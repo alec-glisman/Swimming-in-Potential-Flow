@@ -1,0 +1,6 @@
+[submodule "include/Catch2"]
+	path = include/Catch2
+	url = https://github.com/catchorg/Catch2.git
+[submodule "include/Eigen"]
+	path = include/Eigen
+	url = https://gitlab.com/libeigen/eigen.git
