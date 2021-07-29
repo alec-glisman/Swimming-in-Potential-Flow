@@ -1,3 +1,65 @@
+# SECTION: EXCEPTIONS
+# Save everything in directories below
+!input/**
+!requirements/**
+!src/**
+!tests/**
+
+# Important configurations
+!.cmake-format.json
+!compile_commands.json
+
+# VSCode files
+!.vscode/*
+# !SECTION (EXCEPTIONS)
+
+
+
+# SECTION: DATA
+# Data directories
+*data
+data*
+temp*
+!dataIO*
+
+# Simulation data input
+*.in
+
+# Simulation data output
+*.csv
+*.xlsx
+*.png
+*.eps
+*.txt
+*.out
+*.json
+*.lammpstrj
+
+# Testing data output
+Testing
+tests/temp_tests
+**/temp_tests
+# !SECTION (DATA)
+
+
+
+# SECTION PYTHON
+# Python caches
+*.pyc
+# !SECTION (PYTHON)
+
+
+
+# SECTION: CMAKE
+# Build directories
+cmake-*
+build/*
+build*
+# !SECTION (CMAKE)
+
+
+
+# SECTION: C++
 # Prerequisites
 *.d
 
@@ -30,3 +92,24 @@
 *.exe
 *.out
 *.app
+# !SECTION (C++)
+
+
+
+# SECTION: CACHES
+# clangd language server files
+.clangd/*
+.clangd*
+
+# ccls language server files
+.ccls-cache/*
+.ccls-cache*
+
+# caches
+.cache/*
+.cache*
+
+# MacOS files
+.DS_Store
+*.DS_Store
+# !SECTION (CACHES)
