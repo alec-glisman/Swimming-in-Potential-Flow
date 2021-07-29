@@ -5,12 +5,20 @@
 /* Include all internal project dependencies */
 
 /* Include all external project dependencies */
+
 // eigen3(Linear algebra)
-#include <Eigen3/Core>
-#include <Eigen3/Eigen3>
+#include <Eigen/Core>
+#include <Eigen/Eigen>
 #define EIGEN_USE_MKL_ALL
 #include <Eigen/src/Core/util/MKL_support.h>
-// STL Library
+
+// spdlog (logging)
+#include <spdlog/spdlog.h>
+
+// Catch2
+#include <catch2/catch.hpp>
+
+// STL
 #include <memory> // for std::unique_ptr and std::shared_ptr
 #include <string> // std::string
 #include <vector> // std::vector()
