@@ -112,4 +112,7 @@ build*
 
 # VSCode files
 !.vscode/*
+
+# CMAKE files
+!**/CMakeLists.txt
 # !SECTION (EXCEPTIONS)
