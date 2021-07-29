@@ -1,0 +1,53 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    // To enter commands, preface by '-exec'
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) Main",
+            "type": "cppdbg",
+            "request": "launch",
+            // Resolved by CMake Tools:
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Debug: build",
+            "program": "${workspaceFolder}/build_debug/src/./bodies_in_potential_flow",
+            "stopAtEntry": false,
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerArgs": "--args \"${workspaceFolder}/build_debug/src/./bodies_in_potential_flow\"",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "logging": {
+                "engineLogging": false,
+                "trace": false,
+                "traceResponse": false
+            }
+        },
+        {
+            "name": "(lldb) Main",
+            "type": "cppdbg",
+            "request": "launch",
+            // Resolved by CMake Tools:
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Debug: build",
+            "program": "${workspaceFolder}/build_debug/src/./bodies_in_potential_flow",
+            "args": [],
+            "stopAtEntry": false,
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "setupCommands": [],
+            "logging": {
+                "engineLogging": false,
+                "trace": false,
+                "traceResponse": false
+            }
+        }
+    ]
+}

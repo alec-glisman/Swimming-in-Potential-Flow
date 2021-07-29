@@ -1,0 +1,138 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Debug: config",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "cmake",
+            "args": [
+                "-G",
+                "\"Unix Makefiles\"",
+                "-B",
+                "build_debug",
+                "-DCMAKE_BUILD_TYPE=Debug",
+                "-DENABLE_TESTING=True",
+                "-DCMAKE_EXPORT_COMPILE_COMMANDS=True"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Debug: build",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "cmake",
+            "args": [
+                "--build",
+                "build_debug",
+                "-j"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Debug: run",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "build_debug/src/./bodies_in_potential_flow",
+            "args": [],
+            "group": "build",
+            "dependsOn": "Debug: build",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Debug: test",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "build_debug/tests/./tests",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "dependsOn": "Debug: build",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Release: config",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "cmake",
+            "args": [
+                "-G",
+                "\"Unix Makefiles\"",
+                "-B",
+                "build_release",
+                "-DCMAKE_BUILD_TYPE=Debug",
+                "-DENABLE_TESTING=True",
+                "-DCMAKE_EXPORT_COMPILE_COMMANDS=True"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Release: build",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "cmake",
+            "args": [
+                "--build",
+                "build_release",
+                "-j"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Release: run",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "build_release/src/./bodies_in_potential_flow",
+            "args": [],
+            "group": "build",
+            "dependsOn": "Release: build",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Release: test",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "build_release/tests/./tests",
+            "group": "test",
+            "dependsOn": "Release: build",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        }
+    ]
+}
