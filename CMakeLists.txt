@@ -216,7 +216,6 @@ MESSAGE( "** EIGEN3 **" )
 MESSAGE( STATUS "Found: ${EIGEN3_FOUND}" )
 MESSAGE( STATUS "Include Dir: ${EIGEN3_INCLUDE_DIR}" )
 MESSAGE("")
-# target_link_libraries(example Eigen3::Eigen)
 
 # Logging library
 FIND_PACKAGE( spdlog REQUIRED )
@@ -231,7 +230,6 @@ MESSAGE( "** CATCH2 **" )
 MESSAGE( STATUS "Found: ${Catch2_FOUND}" )
 MESSAGE( STATUS "Include Dir: ${Catch2_INCLUDE_DIRS}" )
 MESSAGE("")
-# target_link_libraries(foo PRIVATE Catch2::Catch2)
 INCLUDE(CTest)
 INCLUDE(Catch)
 # !SECTION
@@ -244,7 +242,7 @@ ADD_SUBDIRECTORY(src)
 
 IF(ENABLE_TESTING STREQUAL "True" OR CMAKE_BUILD_TYPE STREQUAL "Debug")
 
-    ADD_SUBDIRECTORY(tests)
+    # ADD_SUBDIRECTORY(tests)
 
 ENDIF()
 # !SECTION
