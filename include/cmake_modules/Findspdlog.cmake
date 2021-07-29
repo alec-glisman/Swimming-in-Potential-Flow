@@ -11,7 +11,10 @@ if(NOT EXISTS "${spdlog_INCLUDE_DIR}")
     find_path(spdlog_INCLUDE_DIR
         NAMES spdlog/spdlog.h
         DOC "spdlog library header files"
-        HINTS "${CMAKE_SOURCE_DIR}/include/spdlog/include" )
+        HINTS "/usr/local/include"
+              "/usr/local/Cellar/spdlog/1.8.5"  # MacOS
+              "${CMAKE_SOURCE_DIR}/include/spdlog/include" 
+    )
 
 endif()
 
