@@ -28,6 +28,7 @@ IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
         Eigen3::Eigen
         ${Boost_LIBRARIES}
         Catch2::Catch2
+        spdlog::spdlog
         )
 
 ELSEIF(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -38,6 +39,7 @@ ELSEIF(CMAKE_BUILD_TYPE STREQUAL "Release")
         Eigen3::Eigen
         ${Boost_LIBRARIES}
         Catch2::Catch2
+        spdlog::spdlog
         )
 
 ENDIF()
