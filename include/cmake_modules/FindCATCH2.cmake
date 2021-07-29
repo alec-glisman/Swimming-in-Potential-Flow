@@ -16,7 +16,6 @@ if(NOT EXISTS "${CATCH2_INCLUDE_DIR}")
         "/usr/include"
         "$ENV{CPLUS_INCLUDE_PATH}"
         "$ENV{CPATH}"
-        "${CMAKE_SOURCE_DIR}/thirdparty/catch"
         )
 
     find_path(CATCH2_INCLUDE_DIR
