@@ -48,7 +48,10 @@
                 "cwd": "${workspaceFolder}"
             },
             "command": "build_debug/src/./bodies_in_potential_flow",
-            "args": [],
+            "args": [
+                "input/test.gsd",
+                "temp/output"
+            ],
             "group": "build",
             "dependsOn": "Debug: build",
             "problemMatcher": [
