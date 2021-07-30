@@ -2,7 +2,7 @@
 INCLUDE_DIRECTORIES(data_io)
 # INCLUDE_DIRECTORIES(forces)
 # INCLUDE_DIRECTORIES(integrators)
-# INCLUDE_DIRECTORIES(simulation_system)
+INCLUDE_DIRECTORIES(simulation_system)
 
 IF(DEFINED CMAKE_CUDA_COMPILER)
     INCLUDE_DIRECTORIES(cuda_helpers)
@@ -12,7 +12,7 @@ ENDIF()
 ADD_SUBDIRECTORY(data_io)
 # ADD_SUBDIRECTORY(forces)
 # ADD_SUBDIRECTORY(integrators)
-# ADD_SUBDIRECTORY(simulation_system)
+ADD_SUBDIRECTORY(simulation_system)
 
 # Main project executable
 ADD_EXECUTABLE(bodies_in_potential_flow main.cpp)
@@ -27,6 +27,7 @@ IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
         Catch2::Catch2
         spdlog::spdlog
         data_io
+        simulation_system
         )
 
 ELSEIF(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -39,6 +40,7 @@ ELSEIF(CMAKE_BUILD_TYPE STREQUAL "Release")
         Catch2::Catch2
         spdlog::spdlog
         data_io
+        simulation_system
         )
 
 ENDIF()

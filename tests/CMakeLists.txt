@@ -1,5 +1,6 @@
 # Include directories in header search paths (-I flag)
 INCLUDE_DIRECTORIES(../src/data_io)
+INCLUDE_DIRECTORIES(../src/simulation_system)
 
 IF(DEFINED CMAKE_CUDA_COMPILER)
     INCLUDE_DIRECTORIES(../src/cuda_helpers)
