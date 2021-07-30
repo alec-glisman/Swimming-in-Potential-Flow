@@ -1,6 +1,8 @@
 # Bodies in Potential Flow
 
-Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible)
+Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible)  
+
+Author: Alec Glisman
 
 ## Dependencies
 
