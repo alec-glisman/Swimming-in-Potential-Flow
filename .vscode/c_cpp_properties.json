@@ -13,7 +13,10 @@
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/include/spdlog/include",
                 "${workspaceFolder}/src/integrators",
-                "${workspaceFolder}/src/data_io"
+                "${workspaceFolder}/src/data_io",
+                "${workspaceFolder}/src/data_io",
+                "${workspaceFolder}/src/data_io",
+                "${workspaceFolder}/include/spdlog/include"
             ],
             "defines": [],
             "compilerPath": "/usr/local/bin/gcc-11",
