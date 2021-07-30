@@ -13,12 +13,6 @@
 // GSD: Data IO
 #include <gsd.h> // GSD File
 
-// // eigen3(Linear algebra)
-// #include <Eigen/Core>
-// #include <Eigen/Eigen>
-// #define EIGEN_USE_MKL_ALL
-// #include <Eigen/src/Core/util/MKL_support.h>
-
 /* Forward declarations */
 
 int
