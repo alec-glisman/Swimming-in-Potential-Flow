@@ -9,8 +9,11 @@
     },
     "cSpell.words": [
         "Eigen",
+        "dtype",
+        "hoomd",
         "irrotational",
-        "spdlog"
+        "spdlog",
+        "traj"
     ],
     "python.pythonPath": "/Users/alecglisman/anaconda3/envs/bodies-in-potential-flow/bin/python",
     "files.associations": {
