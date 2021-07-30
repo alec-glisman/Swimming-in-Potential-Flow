@@ -11,6 +11,7 @@ Author: Alec Glisman
 * [Eigen3](https://gitlab.com/libeigen/eigen) (v3.3.9): Linear algebra
 * [spdlog](https://github.com/gabime/spdlog) (v1.8.5): Logging
 * [Catch2](https://github.com/catchorg/Catch2) (v2.13.6): Unit testing
+* [gsd](https://github.com/glotzerlab/gsd) (v2.4.2): Simulation data output
 
 ## Compilers tested
 
