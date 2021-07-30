@@ -231,9 +231,6 @@ MESSAGE( STATUS "Include Dir: ${Catch2_INCLUDE_DIRS}" )
 MESSAGE("")
 INCLUDE(CTest)
 INCLUDE(Catch)
-
-# Data IO libraries
-INCLUDE_DIRECTORIES(include/gsd/gsd)
 # !SECTION
 
 
