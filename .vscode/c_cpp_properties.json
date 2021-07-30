@@ -10,7 +10,8 @@
         {
             "name": "Mac",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/src/integrators"
             ],
             "defines": [],
             "compilerPath": "/usr/local/bin/gcc-11",
