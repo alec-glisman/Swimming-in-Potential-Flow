@@ -15,6 +15,7 @@
 /* Include all external project dependencies */
 // Logging
 #include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/spdlog.h>
 
 // STL
 #include <memory> // for std::unique_ptr and std::shared_ptr
@@ -22,8 +23,6 @@
 
 class systemData
 {
-    // auto my_logger = spdlog::basic_logger_mt("file_logger", "logs/basic-log.txt");
-
   public:
     systemData(std::string inputGSDFile, std::string outputDir);
 
@@ -32,8 +31,9 @@ class systemData
   private:
     std::string m_inputGSDFile;
     std::string m_outputDir;
+    std::string m_logFile;
 
-    // spdlog::sinks::basic_file_sink<std::mutex> m_logger;
+    std::shared_ptr<spdlog::logger> m_logger;
 
     std::shared_ptr<gsd_handle> m_handle{new gsd_handle};
     int                         m_return_val{-1};
