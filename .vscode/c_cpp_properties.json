@@ -11,12 +11,13 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
+                "${workspaceFolder}/include/**",
                 "${workspaceFolder}/include/spdlog/include",
+                "${workspaceFolder}/include/Eigen/",
                 "${workspaceFolder}/src/integrators",
                 "${workspaceFolder}/src/data_io",
-                "${workspaceFolder}/src/data_io",
-                "${workspaceFolder}/src/data_io",
-                "${workspaceFolder}/include/spdlog/include"
+                "/usr/local/include",
+                "/usr/local/include/eigen3"
             ],
             "defines": [],
             "compilerPath": "/usr/local/bin/gcc-11",
