@@ -17,6 +17,7 @@ temp*
 *.out
 *.json
 *.lammpstrj
+*.gsd
 
 # Testing data output
 Testing
