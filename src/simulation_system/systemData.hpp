@@ -31,8 +31,9 @@ class systemData
   private:
     std::string m_inputGSDFile;
     std::string m_outputDir;
-    std::string m_logFile;
 
+    std::string                     m_logFile;
+    std::string                     m_logName{"systemData"};
     std::shared_ptr<spdlog::logger> m_logger;
 
     std::shared_ptr<gsd_handle> m_handle{new gsd_handle};
