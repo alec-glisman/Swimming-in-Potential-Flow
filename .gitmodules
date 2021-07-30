@@ -7,3 +7,6 @@
 [submodule "include/spdlog"]
 	path = include/spdlog
 	url = https://github.com/gabime/spdlog.git
+[submodule "include/gsd"]
+	path = include/gsd
+	url = https://github.com/glotzerlab/gsd.git
