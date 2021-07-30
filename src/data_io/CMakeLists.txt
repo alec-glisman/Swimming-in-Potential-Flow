@@ -9,6 +9,12 @@ IF(DEFINED CMAKE_CUDA_COMPILER)
         GSDReader.hpp
         )
 
+    TARGET_LINK_LIBRARIES(
+        data_io
+        PRIVATE
+        spdlog::spdlog
+    )
+
     # COMPUTE ARCHITECTURES: GeForce RTX 3080: Compute Capability 8.6 GeForce
     # GTX 1080 TI: Compute Capability 6.1
     SET_TARGET_PROPERTIES(data_io PROPERTIES CUDA_SEPARABLE_COMPILATION ON)

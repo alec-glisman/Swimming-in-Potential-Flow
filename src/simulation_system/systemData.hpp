@@ -10,7 +10,7 @@
 #endif
 
 /* Include all internal project dependencies */
-#include <gsd.h> // GSD File
+#include "gsd.h" // GSD File
 
 /* Include all external project dependencies */
 // Logging
@@ -22,6 +22,21 @@
 
 class systemData
 {
+    // auto my_logger = spdlog::basic_logger_mt("file_logger", "logs/basic-log.txt");
+
+  public:
+    systemData(std::string inputGSDFile, std::string outputDir);
+
+    ~systemData();
+
+  private:
+    std::string m_inputGSDFile;
+    std::string m_outputDir;
+
+    // spdlog::sinks::basic_file_sink<std::mutex> m_logger;
+
+    std::shared_ptr<gsd_handle> m_handle{new gsd_handle};
+    int                         m_return_val{-1};
 };
 
 #endif

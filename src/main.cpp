@@ -3,25 +3,21 @@
 //
 
 /* Include all internal project dependencies */
+#include <systemData.hpp>
 
 /* Include all external project dependencies */
+// STL
+#include <iostream> // std::cout, std::endl
+#include <memory>   // for std::unique_ptr and std::shared_ptr
+#include <string>   // std::string
+// GSD: Data IO
+#include <gsd.h> // GSD File
 
 // // eigen3(Linear algebra)
 // #include <Eigen/Core>
 // #include <Eigen/Eigen>
 // #define EIGEN_USE_MKL_ALL
 // #include <Eigen/src/Core/util/MKL_support.h>
-
-// // spdlog (logging)
-// #include <spdlog/spdlog.h>
-
-// STL
-#include <iostream> // std::cout, std::endl
-#include <memory>   // for std::unique_ptr and std::shared_ptr
-#include <string>   // std::string
-
-// GSD: Data IO
-#include <gsd.h> // GSD File
 
 /* Forward declarations */
 
@@ -50,14 +46,12 @@ main(const int argc, const char* argv[])
 
     inputDataFile = argv[1];
     outputDir     = argv[2];
-
     /* !SECTION */
 
-    /* Initialize variables */
-    std::shared_ptr<gsd_handle> handle{new gsd_handle};
-    int                         return_val{-1};
+    /* SECTION: Set-up and run simulation */
+    // Initialize data structures
+    auto system = std::make_shared<systemData>(inputDataFile, outputDir);
+    /* !SECTION */
 
-    return_val = gsd_open(handle.get(), inputDataFile.c_str(), GSD_OPEN_READWRITE);
-
-    return return_val;
+    return EXIT_SUCCESS;
 }

@@ -6,7 +6,14 @@ IF(DEFINED CMAKE_CUDA_COMPILER)
         systemData.cpp 
         systemData.hpp 
     )
-
+    
+    TARGET_LINK_LIBRARIES(
+        simulation_system
+        PRIVATE
+        spdlog::spdlog
+        data_io
+    )
+    
     # COMPUTE ARCHITECTURES: GeForce RTX 3080: Compute Capability 8.6 GeForce
     # GTX 1080 TI: Compute Capability 6.1
     SET_TARGET_PROPERTIES(simulation_system PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
@@ -20,11 +27,11 @@ ELSE()
         systemData.hpp 
     )
         
-
     TARGET_LINK_LIBRARIES(
         simulation_system
         PRIVATE
         spdlog::spdlog
+        data_io
     )
 
 ENDIF()
