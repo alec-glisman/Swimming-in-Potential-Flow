@@ -5,7 +5,7 @@
 - [ ] Decide on input data schema
 - [ ] Write data parsing scheme
   - [ ] Kinematic input
-    - [ ] Parameter input
+  - [ ] Parameter input
 - [ ] Add logging of startup behavior
 - [ ] Add unit tests to verify data loaded correctly
 - [ ] Write data output (preferably in GSD file)
