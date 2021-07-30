@@ -1,7 +1,5 @@
 # Include directories in header search paths (-I flag)
-# INCLUDE_DIRECTORIES(../src/forces)
-# INCLUDE_DIRECTORIES(../src/integrators)
-# INCLUDE_DIRECTORIES(../src/simulation_system)
+INCLUDE_DIRECTORIES(../src/data_io)
 
 IF(DEFINED CMAKE_CUDA_COMPILER)
     INCLUDE_DIRECTORIES(../src/cuda_helpers)
@@ -22,6 +20,7 @@ IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
         ${Boost_LIBRARIES}
         Catch2::Catch2
         spdlog::spdlog
+        data_io
         )
 
 ELSEIF(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -33,6 +32,7 @@ ELSEIF(CMAKE_BUILD_TYPE STREQUAL "Release")
         ${Boost_LIBRARIES}
         Catch2::Catch2
         spdlog::spdlog
+        data_io
         )
 
 ENDIF()
