@@ -6,22 +6,21 @@
 
 /* Include all external project dependencies */
 #include <catch2/catch.hpp> // unit testing framework
+#include <gsd.h>            // GSD File
+// STL
+#include <string> // std::string
 
 /* Forward declarations */
-class parseInput;
 
-TEST_CASE("Description", "[tags]")
+TEST_CASE("Load and parse data from GSD file", "[GSD][I/O]")
 {
-    SECTION("Build simulation")
+    SECTION("Load GSD data")
     {
-        /* Declare initialization variables */
+        /* Parameters
+         * REVIEW[epic=Assumptions]: Assuming that the tests are called from project base dir */
+        std::string inputData{"input/three_body_collinear_x/test.gsd"};
+        std::string outputDir{"temp/output"};
 
-        /* Body configuration */
-
-        /* Simulation framework */
-
-        SECTION("1. Load all data from input preferences file")
-        {
-        }
+        /* Initialize variables */
     }
 }
