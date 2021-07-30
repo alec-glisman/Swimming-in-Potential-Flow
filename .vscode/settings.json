@@ -11,5 +11,6 @@
         "Eigen",
         "irrotational",
         "spdlog"
-    ]
+    ],
+    "python.pythonPath": "/Users/alecglisman/anaconda3/envs/bodies-in-potential-flow/bin/python"
 }
