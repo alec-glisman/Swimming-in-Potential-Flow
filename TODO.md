@@ -3,6 +3,9 @@
 ## Get project running
 
 - [ ] Decide on input data schema
+
+May be a good idea to make GSD input in python and then load in C++.  
+
 - [ ] Write data parsing scheme
   - [ ] Kinematic input
   - [ ] Parameter input
