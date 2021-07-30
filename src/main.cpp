@@ -57,7 +57,7 @@ main(const int argc, const char* argv[])
     std::shared_ptr<gsd_handle> handle{new gsd_handle};
     int                         return_val{-1};
 
-    return_val = gsd_open(handle.get(), inputDataFile.c_str(), GSD_OPEN_READONLY);
+    return_val = gsd_open(handle.get(), inputDataFile.c_str(), GSD_OPEN_READWRITE);
 
     return return_val;
 }
