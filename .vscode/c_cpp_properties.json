@@ -11,7 +11,7 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/include/spdlog",
+                "${workspaceFolder}/include/spdlog/include",
                 "${workspaceFolder}/src/integrators",
                 "${workspaceFolder}/src/data_io"
             ],
