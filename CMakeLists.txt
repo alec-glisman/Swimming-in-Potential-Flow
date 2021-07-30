@@ -128,23 +128,23 @@ MESSAGE("")
 IF(APPLE)
 
     PROJECT(
-        potential_swimmer_dynamics
-        VERSION "1.0.0"
+        bodies_in_potential_flow
+        VERSION "0.1.0"
         DESCRIPTION
-            "Potential swimmer dynamics for spherical particles with dipolar disturbance."
+            "Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible)"
         HOMEPAGE_URL
-            "https://github.com/alec-glisman/potential-swimmer-dynamics"
+            "https://github.com/alec-glisman/bodies-in-potential-flow"
         LANGUAGES CXX C)
 
 ELSE()  # Use CUDA when not on MacOS
 
     PROJECT(
-        potential_swimmer_dynamics
-        VERSION "1.0.0"
+        bodies_in_potential_flow
+        VERSION "0.1.0"
         DESCRIPTION
-            "Potential swimmer dynamics for spherical particles with dipolar disturbance."
+            "Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible)"
         HOMEPAGE_URL
-            "https://github.com/alec-glisman/potential-swimmer-dynamics"
+            "https://github.com/alec-glisman/bodies-in-potential-flow"
         LANGUAGES CXX C CUDA)
 
 ENDIF()
@@ -218,7 +218,7 @@ MESSAGE( STATUS "Include Dir: ${EIGEN3_INCLUDE_DIR}" )
 MESSAGE("")
 
 # Logging library
-FIND_PACKAGE( spdlog REQUIRED )
+FIND_PACKAGE( spdlog CONFIG REQUIRED )
 MESSAGE( "** SPDLOG **" )
 MESSAGE( STATUS "Found: ${spdlog_FOUND}" )
 MESSAGE( STATUS "Include Dir: ${spdlog_INCLUDE_DIR}" )
