@@ -6,22 +6,23 @@
 
 /* Include all external project dependencies */
 
-// eigen3(Linear algebra)
-#include <Eigen/Core>
-#include <Eigen/Eigen>
-#define EIGEN_USE_MKL_ALL
-#include <Eigen/src/Core/util/MKL_support.h>
+// // eigen3(Linear algebra)
+// #include <Eigen/Core>
+// #include <Eigen/Eigen>
+// #define EIGEN_USE_MKL_ALL
+// #include <Eigen/src/Core/util/MKL_support.h>
 
-// spdlog (logging)
-#include <spdlog/spdlog.h>
+// // spdlog (logging)
+// #include <spdlog/spdlog.h>
 
-// Catch2
-#include <catch2/catch.hpp>
+// // Catch2
+// #include <catch2/catch.hpp>
 
-// STL
-#include <memory> // for std::unique_ptr and std::shared_ptr
-#include <string> // std::string
-#include <vector> // std::vector()
+// // STL
+#include <iostream> // std::cout, std::endl
+#include <string>   // std::string, and EXIT_FAILURE/EXIT_SUCCESS
+// #include <memory> // for std::unique_ptr and std::shared_ptr
+// #include <vector> // std::vector()
 
 /* Forward declarations */
 
@@ -31,22 +32,19 @@ main(const int argc, const char* argv[])
 
     /* SECTION: Parse command line input
      *      argv[0]: executable name
-     *      argv[1]: input preferences filepath
-     *      argv[2]: output directory to write data to
-     *      argv[3]: (optional) initial configuration data file
+     *      argv[1]: input GSD filepath
+     *      argv[2]: output directory to write data
      */
 
     // Check input is of correct length
-    // if (argc < 3)
-    // {
+    if (argc < 3)
+    {
 
-    //     std::cout << "ERROR: incorrect number of arguments!!!"
-    //               << "[executable] [input preferences] [output directory] [(optional) initial "
-    //                  "configuration]"
-    //               << std::endl;
+        std::cout << "ERROR: incorrect number of arguments!!!"
+                  << "[executable] [input data] [output directory]" << std::endl;
 
-    //     return EXIT_FAILURE;
-    // }
+        return EXIT_FAILURE;
+    }
 
     /* !SECTION */
 
