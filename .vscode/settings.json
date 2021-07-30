@@ -12,5 +12,12 @@
         "irrotational",
         "spdlog"
     ],
-    "python.pythonPath": "/Users/alecglisman/anaconda3/envs/bodies-in-potential-flow/bin/python"
+    "python.pythonPath": "/Users/alecglisman/anaconda3/envs/bodies-in-potential-flow/bin/python",
+    "files.associations": {
+        "*.vim": "viml",
+        ".conkyrc": "properties",
+        "*.cls": "latex",
+        ".latexmkrc": "shellscript",
+        "random": "cpp"
+    }
 }
