@@ -4,7 +4,10 @@ IF(DEFINED CMAKE_CUDA_COMPILER)
     ADD_LIBRARY(
         data_io
         gsd.c 
-        gsd.h)
+        gsd.h
+        GSDReader.cpp
+        GSDReader.hpp
+        )
 
     # COMPUTE ARCHITECTURES: GeForce RTX 3080: Compute Capability 8.6 GeForce
     # GTX 1080 TI: Compute Capability 6.1
@@ -16,6 +19,8 @@ ELSE()
     ADD_LIBRARY(
         data_io
         gsd.c 
-        gsd.h)
+        GSDReader.cpp
+        GSDReader.hpp
+        )
 
 ENDIF()
