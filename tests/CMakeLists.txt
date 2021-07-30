@@ -22,6 +22,7 @@ IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
         Catch2::Catch2
         spdlog::spdlog
         data_io
+        simulation_system
         )
 
 ELSEIF(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -34,6 +35,7 @@ ELSEIF(CMAKE_BUILD_TYPE STREQUAL "Release")
         Catch2::Catch2
         spdlog::spdlog
         data_io
+        simulation_system
         )
 
 ENDIF()
