@@ -1,7 +1,5 @@
 # Include directories in header search paths (-I flag)
 INCLUDE_DIRECTORIES(data_io)
-# INCLUDE_DIRECTORIES(forces)
-# INCLUDE_DIRECTORIES(integrators)
 INCLUDE_DIRECTORIES(simulation_system)
 
 IF(DEFINED CMAKE_CUDA_COMPILER)
@@ -10,8 +8,6 @@ ENDIF()
 
 # Add subdirectories to the build (processes CMakeLists.txt in these dirs)
 ADD_SUBDIRECTORY(data_io)
-# ADD_SUBDIRECTORY(forces)
-# ADD_SUBDIRECTORY(integrators)
 ADD_SUBDIRECTORY(simulation_system)
 
 # Main project executable
