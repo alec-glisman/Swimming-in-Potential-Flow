@@ -10,7 +10,7 @@
 #endif
 
 /* Include all internal project dependencies */
-#include "gsd.h" // GSD File
+#include <gsd.h> // GSD File
 
 /* Include all external project dependencies */
 // Logging
@@ -33,6 +33,9 @@ class systemData
     ~systemData();
 
   private:
+    void
+    check_gsd_return();
+
     // constructor
     std::string m_inputGSDFile;
     std::string m_outputDir;

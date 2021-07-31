@@ -12,13 +12,22 @@ systemData::systemData(std::string inputGSDFile, std::string outputDir)
     m_logger  = spdlog::basic_logger_mt(m_logName, m_logFile);
     spdlog::get(m_logName)->info("Initializing system data");
 
-    // Load GSD data
+    // Load GSD frame
     spdlog::get(m_logName)->info("Loading input GSD file");
     m_return_val = gsd_open(m_handle.get(), m_inputGSDFile.c_str(), GSD_OPEN_READWRITE);
+    check_gsd_return();
+
+    // Parameters: degrees of freedom
+    spdlog::get(m_logName)->info("Parameters: degrees of freedom");
+}
+
+systemData::~systemData() = default;
+
+void
+systemData::check_gsd_return()
+{
     if (m_return_val != 0)
     {
         spdlog::get(m_logName)->critical("m_return_val = {0}", m_return_val);
     }
 }
-
-systemData::~systemData() = default;
