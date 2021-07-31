@@ -57,8 +57,8 @@ GSDReader::readChunk(void* data, uint64_t frame, const char* name, size_t expect
                 actual_size);
         }
 
-        auto retval = gsd_read_chunk(system->handle().get(), data, entry);
-        system->setReturnVal(retval);
+        auto return_val = gsd_read_chunk(system->handle().get(), data, entry);
+        system->setReturnVal(return_val);
         system->check_gsd_return();
     }
 
@@ -68,7 +68,12 @@ GSDReader::readChunk(void* data, uint64_t frame, const char* name, size_t expect
 void
 GSDReader::readHeader()
 {
-    // readChunk(&m_timestep, m_frame, "configuration/step", 8);
+    int  timestep    = -1;
+    auto return_bool = readChunk(&timestep, m_frame, "configuration/step", 8);
+    system->setReturnBool(return_bool);
+    system->check_gsd_return();
+    system->setTimestep(timestep);
+    spdlog::get(m_logName)->info("time step: {0}", timestep);
 
     // uint8_t dim = 3;
     // readChunk(&dim, m_frame, "configuration/dimensions", 1);

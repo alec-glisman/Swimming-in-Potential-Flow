@@ -39,7 +39,7 @@ class GSDReader
   private:
     bool
     readChunk(void* data, uint64_t frame, const char* name, size_t expected_size,
-              unsigned int cur_n);
+              unsigned int cur_n = 0);
 
     void
     readHeader();
