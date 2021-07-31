@@ -11,7 +11,8 @@
 #endif
 
 /* Include all internal project dependencies */
-#include <gsd.h> // GSD File
+#include <gsd.h>          // GSD File
+#include <systemData.hpp> // simulation data
 
 /* Include all external project dependencies */
 // Logging
@@ -20,20 +21,19 @@
 #include <memory> // for std::unique_ptr and std::shared_ptr
 #include <string> // std::string
 
+/* Forward declarations */
+class systemData;
+
 class GSDReader
 {
   public:
     //! Loads in the file and parses the data
-    GSDReader(const std::string& name, const uint64_t frame);
+    GSDReader(std::shared_ptr<systemData> sys);
 
     //! Destructor
     ~GSDReader();
 
   private:
-    std::string m_name;   //!< Cached file name
-    uint64_t    m_frame;  //!< Cached frame
-    gsd_handle  m_handle; //!< Handle to the file
-
     // helper functions to read sections of the file
     void
     readHeader();
@@ -43,6 +43,14 @@ class GSDReader
 
     void
     readTopology();
+
+    // classes
+    std::shared_ptr<systemData> system;
+
+    // logging
+    std::string                     m_logFile;
+    std::string                     m_logName{"GSDReader"};
+    std::shared_ptr<spdlog::logger> m_logger;
 };
 
 #endif // BODIES_IN_POTENTIAL_FLOW_GSD_READER_H

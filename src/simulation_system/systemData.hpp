@@ -32,10 +32,22 @@ class systemData
 
     ~systemData();
 
-  private:
     void
     check_gsd_return();
 
+    std::string
+    outputDir() const
+    {
+        return m_outputDir;
+    }
+
+    void
+    setReturnVal(int return_val)
+    {
+        m_return_val = return_val;
+    }
+
+  private:
     // constructor
     std::string m_inputGSDFile;
     std::string m_outputDir;

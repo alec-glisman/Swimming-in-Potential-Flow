@@ -21,7 +21,10 @@ systemData::systemData(std::string inputGSDFile, std::string outputDir)
     spdlog::get(m_logName)->info("Parameters: degrees of freedom");
 }
 
-systemData::~systemData() = default;
+systemData::~systemData()
+{
+    gsd_close(m_handle.get());
+}
 
 void
 systemData::check_gsd_return()
