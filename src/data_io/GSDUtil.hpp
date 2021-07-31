@@ -29,13 +29,14 @@ class systemData;
 class GSDUtil
 {
   public:
-    // Loads in the file and parses the data
     GSDUtil(std::shared_ptr<systemData> sys);
 
     GSDUtil(std::shared_ptr<systemData> sys, uint64_t frame);
 
-    //! Destructor
     ~GSDUtil();
+
+    void
+    writeFrame();
 
   private:
     bool
@@ -50,6 +51,15 @@ class GSDUtil
 
     void
     readParticles();
+
+    void
+    writeHeader();
+
+    void
+    writeParameters();
+
+    void
+    writeParticles();
 
     // classes
     std::shared_ptr<systemData> system;

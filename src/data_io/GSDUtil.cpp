@@ -267,3 +267,29 @@ GSDUtil::readParticles()
             acc[system->numDim() * i + 2]);
     }
 }
+
+void
+GSDUtil::writeFrame()
+{
+    writeHeader();
+    writeParameters();
+    writeParticles();
+}
+
+void
+GSDUtil::writeHeader()
+{
+    // TODO
+}
+
+void
+GSDUtil::writeParameters()
+{
+    // TODO
+}
+
+void
+GSDUtil::writeParticles()
+{
+    // TODO
+}
