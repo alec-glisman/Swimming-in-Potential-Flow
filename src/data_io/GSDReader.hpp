@@ -12,6 +12,7 @@
 
 /* Include all internal project dependencies */
 #include <gsd.h> // GSD File
+#include <systemData.hpp>
 
 /* Include all external project dependencies */
 // Logging
@@ -21,25 +22,31 @@
 #include <memory> // for std::unique_ptr and std::shared_ptr
 #include <string> // std::string
 
+/* Forward declarations */
+class systemData;
+
 class GSDReader
 {
   public:
-    //! Loads in the file and parses the data
-    GSDReader(std::string inputGSDFile, std::string outputDir);
+    // Loads in the file and parses the data
+    GSDReader(std::shared_ptr<systemData> sys);
 
     //! Destructor
     ~GSDReader();
 
   private:
-    // helper functions to read sections of the file
+    bool
+    readChunk(void* data, uint64_t frame, const char* name, size_t expected_size,
+              unsigned int cur_n);
+
     void
     readHeader();
 
     void
     readParticles();
 
-    void
-    readTopology();
+    // classes
+    std::shared_ptr<systemData> system;
 
     // GSD
     std::string m_inputGSDFile;

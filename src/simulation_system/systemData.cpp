@@ -18,7 +18,8 @@ systemData::systemData(std::string inputGSDFile, std::string outputDir)
     check_gsd_return();
 
     // Begin to parse GSD file
-    gsdReader = std::make_shared<GSDReader>(m_inputGSDFile, m_outputDir);
+    std::shared_ptr<systemData> shd_ptr = std::make_shared<systemData>(*this);
+    gsdReader                           = std::make_shared<GSDReader>(shd_ptr);
 
     // Parameters: degrees of freedom
     spdlog::get(m_logName)->info("Parameters: degrees of freedom");
