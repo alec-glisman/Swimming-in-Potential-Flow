@@ -57,6 +57,23 @@ class systemData
         return m_handle;
     }
 
+    int
+    timestep() const
+    {
+        return m_timestep;
+    }
+    void
+    setTimestep(int timestep)
+    {
+        m_timestep = timestep;
+    }
+
+    void
+    setReturnBool(bool return_bool)
+    {
+        m_return_bool = return_bool;
+    }
+
   private:
     // classes
     std::shared_ptr<GSDReader> gsdReader;
@@ -71,7 +88,8 @@ class systemData
 
     // GSD
     std::shared_ptr<gsd_handle> m_handle{new gsd_handle};
-    int                         m_return_val{-1};
+    int                         m_return_val{0};
+    bool                        m_return_bool{true};
 
     // degrees of freedom
     int m_num_dim{-1};
