@@ -49,7 +49,7 @@
             },
             "command": "build_debug/src/./bodies_in_potential_flow",
             "args": [
-                "input/test.gsd",
+                "temp/test.gsd",
                 "temp/output"
             ],
             "group": "build",
