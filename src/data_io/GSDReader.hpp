@@ -46,6 +46,9 @@ class GSDReader
     readHeader();
 
     void
+    readParameters();
+
+    void
     readParticles();
 
     // classes

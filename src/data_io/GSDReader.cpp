@@ -41,6 +41,7 @@ GSDReader::GSDReader(std::shared_ptr<systemData> sys)
     }
 
     readHeader();
+    readParameters();
     readParticles();
 }
 
@@ -138,9 +139,16 @@ GSDReader::readHeader()
         throw std::runtime_error("Error reading GSD file");
     }
 
+    // Initialize tensors
+    system->resizeTensors();
+}
+
+void
+GSDReader::readParameters()
+{
     spdlog::get(m_logName)->info("GSD parsing dt");
     float dt{0.0};
-    return_bool = readChunk(&dt, m_frame, "log/integrator/dt", 4);
+    auto  return_bool = readChunk(&dt, m_frame, "log/integrator/dt", 4);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
     system->setDt(dt);
@@ -202,9 +210,6 @@ GSDReader::readHeader()
     system->check_gsd_return();
     system->setWcaSigma(wca_sigma);
     spdlog::get(m_logName)->info("wca_sigma : {0}", wca_sigma);
-
-    // Initialize tensors
-    system->resizeTensors();
 }
 
 void
