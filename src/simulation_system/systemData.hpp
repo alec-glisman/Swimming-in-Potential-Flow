@@ -10,7 +10,8 @@
 #endif
 
 /* Include all internal project dependencies */
-#include <gsd.h> // GSD File
+#include <GSDReader.hpp> // GSD parser
+#include <gsd.h>         // GSD File
 
 /* Include all external project dependencies */
 // Logging
@@ -24,6 +25,9 @@
 // STL
 #include <memory> // for std::unique_ptr and std::shared_ptr
 #include <string> // std::string
+
+/* Forward declarations */
+class GSDReader;
 
 class systemData
 {
@@ -48,14 +52,16 @@ class systemData
     }
 
   private:
+    // classes
+    std::shared_ptr<GSDReader> gsdReader;
+
     // constructor
     std::string m_inputGSDFile;
     std::string m_outputDir;
 
     // logging
-    std::string                     m_logFile;
-    std::string                     m_logName{"systemData"};
-    std::shared_ptr<spdlog::logger> m_logger;
+    std::string m_logFile;
+    std::string m_logName{"systemData"};
 
     // GSD
     std::shared_ptr<gsd_handle> m_handle{new gsd_handle};
