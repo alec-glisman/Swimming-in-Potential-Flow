@@ -64,6 +64,12 @@ GSDReader::GSDReader(std::shared_ptr<systemData> sys, uint64_t frame) : GSDReade
 
 GSDReader::~GSDReader() = default;
 
+/* NOTES
+ * Expected size is in units of bytes
+ *     u_int8: 1
+ *     float (np.single, np.float32): 4
+ *     double (np.double, np.float64): 8
+ */
 bool
 GSDReader::readChunk(void* data, uint64_t frame, const char* name, size_t expected_size,
                      unsigned int cur_n)
@@ -117,8 +123,8 @@ GSDReader::readHeader()
     system->setNumDim(dim);
     spdlog::get(m_logName)->info("dim : {0}", dim);
 
-    unsigned int N = 0;
-    return_bool    = readChunk(&N, m_frame, "particles/N", 4);
+    uint32_t N  = 0;
+    return_bool = readChunk(&N, m_frame, "particles/N", 4);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
     system->setNumParticles(N);
@@ -129,7 +135,7 @@ GSDReader::readHeader()
         throw std::runtime_error("Error reading GSD file");
     }
 
-    double dt{0.0};
+    float dt{0.0};
     return_bool = readChunk(&dt, m_frame, "integrator/dt", 32);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
@@ -144,8 +150,8 @@ void
 GSDReader::readParticles()
 {
     // positions
-    double_t pos[system->numDim() * system->numParticles()];
-    auto return_bool = readChunk(&pos, m_frame, "particles/position", system->numParticles() * 12,
+    float pos[system->numDim() * system->numParticles()];
+    auto  return_bool = readChunk(&pos, m_frame, "particles/position", system->numParticles() * 12,
                                  system->numParticles());
     system->setReturnBool(return_bool);
     system->check_gsd_return();
@@ -155,13 +161,13 @@ GSDReader::readParticles()
         (*system->positions())(3 * i + 1) = pos[3 * i + 1];
         (*system->positions())(3 * i + 2) = pos[3 * i + 2];
 
-        spdlog::get(m_logName)->info("Particle {0} position : [{1}, {2}, {3}]", i + 1,
-                                     pos[system->numDim() * i], pos[system->numDim() * i + 1],
-                                     pos[system->numDim() * i + 2]);
+        spdlog::get(m_logName)->info("Particle {0} position : [{1:03.3f}, {2:03.3f}, {3:03.3f}]",
+                                     i + 1, pos[system->numDim() * i],
+                                     pos[system->numDim() * i + 1], pos[system->numDim() * i + 2]);
     }
 
     // velocities
-    double_t vel[system->numDim() * system->numParticles()];
+    float vel[system->numDim() * system->numParticles()];
     return_bool = readChunk(&vel, m_frame, "particles/velocity", system->numParticles() * 12,
                             system->numParticles());
     system->setReturnBool(return_bool);
@@ -172,14 +178,14 @@ GSDReader::readParticles()
         (*system->velocities())(3 * i + 1) = vel[3 * i + 1];
         (*system->velocities())(3 * i + 2) = vel[3 * i + 2];
 
-        spdlog::get(m_logName)->info("Particle {0} velocity : [{1}, {2}, {3}]", i + 1,
-                                     vel[system->numDim() * i], vel[system->numDim() * i + 1],
-                                     vel[system->numDim() * i + 2]);
+        spdlog::get(m_logName)->info("Particle {0} velocity : [{1:03.3f}, {2:03.3f}, {3:03.3f}]",
+                                     i + 1, vel[system->numDim() * i],
+                                     vel[system->numDim() * i + 1], vel[system->numDim() * i + 2]);
     }
 
     // accelerations
-    double_t acc[system->numDim() * system->numParticles()];
-    return_bool = readChunk(&acc, m_frame, "particles/inertia", system->numParticles() * 12,
+    float acc[system->numDim() * system->numParticles()];
+    return_bool = readChunk(&acc, m_frame, "particles/moment_inertia", system->numParticles() * 12,
                             system->numParticles());
     system->setReturnBool(return_bool);
     system->check_gsd_return();
@@ -189,8 +195,9 @@ GSDReader::readParticles()
         (*system->accelerations())(3 * i + 1) = acc[3 * i + 1];
         (*system->accelerations())(3 * i + 2) = acc[3 * i + 2];
 
-        spdlog::get(m_logName)->info("Particle {0} acceleration : [{1}, {2}, {3}]", i + 1,
-                                     acc[system->numDim() * i], acc[system->numDim() * i + 1],
-                                     acc[system->numDim() * i + 2]);
+        spdlog::get(m_logName)->info(
+            "Particle {0} acceleration : [{1:03.3f}, {2:03.3f}, {3:03.3f}]", i + 1,
+            acc[system->numDim() * i], acc[system->numDim() * i + 1],
+            acc[system->numDim() * i + 2]);
     }
 }
