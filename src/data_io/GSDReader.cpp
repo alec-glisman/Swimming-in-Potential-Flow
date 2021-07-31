@@ -13,9 +13,6 @@ GSDReader::GSDReader(std::shared_ptr<systemData> sys)
     // Set member variables
     m_frame = 0;
 
-    // Set temporary variables
-    gsd_handle tmp_handle = *(system->handle());
-
     // Initialize logger
     m_logFile   = system->outputDir() + "/logs/" + m_logName + "-log.txt";
     auto logger = spdlog::basic_logger_mt(m_logName, m_logFile);
@@ -29,21 +26,6 @@ GSDReader::GSDReader(std::shared_ptr<systemData> sys)
 
     system->setReturnVal(return_val);
     system->check_gsd_return();
-
-    // validate schema
-    // if (std::string(tmp_handle.header.schema) != std::string("hoomd"))
-    // {
-    //     spdlog::get(m_logName)->error("data.gsd_snapshot: Invalid schema in {0} ({1})",
-    //                                   system->inputGSDFile(),
-    //                                   std::string(tmp_handle.header.schema));
-    //     throw std::runtime_error("Error opening GSD file");
-    // }
-    // if (tmp_handle.header.schema_version >= gsd_make_version(2, 0))
-    // {
-    //     spdlog::get(m_logName)->error("data.gsd_snapshot: Invalid schema version in {0}",
-    //                                   system->inputGSDFile());
-    //     throw std::runtime_error("Error opening GSD file");
-    // }
 
     // validate number of frames
     uint64_t nframes = gsd_get_nframes(system->handle().get());
@@ -121,32 +103,45 @@ GSDReader::readChunk(void* data, uint64_t frame, const char* name, size_t expect
 void
 GSDReader::readHeader()
 {
-    int  timestep    = -1;
-    auto return_bool = readChunk(&timestep, m_frame, "configuration/step", 8);
+    uint64_t timestep    = 0;
+    auto     return_bool = readChunk(&timestep, m_frame, "configuration/step", 8);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
     system->setTimestep(timestep);
     spdlog::get(m_logName)->info("time step: {0}", timestep);
 
-    // uint8_t dim = 3;
-    // readChunk(&dim, m_frame, "configuration/dimensions", 1);
-    // m_snapshot->dimensions = dim;
+    uint8_t dim = 0;
+    return_bool = readChunk(&dim, m_frame, "configuration/dimensions", 1);
+    system->setReturnBool(return_bool);
+    system->check_gsd_return();
+    system->setNumDim(dim);
+    spdlog::get(m_logName)->info("dim : {0}", dim);
+
+    unsigned int N = 0;
+    return_bool    = readChunk(&N, m_frame, "particles/N", 4);
+    system->setReturnBool(return_bool);
+    system->check_gsd_return();
+    system->setNumParticles(N);
+    spdlog::get(m_logName)->info("Number of particles : {0}", N);
+    if (N == 0)
+    {
+        spdlog::get(m_logFile)->error("data.gsd_snapshot: cannot read a file with 0 particles");
+        throw std::runtime_error("Error reading GSD file");
+    }
+
+    double dt{0.0};
+    return_bool = readChunk(&dt, m_frame, "integrator/dt", 32);
+    system->setReturnBool(return_bool);
+    system->check_gsd_return();
+    system->setDt(dt);
+    spdlog::get(m_logName)->info("dt : {0}", dt);
 
     // float box[6] = {1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f};
     // readChunk(&box, m_frame, "configuration/box", 6 * 4);
     // m_snapshot->global_box = BoxDim(box[0], box[1], box[2]);
     // m_snapshot->global_box.setTiltFactors(box[3], box[4], box[5]);
 
-    // unsigned int N = 0;
-    // readChunk(&N, m_frame, "particles/N", 4);
-    // if (N == 0)
-    // {
-    //     m_exec_conf->msg->error() << "data.gsd_snapshot: "
-    //                               << "cannot read a file with 0 particles" << endl;
-    //     throw runtime_error("Error reading GSD file");
-    // }
-
-    // m_snapshot->particle_data.resize(N);
+    // TODO: Initialize tensors
 }
 
 void
