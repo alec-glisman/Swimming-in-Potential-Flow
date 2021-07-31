@@ -43,7 +43,9 @@ systemData::check_gsd_return()
 void
 systemData::resizeTensors()
 {
-    *m_positions     = Eigen::VectorXd::Zero(m_num_dim * m_num_particles);
-    *m_velocities    = Eigen::VectorXd::Zero(m_num_dim * m_num_particles);
-    *m_accelerations = Eigen::VectorXd::Zero(m_num_dim * m_num_particles);
+    int len = m_num_dim * m_num_particles;
+
+    m_positions     = std::make_shared<Eigen::VectorXd>(len);
+    m_velocities    = std::make_shared<Eigen::VectorXd>(len);
+    m_accelerations = std::make_shared<Eigen::VectorXd>(len);
 }
