@@ -136,11 +136,6 @@ GSDReader::readHeader()
     system->setDt(dt);
     spdlog::get(m_logName)->info("dt : {0}", dt);
 
-    // float box[6] = {1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f};
-    // readChunk(&box, m_frame, "configuration/box", 6 * 4);
-    // m_snapshot->global_box = BoxDim(box[0], box[1], box[2]);
-    // m_snapshot->global_box.setTiltFactors(box[3], box[4], box[5]);
-
     // TODO: Initialize tensors
 }
 
