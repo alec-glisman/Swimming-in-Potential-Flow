@@ -160,7 +160,6 @@ GSDReader::readParticles()
         (*system->positions())(3 * i)     = pos[3 * i];
         (*system->positions())(3 * i + 1) = pos[3 * i + 1];
         (*system->positions())(3 * i + 2) = pos[3 * i + 2];
-
         spdlog::get(m_logName)->info("Particle {0} position : [{1:03.3f}, {2:03.3f}, {3:03.3f}]",
                                      i + 1, pos[system->numDim() * i],
                                      pos[system->numDim() * i + 1], pos[system->numDim() * i + 2]);
@@ -177,7 +176,6 @@ GSDReader::readParticles()
         (*system->velocities())(3 * i)     = vel[3 * i];
         (*system->velocities())(3 * i + 1) = vel[3 * i + 1];
         (*system->velocities())(3 * i + 2) = vel[3 * i + 2];
-
         spdlog::get(m_logName)->info("Particle {0} velocity : [{1:03.3f}, {2:03.3f}, {3:03.3f}]",
                                      i + 1, vel[system->numDim() * i],
                                      vel[system->numDim() * i + 1], vel[system->numDim() * i + 2]);
@@ -194,7 +192,6 @@ GSDReader::readParticles()
         (*system->accelerations())(3 * i)     = acc[3 * i];
         (*system->accelerations())(3 * i + 1) = acc[3 * i + 1];
         (*system->accelerations())(3 * i + 2) = acc[3 * i + 2];
-
         spdlog::get(m_logName)->info(
             "Particle {0} acceleration : [{1:03.3f}, {2:03.3f}, {3:03.3f}]", i + 1,
             acc[system->numDim() * i], acc[system->numDim() * i + 1],
