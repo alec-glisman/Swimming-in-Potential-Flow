@@ -74,6 +74,12 @@ class systemData
         m_return_bool = return_bool;
     }
 
+    std::string
+    inputGSDFile() const
+    {
+        return m_inputGSDFile;
+    }
+
   private:
     // classes
     std::shared_ptr<GSDReader> gsdReader;

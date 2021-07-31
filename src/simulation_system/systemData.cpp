@@ -13,18 +13,11 @@ systemData::systemData(std::string inputGSDFile, std::string outputDir)
     spdlog::get(m_logName)->info("Initializing system data");
     spdlog::get(m_logName)->info("Output path: {0}", m_outputDir);
 
-    // Load GSD frame
-    spdlog::get(m_logName)->info("Loading input GSD file");
-    spdlog::get(m_logName)->info("GSD file path: {0}", m_inputGSDFile);
-    m_return_val = gsd_open(m_handle.get(), m_inputGSDFile.c_str(), GSD_OPEN_READWRITE);
-    check_gsd_return();
-
-    // Begin to parse GSD file
+    // Parse GSD file
     std::shared_ptr<systemData> shd_ptr = std::make_shared<systemData>(*this);
     gsdReader                           = std::make_shared<GSDReader>(shd_ptr);
 
-    // Parameters: degrees of freedom
-    spdlog::get(m_logName)->info("Parameters: degrees of freedom");
+    // TODO: Input checking
 }
 
 systemData::~systemData()
