@@ -51,6 +51,12 @@ class systemData
         m_return_val = return_val;
     }
 
+    std::shared_ptr<gsd_handle>
+    handle() const
+    {
+        return m_handle;
+    }
+
   private:
     // classes
     std::shared_ptr<GSDReader> gsdReader;
@@ -68,26 +74,28 @@ class systemData
     int                         m_return_val{-1};
 
     // degrees of freedom
-    int num_dim{-1};
-    int num_particles{-1};
+    int m_num_dim{-1};
+    int m_num_particles{-1};
 
     // integrator
-    double dt{-1};
-    double tf{-1};
-    int    num_steps_output{-1};
+    double m_dt{-1};
+    double m_tf{-1};
+    double m_t{0.0};
+    int    m_timestep{-1};
+    int    m_num_steps_output{-1};
 
     // material parameters
-    double fluid_density{-1};
-    double particle_density{-1};
+    double m_fluid_density{-1};
+    double m_particle_density{-1};
 
     // potential parameters
-    double wca_epsilon{-1};
-    double wca_sigma{-1};
+    double m_wca_epsilon{-1};
+    double m_wca_sigma{-1};
 
     // kinematics
-    Eigen::VectorXd positions;
-    Eigen::VectorXd velocities;
-    Eigen::VectorXd accelerations;
+    Eigen::VectorXd m_positions;
+    Eigen::VectorXd m_velocities;
+    Eigen::VectorXd m_accelerations;
 };
 
 #endif
