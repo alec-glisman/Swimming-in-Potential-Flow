@@ -16,7 +16,6 @@
 /* Include all external project dependencies */
 // Logging
 #include <spdlog/sinks/basic_file_sink.h>
-
 // STL
 #include <memory> // for std::unique_ptr and std::shared_ptr
 #include <string> // std::string
