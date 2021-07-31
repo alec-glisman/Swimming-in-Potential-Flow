@@ -109,6 +109,7 @@ GSDReader::readChunk(void* data, uint64_t frame, const char* name, size_t expect
 void
 GSDReader::readHeader()
 {
+    spdlog::get(m_logName)->info("GSD parsing timestep");
     uint64_t timestep    = 0;
     auto     return_bool = readChunk(&timestep, m_frame, "configuration/step", 8);
     system->setReturnBool(return_bool);
@@ -116,6 +117,7 @@ GSDReader::readHeader()
     system->setTimestep(timestep);
     spdlog::get(m_logName)->info("time step: {0}", timestep);
 
+    spdlog::get(m_logName)->info("GSD parsing dimensions");
     uint8_t dim = 3; // FIXME: change to 0 when parsing stable
     return_bool = readChunk(&dim, m_frame, "configuration/dimensions", 1);
     system->setReturnBool(return_bool);
@@ -123,6 +125,7 @@ GSDReader::readHeader()
     system->setNumDim(dim);
     spdlog::get(m_logName)->info("dim : {0}", dim);
 
+    spdlog::get(m_logName)->info("GSD parsing number of particles");
     uint32_t N  = 0;
     return_bool = readChunk(&N, m_frame, "particles/N", 4);
     system->setReturnBool(return_bool);
@@ -135,6 +138,7 @@ GSDReader::readHeader()
         throw std::runtime_error("Error reading GSD file");
     }
 
+    spdlog::get(m_logName)->info("GSD parsing dt");
     float dt{0.0};
     return_bool = readChunk(&dt, m_frame, "integrator/dt", 32);
     system->setReturnBool(return_bool);
@@ -150,6 +154,7 @@ void
 GSDReader::readParticles()
 {
     // positions
+    spdlog::get(m_logName)->info("GSD parsing position");
     float pos[system->numDim() * system->numParticles()];
     auto  return_bool = readChunk(&pos, m_frame, "particles/position", system->numParticles() * 12,
                                  system->numParticles());
@@ -166,6 +171,7 @@ GSDReader::readParticles()
     }
 
     // velocities
+    spdlog::get(m_logName)->info("GSD parsing velocity");
     float vel[system->numDim() * system->numParticles()];
     return_bool = readChunk(&vel, m_frame, "particles/velocity", system->numParticles() * 12,
                             system->numParticles());
@@ -182,6 +188,7 @@ GSDReader::readParticles()
     }
 
     // accelerations
+    spdlog::get(m_logName)->info("GSD parsing acceleration");
     float acc[system->numDim() * system->numParticles()];
     return_bool = readChunk(&acc, m_frame, "particles/moment_inertia", system->numParticles() * 12,
                             system->numParticles());
