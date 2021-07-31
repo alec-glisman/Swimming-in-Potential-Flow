@@ -140,7 +140,7 @@ GSDReader::readHeader()
 
     spdlog::get(m_logName)->info("GSD parsing dt");
     float dt{0.0};
-    return_bool = readChunk(&dt, m_frame, "integrator/dt", 32);
+    return_bool = readChunk(&dt, m_frame, "log/integrator/dt", 4);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
     system->setDt(dt);
