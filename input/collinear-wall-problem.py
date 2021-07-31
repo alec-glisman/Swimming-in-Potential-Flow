@@ -27,28 +27,28 @@ wca_epsilon = np.array([0.0], dtype=np.float32)
 wca_sigma = np.array([3.0*a], dtype=np.float32)
 
 # Initial positions
-R_1 = [1, 0, wall_separation]
-R_2 = [0, 0, wall_separation]
-R_3 = [-1, 0, wall_separation]
-R_4 = [1, 0, -wall_separation]
-R_5 = [0, 0, -wall_separation]
-R_6 = [-1, 0, -wall_separation]
+R_1 = np.array([1.0, 0.0, wall_separation], dtype=np.float32)
+R_2 = np.array([0.0, 0.0, wall_separation], dtype=np.float32)
+R_3 = np.array([-1.0, 0.0, wall_separation], dtype=np.float32)
+R_4 = np.array([1.0, 0.0, -wall_separation], dtype=np.float32)
+R_5 = np.array([0.0, 0.0, -wall_separation], dtype=np.float32)
+R_6 = np.array([-1.0, 0.0, -wall_separation], dtype=np.float32)
 
 # Initial velocities
-U_1 = [1.0, 0.0, 0.0]
-U_2 = [1.0, 0.0, 0.0]
-U_3 = [1.0, 0.0, 0.0]
-U_4 = [1.0, 0.0, -0.0]
-U_5 = [1.0, 0.0, -0.0]
-U_6 = [1.0, 0.0, -0.0]
+U_1 = np.array([1.0, 0.0, 0.0], dtype=np.float32)
+U_2 = np.array([1.0, 0.0, 0.0], dtype=np.float32)
+U_3 = np.array([1.0, 0.0, 0.0], dtype=np.float32)
+U_4 = np.array([1.0, 0.0, -0.0], dtype=np.float32)
+U_5 = np.array([1.0, 0.0, -0.0], dtype=np.float32)
+U_6 = np.array([1.0, 0.0, -0.0], dtype=np.float32)
 
 # Initial accelerations
-A_1 = [1.0, 0.0, 0.0]
-A_2 = [1.0, 0.0, 0.0]
-A_3 = [1.0, 0.0, 0.0]
-A_4 = [1.0, 0.0, -0.0]
-A_5 = [1.0, 0.0, -0.0]
-A_6 = [1.0, 0.0, -0.0]
+A_1 = np.array([1.0, 0.0, 0.0], dtype=np.float32)
+A_2 = np.array([1.0, 0.0, 0.0], dtype=np.float32)
+A_3 = np.array([1.0, 0.0, 0.0], dtype=np.float32)
+A_4 = np.array([1.0, 0.0, -0.0], dtype=np.float32)
+A_5 = np.array([1.0, 0.0, -0.0], dtype=np.float32)
+A_6 = np.array([1.0, 0.0, -0.0], dtype=np.float32)
 # !SECTION (Parameters)
 
 
