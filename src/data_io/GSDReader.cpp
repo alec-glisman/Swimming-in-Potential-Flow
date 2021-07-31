@@ -65,6 +65,19 @@ GSDReader::GSDReader(std::shared_ptr<systemData> sys)
 GSDReader::GSDReader(std::shared_ptr<systemData> sys, uint64_t frame) : GSDReader(sys)
 {
     m_frame = frame;
+
+    // validate number of frames
+    uint64_t nframes = gsd_get_nframes(system->handle().get());
+    spdlog::get(m_logName)->info("{0} has {1} frames", system->inputGSDFile(),
+                                 gsd_get_nframes(system->handle().get()));
+
+    if (m_frame >= nframes)
+    {
+        spdlog::get(m_logName)->error(
+            "data.gsd_snapshot: Cannot read frame {0} {1} only has {2} frames", m_frame,
+            system->inputGSDFile(), gsd_get_nframes(system->handle().get()));
+        throw std::runtime_error("Error opening GSD file");
+    }
 }
 
 GSDReader::~GSDReader() = default;
