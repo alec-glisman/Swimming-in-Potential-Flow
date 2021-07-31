@@ -103,6 +103,7 @@ build*
 # SECTION: EXCEPTIONS
 # Save everything in directories below
 !input/**
+input/.DS_Store
 !requirements/**
 !src/**
 !tests/**
