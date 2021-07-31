@@ -28,7 +28,7 @@
 #include <string>    // std::string
 
 /* Forward declarations */
-class GSDReader;
+class GSDUtil;
 
 class systemData
 {
@@ -229,7 +229,7 @@ class systemData
 
   private:
     // classes
-    std::shared_ptr<GSDReader> gsdReader;
+    std::shared_ptr<GSDUtil> gsdUtil;
 
     // constructor
     std::string m_inputGSDFile;

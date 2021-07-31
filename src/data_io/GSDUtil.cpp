@@ -5,7 +5,7 @@
 
 #include <GSDReader.hpp>
 
-GSDReader::GSDReader(std::shared_ptr<systemData> sys)
+GSDUtil::GSDUtil(std::shared_ptr<systemData> sys)
 {
     // save classes
     system = sys;
@@ -45,7 +45,7 @@ GSDReader::GSDReader(std::shared_ptr<systemData> sys)
     readParticles();
 }
 
-GSDReader::GSDReader(std::shared_ptr<systemData> sys, uint64_t frame) : GSDReader(sys)
+GSDUtil::GSDUtil(std::shared_ptr<systemData> sys, uint64_t frame) : GSDUtil(sys)
 {
     m_frame = frame;
 
@@ -63,7 +63,7 @@ GSDReader::GSDReader(std::shared_ptr<systemData> sys, uint64_t frame) : GSDReade
     }
 }
 
-GSDReader::~GSDReader() = default;
+GSDUtil::~GSDUtil() = default;
 
 /* NOTES
  * Expected size is in units of bytes
@@ -72,8 +72,8 @@ GSDReader::~GSDReader() = default;
  *     double (np.double, np.float64): 8
  */
 bool
-GSDReader::readChunk(void* data, uint64_t frame, const char* name, size_t expected_size,
-                     unsigned int cur_n)
+GSDUtil::readChunk(void* data, uint64_t frame, const char* name, size_t expected_size,
+                   unsigned int cur_n)
 {
     const struct gsd_index_entry* entry = gsd_find_chunk(system->handle().get(), frame, name);
 
@@ -108,7 +108,7 @@ GSDReader::readChunk(void* data, uint64_t frame, const char* name, size_t expect
 }
 
 void
-GSDReader::readHeader()
+GSDUtil::readHeader()
 {
     spdlog::get(m_logName)->info("GSD parsing timestep");
     uint64_t timestep    = 0;
@@ -144,7 +144,7 @@ GSDReader::readHeader()
 }
 
 void
-GSDReader::readParameters()
+GSDUtil::readParameters()
 {
     spdlog::get(m_logName)->info("GSD parsing dt");
     float dt{0.0};
@@ -213,7 +213,7 @@ GSDReader::readParameters()
 }
 
 void
-GSDReader::readParticles()
+GSDUtil::readParticles()
 {
     // positions
     spdlog::get(m_logName)->info("GSD parsing position");

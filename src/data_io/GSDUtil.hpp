@@ -26,16 +26,16 @@
 /* Forward declarations */
 class systemData;
 
-class GSDReader
+class GSDUtil
 {
   public:
     // Loads in the file and parses the data
-    GSDReader(std::shared_ptr<systemData> sys);
+    GSDUtil(std::shared_ptr<systemData> sys);
 
-    GSDReader(std::shared_ptr<systemData> sys, uint64_t frame);
+    GSDUtil(std::shared_ptr<systemData> sys, uint64_t frame);
 
     //! Destructor
-    ~GSDReader();
+    ~GSDUtil();
 
   private:
     bool
@@ -60,7 +60,7 @@ class GSDReader
     // logging
     std::string m_outputDir;
     std::string m_logFile;
-    std::string m_logName{"GSDReader"};
+    std::string m_logName{"GSDUtil"};
 };
 
 #endif // BODIES_IN_POTENTIAL_FLOW_GSD_READER_H
