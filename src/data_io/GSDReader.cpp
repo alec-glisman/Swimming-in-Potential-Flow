@@ -110,7 +110,7 @@ GSDReader::readHeader()
     system->setTimestep(timestep);
     spdlog::get(m_logName)->info("time step: {0}", timestep);
 
-    uint8_t dim = 0;
+    uint8_t dim = 3; // FIXME: change to 0 when parsing stable
     return_bool = readChunk(&dim, m_frame, "configuration/dimensions", 1);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
@@ -136,10 +136,52 @@ GSDReader::readHeader()
     system->setDt(dt);
     spdlog::get(m_logName)->info("dt : {0}", dt);
 
-    // TODO: Initialize tensors
+    // Initialize tensors
+    system->resizeTensors();
 }
 
 void
 GSDReader::readParticles()
 {
+    // positions
+    double_t pos[system->numDim() * system->numParticles()];
+    auto return_bool = readChunk(&pos, m_frame, "particles/position", system->numParticles() * 12,
+                                 system->numParticles());
+    system->setReturnBool(return_bool);
+    system->check_gsd_return();
+    // system->positions(Eigen::VectorXd{pos}); //FIXME: figure out how to convert data types
+    for (int i = 0; i < system->numParticles(); i++)
+    {
+        spdlog::get(m_logName)->info("Particle {0} position : [{1}, {2}, {3}]", i + 1,
+                                     pos[system->numDim() * i], pos[system->numDim() * i + 1],
+                                     pos[system->numDim() * i + 2]);
+    }
+
+    // velocities
+    double_t vel[system->numDim() * system->numParticles()];
+    return_bool = readChunk(&vel, m_frame, "particles/velocity", system->numParticles() * 12,
+                            system->numParticles());
+    system->setReturnBool(return_bool);
+    system->check_gsd_return();
+    // system->velocities(Eigen::VectorXd{vel}); //FIXME: figure out how to convert data types
+    for (int i = 0; i < system->numParticles(); i++)
+    {
+        spdlog::get(m_logName)->info("Particle {0} velocity : [{1}, {2}, {3}]", i + 1,
+                                     vel[system->numDim() * i], vel[system->numDim() * i + 1],
+                                     vel[system->numDim() * i + 2]);
+    }
+
+    // accelerations
+    double_t acc[system->numDim() * system->numParticles()];
+    return_bool = readChunk(&acc, m_frame, "particles/inertia", system->numParticles() * 12,
+                            system->numParticles());
+    system->setReturnBool(return_bool);
+    system->check_gsd_return();
+    // system->accelerations(Eigen::VectorXd{acc}); //FIXME: figure out how to convert data types
+    for (int i = 0; i < system->numParticles(); i++)
+    {
+        spdlog::get(m_logName)->info("Particle {0} acceleration : [{1}, {2}, {3}]", i + 1,
+                                     acc[system->numDim() * i], acc[system->numDim() * i + 1],
+                                     acc[system->numDim() * i + 2]);
+    }
 }
