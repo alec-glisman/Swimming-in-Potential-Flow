@@ -111,15 +111,15 @@ GSDReader::readHeader()
 {
     spdlog::get(m_logName)->info("GSD parsing timestep");
     uint64_t timestep    = 0;
-    auto     return_bool = readChunk(&timestep, m_frame, "configuration/step", 8);
+    auto     return_bool = readChunk(&timestep, m_frame, "log/configuration/step", 8);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
     system->setTimestep(timestep);
     spdlog::get(m_logName)->info("time step: {0}", timestep);
 
     spdlog::get(m_logName)->info("GSD parsing dimensions");
-    uint8_t dim = 3; // FIXME: change to 0 when parsing stable
-    return_bool = readChunk(&dim, m_frame, "configuration/dimensions", 1);
+    uint8_t dim = 0;
+    return_bool = readChunk(&dim, m_frame, "log/configuration/dimensions", 1);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
     system->setNumDim(dim);

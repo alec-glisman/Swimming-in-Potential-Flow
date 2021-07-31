@@ -5,8 +5,9 @@ import gsd.hoomd  # Simulation data-structure
 
 # SECTION: Parameters
 # Simulation parameters
-num_dim = 3
 gsd_name = "test.gsd"
+step = np.array([0], dtype=np.uint64)
+num_dimensions = np.array([3], dtype=np.uint8)
 
 # Integrator parameters
 dt = np.array([1e-5], dtype=np.float32)
@@ -55,13 +56,17 @@ A_6 = np.array([1.0, 0.0, -0.0], dtype=np.float32)
 # SECTION: Snapshot initialization
 s = gsd.hoomd.Snapshot()
 
-s.configuration.step = 0  # simulation time step
+s.configuration.step = step  # simulation time step
 # number of spatial dimensions in simulation
-s.configuration.dimensions = num_dim
+s.configuration.dimensions = num_dimensions
 # simulation box size (periodic)
 #   box[0:3]: (𝑙𝑥,𝑙𝑦,𝑙𝑧)  the box length in each direction, in length units
 #   box[3:]: (𝑥𝑦, 𝑥𝑧, 𝑦𝑧) the tilt factors, unitless values
 s.configuration.box = [box_size, box_size, box_size, 0, 0, 0]
+
+# Needed, as GSD does not have these saved by default for some reason?
+s.log['configuration/step'] = step
+s.log['configuration/dimensions'] = num_dimensions
 
 s.log['integrator/dt'] = dt
 s.log['integrator/tf'] = tf
