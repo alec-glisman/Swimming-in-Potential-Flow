@@ -146,6 +146,63 @@ GSDReader::readHeader()
     system->setDt(dt);
     spdlog::get(m_logName)->info("dt : {0}", dt);
 
+    spdlog::get(m_logName)->info("GSD parsing t");
+    float t{0.0};
+    return_bool = readChunk(&t, m_frame, "log/integrator/t", 4);
+    system->setReturnBool(return_bool);
+    system->check_gsd_return();
+    system->setT(t);
+    spdlog::get(m_logName)->info("t : {0}", t);
+
+    spdlog::get(m_logName)->info("GSD parsing tf");
+    float tf{0.0};
+    return_bool = readChunk(&tf, m_frame, "log/integrator/tf", 4);
+    system->setReturnBool(return_bool);
+    system->check_gsd_return();
+    system->setTf(tf);
+    spdlog::get(m_logName)->info("tf : {0}", tf);
+
+    spdlog::get(m_logName)->info("GSD parsing num_steps_output");
+    uint64_t num_steps_output{0};
+    return_bool = readChunk(&num_steps_output, m_frame, "log/integrator/num_steps_output", 8);
+    system->setReturnBool(return_bool);
+    system->check_gsd_return();
+    system->setNumStepsOutput(num_steps_output);
+    spdlog::get(m_logName)->info("num_steps_output : {0}", num_steps_output);
+
+    spdlog::get(m_logName)->info("GSD parsing fluid_density");
+    float fluid_density{0.0};
+    return_bool = readChunk(&fluid_density, m_frame, "log/material_parameters/fluid_density", 4);
+    system->setReturnBool(return_bool);
+    system->check_gsd_return();
+    system->setFluidDensity(fluid_density);
+    spdlog::get(m_logName)->info("fluid_density : {0}", fluid_density);
+
+    spdlog::get(m_logName)->info("GSD parsing particle_density");
+    float particle_density{0.0};
+    return_bool =
+        readChunk(&particle_density, m_frame, "log/material_parameters/particle_density", 4);
+    system->setReturnBool(return_bool);
+    system->check_gsd_return();
+    system->setParticleDensity(particle_density);
+    spdlog::get(m_logName)->info("particle_density : {0}", particle_density);
+
+    spdlog::get(m_logName)->info("GSD parsing wca_epsilon");
+    float wca_epsilon{0.0};
+    return_bool = readChunk(&wca_epsilon, m_frame, "log/wca/epsilon", 4);
+    system->setReturnBool(return_bool);
+    system->check_gsd_return();
+    system->setWcaEpsilon(wca_epsilon);
+    spdlog::get(m_logName)->info("wca_epsilon : {0}", wca_epsilon);
+
+    spdlog::get(m_logName)->info("GSD parsing wca_sigma");
+    float wca_sigma{0.0};
+    return_bool = readChunk(&wca_epsilon, m_frame, "log/wca/sigma", 4);
+    system->setReturnBool(return_bool);
+    system->check_gsd_return();
+    system->setWcaSigma(wca_sigma);
+    spdlog::get(m_logName)->info("wca_sigma : {0}", wca_sigma);
+
     // Initialize tensors
     system->resizeTensors();
 }

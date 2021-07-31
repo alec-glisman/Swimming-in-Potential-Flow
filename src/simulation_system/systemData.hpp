@@ -150,6 +150,83 @@ class systemData
         m_accelerations = accelerations;
     }
 
+    double
+    t() const
+    {
+        return m_t;
+    }
+    void
+    setT(double t)
+    {
+        m_t = t;
+    }
+
+    double
+    tf() const
+    {
+        return m_tf;
+    }
+    void
+    setTf(double tf)
+    {
+        m_tf = tf;
+    }
+
+    int
+    numStepsOutput() const
+    {
+        return m_num_steps_output;
+    }
+    void
+    setNumStepsOutput(int num_steps_output)
+    {
+        m_num_steps_output = num_steps_output;
+    }
+
+    double
+    fluidDensity() const
+    {
+        return m_fluid_density;
+    }
+    void
+    setFluidDensity(double fluid_density)
+    {
+        m_fluid_density = fluid_density;
+    }
+
+    double
+    particleDensity() const
+    {
+        return m_particle_density;
+    }
+    void
+    setParticleDensity(double particle_density)
+    {
+        m_particle_density = particle_density;
+    }
+
+    double
+    wcaSigma() const
+    {
+        return m_wca_sigma;
+    }
+    void
+    setWcaSigma(double wca_sigma)
+    {
+        m_wca_sigma = wca_sigma;
+    }
+
+    double
+    wcaEpsilon() const
+    {
+        return m_wca_epsilon;
+    }
+    void
+    setWcaEpsilon(double wca_epsilon)
+    {
+        m_wca_epsilon = wca_epsilon;
+    }
+
   private:
     // classes
     std::shared_ptr<GSDReader> gsdReader;
