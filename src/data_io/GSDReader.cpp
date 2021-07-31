@@ -25,40 +25,36 @@ bool
 GSDReader::readChunk(void* data, uint64_t frame, const char* name, size_t expected_size,
                      unsigned int cur_n)
 {
-    // const struct gsd_index_entry* entry = gsd_find_chunk(&m_handle, frame, name);
+    const struct gsd_index_entry* entry = gsd_find_chunk(system->handle().get(), frame, name);
 
-    // if (entry == NULL && frame != 0)
+    if (entry == NULL && frame != 0)
     {
-        // entry = gsd_find_chunk(&m_handle, 0, name);
+        entry = gsd_find_chunk(system->handle().get(), 0, name);
+    }
+
+    if (entry == NULL || (cur_n != 0 && entry->N != cur_n))
+    {
+        spdlog::get(m_logName)->warn("data.gsd_snapshot: chunk not found ");
+        return false;
+    }
+    else
+    {
+        spdlog::get(m_logName)->info("data.gsd_snapshot: reading chunk {0}", name);
+        size_t actual_size = entry->N * entry->M * gsd_sizeof_type((enum gsd_type)entry->type);
+
+        if (actual_size != expected_size)
+        {
+            spdlog::get(m_logName)->error(
+                "data.gsd_snapshot: Expecting {0} bytes in {1} but found {2}", expected_size, name,
+                actual_size);
+        }
+
+        auto retval = gsd_read_chunk(system->handle().get(), data, entry);
+        system->setReturnVal(retval);
+        system->check_gsd_return();
     }
 
     return true;
-
-    // const struct gsd_index_entry* entry = gsd_find_chunk(&m_handle, frame, name);
-    // if (entry == NULL && frame != 0)
-    //     entry = gsd_find_chunk(&m_handle, 0, name);
-
-    // if (entry == NULL || (cur_n != 0 && entry->N != cur_n))
-    // {
-    //     m_exec_conf->msg->notice(10) << "data.gsd_snapshot: chunk not found " << name << endl;
-    //     return false;
-    // }
-    // else
-    // {
-    //     m_exec_conf->msg->notice(7) << "data.gsd_snapshot: reading chunk " << name << endl;
-    //     size_t actual_size = entry->N * entry->M * gsd_sizeof_type((enum gsd_type)entry->type);
-    //     if (actual_size != expected_size)
-    //     {
-    //         m_exec_conf->msg->error() << "data.gsd_snapshot: "
-    //                                   << "Expecting " << expected_size << " bytes in " << name
-    //                                   << " but found " << actual_size << endl;
-    //         throw runtime_error("Error reading GSD file");
-    //     }
-    //     int retval = gsd_read_chunk(&m_handle, data, entry);
-    //     checkError(retval);
-
-    //     return true;
-    // }
 }
 
 void
