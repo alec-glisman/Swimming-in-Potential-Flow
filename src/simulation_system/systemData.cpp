@@ -35,6 +35,6 @@ systemData::check_gsd_return()
 {
     if (m_return_val != 0)
     {
-        spdlog::get(m_logName)->critical("m_return_val = {0}", m_return_val);
+        spdlog::get(m_logName)->error("m_return_val = {0}", m_return_val);
     }
 }
