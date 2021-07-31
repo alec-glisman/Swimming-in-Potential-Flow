@@ -23,8 +23,9 @@
 #define EIGEN_USE_MKL_ALL
 #include <Eigen/src/Core/util/MKL_support.h>
 // STL
-#include <memory> // for std::unique_ptr and std::shared_ptr
-#include <string> // std::string
+#include <memory>    // for std::unique_ptr and std::shared_ptr
+#include <stdexcept> // std::errors
+#include <string>    // std::string
 
 /* Forward declarations */
 class GSDReader;

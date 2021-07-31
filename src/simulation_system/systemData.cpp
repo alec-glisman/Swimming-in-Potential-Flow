@@ -31,9 +31,11 @@ systemData::check_gsd_return()
     if (m_return_val != 0)
     {
         spdlog::get(m_logName)->error("m_return_val = {0}", m_return_val);
+        throw std::runtime_error("Error parsing GSD file");
     }
     if (m_return_bool == false)
     {
         spdlog::get(m_logName)->error("m_return_bool = {0}", m_return_bool);
+        throw std::runtime_error("Error parsing GSD file");
     }
 }
