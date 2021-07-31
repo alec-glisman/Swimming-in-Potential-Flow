@@ -149,9 +149,12 @@ GSDReader::readParticles()
                                  system->numParticles());
     system->setReturnBool(return_bool);
     system->check_gsd_return();
-    // system->positions(Eigen::VectorXd{pos}); //FIXME: figure out how to convert data types
     for (int i = 0; i < system->numParticles(); i++)
     {
+        (*system->positions())(3 * i)     = pos[3 * i];
+        (*system->positions())(3 * i + 1) = pos[3 * i + 1];
+        (*system->positions())(3 * i + 2) = pos[3 * i + 2];
+
         spdlog::get(m_logName)->info("Particle {0} position : [{1}, {2}, {3}]", i + 1,
                                      pos[system->numDim() * i], pos[system->numDim() * i + 1],
                                      pos[system->numDim() * i + 2]);
@@ -163,9 +166,12 @@ GSDReader::readParticles()
                             system->numParticles());
     system->setReturnBool(return_bool);
     system->check_gsd_return();
-    // system->velocities(Eigen::VectorXd{vel}); //FIXME: figure out how to convert data types
     for (int i = 0; i < system->numParticles(); i++)
     {
+        (*system->velocities())(3 * i)     = vel[3 * i];
+        (*system->velocities())(3 * i + 1) = vel[3 * i + 1];
+        (*system->velocities())(3 * i + 2) = vel[3 * i + 2];
+
         spdlog::get(m_logName)->info("Particle {0} velocity : [{1}, {2}, {3}]", i + 1,
                                      vel[system->numDim() * i], vel[system->numDim() * i + 1],
                                      vel[system->numDim() * i + 2]);
@@ -177,9 +183,12 @@ GSDReader::readParticles()
                             system->numParticles());
     system->setReturnBool(return_bool);
     system->check_gsd_return();
-    // system->accelerations(Eigen::VectorXd{acc}); //FIXME: figure out how to convert data types
     for (int i = 0; i < system->numParticles(); i++)
     {
+        (*system->accelerations())(3 * i)     = acc[3 * i];
+        (*system->accelerations())(3 * i + 1) = acc[3 * i + 1];
+        (*system->accelerations())(3 * i + 2) = acc[3 * i + 2];
+
         spdlog::get(m_logName)->info("Particle {0} acceleration : [{1}, {2}, {3}]", i + 1,
                                      acc[system->numDim() * i], acc[system->numDim() * i + 1],
                                      acc[system->numDim() * i + 2]);
