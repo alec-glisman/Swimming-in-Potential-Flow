@@ -31,22 +31,24 @@ GSDReader::GSDReader(std::shared_ptr<systemData> sys)
     system->check_gsd_return();
 
     // validate schema
-    if (std::string(tmp_handle.header.schema) != std::string("hoomd"))
-    {
-        spdlog::get(m_logName)->error("data.gsd_snapshot: Invalid schema in {0} ({1})",
-                                      system->inputGSDFile(),
-                                      std::string(tmp_handle.header.schema));
-        throw std::runtime_error("Error opening GSD file");
-    }
-    if (tmp_handle.header.schema_version >= gsd_make_version(2, 0))
-    {
-        spdlog::get(m_logName)->error("data.gsd_snapshot: Invalid schema version in {0}",
-                                      system->inputGSDFile());
-        throw std::runtime_error("Error opening GSD file");
-    }
+    // if (std::string(tmp_handle.header.schema) != std::string("hoomd"))
+    // {
+    //     spdlog::get(m_logName)->error("data.gsd_snapshot: Invalid schema in {0} ({1})",
+    //                                   system->inputGSDFile(),
+    //                                   std::string(tmp_handle.header.schema));
+    //     throw std::runtime_error("Error opening GSD file");
+    // }
+    // if (tmp_handle.header.schema_version >= gsd_make_version(2, 0))
+    // {
+    //     spdlog::get(m_logName)->error("data.gsd_snapshot: Invalid schema version in {0}",
+    //                                   system->inputGSDFile());
+    //     throw std::runtime_error("Error opening GSD file");
+    // }
 
     // validate number of frames
     uint64_t nframes = gsd_get_nframes(system->handle().get());
+    spdlog::get(m_logName)->info("{0} has {1} frames", system->inputGSDFile(),
+                                 gsd_get_nframes(system->handle().get()));
 
     if (m_frame >= nframes)
     {
