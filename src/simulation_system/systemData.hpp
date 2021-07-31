@@ -81,6 +81,34 @@ class systemData
         return m_inputGSDFile;
     }
 
+    void
+    setNumDim(int num_dim)
+    {
+        m_num_dim = num_dim;
+    }
+
+    int
+    numParticles() const
+    {
+        return m_num_particles;
+    }
+    void
+    setNumParticles(int num_particles)
+    {
+        m_num_particles = num_particles;
+    }
+
+    double
+    dt() const
+    {
+        return m_dt;
+    }
+    void
+    setDt(double dt)
+    {
+        m_dt = dt;
+    }
+
   private:
     // classes
     std::shared_ptr<GSDReader> gsdReader;
