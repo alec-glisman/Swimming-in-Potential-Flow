@@ -40,6 +40,9 @@ class systemData
     void
     check_gsd_return();
 
+    void
+    resizeTensors();
+
     std::string
     outputDir() const
     {
@@ -81,6 +84,11 @@ class systemData
         return m_inputGSDFile;
     }
 
+    int
+    numDim()
+    {
+        return m_num_dim;
+    }
     void
     setNumDim(int num_dim)
     {
@@ -107,6 +115,39 @@ class systemData
     setDt(double dt)
     {
         m_dt = dt;
+    }
+
+    std::shared_ptr<Eigen::VectorXd>
+    positions() const
+    {
+        return m_positions;
+    }
+    void
+    setPositions(const std::shared_ptr<Eigen::VectorXd>& positions)
+    {
+        m_positions = positions;
+    }
+
+    std::shared_ptr<Eigen::VectorXd>
+    velocities() const
+    {
+        return m_velocities;
+    }
+    void
+    setVelocities(const std::shared_ptr<Eigen::VectorXd>& velocities)
+    {
+        m_velocities = velocities;
+    }
+
+    std::shared_ptr<Eigen::VectorXd>
+    accelerations() const
+    {
+        return m_accelerations;
+    }
+    void
+    setAccelerations(const std::shared_ptr<Eigen::VectorXd>& accelerations)
+    {
+        m_accelerations = accelerations;
     }
 
   private:
@@ -146,9 +187,9 @@ class systemData
     double m_wca_sigma{-1};
 
     // kinematics
-    Eigen::VectorXd m_positions;
-    Eigen::VectorXd m_velocities;
-    Eigen::VectorXd m_accelerations;
+    std::shared_ptr<Eigen::VectorXd> m_positions;
+    std::shared_ptr<Eigen::VectorXd> m_velocities;
+    std::shared_ptr<Eigen::VectorXd> m_accelerations;
 };
 
 #endif

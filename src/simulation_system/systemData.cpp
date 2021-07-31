@@ -39,3 +39,11 @@ systemData::check_gsd_return()
         // throw std::runtime_error("Error parsing GSD file");
     }
 }
+
+void
+systemData::resizeTensors()
+{
+    *m_positions     = Eigen::VectorXd::Zero(m_num_dim * m_num_particles);
+    *m_velocities    = Eigen::VectorXd::Zero(m_num_dim * m_num_particles);
+    *m_accelerations = Eigen::VectorXd::Zero(m_num_dim * m_num_particles);
+}
