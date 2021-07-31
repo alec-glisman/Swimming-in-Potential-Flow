@@ -13,10 +13,48 @@ GSDReader::GSDReader(std::shared_ptr<systemData> sys)
     // Set member variables
     m_frame = 0;
 
+    // Set temporary variables
+    gsd_handle tmp_handle = *(system->handle());
+
     // Initialize logger
     m_logFile   = system->outputDir() + "/logs/" + m_logName + "-log.txt";
     auto logger = spdlog::basic_logger_mt(m_logName, m_logFile);
     spdlog::get(m_logName)->info("Initializing GSD reader");
+
+    // Load GSD frame
+    spdlog::get(m_logName)->info("Loading input GSD file");
+    spdlog::get(m_logName)->info("GSD file path: {0}", system->inputGSDFile());
+    auto return_val =
+        gsd_open(system->handle().get(), system->inputGSDFile().c_str(), GSD_OPEN_READWRITE);
+
+    system->setReturnVal(return_val);
+    system->check_gsd_return();
+
+    // validate schema
+    if (std::string(tmp_handle.header.schema) != std::string("hoomd"))
+    {
+        spdlog::get(m_logName)->error("data.gsd_snapshot: Invalid schema in {0} ({1})",
+                                      system->inputGSDFile(),
+                                      std::string(tmp_handle.header.schema));
+        throw std::runtime_error("Error opening GSD file");
+    }
+    if (tmp_handle.header.schema_version >= gsd_make_version(2, 0))
+    {
+        spdlog::get(m_logName)->error("data.gsd_snapshot: Invalid schema version in {0}",
+                                      system->inputGSDFile());
+        throw std::runtime_error("Error opening GSD file");
+    }
+
+    // validate number of frames
+    uint64_t nframes = gsd_get_nframes(system->handle().get());
+
+    if (m_frame >= nframes)
+    {
+        spdlog::get(m_logName)->error(
+            "data.gsd_snapshot: Cannot read frame {0} {1} only has {2} frames", m_frame,
+            system->inputGSDFile(), gsd_get_nframes(system->handle().get()));
+        throw std::runtime_error("Error opening GSD file");
+    }
 
     readHeader();
     readParticles();

@@ -19,8 +19,9 @@
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
 // STL
-#include <memory> // for std::unique_ptr and std::shared_ptr
-#include <string> // std::string
+#include <memory>    // for std::unique_ptr and std::shared_ptr
+#include <stdexcept> // std::errors
+#include <string>    // std::string
 
 /* Forward declarations */
 class systemData;
@@ -51,8 +52,7 @@ class GSDReader
     std::shared_ptr<systemData> system;
 
     // GSD
-    std::string m_inputGSDFile;
-    uint64_t    m_frame; //!< Cached frame
+    uint64_t m_frame; //!< Cached frame
 
     // logging
     std::string m_outputDir;
