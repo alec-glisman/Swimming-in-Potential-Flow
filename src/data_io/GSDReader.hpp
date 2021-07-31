@@ -31,6 +31,8 @@ class GSDReader
     // Loads in the file and parses the data
     GSDReader(std::shared_ptr<systemData> sys);
 
+    GSDReader(std::shared_ptr<systemData> sys, uint64_t frame);
+
     //! Destructor
     ~GSDReader();
 
@@ -50,6 +52,7 @@ class GSDReader
 
     // GSD
     std::string m_inputGSDFile;
+    uint64_t    m_frame; //!< Cached frame
 
     // logging
     std::string m_outputDir;

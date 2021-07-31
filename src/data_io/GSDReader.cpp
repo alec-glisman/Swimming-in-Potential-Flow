@@ -10,6 +10,9 @@ GSDReader::GSDReader(std::shared_ptr<systemData> sys)
     // save classes
     system = sys;
 
+    // Set member variables
+    m_frame = 0;
+
     // Initialize logger
     m_logFile   = system->outputDir() + "/logs/" + m_logName + "-log.txt";
     auto logger = spdlog::basic_logger_mt(m_logName, m_logFile);
@@ -17,6 +20,11 @@ GSDReader::GSDReader(std::shared_ptr<systemData> sys)
 
     readHeader();
     readParticles();
+}
+
+GSDReader::GSDReader(std::shared_ptr<systemData> sys, uint64_t frame) : GSDReader(sys)
+{
+    m_frame = frame;
 }
 
 GSDReader::~GSDReader() = default;
