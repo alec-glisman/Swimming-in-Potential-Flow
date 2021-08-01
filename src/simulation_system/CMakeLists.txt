@@ -5,6 +5,8 @@ IF(DEFINED CMAKE_CUDA_COMPILER)
         simulation_system
         systemData.cpp 
         systemData.hpp 
+        engine.cpp
+        engine.hpp
     )
     
     TARGET_LINK_LIBRARIES(
@@ -26,6 +28,8 @@ ELSE()
         simulation_system
         systemData.cpp 
         systemData.hpp 
+        engine.cpp 
+        engine.hpp
     )
         
     TARGET_LINK_LIBRARIES(
