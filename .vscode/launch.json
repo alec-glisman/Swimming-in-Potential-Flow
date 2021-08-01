@@ -16,7 +16,7 @@
             "stopAtEntry": false,
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerArgs": "--args \"${workspaceFolder}/build_debug/src/./bodies_in_potential_flow\"",
+            "miDebuggerArgs": "--args \"${workspaceFolder}/build_debug/src/./bodies_in_potential_flow\" temp/input.gsd temp/output",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -38,7 +38,10 @@
             "cwd": "${workspaceFolder}",
             "preLaunchTask": "Debug: build",
             "program": "${workspaceFolder}/build_debug/src/./bodies_in_potential_flow",
-            "args": [],
+            "args": [
+                "temp/input.gsd",
+                "temp/output"
+            ],
             "stopAtEntry": false,
             "externalConsole": false,
             "MIMode": "lldb",
