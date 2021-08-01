@@ -150,7 +150,7 @@ void
 GSDUtil::readParameters()
 {
     spdlog::get(m_logName)->info("GSD parsing dt");
-    float dt{0.0};
+    float dt{-1.0};
     auto  return_bool = readChunk(&dt, m_frame, "log/integrator/dt", 4);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
@@ -159,7 +159,7 @@ GSDUtil::readParameters()
     assert(double(dt) == system->dt() && "dt not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing t");
-    float t{0.0};
+    float t{-1.0};
     return_bool = readChunk(&t, m_frame, "log/integrator/t", 4);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
@@ -168,7 +168,7 @@ GSDUtil::readParameters()
     assert(double(t) == system->t() && "t not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing tf");
-    float tf{0.0};
+    float tf{-1.0};
     return_bool = readChunk(&tf, m_frame, "log/integrator/tf", 4);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
@@ -187,7 +187,7 @@ GSDUtil::readParameters()
            "num_steps_output not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing fluid_density");
-    float fluid_density{0.0};
+    float fluid_density{-1.0};
     return_bool = readChunk(&fluid_density, m_frame, "log/material_parameters/fluid_density", 4);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
@@ -196,7 +196,7 @@ GSDUtil::readParameters()
     assert(double(fluid_density) == system->fluidDensity() && "fluid_density not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing particle_density");
-    float particle_density{0.0};
+    float particle_density{-1.0};
     return_bool =
         readChunk(&particle_density, m_frame, "log/material_parameters/particle_density", 4);
     system->setReturnBool(return_bool);
@@ -207,7 +207,7 @@ GSDUtil::readParameters()
            "particle_density not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing wca_epsilon");
-    float wca_epsilon{0.0};
+    float wca_epsilon{-1.0};
     return_bool = readChunk(&wca_epsilon, m_frame, "log/wca/epsilon", 4);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
@@ -216,13 +216,14 @@ GSDUtil::readParameters()
     assert(double(wca_epsilon) == system->wcaEpsilon() && "wca_epsilon not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing wca_sigma");
-    float wca_sigma{0.0};
+    float wca_sigma{-1.0};
     return_bool = readChunk(&wca_epsilon, m_frame, "log/wca/sigma", 4);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
     system->setWcaSigma(double(wca_sigma));
     spdlog::get(m_logName)->info("wca_sigma : {0}", wca_sigma);
     assert(double(wca_sigma) == system->wcaSigma() && "wca_sigma not properly set");
+    std::cout << s
 }
 
 void
