@@ -227,6 +227,12 @@ class systemData
         m_wca_epsilon = wca_epsilon;
     }
 
+    std::shared_ptr<GSDUtil>
+    gsdUtil() const
+    {
+        return m_gsdUtil;
+    }
+
   private:
     // classes
     std::shared_ptr<GSDUtil> m_gsdUtil;
