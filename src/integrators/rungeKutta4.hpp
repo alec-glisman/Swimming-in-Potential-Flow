@@ -10,6 +10,7 @@
 #error This header cannot be compiled by nvcc
 #endif
 /* Include all internal project dependencies */
+#include <potentialHydrodynamics.hpp>
 #include <systemData.hpp>
 
 /* Include all external project dependencies */
@@ -30,6 +31,8 @@ class rungeKutta4
   public:
     rungeKutta4(systemData& sys);
 
+    rungeKutta4(systemData& sys, potentialHydrodynamics& hydro);
+
     ~rungeKutta4();
 
     void
@@ -40,7 +43,8 @@ class rungeKutta4
     acceleration_update();
 
     // classes
-    systemData* system;
+    systemData*             system;
+    potentialHydrodynamics* potHydro;
 
     // logging
     std::string m_logFile;

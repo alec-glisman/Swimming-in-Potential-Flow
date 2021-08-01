@@ -14,9 +14,13 @@ engine::engine(systemData& sys)
     auto logger = spdlog::basic_logger_mt(m_logName, m_logFile);
     spdlog::get(m_logName)->info("Initializing engine");
 
+    // Initialize forces
+    spdlog::get(m_logName)->info("Initializing potential hydrodynamics");
+    potHydro = std::make_shared<potentialHydrodynamics>(sys);
+
     // Initialize integrator
     spdlog::get(m_logName)->info("Initializing integrator");
-    rk4Integrator = std::make_shared<rungeKutta4>(sys);
+    rk4Integrator = std::make_shared<rungeKutta4>(sys, *potHydro);
 
     // Initialize progressBar
     spdlog::get(m_logName)->info("Initializing progressBar");

@@ -18,6 +18,12 @@ rungeKutta4::rungeKutta4(systemData& sys)
     spdlog::get(m_logName)->info("Creating integrator");
 }
 
+rungeKutta4::rungeKutta4(systemData& sys, potentialHydrodynamics& hydro) : rungeKutta4(sys)
+{
+    // save classes
+    potHydro = &hydro;
+}
+
 rungeKutta4::~rungeKutta4()
 {
     spdlog::get(m_logName)->info("Destructing Runge-Kutta 4th order");

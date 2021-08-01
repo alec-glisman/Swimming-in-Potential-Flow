@@ -10,6 +10,7 @@
 #endif
 
 /* Include all internal project dependencies */
+#include <potentialHydrodynamics.hpp>
 #include <progressBar.hpp>
 #include <rungeKutta4.hpp>
 #include <systemData.hpp>
@@ -31,7 +32,6 @@
 
 /* Forward declarations */
 class systemData;
-class rungeKutta;
 
 class engine
 {
@@ -48,9 +48,10 @@ class engine
     integrate();
 
     // classes
-    systemData*                  system;
-    std::shared_ptr<rungeKutta4> rk4Integrator;
-    std::shared_ptr<ProgressBar> progressBar;
+    systemData*                             system;
+    std::shared_ptr<potentialHydrodynamics> potHydro;
+    std::shared_ptr<rungeKutta4>            rk4Integrator;
+    std::shared_ptr<ProgressBar>            progressBar;
 
     // logging
     std::string m_logFile;
