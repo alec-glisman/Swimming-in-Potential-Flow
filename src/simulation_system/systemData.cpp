@@ -17,10 +17,21 @@ systemData::systemData(std::string inputGSDFile, std::string outputDir)
     std::shared_ptr<systemData> shd_ptr = std::make_shared<systemData>(*this);
     m_gsdUtil                           = std::make_shared<GSDUtil>(shd_ptr);
 
-    // TODO: Input checking
+    // Input checking
+    assert(m_fluid_density >= 0.0 && "Fluid density must be non-negative.");
+    assert(m_particle_density >= 0.0 && "Particle density must be non-negative");
+    assert(m_num_particles > 0 && "Must have at least one particle to simulate.");
+    assert(m_tf > 0. && "Must have positive integration time.");
+    assert(m_dt > 0.0 && "Integration time step must be positive");
+    assert(m_wca_epsilon >= 0.0 && "WCA_epsilon must be non-negative");
+    assert(m_wca_sigma >= 0.0 && "WCA_sigma must be non-negative");
 
-    // TODO: Practice writing a frame
-    m_gsdUtil->writeFrame();
+    assert((*m_positions).size() == m_num_dim * m_num_particles &&
+           "Position vector has incorrect length, not 3N");
+    assert((*m_velocities).size() == m_num_dim * m_num_particles &&
+           "Velocity vector has incorrect length, not 3N");
+    assert((*m_accelerations).size() == m_num_dim * m_num_particles &&
+           "Acceleration vector has incorrect length, not 3N");
 }
 
 systemData::~systemData()
