@@ -20,6 +20,7 @@ systemData::systemData(std::string inputGSDFile, std::string outputDir)
     // TODO: Input checking
 
     // TODO: Practice writing a frame
+    m_gsdUtil->writeFrame();
 }
 
 systemData::~systemData()
