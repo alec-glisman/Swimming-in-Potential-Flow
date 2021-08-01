@@ -272,46 +272,113 @@ void
 GSDUtil::writeFrame()
 {
     spdlog::get(m_logName)->info("GSD writing frame");
+    spdlog::get(m_logName)->info("time step: {0}", system->timestep());
+    spdlog::get(m_logName)->info("time: {0}", system->t());
 
     writeHeader();
     writeParameters();
     writeParticles();
+
+    spdlog::get(m_logName)->info("GSD ending frame");
+    auto return_val = gsd_end_frame(system->handle().get());
+    system->setReturnVal(return_val);
+    system->check_gsd_return();
 }
 
 void
 GSDUtil::writeHeader()
 {
-    // TODO
+    spdlog::get(m_logName)->info("GSD writing log/configuration/timestep");
+    uint64_t step       = system->timestep();
+    auto     return_val = gsd_write_chunk(system->handle().get(), "log/configuration/step",
+                                      GSD_TYPE_UINT64, 1, 1, 0, (void*)&step);
+    system->setReturnVal(return_val);
+    system->check_gsd_return();
 
-    // int      retval;
-    // uint64_t step = timestep;
-    // retval =
-    //     gsd_write_chunk(&m_handle, "configuration/step", GSD_TYPE_UINT64, 1, 1, 0, (void*)&step);
-    // checkError(retval);
+    if (gsd_get_nframes(system->handle().get()) == 0)
+    {
+        spdlog::get(m_logName)->info("GSD writing configuration/dimensions");
+        uint8_t dimensions = system->numDim();
+        return_val         = gsd_write_chunk(system->handle().get(), "configuration/dimensions",
+                                     GSD_TYPE_UINT8, 1, 1, 0, (void*)&dimensions);
+        system->setReturnVal(return_val);
+        system->check_gsd_return();
+    }
 
-    // if (gsd_get_nframes(&m_handle) == 0)
-    // {
-    //     m_exec_conf->msg->notice(10) << "dump.gsd: writing configuration/dimensions" << endl;
-    //     uint8_t dimensions = m_sysdef->getNDimensions();
-    //     retval = gsd_write_chunk(&m_handle, "configuration/dimensions", GSD_TYPE_UINT8, 1, 1, 0,
-    //                              (void*)&dimensions);
-    //     checkError(retval);
-    // }
-
-    // m_exec_conf->msg->notice(10) << "dump.gsd: writing particles/N" << endl;
-    // uint32_t N = m_group->getNumMembersGlobal();
-    // retval     = gsd_write_chunk(&m_handle, "particles/N", GSD_TYPE_UINT32, 1, 1, 0, (void*)&N);
-    // checkError(retval);
+    spdlog::get(m_logName)->info("GSD writing particles/N");
+    uint32_t N = system->numParticles();
+    return_val =
+        gsd_write_chunk(system->handle().get(), "particles/N", GSD_TYPE_UINT32, 1, 1, 0, (void*)&N);
+    system->setReturnVal(return_val);
+    system->check_gsd_return();
 }
 
 void
 GSDUtil::writeParameters()
 {
-    // TODO
+    spdlog::get(m_logName)->info("GSD writing log/integrator/dt");
+    float_t dt      = system->dt();
+    auto return_val = gsd_write_chunk(system->handle().get(), "log/integrator/dt", GSD_TYPE_FLOAT,
+                                      1, 1, 0, (void*)&dt);
+    system->setReturnVal(return_val);
+    system->check_gsd_return();
+
+    spdlog::get(m_logName)->info("GSD writing log/integrator/t");
+    float_t time = system->t();
+    return_val   = gsd_write_chunk(system->handle().get(), "log/integrator/t", GSD_TYPE_FLOAT, 1, 1,
+                                 0, (void*)&time);
+    system->setReturnVal(return_val);
+    system->check_gsd_return();
 }
 
 void
 GSDUtil::writeParticles()
 {
-    // TODO
+    uint32_t N       = system->numParticles();
+    uint32_t num_dim = system->numDim();
+    int      return_val;
+    uint64_t nframes = gsd_get_nframes(system->handle().get());
+    spdlog::get(m_logName)->debug("vectors are assumed to have 3 spatial DoF");
+
+    std::vector<float> pos(uint64_t(N) * uint64_t(num_dim));
+    pos.reserve(1); //! make sure we allocate
+    for (uint32_t i = 0; i < N; i++)
+    {
+        pos[3 * i]     = (*system->positions())(3 * i);
+        pos[3 * i + 1] = (*system->positions())(3 * i + 1);
+        pos[3 * i + 2] = (*system->positions())(3 * i + 2);
+    }
+    spdlog::get(m_logName)->info("GSD writing particles/position");
+    return_val = gsd_write_chunk(system->handle().get(), "particles/position", GSD_TYPE_FLOAT, N, 3,
+                                 0, (void*)&pos[0]);
+    system->setReturnVal(return_val);
+    system->check_gsd_return();
+
+    std::vector<float> vel(uint64_t(N) * uint64_t(num_dim));
+    vel.reserve(1); //! make sure we allocate
+    for (uint32_t i = 0; i < N; i++)
+    {
+        vel[3 * i]     = (*system->velocities())(3 * i);
+        vel[3 * i + 1] = (*system->velocities())(3 * i + 1);
+        vel[3 * i + 2] = (*system->velocities())(3 * i + 2);
+    }
+    spdlog::get(m_logName)->info("GSD writing particles/velocity");
+    return_val = gsd_write_chunk(system->handle().get(), "particles/velocity", GSD_TYPE_FLOAT, N, 3,
+                                 0, (void*)&vel[0]);
+    system->setReturnVal(return_val);
+    system->check_gsd_return();
+
+    std::vector<float> acc(uint64_t(N) * uint64_t(num_dim));
+    acc.reserve(1); //! make sure we allocate
+    for (uint32_t i = 0; i < N; i++)
+    {
+        acc[3 * i]     = (*system->accelerations())(3 * i);
+        acc[3 * i + 1] = (*system->accelerations())(3 * i + 1);
+        acc[3 * i + 2] = (*system->accelerations())(3 * i + 2);
+    }
+    spdlog::get(m_logName)->info("GSD writing particles/acceleration");
+    return_val = gsd_write_chunk(system->handle().get(), "particles/acceleration", GSD_TYPE_FLOAT,
+                                 N, 3, 0, (void*)&acc[0]);
+    system->setReturnVal(return_val);
+    system->check_gsd_return();
 }
