@@ -3,6 +3,7 @@
 //
 
 /* Include all internal project dependencies */
+#include <engine.hpp>
 #include <systemData.hpp>
 
 /* Include all external project dependencies */
@@ -45,6 +46,11 @@ main(const int argc, const char* argv[])
     /* SECTION: Set-up and run simulation */
     // Initialize data structures
     auto system = std::make_shared<systemData>(inputDataFile, outputDir);
+    auto eng    = std::make_shared<engine>(*system);
+
+    // Run simulations
+    eng->run();
+
     /* !SECTION */
 
     return EXIT_SUCCESS;
