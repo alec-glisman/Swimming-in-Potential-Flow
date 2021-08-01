@@ -229,7 +229,7 @@ class systemData
 
   private:
     // classes
-    std::shared_ptr<GSDUtil> gsdUtil;
+    std::shared_ptr<GSDUtil> m_gsdUtil;
 
     // constructor
     std::string m_inputGSDFile;

@@ -15,7 +15,7 @@ systemData::systemData(std::string inputGSDFile, std::string outputDir)
 
     // Parse GSD file
     std::shared_ptr<systemData> shd_ptr = std::make_shared<systemData>(*this);
-    gsdUtil                             = std::make_shared<GSDUtil>(shd_ptr);
+    m_gsdUtil                           = std::make_shared<GSDUtil>(shd_ptr);
 
     // TODO: Input checking
 
