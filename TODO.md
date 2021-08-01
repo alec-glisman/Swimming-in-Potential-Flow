@@ -2,17 +2,13 @@
 
 ## Get project running
 
-- [ ] Decide on input data schema
-
-May be a good idea to make GSD input in python and then load in C++.  
-
-- [ ] Write data parsing scheme
-  - [ ] Kinematic input
-  - [ ] Parameter input
-- [ ] Add logging of startup behavior
-- [ ] Add unit tests to verify data loaded correctly
-- [ ] Write data output (preferably in GSD file)
-- [ ] Add unit tests to verify data exported correctly
+- [x] Decide on input data schema
+    - May be a good idea to make GSD input in python and then load in C++.  
+- [x] Write data parsing scheme
+  - [x] Kinematic input
+  - [x] Parameter input
+- [x] Add logging of startup behavior
+- [x] Write data output (preferably in GSD file)
 - [ ] Add logging of startup behavior
 - [ ] Write leading order hydrodynamics calculation
 - [ ] Write RKF45 integration function
