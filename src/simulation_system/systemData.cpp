@@ -17,6 +17,7 @@ systemData::systemData(std::string inputGSDFile, std::string outputDir)
     m_gsdUtil = std::make_shared<GSDUtil>(*this);
 
     // Input checking
+    spdlog::get(m_logName)->info("Input checking assertions");
     assert(m_fluid_density >= 0.0 && "Fluid density must be non-negative.");
     assert(m_particle_density >= 0.0 && "Particle density must be non-negative");
     assert(m_num_particles > 0 && "Must have at least one particle to simulate.");
