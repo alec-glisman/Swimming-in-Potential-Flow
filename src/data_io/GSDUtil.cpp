@@ -5,10 +5,10 @@
 
 #include <GSDUtil.hpp>
 
-GSDUtil::GSDUtil(std::shared_ptr<systemData> sys)
+GSDUtil::GSDUtil(systemData& sys)
 {
     // save classes
-    system = sys;
+    system = &sys;
 
     // Set member variables
     m_frame = 0;
@@ -45,7 +45,7 @@ GSDUtil::GSDUtil(std::shared_ptr<systemData> sys)
     readParticles();
 }
 
-GSDUtil::GSDUtil(std::shared_ptr<systemData> sys, uint64_t frame) : GSDUtil(sys)
+GSDUtil::GSDUtil(systemData& sys, uint64_t frame) : GSDUtil(sys)
 {
     m_frame = frame;
 
