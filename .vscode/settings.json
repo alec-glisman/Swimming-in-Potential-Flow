@@ -9,8 +9,10 @@
     },
     "cSpell.words": [
         "Eigen",
+        "KUTTA",
         "NOLINT",
         "NVCC",
+        "RUNGE",
         "dtype",
         "heapify",
         "hoomd",
@@ -113,6 +115,7 @@
         "memory_resource": "cpp",
         "hash_map": "cpp",
         "stop_token": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "*.ipp": "cpp"
     }
 }
