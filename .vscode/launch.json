@@ -39,7 +39,7 @@
             "preLaunchTask": "Debug: build",
             "program": "${workspaceFolder}/build_debug/src/./bodies_in_potential_flow",
             "args": [
-                "temp/input.gsd",
+                "temp/test.gsd",
                 "temp/output"
             ],
             "stopAtEntry": false,
