@@ -10,8 +10,8 @@
 #endif
 
 /* Include all internal project dependencies */
-#include <GSDReader.hpp> // GSD parser
-#include <gsd.h>         // GSD File
+#include <GSDUtil.hpp> // GSD parser
+#include <gsd.h>       // GSD File
 
 /* Include all external project dependencies */
 // Logging

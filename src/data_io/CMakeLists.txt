@@ -5,8 +5,8 @@ IF(DEFINED CMAKE_CUDA_COMPILER)
         data_io
         gsd.c 
         gsd.h
-        GSDReader.cpp
-        GSDReader.hpp
+        GSDUtil.cpp
+        GSDUtil.hpp
         )
 
     TARGET_LINK_LIBRARIES(
@@ -25,8 +25,8 @@ ELSE()
     ADD_LIBRARY(
         data_io
         gsd.c 
-        GSDReader.cpp
-        GSDReader.hpp
+        GSDUtil.cpp
+        GSDUtil.hpp
         )
 
     TARGET_LINK_LIBRARIES(

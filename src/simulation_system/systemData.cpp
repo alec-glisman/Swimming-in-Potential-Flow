@@ -18,6 +18,8 @@ systemData::systemData(std::string inputGSDFile, std::string outputDir)
     gsdUtil                             = std::make_shared<GSDUtil>(shd_ptr);
 
     // TODO: Input checking
+
+    // TODO: Practice writing a frame
 }
 
 systemData::~systemData()

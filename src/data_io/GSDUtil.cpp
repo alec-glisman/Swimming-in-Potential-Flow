@@ -3,7 +3,7 @@
 // Building off of GSDReader class in HOOMD-Blue
 //
 
-#include <GSDReader.hpp>
+#include <GSDUtil.hpp>
 
 GSDUtil::GSDUtil(std::shared_ptr<systemData> sys)
 {
@@ -271,6 +271,8 @@ GSDUtil::readParticles()
 void
 GSDUtil::writeFrame()
 {
+    spdlog::get(m_logName)->info("GSD writing frame");
+
     writeHeader();
     writeParameters();
     writeParticles();
@@ -280,6 +282,26 @@ void
 GSDUtil::writeHeader()
 {
     // TODO
+
+    // int      retval;
+    // uint64_t step = timestep;
+    // retval =
+    //     gsd_write_chunk(&m_handle, "configuration/step", GSD_TYPE_UINT64, 1, 1, 0, (void*)&step);
+    // checkError(retval);
+
+    // if (gsd_get_nframes(&m_handle) == 0)
+    // {
+    //     m_exec_conf->msg->notice(10) << "dump.gsd: writing configuration/dimensions" << endl;
+    //     uint8_t dimensions = m_sysdef->getNDimensions();
+    //     retval = gsd_write_chunk(&m_handle, "configuration/dimensions", GSD_TYPE_UINT8, 1, 1, 0,
+    //                              (void*)&dimensions);
+    //     checkError(retval);
+    // }
+
+    // m_exec_conf->msg->notice(10) << "dump.gsd: writing particles/N" << endl;
+    // uint32_t N = m_group->getNumMembersGlobal();
+    // retval     = gsd_write_chunk(&m_handle, "particles/N", GSD_TYPE_UINT32, 1, 1, 0, (void*)&N);
+    // checkError(retval);
 }
 
 void
