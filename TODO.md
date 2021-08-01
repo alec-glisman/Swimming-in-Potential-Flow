@@ -9,6 +9,7 @@
   - [x] Parameter input
 - [x] Add logging of startup behavior
 - [x] Write data output (preferably in GSD file)
+- [x] Figure out why input assertions seem to pass, but data not loaded into class??
 - [ ] Add logging of startup behavior
 - [ ] Write leading order hydrodynamics calculation
 - [ ] Write RKF45 integration function

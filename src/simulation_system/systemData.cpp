@@ -14,7 +14,7 @@ systemData::systemData(std::string inputGSDFile, std::string outputDir)
     spdlog::get(m_logName)->info("Output path: {0}", m_outputDir);
 
     // Parse GSD file
-    std::shared_ptr<systemData> shd_ptr = std::make_shared<systemData>(*this);
+    std::shared_ptr<systemData> shd_ptr = std::shared_ptr<systemData>(this);
     m_gsdUtil                           = std::make_shared<GSDUtil>(shd_ptr);
 
     // Input checking
