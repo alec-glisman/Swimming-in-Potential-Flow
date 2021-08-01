@@ -115,29 +115,32 @@ GSDUtil::readHeader()
     auto     return_bool = readChunk(&timestep, m_frame, "log/configuration/step", 8);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
-    system->setTimestep(timestep);
+    system->setTimestep(int(timestep));
     spdlog::get(m_logName)->info("time step: {0}", timestep);
+    assert(int(timestep) == system->timestep() && "time step not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing dimensions");
     uint8_t dim = 0;
     return_bool = readChunk(&dim, m_frame, "log/configuration/dimensions", 1);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
-    system->setNumDim(dim);
+    system->setNumDim(int(dim));
     spdlog::get(m_logName)->info("dim : {0}", dim);
+    assert(int(dim) == system->numDim() && "number of dimensions not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing number of particles");
     uint32_t N  = 0;
     return_bool = readChunk(&N, m_frame, "particles/N", 4);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
-    system->setNumParticles(N);
+    system->setNumParticles(int(N));
     spdlog::get(m_logName)->info("Number of particles : {0}", N);
     if (N == 0)
     {
         spdlog::get(m_logFile)->error("data.gsd_snapshot: cannot read a file with 0 particles");
         throw std::runtime_error("Error reading GSD file");
     }
+    assert(int(N) == system->numParticles() && "number of particles not properly set");
 
     // Initialize tensors
     system->resizeTensors();
@@ -151,40 +154,46 @@ GSDUtil::readParameters()
     auto  return_bool = readChunk(&dt, m_frame, "log/integrator/dt", 4);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
-    system->setDt(dt);
+    system->setDt(double(dt));
     spdlog::get(m_logName)->info("dt : {0}", dt);
+    assert(double(dt) == system->dt() && "dt not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing t");
     float t{0.0};
     return_bool = readChunk(&t, m_frame, "log/integrator/t", 4);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
-    system->setT(t);
+    system->setT(double(t));
     spdlog::get(m_logName)->info("t : {0}", t);
+    assert(double(t) == system->t() && "t not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing tf");
     float tf{0.0};
     return_bool = readChunk(&tf, m_frame, "log/integrator/tf", 4);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
-    system->setTf(tf);
+    system->setTf(double(tf));
     spdlog::get(m_logName)->info("tf : {0}", tf);
+    assert(double(tf) == system->tf() && "tf not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing num_steps_output");
     uint64_t num_steps_output{0};
     return_bool = readChunk(&num_steps_output, m_frame, "log/integrator/num_steps_output", 8);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
-    system->setNumStepsOutput(num_steps_output);
+    system->setNumStepsOutput(int(num_steps_output));
     spdlog::get(m_logName)->info("num_steps_output : {0}", num_steps_output);
+    assert(int(num_steps_output) == system->numStepsOutput() &&
+           "num_steps_output not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing fluid_density");
     float fluid_density{0.0};
     return_bool = readChunk(&fluid_density, m_frame, "log/material_parameters/fluid_density", 4);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
-    system->setFluidDensity(fluid_density);
+    system->setFluidDensity(double(fluid_density));
     spdlog::get(m_logName)->info("fluid_density : {0}", fluid_density);
+    assert(double(fluid_density) == system->fluidDensity() && "fluid_density not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing particle_density");
     float particle_density{0.0};
@@ -192,24 +201,28 @@ GSDUtil::readParameters()
         readChunk(&particle_density, m_frame, "log/material_parameters/particle_density", 4);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
-    system->setParticleDensity(particle_density);
+    system->setParticleDensity(double(particle_density));
     spdlog::get(m_logName)->info("particle_density : {0}", particle_density);
+    assert(double(particle_density) == system->particleDensity() &&
+           "particle_density not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing wca_epsilon");
     float wca_epsilon{0.0};
     return_bool = readChunk(&wca_epsilon, m_frame, "log/wca/epsilon", 4);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
-    system->setWcaEpsilon(wca_epsilon);
+    system->setWcaEpsilon(double(wca_epsilon));
     spdlog::get(m_logName)->info("wca_epsilon : {0}", wca_epsilon);
+    assert(double(wca_epsilon) == system->wcaEpsilon() && "wca_epsilon not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing wca_sigma");
     float wca_sigma{0.0};
     return_bool = readChunk(&wca_epsilon, m_frame, "log/wca/sigma", 4);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
-    system->setWcaSigma(wca_sigma);
+    system->setWcaSigma(double(wca_sigma));
     spdlog::get(m_logName)->info("wca_sigma : {0}", wca_sigma);
+    assert(double(wca_sigma) == system->wcaSigma() && "wca_sigma not properly set");
 }
 
 void
