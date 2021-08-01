@@ -10,6 +10,7 @@
 #endif
 
 /* Include all internal project dependencies */
+#include <progressBar.hpp>
 #include <rungeKutta4.hpp>
 #include <systemData.hpp>
 
@@ -52,10 +53,14 @@ class engine
     // classes
     systemData*                  system;
     std::shared_ptr<rungeKutta4> rk4Integrator;
+    std::shared_ptr<ProgressBar> progressBar;
 
     // logging
     std::string m_logFile;
     std::string m_logName{"engine"};
+
+    // ProgressBar output
+    double outputPercentile{0.05};
 };
 
 #endif // BODIES_IN_POTENTIAL_FLOW_ENGINE_H

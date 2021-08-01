@@ -7,6 +7,7 @@ IF(DEFINED CMAKE_CUDA_COMPILER)
         systemData.hpp 
         engine.cpp
         engine.hpp
+        progressBar.hpp
     )
     
     TARGET_LINK_LIBRARIES(
@@ -30,6 +31,7 @@ ELSE()
         systemData.hpp 
         engine.cpp 
         engine.hpp
+        progressBar.hpp
     )
         
     TARGET_LINK_LIBRARIES(
