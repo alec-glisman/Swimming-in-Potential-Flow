@@ -63,11 +63,7 @@ engine::run()
 }
 
 void
-engine::acceleration_update()
-{
-}
-
-void
 engine::integrate()
 {
+    rk4Integrator->integrate();
 }

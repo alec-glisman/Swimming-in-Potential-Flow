@@ -45,9 +45,6 @@ class engine
 
   private:
     void
-    acceleration_update();
-
-    void
     integrate();
 
     // classes

@@ -36,6 +36,9 @@ class rungeKutta4
     integrate();
 
   private:
+    void
+    acceleration_update();
+
     // classes
     systemData* system;
 

@@ -27,3 +27,8 @@ void
 rungeKutta4::integrate()
 {
 }
+
+void
+rungeKutta4::acceleration_update()
+{
+}
