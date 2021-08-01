@@ -65,10 +65,9 @@ class GSDUtil
     systemData* system;
 
     // GSD
-    uint64_t m_frame; //!< Cached frame
+    uint64_t m_frame;
 
     // logging
-    std::string m_outputDir;
     std::string m_logFile;
     std::string m_logName{"GSDUtil"};
 };
