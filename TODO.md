@@ -3,7 +3,7 @@
 ## Get project running
 
 - [x] Decide on input data schema
-    - May be a good idea to make GSD input in python and then load in C++.  
+  - May be a good idea to make GSD input in python and then load in C++.  
 - [x] Write data parsing scheme
   - [x] Kinematic input
   - [x] Parameter input
