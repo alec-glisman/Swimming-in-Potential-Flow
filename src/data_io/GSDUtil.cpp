@@ -63,7 +63,10 @@ GSDUtil::GSDUtil(std::shared_ptr<systemData> sys, uint64_t frame) : GSDUtil(sys)
     }
 }
 
-GSDUtil::~GSDUtil() = default;
+GSDUtil::~GSDUtil()
+{
+    spdlog::get(m_logName)->info("GSDUtil destructor called");
+}
 
 /* NOTES
  * Expected size is in units of bytes
@@ -217,13 +220,12 @@ GSDUtil::readParameters()
 
     spdlog::get(m_logName)->info("GSD parsing wca_sigma");
     float wca_sigma{-1.0};
-    return_bool = readChunk(&wca_epsilon, m_frame, "log/wca/sigma", 4);
+    return_bool = readChunk(&wca_sigma, m_frame, "log/wca/sigma", 4);
     system->setReturnBool(return_bool);
     system->check_gsd_return();
     system->setWcaSigma(double(wca_sigma));
     spdlog::get(m_logName)->info("wca_sigma : {0}", wca_sigma);
     assert(double(wca_sigma) == system->wcaSigma() && "wca_sigma not properly set");
-    std::cout << s
 }
 
 void

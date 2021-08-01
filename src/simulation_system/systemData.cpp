@@ -36,6 +36,7 @@ systemData::systemData(std::string inputGSDFile, std::string outputDir)
 
 systemData::~systemData()
 {
+    spdlog::get(m_logName)->info("systemData desstructor called");
     gsd_close(m_handle.get());
 }
 
