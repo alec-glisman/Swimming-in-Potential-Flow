@@ -19,3 +19,13 @@ potentialHydrodynamics::~potentialHydrodynamics()
 {
     spdlog::get(m_logName)->info("Destructing potential hydrodynamics");
 }
+
+void
+potentialHydrodynamics::update()
+{
+    calcAddedMass();
+    calcAddedMassGrad();
+
+    calcHydroTensors();
+    calcHydroForces();
+}
