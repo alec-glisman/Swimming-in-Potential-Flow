@@ -18,6 +18,7 @@
         "hoomd",
         "irrotational",
         "lseeki",
+        "noalias",
         "numpy",
         "spdlog",
         "telli",
