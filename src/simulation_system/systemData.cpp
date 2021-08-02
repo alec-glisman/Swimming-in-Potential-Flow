@@ -60,7 +60,7 @@ systemData::resizeTensors()
 {
     int len = m_num_dim * m_num_particles;
 
-    positions.noalias()     = Eigen::Vector::Zero(len);
-    velocities.noalias()    = Eigen::Vector::Zero(len);
-    accelerations.noalias() = Eigen::Vector::Zero(len);
+    positions.noalias()     = Eigen::VectorXd::Zero(len);
+    velocities.noalias()    = Eigen::VectorXd::Zero(len);
+    accelerations.noalias() = Eigen::VectorXd::Zero(len);
 }
