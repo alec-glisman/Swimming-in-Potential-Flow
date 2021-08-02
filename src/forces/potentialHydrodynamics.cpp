@@ -29,3 +29,27 @@ potentialHydrodynamics::update()
     calcHydroTensors();
     calcHydroForces();
 }
+
+void
+potentialHydrodynamics::calcAddedMass()
+{
+    // TODO
+}
+
+void
+potentialHydrodynamics::calcAddedMassGrad()
+{
+    // TODO
+}
+
+void
+potentialHydrodynamics::calcHydroTensors()
+{
+    // TODO
+}
+
+void
+potentialHydrodynamics::calcHydroForces()
+{
+    // TODO
+}
