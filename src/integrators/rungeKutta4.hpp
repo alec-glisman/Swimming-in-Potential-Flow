@@ -29,8 +29,6 @@ class systemData;
 class rungeKutta4
 {
   public:
-    rungeKutta4(systemData& sys);
-
     rungeKutta4(systemData& sys, potentialHydrodynamics& hydro);
 
     ~rungeKutta4();

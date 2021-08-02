@@ -4,10 +4,10 @@
 
 #include <rungeKutta4.hpp>
 
-rungeKutta4::rungeKutta4(systemData& sys)
+rungeKutta4::rungeKutta4(systemData& sys, potentialHydrodynamics& hydro)
 {
     // save classes
-    system = &sys;
+    potHydro = &hydro;
 
     // Initialize logger
     m_logFile   = system->outputDir() + "/logs/" + m_logName + "-log.txt";
@@ -16,12 +16,6 @@ rungeKutta4::rungeKutta4(systemData& sys)
 
     // Create integrator
     spdlog::get(m_logName)->info("Creating integrator");
-}
-
-rungeKutta4::rungeKutta4(systemData& sys, potentialHydrodynamics& hydro) : rungeKutta4(sys)
-{
-    // save classes
-    potHydro = &hydro;
 }
 
 rungeKutta4::~rungeKutta4()
