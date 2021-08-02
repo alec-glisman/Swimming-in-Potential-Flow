@@ -33,6 +33,11 @@ class GSDUtil;
 class systemData
 {
   public:
+    // kinematics
+    Eigen::VectorXd positions;
+    Eigen::VectorXd velocities;
+    Eigen::VectorXd accelerations;
+
     systemData(std::string inputGSDFile, std::string outputDir);
 
     ~systemData();
@@ -115,39 +120,6 @@ class systemData
     setDt(double dt)
     {
         m_dt = dt;
-    }
-
-    std::shared_ptr<Eigen::VectorXd>
-    positions() const
-    {
-        return m_positions;
-    }
-    void
-    setPositions(const std::shared_ptr<Eigen::VectorXd>& positions)
-    {
-        m_positions = positions;
-    }
-
-    std::shared_ptr<Eigen::VectorXd>
-    velocities() const
-    {
-        return m_velocities;
-    }
-    void
-    setVelocities(const std::shared_ptr<Eigen::VectorXd>& velocities)
-    {
-        m_velocities = velocities;
-    }
-
-    std::shared_ptr<Eigen::VectorXd>
-    accelerations() const
-    {
-        return m_accelerations;
-    }
-    void
-    setAccelerations(const std::shared_ptr<Eigen::VectorXd>& accelerations)
-    {
-        m_accelerations = accelerations;
     }
 
     double
@@ -280,11 +252,6 @@ class systemData
     // potential parameters
     double m_wca_epsilon{-1};
     double m_wca_sigma{-1};
-
-    // kinematics
-    std::shared_ptr<Eigen::VectorXd> m_positions;
-    std::shared_ptr<Eigen::VectorXd> m_velocities;
-    std::shared_ptr<Eigen::VectorXd> m_accelerations;
 };
 
 #endif
