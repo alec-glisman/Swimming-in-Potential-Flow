@@ -13,6 +13,7 @@ num_dimensions = np.array([3], dtype=np.uint8)
 dt = np.array([1e-5], dtype=np.float32)
 t = np.array([0.0], dtype=np.float32)
 tf = np.array([1.0], dtype=np.float32)
+tau = np.array([1.0], dtype=np.float32)
 num_steps_output = np.array([1000], dtype=np.uint64)
 
 # Length scales
@@ -72,6 +73,7 @@ s.log['configuration/dimensions'] = num_dimensions
 s.log['integrator/dt'] = dt
 s.log['integrator/t'] = t
 s.log['integrator/tf'] = tf
+s.log['integrator/tau'] = tau
 s.log['integrator/num_steps_output'] = num_steps_output
 
 s.log['material_parameters/fluid_density'] = fluid_density

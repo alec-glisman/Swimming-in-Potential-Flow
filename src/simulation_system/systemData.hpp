@@ -233,6 +233,17 @@ class systemData
         return m_gsdUtil;
     }
 
+    double
+    tau() const
+    {
+        return m_tau;
+    }
+    void
+    setTau(double tau)
+    {
+        m_tau = tau;
+    }
+
   private:
     // classes
     std::shared_ptr<GSDUtil> m_gsdUtil;
@@ -255,9 +266,10 @@ class systemData
     int m_num_particles{-1};
 
     // integrator
-    double m_dt{-1};
-    double m_tf{-1};
+    double m_dt{-1.0};
+    double m_tf{-1.0};
     double m_t{0.0};
+    double m_tau{-1.0};
     int    m_timestep{-1};
     int    m_num_steps_output{-1};
 
