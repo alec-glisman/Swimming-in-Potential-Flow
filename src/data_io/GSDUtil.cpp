@@ -179,6 +179,15 @@ GSDUtil::readParameters()
     spdlog::get(m_logName)->info("tf : {0}", tf);
     assert(double(tf) == system->tf() && "tf not properly set");
 
+    spdlog::get(m_logName)->info("GSD parsing tau");
+    float tau{-1.0};
+    return_bool = readChunk(&tau, m_frame, "log/integrator/tau", 4);
+    system->setReturnBool(return_bool);
+    system->check_gsd_return();
+    system->setTau(double(tau));
+    spdlog::get(m_logName)->info("tau : {0}", tau);
+    assert(double(tf) == system->tau() && "tau not properly set");
+
     spdlog::get(m_logName)->info("GSD parsing num_steps_output");
     uint64_t num_steps_output{0};
     return_bool = readChunk(&num_steps_output, m_frame, "log/integrator/num_steps_output", 8);
@@ -240,9 +249,9 @@ GSDUtil::readParticles()
     system->check_gsd_return();
     for (int i = 0; i < system->numParticles(); i++)
     {
-        (*system->positions())(3 * i)     = pos[3 * i];
-        (*system->positions())(3 * i + 1) = pos[3 * i + 1];
-        (*system->positions())(3 * i + 2) = pos[3 * i + 2];
+        system->positions(3 * i)     = pos[3 * i];
+        system->positions(3 * i + 1) = pos[3 * i + 1];
+        system->positions(3 * i + 2) = pos[3 * i + 2];
         spdlog::get(m_logName)->info("Particle {0} position : [{1:03.3f}, {2:03.3f}, {3:03.3f}]",
                                      i + 1, pos[system->numDim() * i],
                                      pos[system->numDim() * i + 1], pos[system->numDim() * i + 2]);
@@ -257,9 +266,9 @@ GSDUtil::readParticles()
     system->check_gsd_return();
     for (int i = 0; i < system->numParticles(); i++)
     {
-        (*system->velocities())(3 * i)     = vel[3 * i];
-        (*system->velocities())(3 * i + 1) = vel[3 * i + 1];
-        (*system->velocities())(3 * i + 2) = vel[3 * i + 2];
+        system->velocities(3 * i)     = vel[3 * i];
+        system->velocities(3 * i + 1) = vel[3 * i + 1];
+        system->velocities(3 * i + 2) = vel[3 * i + 2];
         spdlog::get(m_logName)->info("Particle {0} velocity : [{1:03.3f}, {2:03.3f}, {3:03.3f}]",
                                      i + 1, vel[system->numDim() * i],
                                      vel[system->numDim() * i + 1], vel[system->numDim() * i + 2]);
@@ -274,9 +283,9 @@ GSDUtil::readParticles()
     system->check_gsd_return();
     for (int i = 0; i < system->numParticles(); i++)
     {
-        (*system->accelerations())(3 * i)     = acc[3 * i];
-        (*system->accelerations())(3 * i + 1) = acc[3 * i + 1];
-        (*system->accelerations())(3 * i + 2) = acc[3 * i + 2];
+        system->accelerations(3 * i)     = acc[3 * i];
+        system->accelerations(3 * i + 1) = acc[3 * i + 1];
+        system->accelerations(3 * i + 2) = acc[3 * i + 2];
         spdlog::get(m_logName)->info(
             "Particle {0} acceleration : [{1:03.3f}, {2:03.3f}, {3:03.3f}]", i + 1,
             acc[system->numDim() * i], acc[system->numDim() * i + 1],
@@ -360,9 +369,9 @@ GSDUtil::writeParticles()
     pos.reserve(1); //! make sure we allocate
     for (uint32_t i = 0; i < N; i++)
     {
-        pos[3 * i]     = (*system->positions())(3 * i);
-        pos[3 * i + 1] = (*system->positions())(3 * i + 1);
-        pos[3 * i + 2] = (*system->positions())(3 * i + 2);
+        pos[3 * i]     = system->positions(3 * i);
+        pos[3 * i + 1] = system->positions(3 * i + 1);
+        pos[3 * i + 2] = system->positions(3 * i + 2);
     }
     spdlog::get(m_logName)->info("GSD writing particles/position");
     return_val = gsd_write_chunk(system->handle().get(), "particles/position", GSD_TYPE_FLOAT, N, 3,
@@ -374,9 +383,9 @@ GSDUtil::writeParticles()
     vel.reserve(1); //! make sure we allocate
     for (uint32_t i = 0; i < N; i++)
     {
-        vel[3 * i]     = (*system->velocities())(3 * i);
-        vel[3 * i + 1] = (*system->velocities())(3 * i + 1);
-        vel[3 * i + 2] = (*system->velocities())(3 * i + 2);
+        vel[3 * i]     = system->velocities(3 * i);
+        vel[3 * i + 1] = system->velocities(3 * i + 1);
+        vel[3 * i + 2] = system->velocities(3 * i + 2);
     }
     spdlog::get(m_logName)->info("GSD writing particles/velocity");
     return_val = gsd_write_chunk(system->handle().get(), "particles/velocity", GSD_TYPE_FLOAT, N, 3,
@@ -388,9 +397,9 @@ GSDUtil::writeParticles()
     acc.reserve(1); //! make sure we allocate
     for (uint32_t i = 0; i < N; i++)
     {
-        acc[3 * i]     = (*system->accelerations())(3 * i);
-        acc[3 * i + 1] = (*system->accelerations())(3 * i + 1);
-        acc[3 * i + 2] = (*system->accelerations())(3 * i + 2);
+        acc[3 * i]     = system->accelerations(3 * i);
+        acc[3 * i + 1] = system->accelerations(3 * i + 1);
+        acc[3 * i + 2] = system->accelerations(3 * i + 2);
     }
     spdlog::get(m_logName)->info("GSD writing particles/acceleration");
     return_val = gsd_write_chunk(system->handle().get(), "particles/acceleration", GSD_TYPE_FLOAT,
