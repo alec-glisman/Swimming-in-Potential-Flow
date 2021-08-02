@@ -32,6 +32,9 @@ class potentialHydrodynamics
 
     ~potentialHydrodynamics();
 
+    void
+    update();
+
   private:
     // classes
     systemData* system;
@@ -39,6 +42,32 @@ class potentialHydrodynamics
     // logging
     std::string m_logFile;
     std::string m_logName{"potentialHydrodynamics"};
+
+    // data TODO
+    Eigen::MatrixXd M_added;
+    Eigen::MatrixXd M_intrinsic;
+    Eigen::MatrixXd M_total;
+    Eigen::MatrixXd grad_M_added;
+
+    Eigen::VectorXd F_hydro;
+    Eigen::VectorXd F_hydroNoInertia;
+
+    // constants
+    const double c2_3{2.0 / 3.0};
+    const double c3_2{1.50};
+    const double c15_2{7.50};
+
+    void
+    calcHydroTensors();
+
+    void
+    calcHydroForces();
+
+    void
+    calcAddedMass();
+
+    void
+    calcAddedMassGrad();
 };
 
 #endif // BODIES_IN_POTENTIAL_FLOW_POTENTIAL_HYDRODYNAMICS_H
