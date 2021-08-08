@@ -22,7 +22,6 @@ IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
     TARGET_LINK_LIBRARIES(
         bodies_in_potential_flow
         PRIVATE
-        Eigen3::Eigen
         ${Boost_LIBRARIES}
         Catch2::Catch2
         spdlog::spdlog
@@ -37,7 +36,6 @@ ELSEIF(CMAKE_BUILD_TYPE STREQUAL "Release")
     TARGET_LINK_LIBRARIES(
         bodies_in_potential_flow
         PRIVATE
-        Eigen3::Eigen
         ${Boost_LIBRARIES}
         Catch2::Catch2
         spdlog::spdlog
