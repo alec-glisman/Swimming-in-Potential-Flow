@@ -43,7 +43,20 @@ class potentialHydrodynamics
     std::string m_logFile;
     std::string m_logName{"potentialHydrodynamics"};
 
-    // data TODO
+    // For-loop variables
+    int num_inter; // Number of pairwise interactions to count
+
+    // Distance between particle pairs
+    Eigen::VectorXd alphaVec; // particle number; dim = (r) x (1)
+    Eigen::VectorXd betaVec;  // particle number; dim = (r) x (1)
+    Eigen::VectorXd r_mag_ab; // [1]; dim = (r) x (1)
+    Eigen::MatrixXd r_ab;     // [1]; dim = (3)  x (r)
+
+    // Identity Matrices
+    Eigen::MatrixXd       I3N;                                  // dim = (3N) x (3N)
+    const Eigen::Matrix3d I3 = Eigen::Matrix3d::Identity(3, 3); // dim = 3 x 3
+
+    // hydrodynamic quantities
     Eigen::MatrixXd M_added;
     Eigen::MatrixXd M_intrinsic;
     Eigen::MatrixXd M_total;
