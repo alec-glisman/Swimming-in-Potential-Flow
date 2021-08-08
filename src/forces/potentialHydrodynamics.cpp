@@ -4,6 +4,9 @@
 
 #include <potentialHydrodynamics.hpp>
 
+// REVIEW[epic=Debug]: Uncomment line below to prevent all runtime checks from executing in debug
+// #define NO_HYDRO_CHECK
+
 potentialHydrodynamics::potentialHydrodynamics(systemData& sys)
 {
     // save classes
@@ -77,11 +80,35 @@ potentialHydrodynamics::~potentialHydrodynamics()
 void
 potentialHydrodynamics::update()
 {
+    calcParticleDistances();
+
     calcAddedMass();
     calcAddedMassGrad();
 
     calcHydroTensors();
     calcHydroForces();
+}
+
+void
+potentialHydrodynamics::calcParticleDistances()
+{
+    /* NOTE: Fill Mass matrix elements one (3 x 3) block at a time (matrix elements between
+     * particles \alpha and \beta) */
+    for (int i = 0; i < num_inter; i++)
+    {
+        r_ab.col(i).noalias() = system->positions(Eigen::seqN(3 * alphaVec[i], 3));
+        r_ab.col(i).noalias() -= system->positions(Eigen::seqN(3 * betaVec[i], 3));
+
+        r_mag_ab[i] = r_ab.col(i).norm(); //! [1]; |r| between 2 particles
+
+#if !defined(NDEBUG) && !defined(NO_HYDRO_CHECKS)
+        spdlog::get(m_logName)->info("Checking distance between pairs {0} & {1}", alphaVec[i],
+                                     betaVec[i]);
+        spdlog::get(m_logName)->info("Interparticle distance is", r_mag_ab[i]);
+
+        assert(r_mag_ab[i] >= 2.0 && "Particle overlap found");
+#endif
+    }
 }
 
 void

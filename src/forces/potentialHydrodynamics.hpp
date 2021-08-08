@@ -71,6 +71,9 @@ class potentialHydrodynamics
     const double c15_2{7.50};
 
     void
+    calcParticleDistances();
+
+    void
     calcHydroTensors();
 
     void
