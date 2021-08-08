@@ -19,13 +19,6 @@ potentialHydrodynamics::potentialHydrodynamics(systemData& sys)
                 2; // Number of interactions to count
     spdlog::get(m_logName)->info("Setting number of interactions to count: {0}", num_inter);
 
-    //! Assign particle pair information
-    spdlog::get(m_logName)->info("Initializing particle pair information tensors");
-    alphaVec = Eigen::VectorXd::Zero(num_inter);
-    betaVec  = Eigen::VectorXd::Zero(num_inter);
-    r_mag_ab = Eigen::VectorXd::Zero(num_inter);
-    r_ab     = Eigen::MatrixXd::Zero(3, num_inter);
-
     // Set identity matrices
     I3N = Eigen::MatrixXd::Identity(system->numParticles(), system->numParticles());
 
@@ -39,6 +32,39 @@ potentialHydrodynamics::potentialHydrodynamics(systemData& sys)
 
     grad_M_added = Eigen::MatrixXd::Zero(system->numParticles(),
                                          system->numParticles() * system->numParticles());
+
+    // Assign particle pair information
+    spdlog::get(m_logName)->info("Initializing particle pair information tensors");
+    alphaVec = Eigen::VectorXd::Zero(num_inter);
+    betaVec  = Eigen::VectorXd::Zero(num_inter);
+    r_mag_ab = Eigen::VectorXd::Zero(num_inter);
+    r_ab     = Eigen::MatrixXd::Zero(3, num_inter);
+
+    /* Fill the particle index vectors
+     * Calculate ahead of time to save time during runtime
+     */
+    spdlog::get(m_logName)->info("Filling particle pair information tensors");
+    for (int i = 0; i < num_inter; i++)
+    {
+        /* alpha and beta convention to convert from linear coordinate to ordered pair
+         * @Source:
+         * https://stackoverflow.com/questions/33810187/openmp-and-c-private-variables/33836073#33836073
+         */
+        int alpha = i / system->numParticles();
+        int beta  = i % system->numParticles();
+
+        if (beta <= alpha)
+        {
+            alpha = system->numParticles() - alpha - 2;
+            beta  = system->numParticles() - beta - 1;
+        }
+
+        assert(alpha >= 0 && "Calculated alpha must be non-negative");
+        assert(beta >= 0 && "Calculated beta must be non-negative");
+
+        alphaVec[i] = alpha;
+        betaVec[i]  = beta;
+    }
 
     spdlog::get(m_logName)->info("Constructor complete");
 }
