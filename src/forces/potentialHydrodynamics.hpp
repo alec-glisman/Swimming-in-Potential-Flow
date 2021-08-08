@@ -84,6 +84,10 @@ class potentialHydrodynamics
 
     void
     calcAddedMassGrad();
+
+    // Helper function to calculate 3D --> 2D horizontal stack tensor reduction in dimension
+    static int
+    flattenedCol(int realColParticle, int depthParticle, int spatialDim, int dim3N);
 };
 
 #endif // BODIES_IN_POTENTIAL_FLOW_POTENTIAL_HYDRODYNAMICS_H

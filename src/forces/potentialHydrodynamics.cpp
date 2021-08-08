@@ -134,3 +134,22 @@ potentialHydrodynamics::calcHydroForces()
 {
     // TODO
 }
+
+int
+potentialHydrodynamics::flattenedCol(int realColParticle, int depthParticle, int spatialDim,
+                                     int dim3N)
+{
+    /*
+     * Converts index a in (a, b, c) to index b' in (a, b')
+     *
+     * Function converts between three dimensional matrix (rowParticle, realColumnParticle,
+     * depthParticle) into a flattened two dimensional representation. "Layers" are concatenated
+     * together horizontally to make one short and very wide two dimensional matrix.
+     *
+     * int realColParticle: 3 * the particle number of the col in 3D matrix
+     * int depthParticle: 3 * the particle number of the 3rd dim in 3D matrix
+     * int spatialDim: spatial dimension of derivative var (x, y, z) denoted as (0, 1, or 2),
+     * respectively. int dim3N: nDim
+     */
+    return (realColParticle) + (depthParticle + spatialDim) * dim3N;
+}
