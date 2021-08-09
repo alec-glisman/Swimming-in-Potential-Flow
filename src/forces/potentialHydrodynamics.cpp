@@ -87,11 +87,8 @@ potentialHydrodynamics::update()
 
     calcAddedMass();
     calcAddedMassGrad();
-
-    M_total.noalias() = M_intrinsic;
-    M_total.noalias() += M_added;
-
     calcHydroTensors();
+
     calcHydroForces();
 }
 
@@ -119,8 +116,37 @@ potentialHydrodynamics::calcParticleDistances()
 
 void
 potentialHydrodynamics::calcAddedMass()
-{
-    // TODO
+{ // FIXME: Check the sign of this
+    // set matrices to zero
+    M_added.setZero(len_tensor, len_tensor);
+
+    /* NOTE: Fill Mass matrix elements one (3 x 3) block at a time (matrix elements between
+     * particles \alpha and \beta) */
+    for (int k = 0; k < num_inter; k++)
+    {
+        //! Convert (\alpha, \beta) --> (i, j) by factor of 3
+        int i_part = 3 * alphaVec[k];
+        int j_part = 3 * betaVec[k];
+
+        //! Full distance between particles \alpha and \beta
+        Eigen::Vector3d r_ij     = r_ab.col(k); // [1]
+        double          r_mag_ij = r_mag_ab[k]; //! [1]; |r| between 2 particles
+
+        //! M1 Matrix Element Constants:
+        double M1_c1 = -c3_2 / std::pow(r_mag_ij, 5); // [1]
+        double M1_c2 = c1_2 / std::pow(r_mag_ij, 3);  // [1]
+
+        //! Full matrix elements for M_{ij}
+        Eigen::Matrix3d Mij = r_ij * r_ij.transpose(); //! [1]; Outer product of \bm{r} \bm{r}
+        Mij *= M1_c1;
+        Mij.noalias() += M1_c2 * I3;
+
+        //! Output added mass element
+        M_added.block<3, 3>(i_part, j_part).noalias() = Mij;
+    }
+
+    M_added += M_added.transpose();                    // Symmetry to get other mass elements
+    M_added *= system->fluidDensity() * unitSphereVol; // units
 }
 
 void
@@ -132,6 +158,10 @@ potentialHydrodynamics::calcAddedMassGrad()
 void
 potentialHydrodynamics::calcHydroTensors()
 {
+    // total mass
+    M_total.noalias() = M_intrinsic;
+    M_total.noalias() += M_added;
+
     // TODO
 }
 
