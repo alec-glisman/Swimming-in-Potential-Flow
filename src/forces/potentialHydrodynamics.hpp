@@ -44,7 +44,10 @@ class potentialHydrodynamics
     std::string m_logName{"potentialHydrodynamics"};
 
     // For-loop variables
-    int num_inter; // Number of pairwise interactions to count
+    int num_inter{-1}; // Number of pairwise interactions to count
+
+    // tensor variables
+    int len_tensor{-1}; // length of tensor quantities
 
     // Distance between particle pairs
     Eigen::VectorXd alphaVec; // particle number; dim = (r) x (1)

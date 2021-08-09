@@ -22,6 +22,10 @@ potentialHydrodynamics::potentialHydrodynamics(systemData& sys)
                 2; // Number of interactions to count
     spdlog::get(m_logName)->info("Setting number of interactions to count: {0}", num_inter);
 
+    // tensor variables
+    len_tensor = system->numParticles() * 3; // length of tensor quantities
+    spdlog::get(m_logName)->info("Length of tensor quantities: {0}", len_tensor);
+
     // Set identity matrices
     I3N = Eigen::MatrixXd::Identity(system->numParticles(), system->numParticles());
 
