@@ -132,11 +132,11 @@ potentialHydrodynamics::calcAddedMass()
         Eigen::Vector3d r_ij     = r_ab.col(k); // [1]
         double          r_mag_ij = r_mag_ab[k]; //! [1]; |r| between 2 particles
 
-        //! M1 Matrix Element Constants:
+        //! M^{(1)} Matrix Element Constants:
         double M1_c1 = -c3_2 / std::pow(r_mag_ij, 5); // [1]
         double M1_c2 = c1_2 / std::pow(r_mag_ij, 3);  // [1]
 
-        //! Full matrix elements for M_{ij}
+        //! Full matrix elements for M^{(1)}_{ij}
         Eigen::Matrix3d Mij = r_ij * r_ij.transpose(); //! [1]; Outer product of \bm{r} \bm{r}
         Mij *= M1_c1;
         Mij.noalias() += M1_c2 * I3;
@@ -145,7 +145,10 @@ potentialHydrodynamics::calcAddedMass()
         M_added.block<3, 3>(i_part, j_part).noalias() = Mij;
     }
 
-    M_added += M_added.transpose();                    // Symmetry to get other mass elements
+    M_added += M_added.transpose(); // Symmetry to get other mass elements
+    // TODO: Change sign of M_added from M^{(1)}
+    // TODO: Add diagonal elements
+    // TODO: Multiply by factor of 1/2
     M_added *= system->fluidDensity() * unitSphereVol; // units
 }
 
