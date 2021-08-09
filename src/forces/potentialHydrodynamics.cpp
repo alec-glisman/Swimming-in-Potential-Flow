@@ -88,6 +88,9 @@ potentialHydrodynamics::update()
     calcAddedMass();
     calcAddedMassGrad();
 
+    M_total.noalias() = M_intrinsic;
+    M_total.noalias() += M_added;
+
     calcHydroTensors();
     calcHydroForces();
 }
