@@ -116,10 +116,11 @@ potentialHydrodynamics::calcParticleDistances()
 
 void
 potentialHydrodynamics::calcAddedMass()
-{ // FIXME: Check the sign of this
+{
     // set matrices to zero
     M_added.setZero(len_tensor, len_tensor);
 
+    /* Fill off-diagonal elements (without units ) */
     /* NOTE: Fill Mass matrix elements one (3 x 3) block at a time (matrix elements between
      * particles \alpha and \beta) */
     for (int k = 0; k < num_inter; k++)
@@ -136,7 +137,7 @@ potentialHydrodynamics::calcAddedMass()
         double M1_c1 = -c3_2 / std::pow(r_mag_ij, 5); // [1]
         double M1_c2 = c1_2 / std::pow(r_mag_ij, 3);  // [1]
 
-        //! Full matrix elements for M^{(1)}_{ij}
+        //! Full matrix elements for M^{(1)}_{ij} (NOTE: missing factor of 1/2)
         Eigen::Matrix3d Mij = r_ij * r_ij.transpose(); //! [1]; Outer product of \bm{r} \bm{r}
         Mij *= M1_c1;
         Mij.noalias() += M1_c2 * I3;
@@ -145,11 +146,11 @@ potentialHydrodynamics::calcAddedMass()
         M_added.block<3, 3>(i_part, j_part).noalias() = Mij;
     }
 
-    M_added += M_added.transpose(); // Symmetry to get other mass elements
-    // TODO: Change sign of M_added from M^{(1)}
-    // TODO: Add diagonal elements
-    // TODO: Multiply by factor of 1/2
-    M_added *= system->fluidDensity() * unitSphereVol; // units
+    /* Construct full added mass matrix
+     * M = 1/2 I + M^{(1)} */
+    M_added += M_added.transpose(); // Symmetry to get other off-diagonal mass elements
+    M_added.noalias() += I3N;       // Add diagonal elements
+    M_added *= c1_2 * system->fluidDensity() * unitSphereVol; // factor of 1/2 and mass units
 }
 
 void
