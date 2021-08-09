@@ -165,8 +165,6 @@ potentialHydrodynamics::calcHydroTensors()
     // total mass
     M_total.noalias() = M_intrinsic;
     M_total.noalias() += M_added;
-
-    // TODO
 }
 
 void
