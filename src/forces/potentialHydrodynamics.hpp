@@ -69,6 +69,7 @@ class potentialHydrodynamics
     Eigen::VectorXd F_hydroNoInertia;
 
     // constants
+    const double unitSphereVol{4.0 / 3.0 * M_PI};
     const double c2_3{2.0 / 3.0};
     const double c3_2{1.50};
     const double c15_2{7.50};

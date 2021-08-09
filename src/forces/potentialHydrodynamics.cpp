@@ -23,22 +23,21 @@ potentialHydrodynamics::potentialHydrodynamics(systemData& sys)
     spdlog::get(m_logName)->info("Setting number of interactions to count: {0}", num_inter);
 
     // tensor variables
-    len_tensor = system->numParticles() * 3; // length of tensor quantities
+    len_tensor = 3 * system->numParticles(); // length of tensor quantities
     spdlog::get(m_logName)->info("Length of tensor quantities: {0}", len_tensor);
 
-    // Set identity matrices
-    I3N = Eigen::MatrixXd::Identity(system->numParticles(), system->numParticles());
+    // set identity matrices
+    I3N = Eigen::MatrixXd::Identity(len_tensor, len_tensor);
 
     // Initialize mass matrices
     spdlog::get(m_logName)->info("Initializing mass tensors");
-    M_intrinsic = (system->particleDensity() * (4.0 / 3.0) * M_PI) * I3N;
-    M_added     = Eigen::MatrixXd::Zero(system->numParticles(), system->numParticles());
+    M_intrinsic = system->particleDensity() * unitSphereVol * I3N;
+    M_added     = Eigen::MatrixXd::Zero(len_tensor, len_tensor);
 
     M_total.noalias() = M_added;
     M_total.noalias() += M_intrinsic;
 
-    grad_M_added = Eigen::MatrixXd::Zero(system->numParticles(),
-                                         system->numParticles() * system->numParticles());
+    grad_M_added = Eigen::MatrixXd::Zero(len_tensor, len_tensor * len_tensor);
 
     // Assign particle pair information
     spdlog::get(m_logName)->info("Initializing particle pair information tensors");
