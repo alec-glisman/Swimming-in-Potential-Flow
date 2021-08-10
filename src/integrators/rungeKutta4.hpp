@@ -38,7 +38,7 @@ class rungeKutta4
 
   private:
     void
-    acceleration_update();
+    acceleration_update(Eigen::VectorXd & acc);
 
     // classes
     systemData*             system;

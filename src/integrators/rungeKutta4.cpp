@@ -41,24 +41,24 @@ rungeKutta4::integrate()
     system->positions.noalias() = x2;
     potHydro->update();
     Eigen::VectorXd v2 = v1 + (0.5 * dt) * a1;
-    Eigen::VectorXd a2;
-    acceleration_update();
+    Eigen::VectorXd a2 = Eigen::VectorXd::Zero(system->numDim() * system->numParticles());
+    acceleration_update(a2);
 
     /* Step 3: k3 = f(t + h/2, y + h/2*k2) */
     Eigen::VectorXd x3          = x1 + (0.5 * dt) * v2;
     system->positions.noalias() = x3;
     potHydro->update();
     Eigen::VectorXd v3 = v1 + (0.5 * dt) * a2;
-    Eigen::VectorXd a3;
-    acceleration_update();
+    Eigen::VectorXd a3 = Eigen::VectorXd::Zero(system->numDim() * system->numParticles());
+    acceleration_update(a3);
 
     /* Step 4: k4 = f(t + h, y + h*k3) */
     Eigen::VectorXd x4          = x1 + dt * v3;
     system->positions.noalias() = x4;
     potHydro->update();
     Eigen::VectorXd v4 = v1 + dt * a3;
-    Eigen::VectorXd a4;
-    acceleration_update();
+    Eigen::VectorXd a4 = Eigen::VectorXd::Zero(system->numDim() * system->numParticles());
+    acceleration_update(a4);
 
     /* Output calculated values */
     system->positions.noalias()     = x1 + (dt / 6.0) * (v1 + 2.0 * v2 + 2.0 * v3 + v4);
@@ -67,7 +67,7 @@ rungeKutta4::integrate()
 }
 
 void
-rungeKutta4::acceleration_update()
+rungeKutta4::acceleration_update(Eigen::VectorXd& acc)
 {
     // TODO
 }
