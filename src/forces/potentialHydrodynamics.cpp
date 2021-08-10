@@ -147,7 +147,8 @@ potentialHydrodynamics::calcAddedMass()
     }
 
     /* Construct full added mass matrix
-     * M = 1/2 I + M^{(1)} */
+     * M = 1/2 I + M^{(1)}
+     */
     M_added += M_added.transpose(); // Symmetry to get other off-diagonal mass elements
     M_added.noalias() += I3N;       // Add diagonal elements
     M_added *= c1_2 * system->fluidDensity() * unitSphereVol; // factor of 1/2 and mass units
@@ -156,7 +157,113 @@ potentialHydrodynamics::calcAddedMass()
 void
 potentialHydrodynamics::calcAddedMassGrad()
 {
-    // TODO
+    // set matrices to zero
+    grad_M_added.setZero(len_tensor, len_tensor * len_tensor);
+
+    /* NOTE: Fill Mass matrix elements one (3 x 3) block at a time (matrix elements between
+     * particles \alpha and \beta) */
+    for (int k = 0; k < num_inter; k++)
+    {
+        //! Convert (\alpha, \beta) --> (i, j) by factor of 3
+        int i_part = 3 * alphaVec[k];
+        int j_part = 3 * betaVec[k];
+
+        //! Full distance between particles \alpha and \beta
+        Eigen::Vector3d r_ij     = r_ab.col(k); // [1]
+        double          r_mag_ij = r_mag_ab[k]; //! [1]; |r| between 2 particles
+
+        //! Matrices to use in Calculation
+        Eigen::Matrix3d delta_Ri_x, delta_Ri_y, delta_Ri_z; // [1]
+        delta_Ri_x.noalias() = Eigen::Matrix3d::Zero(); //! (\delta_{j x} r_i) + (\delta_{i x} r_j)
+        delta_Ri_y.noalias() = Eigen::Matrix3d::Zero(); //! (\delta_{j y} r_i) + (\delta_{i y} r_j)
+        delta_Ri_z.noalias() = Eigen::Matrix3d::Zero(); //! (\delta_{j z} r_i) + (\delta_{i z} r_j)
+
+        /* (\delta_{j x} r_i) Adds all components of \bm{r} as a column vector to the first column
+         * (j=x) The indexing comes from a M_{i j, k} index scheme, where k=x in this case */
+        delta_Ri_x.col(0).noalias() += r_ij;
+        delta_Ri_x.row(0).noalias() += r_ij.transpose();
+        delta_Ri_y.col(1).noalias() += r_ij;
+        delta_Ri_y.row(1).noalias() += r_ij.transpose();
+        delta_Ri_z.col(2).noalias() += r_ij;
+        delta_Ri_z.row(2).noalias() += r_ij.transpose();
+
+        //! Constants to use in Calculation
+        double gradM1_c1 = -c3_2 / std::pow(r_mag_ij, 5); // [1]
+        double gradM1_c2 = c15_2 / std::pow(r_mag_ij, 7); // [1]
+
+        //! Full matrix elements for M_{ij, i}
+        Eigen::Matrix3d Mij_ix, Mij_iy, Mij_iz;             // [1]
+        Eigen::Matrix3d r_dyad_r = r_ij * r_ij.transpose(); // [1]; Outer product of \bm{r} \bm{r}
+
+        // Mij_ix
+        Mij_ix.noalias() = delta_Ri_x;
+        Mij_ix.noalias() += r_ij[0] * I3;
+        Mij_ix *= gradM1_c1;                                  // sub-term 1 complete
+        Mij_ix.noalias() += (gradM1_c2 * r_ij[0]) * r_dyad_r; // sub-term 2 complete
+
+        // Mij_iy
+        Mij_iy.noalias() = delta_Ri_y;
+        Mij_iy.noalias() += r_ij[1] * I3;
+        Mij_iy *= gradM1_c1;                                  // sub-term 1 complete
+        Mij_iy.noalias() += (gradM1_c2 * r_ij[1]) * r_dyad_r; // sub-term 2 complete
+
+        // Mij_iz
+        Mij_iz.noalias() = delta_Ri_z;
+        Mij_iz.noalias() += r_ij[2] * I3;
+        Mij_iz *= gradM1_c1;                                  // sub-term 1 complete
+        Mij_iz.noalias() += (gradM1_c2 * r_ij[2]) * r_dyad_r; // sub-term 2 complete
+
+        //! Rows to start data access at
+        int row_Ri = i_part;
+        int row_Rj = j_part;
+
+        //! Columns for each block to start at: M_{ij, i}
+        int col_j_dRi_x = flattenedCol(j_part, i_part, 0, len_tensor);
+        int col_j_dRi_y = flattenedCol(j_part, i_part, 1, len_tensor);
+        int col_j_dRi_z = flattenedCol(j_part, i_part, 2, len_tensor);
+
+        //! M_{ij, j} = - M_{ij, i} -- Anti-symmetry under exchange of derivative variable, due to j
+        //! particle
+        int col_j_dRj_x = flattenedCol(j_part, j_part, 0, len_tensor);
+        int col_j_dRj_y = flattenedCol(j_part, j_part, 1, len_tensor);
+        int col_j_dRj_z = flattenedCol(j_part, j_part, 2, len_tensor);
+
+        //! M_{ji, j} = - M_{ji, i} -- Anti-Symmetry upon exchange of derivative variable
+        int col_i_dRj_x = flattenedCol(i_part, j_part, 0, len_tensor);
+        int col_i_dRj_y = flattenedCol(i_part, j_part, 1, len_tensor);
+        int col_i_dRj_z = flattenedCol(i_part, j_part, 2, len_tensor);
+
+        //! M_{ji, i} =   M_{ij, i} -- Symmetry under exchange of mass matrix elements
+        int col_i_dRi_x = flattenedCol(i_part, i_part, 0, len_tensor);
+        int col_i_dRi_y = flattenedCol(i_part, i_part, 1, len_tensor);
+        int col_i_dRi_z = flattenedCol(i_part, i_part, 2, len_tensor);
+
+        //! M_{ij, i}: Matrix Element (Anti-Symmetric upon exchange of derivative, Symmetric upon
+        //! exchange of first two indices)
+        grad_M_added.block<3, 3>(row_Ri, col_j_dRi_x).noalias() = Mij_ix; //! M_{ij, i_x}
+        grad_M_added.block<3, 3>(row_Ri, col_j_dRi_y).noalias() = Mij_iy; //! M_{ij, i_y}
+        grad_M_added.block<3, 3>(row_Ri, col_j_dRi_z).noalias() = Mij_iz; //! M_{ij, i_z}
+
+        //! M_{ij, j} = - M_{ij, i}
+        grad_M_added.block<3, 3>(row_Ri, col_j_dRj_x).noalias() = -Mij_ix;
+        grad_M_added.block<3, 3>(row_Ri, col_j_dRj_y).noalias() = -Mij_iy;
+        grad_M_added.block<3, 3>(row_Ri, col_j_dRj_z).noalias() = -Mij_iz;
+
+        //! M_{ji, j} = - M_{ij, i}
+        grad_M_added.block<3, 3>(row_Rj, col_i_dRj_x).noalias() = -Mij_ix;
+        grad_M_added.block<3, 3>(row_Rj, col_i_dRj_y).noalias() = -Mij_iy;
+        grad_M_added.block<3, 3>(row_Rj, col_i_dRj_z).noalias() = -Mij_iz;
+
+        //! M_{ji, i} = M_{ij, i}
+        grad_M_added.block<3, 3>(row_Rj, col_i_dRi_x).noalias() = Mij_ix;
+        grad_M_added.block<3, 3>(row_Rj, col_i_dRi_y).noalias() = Mij_iy;
+        grad_M_added.block<3, 3>(row_Rj, col_i_dRi_z).noalias() = Mij_iz;
+    }
+
+    /* Construct full added mass matrix
+     * \nabla M = \nabla M^{(1)}
+     */
+    grad_M_added *= c1_2 * system->fluidDensity() * unitSphereVol; // factor of 1/2 and mass units
 }
 
 void
