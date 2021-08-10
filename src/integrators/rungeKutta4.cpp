@@ -20,9 +20,12 @@ rungeKutta4::rungeKutta4(std::shared_ptr<systemData>             sys,
     spdlog::get(m_logName)->info("Creating integrator");
 
     // initialize member variables
-    m_dt      = m_system->dt() * m_system->tau();
+    m_dt = m_system->dt() * m_system->tau();
+    spdlog::get(m_logName)->info("dt (dimensional): {0}", m_dt);
     m_c1_2_dt = m_c1_2 * m_dt;
+    spdlog::get(m_logName)->info("1/2 * dt (dimensional): {0}", m_c1_2_dt);
     m_c1_6_dt = m_c1_6 * m_dt;
+    spdlog::get(m_logName)->info("1/6 * dt (dimensional): {0}", m_c1_6_dt);
 }
 
 rungeKutta4::~rungeKutta4()
