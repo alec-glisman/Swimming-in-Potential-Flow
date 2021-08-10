@@ -47,6 +47,16 @@ class rungeKutta4
     // logging
     std::string m_logFile;
     std::string m_logName{"rungeKutta4"};
+
+    // time step variables
+    double m_dt{-1.0};
+    double m_c1_2_dt{-1.0};
+    double m_c1_6_dt{-1.0};
+
+    // constants
+    const double m_c1_2{0.50};
+    const double m_c1_6{1.0 / 6.0};
+    const double m_c2{2.0};
 };
 
 #endif // BODIES_IN_POTENTIAL_FLOW_RUNGE_KUTTA_4_H
