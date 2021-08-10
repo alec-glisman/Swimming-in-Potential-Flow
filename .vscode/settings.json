@@ -13,6 +13,7 @@
         "NOLINT",
         "NVCC",
         "RUNGE",
+        "cwise",
         "dtype",
         "heapify",
         "hoomd",
