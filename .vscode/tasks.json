@@ -117,7 +117,10 @@
                 "cwd": "${workspaceFolder}"
             },
             "command": "build_release/src/./bodies_in_potential_flow",
-            "args": [],
+            "args": [
+                "temp/test.gsd",
+                "temp/output"
+            ],
             "group": "build",
             "dependsOn": "Release: build",
             "problemMatcher": [
