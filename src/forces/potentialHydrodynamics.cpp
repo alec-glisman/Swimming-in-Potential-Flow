@@ -277,7 +277,50 @@ potentialHydrodynamics::calcHydroTensors()
 void
 potentialHydrodynamics::calcHydroForces()
 {
-    // TODO
+    // calculate requisite configurational tensors
+    Eigen::MatrixXd U_dyad_U = system->velocities * system->velocities.transpose();
+
+    //! Term 1: - M_kj * U_dot_j
+    Eigen::VectorXd t1_Intertia = -M_total * system->accelerations; //! dim = (3N) x 1
+
+    //! Term 2: - d(M_kj)/d(R_l) * U_l * U_j;
+    Eigen::MatrixXd hat_dMkj = Eigen::MatrixXd::Zero(len_tensor, len_tensor);
+    // Reduce along derivative vars (index: l) via matrix-vector product for each derivative
+    // variable
+    for (int l = 0; l < len_tensor; l += 1)
+    {
+        hat_dMkj.noalias() +=
+            system->velocities[l] * grad_M_added.block(0, l * len_tensor, len_tensor, len_tensor);
+    }
+    // Reduce along gradient (index: l) via matrix-vector product
+    Eigen::VectorXd t2_VelGrad = -hat_dMkj * system->velocities;
+
+    //! Term 3: (1/2) U_i * d(M_ij)/d(R_k) * U_j
+    Eigen::VectorXd t3_PosGrad = Eigen::VectorXd::Zero(len_tensor);
+
+    for (int k = 0; k < len_tensor; k += 3)
+    { //! k: derivative variable, 3N loops
+        // Unroll loop slightly (do 3 entries at a time)
+        t3_PosGrad[k] = grad_M_added.block(0, k * len_tensor, len_tensor, len_tensor)
+                            .cwiseProduct(U_dyad_U)
+                            .sum();
+        t3_PosGrad[k + 1] = grad_M_added.block(0, (k + 1) * len_tensor, len_tensor, len_tensor)
+                                .cwiseProduct(U_dyad_U)
+                                .sum();
+        t3_PosGrad[k + 2] = grad_M_added.block(0, (k + 2) * len_tensor, len_tensor, len_tensor)
+                                .cwiseProduct(U_dyad_U)
+                                .sum();
+    }
+    /* Coefficient-wise operations for the sub-terms */
+    t3_PosGrad *= c1_2;
+
+    /* Compute non-inertial part of force */
+    F_hydroNoInertia.noalias() = t2_VelGrad;
+    F_hydroNoInertia.noalias() += t3_PosGrad;
+
+    /* Compute complete potential pressure force */
+    F_hydro.noalias() = t1_Intertia; // Full hydrodynamic force, dim = (3N) x 1
+    F_hydro.noalias() += F_hydroNoInertia;
 }
 
 int
