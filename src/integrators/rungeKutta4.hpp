@@ -38,11 +38,11 @@ class rungeKutta4
 
   private:
     void
-    acceleration_update(Eigen::VectorXd & acc);
+    acceleration_update(Eigen::VectorXd& acc);
 
     // classes
-    systemData*             system;
-    potentialHydrodynamics* potHydro;
+    systemData*             m_system;
+    potentialHydrodynamics* m_potHydro;
 
     // logging
     std::string m_logFile;
