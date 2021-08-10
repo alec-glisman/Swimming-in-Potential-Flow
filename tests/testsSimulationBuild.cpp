@@ -3,6 +3,8 @@
 //
 
 /* Include all internal project dependencies */
+#include <engine.hpp>
+#include <systemData.hpp>
 
 /* Include all external project dependencies */
 #include <catch2/catch.hpp> // unit testing framework
@@ -17,17 +19,28 @@ TEST_CASE("Load and parse data from GSD file", "[GSD][I/O]")
 {
     /* Parameters
      * REVIEW[epic=Assumptions]: Assuming that the tests are called from project base dir */
-    std::string inputDataFile{"input/test.gsd"};
-    std::string outputDir{"temp/output"};
+    std::string inputDataFile = "temp/test.gsd";
+    std::string outputDir     = "temp/output";
 
     /* Initialize variables */
     std::shared_ptr<gsd_handle> handle{new gsd_handle};
     int                         return_val{-1};
+
+    std::shared_ptr<systemData> system;
+    std::shared_ptr<engine>     eng;
 
     SECTION("Load GSD data")
     {
         REQUIRE_NOTHROW(return_val =
                             gsd_open(handle.get(), inputDataFile.c_str(), GSD_OPEN_READONLY));
         REQUIRE(return_val == 0);
+    }
+
+    SECTION("Initialize simulation")
+    {
+        REQUIRE_NOTHROW(system = std::make_shared<systemData>(inputDataFile, outputDir));
+        REQUIRE_NOTHROW(system->parseGSD());
+
+        REQUIRE_NOTHROW(eng = std::make_shared<engine>(system));
     }
 }
