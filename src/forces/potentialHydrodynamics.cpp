@@ -224,18 +224,17 @@ potentialHydrodynamics::calcAddedMassGrad()
         int col_j_dRi_y = flattenedCol(j_part, i_part, 1, len_tensor);
         int col_j_dRi_z = flattenedCol(j_part, i_part, 2, len_tensor);
 
-        //! M_{ij, j} = - M_{ij, i} -- Anti-symmetry under exchange of derivative variable, due to j
-        //! particle
+        //! M_{ij, j} elements
         int col_j_dRj_x = flattenedCol(j_part, j_part, 0, len_tensor);
         int col_j_dRj_y = flattenedCol(j_part, j_part, 1, len_tensor);
         int col_j_dRj_z = flattenedCol(j_part, j_part, 2, len_tensor);
 
-        //! M_{ji, j} = - M_{ji, i} -- Anti-Symmetry upon exchange of derivative variable
+        //! M_{ji, j} elements
         int col_i_dRj_x = flattenedCol(i_part, j_part, 0, len_tensor);
         int col_i_dRj_y = flattenedCol(i_part, j_part, 1, len_tensor);
         int col_i_dRj_z = flattenedCol(i_part, j_part, 2, len_tensor);
 
-        //! M_{ji, i} =   M_{ij, i} -- Symmetry under exchange of mass matrix elements
+        //! M_{ji, i} elements
         int col_i_dRi_x = flattenedCol(i_part, i_part, 0, len_tensor);
         int col_i_dRi_y = flattenedCol(i_part, i_part, 1, len_tensor);
         int col_i_dRi_z = flattenedCol(i_part, i_part, 2, len_tensor);
