@@ -167,8 +167,8 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native -O3 -mfpmath=s
 
 IF(CMAKE_BUILD_TYPE STREQUAL "Profile")
 
-    SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-omit-frame-pointer")
-    SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fno-omit-frame-pointer")
+    SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-omit-frame-pointer -march=native -O3 -mfpmath=sse -funroll-loops -lboost_system -Wno-deprecated-declarations")
+    SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fno-omit-frame-pointer -march=native -O3 -mfpmath=sse -funroll-loops -lboost_system -Wno-deprecated-declarations")
 
 ENDIF()
 # !SECTION
@@ -192,8 +192,6 @@ IF(Boost_FOUND)
     MESSAGE(STATUS "Found: ${Boost_FOUND}")
     MESSAGE(STATUS "Version: ${Boost_VERSION}")
     MESSAGE(STATUS "Include Dir: ${Boost_INCLUDE_DIR}")
-    # MESSAGE(STATUS "Library Dir: ${Boost_LIBRARY_DIRS}")
-    # MESSAGE(STATUS "Libraries: ${Boost_LIBRARIES}")
 
 ELSE()
 
@@ -211,11 +209,6 @@ MESSAGE("")
 
 # Linear algebra libraries
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include/Eigen)
-# FIND_PACKAGE(Eigen REQUIRED)
-# MESSAGE( "** EIGEN3 **" )
-# MESSAGE( STATUS "Found: ${EIGEN3_FOUND}" )
-# MESSAGE( STATUS "Include Dir: ${EIGEN3_INCLUDE_DIR}" )
-# MESSAGE("")
 
 # Logging library
 FIND_PACKAGE( spdlog CONFIG REQUIRED )
@@ -242,7 +235,7 @@ ADD_SUBDIRECTORY(src)
 
 IF(ENABLE_TESTING STREQUAL "True" OR CMAKE_BUILD_TYPE STREQUAL "Debug")
 
-    # ADD_SUBDIRECTORY(tests)
+    ADD_SUBDIRECTORY(tests)
 
 ENDIF()
 # !SECTION
