@@ -8,11 +8,8 @@
 
 /* Include all external project dependencies */
 // STL
-#include <iostream> // std::cout, std::endl
-#include <memory>   // for std::unique_ptr and std::shared_ptr
-#include <string>   // std::string
-// GSD: Data IO
-#include <gsd.h> // GSD File
+#include <memory> // for std::unique_ptr and std::shared_ptr
+#include <string> // std::string
 
 /* Forward declarations */
 
