@@ -122,6 +122,7 @@
         "__functional_03": "cpp",
         "nonlinearoptimization": "cpp",
         "unordered_set": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "typeindex": "cpp"
     }
 }
