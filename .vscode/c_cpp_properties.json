@@ -16,7 +16,8 @@
                 "${workspaceFolder}/include/Eigen/",
                 "${workspaceFolder}/src/integrators",
                 "${workspaceFolder}/src/data_io",
-                "/usr/local/include"
+                "/usr/local/include",
+                "${workspaceFolder}/src/simulation_system"
             ],
             "defines": [],
             "compilerPath": "/usr/local/bin/gcc-11",
