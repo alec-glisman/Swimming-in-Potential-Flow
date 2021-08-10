@@ -27,7 +27,9 @@ potentialHydrodynamics::potentialHydrodynamics(systemData& sys)
     spdlog::get(m_logName)->info("Length of tensor quantities: {0}", len_tensor);
 
     // set identity matrices
-    I3N = Eigen::MatrixXd::Identity(len_tensor, len_tensor);
+    I3N      = Eigen::MatrixXd::Identity(len_tensor, len_tensor);
+    c1_2_I3N = I3N;
+    c1_2_I3N *= c1_2;
 
     // Initialize mass matrices
     spdlog::get(m_logName)->info("Initializing mass tensors");
@@ -150,8 +152,8 @@ potentialHydrodynamics::calcAddedMass()
     /* Construct full added mass matrix
      * M = 1/2 I + M^{(1)}
      */
-    M_added.noalias() += I3N;                                 // Add diagonal elements
-    M_added *= c1_2 * system->fluidDensity() * unitSphereVol; // factor of 1/2 and mass units
+    M_added.noalias() += c1_2_I3N;                     // Add diagonal elements
+    M_added *= system->fluidDensity() * unitSphereVol; // mass units
 }
 
 void
@@ -263,7 +265,7 @@ potentialHydrodynamics::calcAddedMassGrad()
     /* Construct full added mass matrix
      * \nabla M = \nabla M^{(1)}
      */
-    grad_M_added *= c1_2 * system->fluidDensity() * unitSphereVol; // factor of 1/2 and mass units
+    grad_M_added *= system->fluidDensity() * unitSphereVol; // mass units
 }
 
 void
