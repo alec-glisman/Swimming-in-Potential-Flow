@@ -128,17 +128,57 @@
             ]
         },
         {
-            "label": "Release: test",
+            "label": "Profile: config",
             "type": "shell",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "command": "build_release/tests/./tests",
-            "group": "test",
-            "dependsOn": "Release: build",
+            "command": "cmake",
+            "args": [
+                "-G",
+                "\"Unix Makefiles\"",
+                "-B",
+                "build_profile",
+                "-DCMAKE_BUILD_TYPE=Profile",
+                "-DENABLE_TESTING=True",
+                "-DCMAKE_EXPORT_COMPILE_COMMANDS=True"
+            ],
             "problemMatcher": [
                 "$gcc"
             ]
-        }
+        },
+        {
+            "label": "Profile: build",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "cmake",
+            "args": [
+                "--build",
+                "build_profile",
+                "-j"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Profile: run",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "build_profile/src/./bodies_in_potential_flow",
+            "args": [
+                "temp/test.gsd",
+                "temp/output"
+            ],
+            "group": "build",
+            "dependsOn": "Profile: build",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
     ]
 }
