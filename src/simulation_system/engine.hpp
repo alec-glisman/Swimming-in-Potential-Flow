@@ -48,17 +48,17 @@ class engine
     integrate();
 
     // classes
-    systemData*                             system;
-    std::shared_ptr<potentialHydrodynamics> potHydro;
-    std::shared_ptr<rungeKutta4>            rk4Integrator;
-    std::shared_ptr<ProgressBar>            progressBar;
+    systemData*                             m_system;
+    std::shared_ptr<potentialHydrodynamics> m_potHydro;
+    std::shared_ptr<rungeKutta4>            m_rk4Integrator;
+    std::shared_ptr<ProgressBar>            m_progressBar;
 
     // logging
     std::string m_logFile;
     std::string m_logName{"engine"};
 
     // ProgressBar output
-    double outputPercentile{0.05};
+    double m_outputPercentile{0.05};
 };
 
 #endif // BODIES_IN_POTENTIAL_FLOW_ENGINE_H
