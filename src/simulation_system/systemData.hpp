@@ -30,7 +30,7 @@
 /* Forward declarations */
 class GSDUtil;
 
-class systemData
+class systemData : public std::enable_shared_from_this<systemData>
 {
   public:
     // kinematics
@@ -41,6 +41,9 @@ class systemData
     systemData(std::string inputGSDFile, std::string outputDir);
 
     ~systemData();
+
+    void
+    parseGSD();
 
     void
     check_gsd_return();
@@ -216,7 +219,16 @@ class systemData
         m_tau = tau;
     }
 
+    bool
+    gSDParsed() const
+    {
+        return m_GSD_parsed;
+    }
+
   private:
+    void
+    checkInput();
+
     // classes
     std::shared_ptr<GSDUtil> m_gsdUtil;
 
@@ -232,6 +244,7 @@ class systemData
     std::shared_ptr<gsd_handle> m_handle{new gsd_handle};
     int                         m_return_val{0};
     bool                        m_return_bool{true};
+    bool                        m_GSD_parsed{false};
 
     // degrees of freedom
     int m_num_dim{-1};

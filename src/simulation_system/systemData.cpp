@@ -12,11 +12,22 @@ systemData::systemData(std::string inputGSDFile, std::string outputDir)
     auto logger = spdlog::basic_logger_mt(m_logName, m_logFile);
     spdlog::get(m_logName)->info("Initializing system data");
     spdlog::get(m_logName)->info("Output path: {0}", m_outputDir);
+}
 
-    // Parse GSD file
-    m_gsdUtil = std::make_shared<GSDUtil>(*this);
+void
+systemData::parseGSD()
+{
+    spdlog::get(m_logName)->info("Starting to parse GSD file");
 
-    // Input checking
+    m_gsdUtil    = std::make_shared<GSDUtil>(shared_from_this());
+    m_GSD_parsed = true;
+
+    checkInput();
+}
+
+void
+systemData::checkInput()
+{
     spdlog::get(m_logName)->info("Input checking assertions");
     assert(m_fluid_density >= 0.0 && "Fluid density must be non-negative.");
     assert(m_particle_density >= 0.0 && "Particle density must be non-negative");
