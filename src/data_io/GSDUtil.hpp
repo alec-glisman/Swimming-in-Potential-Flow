@@ -62,7 +62,7 @@ class GSDUtil
     writeParticles();
 
     // classes
-    systemData* system;
+    systemData* m_system;
 
     // GSD
     uint64_t m_frame;
