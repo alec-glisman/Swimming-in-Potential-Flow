@@ -105,9 +105,9 @@ potentialHydrodynamics::calcParticleDistances()
         r_mag_ab[i] = r_ab.col(i).norm(); //! [1]; |r| between 2 particles
 
 #if !defined(NDEBUG) && !defined(NO_HYDRO_CHECKS)
-        spdlog::get(m_logName)->info("Checking distance between pairs {0} & {1}", alphaVec[i],
-                                     betaVec[i]);
-        spdlog::get(m_logName)->info("Interparticle distance is", r_mag_ab[i]);
+        spdlog::get(m_logName)->debug("Checking distance between pairs {0} & {1}", alphaVec[i],
+                                      betaVec[i]);
+        spdlog::get(m_logName)->debug("Interparticle distance is", r_mag_ab[i]);
 
         assert(r_mag_ab[i] >= 2.0 && "Particle overlap found");
 #endif
