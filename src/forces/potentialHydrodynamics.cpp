@@ -142,15 +142,15 @@ potentialHydrodynamics::calcAddedMass()
         Mij *= M1_c1;
         Mij.noalias() += M1_c2 * I3;
 
-        //! Output added mass element
+        //! Output added mass element (symmetry of mass matrix)
         M_added.block<3, 3>(i_part, j_part).noalias() = Mij;
+        M_added.block<3, 3>(j_part, i_part).noalias() = Mij;
     }
 
     /* Construct full added mass matrix
      * M = 1/2 I + M^{(1)}
      */
-    M_added += M_added.transpose(); // Symmetry to get other off-diagonal mass elements
-    M_added.noalias() += I3N;       // Add diagonal elements
+    M_added.noalias() += I3N;                                 // Add diagonal elements
     M_added *= c1_2 * system->fluidDensity() * unitSphereVol; // factor of 1/2 and mass units
 }
 
