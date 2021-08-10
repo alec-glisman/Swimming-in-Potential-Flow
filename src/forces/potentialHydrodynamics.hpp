@@ -38,74 +38,74 @@ class potentialHydrodynamics
     const Eigen::VectorXd&
     fHydro() const
     {
-        return F_hydro;
+        return m_F_hydro;
     }
 
     const Eigen::VectorXd&
     fHydroNoInertia() const
     {
-        return F_hydroNoInertia;
+        return m_F_hydroNoInertia;
     }
 
     const Eigen::MatrixXd&
     mTotal() const
     {
-        return M_total;
+        return m_M_total;
     }
 
     const Eigen::MatrixXd&
     mIntrinsic() const
     {
-        return M_intrinsic;
+        return m_M_intrinsic;
     }
 
     const Eigen::MatrixXd&
     mAdded() const
     {
-        return M_added;
+        return m_M_added;
     }
 
   private:
     // classes
-    systemData* system;
+    systemData* m_system;
 
     // logging
     std::string m_logFile;
     std::string m_logName{"potentialHydrodynamics"};
 
     // For-loop variables
-    int num_inter{-1}; // Number of pairwise interactions to count
+    int m_num_inter{-1}; // Number of pairwise interactions to count
 
     // tensor variables
-    int len_tensor{-1}; // length of tensor quantities
+    int m_len_tensor{-1}; // length of tensor quantities
 
     // Distance between particle pairs
-    Eigen::VectorXd alphaVec; // particle number; dim = (r) x (1)
-    Eigen::VectorXd betaVec;  // particle number; dim = (r) x (1)
-    Eigen::VectorXd r_mag_ab; // [1]; dim = (r) x (1)
-    Eigen::MatrixXd r_ab;     // [1]; dim = (3)  x (r)
+    Eigen::VectorXd m_alphaVec; // particle number; dim = (r) x (1)
+    Eigen::VectorXd m_betaVec;  // particle number; dim = (r) x (1)
+    Eigen::VectorXd m_r_mag_ab; // [1]; dim = (r) x (1)
+    Eigen::MatrixXd m_r_ab;     // [1]; dim = (3)  x (r)
 
     // Identity Matrices
-    Eigen::MatrixXd I3N;      // dim = (3N) x (3N)
-    Eigen::MatrixXd c1_2_I3N; // dim = (3N) x (3N)
+    Eigen::MatrixXd m_I3N;      // dim = (3N) x (3N)
+    Eigen::MatrixXd m_c1_2_I3N; // dim = (3N) x (3N)
 
-    const Eigen::Matrix3d I3 = Eigen::Matrix3d::Identity(3, 3); // dim = 3 x 3
+    const Eigen::Matrix3d m_I3 = Eigen::Matrix3d::Identity(3, 3); // dim = 3 x 3
 
     // hydrodynamic quantities
-    Eigen::MatrixXd M_added;
-    Eigen::MatrixXd M_intrinsic;
-    Eigen::MatrixXd M_total;
-    Eigen::MatrixXd grad_M_added;
+    Eigen::MatrixXd m_M_added;
+    Eigen::MatrixXd m_M_intrinsic;
+    Eigen::MatrixXd m_M_total;
+    Eigen::MatrixXd m_grad_M_added;
 
-    Eigen::VectorXd F_hydro;
-    Eigen::VectorXd F_hydroNoInertia;
+    Eigen::VectorXd m_F_hydro;
+    Eigen::VectorXd m_F_hydroNoInertia;
 
     // constants
-    const double unitSphereVol{4.0 / 3.0 * M_PI};
-    const double c1_2{0.50};
-    const double c2_3{2.0 / 3.0};
-    const double c3_2{1.50};
-    const double c15_2{7.50};
+    const double m_unitSphereVol{4.0 / 3.0 * M_PI};
+    const double m_c1_2{0.50};
+    const double m_c2_3{2.0 / 3.0};
+    const double m_c3_2{1.50};
+    const double m_c15_2{7.50};
 
     void
     calcParticleDistances();
