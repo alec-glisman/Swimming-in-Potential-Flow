@@ -24,9 +24,10 @@ engine::engine(systemData& sys)
 
     // Initialize progressBar
     spdlog::get(m_logName)->info("Initializing progressBar");
-    unsigned int num_step = ceil(system->t() / system->dt());
+    int num_step = floor(system->tf() / system->dt());
+    spdlog::get(m_logName)->info("Numer of integration steps: {0}", num_step);
     unsigned int barWidth = 70;
-    progressBar           = std::make_shared<ProgressBar>(num_step, barWidth);
+    progressBar = std::make_shared<ProgressBar>(static_cast<unsigned int>(num_step), barWidth);
 }
 
 engine::~engine()
@@ -40,8 +41,10 @@ engine::run()
     spdlog::get(m_logName)->info("Starting engine run");
     progressBar->display(); // display the bar
 
-    int write_step   = (int)ceil(system->tf() / system->dt() / system->numStepsOutput());
-    int display_step = (int)ceil(system->tf() / system->dt() * outputPercentile);
+    int write_step   = (int)floor(system->tf() / system->dt() / system->numStepsOutput());
+    int display_step = (int)floor(system->tf() / system->dt() * outputPercentile);
+    spdlog::get(m_logName)->info("Write step: {0}", write_step);
+    spdlog::get(m_logName)->info("Display step: {0}", display_step);
 
     while (system->t() <= system->tf())
     {
