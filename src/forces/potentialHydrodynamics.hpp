@@ -47,6 +47,24 @@ class potentialHydrodynamics
         return F_hydroNoInertia;
     }
 
+    Eigen::MatrixXd
+    mTotal() const
+    {
+        return M_total;
+    }
+
+    Eigen::MatrixXd
+    mIntrinsic() const
+    {
+        return M_intrinsic;
+    }
+
+    Eigen::MatrixXd
+    mAdded() const
+    {
+        return M_added;
+    }
+
   private:
     // classes
     systemData* system;
