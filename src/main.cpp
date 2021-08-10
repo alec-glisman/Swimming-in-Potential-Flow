@@ -46,7 +46,8 @@ main(const int argc, const char* argv[])
     /* SECTION: Set-up and run simulation */
     // Initialize data structures
     auto system = std::make_shared<systemData>(inputDataFile, outputDir);
-    auto eng    = std::make_shared<engine>(system);
+    system->parseGSD();
+    auto eng = std::make_shared<engine>(system);
 
     // Run simulations
     eng->run();
