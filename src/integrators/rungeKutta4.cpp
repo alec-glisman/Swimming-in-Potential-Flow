@@ -7,6 +7,7 @@
 rungeKutta4::rungeKutta4(systemData& sys, potentialHydrodynamics& hydro)
 {
     // save classes
+    system   = &sys;
     potHydro = &hydro;
 
     // Initialize logger
