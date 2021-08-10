@@ -14,35 +14,17 @@ ADD_LIBRARY(Catch INTERFACE)
 # Add test executable
 ADD_EXECUTABLE(tests testsMain.cpp testsSimulationBuild.cpp)
 
-IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
-
-    TARGET_LINK_LIBRARIES(
-        tests
-        PRIVATE
-        ${Boost_LIBRARIES}
-        Catch2::Catch2
-        spdlog::spdlog
-        data_io
-        simulation_system
-        forces
-        integrators
-        )
-
-ELSEIF(CMAKE_BUILD_TYPE STREQUAL "Release")
-
-    TARGET_LINK_LIBRARIES(
-        tests
-        PRIVATE
-        ${Boost_LIBRARIES}
-        Catch2::Catch2
-        spdlog::spdlog
-        data_io
-        simulation_system
-        forces
-        integrators
-        )
-
-ENDIF()
+TARGET_LINK_LIBRARIES(
+    tests
+    PRIVATE
+    ${Boost_LIBRARIES}
+    Catch2::Catch2
+    spdlog::spdlog
+    data_io
+    simulation_system
+    forces
+    integrators
+    )
 
 ADD_TEST(NAME tests COMMAND tests)
 

@@ -14,7 +14,9 @@
 - [ ] Write leading order hydrodynamics calculation
   - [ ] Check sign of added mass matrix and gradient
 - [ ] Write RKF45 integration function
+
 - [x] Convert raw pointers into smart pointers
+- [x] Figure out why profile build is not linking as expected
 
 ## Additional features
 

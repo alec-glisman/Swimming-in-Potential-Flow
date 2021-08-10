@@ -17,32 +17,14 @@ ADD_SUBDIRECTORY(integrators)
 # Main project executable
 ADD_EXECUTABLE(bodies_in_potential_flow main.cpp)
 
-IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
-
-    TARGET_LINK_LIBRARIES(
-        bodies_in_potential_flow
-        PRIVATE
-        ${Boost_LIBRARIES}
-        Catch2::Catch2
-        spdlog::spdlog
-        data_io
-        simulation_system
-        forces
-        integrators
-        )
-
-ELSEIF(CMAKE_BUILD_TYPE STREQUAL "Release")
-
-    TARGET_LINK_LIBRARIES(
-        bodies_in_potential_flow
-        PRIVATE
-        ${Boost_LIBRARIES}
-        Catch2::Catch2
-        spdlog::spdlog
-        data_io
-        simulation_system
-        forces
-        integrators
-        )
-
-ENDIF()
+TARGET_LINK_LIBRARIES(
+    bodies_in_potential_flow
+    PRIVATE
+    ${Boost_LIBRARIES}
+    Catch2::Catch2
+    spdlog::spdlog
+    data_io
+    simulation_system
+    forces
+    integrators
+    )
