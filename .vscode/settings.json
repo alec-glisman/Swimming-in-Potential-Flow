@@ -120,6 +120,8 @@
         "cinttypes": "cpp",
         "*.ipp": "cpp",
         "__functional_03": "cpp",
-        "nonlinearoptimization": "cpp"
+        "nonlinearoptimization": "cpp",
+        "unordered_set": "cpp",
+        "valarray": "cpp"
     }
 }
