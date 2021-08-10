@@ -35,31 +35,31 @@ class potentialHydrodynamics
     void
     update();
 
-    Eigen::VectorXd
+    const Eigen::VectorXd&
     fHydro() const
     {
         return F_hydro;
     }
 
-    Eigen::VectorXd
+    const Eigen::VectorXd&
     fHydroNoInertia() const
     {
         return F_hydroNoInertia;
     }
 
-    Eigen::MatrixXd
+    const Eigen::MatrixXd&
     mTotal() const
     {
         return M_total;
     }
 
-    Eigen::MatrixXd
+    const Eigen::MatrixXd&
     mIntrinsic() const
     {
         return M_intrinsic;
     }
 
-    Eigen::MatrixXd
+    const Eigen::MatrixXd&
     mAdded() const
     {
         return M_added;
