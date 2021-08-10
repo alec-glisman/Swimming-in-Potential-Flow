@@ -35,6 +35,18 @@ class potentialHydrodynamics
     void
     update();
 
+    Eigen::VectorXd
+    fHydro() const
+    {
+        return F_hydro;
+    }
+
+    Eigen::VectorXd
+    fHydroNoInertia() const
+    {
+        return F_hydroNoInertia;
+    }
+
   private:
     // classes
     systemData* system;
