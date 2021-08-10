@@ -29,7 +29,7 @@ class systemData;
 class rungeKutta4
 {
   public:
-    rungeKutta4(systemData& sys, potentialHydrodynamics& hydro);
+    rungeKutta4(std::shared_ptr<systemData> sys, std::shared_ptr<potentialHydrodynamics> hydro);
 
     ~rungeKutta4();
 
@@ -41,8 +41,8 @@ class rungeKutta4
     acceleration_update(Eigen::VectorXd& acc);
 
     // classes
-    systemData*             m_system;
-    potentialHydrodynamics* m_potHydro;
+    std::shared_ptr<systemData>             m_system;
+    std::shared_ptr<potentialHydrodynamics> m_potHydro;
 
     // logging
     std::string m_logFile;

@@ -7,10 +7,10 @@
 // REVIEW[epic=Debug]: Uncomment line below to prevent all runtime checks from executing in debug
 #define NO_HYDRO_CHECK
 
-potentialHydrodynamics::potentialHydrodynamics(systemData& sys)
+potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
 {
     // save classes
-    m_system = &sys;
+    m_system = sys;
 
     // Initialize logger
     m_logFile   = m_system->outputDir() + "/logs/" + m_logName + "-log.txt";

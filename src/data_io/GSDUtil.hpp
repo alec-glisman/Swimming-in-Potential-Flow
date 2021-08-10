@@ -29,9 +29,9 @@ class systemData;
 class GSDUtil
 {
   public:
-    GSDUtil(systemData& sys);
+    GSDUtil(std::shared_ptr<systemData> sys);
 
-    GSDUtil(systemData& sys, uint64_t frame);
+    GSDUtil(std::shared_ptr<systemData> sys, uint64_t frame);
 
     ~GSDUtil();
 
@@ -62,7 +62,7 @@ class GSDUtil
     writeParticles();
 
     // classes
-    systemData* m_system;
+    std::shared_ptr<systemData> m_system;
 
     // GSD
     uint64_t m_frame;

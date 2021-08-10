@@ -28,7 +28,7 @@ class systemData;
 class potentialHydrodynamics
 {
   public:
-    potentialHydrodynamics(systemData& sys);
+    potentialHydrodynamics(std::shared_ptr<systemData> sys);
 
     ~potentialHydrodynamics();
 
@@ -67,7 +67,7 @@ class potentialHydrodynamics
 
   private:
     // classes
-    systemData* m_system;
+    std::shared_ptr<systemData> m_system;
 
     // logging
     std::string m_logFile;

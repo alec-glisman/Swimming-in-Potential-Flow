@@ -36,7 +36,7 @@ class systemData;
 class engine
 {
   public:
-    engine(systemData& sys);
+    engine(std::shared_ptr<systemData> sys);
 
     ~engine();
 
@@ -48,7 +48,7 @@ class engine
     integrate();
 
     // classes
-    systemData*                             m_system;
+    std::shared_ptr<systemData>             m_system;
     std::shared_ptr<potentialHydrodynamics> m_potHydro;
     std::shared_ptr<rungeKutta4>            m_rk4Integrator;
     std::shared_ptr<ProgressBar>            m_progressBar;

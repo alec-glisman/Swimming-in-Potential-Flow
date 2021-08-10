@@ -4,11 +4,12 @@
 
 #include <rungeKutta4.hpp>
 
-rungeKutta4::rungeKutta4(systemData& sys, potentialHydrodynamics& hydro)
+rungeKutta4::rungeKutta4(std::shared_ptr<systemData>             sys,
+                         std::shared_ptr<potentialHydrodynamics> hydro)
 {
     // save classes
-    m_system   = &sys;
-    m_potHydro = &hydro;
+    m_system   = sys;
+    m_potHydro = hydro;
 
     // Initialize logger
     m_logFile   = m_system->outputDir() + "/logs/" + m_logName + "-log.txt";
@@ -37,7 +38,7 @@ rungeKutta4::integrate()
     Eigen::VectorXd a1 = m_system->accelerations;
 
     /* Step 2: k2 = f(t + h/2, y + h*k1/2) */
-    Eigen::VectorXd x2          = x1 + (0.5 * dt) * v1;
+    Eigen::VectorXd x2            = x1 + (0.5 * dt) * v1;
     m_system->positions.noalias() = x2;
     m_potHydro->update();
     Eigen::VectorXd v2 = v1 + (0.5 * dt) * a1;
@@ -45,7 +46,7 @@ rungeKutta4::integrate()
     acceleration_update(a2);
 
     /* Step 3: k3 = f(t + h/2, y + h/2*k2) */
-    Eigen::VectorXd x3          = x1 + (0.5 * dt) * v2;
+    Eigen::VectorXd x3            = x1 + (0.5 * dt) * v2;
     m_system->positions.noalias() = x3;
     m_potHydro->update();
     Eigen::VectorXd v3 = v1 + (0.5 * dt) * a2;
@@ -53,7 +54,7 @@ rungeKutta4::integrate()
     acceleration_update(a3);
 
     /* Step 4: k4 = f(t + h, y + h*k3) */
-    Eigen::VectorXd x4          = x1 + dt * v3;
+    Eigen::VectorXd x4            = x1 + dt * v3;
     m_system->positions.noalias() = x4;
     m_potHydro->update();
     Eigen::VectorXd v4 = v1 + dt * a3;

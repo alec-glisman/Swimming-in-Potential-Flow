@@ -4,10 +4,10 @@
 
 #include <engine.hpp>
 
-engine::engine(systemData& sys)
+engine::engine(std::shared_ptr<systemData> sys)
 {
     // save classes
-    m_system = &sys;
+    m_system = sys;
 
     // Initialize logger
     m_logFile   = m_system->outputDir() + "/logs/" + m_logName + "-log.txt";
@@ -16,11 +16,11 @@ engine::engine(systemData& sys)
 
     // Initialize forces
     spdlog::get(m_logName)->info("Initializing potential hydrodynamics");
-    m_potHydro = std::make_shared<potentialHydrodynamics>(sys);
+    m_potHydro = std::make_shared<potentialHydrodynamics>(m_system);
 
     // Initialize integrator
     spdlog::get(m_logName)->info("Initializing integrator");
-    m_rk4Integrator = std::make_shared<rungeKutta4>(sys, *m_potHydro);
+    m_rk4Integrator = std::make_shared<rungeKutta4>(m_system, m_potHydro);
 
     // Initialize progressBar
     spdlog::get(m_logName)->info("Initializing progressBar");
