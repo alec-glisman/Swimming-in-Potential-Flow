@@ -30,12 +30,12 @@ wca_epsilon = np.array([0.0], dtype=np.float32)
 wca_sigma = np.array([3.0*a], dtype=np.float32)
 
 # Initial positions
-R_1 = np.array([1.0, 0.0, wall_separation], dtype=np.float32)
+R_1 = np.array([5.0, 0.0, wall_separation], dtype=np.float32)
 R_2 = np.array([0.0, 0.0, wall_separation], dtype=np.float32)
-R_3 = np.array([-1.0, 0.0, wall_separation], dtype=np.float32)
-R_4 = np.array([1.0, 0.0, -wall_separation], dtype=np.float32)
+R_3 = np.array([-5.0, 0.0, wall_separation], dtype=np.float32)
+R_4 = np.array([5.0, 0.0, -wall_separation], dtype=np.float32)
 R_5 = np.array([0.0, 0.0, -wall_separation], dtype=np.float32)
-R_6 = np.array([-1.0, 0.0, -wall_separation], dtype=np.float32)
+R_6 = np.array([-5.0, 0.0, -wall_separation], dtype=np.float32)
 
 # Initial velocities
 U_1 = np.array([1.0, 0.0, 0.0], dtype=np.float32)
