@@ -14,6 +14,7 @@
 - [ ] Write leading order hydrodynamics calculation
   - [ ] Check sign of added mass matrix and gradient
 - [ ] Write RKF45 integration function
+- [ ] Convert raw pointers into smart pointers
 
 ## Additional features
 
