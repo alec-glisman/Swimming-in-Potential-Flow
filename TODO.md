@@ -12,6 +12,7 @@
 - [x] Figure out why input assertions seem to pass, but data not loaded into class??
 - [x] Add logging of startup behavior
 - [ ] Write leading order hydrodynamics calculation
+  - [ ] Check sign of added mass matrix and gradient
 - [ ] Write RKF45 integration function
 
 ## Additional features
