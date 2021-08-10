@@ -29,11 +29,8 @@ main(const int argc, const char* argv[])
     // Check input is of correct length
     if (argc < 3)
     {
-
-        std::cout << "ERROR: incorrect number of arguments!!!"
-                  << "[executable] [input data] [output directory]" << std::endl;
-
-        return EXIT_FAILURE;
+        throw std::runtime_error(
+            "ERROR: incorrect number of arguments!!! [executable][input data][output directory]");
     }
 
     // Get input files
