@@ -5,7 +5,7 @@
 #include <potentialHydrodynamics.hpp>
 
 // REVIEW[epic=Debug]: Uncomment line below to prevent all runtime checks from executing in debug
-// #define NO_HYDRO_CHECK
+#define NO_HYDRO_CHECK
 
 potentialHydrodynamics::potentialHydrodynamics(systemData& sys)
 {
