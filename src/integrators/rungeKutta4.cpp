@@ -101,5 +101,14 @@ rungeKutta4::integrate()
 void
 rungeKutta4::acceleration_update(Eigen::VectorXd& acc)
 {
-    // TODO
+    /*! Solve linear equation of the form: Ax = b, where x is the unknown acceleration vector
+     * A is the total mass matrix, and b are the known parts of the forces */
+    Eigen::VectorXd f = Eigen::VectorXd::Zero(m_system->numDim() * m_system->numParticles());
+
+    if (m_system->particleDensity() >= 0) // hydrodynamic force
+    {
+        f.noalias() += m_potHydro->fHydroNoInertia();
+    }
+
+    acc.noalias() = m_potHydro->mTotal().llt().solve(f);
 }
