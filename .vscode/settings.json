@@ -124,5 +124,8 @@
         "unordered_set": "cpp",
         "valarray": "cpp",
         "typeindex": "cpp"
-    }
+    },
+    "python.analysis.extraPaths": [
+        "./python"
+    ]
 }
