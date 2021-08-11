@@ -23,6 +23,10 @@ temp*
 Testing
 tests/temp_tests
 **/temp_tests
+
+# traces
+*.trace
+
 # !SECTION (DATA)
 
 
