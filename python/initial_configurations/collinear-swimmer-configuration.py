@@ -1,6 +1,18 @@
 # External dependencies
 import numpy as np  # mathematical data structures
 import gsd.hoomd  # Simulation data-structure
+from optparse import OptionParser  # Get user input
+
+# Parse user input
+parser = OptionParser()
+parser.add_option("--dt", dest="u_dt",
+                  help="(dimensionless) time-step for numerical integration", metavar="double")
+parser.add_option("--R_avg", dest="u_R_avg",
+                  help="(dimensionless) average inter-particle pair separation during articulation period", metavar="double")
+parser.add_option("--phase_angle", dest="u_phase_angle",
+                  help="phase angle between oscillating pairs", metavar="double")
+parser.add_option("--epsilon", dest="u_epsilon",
+                  help="(dimensionless) relative oscillation amplitude compared to average inter-particle separation", metavar="double")
 
 
 # SECTION: Parameters
@@ -107,3 +119,12 @@ s.particles.moment_inertia = [  # initial accelerations
 traj = gsd.hoomd.open(name=gsd_name, mode='wb')
 traj.append(s)
 # !SECTION: (Trajectory initialization)
+
+# For use when being called from command line
+if __name__ == "__main__":
+    options, remainder = parser.parse_args(sys.argv[1:])
+
+    RelPath = str(options.user_relPath)
+    OutputDir = str(options.user_outputDir)
+
+    aggregate_plots(RelPath, OutputDir)
