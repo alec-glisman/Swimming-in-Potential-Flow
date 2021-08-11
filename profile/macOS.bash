@@ -8,7 +8,7 @@ output_dir="${base_dir}/profile/MacOS"
 
 # Apple instruments arguments
 instruments_template="Time Profiler"
-trace_output="${output_dir}bodies-in-potential-flow-profile.trace"
+trace_output="${output_dir}/bodies-in-potential-flow-profile.trace"
 executable="${base_dir}/build_profile/src/bodies_in_potential_flow"
 args="${base_dir}/temp/test.gsd ${base_dir}/temp/output"
 
