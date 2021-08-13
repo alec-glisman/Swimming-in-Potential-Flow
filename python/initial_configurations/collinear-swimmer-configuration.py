@@ -80,11 +80,15 @@ def setInitialConditions():
     pos[0] = R_avg  # particle 0
     pos[6] = - R_avg + (U0 / omega) * np.sin(phase_angle)
 
+    # REVIEW[epic=Debug]: vel and acc cannot be all zeros, as hoomd calls these "default" values and will not write them to save space
+
     # velocity NOTE[epic=Assumptions]: must be calculated in simulation system (C++)
     vel = np.zeros_like(pos, dtype=np.float32)
+    vel[0] = 1e-16
 
     # acceleration NOTE[epic=Assumptions]: must be calculated in simulation system (C++)
     acc = np.zeros_like(pos, dtype=np.float32)
+    acc[0] = 1e-16
 
     # output data
     gsd_class.setKinematics(pos, vel, acc)
