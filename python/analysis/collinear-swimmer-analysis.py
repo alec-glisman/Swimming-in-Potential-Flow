@@ -3,6 +3,7 @@
 # External Dependencies
 import os                          # Access system file-tree
 import sys                         # Modify system parameters
+import numpy as np                 # Data structures
 from optparse import OptionParser  # Get user input
 
 # Internal Dependencies
@@ -65,8 +66,8 @@ def aggregate_plots(relative_path, output_dir):
 
     for i in range(len(metadata)):
         CoM_disp_x[i] = float(
-            metadata[i]["KPIs"]["final_CoM_displacement_x"]) / (numPeriods * a)
-        relDispEqbm[i] = float(metadata[i]["KPIs"]["rel_disp_eqbm"]) / (a)
+            metadata[i]["KPIs"]["final_CoM_displacement_x"])
+        relDispEqbm[i] = float(metadata[i]["KPIs"]["rel_disp_eqbm"])
         phaseShift[i] = float(metadata[i]["constraint"]
                               ["1D_kinematic"]["phase_angle"])
 
