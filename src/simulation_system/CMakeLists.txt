@@ -13,7 +13,7 @@ IF(DEFINED CMAKE_CUDA_COMPILER)
     TARGET_LINK_LIBRARIES(
         simulation_system
         PRIVATE
-        spdlog::spdlog
+        spdlog::spdlog_header_only
         Eigen3::Eigen
         data_io
     )
@@ -37,7 +37,7 @@ ELSE()
     TARGET_LINK_LIBRARIES(
         simulation_system
         PRIVATE
-        spdlog::spdlog
+        spdlog::spdlog_header_only
         Eigen3::Eigen
         data_io
     )

@@ -20,7 +20,7 @@ ADD_EXECUTABLE(bodies_in_potential_flow main.cpp)
 TARGET_LINK_LIBRARIES(
     bodies_in_potential_flow
     PRIVATE
-    spdlog::spdlog
+    spdlog::spdlog_header_only
     ${Boost_LIBRARIES}
     Eigen3::Eigen
     Catch2::Catch2

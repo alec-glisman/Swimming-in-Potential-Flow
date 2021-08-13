@@ -19,7 +19,7 @@ TARGET_LINK_LIBRARIES(
     PRIVATE
     ${Boost_LIBRARIES}
     Catch2::Catch2
-    spdlog::spdlog
+    spdlog::spdlog_header_only
     data_io
     simulation_system
     forces

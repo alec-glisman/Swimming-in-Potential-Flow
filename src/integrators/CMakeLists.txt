@@ -10,7 +10,7 @@ IF(DEFINED CMAKE_CUDA_COMPILER)
     TARGET_LINK_LIBRARIES(
         integrators
         PRIVATE
-        spdlog::spdlog
+        spdlog::spdlog_header_only
         Eigen3::Eigen
     )
 
@@ -30,7 +30,7 @@ ELSE()
     TARGET_LINK_LIBRARIES(
         integrators
         PRIVATE
-        spdlog::spdlog
+        spdlog::spdlog_header_only
         Eigen3::Eigen
     )
 
