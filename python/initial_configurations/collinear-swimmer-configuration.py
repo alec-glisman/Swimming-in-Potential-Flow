@@ -84,11 +84,11 @@ def setInitialConditions():
 
     # velocity NOTE[epic=Assumptions]: must be calculated in simulation system (C++)
     vel = np.zeros_like(pos, dtype=np.float32)
-    vel[0] = 1e-16
+    vel[0] = 1e-15
 
     # acceleration NOTE[epic=Assumptions]: must be calculated in simulation system (C++)
     acc = np.zeros_like(pos, dtype=np.float32)
-    acc[0] = 1e-16
+    acc[0] = 1e-15
 
     # output data
     gsd_class.setKinematics(pos, vel, acc)
