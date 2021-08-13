@@ -67,7 +67,7 @@ if ( (index($host, "MacBook-Pro") != -1) or (index($host, "MBP") != -1) ) {
     $numThreads  = "";
 }
 my $build         = "Release";                # OPTIONS: Release, Debug
-my $enableTesting = "False";                   # OPTIONS: (False) OFF, (True) ON
+my $enableTesting = "True";                   # OPTIONS: (False) OFF, (True) ON
 my $buildDir      = "build";                  # Title whatever you want build folder to be
 my $generator     = "Unix Makefiles";         # ONLY TESTED WITH UNIX
 my $cwd           = cwd();
