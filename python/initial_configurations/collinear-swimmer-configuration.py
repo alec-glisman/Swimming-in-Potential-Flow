@@ -1,6 +1,7 @@
 # External dependencies
-import numpy as np  # mathematical data structures
-import gsd.hoomd  # Simulation data-structure
+import numpy as np                 # mathematical data structures
+import gsd.hoomd                   # Simulation data-structure
+import sys                         # access system data
 from optparse import OptionParser  # Get user input
 
 # Parse user input
@@ -126,5 +127,3 @@ if __name__ == "__main__":
 
     RelPath = str(options.user_relPath)
     OutputDir = str(options.user_outputDir)
-
-    aggregate_plots(RelPath, OutputDir)
