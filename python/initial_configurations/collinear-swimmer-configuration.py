@@ -135,4 +135,4 @@ if __name__ == "__main__":
     setSystemData()         # set data specific to given simulation system
     gsd_class.saveSnapshot()
 
-# !SECTION
+# !SECTION (For use when being called from command line)
