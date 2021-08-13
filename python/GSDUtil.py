@@ -103,9 +103,9 @@ class GSDUtil:
         A = np.array(A, dtype=np.float32)
 
         # Save kinematics
-        self.snapshot.particles.position = [X]
-        self.snapshot.particles.velocity = [U]
-        self.snapshot.particles.moment_inertia = [A]
+        self.snapshot.particles.position = X
+        self.snapshot.particles.velocity = U
+        self.snapshot.particles.moment_inertia = A
 
     def saveSnapshot(self):
         self.trajectory.append(self.snapshot)
