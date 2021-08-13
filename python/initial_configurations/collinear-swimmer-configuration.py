@@ -4,16 +4,21 @@ import gsd.hoomd                   # Simulation data-structure
 import sys                         # access system data
 from optparse import OptionParser  # Get user input
 
-# Parse user input
+# SECTION: Parse user input options
 parser = OptionParser()
 parser.add_option("--dt", dest="u_dt",
-                  help="(dimensionless) time-step for numerical integration", metavar="double")
+                  help="(dimensionless) time-step for numerical integration",
+                  metavar="double")
 parser.add_option("--R_avg", dest="u_R_avg",
-                  help="(dimensionless) average inter-particle pair separation during articulation period", metavar="double")
+                  help="(dimensionless) average inter-particle pair separation during articulation period",
+                  metavar="double")
 parser.add_option("--phase_angle", dest="u_phase_angle",
-                  help="phase angle between oscillating pairs", metavar="double")
+                  help="phase angle between oscillating pairs",
+                  metavar="double")
 parser.add_option("--epsilon", dest="u_epsilon",
-                  help="(dimensionless) relative oscillation amplitude compared to average inter-particle separation", metavar="double")
+                  help="(dimensionless) relative oscillation amplitude compared to average inter-particle separation",
+                  metavar="double")
+# !SECTION (Parse user input options)
 
 
 # SECTION: Parameters
@@ -123,7 +128,10 @@ traj.append(s)
 
 # For use when being called from command line
 if __name__ == "__main__":
+
     options, remainder = parser.parse_args(sys.argv[1:])
 
-    RelPath = str(options.user_relPath)
-    OutputDir = str(options.user_outputDir)
+    dt = np.double(options.u_dt)
+    R_avg = np.double(options.u_R_avg)
+    phase_angle = np.double(options.u_phase_angle)
+    epsilon = np.double(options.u_epsilon)
