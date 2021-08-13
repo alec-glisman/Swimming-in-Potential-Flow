@@ -60,15 +60,15 @@ def aggregate_plots(relative_path, output_dir):
         raise IOError("FAILURE!!")
 
     # Loop through all simulations and grab the final CoM displacement (x-axis)
-    CoM_disp_x = np.zeros(len(metadata))
-    relDispEqbm = np.zeros(len(metadata))
-    phaseShift = np.zeros(len(metadata))
+    CoM_disp_x = np.zeros(len(gsd_files))
+    relDispEqbm = np.zeros(len(gsd_files))
+    phaseShift = np.zeros(len(gsd_files))
 
-    for i in range(len(metadata)):
+    for i in range(len(gsd_files)):
         CoM_disp_x[i] = float(
-            metadata[i]["KPIs"]["final_CoM_displacement_x"])
-        relDispEqbm[i] = float(metadata[i]["KPIs"]["rel_disp_eqbm"])
-        phaseShift[i] = float(metadata[i]["constraint"]
+            gsd_files[i]["KPIs"]["final_CoM_displacement_x"])
+        relDispEqbm[i] = float(gsd_files[i]["KPIs"]["rel_disp_eqbm"])
+        phaseShift[i] = float(gsd_files[i]["constraint"]
                               ["1D_kinematic"]["phase_angle"])
 
 # !SECTION (Load data)
