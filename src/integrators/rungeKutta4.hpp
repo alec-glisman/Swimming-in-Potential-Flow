@@ -15,10 +15,10 @@
 
 /* Include all external project dependencies */
 // eigen3 (Linear algebra)
-#include <Eigen/Core>
-#include <Eigen/Eigen>
+#include <eigen3/Eigen/Core>
+#include <eigen3/Eigen/Eigen>
 #define EIGEN_USE_MKL_ALL
-#include <Eigen/src/Core/util/MKL_support.h>
+#include <eigen3/Eigen/src/Core/util/MKL_support.h>
 // Logging
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
