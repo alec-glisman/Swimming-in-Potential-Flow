@@ -65,6 +65,7 @@ def aggregate_plots(relative_path, output_dir):
     phaseShift = np.zeros(len(gsd_files))
 
     for i in range(len(gsd_files)):
+
         CoM_disp_x[i] = float(
             gsd_files[i]["KPIs"]["final_CoM_displacement_x"])
         relDispEqbm[i] = float(gsd_files[i]["KPIs"]["rel_disp_eqbm"])
@@ -104,7 +105,7 @@ def aggregate_plots(relative_path, output_dir):
         CoM_disp_x), zorder=2, label="Simulation")
     CoM_PlotLL.save_plot()
 
-    # PLOT: net displacement of swimmer vs phase Shift
+    # PLOT: net displacement of swimmer vs phase shift
     phaseShift_Plot = PlotStyling(r"Phase Shift, $\delta$", r"$\Delta Z / a$",
                                   title=None, loglog=False,
                                   outputDir=output_dir, figName="collinear-swimmer-phaseShift", eps=epsOutput,
