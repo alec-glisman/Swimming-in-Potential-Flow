@@ -81,10 +81,10 @@ def setInitialConditions():
     pos[6] = - R_avg + (U0 / omega) * np.sin(phase_angle)
 
     # velocity NOTE[epic=Assumptions]: must be calculated in simulation system (C++)
-    vel = np.zeros_like(pos)
+    vel = np.zeros_like(pos, dtype=np.float32)
 
     # acceleration NOTE[epic=Assumptions]: must be calculated in simulation system (C++)
-    acc = np.zeros_like(vel)
+    acc = np.zeros_like(pos, dtype=np.float32)
 
     # output data
     gsd_class.setKinematics(pos, vel, acc)
