@@ -53,20 +53,15 @@ my $numThreads = "";
 if ( (index($host, "MacBook-Pro") != -1) or (index($host, "MBP") != -1) ) {
     $compiler    = "macOS"; 
     $numThreads = "16";
-} elsif ( index($host, "stokes") != -1 ) {
-    $compiler    = "stokes"; 
-    $numThreads  = "16";
 } elsif (( index($host, "Alec-Glisman-PC-Ubuntu") != -1 ) or ( index($host, "Alec-Glisman-PC-Windows") != -1 ) or ( index($host, "s") != -1 )) {
     $compiler    = "PC-Ubuntu";
     $numThreads  = "24";
 } elsif (( index($host, "shear") != -1 ) or ( index($host, "s") != -1 )) {
     $compiler    = "shear";
     $numThreads  = "";
-} else {
-    $compiler    = "Docker"; 
-    $numThreads  = "";
 }
-my $build         = "Release";                # OPTIONS: Release, Debug
+
+my $build         = "Release";                # OPTIONS: Release, Debug, Profile
 my $enableTesting = "True";                   # OPTIONS: (False) OFF, (True) ON
 my $buildDir      = "build";                  # Title whatever you want build folder to be
 my $generator     = "Unix Makefiles";         # ONLY TESTED WITH UNIX
