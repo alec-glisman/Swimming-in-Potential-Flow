@@ -1,56 +1,60 @@
+# SECTION: Depdencendies
+
 # External Dependencies
-import json                        # Load and parse simulation metadata
 import os                          # Access system file-tree
 import sys                         # Modify system parameters
-import matplotlib.pyplot as plt    # Plots (duh)
-import numpy as np                 # Data structures
 from optparse import OptionParser  # Get user input
 
 # Internal Dependencies
 sys.path.insert(0, os.getcwd() + '/python')
 from plotStyling import PlotStyling  # noqa: E402
+from GSDUtil import GSDUtil  # noqa: E402
+
+# !SECTION (Dependencies)
 
 
-# NOTE: Parse user input
+# SECTION: User input options
+
 parser = OptionParser()
-parser.add_option("--relPath", dest="user_relPath",
-                  help="Confine bodies to only move in the x direction", metavar="PathString")
-parser.add_option("--outputDir", dest="user_outputDir",
-                  help="The ratio of the greater to lesser spring constants", metavar="PathString")
+parser.add_option("--relative-path", dest="u_relative_path",
+                  help="Path to parent of simulation data",
+                  metavar="string")
+parser.add_option("--output-dir", dest="u_output_dir",
+                  help="Directory to output plots (relative to relative-path)",
+                  metavar="string")
+
+
+# !SECTION: (User input options)
 
 
 # Date that simulations of interest were run
-def aggregate_plots(relPath, outputDir):
+def aggregate_plots(relative_path, output_dir):
 
-    # Parameters for function
-    outputDir = relPath + outputDir + "/"
-    metadata = []  # Lists to store loaded data
+    # SECTION: Parameters for function
+
+    output_dir = relative_path + "/" + output_dir + "/"
+    gsd_files = []
     epsOutput = True
-    numPeriods = 1
 
-    # REVIEW
-    omega = 0.0
+# !SECTION (Parameters for function)
 
-    # Load all data files
+
+# SECTION: Load data
+
     try:
         # Loop through all subdirectories in the 'data' directory
-        for root, dirs, files in os.walk(relPath, topdown=True):
+        for root, dirs, files in os.walk(relative_path, topdown=True):
             dirs.sort()  # Sort the directories
 
-            # Loop through all files in given directory
-            for file in files:
+            for file in files:  # Loop through all files in given directory
+                if (".gsd" in file):
+                    with open(root + "/" + file) as g:
+                        gsd_files.append(GSDUtil(g, create_gsd=False))
 
-                # Only read data here from json files
-                if ("json" in file):
-                    with open(root + "/" + file) as j:
-                        metadata.append(json.load(j))
-
-        # Find \omega and U_0 from metadata output
-        # omega   = float(metadata[0]["constraint"]["1D_kinematic"]["omega"])
-        a = float(metadata[0]["scaling"]["length"])
+            assert(len(gsd_files) > 0)
 
     except:  # No files found
-        print(f"No files found in relPath {relPath}")
+        print(f"No files found in relPath {relative_path}")
         print(f"Failure to load data")
         raise IOError("FAILURE!!")
 
@@ -65,6 +69,11 @@ def aggregate_plots(relPath, outputDir):
         relDispEqbm[i] = float(metadata[i]["KPIs"]["rel_disp_eqbm"]) / (a)
         phaseShift[i] = float(metadata[i]["constraint"]
                               ["1D_kinematic"]["phase_angle"])
+
+# !SECTION (Load data)
+
+
+# SECTION: Plots
 
     # PLOT: net displacement of swimmer vs. distance between spheres
     CoM_Plot = PlotStyling(r"$|X_0 / a |$", r"$ \Delta Z / a $",
@@ -107,34 +116,18 @@ def aggregate_plots(relPath, outputDir):
     phaseShift_Plot.set_yaxis_scientific()
     phaseShift_Plot.save_plot()
 
-    # Output data to log file
-    file = outputDir + "output.txt"
-    with open(file, "w") as f:
-        # Find scaling of CoM_dis_x vs. relDispEqbm the simulation data points
-        with CoM_Plot.suppress_stdout():
-            m, b = np.polyfit(np.log(relDispEqbm),
-                              np.log(np.abs(CoM_disp_x)), 1)
-        print(f"ln(CoM_disp_x) = {m} * ln(relDispEqbm) + {b}", file=f)
-        print("\n", file=f)
-
-        # Dump any other relevant data
-        print(f"omega = {omega}",   file=f)
-        print(f"a = {a}",           file=f)
-        print("",                   file=f)
-        print("phaseShift",      file=f)
-        print(phaseShift,        file=f)
-        print("relDispEqbm",     file=f)
-        print(relDispEqbm,       file=f)
-        print("CoM_disp_x",      file=f)
-        print(CoM_disp_x,        file=f)
-        print("\n",              file=f)
+# !SECTION (Plots)
 
 
-# For use when being called from C++
+# SECTION: For use when being called from command line
 if __name__ == "__main__":
+
+    # parse user input
     options, remainder = parser.parse_args(sys.argv[1:])
+    relative_path = str(options.u_relative_path)
+    output_dir = str(options.u_output_dir)
 
-    RelPath = str(options.user_relPath)
-    OutputDir = str(options.user_outputDir)
+    # generate plots
+    aggregate_plots(relative_path, output_dir)
 
-    aggregate_plots(RelPath, OutputDir)
+# !SECTION (For use when being called from command line)
