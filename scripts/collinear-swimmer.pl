@@ -1,5 +1,7 @@
 #!/usr/bin/env perl
 
+# SECTION: Dependencies
+
 # External dependencies
 use Cwd;                          # get the current working directory
 use Sys::Hostname;                # get the hostname
@@ -14,26 +16,23 @@ use Switch;                       # switch-case control flow statements
 use strict;                       # conform to better style and conventions
 use warnings;                     # give warnings
 
-
-# TODO: Write this script
-# 1) specify variables
-# 2) generate GSD
-# 3) generate output data files
-# 4) move GSD to output location
-# 5) call simulation (configure and build first)
-# 6) analyze trajectory file
-
-
+# !SECTION (Dependencies)
 
 
 
 # SECTION: Input variables that user must specify before running script
 
 # Input variables
+my $simulationTag    = "collinear-swimmer"
+my $projectName      = "bodies_in_potential_flow"
 my $inputDir         = "input";
 my @inputData        = ( "varyDt", "varyEpsilon", "varyPhaseAngle", "varyRelDisp" );
 my $numSimulationTypes = scalar @inputData;
 my $runSimulationSimulan = 1; # 0 only runs one simulation at a time
+
+# Python variables
+my $pythonGSDCreation = "python/initial_configurations/" . "collinear-swimmer-configuration.py"
+my $pythonAnalysis   = "python/analysis/" . "collinear-swimmer-analysis.py";
 
 # Output variables
 my $curDate          = strftime('%Y-%m-%d', localtime);
@@ -42,9 +41,6 @@ my $analysisDir      = "analysis";
 # Get the name of computer script is running on
 my $host = `uname -n`;
 chomp(my $home = `echo ~`);
-
-# REVIEW: Python variables, check analysis script is correct for simulations run
-my $pythonAnalysis   = "src/python_scripts/analysis/continuousForcedOscillation.py";
 
 # Compiler variables
 my $compiler = "";
@@ -66,7 +62,7 @@ my $buildDir      = "build";                  # Title whatever you want build fo
 my $generator     = "Unix Makefiles";         # ONLY TESTED WITH UNIX
 my $cwd           = cwd();
 
-# !SECTION  
+# !SECTION (Input variables that user must specify before running script)
 
 
 
@@ -99,18 +95,20 @@ if (${enableTesting} eq "True") {
 # Add newline characters
 print "\n\n\n";
 
-# !SECTION
+# !SECTION (Build project and make output directory)
+
 
 
 # SECTION: Loop through simulation types
 
 for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
 {
+
     # Current datetime
     my $curDateTime = strftime('%Y-%m-%d.%H-%M-%S', localtime);
 
     # Make temp output directory
-    my $tempOutputDir = "temp_" . $curDateTime . "_collinear_" .  ${inputData[$i]};
+    my $tempOutputDir = "temp_" . $curDateTime . "_" . ${simulationTag} . "_" .  ${inputData[$i]};
     make_path( $tempOutputDir );
 
     # tee the command line outputs
@@ -148,193 +146,54 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         my $jj = $j + 1;
         print "Run ${jj} of ${numSimulations} \n";
 
+        # Default parameters
+        my $gsd_path    = ${tempOutputDir} . "/" . "data.gsd";
+        my $dt          = 1e-5;
+        my $R_avg       = 10.0;
+        my $phase_angle = 1.57079632679;
+        my $epsilon     = 1e-4;
 
-        # SECTION: Modify default preferences for each simulation run
-
-        # Make a copy of 'defaultPref.in' in current tempOutputDir
-        my $uniquePrefs = "${tempOutputDir}/pref.in";
-        copy("${inputDir}/defaultPref.in", $uniquePrefs) 
-            or die "Could not copy default preferences: $!";
-
-        # Modify input data as needed
-        my $file = path( $uniquePrefs );
-        my $dataChange = path( $file )->slurp_utf8;
-        my $oldKey;
-        my $newKey;
-
-        # REVIEW: If input preferences changes, these regex strings must change
+        # Modify default preferences for each simulation run
         switch($inputData[$i]) {
-
-            case ( "varyDt" ) {
-            
-                $oldKey = '1e-6               \| ND: finite timestep';
-                $newKey = ${data[$j]} . '               | ND: finite timestep';
+            case ( "varyDt" ) {    
+                $dt = ${data[$j]};
             }
-
-            case ( "varyEpsilon" ) {
-
-                # Recalculate relDispEqbm so that max separation (D) is 10.0
-                $oldKey = '10.0               \| ND: particle pair eqbm separation';
-                $newKey = '4.0                | ND: particle pair eqbm separation';
-                $dataChange =~ s/$oldKey/$newKey/g;
-                $file->spew_utf8( $dataChange );
-
-                # Recalculate the max velocity to for the given epsilon
-                my $U0 = $data[$j] * $defaultOmegaCon * $defaultR0;
-                my $U0Str = sprintf( "%1.6e", $U0 );
-                $oldKey = '0.001              \| D \[length / time\]: particle pair max velocity';
-                $newKey = $U0Str . '            | D [length / time]: particle pair max velocity';
-            }
-
-        	case ( "varyVarEpsilon" ) {  # Golestanian (2004, PRE) Swimmer analog
-
-                # Run through both "fictitious" steps detailed in Eq. (9)
-		        for ( my $k = 0; $k < 2; $k++ ) {
-
-                    # Make a copy of 'defaultPref.in' in current tempOutputDir
-                    copy("${inputDir}/defaultPref.in", $uniquePrefs) 
-                        or die "Could not copy default preferences: $!";
-                    # Modify input data as needed
-                    $file = path( $uniquePrefs );
-                    $dataChange = path( $file )->slurp_utf8;
-             
-                    # Make Golestanian Swimmer flag true
-                    $oldKey = 'false               \| Golestanian Swimmer';
-                    $newKey = 'true                | Golestanian Swimmer';
-                    $dataChange =~ s/$oldKey/$newKey/g;
-                    $file->spew_utf8( $dataChange );
-
-                    # Make continuously deforming flag false
-                    $oldKey = 'true                \| Continuously deforming swimmer';
-                    $newKey = 'false               | Continuously deforming swimmer';
-                    $dataChange =~ s/$oldKey/$newKey/g;
-                    $file->spew_utf8( $dataChange );
-
-                    my $new_delta_len;
-                    my $delta_len_str;
-
-                    # First step: \Delta_f (D) 
-                    if ($k == 0) {
-
-                        # Nothing to change, default compression value is false
-
-  
-                    # Second step: \Delta_f (D - \epsilon)
-                    } else {
-                        
-                        # Change boolean to have the swimmer compressed on 2--3 side
-                        $oldKey = 'false               \| If Golestanian Swimmer is compressed';
-                        $newKey = 'true                | If Golestanian Swimmer is compressed';
-                    }
-
-                    $dataChange =~ s/$oldKey/$newKey/g;
-                    $file->spew_utf8( $dataChange );
-
-                    # Recalculate U0 to that we oscillate correct magnitude in position space
-                    my $varEpsilon = ${data[$j]};
-                    my $U0 = $varEpsilon * $defaultOmegaCon * 0.50;
-                    my $U0Str = sprintf( "%1.4e", $U0 );
-                    $oldKey = '0.001              \| D \[length / time\]: particle pair max velocity';
-                    $newKey = $U0Str . '        | D [length / time]: particle pair max velocity';
-                    $dataChange =~ s/$oldKey/$newKey/g;
-                    $file->spew_utf8( $dataChange );
-                    
-                    # Recalculate relDispEqbm so that max separation (D) is 10.0
-                    my $D = 10.0;
-                    my $newRelDispEqbm = $D - ( 0.50 * $varEpsilon );
-                    my $newRelDispEqbmStr = sprintf( "%1.4e", $newRelDispEqbm );
-                    $oldKey = '10.0               \| ND: particle pair eqbm separation';
-                    $newKey = $newRelDispEqbmStr . '              | ND: particle pair eqbm separation';
-
-                    # ANCHOR: Run executable: [executable] [input preferences] [output directory]
-                    if ( ($jj < $numSimulations) and ($jj % int($numThreads / 2) != 0) and ($runSimulationSimulan) ) {
-                        system( "\"${buildDir}/src/./potential_swimmer_dynamics\" ${uniquePrefs} ${tempOutputDir}/ &" ) 
-                            and die "Main project executable failed: $?, $!";
-                        sleep(5);  # brief pause before next simulation
-                    } else {
-                        system( "\"${buildDir}/src/./potential_swimmer_dynamics\" ${uniquePrefs} ${tempOutputDir}/ " ) 
-                            and die "Main project executable failed: $?, $!";            
-                    }
-                }  
-
-
-                # Make a copy of 'defaultPref.in' in current tempOutputDir
-                copy("${inputDir}/defaultPref.in", $uniquePrefs) 
-                    or die "Could not copy default preferences: $!";
-                # Modify input data as needed
-                $file = path( $uniquePrefs );
-                $dataChange = path( $file )->slurp_utf8;
-
-                # Make "continuous" swimmer analog
-                # Recalculate U0 to that we oscillate correct magnitude in position space
-                my $varEpsilon = ${data[$j]};
-                my $U0 = $varEpsilon * $defaultOmegaCon * 0.50;
-                my $U0Str = sprintf( "%1.4e", $U0 );
-                $oldKey = '0.001              \| D \[length / time\]: particle pair max velocity';
-                $newKey = $U0Str . '         | D [length / time]: particle pair max velocity';
-                $dataChange =~ s/$oldKey/$newKey/g;
-                $file->spew_utf8( $dataChange );
-                
-                # Recalculate relDispEqbm so that max separation (D) is 10.0
-                my $D = 10.0;
-                my $newRelDispEqbm = $D - ( 0.50 * $varEpsilon );
-                my $newRelDispEqbmStr = sprintf( "%1.4e", $newRelDispEqbm );
-                $oldKey = '10.0               \| ND: particle pair eqbm separation';
-                $newKey = $newRelDispEqbmStr . '              | ND: particle pair eqbm separation';
-
-			}
-
-            case ( "varyPhaseAngle" ) {
-
-                $oldKey = '1.57079632679      \| ND \[radians\]: phase angle between oscillators';
-                $newKey = ${data[$j]} . '                | ND [radians]: phase angle between oscillators';
-            }
-
             case ( "varyRelDisp" ) {
-
-                $oldKey = '10.0               \| ND: particle pair eqbm separation';
-                $newKey = ${data[$j]} . '              | ND: particle pair eqbm separation';
+                $R_avg = ${data[$j]};
             }
-
+            case ( "varyPhaseAngle" ) {
+                $phase_angle = ${data[$j]};
+            }
+            case ( "varyEpsilon" ) {
+                $epsilon = ${data[$j]};
+            }
         }
-        
-        $dataChange =~ s/$oldKey/$newKey/g;
-        $file->spew_utf8( $dataChange );
 
-        # !SECTION
+        # Generate GSD file
+        system( "python " . ${pythonGSDCreation} "--GSD-path=" . ${gsd_path} " --dt=" . ${dt} . " --R_avg=" . "${R_avg}" . " --phase-angle=" . ${phase_angle} . " --epsilon=" . ${epsilon} ) and die "Unable to generate GSD file: $?, $!";
 
 
-        # ANCHOR: Run executable: [executable] [input preferences] [output directory]
+        # ANCHOR: Run executable: [executable] [input gsd] [output directory]
         if ( ($jj < $numSimulations) and ($jj % int($numThreads / 2) != 0) and ($runSimulationSimulan) ) {
-            system( "\"${buildDir}/src/./potential_swimmer_dynamics\" ${uniquePrefs} ${tempOutputDir}/ &" ) 
+
+            system( "\"${buildDir}/src/./" . ${projectName} . "\" ${gsd_path} ${tempOutputDir} &" ) 
                 and die "Main project executable failed: $?, $!";
             sleep(5);  # brief pause before next simulation
+        
         } else {
-            system( "\"${buildDir}/src/./potential_swimmer_dynamics\" ${uniquePrefs} ${tempOutputDir}/ " ) 
+        
+            system( "\"${buildDir}/src/./" . ${projectName} . "\" . ${gsd_path} ${tempOutputDir}" ) 
                 and die "Main project executable failed: $?, $!";            
         }
     }
 
+    # NOTE: Pause for all simulations to finish
+    sleep(60);
+
 # !SECTION
    
-    # NOTE: Pause for python plots to finish (individual)
-    if ( $compiler eq "Server" ) {
-        sleep(40 * 60);
-    } elsif ( $compiler eq "Docker" ) {
-        sleep(20 * 60);
-    } else {
-        sleep(2 * 60);
-    } 
 
-    # SECTION: Run analysis scripts and clean-up
-
-    # Change to other analysis scripts as needed
-    if ($inputData[$i] eq "varyVarEpsilon" ) {
-        $pythonAnalysis = "src/python_scripts/analysis/GolestanianOscillation.py";
-    } else {
-        $pythonAnalysis   = "src/python_scripts/analysis/continuousForcedOscillation.py";
-
-    }
+# SECTION: Run analysis scripts and clean-up
 
     # Run the analysis scripts
     make_path( "${tempOutputDir}/${analysisDir}" );
@@ -342,7 +201,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         and warn "Python analysis script failed: $!";
 
     # Move all output into the "data" directory
-    my $outputDir = "data/${curDateTime}" . "_collinear_" .  ${inputData[$i]};
+    my $outputDir = "data/${curDateTime}" . "_" . ${simulationTag} . "_" . ${inputData[$i]};
     make_path($outputDir);
     system( "mv ${tempOutputDir}/* ${outputDir}" )
         and die "Moving temporary output to final output failed: $!";
@@ -354,5 +213,5 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
     # Add newline character on std-out
     print "\n";
 
-    # !SECTION
+# !SECTION
 }
