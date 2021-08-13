@@ -6,6 +6,20 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: collinear-swimmer-configuration",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": [
+                "--GSD-path=temp/test.gsd",
+                "--dt=1e-5",
+                "--R_avg=10",
+                "--phase_angle=1.57079632679",
+                "--epsilon=0.01"
+            ]
+        },
+        {
             "name": "(gdb) Main",
             "type": "cppdbg",
             "request": "launch",
