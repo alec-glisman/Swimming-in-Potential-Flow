@@ -78,7 +78,7 @@ def aggregate_plots(relative_path, output_dir):
     # PLOT: net displacement of swimmer vs. distance between spheres
     CoM_Plot = PlotStyling(r"$|X_0 / a |$", r"$ \Delta Z / a $",
                            title=None, loglog=False,
-                           outputDir=outputDir, figName="forced-potential-oscillation-CoM_x-disp", eps=epsOutput,
+                           outputDir=output_dir, figName="collinear-swimmer-CoM_x-disp", eps=epsOutput,
                            continuousColors=False)
     # Show numerical data points
     CoM_Plot.make_plot()
@@ -96,7 +96,7 @@ def aggregate_plots(relative_path, output_dir):
     # PLOT: log-log of net displacement of swimmer vs. distance between spheres
     CoM_PlotLL = PlotStyling(r"$|X_0 / a |$", r"$| \Delta Z / a |$",
                              title=None, loglog=True,
-                             outputDir=outputDir, figName="forced-potential-oscillation-CoM_x-disp-loglog", eps=epsOutput,
+                             outputDir=output_dir, figName="collinear-swimmer-CoM_x-disp-loglog", eps=epsOutput,
                              continuousColors=False)
     CoM_PlotLL.make_plot()
     CoM_PlotLL.add_scatter(relDispEqbm, np.abs(
@@ -106,7 +106,7 @@ def aggregate_plots(relative_path, output_dir):
     # PLOT: net displacement of swimmer vs phase Shift
     phaseShift_Plot = PlotStyling(r"Phase Shift, $\delta$", r"$\Delta Z / a$",
                                   title=None, loglog=False,
-                                  outputDir=outputDir, figName="forced-potential-oscillation-phaseShift", eps=epsOutput,
+                                  outputDir=output_dir, figName="collinear-swimmer-phaseShift", eps=epsOutput,
                                   continuousColors=False)
     phaseShift_Plot.make_plot()
     phaseShift_Plot.add_scatter(
