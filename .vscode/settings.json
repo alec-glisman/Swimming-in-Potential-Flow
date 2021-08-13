@@ -14,7 +14,9 @@
         "NVCC",
         "RUNGE",
         "cwise",
+        "disp",
         "dtype",
+        "eqbm",
         "heapify",
         "hoomd",
         "irrotational",
@@ -24,7 +26,10 @@
         "numpy",
         "spdlog",
         "telli",
-        "traj"
+        "traj",
+        "xlim",
+        "yaxis",
+        "zorder"
     ],
     "python.pythonPath": "/Users/alecglisman/anaconda3/envs/bodies-in-potential-flow/bin/python",
     "files.associations": {
