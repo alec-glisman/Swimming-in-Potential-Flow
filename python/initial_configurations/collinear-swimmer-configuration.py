@@ -77,11 +77,13 @@ def setInitialConditions():
 
     # position
     pos = np.zeros((3*n), dtype=np.float32)
+    pos[0] = R_avg  # particle 0
+    pos[6] = - R_avg + (U0 / omega) * np.sin(phase_angle)
 
-    # velocity
+    # velocity NOTE[epic=Assumptions]: must be calculated in simulation system (C++)
     vel = np.zeros_like(pos)
 
-    # acceleration
+    # acceleration NOTE[epic=Assumptions]: must be calculated in simulation system (C++)
     acc = np.zeros_like(vel)
 
     # output data
