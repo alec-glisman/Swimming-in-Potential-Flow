@@ -20,9 +20,10 @@ ADD_EXECUTABLE(bodies_in_potential_flow main.cpp)
 TARGET_LINK_LIBRARIES(
     bodies_in_potential_flow
     PRIVATE
-    ${Boost_LIBRARIES}
-    Catch2::Catch2
     spdlog::spdlog
+    ${Boost_LIBRARIES}
+    Eigen3::Eigen
+    Catch2::Catch2
     data_io
     simulation_system
     forces
