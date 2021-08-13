@@ -30,9 +30,8 @@ use warnings;                     # give warnings
 # SECTION: Input variables that user must specify before running script
 
 # Input variables
-my $inputDir         = "input/collinear_constrained";
-my $inputPreferences = "defaultPref.in";
-my @inputData        = (  );  # TODO
+my $inputDir         = "input";
+my @inputData        = ( "varyDt", "varyEpsilon", "varyPhaseAngle", "varyRelDisp" );
 my $numSimulationTypes = scalar @inputData;
 my $runSimulationSimulan = 1; # 0 only runs one simulation at a time
 
@@ -70,6 +69,7 @@ my $cwd           = cwd();
 # !SECTION  
 
 
+
 # SECTION: Build project and make output directory
 
 # Make build directory and move into it
@@ -96,7 +96,6 @@ if (${enableTesting} eq "True") {
             and die "Unit test failed: $!";
 }
 
-
 # Add newline characters
 print "\n\n\n";
 
@@ -107,7 +106,6 @@ print "\n\n\n";
 
 for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
 {
-
     # Current datetime
     my $curDateTime = strftime('%Y-%m-%d.%H-%M-%S', localtime);
 
