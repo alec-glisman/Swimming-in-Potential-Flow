@@ -23,15 +23,15 @@ use warnings;                     # give warnings
 # SECTION: Input variables that user must specify before running script
 
 # Input variables
-my $simulationTag    = "collinear-swimmer"
-my $projectName      = "bodies_in_potential_flow"
+my $simulationTag    = "collinear-swimmer";
+my $projectName      = "bodies_in_potential_flow";
 my $inputDir         = "input";
 my @inputData        = ( "varyDt", "varyEpsilon", "varyPhaseAngle", "varyRelDisp" );
 my $numSimulationTypes = scalar @inputData;
 my $runSimulationSimulan = 1; # 0 only runs one simulation at a time
 
 # Python variables
-my $pythonGSDCreation = "python/initial_configurations/" . "collinear-swimmer-configuration.py"
+my $pythonGSDCreation = "python/initial_configurations/" . "collinear-swimmer-configuration.py";
 my $pythonAnalysis   = "python/analysis/" . "collinear-swimmer-analysis.py";
 
 # Output variables
@@ -170,7 +170,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         }
 
         # Generate GSD file
-        system( "python " . ${pythonGSDCreation} "--GSD-path=" . ${gsd_path} " --dt=" . ${dt} . " --R_avg=" . "${R_avg}" . " --phase-angle=" . ${phase_angle} . " --epsilon=" . ${epsilon} ) and die "Unable to generate GSD file: $?, $!";
+        system( "python " . ${pythonGSDCreation} . "--GSD-path=" . ${gsd_path} " . --dt=" . ${dt} . " --R_avg=" . "${R_avg}" . " --phase-angle=" . ${phase_angle} . " --epsilon=" . ${epsilon} ) and die "Unable to generate GSD file: $?, $!";
 
 
         # ANCHOR: Run executable: [executable] [input gsd] [output directory]
