@@ -170,7 +170,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         }
 
         # Generate GSD file
-        system( "python " . ${pythonGSDCreation} . "--GSD-path=" . ${gsd_path} " . --dt=" . ${dt} . " --R_avg=" . "${R_avg}" . " --phase-angle=" . ${phase_angle} . " --epsilon=" . ${epsilon} ) and die "Unable to generate GSD file: $?, $!";
+        system( "python " . ${pythonGSDCreation} . " --GSD-path=" . ${gsd_path} . " --dt=" . ${dt} . " --R_avg=" . ${R_avg} . " --phase-angle=" . ${phase_angle} . " --epsilon=" . ${epsilon} ) and die "Unable to generate GSD file: $?, $!";
 
 
         # ANCHOR: Run executable: [executable] [input gsd] [output directory]
