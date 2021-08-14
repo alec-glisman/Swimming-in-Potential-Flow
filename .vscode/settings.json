@@ -129,7 +129,8 @@
         "nonlinearoptimization": "cpp",
         "unordered_set": "cpp",
         "valarray": "cpp",
-        "typeindex": "cpp"
+        "typeindex": "cpp",
+        "*.main": "cpp"
     },
     "python.analysis.extraPaths": [
         "./python"
