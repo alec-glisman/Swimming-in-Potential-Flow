@@ -146,6 +146,9 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         my $jj = $j + 1;
         print "Run ${jj} of ${numSimulations} \n";
 
+        # TODO: Create individual simulation directory and alter $gsd_path to reflect this
+        # TODO: Then update simulation call to keep all files separate
+
         # Default parameters
         my $gsd_path    = ${tempOutputDir} . "/" . "data.gsd";
         my $dt          = 1e-5;
@@ -184,6 +187,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         
             system( "${buildDir}/src/./" . ${projectName} . " " . ${gsd_path} . " " . ${tempOutputDir} . " &" ) 
                 and die "Main project executable failed: $?, $!";
+          
         }
     }
 
