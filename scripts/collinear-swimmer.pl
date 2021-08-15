@@ -176,14 +176,14 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         # ANCHOR: Run executable: [executable] [input gsd] [output directory]
         if ( ($jj < $numSimulations) and ($jj % int($numThreads / 2) != 0) and ($runSimulationSimulan) ) {
 
-            system( "\"${buildDir}/src/./" . ${projectName} . "\" ${gsd_path} ${tempOutputDir} &" ) 
+            system( "\"${buildDir}/src/./" . ${projectName} . " " . ${gsd_path} . " " . ${tempOutputDir} . " &" ) 
                 and die "Main project executable failed: $?, $!";
             sleep(5);  # brief pause before next simulation
         
         } else {
         
-            system( "\"${buildDir}/src/./" . ${projectName} . "\" . ${gsd_path} ${tempOutputDir}" ) 
-                and die "Main project executable failed: $?, $!";            
+            system( "${buildDir}/src/./" . ${projectName} . " " . ${gsd_path} . " " . ${tempOutputDir} . " &" ) 
+                and die "Main project executable failed: $?, $!";
         }
     }
 
