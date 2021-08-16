@@ -120,6 +120,7 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc)
     acc.noalias() = m_potHydro->mTotal().llt().solve(f);
 }
 
+/* REVIEW[epic=Change,order=1]: Change initializeSpecificVars() for different systems*/
 void
 rungeKutta4::initializeSpecificVars()
 {
@@ -159,8 +160,20 @@ rungeKutta4::initializeSpecificVars()
     m_phase_shift = double(phase_shift);
     spdlog::get(m_logName)->info("phase_shift : {0}", m_phase_shift);
     assert(double(phase_shift) == m_phase_shift && "phase_shift not properly set");
+
+    /* set initial conditions */
+    spdlog::get(m_logName)->info("Setting initial conditions");
+    // set articulation velocities
+    m_system->velocities    = articulationVel(0.0);
+    m_system->accelerations = articulationAcc(0.0);
+    // calculate locater point motion via linear and angular momentum free conditions
+    int             first_idx{0};
+    int             last_idx{3 * m_system->numParticles() - 1};
+    Eigen::Vector3d rloc = rLoc();
+    momentumLinAngFree(rloc, first_idx, last_idx);
 }
 
+/* REVIEW[epic=Change,order=2]: Change articulationVel() for different systems*/
 const Eigen::VectorXd&
 rungeKutta4::articulationVel(double dimensional_time)
 {
@@ -175,6 +188,7 @@ rungeKutta4::articulationVel(double dimensional_time)
     return m_velArtic;
 }
 
+/* REVIEW[epic=Change,order=3]: Change articulationAcc() for different systems*/
 const Eigen::VectorXd&
 rungeKutta4::articulationAcc(double dimensional_time)
 {
@@ -189,9 +203,16 @@ rungeKutta4::articulationAcc(double dimensional_time)
     return m_accArtic;
 }
 
+/* REVIEW[epic=Change,order=4]: Change rLoc() for different systems*/
 const Eigen::Vector3d&
 rungeKutta4::rLoc()
 {
     m_RLoc = m_system->positions.segment<3>(3 * 1);
     return m_RLoc;
+}
+
+void
+rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, int first_idx, int last_idx)
+{
+    // TODO
 }

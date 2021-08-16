@@ -48,6 +48,7 @@
         "pylab",
         "pyplot",
         "rint",
+        "rloc",
         "spdlog",
         "telli",
         "traj",

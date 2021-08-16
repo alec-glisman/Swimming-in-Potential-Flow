@@ -50,6 +50,19 @@ class rungeKutta4
     rLoc();
 
     void
+    momentumLinAngFree(Eigen::Vector3d& r_loc, int first_idx, int last_idx);
+
+    void
+    crossProdMat(const Eigen::Vector3d& vec, Eigen::Matrix3d& mat)
+    {
+        /* Function takes in vector in vector cross-product expression: c = a \times b
+         * vec must be 'a' in above equation
+         * Output is the matrix representation of 'a \times' operator
+         */
+        mat << 0, -vec(2), vec(1), vec(2), 0, -vec(0), -vec(1), vec(0), 0;
+    };
+
+    void
     accelerationUpdate(Eigen::VectorXd& acc);
 
     // classes
