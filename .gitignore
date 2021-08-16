@@ -21,8 +21,6 @@ temp*
 
 # Testing data output
 Testing
-tests/temp_tests
-**/temp_tests
 
 # traces
 *.trace
@@ -111,6 +109,7 @@ input/.DS_Store
 !requirements/**
 !src/**
 !tests/**
+tests/output/**
 
 # Important configurations
 !.cmake-format.json
