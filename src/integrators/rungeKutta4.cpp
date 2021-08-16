@@ -39,7 +39,10 @@ rungeKutta4::~rungeKutta4()
 void
 rungeKutta4::integrate()
 {
-    /* Step 1: k1 = f(t, h) */
+    /* Solve system of form: y'(t) = f( y(t),  t ) */
+
+    /* Step 1: k1 = f( y(t_0),  t_0 ),
+     * initial conditions at current step */
     Eigen::VectorXd x1 = m_system->positions;
     Eigen::VectorXd v1 = m_system->velocities;
     Eigen::VectorXd a1 = m_system->accelerations;
@@ -51,8 +54,7 @@ rungeKutta4::integrate()
     m_system->positions.noalias() =
         x2; // temporarily change positions to get correct hydro tensors during acceleration update
 
-    Eigen::VectorXd v2 = a1;
-    v2 *= m_c1_2_dt;
+    Eigen::VectorXd v2 = m_c1_2_dt * a1;
     v2.noalias() += v1;
 
     m_potHydro->update(); // update hydrodynamics tensors
@@ -65,8 +67,7 @@ rungeKutta4::integrate()
     x3.noalias() += x1;
     m_system->positions.noalias() = x3;
 
-    Eigen::VectorXd v3 = a2;
-    v3 *= m_c1_2_dt;
+    Eigen::VectorXd v3 = m_c1_2_dt * a2;
     v3.noalias() += v1;
 
     m_potHydro->update();
