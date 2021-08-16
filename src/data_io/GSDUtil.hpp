@@ -35,14 +35,20 @@ class GSDUtil
 
     ~GSDUtil();
 
-    void
-    writeFrame();
-
-  private:
     bool
     readChunk(void* data, uint64_t frame, const char* name, size_t expected_size,
               unsigned int cur_n = 0);
 
+    void
+    writeFrame();
+
+    uint64_t
+    frame() const
+    {
+        return m_frame;
+    }
+
+  private:
     void
     readHeader();
 
