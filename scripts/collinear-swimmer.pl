@@ -116,7 +116,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
 
     # Print the number of simulation runs
     my $ii = $i + 1;
-    print "** Simulation type ${ii} of ${numSimulationTypes} **\n";
+    print "** Simulation type ${ii} of ${numSimulationTypes}:". ${inputData[$i]} ." **\n";
 
     # Data file to read from and modify input preferences
     my $fileToOpen = ${inputDir} . '/' . ${inputData[$i]} . '.dat';
