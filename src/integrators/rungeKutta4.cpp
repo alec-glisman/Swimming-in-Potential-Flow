@@ -55,7 +55,7 @@ rungeKutta4::integrate()
     v2 *= m_c1_2_dt;
     v2.noalias() += v1;
 
-    Eigen::VectorXd a2 = Eigen::VectorXd::Zero(m_system->numDim() * m_system->numParticles());
+    Eigen::VectorXd a2 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a2);
 
     /* Step 3: k3 = f(t + h/2, y + h/2*k2) */
@@ -69,7 +69,7 @@ rungeKutta4::integrate()
     v3 *= m_c1_2_dt;
     v3.noalias() += v1;
 
-    Eigen::VectorXd a3 = Eigen::VectorXd::Zero(m_system->numDim() * m_system->numParticles());
+    Eigen::VectorXd a3 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a3);
 
     /* Step 4: k4 = f(t + h, y + h*k3) */
@@ -83,7 +83,7 @@ rungeKutta4::integrate()
     v4 *= m_c1_2_dt;
     v4.noalias() += v1;
 
-    Eigen::VectorXd a4 = Eigen::VectorXd::Zero(m_system->numDim() * m_system->numParticles());
+    Eigen::VectorXd a4 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a4);
 
     /* Output calculated values */
@@ -109,7 +109,7 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc)
 {
     /*! Solve linear equation of the form: Ax = b, where x is the unknown acceleration vector
      * A is the total mass matrix, and b are the known parts of the forces */
-    Eigen::VectorXd f = Eigen::VectorXd::Zero(m_system->numDim() * m_system->numParticles());
+    Eigen::VectorXd f = Eigen::VectorXd::Zero(3 * m_system->numParticles());
 
     if (m_system->particleDensity() >= 0) // hydrodynamic force
     {
