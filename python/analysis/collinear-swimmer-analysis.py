@@ -118,17 +118,17 @@ def aggregate_plots(relative_path, output_dir):
     xAnalyticalRng = np.array(np.linspace(
         2.0, 40.0, num=1000), dtype=np.float64)
     dZAnalyticalDist = dZ_leadingOrder(
-        phaseShift[0], U0[0], omega, a, xAnalyticalRng)
+        phaseShift[0], U0[0], omega[0], a, xAnalyticalRng)
     # Calculate leading order net motion over one period of articulation (for varying phase Shift)
     deltaAnalyticalRng = np.array(np.linspace(
         0, 2 * np.pi, num=1000), dtype=np.float64)
     dZAnalyticaldelt = dZ_leadingOrder(
-        deltaAnalyticalRng, U0[0], omega, a, relDispEqbm[0])
+        deltaAnalyticalRng, U0[0], omega[0], a, relDispEqbm[0])
     # Calculate leading order net motion (for varying epsilon)
     epsAnalyticalRng = np.array(np.linspace(
         0, np.max(epsilon), num=1000), dtype=np.float64)
     dZAnalyticaleps = dZ_leadingOrder(
-        phaseShift[0], epsAnalyticalRng * omega * relDispEqbm[0], omega, a, relDispEqbm[0])
+        phaseShift[0], epsAnalyticalRng * omega[0] * relDispEqbm[0], omega[0], a, relDispEqbm[0])
 
 # !SECTION (Analysis)
 
@@ -141,7 +141,7 @@ def aggregate_plots(relative_path, output_dir):
         CoM_Plot = PlotStyling(numLines,
                                r"$\mathrm{R}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
                                title=None, loglog=False,
-                               output_dir=output_dir, figName="forced-potential-oscillation-CoM_x-disp", eps=epsOutput,
+                               output_dir=output_dir, figName="collinear-swimmer-CoM_x-disp", eps=epsOutput,
                                continuousColors=False)
         # Show numerical data points
         CoM_Plot.make_plot()
@@ -164,7 +164,7 @@ def aggregate_plots(relative_path, output_dir):
         CoM_PlotLL = PlotStyling(numLines,
                                  r"$\mathrm{R}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
                                  title=None, loglog=True,
-                                 output_dir=output_dir, figName="forced-potential-oscillation-CoM_x-disp-loglog", eps=epsOutput,
+                                 output_dir=output_dir, figName="collinear-swimmer-CoM_x-disp-loglog", eps=epsOutput,
                                  continuousColors=False)
         CoM_PlotLL.make_plot()
         CoM_PlotLL.curve(np.abs(xAnalyticalRng), np.abs(
@@ -177,12 +177,12 @@ def aggregate_plots(relative_path, output_dir):
 
         # PLOT: Relative error of displacement with relDisp
         numLines = 1
-        relDisErr = relErr(dZ_leadingOrder(phaseShift[0], U0[0], omega, a, relDispEqbm),
+        relDisErr = relErr(dZ_leadingOrder(phaseShift[0], U0[0], omega[0], a, relDispEqbm),
                            CoM_disp_x)
         CoMDispErr_Plot = PlotStyling(numLines,
                                       r"$\mathrm{R}_0 / a $", r"Relative Error",
                                       title=None, loglog=True,
-                                      output_dir=output_dir, figName="forced-potential-oscillation-CoM_x-disp-error", eps=epsOutput,
+                                      output_dir=output_dir, figName="collinear-swimmer-CoM_x-disp-error", eps=epsOutput,
                                       continuousColors=False)
         CoMDispErr_Plot.make_plot()
         CoMDispErr_Plot.scatter(
@@ -195,7 +195,7 @@ def aggregate_plots(relative_path, output_dir):
         phaseShift_Plot = PlotStyling(numLines,
                                       r"Phase Shift, $\delta$", r"$\Delta \mathrm{R}_{2} / a$",
                                       title=None, loglog=False,
-                                      output_dir=output_dir, figName="forced-potential-oscillation-phaseShift", eps=epsOutput,
+                                      output_dir=output_dir, figName="collinear-swimmer-phaseShift", eps=epsOutput,
                                       continuousColors=False)
         phaseShift_Plot.make_plot()
         phaseShift_Plot.curve(
@@ -208,13 +208,13 @@ def aggregate_plots(relative_path, output_dir):
         phaseShift_Plot.save_plot()
 
         # PLOT: Relative error of displacement with delta
-        relPhErr = relErr(dZ_leadingOrder(phaseShift, U0[0], omega, a, relDispEqbm[0]),
+        relPhErr = relErr(dZ_leadingOrder(phaseShift, U0[0], omega[0], a, relDispEqbm[0]),
                           CoM_disp_x)
         numLines = 1
         phaseShiftErr_Plot = PlotStyling(numLines,
                                          r"Phase Shift, $\delta$", r"Relative Error",
                                          title=None, loglog=True,
-                                         output_dir=output_dir, figName="forced-potential-oscillation-phaseShift-error", eps=epsOutput,
+                                         output_dir=output_dir, figName="collinear-swimmer-phaseShift-error", eps=epsOutput,
                                          continuousColors=False)
         phaseShiftErr_Plot.make_plot()
         phaseShiftErr_Plot.scatter(
@@ -227,7 +227,7 @@ def aggregate_plots(relative_path, output_dir):
         eps_Plot = PlotStyling(numLines,
                                r"$\epsilon = \frac{\mathrm{U}_0 / \omega}{\mathrm{R}_0}$", r"$\Delta \mathrm{R}_{2} / a$",
                                title=None, loglog=False,
-                               output_dir=output_dir, figName="forced-potential-oscillation-eps-scaling-CoM_x-disp", eps=epsOutput,
+                               output_dir=output_dir, figName="collinear-swimmer-eps-scaling-CoM_x-disp", eps=epsOutput,
                                continuousColors=False)
         eps_Plot.make_plot()
         eps_Plot.curve(epsAnalyticalRng, dZAnalyticaleps,
@@ -242,7 +242,7 @@ def aggregate_plots(relative_path, output_dir):
         epsLL_Plot = PlotStyling(numLines,
                                  r"$\epsilon = \frac{\mathrm{U}_0 / \omega}{\mathrm{R}_0}$", r"$\Delta \mathrm{R}_{2} / a$",
                                  title=None, loglog=True,
-                                 output_dir=output_dir, figName="forced-potential-oscillation-eps-scaling-CoM_x-disp-loglog", eps=epsOutput,
+                                 output_dir=output_dir, figName="collinear-swimmer-eps-scaling-CoM_x-disp-loglog", eps=epsOutput,
                                  continuousColors=False)
         epsLL_Plot.make_plot()
         epsLL_Plot.curve(epsAnalyticalRng, dZAnalyticaleps,
