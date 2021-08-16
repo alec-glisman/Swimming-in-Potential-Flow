@@ -78,16 +78,18 @@ def aggregate_plots(relative_path, output_dir):
 # SECTION: Plots
 
     # PLOT: net displacement of swimmer vs. distance between spheres
-    CoM_Plot = PlotStyling(r"$|X_0 / a |$", r"$ \Delta Z / a $",
+    numLines = 1
+    CoM_Plot = PlotStyling(numLines,
+                           r"$|X_0 / a |$", r"$ \Delta Z / a $",
                            title=None, loglog=False,
                            outputDir=output_dir, figName="collinear-swimmer-CoM_x-disp", eps=epsOutput,
                            continuousColors=False)
     # Show numerical data points
     CoM_Plot.make_plot()
-    CoM_Plot.add_scatter(relDispEqbm, CoM_disp_x, zorder=2, label="Simulation")
+    CoM_Plot.scatter(relDispEqbm, CoM_disp_x, zorder=2, label="Simulation")
     # Add legend
-    CoM_Plot.add_legend(title=None, loc='best',
-                        bbox_to_anchor=(0.05, 0.05, 0.9, 0.9))
+    CoM_Plot.legend(title=None, loc='best',
+                    bbox_to_anchor=(0.05, 0.05, 0.9, 0.9))
     # Adjust ticks and tick labels
     CoM_Plot.ax.set_xlim([2, 6])
     CoM_Plot.set_major_minor_ticks(
@@ -96,24 +98,28 @@ def aggregate_plots(relative_path, output_dir):
     CoM_Plot.save_plot()
 
     # PLOT: log-log of net displacement of swimmer vs. distance between spheres
-    CoM_PlotLL = PlotStyling(r"$|X_0 / a |$", r"$| \Delta Z / a |$",
+    numLines = 1
+    CoM_PlotLL = PlotStyling(numLines,
+                             r"$|X_0 / a |$", r"$| \Delta Z / a |$",
                              title=None, loglog=True,
                              outputDir=output_dir, figName="collinear-swimmer-CoM_x-disp-loglog", eps=epsOutput,
                              continuousColors=False)
     CoM_PlotLL.make_plot()
-    CoM_PlotLL.add_scatter(relDispEqbm, np.abs(
+    CoM_PlotLL.scatter(relDispEqbm, np.abs(
         CoM_disp_x), zorder=2, label="Simulation")
     CoM_PlotLL.save_plot()
 
     # PLOT: net displacement of swimmer vs phase shift
-    phaseShift_Plot = PlotStyling(r"Phase Shift, $\delta$", r"$\Delta Z / a$",
+    numLines = 1
+    phaseShift_Plot = PlotStyling(numLines,
+                                  r"Phase Shift, $\delta$", r"$\Delta Z / a$",
                                   title=None, loglog=False,
                                   outputDir=output_dir, figName="collinear-swimmer-phaseShift", eps=epsOutput,
                                   continuousColors=False)
     phaseShift_Plot.make_plot()
-    phaseShift_Plot.add_scatter(
+    phaseShift_Plot.scatter(
         phaseShift, CoM_disp_x, zorder=2, label="Simulation")
-    phaseShift_Plot.add_legend(
+    phaseShift_Plot.legend(
         title=None, loc='best', bbox_to_anchor=(0.05, 0.05, 0.9, 0.9))
     phaseShift_Plot.set_yaxis_scientific()
     phaseShift_Plot.save_plot()
