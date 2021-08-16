@@ -100,7 +100,6 @@ print "\n\n\n";
 
 
 # SECTION: Loop through simulation types
-
 for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
 {
 
