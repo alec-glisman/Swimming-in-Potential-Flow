@@ -44,9 +44,9 @@ rungeKutta4::integrate()
     Eigen::VectorXd v1 = m_system->velocities;
     Eigen::VectorXd a1 = m_system->accelerations;
 
-    /* Step 2: k2 = f(t + h/2, y + h*k1/2) */
-    Eigen::VectorXd x2 = v1;
-    x2 *= m_c1_2_dt;
+    /* Step 2: k2 = f( y(t_0) + k1 * dt/2,  t_0 + dt/2 )
+     * time rate-of-change k1 evaluated halfway through time step (midpoint) */
+    Eigen::VectorXd x2 = m_c1_2_dt * v1;
     x2.noalias() += x1;
     m_system->positions.noalias() =
         x2; // temporarily change positions to get correct hydro tensors during acceleration update
@@ -59,9 +59,9 @@ rungeKutta4::integrate()
     Eigen::VectorXd a2 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a2);
 
-    /* Step 3: k3 = f(t + h/2, y + h/2*k2) */
-    Eigen::VectorXd x3 = v2;
-    x3 *= m_c1_2_dt;
+    /* Step 3: k3 = f( y(t_0) + k2 * dt/2,  t_0 + dt/2 )
+     * time rate-of-change k2 evaluated halfway through time step (midpoint) */
+    Eigen::VectorXd x3 = m_c1_2_dt * v2;
     x3.noalias() += x1;
     m_system->positions.noalias() = x3;
 
