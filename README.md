@@ -23,6 +23,8 @@ brew install eigen --HEAD  # Needed for Eigen::seqN()
 # @SOURCE: https://software.intel.com/content/www/us/en/develop/tools/oneapi/base-toolkit/download.html
 ```
 
+Note that there are more dependencies for python scripts via a conda environment and perl scripts via cpan. The relevant files to generate these environments are located in the `requirements` directory.
+
 ### Integrated into project
 
 * [gsd](https://github.com/glotzerlab/gsd) (v2.4.2): Simulation data output
