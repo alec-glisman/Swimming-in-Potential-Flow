@@ -53,7 +53,7 @@ rungeKutta4::integrate()
     v2.noalias() += v1;
 
     Eigen::VectorXd a2 = Eigen::VectorXd::Zero(m_system->numDim() * m_system->numParticles());
-    acceleration_update(a2);
+    accelerationUpdate(a2);
 
     /* Step 3: k3 = f(t + h/2, y + h/2*k2) */
     Eigen::VectorXd x3 = v2;
@@ -67,7 +67,7 @@ rungeKutta4::integrate()
     v3.noalias() += v1;
 
     Eigen::VectorXd a3 = Eigen::VectorXd::Zero(m_system->numDim() * m_system->numParticles());
-    acceleration_update(a3);
+    accelerationUpdate(a3);
 
     /* Step 4: k4 = f(t + h, y + h*k3) */
     Eigen::VectorXd x4 = v3;
@@ -81,7 +81,7 @@ rungeKutta4::integrate()
     v4.noalias() += v1;
 
     Eigen::VectorXd a4 = Eigen::VectorXd::Zero(m_system->numDim() * m_system->numParticles());
-    acceleration_update(a4);
+    accelerationUpdate(a4);
 
     /* Output calculated values */
     m_system->positions.noalias() = v1;
@@ -102,7 +102,7 @@ rungeKutta4::integrate()
 }
 
 void
-rungeKutta4::acceleration_update(Eigen::VectorXd& acc)
+rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc)
 {
     /*! Solve linear equation of the form: Ax = b, where x is the unknown acceleration vector
      * A is the total mass matrix, and b are the known parts of the forces */
@@ -114,4 +114,21 @@ rungeKutta4::acceleration_update(Eigen::VectorXd& acc)
     }
 
     acc.noalias() = m_potHydro->mTotal().llt().solve(f);
+}
+
+void
+rungeKutta4::articulationVel()
+{
+}
+
+void
+rungeKutta4::articulationAcc()
+{
+}
+
+const Eigen::Vector3d&
+rungeKutta4::rLoc()
+{
+    m_RLoc = m_system->positions(Eigen::seqN(3 * 1, 3));
+    return m_RLoc;
 }

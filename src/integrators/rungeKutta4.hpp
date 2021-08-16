@@ -38,7 +38,16 @@ class rungeKutta4
 
   private:
     void
-    acceleration_update(Eigen::VectorXd& acc);
+    accelerationUpdate(Eigen::VectorXd& acc);
+
+    void
+    articulationVel();
+
+    void
+    articulationAcc();
+
+    const Eigen::Vector3d&
+    rLoc();
 
     // classes
     std::shared_ptr<systemData>             m_system;
@@ -47,6 +56,9 @@ class rungeKutta4
     // logging
     std::string m_logFile;
     std::string m_logName{"rungeKutta4"};
+
+    // swimmer parameters
+    Eigen::Vector3d m_RLoc;
 
     // time step variables
     double m_dt{-1.0};
