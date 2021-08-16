@@ -148,6 +148,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
 
         # Create individual simulation directory TODO: add system time and unique tag (increment from beginning)
         my $simulation_dir = ${tempOutputDir} . "/";
+        make_path( $simulation_dir );
         my $gsd_path    = ${simulation_dir} . "/" . "data.gsd";
 
         # TODO: Create individual simulation directory and alter $gsd_path to reflect this
