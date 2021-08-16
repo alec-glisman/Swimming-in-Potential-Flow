@@ -146,11 +146,14 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         my $jj = $j + 1;
         print "Run ${jj} of ${numSimulations} \n";
 
+        # Create individual simulation directory TODO: add system time and unique tag (increment from beginning)
+        my $simulation_dir = ${tempOutputDir} . "/";
+        my $gsd_path    = ${simulation_dir} . "/" . "data.gsd";
+
         # TODO: Create individual simulation directory and alter $gsd_path to reflect this
         # TODO: Then update simulation call to keep all files separate
 
         # Default parameters
-        my $gsd_path    = ${tempOutputDir} . "/" . "data.gsd";
         my $dt          = 1e-5;
         my $R_avg       = 10.0;
         my $phase_angle = 1.57079632679;
@@ -179,13 +182,13 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         # ANCHOR: Run executable: [executable] [input gsd] [output directory]
         if ( ($jj < $numSimulations) and ($jj % int($numThreads / 2) != 0) and ($runSimulationSimulan) ) {
 
-            system( "\"${buildDir}/src/./" . ${projectName} . " " . ${gsd_path} . " " . ${tempOutputDir} . " &" ) 
+            system( "\"${buildDir}/src/./" . ${projectName} . " " . ${gsd_path} . " " . ${simulation_dir} . " &" ) 
                 and die "Main project executable failed: $?, $!";
             sleep(5);  # brief pause before next simulation
         
         } else {
         
-            system( "${buildDir}/src/./" . ${projectName} . " " . ${gsd_path} . " " . ${tempOutputDir} . " &" ) 
+            system( "${buildDir}/src/./" . ${projectName} . " " . ${gsd_path} . " " . ${simulation_dir} . " &" ) 
                 and die "Main project executable failed: $?, $!";
           
         }
@@ -201,7 +204,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
 
     # Run the analysis scripts
     make_path( "${tempOutputDir}/${analysisDir}" );
-    system( "python3 ${pythonAnalysis} --relPath=${tempOutputDir}/ --outputDir=${analysisDir}" ) 
+    system( "python3 ${pythonAnalysis} --relPath=${tempOutputDir} --outputDir=${analysisDir}" ) 
         and warn "Python analysis script failed: $!";
 
     # Move all output into the "data" directory
