@@ -49,12 +49,12 @@ rungeKutta4::integrate()
     x2 *= m_c1_2_dt;
     x2.noalias() += x1;
     m_system->positions.noalias() = x2;
-    m_potHydro->update();
 
     Eigen::VectorXd v2 = a1;
     v2 *= m_c1_2_dt;
     v2.noalias() += v1;
 
+    m_potHydro->update();
     Eigen::VectorXd a2 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a2);
 
@@ -63,12 +63,12 @@ rungeKutta4::integrate()
     x3 *= m_c1_2_dt;
     x3.noalias() += x1;
     m_system->positions.noalias() = x3;
-    m_potHydro->update();
 
     Eigen::VectorXd v3 = a2;
     v3 *= m_c1_2_dt;
     v3.noalias() += v1;
 
+    m_potHydro->update();
     Eigen::VectorXd a3 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a3);
 
@@ -77,12 +77,12 @@ rungeKutta4::integrate()
     x4 *= m_c1_2_dt;
     x4.noalias() += x1;
     m_system->positions.noalias() = x4;
-    m_potHydro->update();
 
     Eigen::VectorXd v4 = a3;
     v4 *= m_c1_2_dt;
     v4.noalias() += v1;
 
+    m_potHydro->update();
     Eigen::VectorXd a4 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a4);
 
