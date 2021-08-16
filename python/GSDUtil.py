@@ -26,9 +26,10 @@ class GSDUtil:
             self.trajectory = gsd.hoomd.open(name=self.gsdPath, mode='wb')
             self.snapshot = gsd.hoomd.Snapshot()
         else:
-            self.trajectory = gsd.hoomd.open(name=self.gsdPath, mode='wb')
+            self.trajectory = gsd.hoomd.open(name=self.gsdPath, mode='rb')
             # load last snapshot in GSD file
-            self.snapshot = self.trajectory[-1]
+            self.snapshot = self.trajectory.read_frame(
+                self.trajectory.file.nframes - 1)
 
         # box parameters (not currently used)
         #   box[0:3]: (𝑙𝑥,𝑙𝑦,𝑙𝑧)  the box length in each direction, in length units

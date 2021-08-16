@@ -24,6 +24,7 @@
         "hoomd",
         "irrotational",
         "lseeki",
+        "nframes",
         "noalias",
         "noqa",
         "numpy",
