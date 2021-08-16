@@ -66,10 +66,9 @@ def aggregate_plots(relative_path, output_dir):
 
     for i in range(len(gsd_files)):
 
-        # FIXME: Must be updated for GSD file (get snapshots)
         CoM_disp_x[i] = float(
-            gsd_files[i]["KPIs"]["final_CoM_displacement_x"])
-
+            gsd_files[i].snapshot.particles.position[3 * 1]
+        )
         relDispEqbm[i] = float(gsd_files[i].snapshot.log['swimmer/R_avg'])
         phaseShift[i] = float(gsd_files[i].snapshot.log['swimmer/phase_shift'])
 
