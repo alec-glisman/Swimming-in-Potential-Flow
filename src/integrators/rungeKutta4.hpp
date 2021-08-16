@@ -40,10 +40,10 @@ class rungeKutta4
     void
     accelerationUpdate(Eigen::VectorXd& acc);
 
-    void
+    const Eigen::VectorXd&
     articulationVel();
 
-    void
+    const Eigen::VectorXd&
     articulationAcc();
 
     const Eigen::Vector3d&
@@ -59,6 +59,8 @@ class rungeKutta4
 
     // swimmer parameters
     Eigen::Vector3d m_RLoc;
+    Eigen::VectorXd m_velArtic;
+    Eigen::VectorXd m_accArtic;
 
     // time step variables
     double m_dt{-1.0};

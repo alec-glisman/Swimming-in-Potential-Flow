@@ -116,19 +116,37 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc)
     acc.noalias() = m_potHydro->mTotal().llt().solve(f);
 }
 
-void
+const Eigen::VectorXd&
 rungeKutta4::articulationVel()
 {
+    m_velArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
+
+    double part0_x_vel = -bondU0 * cos(bondOmega * dimensional_time);
+    double part2_x_vel = bondU0 * cos(bondOmega * dimensional_time + bondPhaseAngle);
+
+    m_velArtic(0)     = part0_x_vel;
+    m_velArtic(3 * 2) = part2_x_vel;
+
+    return m_velArtic;
 }
 
-void
+const Eigen::VectorXd&
 rungeKutta4::articulationAcc()
 {
+    m_accArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
+
+    double part0_x_acc = bondU0 * bondOmega * sin(bondOmega * dimensional_time);
+    double part2_x_acc = -bondU0 * bondOmega * sin(bondOmega * dimensional_time + bondPhaseAngle);
+
+    m_accArtic(0)     = part0_x_acc;
+    m_accArtic(3 * 2) = part2_x_acc;
+
+    return m_accArtic;
 }
 
 const Eigen::Vector3d&
 rungeKutta4::rLoc()
 {
-    m_RLoc = m_system->positions(Eigen::seqN(3 * 1, 3));
+    m_RLoc = m_system->positions.segment<3>(3 * 1);
     return m_RLoc;
 }
