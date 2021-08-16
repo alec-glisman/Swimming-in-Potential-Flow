@@ -112,7 +112,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
     make_path( $tempOutputDir );
 
     # tee the command line outputs
-    tee STDERR, '>>', "${tempOutputDir}/std_err.out";
+    tee STDERR, '>>', "${tempOutputDir}/std_err.txt";
 
     # Print the number of simulation runs
     my $ii = $i + 1;
