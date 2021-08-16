@@ -20,6 +20,17 @@
             ]
         },
         {
+            "name": "Python: collinear-swimmer-analysis",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": [
+                "--relative-path=temp_2021-08-16.10-33-21_collinear-swimmer_varyRelDisp",
+                "--output-dir=analysis"
+            ]
+        },
+        {
             "name": "(gdb) Main",
             "type": "cppdbg",
             "request": "launch",
