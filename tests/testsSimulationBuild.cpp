@@ -19,8 +19,8 @@ TEST_CASE("Load and parse data from GSD file", "[GSD][I/O]")
 {
     /* Parameters
      * REVIEW[epic=Assumptions]: Assuming that the tests are called from project base dir */
-    std::string inputDataFile = "temp/test.gsd";
-    std::string outputDir     = "temp/output";
+    std::string inputDataFile = "tests/data.gsd";
+    std::string outputDir     = "tests/output";
 
     /* Initialize variables */
     std::shared_ptr<gsd_handle> handle{new gsd_handle};
