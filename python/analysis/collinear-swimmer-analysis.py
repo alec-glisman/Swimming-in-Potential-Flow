@@ -55,9 +55,8 @@ def aggregate_plots(relative_path, output_dir):
             assert(len(gsd_files) > 0)
 
     except:  # No files found
-        print(f"No files found in relPath {relative_path}")
-        print(f"Failure to load data")
-        raise IOError("FAILURE!!")
+        raise IOError(
+            f"Failure to load data. No files found in relPath {relative_path}")
 
     # Loop through all simulations and grab the final CoM displacement (x-axis)
     CoM_disp_x = np.zeros(len(gsd_files))
