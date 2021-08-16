@@ -28,7 +28,7 @@ my $projectName      = "bodies_in_potential_flow";
 my $inputDir         = "input";
 my @inputData        = ( "varyDt", "varyEpsilon", "varyPhaseAngle", "varyRelDisp" );
 my $numSimulationTypes = scalar @inputData;
-my $runSimulationSimulan = 1; # 0 only runs one simulation at a time
+my $runSimulationSimulan = 0; # 0 only runs one simulation at a time
 
 # Python variables
 my $pythonGSDCreation = "python/initial_configurations/" . "collinear-swimmer-configuration.py";
