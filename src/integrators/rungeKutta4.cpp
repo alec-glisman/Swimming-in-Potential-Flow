@@ -26,6 +26,9 @@ rungeKutta4::rungeKutta4(std::shared_ptr<systemData>             sys,
     spdlog::get(m_logName)->info("1/2 * dt (dimensional): {0}", m_c1_2_dt);
     m_c1_6_dt = m_c1_6 * m_dt;
     spdlog::get(m_logName)->info("1/6 * dt (dimensional): {0}", m_c1_6_dt);
+
+    // Set specific variables to each system
+    initializeSpecificVars();
 }
 
 rungeKutta4::~rungeKutta4()
@@ -116,13 +119,54 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc)
     acc.noalias() = m_potHydro->mTotal().llt().solve(f);
 }
 
+void
+rungeKutta4::initializeSpecificVars()
+{
+    spdlog::get(m_logName)->info("Running initializeSpecificVars()");
+
+    auto gsdParser = m_system->gsdUtil();
+
+    /* set specific parameters */
+
+    // oscillation velocity amplitude
+    spdlog::get(m_logName)->info("GSD parsing U0");
+    float U0{-1.0};
+    auto  return_bool = gsdParser->readChunk(&U0, gsdParser->frame(), "log/swimmer/U0", 4);
+    m_system->setReturnBool(return_bool);
+    m_system->check_gsd_return();
+    m_U0 = double(U0);
+    spdlog::get(m_logName)->info("U_0 : {0}", m_U0);
+    assert(double(U0) == m_U0 && "U0 not properly set");
+
+    // oscillation frequency
+    spdlog::get(m_logName)->info("GSD parsing omega");
+    float omega{-1.0};
+    return_bool = gsdParser->readChunk(&omega, gsdParser->frame(), "log/swimmer/omega", 4);
+    m_system->setReturnBool(return_bool);
+    m_system->check_gsd_return();
+    m_omega = double(omega);
+    spdlog::get(m_logName)->info("omega : {0}", m_omega);
+    assert(double(omega) == m_omega && "omega not properly set");
+
+    // phase shift between oscillators
+    spdlog::get(m_logName)->info("GSD parsing phase_shift");
+    float phase_shift{-1.0};
+    return_bool =
+        gsdParser->readChunk(&phase_shift, gsdParser->frame(), "log/swimmer/phase_shift", 4);
+    m_system->setReturnBool(return_bool);
+    m_system->check_gsd_return();
+    m_phase_shift = double(phase_shift);
+    spdlog::get(m_logName)->info("phase_shift : {0}", m_phase_shift);
+    assert(double(phase_shift) == m_phase_shift && "phase_shift not properly set");
+}
+
 const Eigen::VectorXd&
 rungeKutta4::articulationVel(double dimensional_time)
 {
     m_velArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
 
-    double part0_x_vel = -bondU0 * cos(bondOmega * dimensional_time);
-    double part2_x_vel = bondU0 * cos(bondOmega * dimensional_time + bondPhaseAngle);
+    double part0_x_vel = -m_U0 * cos(m_omega * dimensional_time);
+    double part2_x_vel = m_U0 * cos(m_omega * dimensional_time + m_phase_shift);
 
     m_velArtic(0)     = part0_x_vel;
     m_velArtic(3 * 2) = part2_x_vel;
@@ -135,8 +179,8 @@ rungeKutta4::articulationAcc(double dimensional_time)
 {
     m_accArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
 
-    double part0_x_acc = bondU0 * bondOmega * sin(bondOmega * dimensional_time);
-    double part2_x_acc = -bondU0 * bondOmega * sin(bondOmega * dimensional_time + bondPhaseAngle);
+    double part0_x_acc = m_U0 * m_omega * sin(m_omega * dimensional_time);
+    double part2_x_acc = -m_U0 * m_omega * sin(m_omega * dimensional_time + m_phase_shift);
 
     m_accArtic(0)     = part0_x_acc;
     m_accArtic(3 * 2) = part2_x_acc;

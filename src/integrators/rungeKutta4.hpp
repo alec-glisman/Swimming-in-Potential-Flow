@@ -38,7 +38,7 @@ class rungeKutta4
 
   private:
     void
-    accelerationUpdate(Eigen::VectorXd& acc);
+    initializeSpecificVars();
 
     const Eigen::VectorXd&
     articulationVel(double dimensional_time);
@@ -48,6 +48,9 @@ class rungeKutta4
 
     const Eigen::Vector3d&
     rLoc();
+
+    void
+    accelerationUpdate(Eigen::VectorXd& acc);
 
     // classes
     std::shared_ptr<systemData>             m_system;
@@ -61,6 +64,11 @@ class rungeKutta4
     Eigen::Vector3d m_RLoc;
     Eigen::VectorXd m_velArtic;
     Eigen::VectorXd m_accArtic;
+
+    // specific parameters
+    double m_U0{-1.0};
+    double m_omega{-1.0};
+    double m_phase_shift{-1.0};
 
     // time step variables
     double m_dt{-1.0};
