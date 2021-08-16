@@ -48,13 +48,14 @@ rungeKutta4::integrate()
     Eigen::VectorXd x2 = v1;
     x2 *= m_c1_2_dt;
     x2.noalias() += x1;
-    m_system->positions.noalias() = x2;
+    m_system->positions.noalias() =
+        x2; // temporarily change positions to get correct hydro tensors during acceleration update
 
     Eigen::VectorXd v2 = a1;
     v2 *= m_c1_2_dt;
     v2.noalias() += v1;
 
-    m_potHydro->update();
+    m_potHydro->update(); // update hydrodynamics tensors
     Eigen::VectorXd a2 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a2);
 
