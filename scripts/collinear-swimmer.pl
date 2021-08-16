@@ -26,7 +26,7 @@ use warnings;                     # give warnings
 my $simulationTag    = "collinear-swimmer";
 my $projectName      = "bodies_in_potential_flow";
 my $inputDir         = "input";
-my @inputData        = ( "varyDt", "varyEpsilon", "varyPhaseAngle", "varyRelDisp" );
+my @inputData        = ( "varyRelDisp", "varyDt", "varyEpsilon", "varyPhaseAngle" );
 my $numSimulationTypes = scalar @inputData;
 my $runSimulationSimulan = 0; # 0 only runs one simulation at a time
 
