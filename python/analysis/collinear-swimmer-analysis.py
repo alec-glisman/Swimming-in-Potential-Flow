@@ -5,6 +5,7 @@ import os                          # Access system file-tree
 import sys                         # Modify system parameters
 import numpy as np                 # Data structures
 from optparse import OptionParser  # Get user input
+import matplotlib.ticker as mticker  # Scientific notation in labels
 
 # Internal Dependencies
 sys.path.insert(0, os.getcwd() + '/python')
@@ -27,7 +28,29 @@ parser.add_option("--output-dir", dest="u_output_dir",
 # !SECTION: (User input options)
 
 
-# Date that simulations of interest were run
+# Function for D: derivative of mass matrix elements, dimensionless
+def f_D(x):
+    # In R/a coordinates
+    numerator = 36.0 * (-1045.0 + 1632.0 * np.power(x, 3) -
+                        1564.0 * np.power(x, 6) + 744.0 * np.power(x, 9))
+    denominator = x * \
+        np.square(209.0 - 204.0 * np.power(x, 3) + 144 * np.power(x, 6))
+    return np.divide(numerator, denominator)
+
+
+# Function for \Delta Z / a
+def dZ_leadingOrder(phi, U0, omega, a, x):
+    # In R/a coordinates
+    return (np.pi * np.sin(phi)) * np.square(U0 / (a * omega)) * f_D(x)
+
+
+# Function to calculate relative error
+def relErr(exact, approximate):
+    return np.divide(np.abs(exact - approximate), np.abs(exact))
+
+# Function to load data, perform analysis, and generate plots
+
+
 def aggregate_plots(relative_path, output_dir):
 
     # SECTION: Parameters for function
@@ -35,6 +58,13 @@ def aggregate_plots(relative_path, output_dir):
     output_dir = relative_path + "/" + output_dir + "/"
     gsd_files = []
     epsOutput = True
+    a = 1
+
+    # REVIEW[epic=Future Features]: Move this adjustment into plotting style library
+    # Correctly get scientific notation in text elements
+    f = mticker.ScalarFormatter(useOffset=False, useMathText=True)
+    def g(x, pos): return "${}$".format(f._formatSciNotation('%1.1e' % x))
+    fmt = mticker.FuncFormatter(g)
 
 # !SECTION (Parameters for function)
 
@@ -62,6 +92,9 @@ def aggregate_plots(relative_path, output_dir):
     CoM_disp_x = np.zeros(len(gsd_files))
     relDispEqbm = np.zeros(len(gsd_files))
     phaseShift = np.zeros(len(gsd_files))
+    U0 = np.zeros(len(gsd_files))
+    omega = np.zeros(len(gsd_files))
+    epsilon = np.zeros(len(gsd_files))
 
     for i in range(len(gsd_files)):
 
@@ -71,59 +104,154 @@ def aggregate_plots(relative_path, output_dir):
         )
         relDispEqbm[i] = float(gsd_files[i].snapshot.log['swimmer/R_avg'])
         phaseShift[i] = float(gsd_files[i].snapshot.log['swimmer/phase_shift'])
+        U0[i] = float(gsd_files[i].snapshot.log['swimmer/U0'])
+        omega[i] = float(gsd_files[i].snapshot.log['swimmer/omega'])
+        epsilon[i] = U0[i] / relDispEqbm[i] / omega[i]
+
 
 # !SECTION (Load data)
 
 
+# SECTION: Analysis
+
+    # Calculate leading order net motion over one period of articulation (for varying distance between spheres)
+    xAnalyticalRng = np.array(np.linspace(
+        2.0, 40.0, num=1000), dtype=np.float64)
+    dZAnalyticalDist = dZ_leadingOrder(
+        phaseShift[0], U0[0], omega, a, xAnalyticalRng)
+    # Calculate leading order net motion over one period of articulation (for varying phase Shift)
+    deltaAnalyticalRng = np.array(np.linspace(
+        0, 2 * np.pi, num=1000), dtype=np.float64)
+    dZAnalyticaldelt = dZ_leadingOrder(
+        deltaAnalyticalRng, U0[0], omega, a, relDispEqbm[0])
+    # Calculate leading order net motion (for varying epsilon)
+    epsAnalyticalRng = np.array(np.linspace(
+        0, np.max(epsilon), num=1000), dtype=np.float64)
+    dZAnalyticaleps = dZ_leadingOrder(
+        phaseShift[0], epsAnalyticalRng * omega * relDispEqbm[0], omega, a, relDispEqbm[0])
+
+# !SECTION (Analysis)
+
+
 # SECTION: Plots
 
-    # PLOT: net displacement of swimmer vs. distance between spheres
-    numLines = 1
-    CoM_Plot = PlotStyling(numLines,
-                           r"$|X_0 / a |$", r"$ \Delta Z / a $",
-                           title=None, loglog=False,
-                           outputDir=output_dir, figName="collinear-swimmer-CoM_x-disp", eps=epsOutput,
-                           continuousColors=False)
-    # Show numerical data points
-    CoM_Plot.make_plot()
-    CoM_Plot.scatter(relDispEqbm, CoM_disp_x, zorder=2, label="Simulation")
-    # Add legend
-    CoM_Plot.legend(title=None, loc='best',
-                    bbox_to_anchor=(0.05, 0.05, 0.9, 0.9))
-    # Adjust ticks and tick labels
-    CoM_Plot.ax.set_xlim([2, 6])
-    CoM_Plot.set_major_minor_ticks(
-        xMajorLoc=1, xMinorLoc=0.5, yMajorLoc=None, yMinorLoc=None)
-    CoM_Plot.set_yaxis_scientific()
-    CoM_Plot.save_plot()
+    if (len(np.unique(relDispEqbm)) > 1):
+        # PLOT: net displacement of swimmer vs. distance between spheres
+        numLines = 2
+        CoM_Plot = PlotStyling(numLines,
+                               r"$\mathrm{R}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
+                               title=None, loglog=False,
+                               output_dir=output_dir, figName="forced-potential-oscillation-CoM_x-disp", eps=epsOutput,
+                               continuousColors=False)
+        # Show numerical data points
+        CoM_Plot.make_plot()
+        CoM_Plot.curve(np.abs(xAnalyticalRng),
+                       dZAnalyticalDist, zorder=1, label="Leading Order")
+        CoM_Plot.scatter(relDispEqbm, CoM_disp_x,
+                         zorder=2, label="Simulation")
+        # Add legend
+        CoM_Plot.legend(title=r"$\epsilon \leq$" + "{}".format(fmt(np.max(epsilon))),
+                        loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
+        # Adjust ticks and tick labels
+        CoM_Plot.ax.set_xlim([1.9, 6])
+        CoM_Plot.set_major_minor_ticks(
+            xMajorLoc=1, xMinorLoc=0.5, yMajorLoc=None, yMinorLoc=None)
+        CoM_Plot.set_yaxis_scientific()
+        CoM_Plot.save_plot()
 
-    # PLOT: log-log of net displacement of swimmer vs. distance between spheres
-    numLines = 1
-    CoM_PlotLL = PlotStyling(numLines,
-                             r"$|X_0 / a |$", r"$| \Delta Z / a |$",
-                             title=None, loglog=True,
-                             outputDir=output_dir, figName="collinear-swimmer-CoM_x-disp-loglog", eps=epsOutput,
-                             continuousColors=False)
-    CoM_PlotLL.make_plot()
-    CoM_PlotLL.scatter(relDispEqbm, np.abs(
-        CoM_disp_x), zorder=2, label="Simulation")
-    CoM_PlotLL.save_plot()
+        # PLOT: log-log of net displacement of swimmer vs. distance between spheres
+        numLines = 2
+        CoM_PlotLL = PlotStyling(numLines,
+                                 r"$\mathrm{R}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
+                                 title=None, loglog=True,
+                                 output_dir=output_dir, figName="forced-potential-oscillation-CoM_x-disp-loglog", eps=epsOutput,
+                                 continuousColors=False)
+        CoM_PlotLL.make_plot()
+        CoM_PlotLL.curve(np.abs(xAnalyticalRng), np.abs(
+            dZAnalyticalDist), zorder=1, label="Leading Order")
+        CoM_PlotLL.scatter(relDispEqbm, np.abs(
+            CoM_disp_x), zorder=2, label="Simulation")
+        CoM_PlotLL.legend(title=r"$\epsilon \leq$" + "{}".format(
+            fmt(np.max(epsilon))), loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
+        CoM_PlotLL.save_plot()
 
-    # PLOT: net displacement of swimmer vs phase shift
-    numLines = 1
-    phaseShift_Plot = PlotStyling(numLines,
-                                  r"Phase Shift, $\delta$", r"$\Delta Z / a$",
-                                  title=None, loglog=False,
-                                  outputDir=output_dir, figName="collinear-swimmer-phaseShift", eps=epsOutput,
-                                  continuousColors=False)
-    phaseShift_Plot.make_plot()
-    phaseShift_Plot.scatter(
-        phaseShift, CoM_disp_x, zorder=2, label="Simulation")
-    phaseShift_Plot.legend(
-        title=None, loc='best', bbox_to_anchor=(0.05, 0.05, 0.9, 0.9))
-    phaseShift_Plot.set_yaxis_scientific()
-    phaseShift_Plot.save_plot()
+        # PLOT: Relative error of displacement with relDisp
+        numLines = 1
+        relDisErr = relErr(dZ_leadingOrder(phaseShift[0], U0[0], omega, a, relDispEqbm),
+                           CoM_disp_x)
+        CoMDispErr_Plot = PlotStyling(numLines,
+                                      r"$\mathrm{R}_0 / a $", r"Relative Error",
+                                      title=None, loglog=True,
+                                      output_dir=output_dir, figName="forced-potential-oscillation-CoM_x-disp-error", eps=epsOutput,
+                                      continuousColors=False)
+        CoMDispErr_Plot.make_plot()
+        CoMDispErr_Plot.scatter(
+            relDispEqbm, relDisErr, zorder=1, label="Relative Error")
+        CoMDispErr_Plot.save_plot()
 
+    if (len(np.unique(phaseShift)) > 1):
+        # PLOT: net displacement of swimmer vs phase Shift
+        numLines = 2
+        phaseShift_Plot = PlotStyling(numLines,
+                                      r"Phase Shift, $\delta$", r"$\Delta \mathrm{R}_{2} / a$",
+                                      title=None, loglog=False,
+                                      output_dir=output_dir, figName="forced-potential-oscillation-phaseShift", eps=epsOutput,
+                                      continuousColors=False)
+        phaseShift_Plot.make_plot()
+        phaseShift_Plot.curve(
+            deltaAnalyticalRng, dZAnalyticaldelt, zorder=1, label="Leading Order")
+        phaseShift_Plot.scatter(
+            phaseShift, CoM_disp_x, zorder=2, label="Simulation")
+        phaseShift_Plot.legend(title=r"$\epsilon \leq$" + "{}".format(
+            fmt(np.max(epsilon))), loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
+        phaseShift_Plot.set_yaxis_scientific()
+        phaseShift_Plot.save_plot()
+
+        # PLOT: Relative error of displacement with delta
+        relPhErr = relErr(dZ_leadingOrder(phaseShift, U0[0], omega, a, relDispEqbm[0]),
+                          CoM_disp_x)
+        numLines = 1
+        phaseShiftErr_Plot = PlotStyling(numLines,
+                                         r"Phase Shift, $\delta$", r"Relative Error",
+                                         title=None, loglog=True,
+                                         output_dir=output_dir, figName="forced-potential-oscillation-phaseShift-error", eps=epsOutput,
+                                         continuousColors=False)
+        phaseShiftErr_Plot.make_plot()
+        phaseShiftErr_Plot.scatter(
+            phaseShift, relPhErr, zorder=1, label="Relative Error")
+        phaseShiftErr_Plot.save_plot()
+
+    if (len(np.unique(epsilon)) > 1):
+        # PLOT: net displacement of swimmer vs epsilon
+        numLines = 2
+        eps_Plot = PlotStyling(numLines,
+                               r"$\epsilon = \frac{\mathrm{U}_0 / \omega}{\mathrm{R}_0}$", r"$\Delta \mathrm{R}_{2} / a$",
+                               title=None, loglog=False,
+                               output_dir=output_dir, figName="forced-potential-oscillation-eps-scaling-CoM_x-disp", eps=epsOutput,
+                               continuousColors=False)
+        eps_Plot.make_plot()
+        eps_Plot.curve(epsAnalyticalRng, dZAnalyticaleps,
+                       zorder=1, label="Leading Order")
+        eps_Plot.scatter(epsilon, CoM_disp_x,
+                         zorder=2, label="Simulation")
+        eps_Plot.legend(loc='best', bbox_to_anchor=(0.05, 0.05, 0.5, 0.9))
+        eps_Plot.save_plot()
+
+        # PLOT: log-log net displacement of swimmer vs epsilon
+        numLines = 2
+        epsLL_Plot = PlotStyling(numLines,
+                                 r"$\epsilon = \frac{\mathrm{U}_0 / \omega}{\mathrm{R}_0}$", r"$\Delta \mathrm{R}_{2} / a$",
+                                 title=None, loglog=True,
+                                 output_dir=output_dir, figName="forced-potential-oscillation-eps-scaling-CoM_x-disp-loglog", eps=epsOutput,
+                                 continuousColors=False)
+        epsLL_Plot.make_plot()
+        epsLL_Plot.curve(epsAnalyticalRng, dZAnalyticaleps,
+                         zorder=1, label="Leading Order")
+        epsLL_Plot.scatter(epsilon, CoM_disp_x,
+                           zorder=2, label="Simulation")
+        epsLL_Plot.legend(
+            loc='best', bbox_to_anchor=(0.05, 0.01, 0.5, 0.98))
+        epsLL_Plot.save_plot()
 # !SECTION (Plots)
 
 
