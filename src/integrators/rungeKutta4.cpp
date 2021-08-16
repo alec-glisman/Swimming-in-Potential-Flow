@@ -39,7 +39,7 @@ rungeKutta4::~rungeKutta4()
 void
 rungeKutta4::integrate()
 {
-    /* Solve system of form: y'(t) = f( y(t),  t ) */
+    /* ANCHOR: Solve system of form: y'(t) = f( y(t),  t ) */
 
     /* Step 1: k1 = f( y(t_0),  t_0 ),
      * initial conditions at current step */
@@ -128,7 +128,7 @@ rungeKutta4::initializeSpecificVars()
 
     auto gsdParser = m_system->gsdUtil();
 
-    /* set specific parameters */
+    /* ANCHOR: set specific parameters */
 
     // oscillation velocity amplitude
     spdlog::get(m_logName)->info("GSD parsing U0");
@@ -161,8 +161,9 @@ rungeKutta4::initializeSpecificVars()
     spdlog::get(m_logName)->info("phase_shift : {0}", m_phase_shift);
     assert(double(phase_shift) == m_phase_shift && "phase_shift not properly set");
 
-    /* set initial conditions */
+    /* ANCHOR: set initial conditions */
     spdlog::get(m_logName)->info("Setting initial conditions");
+
     // set articulation velocities
     m_system->velocities    = articulationVel(0.0);
     m_system->accelerations = articulationAcc(0.0);
@@ -215,4 +216,10 @@ void
 rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, int first_idx, int last_idx)
 {
     // TODO
+
+    /* ANCHOR: Generate linear system for locater point motion */
+
+    /* ANCHOR: Solve linear system for locater point motion */
+
+    /* ANCHOR: Output kinematic data back to m_system */
 }
