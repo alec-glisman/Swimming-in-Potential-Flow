@@ -214,9 +214,7 @@ rungeKutta4::rLoc()
 
 void
 rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, int first_idx, int last_idx)
-{
-    // TODO
-
+{ // TODO
     /* ANCHOR: Generate linear system for locater point motion */
 
     /* ANCHOR: Solve linear system for locater point motion */
