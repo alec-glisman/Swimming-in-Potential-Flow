@@ -24,7 +24,6 @@ parser.add_option("--output-dir", dest="u_output_dir",
                   help="Directory to output plots (relative to relative-path)",
                   metavar="string")
 
-
 # !SECTION: (User input options)
 
 
