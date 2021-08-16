@@ -41,10 +41,10 @@ class rungeKutta4
     accelerationUpdate(Eigen::VectorXd& acc);
 
     const Eigen::VectorXd&
-    articulationVel();
+    articulationVel(double dimensional_time);
 
     const Eigen::VectorXd&
-    articulationAcc();
+    articulationAcc(double dimensional_time);
 
     const Eigen::Vector3d&
     rLoc();
