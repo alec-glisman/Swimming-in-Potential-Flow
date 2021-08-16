@@ -13,6 +13,8 @@
         "NOLINT",
         "NVCC",
         "RUNGE",
+        "conda",
+        "cpan",
         "cwise",
         "disp",
         "dtype",
