@@ -138,6 +138,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
     close( $dataFile)
         or die "Could not close data file: $!";
     
+    my $simulationIter = 1;
 
     # Loop through the number of simulations of each type
     for (my $j = 0; $j < $numSimulations; $j += 1 )
@@ -146,13 +147,10 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         my $jj = $j + 1;
         print "Run ${jj} of ${numSimulations} \n";
 
-        # Create individual simulation directory TODO: add system time and unique tag (increment from beginning)
-        my $simulation_dir = ${tempOutputDir} . "/";
+        # Create individual simulation directory
+        my $simulation_dir = ${tempOutputDir} . "/" . "sim_" . ${simulationIter};
         make_path( $simulation_dir );
-        my $gsd_path    = ${simulation_dir} . "/" . "data.gsd";
-
-        # TODO: Create individual simulation directory and alter $gsd_path to reflect this
-        # TODO: Then update simulation call to keep all files separate
+        my $gsd_path = ${simulation_dir} . "/" . "data.gsd";
 
         # Default parameters
         my $dt          = 1e-5;
@@ -193,6 +191,8 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
                 and die "Main project executable failed: $?, $!";
           
         }
+
+        ++${simulationIter};
     }
 
     # NOTE: Pause for all simulations to finish
