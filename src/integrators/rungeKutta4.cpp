@@ -73,14 +73,13 @@ rungeKutta4::integrate()
     Eigen::VectorXd a3 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a3);
 
-    /* Step 4: k4 = f(t + h, y + h*k3) */
-    Eigen::VectorXd x4 = v3;
-    x4 *= m_c1_2_dt;
+    /* Step 4: k4 = f( y(t_0) + k3 * dt,  t_0 + dt )
+     * time rate-of-change k3 evaluated at end of step (endpoint) */
+    Eigen::VectorXd x4 = m_dt * v3;
     x4.noalias() += x1;
     m_system->positions.noalias() = x4;
 
-    Eigen::VectorXd v4 = a3;
-    v4 *= m_c1_2_dt;
+    Eigen::VectorXd v4 = m_dt * a3;
     v4.noalias() += v1;
 
     m_potHydro->update();
