@@ -25,7 +25,7 @@
 - [x] Figure out why profile build is not linking as expected
 
 - [x] Perl script to run many simulations
-- [ ] Python analysis script to analyze data and generate plots
+- [x] Python analysis script to analyze data and generate plots
 
 ## Additional features
 
