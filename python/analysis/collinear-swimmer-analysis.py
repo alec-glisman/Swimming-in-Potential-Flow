@@ -49,9 +49,10 @@ def aggregate_plots(relative_path, output_dir):
             for file in files:  # Loop through all files in given directory
                 if (".gsd" in file):
                     with open(root + "/" + file) as g:
-                        gsd_files.append(GSDUtil(g, create_gsd=False))
+                        cur_gsd = GSDUtil(g.name, create_gsd=False)
+                        gsd_files.append(cur_gsd)
 
-            assert(len(gsd_files) > 0)
+        assert(len(gsd_files) > 0)
 
     except:  # No files found
         raise IOError(
