@@ -204,7 +204,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
 
     # Run the analysis scripts
     make_path( "${tempOutputDir}/${analysisDir}" );
-    system( "python3 ${pythonAnalysis} --relPath=${tempOutputDir} --outputDir=${analysisDir}" ) 
+    system( "python3 ${pythonAnalysis} --relative-path=${tempOutputDir} --output-dir=${analysisDir}" ) 
         and warn "Python analysis script failed: $!";
 
     # Move all output into the "data" directory
