@@ -74,7 +74,7 @@ chdir $buildDir
     or die "Could not move to build directory: $!";
 
 # Configure and build the project
-system( "cmake \"${cwd}\" -G \"${generator}\" -DMY_COMPILER_OPTION=${compiler} -DCMAKE_BUILD_TYPE=${build} -DENABLE_TESTING=${enableTesting}" ) 
+system( "cmake \"${cwd}\" -G \"${generator}\" -DCMAKE_BUILD_TYPE=${build} -DENABLE_TESTING=${enableTesting}" ) 
     and die "Configuring project failed: $!";
 system( "make -j" ) 
     and die "Building project failed: $!";
