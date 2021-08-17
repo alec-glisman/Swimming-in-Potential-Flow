@@ -41,7 +41,7 @@ IF(APPLE)  # Build on laptop PC
 
 ELSEIF($ENV{USER} STREQUAL "aglisman")  # Build on desktop PC
 
-    MESSAGE(STATUS "** Compiling with gcc-10 on PC-Ubuntu **")
+    MESSAGE(STATUS "** Compiling with gcc-11 on PC-Ubuntu **")
 
     SET(CMAKE_CXX_STANDARD 17)
     SET(CMAKE_CUDA_STANDARD 14)
@@ -49,10 +49,10 @@ ELSEIF($ENV{USER} STREQUAL "aglisman")  # Build on desktop PC
     ADD_DEFINITIONS(-DMACOS_COMPILE)
 
     SET(CMAKE_CXX_COMPILER
-        "/usr/bin/g++-10"
+        "/usr/bin/g++-11"
         CACHE PATH "" FORCE)
     SET(CMAKE_C_COMPILER
-        "/usr/bin/gcc-10"
+        "/usr/bin/gcc-11"
         CACHE PATH "" FORCE)
         
     SET(CMAKE_CUDA_COMPILER "/opt/nvidia/hpc_sdk/Linux_x86_64/21.5/cuda/bin/nvcc")
