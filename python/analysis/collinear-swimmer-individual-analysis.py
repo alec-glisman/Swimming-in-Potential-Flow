@@ -80,8 +80,8 @@ def aggregate_plots(relative_path, output_dir):
 
     # Initialize temporal data
     nframes = gsd_file.trajectory.file.nframes
-    time = np.zeros((nframes - 1))
-    positions = np.zeros((9, nframes - 1))
+    time = np.zeros((nframes - 2))
+    positions = np.zeros((9, nframes - 2))
     velocities = np.zeros_like(positions)
     accelerations = np.zeros_like(positions)
 
@@ -89,7 +89,7 @@ def aggregate_plots(relative_path, output_dir):
     for i in range(1, nframes-1):
         current_snapshot = gsd_file.trajectory.read_frame(i)
 
-        time[i] = current_snapshot.log['integrator/t']
+        time[i-1] = current_snapshot.log['integrator/t']
         positions[:, i-1] = current_snapshot.particles.position.flatten()
         velocities[:, i-1] = current_snapshot.particles.position.flatten()
         accelerations[:, i-1] = current_snapshot.particles.position.flatten()
