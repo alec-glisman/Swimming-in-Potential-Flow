@@ -187,7 +187,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         if ( ($jj < $numSimulations) and ($jj % int($numThreads / 2) != 0) and ($runSimulationSimulan) ) {
 
 
-            system( "${shellSimulationCmd}; ${shellPythonCmd} &" ) 
+            system( "${shellSimulationCmd} && ${shellPythonCmd} &" ) 
                 and die "Main project executable or Python individual analysis script failed: $?, $!";
 
             sleep(5);  # brief pause before next simulation
