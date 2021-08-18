@@ -224,7 +224,7 @@ rungeKutta4::rLoc()
 void
 rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic,
                                 Eigen::VectorXd a_artic)
-{ // TODO
+{
     /* ANCHOR: Solve for rigid body motion (rbm) tensors */
     // initialize variables
     Eigen::Matrix3d I       = Eigen::Matrix3d::Identity(3, 3);                        // [3 x 3]
@@ -248,7 +248,6 @@ rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic
     // calculate M_tilde = Sigma * M_total * Sigma^T;  [6 x 6]
     Eigen::MatrixXd M_tilde_hold = m_potHydro->mTotal() * rbmconn.transpose();
     Eigen::MatrixXd M_tilde      = rbmconn * M_tilde_hold;
-    Eigen::MatrixXd M_tilde_inv  = M_tilde.inverse();
 
     /* ANCHOR: Solve for rigid body motion velocity components */
     // calculate P_script = Sigma * M_total * V_articulation;  [6 x 1]
@@ -257,7 +256,7 @@ rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic
 
     // calculate U_swim = - M_tilde_inv * P_script; U_swim has translation and rotation
     // components
-    Eigen::VectorXd U_swim = -M_tilde_inv * P_script;
+    Eigen::VectorXd U_swim = -M_tilde.fullPivLu().solve(P_script);
 
     /* ANCHOR: Output velocity data back to m_system */
     // calculate U = Sigma^T * U_swim + v_artic
@@ -299,7 +298,7 @@ rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic
 
     // calculate A_swim = - M_tilde_inv * F_script; A_swim has translation and rotation
     // components
-    Eigen::VectorXd A_swim = -M_tilde_inv * F_script;
+    Eigen::VectorXd A_swim = -M_tilde.fullPivLu().solve(F_script);
 
     /* ANCHOR: Output acceleration data back to m_system */
     // calculate A = Sigma^T * A_swim + b
