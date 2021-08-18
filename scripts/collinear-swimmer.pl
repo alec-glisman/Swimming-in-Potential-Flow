@@ -32,7 +32,7 @@ my $runSimulationSimulan = 1; # 0 only runs one simulation at a time
 
 # Python variables
 my $pythonGSDCreation = "python/initial_configurations/" . "collinear-swimmer-configuration.py";
-my $pythonAnalysis   = "python/analysis/" . "collinear-swimmer-analysis.py";
+my $pythonAggregrateAnalysis   = "python/analysis/" . "collinear-swimmer-aggregrate-analysis.py";
 
 # Output variables
 my $curDate          = strftime('%Y-%m-%d', localtime);
@@ -204,7 +204,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
 
     # Run the analysis scripts
     make_path( "${tempOutputDir}/${analysisDir}" );
-    system( "python3 ${pythonAnalysis} --relative-path=${tempOutputDir} --output-dir=${analysisDir}" ) 
+    system( "python3 ${pythonAggregrateAnalysis} --relative-path=${tempOutputDir} --output-dir=${analysisDir}" ) 
         and warn "Python analysis script failed: $!";
 
     # Move all output into the "data" directory
