@@ -102,7 +102,8 @@ def aggregate_plots(relative_path, output_dir):
     for i in range(len(gsd_files)):
 
         # Data from final frame
-        gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(0)
+        gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(
+            gsd_files[i].trajectory.file.nframes - 1)
         CoM_disp_x[i] = float(
             # particle 1, x-coordinate
             gsd_files[i].snapshot.particles.position[1][0]
