@@ -38,7 +38,7 @@ parser.add_option("--epsilon", dest="u_epsilon",
 # SECTION: Parameters
 
 # Swimmer parameters
-omega = 2.0 * np.pi
+omega = 1.0
 tau = (2.0 * np.pi) / omega
 
 # Integrator parameters
