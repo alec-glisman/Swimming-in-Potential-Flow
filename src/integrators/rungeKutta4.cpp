@@ -43,6 +43,7 @@ rungeKutta4::integrate()
 
     /* Step 1: k1 = f( y(t_0),  t_0 ),
      * initial conditions at current step */
+    double          time{m_system->t()};
     Eigen::VectorXd x1 = m_system->positions;
     Eigen::VectorXd v1 = m_system->velocities;
     Eigen::VectorXd a1 = m_system->accelerations;
@@ -59,7 +60,7 @@ rungeKutta4::integrate()
 
     m_potHydro->update(); // update hydrodynamics tensors
     Eigen::VectorXd a2 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a2, m_system->t() * m_system->tau());
+    accelerationUpdate(a2, m_system->tau() * (time + m_c1_2_dt));
 
     /* Step 3: k3 = f( y(t_0) + k2 * dt/2,  t_0 + dt/2 )
      * time rate-of-change k2 evaluated halfway through time step (midpoint) */
@@ -72,7 +73,7 @@ rungeKutta4::integrate()
 
     m_potHydro->update();
     Eigen::VectorXd a3 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a3, m_system->t() * m_system->tau());
+    accelerationUpdate(a3, m_system->tau() * (time + m_c1_2_dt));
 
     /* Step 4: k4 = f( y(t_0) + k3 * dt,  t_0 + dt )
      * time rate-of-change k3 evaluated at end of step (endpoint) */
@@ -85,7 +86,7 @@ rungeKutta4::integrate()
 
     m_potHydro->update();
     Eigen::VectorXd a4 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a4, m_system->t() * m_system->tau());
+    accelerationUpdate(a4, m_system->tau() * (time + m_dt));
 
     /* Output calculated values */
     m_system->positions.noalias() = v1;
