@@ -39,7 +39,10 @@ rungeKutta4::~rungeKutta4()
 void
 rungeKutta4::integrate()
 {
-    /* ANCHOR: Solve system of form: y'(t) = f( y(t),  t ) */
+    /* ANCHOR: Solve system of form: y'(t) = f( y(t),  t )
+     * @REFERENCE:
+     * https://www.physicsforums.com/threads/using-runge-kutta-method-for-position-calc.553663/post-3634957
+     */
 
     /* Step 1: k1 = f( y(t_0),  t_0 ),
      * initial conditions at current step */
@@ -103,7 +106,10 @@ rungeKutta4::integrate()
     m_system->velocities *= m_c1_6_dt;
     m_system->velocities.noalias() += v1;
 
-    m_system->accelerations.noalias() = a4;
+    m_potHydro->update();
+    Eigen::VectorXd a_out = Eigen::VectorXd::Zero(3 * m_system->numParticles());
+    accelerationUpdate(a_out, m_system->tau() * (time + m_dt));
+    m_system->accelerations.noalias() = a_out;
 }
 
 void
