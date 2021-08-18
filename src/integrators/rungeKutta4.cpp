@@ -258,6 +258,9 @@ rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic
     m_system->velocities.noalias() = rbmconn.transpose() * U_swim;
     m_system->velocities.noalias() += v_artic;
 
+    // update hydrodynamic force terms for acceleration components
+    m_potHydro->updateForcesOnly();
+
     /* ANCHOR: Solve for rigid body motion acceleration components */
     // calculate b = a_artic + W * r + [v_artic ^ ]^T * Omega_C;  Omega_C = U_swim(3::5)
     Eigen::Vector3d Omega_C = U_swim.segment<3>(3);
@@ -281,11 +284,18 @@ rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic
     }
 
     // calculate gMUU = \nabla M_added : U U
+    Eigen::VectorXd gMUU = m_potHydro->t2VelGrad();
 
     // calculate F_script = Sigma * (M_total * b + gMUU)
+    Eigen::VectorXd F_script_hold = m_potHydro->mTotal() * b;
+    F_script_hold.noalias() += gMUU;
+    Eigen::VectorXd F_script = rbmconn * F_script_hold;
 
     // calculate A_swim = - M_tilde_inv * F_script; A_swim has translation and rotation components
+    Eigen::VectorXd A_swim = -M_tilde_inv * F_script;
 
     /* ANCHOR: Output acceleration data back to m_system */
     // calculate A = Sigma^T * A_swim + b
+    m_system->accelerations.noalias() = rbmconn.transpose() * A_swim;
+    m_system->accelerations.noalias() += b;
 }
