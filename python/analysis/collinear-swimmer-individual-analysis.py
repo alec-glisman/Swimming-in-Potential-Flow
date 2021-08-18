@@ -139,7 +139,7 @@ def aggregate_plots(relative_path, output_dir):
     sprVel_Plot.save_plot()
 
     # PLOT: spring acceleration (x)
-    numLines = 2
+    numLines = 4
     sprAcc_Plot = PlotStyling(numLines,
                               r"$t/\tau$", r"$\Delta \dot{U} / (U_0 \, \omega)$",
                               title=None, loglog=False,
@@ -149,11 +149,16 @@ def aggregate_plots(relative_path, output_dir):
     # Show numerical data points
     sprAcc_Plot.make_plot()
     sprAcc_Plot.curve(time, (accelerations[0, :] - accelerations[3, :]) / (
-        U0 * omega), zorder=1, label=r"$1-2$")
+        U0 * omega), zorder=1, label=r"$1-2$ Simulation")
     sprAcc_Plot.curve(time, (accelerations[3, :] - accelerations[6, :]) / (
-        U0 * omega), zorder=2, label=r"$2-3$")
+        U0 * omega), zorder=2, label=r"$2-3$ Simulation")
+    sprAcc_Plot.curve(
+        time, np.sin(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
+    sprAcc_Plot.curve(
+        time, -np.sin(omega * tau * time + phaseShift), thin_curve=True, zorder=4, label=r"$2-3$ Constraint")
     # Add legend
-    sprAcc_Plot.legend(loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
+    sprAcc_Plot.legend(
+        loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
     sprAcc_Plot.save_plot()
 
 # !SECTION (Plots)
