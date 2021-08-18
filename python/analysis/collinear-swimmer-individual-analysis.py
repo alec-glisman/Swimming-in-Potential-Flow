@@ -124,7 +124,7 @@ def aggregate_plots(relative_path, output_dir):
                               continuousColors=False)
     # Show numerical data points
     sprVel_Plot.make_plot()
-    sprVel_Plot.curve(time, (velocities[0, :] - velocities[3, 0]) / (
+    sprVel_Plot.curve(time, (velocities[0, :] - velocities[3, :]) / (
         U0), zorder=1, label=r"$2-3$ Simulation")
     sprVel_Plot.curve(time, (velocities[3, :] - velocities[6, :]) / (
         U0), zorder=2, label=r"$1-2$ Simulation")
