@@ -3,6 +3,7 @@
 # External Dependencies
 import os                          # Access system file-tree
 import sys                         # Modify system parameters
+from math import isclose           # isclose()
 import numpy as np                 # Data structures
 from optparse import OptionParser  # Get user input
 import matplotlib.ticker as mticker  # Scientific notation in labels
@@ -103,7 +104,9 @@ def aggregate_plots(relative_path, output_dir):
 
         # Data from final frame
         gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(
-            gsd_files[i].trajectory.file.nframes - 1)
+            gsd_files[i].trajectory.file.nframes - 2)
+        final_t = float(gsd_files[i].snapshot.log['integrator/t'])
+        assert(isclose(1.0, final_t, rel_tol=1e-8))
         CoM_disp_x[i] = float(
             # particle 1, x-coordinate
             gsd_files[i].snapshot.particles.position[1][0]
