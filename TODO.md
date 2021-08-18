@@ -20,6 +20,7 @@
   - [x] Calculate (linear) velocity of CoM
   - [x] Calculate (linear) acceleration of CoM
   - [x] Calculate angular CoM components
+  - [ ] Update accelerations based on constrained lagrangian approach in paper
 
 - [x] Convert raw pointers into smart pointers
 - [x] Figure out why profile build is not linking as expected
