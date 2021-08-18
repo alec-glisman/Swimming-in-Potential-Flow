@@ -222,10 +222,10 @@ rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic
 { // TODO
     /* ANCHOR: Solve for rigid body motion (rbm) tensors */
     // initialize variables
-    Eigen::Matrix3d I       = Eigen::Matrix3d::Identity(3, 3);
-    Eigen::Matrix3d rbmconn = Eigen::MatrixXd::Zero(6, 3 * m_system->numParticles());
+    Eigen::Matrix3d I       = Eigen::Matrix3d::Identity(3, 3);                        // [3 x 3]
+    Eigen::MatrixXd rbmconn = Eigen::MatrixXd::Zero(6, 3 * m_system->numParticles()); // [6 x 3N]
 
-    // assemble the rigid body motion connectivity tensor (Sigma)
+    // assemble the rigid body motion connectivity tensor (Sigma);  [6 x 3N]
     for (int i = 0; i < m_system->numParticles(); i++)
     {
         int i3{3 * i};
@@ -240,13 +240,13 @@ rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic
         rbmconn.block<3, 3>(3, i3).noalias() = n_dr_cross; // translation-rotation couple
     }
 
-    // calculate M_tilde = Sigma * M_total * Sigma^T
+    // calculate M_tilde = Sigma * M_total * Sigma^T;  [6 x 6]
     Eigen::MatrixXd M_tilde_hold = m_potHydro->mTotal() * rbmconn.transpose();
-    Eigen::Matrix3d M_tilde      = rbmconn * M_tilde_hold;
-    Eigen::Matrix3d M_tilde_inv  = M_tilde.inverse();
+    Eigen::MatrixXd M_tilde      = rbmconn * M_tilde_hold;
+    Eigen::MatrixXd M_tilde_inv  = M_tilde.inverse();
 
     /* ANCHOR: Solve for rigid body motion velocity components */
-    // calculate P_script = Sigma * M_total * V_articulation
+    // calculate P_script = Sigma * M_total * V_articulation;  [6 x 1]
     Eigen::VectorXd P_script_hold = m_potHydro->mTotal() * v_artic;
     Eigen::VectorXd P_script      = rbmconn * P_script_hold;
 
