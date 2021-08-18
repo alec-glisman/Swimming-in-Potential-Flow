@@ -68,7 +68,14 @@ GSDUtil::~GSDUtil()
     spdlog::get(m_logName)->info("GSDUtil destructor called");
 }
 
-/* NOTES
+void
+GSDUtil::truncateGSD()
+{
+    spdlog::get(m_logName)->info("truncating GSD file: {0}", m_system->inputGSDFile());
+    gsd_truncate(m_system->handle().get());
+}
+
+/* NOTE:
  * Expected size is in units of bytes
  *     u_int8: 1
  *     float (np.single, np.float32): 4

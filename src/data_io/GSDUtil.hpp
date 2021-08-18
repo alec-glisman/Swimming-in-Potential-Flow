@@ -40,6 +40,9 @@ class GSDUtil
               unsigned int cur_n = 0);
 
     void
+    truncateGSD();
+
+    void
     writeFrame();
 
     uint64_t
