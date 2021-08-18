@@ -91,8 +91,9 @@ def aggregate_plots(relative_path, output_dir):
 
         time[i-1] = current_snapshot.log['integrator/t']
         positions[:, i-1] = current_snapshot.particles.position.flatten()
-        velocities[:, i-1] = current_snapshot.particles.position.flatten()
-        accelerations[:, i-1] = current_snapshot.particles.position.flatten()
+        velocities[:, i-1] = current_snapshot.particles.velocity.flatten()
+        accelerations[:, i -
+                      1] = current_snapshot.particles.moment_inertia.flatten()
 
 # !SECTION (Load data)
 
@@ -129,9 +130,9 @@ def aggregate_plots(relative_path, output_dir):
     sprVel_Plot.curve(time, (velocities[3, :] - velocities[6, :]) / (
         U0), zorder=2, label=r"$1-2$ Simulation")
     sprVel_Plot.curve(
-        time, -np.cos(2 * np.pi * time), thin_curve=True, zorder=3, label=r"$1-2$ Leading Order")
+        time, -np.cos(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
     sprVel_Plot.curve(
-        time, -np.cos(2 * np.pi * time + phaseShift), thin_curve=True, zorder=4, label=r"$2-3$ Leading Order")
+        time, np.cos(omega * tau * time + phaseShift), thin_curve=True, zorder=4, label=r"$2-3$ Constraint")
     # Add legend
     sprVel_Plot.legend(
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
