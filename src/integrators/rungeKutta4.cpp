@@ -55,12 +55,11 @@ rungeKutta4::integrate()
      * time rate-of-change k1 evaluated halfway through time step (midpoint) */
     Eigen::VectorXd x2 = m_c1_2_dt * v1;
     x2.noalias() += x1;
-    m_system->positions.noalias() =
-        x2; // temporarily change positions to get correct hydro tensors during acceleration update
-
     Eigen::VectorXd v2 = m_c1_2_dt * a1;
     v2.noalias() += v1;
 
+    m_system->positions.noalias() =
+        x2; // temporarily change positions to get correct hydro tensors during acceleration update
     m_potHydro->update(); // update hydrodynamics tensors
     Eigen::VectorXd a2 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a2, m_system->tau() * (time + m_c1_2_dt));
@@ -69,11 +68,10 @@ rungeKutta4::integrate()
      * time rate-of-change k2 evaluated halfway through time step (midpoint) */
     Eigen::VectorXd x3 = m_c1_2_dt * v2;
     x3.noalias() += x1;
-    m_system->positions.noalias() = x3;
-
     Eigen::VectorXd v3 = m_c1_2_dt * a2;
     v3.noalias() += v1;
 
+    m_system->positions.noalias() = x3;
     m_potHydro->update();
     Eigen::VectorXd a3 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a3, m_system->tau() * (time + m_c1_2_dt));
@@ -82,11 +80,10 @@ rungeKutta4::integrate()
      * time rate-of-change k3 evaluated at end of step (endpoint) */
     Eigen::VectorXd x4 = m_dt * v3;
     x4.noalias() += x1;
-    m_system->positions.noalias() = x4;
-
     Eigen::VectorXd v4 = m_dt * a3;
     v4.noalias() += v1;
 
+    m_system->positions.noalias() = x4;
     m_potHydro->update();
     Eigen::VectorXd a4 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a4, m_system->tau() * (time + m_dt));
