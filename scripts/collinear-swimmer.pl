@@ -32,7 +32,7 @@ my $runSimulationSimulan = 0; # NOTE: 0 only runs one simulation at a time
 
 # Python variables
 my $pythonGSDCreation = "python/initial_configurations/" . "collinear-swimmer-configuration.py";
-my $pythonAggregrateAnalysis   = "python/analysis/" . "collinear-swimmer-aggregrate-analysis.py";
+my $pythonAggregrateAnalysis   = "python/analysis/" . "collinear-swimmer-aggegrate-analysis.py";
 my $pythonIndividualAnalysis   = "python/analysis/" . "collinear-swimmer-individual-analysis.py";
 
 # Output variables
