@@ -6,6 +6,7 @@ dependencies:
   - matplotlib
   - colorcet
   - scipy
+  - pandas
   - gsd
   - pylint
   - autopep8
