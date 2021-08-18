@@ -43,6 +43,7 @@
         "installdeps",
         "ipykernel",
         "irrotational",
+        "isclose",
         "lseeki",
         "mathrm",
         "mathrsfs",
