@@ -111,9 +111,9 @@ def aggregate_plots(relative_path, output_dir):
     sprDis_Plot.curve(
         time, (positions[0, :] - positions[3, :] - relDispEqbm) * omega / U0, zorder=1, label=r"$1-2$")
     sprDis_Plot.curve(
-        time, (positions[6, :] - positions[3, :] - relDispEqbm) * omega / U0, zorder=2, label=r"$2-3$")
+        time, (positions[3, :] - positions[6, :] - relDispEqbm) * omega / U0, zorder=2, label=r"$2-3$")
     sprDis_Plot.curve(
-        time, -np.sin(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
+        time, np.sin(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
     sprDis_Plot.curve(
         time, -np.sin(omega * tau * time + phaseShift), thin_curve=True, zorder=4, label=r"$2-3$ Constraint")
     # Add legend
@@ -131,13 +131,13 @@ def aggregate_plots(relative_path, output_dir):
     # Show numerical data points
     sprVel_Plot.make_plot()
     sprVel_Plot.curve(time, (velocities[0, :] - velocities[3, :]) / (
-        U0), zorder=1, label=r"$2-3$ Simulation")
+        U0), zorder=1, label=r"$1-2$ Simulation")
     sprVel_Plot.curve(time, (velocities[6, :] - velocities[3, :]) / (
-        U0), zorder=2, label=r"$1-2$ Simulation")
+        U0), zorder=2, label=r"$3-2$ Simulation")
     sprVel_Plot.curve(
         time, np.cos(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
     sprVel_Plot.curve(
-        time, np.cos(omega * tau * time + phaseShift), thin_curve=True, zorder=4, label=r"$2-3$ Constraint")
+        time, np.cos(omega * tau * time + phaseShift), thin_curve=True, zorder=4, label=r"$3-2$ Constraint")
     # Add legend
     sprVel_Plot.legend(
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
@@ -156,11 +156,11 @@ def aggregate_plots(relative_path, output_dir):
     sprAcc_Plot.curve(time, (accelerations[0, :] - accelerations[3, :]) / (
         U0 * omega), zorder=1, label=r"$1-2$ Simulation")
     sprAcc_Plot.curve(time, (accelerations[6, :] - accelerations[3, :]) / (
-        U0 * omega), zorder=2, label=r"$2-3$ Simulation")
+        U0 * omega), zorder=2, label=r"$3-2$ Simulation")
     sprAcc_Plot.curve(
         time, -np.sin(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
     sprAcc_Plot.curve(
-        time, -np.sin(omega * tau * time + phaseShift), thin_curve=True, zorder=4, label=r"$2-3$ Constraint")
+        time, -np.sin(omega * tau * time + phaseShift), thin_curve=True, zorder=4, label=r"$3-2$ Constraint")
     # Add legend
     sprAcc_Plot.legend(
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
