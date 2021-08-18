@@ -176,27 +176,28 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
 
         # Generate GSD file
         system( "python " . ${pythonGSDCreation} . " --GSD-path=" . ${gsd_path} . " --dt=" . ${dt} . " --R_avg=" . ${R_avg} . " --phase-angle=" . ${phase_angle} . " --epsilon=" . ${epsilon} ) and die "Unable to generate GSD file: $?, $!";
+        
+        # Prepare for simulation
+        make_path( "${simulation_dir}/${analysisDir}" );
+        my $shellSimulationCmd = "${buildDir}/src/./" . ${projectName} . " " . ${gsd_path} . " " . ${simulation_dir};
+        my $shellPythonCmd = "python3 ${pythonIndividualAnalysis} --relative-path=${simulation_dir} --output-dir=${analysisDir}";
 
 
         # ANCHOR: Run executable: [executable] [input gsd] [output directory]
         if ( ($jj < $numSimulations) and ($jj % int($numThreads / 2) != 0) and ($runSimulationSimulan) ) {
 
-            system( "${buildDir}/src/./" . ${projectName} . " " . ${gsd_path} . " " . ${simulation_dir} . " &" ) 
-                and die "Main project executable failed: $?, $!";
 
-            make_path( "${simulation_dir}/${analysisDir}" );
-            system( "python3 ${pythonIndividualAnalysis} --relative-path=${simulation_dir} --output-dir=${analysisDir}" ) 
-                and warn "Python individual analysis script failed: $!";
+            system( "${shellSimulationCmd}; ${shellPythonCmd} &" ) 
+                and die "Main project executable or Python individual analysis script failed: $?, $!";
 
             sleep(5);  # brief pause before next simulation
         
         } else {
-        
-            system( "${buildDir}/src/./" . ${projectName} . " " . ${gsd_path} . " " . ${simulation_dir} ) 
+
+            system( ${shellSimulationCmd} ) 
                 and die "Main project executable failed: $?, $!";
 
-            make_path( "${simulation_dir}/${analysisDir}" );
-            system( "python3 ${pythonIndividualAnalysis} --relative-path=${simulation_dir} --output-dir=${analysisDir}" ) 
+            system( ${shellPythonCmd} ) 
                 and warn "Python individual analysis script failed: $!";
         }
 
