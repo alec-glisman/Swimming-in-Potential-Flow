@@ -103,7 +103,8 @@ def aggregate_plots(relative_path, output_dir):
     # Output data to log file
     file = output_dir + "output.txt"
     with open(file, "w") as f:
-        print(f"\Delta R_2 = {positions[3, -1] - positions[3, 0]}",   file=f)
+        print(f"R_avg = {relDispEqbm}", file=f)
+        print(f"\Delta R_2 = {positions[3, -1] - positions[3, 0]}", file=f)
 
 # !SECTION (Output data)
 
