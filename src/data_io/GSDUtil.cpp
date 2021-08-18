@@ -72,7 +72,9 @@ void
 GSDUtil::truncateGSD()
 {
     spdlog::get(m_logName)->info("truncating GSD file: {0}", m_system->inputGSDFile());
-    gsd_truncate(m_system->handle().get());
+    auto return_val = gsd_truncate(m_system->handle().get());
+    m_system->setReturnVal(return_val);
+    m_system->check_gsd_return();
 }
 
 /* NOTE:
