@@ -37,7 +37,7 @@
             "cwd": "${workspaceFolder}",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/python/analysis/collinear-swimmer-indivudial-analysis.py",
+            "program": "${workspaceFolder}/python/analysis/collinear-swimmer-individual-analysis.py",
             "console": "integratedTerminal",
             "args": [
                 "--relative-path=${workspaceFolder}/temp_2021-08-18.13-18-51_collinear-swimmer_varyRelDisp/sim_1",
