@@ -28,15 +28,16 @@ my $projectName      = "bodies_in_potential_flow";
 my $inputDir         = "input";
 my @inputData        = ( "varyRelDisp", "varyDt", "varyEpsilon", "varyPhaseAngle" );
 my $numSimulationTypes = scalar @inputData;
-my $runSimulationSimulan = 1; # 0 only runs one simulation at a time
+my $runSimulationSimulan = 0; # NOTE: 0 only runs one simulation at a time
 
 # Python variables
 my $pythonGSDCreation = "python/initial_configurations/" . "collinear-swimmer-configuration.py";
 my $pythonAggregrateAnalysis   = "python/analysis/" . "collinear-swimmer-aggregrate-analysis.py";
+my $pythonIndividualAnalysis   = "python/analysis/" . "collinear-swimmer-individual-analysis.py";
 
 # Output variables
 my $curDate          = strftime('%Y-%m-%d', localtime);
-my $analysisDir      = "analysis";
+my $analysisDir      = "figures";
 
 # Get the name of computer script is running on
 my $host = `uname -n`;
@@ -182,13 +183,21 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
 
             system( "${buildDir}/src/./" . ${projectName} . " " . ${gsd_path} . " " . ${simulation_dir} . " &" ) 
                 and die "Main project executable failed: $?, $!";
+
+            make_path( "${simulation_dir}/${analysisDir}" );
+            system( "python3 ${pythonIndividualAnalysis} --relative-path=${simulation_dir} --output-dir=${analysisDir}" ) 
+                and warn "Python individual analysis script failed: $!";
+
             sleep(5);  # brief pause before next simulation
         
         } else {
         
             system( "${buildDir}/src/./" . ${projectName} . " " . ${gsd_path} . " " . ${simulation_dir} ) 
                 and die "Main project executable failed: $?, $!";
-          
+
+            make_path( "${simulation_dir}/${analysisDir}" );
+            system( "python3 ${pythonIndividualAnalysis} --relative-path=${simulation_dir} --output-dir=${analysisDir}" ) 
+                and warn "Python individual analysis script failed: $!";
         }
 
         ++${simulationIter};
@@ -205,7 +214,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
     # Run the analysis scripts
     make_path( "${tempOutputDir}/${analysisDir}" );
     system( "python3 ${pythonAggregrateAnalysis} --relative-path=${tempOutputDir} --output-dir=${analysisDir}" ) 
-        and warn "Python analysis script failed: $!";
+        and warn "Python aggregate analysis script failed: $!";
 
     # Move all output into the "data" directory
     my $outputDir = "data/${curDateTime}" . "_" . ${simulationTag} . "_" . ${inputData[$i]};
