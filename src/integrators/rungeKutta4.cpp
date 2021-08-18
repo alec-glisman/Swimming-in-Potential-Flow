@@ -226,7 +226,6 @@ rungeKutta4::initializeSpecificVars()
 
     // write updated kinematics to original frame (overwrite current file)
     spdlog::get(m_logName)->info("Overwriting input GSD with updated kinematic initial conditions");
-    gsdParser->truncateGSD();
     gsdParser->writeFrame();
 }
 
