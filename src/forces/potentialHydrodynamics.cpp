@@ -41,6 +41,14 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
 
     m_grad_M_added = Eigen::MatrixXd::Zero(m_len_tensor, m_len_tensor * m_len_tensor);
 
+    // Initialize force vectors
+    spdlog::get(m_logName)->info("Initializing hydrodynamic force tensors");
+    m_F_hydro          = Eigen::VectorXd::Zero(m_len_tensor);
+    m_F_hydroNoInertia = Eigen::VectorXd::Zero(m_len_tensor);
+    m_t1_Inertia       = Eigen::VectorXd::Zero(m_len_tensor);
+    m_t2_VelGrad       = Eigen::VectorXd::Zero(m_len_tensor);
+    m_t3_PosGrad       = Eigen::VectorXd::Zero(m_len_tensor);
+
     // Assign particle pair information
     spdlog::get(m_logName)->info("Initializing particle pair information tensors");
     m_alphaVec = Eigen::VectorXd::Zero(m_num_inter);
@@ -91,6 +99,12 @@ potentialHydrodynamics::update()
     calcAddedMassGrad();
     calcHydroTensors();
 
+    calcHydroForces();
+}
+
+void
+potentialHydrodynamics::updateForcesOnly()
+{
     calcHydroForces();
 }
 
@@ -282,7 +296,7 @@ potentialHydrodynamics::calcHydroForces()
     Eigen::MatrixXd U_dyad_U = m_system->velocities * m_system->velocities.transpose();
 
     //! Term 1: - M_kj * U_dot_j
-    Eigen::VectorXd t1_Intertia = -m_M_total * m_system->accelerations; //! dim = (3N) x 1
+    m_t1_Inertia.noalias() = -m_M_total * m_system->accelerations; //! dim = (3N) x 1
 
     //! Term 2: - d(M_kj)/d(R_l) * U_l * U_j;
     Eigen::MatrixXd hat_dMkj = Eigen::MatrixXd::Zero(m_len_tensor, m_len_tensor);
@@ -294,35 +308,35 @@ potentialHydrodynamics::calcHydroForces()
                               m_grad_M_added.block(0, l * m_len_tensor, m_len_tensor, m_len_tensor);
     }
     // Reduce along gradient (index: l) via matrix-vector product
-    Eigen::VectorXd t2_VelGrad = -hat_dMkj * m_system->velocities;
+    m_t2_VelGrad.noalias() = -hat_dMkj * m_system->velocities;
 
     //! Term 3: (1/2) U_i * d(M_ij)/d(R_k) * U_j
-    Eigen::VectorXd t3_PosGrad = Eigen::VectorXd::Zero(m_len_tensor);
+    m_t3_PosGrad.noalias() = Eigen::VectorXd::Zero(m_len_tensor);
 
     for (int k = 0; k < m_len_tensor; k += 3)
     { //! k: derivative variable, 3N loops
         // Unroll loop slightly (do 3 entries at a time)
-        t3_PosGrad[k] = m_grad_M_added.block(0, k * m_len_tensor, m_len_tensor, m_len_tensor)
-                            .cwiseProduct(U_dyad_U)
-                            .sum();
-        t3_PosGrad[k + 1] =
+        m_t3_PosGrad[k] = m_grad_M_added.block(0, k * m_len_tensor, m_len_tensor, m_len_tensor)
+                              .cwiseProduct(U_dyad_U)
+                              .sum();
+        m_t3_PosGrad[k + 1] =
             m_grad_M_added.block(0, (k + 1) * m_len_tensor, m_len_tensor, m_len_tensor)
                 .cwiseProduct(U_dyad_U)
                 .sum();
-        t3_PosGrad[k + 2] =
+        m_t3_PosGrad[k + 2] =
             m_grad_M_added.block(0, (k + 2) * m_len_tensor, m_len_tensor, m_len_tensor)
                 .cwiseProduct(U_dyad_U)
                 .sum();
     }
     /* Coefficient-wise operations for the sub-terms */
-    t3_PosGrad *= m_c1_2;
+    m_t3_PosGrad *= m_c1_2;
 
     /* Compute non-inertial part of force */
-    m_F_hydroNoInertia.noalias() = t2_VelGrad;
-    m_F_hydroNoInertia.noalias() += t3_PosGrad;
+    m_F_hydroNoInertia.noalias() = m_t2_VelGrad;
+    m_F_hydroNoInertia.noalias() += m_t3_PosGrad;
 
     /* Compute complete potential pressure force */
-    m_F_hydro.noalias() = t1_Intertia; // Full hydrodynamic force, dim = (3N) x 1
+    m_F_hydro.noalias() = m_t1_Inertia; // Full hydrodynamic force, dim = (3N) x 1
     m_F_hydro.noalias() += m_F_hydroNoInertia;
 }
 

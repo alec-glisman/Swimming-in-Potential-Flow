@@ -35,6 +35,9 @@ class potentialHydrodynamics
     void
     update();
 
+    void
+    updateForcesOnly();
+
     const Eigen::VectorXd&
     fHydro() const
     {
@@ -63,6 +66,12 @@ class potentialHydrodynamics
     mAdded() const
     {
         return m_M_added;
+    }
+
+    const Eigen::VectorXd&
+    t2VelGrad() const
+    {
+        return m_t2_VelGrad;
     }
 
   private:
@@ -99,6 +108,10 @@ class potentialHydrodynamics
 
     Eigen::VectorXd m_F_hydro;
     Eigen::VectorXd m_F_hydroNoInertia;
+
+    Eigen::VectorXd m_t1_Inertia;
+    Eigen::VectorXd m_t2_VelGrad;
+    Eigen::VectorXd m_t3_PosGrad;
 
     // constants
     const double m_unitSphereVol{4.0 / 3.0 * M_PI};
