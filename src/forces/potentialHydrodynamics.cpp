@@ -82,6 +82,10 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
         m_betaVec[i]  = beta;
     }
 
+    // Compute all relevant quantities
+    spdlog::get(m_logName)->info("Calling update()");
+    update();
+
     spdlog::get(m_logName)->info("Constructor complete");
 }
 
