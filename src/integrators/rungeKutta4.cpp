@@ -151,7 +151,7 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
     // calculate K
     Eigen::MatrixXd AM_nHalf      = A * M_total_negativeHalf;
     Eigen::MatrixXd AM_nHalf_pInv = AM_nHalf.completeOrthogonalDecomposition().pseudoInverse();
-    Eigen::MatrixXd K = M_total_halfPower = AM_nHalf_pInv;
+    Eigen::MatrixXd K             = M_total_halfPower * AM_nHalf_pInv;
 
     // calculate Q_con
     Eigen::MatrixXd M_total_inv   = m_potHydro->mTotal().inverse();
