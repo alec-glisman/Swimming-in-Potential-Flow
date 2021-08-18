@@ -6,6 +6,7 @@ import sys                         # Modify system parameters
 import numpy as np                 # Data structures
 from optparse import OptionParser  # Get user input
 import matplotlib.ticker as mticker  # Scientific notation in labels
+from matplotlib.ticker import FuncFormatter
 
 # Internal Dependencies
 sys.path.insert(0, os.getcwd() + '/python')
@@ -100,16 +101,24 @@ def aggregate_plots(relative_path, output_dir):
 
     for i in range(len(gsd_files)):
 
+        # Data from final frame
+        gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(0)
         CoM_disp_x[i] = float(
             # particle 1, x-coordinate
             gsd_files[i].snapshot.particles.position[1][0]
         )
+
+        # Data from header frame
+        gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(0)
         relDispEqbm[i] = float(gsd_files[i].snapshot.log['swimmer/R_avg'])
         phaseShift[i] = float(gsd_files[i].snapshot.log['swimmer/phase_shift'])
         U0[i] = float(gsd_files[i].snapshot.log['swimmer/U0'])
         omega[i] = float(gsd_files[i].snapshot.log['swimmer/omega'])
         epsilon[i] = U0[i] / relDispEqbm[i] / omega[i]
 
+        # Data from initial frame
+        gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(1)
+        CoM_disp_x[i] -= float(gsd_files[i].snapshot.particles.position[1][0])
 
 # !SECTION (Load data)
 
