@@ -1,0 +1,13 @@
+name: bodies-in-potential-flow
+channels:
+  - defaults
+dependencies:
+  - numpy
+  - matplotlib
+  - colorcet
+  - scipy
+  - gsd
+  - pylint
+  - autopep8
+  - pathlib
+prefix: /home/aglisman/anaconda3/envs/bodies-in-potential-flow

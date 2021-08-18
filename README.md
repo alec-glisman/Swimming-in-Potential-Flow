@@ -25,6 +25,15 @@ brew install eigen --HEAD  # Needed for Eigen::seqN()
 
 Note that there are more dependencies for python scripts via a conda environment and perl scripts via cpan. The relevant files to generate these environments are located in the `requirements` directory.
 
+```[shell]
+conda env export --from-history  > requirements/Python/environment.yml  # Export conda environment
+conda env create -f requirements/Python/environment.yml # Create conda environment
+
+# Install Perl modules via cpanm
+cd requirements/Perl
+cpanm --installdeps .
+```
+
 ### Integrated into project
 
 * [gsd](https://github.com/glotzerlab/gsd) (v2.4.2): Simulation data output
