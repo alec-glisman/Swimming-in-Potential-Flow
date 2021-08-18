@@ -53,6 +53,7 @@
         "pylab",
         "pylint",
         "pyplot",
+        "rbmconn",
         "rint",
         "rloc",
         "scipy",
