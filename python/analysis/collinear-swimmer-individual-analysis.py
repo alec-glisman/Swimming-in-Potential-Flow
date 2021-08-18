@@ -99,72 +99,85 @@ def aggregate_plots(relative_path, output_dir):
 
 
 # SECTION: Plots
+    # PLOT: Locater point position (x-axis)
+    numLines = 1
+    locPos_Plot = PlotStyling(numLines,
+                              r"$t/\tau$", r"$\Delta R_2$",
+                              title=None, loglog=False,
+                              outputDir=output_dir, figName="loc-pos-x", eps=epsOutput,
+                              continuousColors=False)
+    # Show numerical data points
+    locPos_Plot.make_plot()
+    locPos_Plot.curve(
+        time, positions[3, :], zorder=1, label=r"$2$")
+    locPos_Plot.save_plot()
+
     # PLOT: Relative oscillator displacement (x-axis)
     numLines = 4
-    sprDis_Plot = PlotStyling(numLines,
+    oscDis_Plot = PlotStyling(numLines,
                               r"$t/\tau$", r"$\Delta x \, \omega / U_0$",
                               title=None, loglog=False,
-                              outputDir=output_dir, figName="spring_disp-x", eps=epsOutput,
+                              outputDir=output_dir, figName="osc-disp-x", eps=epsOutput,
                               continuousColors=False)
     # Show numerical data points
-    sprDis_Plot.make_plot()
-    sprDis_Plot.curve(
+    oscDis_Plot.make_plot()
+    oscDis_Plot.curve(
         time, (positions[0, :] - positions[3, :] - relDispEqbm) * omega / U0, zorder=1, label=r"$1-2$")
-    sprDis_Plot.curve(
+    oscDis_Plot.curve(
         time, (positions[3, :] - positions[6, :] - relDispEqbm) * omega / U0, zorder=2, label=r"$2-3$")
-    sprDis_Plot.curve(
+    oscDis_Plot.curve(
         time, np.sin(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
-    sprDis_Plot.curve(
+    oscDis_Plot.curve(
         time, -np.sin(omega * tau * time + phaseShift), thin_curve=True, zorder=4, label=r"$2-3$ Constraint")
     # Add legend
-    sprDis_Plot.legend(
+    oscDis_Plot.legend(
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
-    sprDis_Plot.save_plot()
+    oscDis_Plot.save_plot()
 
-    # PLOT: spring velocity (x)
+    # PLOT: Relative oscillator velocity (x-axis)
     numLines = 4
-    sprVel_Plot = PlotStyling(numLines,
+    oscVel_Plot = PlotStyling(numLines,
                               r"$t/\tau$", r"$\Delta U / U_0$",
                               title=None, loglog=False,
-                              outputDir=output_dir, figName="spring_vel-x", eps=epsOutput,
+                              outputDir=output_dir, figName="osc-vel-x", eps=epsOutput,
                               continuousColors=False)
     # Show numerical data points
-    sprVel_Plot.make_plot()
-    sprVel_Plot.curve(time, (velocities[0, :] - velocities[3, :]) / (
+    oscVel_Plot.make_plot()
+    oscVel_Plot.curve(time, (velocities[0, :] - velocities[3, :]) / (
         U0), zorder=1, label=r"$1-2$ Simulation")
-    sprVel_Plot.curve(time, (velocities[6, :] - velocities[3, :]) / (
+    oscVel_Plot.curve(time, (velocities[6, :] - velocities[3, :]) / (
         U0), zorder=2, label=r"$3-2$ Simulation")
-    sprVel_Plot.curve(
+    oscVel_Plot.curve(
         time, np.cos(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
-    sprVel_Plot.curve(
+    oscVel_Plot.curve(
         time, np.cos(omega * tau * time + phaseShift), thin_curve=True, zorder=4, label=r"$3-2$ Constraint")
     # Add legend
-    sprVel_Plot.legend(
+    oscVel_Plot.legend(
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
-    sprVel_Plot.save_plot()
+    oscVel_Plot.save_plot()
 
-    # PLOT: spring acceleration (x)
+    # PLOT: Relative oscillator acceleration (x-axis)
     numLines = 4
-    sprAcc_Plot = PlotStyling(numLines,
+    oscAcc_Plot = PlotStyling(numLines,
                               r"$t/\tau$", r"$\Delta \dot{U} / (U_0 \, \omega)$",
                               title=None, loglog=False,
-                              outputDir=output_dir, figName="spring_acc-x", eps=epsOutput,
+                              outputDir=output_dir, figName="osc-acc-x", eps=epsOutput,
                               continuousColors=False)
 
     # Show numerical data points
-    sprAcc_Plot.make_plot()
-    sprAcc_Plot.curve(time, (accelerations[0, :] - accelerations[3, :]) / (
+    oscAcc_Plot.make_plot()
+    oscAcc_Plot.curve(time, (accelerations[0, :] - accelerations[3, :]) / (
         U0 * omega), zorder=1, label=r"$1-2$ Simulation")
-    sprAcc_Plot.curve(time, (accelerations[6, :] - accelerations[3, :]) / (
+    oscAcc_Plot.curve(time, (accelerations[6, :] - accelerations[3, :]) / (
         U0 * omega), zorder=2, label=r"$3-2$ Simulation")
-    sprAcc_Plot.curve(
+    oscAcc_Plot.curve(
         time, -np.sin(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
-    sprAcc_Plot.curve(
+    oscAcc_Plot.curve(
         time, -np.sin(omega * tau * time + phaseShift), thin_curve=True, zorder=4, label=r"$3-2$ Constraint")
     # Add legend
-    sprAcc_Plot.legend(
+    oscAcc_Plot.legend(
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
-    sprAcc_Plot.save_plot()
+    oscAcc_Plot.save_plot()
 
 # !SECTION (Plots)
 
