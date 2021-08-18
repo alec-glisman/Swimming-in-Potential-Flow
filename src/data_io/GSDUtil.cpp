@@ -412,9 +412,9 @@ GSDUtil::writeParticles()
         acc[3 * i + 1] = m_system->accelerations(3 * i + 1);
         acc[3 * i + 2] = m_system->accelerations(3 * i + 2);
     }
-    spdlog::get(m_logName)->info("GSD writing particles/acceleration");
-    return_val = gsd_write_chunk(m_system->handle().get(), "particles/acceleration", GSD_TYPE_FLOAT,
-                                 N, 3, 0, (void*)&acc[0]);
+    spdlog::get(m_logName)->info("GSD writing particles/moment_inertia");
+    return_val = gsd_write_chunk(m_system->handle().get(), "particles/moment_inertia",
+                                 GSD_TYPE_FLOAT, N, 3, 0, (void*)&acc[0]);
     m_system->setReturnVal(return_val);
     m_system->check_gsd_return();
 }
