@@ -62,9 +62,11 @@ def aggregate_plots(relative_path, output_dir):
 
     # REVIEW[epic=Future Features]: Move this adjustment into plotting style library
     # Correctly get scientific notation in text elements
-    f = mticker.ScalarFormatter(useOffset=False, useMathText=True)
-    def g(x, pos): return "${}$".format(f._formatSciNotation('%1.1e' % x))
-    fmt = mticker.FuncFormatter(g)
+    def scientific(x, pos):
+        return '%0.2e' % x
+
+    scientific_formatter = FuncFormatter(scientific)
+    fmt = mticker.FuncFormatter(scientific_formatter)
 
 # !SECTION (Parameters for function)
 
