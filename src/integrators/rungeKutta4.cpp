@@ -176,6 +176,11 @@ rungeKutta4::initializeSpecificVars()
     m_potHydro->update();
     spdlog::get(m_logName)->info("Calling momentumLinAngFree()");
     momentumLinAngFree(rloc, v_artic, a_artic);
+
+    // write updated kinematics to original frame (overwrite current file)
+    spdlog::get(m_logName)->info("Overwriting input GSD with updated kinematic initial conditions");
+    gsdParser->truncateGSD();
+    gsdParser->writeFrame();
 }
 
 /* REVIEW[epic=Change,order=2]: Change articulationVel() for different systems*/
@@ -250,7 +255,8 @@ rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic
     Eigen::VectorXd P_script_hold = m_potHydro->mTotal() * v_artic;
     Eigen::VectorXd P_script      = rbmconn * P_script_hold;
 
-    // calculate U_swim = - M_tilde_inv * P_script; U_swim has translation and rotation components
+    // calculate U_swim = - M_tilde_inv * P_script; U_swim has translation and rotation
+    // components
     Eigen::VectorXd U_swim = -M_tilde_inv * P_script;
 
     /* ANCHOR: Output velocity data back to m_system */
@@ -291,7 +297,8 @@ rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic
     F_script_hold.noalias() += gMUU;
     Eigen::VectorXd F_script = rbmconn * F_script_hold;
 
-    // calculate A_swim = - M_tilde_inv * F_script; A_swim has translation and rotation components
+    // calculate A_swim = - M_tilde_inv * F_script; A_swim has translation and rotation
+    // components
     Eigen::VectorXd A_swim = -M_tilde_inv * F_script;
 
     /* ANCHOR: Output acceleration data back to m_system */
