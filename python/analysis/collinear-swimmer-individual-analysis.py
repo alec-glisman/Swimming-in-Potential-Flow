@@ -80,7 +80,7 @@ def aggregate_plots(relative_path, output_dir):
 
     # Initialize temporal data
     nframes = gsd_file.trajectory.file.nframes
-    time = np.zeros((1, nframes - 1))
+    time = np.zeros((nframes - 1))
     positions = np.zeros((9, nframes - 1))
     velocities = np.zeros_like(positions)
     accelerations = np.zeros_like(positions)
@@ -126,10 +126,10 @@ def aggregate_plots(relative_path, output_dir):
         U0), zorder=1, label=r"$2-3$ Simulation")
     sprVel_Plot.curve(time, (velocities[3, :] - velocities[6, :]) / (
         U0), zorder=2, label=r"$1-2$ Simulation")
-    sprVel_Plot.thin_curve(
-        time, -np.cos(2 * np.pi * time), zorder=3, label=r"$1-2$ Leading Order")
-    sprVel_Plot.thin_curve(
-        time, -np.cos(2 * np.pi * time + phaseShift), zorder=4, label=r"$2-3$ Leading Order")
+    sprVel_Plot.curve(
+        time, -np.cos(2 * np.pi * time), thin_curve=True, zorder=3, label=r"$1-2$ Leading Order")
+    sprVel_Plot.curve(
+        time, -np.cos(2 * np.pi * time + phaseShift), thin_curve=True, zorder=4, label=r"$2-3$ Leading Order")
     # Add legend
     sprVel_Plot.legend(
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
