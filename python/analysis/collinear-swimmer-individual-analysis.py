@@ -100,7 +100,7 @@ def aggregate_plots(relative_path, output_dir):
 
 # SECTION: Plots
     # PLOT: Relative oscillator displacement (x-axis)
-    numLines = 2
+    numLines = 4
     sprDis_Plot = PlotStyling(numLines,
                               r"$t/\tau$", r"$\Delta x \, \omega / U_0$",
                               title=None, loglog=False,
@@ -112,8 +112,13 @@ def aggregate_plots(relative_path, output_dir):
         time, (positions[0, :] - positions[3, :] - relDispEqbm) * omega / U0, zorder=1, label=r"$1-2$")
     sprDis_Plot.curve(
         time, (positions[6, :] - positions[3, :] - relDispEqbm) * omega / U0, zorder=2, label=r"$2-3$")
+    sprDis_Plot.curve(
+        time, -np.sin(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
+    sprDis_Plot.curve(
+        time, -np.sin(omega * tau * time + phaseShift), thin_curve=True, zorder=4, label=r"$2-3$ Constraint")
     # Add legend
-    sprDis_Plot.legend(loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
+    sprDis_Plot.legend(
+        loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
     sprDis_Plot.save_plot()
 
     # PLOT: spring velocity (x)
