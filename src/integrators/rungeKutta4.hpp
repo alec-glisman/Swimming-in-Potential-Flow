@@ -17,6 +17,7 @@
 // eigen3 (Linear algebra)
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/Eigen>
+#include <eigen3/Eigen/Eigenvalues>
 #define EIGEN_USE_MKL_ALL
 #include <eigen3/Eigen/src/Core/util/MKL_support.h>
 // Logging
@@ -63,7 +64,7 @@ class rungeKutta4
     };
 
     void
-    accelerationUpdate(Eigen::VectorXd& acc);
+    accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time);
 
     // classes
     std::shared_ptr<systemData>             m_system;
