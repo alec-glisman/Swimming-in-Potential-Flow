@@ -16,16 +16,19 @@
   - [ ] Check sign of added mass matrix and gradient
 
 - [x] Write RK4 integration function
-  - [ ] Add function for t=0 step to correctly set velocity and acceleration
-  - [ ] Calculate (linear) velocity of CoM
-  - [ ] Calculate (linear) acceleration of CoM
-  - [ ] Calculate angular CoM components
+  - [x] Add function for t=0 step to correctly set velocity and acceleration
+  - [x] Calculate (linear) velocity of CoM
+  - [x] Calculate (linear) acceleration of CoM
+  - [x] Calculate angular CoM components
 
 - [x] Convert raw pointers into smart pointers
 - [x] Figure out why profile build is not linking as expected
 
 - [x] Perl script to run many simulations
 - [x] Python analysis script to analyze data and generate plots
+
+- [ ] Make kinematic variables in systemData class private
+  - [ ] Add getter and setter functions
 
 ## Additional features
 
