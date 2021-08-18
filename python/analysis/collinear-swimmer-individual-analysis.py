@@ -86,7 +86,7 @@ def aggregate_plots(relative_path, output_dir):
     accelerations = np.zeros_like(positions)
 
     # Loop over all snapshots in GSD (skipping header with incorrect kinematics)
-    for i in range(1, nframes):
+    for i in range(1, nframes-1):
         current_snapshot = gsd_file.trajectory.read_frame(i)
 
         time[i] = current_snapshot.log['integrator/t']
@@ -116,7 +116,9 @@ def aggregate_plots(relative_path, output_dir):
     sprDis_Plot.save_plot()
 
     # PLOT: spring velocity (x)
-    sprVel_Plot = PlotStyling(r"$t/\tau$", r"$\Delta U / U_0$",
+    numLines = 4
+    sprVel_Plot = PlotStyling(numLines,
+                              r"$t/\tau$", r"$\Delta U / U_0$",
                               title=None, loglog=False,
                               outputDir=output_dir, figName="spring_vel-x", eps=epsOutput,
                               continuousColors=False)
@@ -136,7 +138,9 @@ def aggregate_plots(relative_path, output_dir):
     sprVel_Plot.save_plot()
 
     # PLOT: spring acceleration (x)
-    sprAcc_Plot = PlotStyling(r"$t/\tau$", r"$\Delta \dot{U} / (U_0 \, \omega)$",
+    numLines = 2
+    sprAcc_Plot = PlotStyling(numLines,
+                              r"$t/\tau$", r"$\Delta \dot{U} / (U_0 \, \omega)$",
                               title=None, loglog=False,
                               outputDir=output_dir, figName="spring_acc-x", eps=epsOutput,
                               continuousColors=False)

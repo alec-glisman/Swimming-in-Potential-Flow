@@ -21,15 +21,27 @@
             ]
         },
         {
-            "name": "Python: collinear-swimmer-analysis",
+            "name": "Python: collinear-swimmer-aggregrate-analysis",
             "cwd": "${workspaceFolder}",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}/python/analysis/collinear-swimmer-aggregrate-analysis.py",
             "console": "integratedTerminal",
             "args": [
                 "--relative-path=${workspaceFolder}/data/2021-08-18.11-48-49_collinear-swimmer_varyRelDisp",
-                "--output-dir=analysis"
+                "--output-dir=figures"
+            ]
+        },
+        {
+            "name": "Python: collinear-swimmer-individual-analysis",
+            "cwd": "${workspaceFolder}",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/python/analysis/collinear-swimmer-indivudial-analysis.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--relative-path=${workspaceFolder}/temp_2021-08-18.13-18-51_collinear-swimmer_varyRelDisp/sim_1",
+                "--output-dir=figures"
             ]
         },
         {
