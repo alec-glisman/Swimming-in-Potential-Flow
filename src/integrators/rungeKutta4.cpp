@@ -165,13 +165,17 @@ rungeKutta4::initializeSpecificVars()
     spdlog::get(m_logName)->info("Setting initial conditions");
 
     // set articulation velocities
-    m_system->velocities    = articulationVel(0.0);
+    spdlog::get(m_logName)->info("Calling articulationVel()");
+    m_system->velocities = articulationVel(0.0);
+    spdlog::get(m_logName)->info("Calling articulationAcc()");
     m_system->accelerations = articulationAcc(0.0);
     // calculate locater point motion via linear and angular momentum free conditions
-    int             first_idx{0};
-    int             last_idx{3 * m_system->numParticles() - 1};
+    spdlog::get(m_logName)->info("Calling rLoc()");
     Eigen::Vector3d rloc = rLoc();
-    momentumLinAngFree(rloc, first_idx, last_idx);
+    spdlog::get(m_logName)->info("Updating (for first time) hydrodynamic tensors");
+    m_potHydro->update();
+    spdlog::get(m_logName)->info("Calling momentumLinAngFree()");
+    momentumLinAngFree(rloc);
 }
 
 /* REVIEW[epic=Change,order=2]: Change articulationVel() for different systems*/
@@ -215,7 +219,23 @@ rungeKutta4::rLoc()
 void
 rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc)
 { // TODO
-    /* ANCHOR: Generate linear system for locater point motion */
+    /* ANCHOR: Solve for rigid body motion (rbm) tensors */
+    // initialize variables
+    Eigen::Matrix3d I       = Eigen::Matrix3d::Identity(3, 3);
+    Eigen::Matrix3d rbmconn = Eigen::MatrixXd::Zero(6, 3 * m_system->numParticles());
+
+    // assemble the rigid body motion connectivity tensor (Sigma)
+    for (int i = 0; i < m_system->numParticles(); i++)
+    {
+        int i3{3 * i};
+
+        Eigen::Vector3d n_dr = -m_system->positions.segment<3>(i3);
+        Eigen::Matrix3d n_dr_cross;
+        crossProdMat(n_dr, n_dr_cross);
+
+        rbmconn.block<3, 3>(0, i3).noalias() = I;          // translation-translation couple
+        rbmconn.block<3, 3>(3, i3).noalias() = n_dr_cross; // translation-rotation couple
+    }
 
     /* ANCHOR: Solve linear system for locater point motion */
 
