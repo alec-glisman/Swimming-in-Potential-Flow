@@ -50,7 +50,7 @@ class rungeKutta4
     rLoc();
 
     void
-    momentumLinAngFree(Eigen::Vector3d& r_loc);
+    momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic, Eigen::VectorXd a_artic);
 
     void
     crossProdMat(const Eigen::Vector3d& vec, Eigen::Matrix3d& mat)
