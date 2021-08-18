@@ -134,8 +134,8 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
     A(1, 6)           = 1;
     // calculate B
     Eigen::Vector2d b = Eigen::Vector2d::Zero(2, 1);
-    b(0)              = m_U0 * m_omega * sin(dimensional_time);
-    b(1)              = m_U0 * m_omega * sin(m_omega * dimensional_time + m_phase_shift);
+    b(0)              = m_U0 * m_omega * sin(m_omega * dimensional_time);
+    b(1)              = -m_U0 * m_omega * sin(m_omega * dimensional_time + m_phase_shift);
 
     // calculate M^{1/2} & M^{-1/2}
     Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> eigensolver(m_potHydro->mTotal());
