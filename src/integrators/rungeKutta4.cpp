@@ -134,7 +134,7 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
     A(1, 6)           = 1;
     // calculate B
     Eigen::Vector2d b = Eigen::Vector2d::Zero(2, 1);
-    b(0)              = m_U0 * m_omega * sin(m_omega * dimensional_time);
+    b(0)              = -m_U0 * m_omega * sin(m_omega * dimensional_time);
     b(1)              = -m_U0 * m_omega * sin(m_omega * dimensional_time + m_phase_shift);
 
     // calculate M^{1/2} & M^{-1/2}
@@ -235,7 +235,7 @@ rungeKutta4::articulationVel(double dimensional_time)
 {
     m_velArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
 
-    double part0_x_vel = -m_U0 * cos(m_omega * dimensional_time);
+    double part0_x_vel = m_U0 * cos(m_omega * dimensional_time);
     double part2_x_vel = m_U0 * cos(m_omega * dimensional_time + m_phase_shift);
 
     m_velArtic(0)     = part0_x_vel;
@@ -250,7 +250,7 @@ rungeKutta4::articulationAcc(double dimensional_time)
 {
     m_accArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
 
-    double part0_x_acc = m_U0 * m_omega * sin(m_omega * dimensional_time);
+    double part0_x_acc = -m_U0 * m_omega * sin(m_omega * dimensional_time);
     double part2_x_acc = -m_U0 * m_omega * sin(m_omega * dimensional_time + m_phase_shift);
 
     m_accArtic(0)     = part0_x_acc;

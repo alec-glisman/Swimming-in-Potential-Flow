@@ -111,7 +111,7 @@ def aggregate_plots(relative_path, output_dir):
     sprDis_Plot.curve(
         time, (positions[0, :] - positions[3, :] - relDispEqbm) * omega / U0, zorder=1, label=r"$1-2$")
     sprDis_Plot.curve(
-        time, (positions[3, :] - positions[6, :] - relDispEqbm) * omega / U0, zorder=2, label=r"$2-3$")
+        time, (positions[6, :] - positions[3, :] - relDispEqbm) * omega / U0, zorder=2, label=r"$2-3$")
     # Add legend
     sprDis_Plot.legend(loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
     sprDis_Plot.save_plot()
@@ -127,10 +127,10 @@ def aggregate_plots(relative_path, output_dir):
     sprVel_Plot.make_plot()
     sprVel_Plot.curve(time, (velocities[0, :] - velocities[3, :]) / (
         U0), zorder=1, label=r"$2-3$ Simulation")
-    sprVel_Plot.curve(time, (velocities[3, :] - velocities[6, :]) / (
+    sprVel_Plot.curve(time, (velocities[6, :] - velocities[3, :]) / (
         U0), zorder=2, label=r"$1-2$ Simulation")
     sprVel_Plot.curve(
-        time, -np.cos(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
+        time, np.cos(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
     sprVel_Plot.curve(
         time, np.cos(omega * tau * time + phaseShift), thin_curve=True, zorder=4, label=r"$2-3$ Constraint")
     # Add legend
@@ -150,10 +150,10 @@ def aggregate_plots(relative_path, output_dir):
     sprAcc_Plot.make_plot()
     sprAcc_Plot.curve(time, (accelerations[0, :] - accelerations[3, :]) / (
         U0 * omega), zorder=1, label=r"$1-2$ Simulation")
-    sprAcc_Plot.curve(time, (accelerations[3, :] - accelerations[6, :]) / (
+    sprAcc_Plot.curve(time, (accelerations[6, :] - accelerations[3, :]) / (
         U0 * omega), zorder=2, label=r"$2-3$ Simulation")
     sprAcc_Plot.curve(
-        time, np.sin(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
+        time, -np.sin(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
     sprAcc_Plot.curve(
         time, -np.sin(omega * tau * time + phaseShift), thin_curve=True, zorder=4, label=r"$2-3$ Constraint")
     # Add legend
