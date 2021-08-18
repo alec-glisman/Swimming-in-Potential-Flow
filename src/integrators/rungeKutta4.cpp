@@ -225,8 +225,12 @@ rungeKutta4::initializeSpecificVars()
     spdlog::get(m_logName)->info("Calling momentumLinAngFree()");
     momentumLinAngFree(rloc, v_artic, a_artic);
 
-    // write updated kinematics to original frame (overwrite current file)
-    spdlog::get(m_logName)->info("Overwriting input GSD with updated kinematic initial conditions");
+    // write updated kinematics to original frame (appending current file)
+    spdlog::get(m_logName)->info("Updating input GSD with updated kinematic initial conditions");
+    spdlog::get(m_logName)->critical(
+        "Frame 0 contains header information but incorrect kinematics");
+    spdlog::get(m_logName)->critical(
+        "Frame 1 should be treated as correct starting frame for analysis");
     gsdParser->writeFrame();
 }
 
