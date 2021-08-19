@@ -13,14 +13,14 @@
 - [x] Add logging of startup behavior
 
 - [x] Write leading order hydrodynamics calculation
-  - [ ] Check sign of added mass matrix and gradient
+  - [x] Check sign of added mass matrix and gradient
 
 - [x] Write RK4 integration function
   - [x] Add function for t=0 step to correctly set velocity and acceleration
   - [x] Calculate (linear) velocity of CoM
   - [x] Calculate (linear) acceleration of CoM
   - [x] Calculate angular CoM components
-  - [ ] Update accelerations based on constrained lagrangian approach in paper
+  - [x] Update accelerations based on constrained lagrangian approach in paper
 
 - [x] Convert raw pointers into smart pointers
 - [x] Figure out why profile build is not linking as expected
@@ -28,11 +28,10 @@
 - [x] Perl script to run many simulations
 - [x] Python analysis script to analyze data and generate plots
 
-- [ ] Make kinematic variables in systemData class private
-  - [ ] Add getter and setter functions
-
 ## Additional features
 
+- [ ] Make kinematic variables in systemData class private
+  - [ ] Add getter and setter functions
 - [ ] Write WCA potential
 - [ ] Calculate constraint forces
 - [ ] Write RKF45 integration function
