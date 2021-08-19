@@ -195,7 +195,7 @@ GSDUtil::readParameters()
     m_system->check_gsd_return();
     m_system->setTau(double(tau));
     spdlog::get(m_logName)->info("tau : {0}", tau);
-    assert(double(tf) == m_system->tau() && "tau not properly set");
+    assert(double(tau) == m_system->tau() && "tau not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing num_steps_output");
     uint64_t num_steps_output{0};
