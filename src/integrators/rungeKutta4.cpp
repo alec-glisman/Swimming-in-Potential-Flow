@@ -127,7 +127,7 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
 
     // calculate Q
     Eigen::VectorXd Q = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    if (m_system->fluidDensity() >= 0) // hydrodynamic force
+    if (m_system->fluidDensity() > 0) // hydrodynamic force
     {
         Q.noalias() += m_potHydro->fHydroNoInertia();
     }
