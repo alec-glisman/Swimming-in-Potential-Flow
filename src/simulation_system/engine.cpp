@@ -30,7 +30,7 @@ engine::engine(std::shared_ptr<systemData> sys)
 
     // Initialize progressBar
     spdlog::get(m_logName)->info("Initializing progressBar");
-    int num_step = floor(m_system->tf() / m_system->dt());
+    int num_step = (int)ceil(m_system->tf() / m_system->dt());
     spdlog::get(m_logName)->info("Numer of integration steps: {0}", num_step);
     unsigned int barWidth = 70;
     m_progressBar = std::make_shared<ProgressBar>(static_cast<unsigned int>(num_step), barWidth);
@@ -47,12 +47,14 @@ engine::run()
     spdlog::get(m_logName)->info("Starting engine run");
     m_progressBar->display(); // display the bar
 
+    int tot_step     = (int)ceil(m_system->tf() / m_system->dt());
     int write_step   = (int)ceil(m_system->tf() / m_system->dt() / m_system->numStepsOutput());
     int display_step = (int)ceil(m_system->tf() / m_system->dt() * m_outputPercentile);
+
     spdlog::get(m_logName)->info("Write step: {0}", write_step);
     spdlog::get(m_logName)->info("Display step: {0}", display_step);
 
-    while (m_system->t() + m_system->dt() <= m_system->tf())
+    while (m_system->timestep() < tot_step)
     {
         // Integrate system forward in time
         integrate();
