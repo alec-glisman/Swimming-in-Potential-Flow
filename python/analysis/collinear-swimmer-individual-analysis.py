@@ -108,6 +108,7 @@ def aggregate_plots(relative_path, output_dir):
 
 # !SECTION (Output data)
 
+
 # SECTION: Plots
     # PLOT: Locater point position (x-axis)
     numLines = 1
