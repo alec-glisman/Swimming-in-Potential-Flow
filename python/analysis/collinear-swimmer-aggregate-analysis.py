@@ -178,15 +178,15 @@ def aggregate_plots(relative_path, output_dir):
                                continuousColors=False)
         # Show numerical data points
         CoM_Plot.make_plot()
-        # CoM_Plot.curve(np.abs(xAnalyticalRng),
-        #                dZAnalyticalDist, zorder=1, label="Leading Order")
+        CoM_Plot.curve(np.abs(xAnalyticalRng),
+                       dZAnalyticalDist, zorder=1, label="Leading Order")
         CoM_Plot.scatter(relDispEqbm, CoM_disp_x,
                          zorder=2, label="Simulation")
         # Add legend
         CoM_Plot.legend(title=r"$\epsilon \leq$" + "{}".format(fmt(np.max(epsilon))),
                         loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
         # Adjust ticks and tick labels
-        # CoM_Plot.ax.set_xlim([1.9, 6])
+        CoM_Plot.ax.set_xlim([1.9, 6])
         # CoM_Plot.set_major_minor_ticks(
         #     xMajorLoc=1, xMinorLoc=0.5, yMajorLoc=None, yMinorLoc=None)
         CoM_Plot.set_yaxis_scientific()
