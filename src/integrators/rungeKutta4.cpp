@@ -233,12 +233,6 @@ rungeKutta4::initializeSpecificVars()
     /* ANCHOR: set initial conditions */
     spdlog::get(m_logName)->info("Setting initial conditions");
 
-    // reset initial positions
-    spdlog::get(m_logName)->warn("Setting initial positions");
-    m_system->positions.setZero();
-    m_system->positions(0) = m_R_avg;
-    m_system->positions(6) = -m_R_avg + m_U0 / m_omega * sin(m_phase_shift);
-
     // set articulation velocities
     spdlog::get(m_logName)->info("Calling articulationVel()");
     articulationVel(0.0);
