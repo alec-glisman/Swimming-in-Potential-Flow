@@ -43,17 +43,17 @@ class GSDUtil:
                          fluid_density=1.0, particle_density=1.0,
                          wca_epsilon=0.0, wca_sigma=0.0):
         # Convert data types to GSD expected type
-        dt = np.array([dt], dtype=np.float32)
-        t = np.array([t], dtype=np.float32)
-        tf = np.array([tf], dtype=np.float32)
-        tau = np.array([tau], dtype=np.float32)
+        dt = np.array([dt], dtype=np.single)
+        t = np.array([t], dtype=np.single)
+        tf = np.array([tf], dtype=np.single)
+        tau = np.array([tau], dtype=np.single)
         num_steps_output = np.array([num_steps_output], dtype=np.uint64)
 
-        fluid_density = np.array([fluid_density], dtype=np.float32)
-        particle_density = np.array([particle_density], dtype=np.float32)
+        fluid_density = np.array([fluid_density], dtype=np.single)
+        particle_density = np.array([particle_density], dtype=np.single)
 
-        wca_epsilon = np.array([wca_epsilon], dtype=np.float32)
-        wca_sigma = np.array([wca_sigma], dtype=np.float32)
+        wca_epsilon = np.array([wca_epsilon], dtype=np.single)
+        wca_sigma = np.array([wca_sigma], dtype=np.single)
 
         # Save data
         self.snapshot.log['integrator/dt'] = dt
@@ -99,9 +99,9 @@ class GSDUtil:
 
     def setKinematics(self, X, U, A):
         # Convert data types to personal expected type
-        X = np.array(X, dtype=np.float64)
-        U = np.array(U, dtype=np.float64)
-        A = np.array(A, dtype=np.float64)
+        X = np.array(X, dtype=np.double)
+        U = np.array(U, dtype=np.double)
+        A = np.array(A, dtype=np.double)
 
         # Save kinematics
         self.snapshot.log['particles/double_position'] = X
@@ -109,9 +109,9 @@ class GSDUtil:
         self.snapshot.log['particles/double_moment_inertia'] = A
 
         # Convert data types to GSD expected type
-        X = np.array(X, dtype=np.float32)
-        U = np.array(U, dtype=np.float32)
-        A = np.array(A, dtype=np.float32)
+        X = np.array(X, dtype=np.single)
+        U = np.array(U, dtype=np.single)
+        A = np.array(A, dtype=np.single)
 
         # Save kinematics
         self.snapshot.particles.position = X
