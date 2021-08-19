@@ -57,8 +57,10 @@ rungeKutta4::integrate()
     accelerationUpdate(a1, time);
 
     /* Step 2: k2 = dt * f ( y(t_0) + 1/2 * k1, t_0 + 1/2 dt ) */
-    Eigen::VectorXd v2 = v1 + m_c1_2_dt * a1;
-    Eigen::VectorXd x2 = x1 + m_c1_2_dt * v2;
+    Eigen::VectorXd v2 = v1;
+    v2.noalias() += m_c1_2_dt * a1;
+    Eigen::VectorXd x2 = x1;
+    v2.noalias() += m_c1_2_dt * v2;
 
     m_system->accelerations.noalias() = a1;
     m_system->velocities.noalias()    = v2;
@@ -70,8 +72,10 @@ rungeKutta4::integrate()
     accelerationUpdate(a2, time + m_c1_2_dt);
 
     /* Step 3 */
-    Eigen::VectorXd v3 = v1 + m_c1_2_dt * a2;
-    Eigen::VectorXd x3 = x1 + m_c1_2_dt * v3;
+    Eigen::VectorXd v3 = v1;
+    v3.noalias() += m_c1_2_dt * a2;
+    Eigen::VectorXd x3 = x1;
+    x3.noalias() += m_c1_2_dt * v3;
 
     m_system->accelerations.noalias() = a2;
     m_system->velocities.noalias()    = v3;
@@ -83,8 +87,10 @@ rungeKutta4::integrate()
     accelerationUpdate(a3, time + m_c1_2_dt);
 
     /* Step 4 */
-    Eigen::VectorXd v4 = v1 + m_dt * a3;
-    Eigen::VectorXd x4 = x1 + m_dt * v3;
+    Eigen::VectorXd v4 = v1;
+    v4.noalias() += m_dt * a3;
+    Eigen::VectorXd x4 = x1;
+    x4.noalias() += m_dt * v3;
 
     m_system->accelerations.noalias() = a3;
     m_system->velocities.noalias()    = v4;
@@ -96,8 +102,19 @@ rungeKutta4::integrate()
     accelerationUpdate(a4, time + m_dt);
 
     /* Output data */
-    m_system->positions.noalias()  = x1 + m_c1_6_dt * (v1 + 2.0 * v2 + 2.0 * v3 + v4);
-    m_system->velocities.noalias() = v1 + m_c1_6_dt * (a1 + 2.0 * a2 + 2.0 * a3 + a4);
+    m_system->positions.noalias() = v1;
+    m_system->positions.noalias() += 2.0 * v2;
+    m_system->positions.noalias() += 2.0 * v3;
+    m_system->positions.noalias() += v4;
+    m_system->positions *= m_c1_6_dt;
+    m_system->positions.noalias() += x1;
+
+    m_system->velocities.noalias() = a1;
+    m_system->velocities.noalias() += 2.0 * a2;
+    m_system->velocities.noalias() += 2.0 * a3;
+    m_system->velocities.noalias() += a4;
+    m_system->velocities *= m_c1_6_dt;
+    m_system->velocities.noalias() += v1;
 
     m_potHydro->update();
 
