@@ -41,51 +41,31 @@ rungeKutta4::integrate()
 {
     double time{m_system->t() * m_system->tau()};
 
-    /* ANCHOR: use momentum free method to integrate system with velocity verlet */
-    /* Step 1: Get current articulation velocity at t + 1/2 * dt */
-    articulationVel(time + m_c1_2_dt);
-    articulationAcc(time + m_c1_2_dt);
-    rLoc();
-    momentumLinAngFree();
+    /* ANCHOR: Solve system of form: y'(t) = f( y(t),  t )
+     * @REFERENCE:
+     * https://www.physicsforums.com/threads/using-runge-kutta-method-for-position-calc.553663/post-3634957
+     */
 
-    /* Step 2: Propagate positions to next time step */
-    m_system->positions.noalias() += m_dt * m_system->velocities;
+    /* Step 1: k1 = f( y(t_0),  t_0 ),
+     * initial conditions at current step */
+    Eigen::VectorXd x1 = m_system->positions;
+    Eigen::VectorXd v1 = m_system->velocities;
+    Eigen::VectorXd a1 = m_system->accelerations;
 
-    /* Step 3: Update mass matrices with new configuration */
+    /* ANCHOR: temporary Euler method to see if integration is the issue */
+    Eigen::VectorXd x2 = x1;
+    x2.noalias() += m_dt * v1;
+    Eigen::VectorXd v2 = v1;
+    v2.noalias() += m_dt * a1;
+
+    m_system->positions.noalias()  = x2;
+    m_system->velocities.noalias() = v2;
+
     m_potHydro->update();
-
-    /* Step 4: Update velocity and acceleration at t + dt and recalculate forces */
-    articulationVel(time + m_dt);
-    articulationAcc(time + m_dt);
-    rLoc();
-    momentumLinAngFree();
+    Eigen::VectorXd a2 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
+    accelerationUpdate(a2, m_system->tau() * (time + m_dt));
+    m_system->accelerations.noalias() = a2;
 }
-
-// /* ANCHOR: Solve system of form: y'(t) = f( y(t),  t )
-//  * @REFERENCE:
-//  * https://www.physicsforums.com/threads/using-runge-kutta-method-for-position-calc.553663/post-3634957
-//  */
-
-// /* Step 1: k1 = f( y(t_0),  t_0 ),
-//  * initial conditions at current step */
-// double time{m_system->t() * m_system->tau()};
-// Eigen::VectorXd x1 = m_system->positions;
-// Eigen::VectorXd v1 = m_system->velocities;
-// Eigen::VectorXd a1 = m_system->accelerations;
-
-// /* ANCHOR: temporary Euler method to see if integration is the issue */
-// Eigen::VectorXd x2 = x1;
-// x2.noalias() += m_dt * v1;
-// Eigen::VectorXd v2 = v1;
-// v2.noalias() += m_dt * a1;
-
-// m_system->positions.noalias()  = x2;
-// m_system->velocities.noalias() = v2;
-
-// m_potHydro->update();
-// Eigen::VectorXd a2 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-// accelerationUpdate(a2, m_system->tau() * (time + m_dt));
-// m_system->accelerations.noalias() = a2;
 
 // FIXME: UPDATE m_system->velocities as the accelerations depends on this
 // FIXME: UPDATE m_dt in light of the fact it already has tau built in
