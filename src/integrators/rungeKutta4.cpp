@@ -39,75 +39,110 @@ rungeKutta4::~rungeKutta4()
 void
 rungeKutta4::integrate()
 {
-    /* ANCHOR: Solve system of form: y'(t) = f( y(t),  t )
-     * @REFERENCE:
-     * https://www.physicsforums.com/threads/using-runge-kutta-method-for-position-calc.553663/post-3634957
-     */
+    double time{m_system->t() * m_system->tau()};
 
-    /* Step 1: k1 = f( y(t_0),  t_0 ),
-     * initial conditions at current step */
-    double          time{m_system->t()};
-    Eigen::VectorXd x1 = m_system->positions;
-    Eigen::VectorXd v1 = m_system->velocities;
-    Eigen::VectorXd a1 = m_system->accelerations;
-
-    /* Step 2: k2 = f( y(t_0) + k1 * dt/2,  t_0 + dt/2 )
-     * time rate-of-change k1 evaluated halfway through time step (midpoint) */
-    Eigen::VectorXd x2 = m_c1_2_dt * v1;
-    x2.noalias() += x1;
-    Eigen::VectorXd v2 = m_c1_2_dt * a1;
-    v2.noalias() += v1;
-
-    m_system->positions.noalias() =
-        x2; // temporarily change positions to get correct hydro tensors during acceleration update
-    m_potHydro->update(); // update hydrodynamics tensors
-    Eigen::VectorXd a2 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a2, m_system->tau() * (time + m_c1_2_dt));
-
-    /* Step 3: k3 = f( y(t_0) + k2 * dt/2,  t_0 + dt/2 )
-     * time rate-of-change k2 evaluated halfway through time step (midpoint) */
-    Eigen::VectorXd x3 = m_c1_2_dt * v2;
-    x3.noalias() += x1;
-    Eigen::VectorXd v3 = m_c1_2_dt * a2;
-    v3.noalias() += v1;
-
-    m_system->positions.noalias() = x3;
+    /* ANCHOR: use momentum free method to integrate system with velocity verlet */
+    /* Step 1: Get current articulation velocity at t + 1/2 * dt */
+    m_velArtic = articulationVel(time + m_c1_2_dt);
+    m_accArtic = articulationAcc(time + m_c1_2_dt);
+    m_RLoc     = rLoc();
+    momentumLinAngFree(m_RLoc, m_velArtic, m_accArtic);
+    /* Step 2: Propagate positions to next time step */
+    m_system->positions.noalias() += m_dt * m_system->velocities;
+    /* Step 3: Update mass matrices with new configuration */
     m_potHydro->update();
-    Eigen::VectorXd a3 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a3, m_system->tau() * (time + m_c1_2_dt));
-
-    /* Step 4: k4 = f( y(t_0) + k3 * dt,  t_0 + dt )
-     * time rate-of-change k3 evaluated at end of step (endpoint) */
-    Eigen::VectorXd x4 = m_dt * v3;
-    x4.noalias() += x1;
-    Eigen::VectorXd v4 = m_dt * a3;
-    v4.noalias() += v1;
-
-    m_system->positions.noalias() = x4;
-    m_potHydro->update();
-    Eigen::VectorXd a4 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a4, m_system->tau() * (time + m_dt));
-
-    /* Output calculated values */
-    m_system->positions.noalias() = v1;
-    m_system->positions.noalias() += m_c2 * v2;
-    m_system->positions.noalias() += m_c2 * v3;
-    m_system->positions.noalias() += v4;
-    m_system->positions *= m_c1_6_dt;
-    m_system->positions.noalias() += x1;
-
-    m_system->velocities.noalias() = a1;
-    m_system->velocities.noalias() += m_c2 * a2;
-    m_system->velocities.noalias() += m_c2 * a3;
-    m_system->velocities.noalias() += a4;
-    m_system->velocities *= m_c1_6_dt;
-    m_system->velocities.noalias() += v1;
-
-    m_potHydro->update();
-    Eigen::VectorXd a_out = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a_out, m_system->tau() * (time + m_dt));
-    m_system->accelerations.noalias() = a_out;
+    /* Step 4: Update velocity and acceleration at t + dt and recalculate forces */
+    m_velArtic = articulationVel(time + m_dt);
+    m_accArtic = articulationAcc(time + m_dt);
+    m_RLoc     = rLoc();
+    momentumLinAngFree(m_RLoc, m_velArtic, m_accArtic);
 }
+
+// /* ANCHOR: Solve system of form: y'(t) = f( y(t),  t )
+//  * @REFERENCE:
+//  * https://www.physicsforums.com/threads/using-runge-kutta-method-for-position-calc.553663/post-3634957
+//  */
+
+// /* Step 1: k1 = f( y(t_0),  t_0 ),
+//  * initial conditions at current step */
+// double time{m_system->t() * m_system->tau()};
+// Eigen::VectorXd x1 = m_system->positions;
+// Eigen::VectorXd v1 = m_system->velocities;
+// Eigen::VectorXd a1 = m_system->accelerations;
+
+// /* ANCHOR: temporary Euler method to see if integration is the issue */
+// Eigen::VectorXd x2 = x1;
+// x2.noalias() += m_dt * v1;
+// Eigen::VectorXd v2 = v1;
+// v2.noalias() += m_dt * a1;
+
+// m_system->positions.noalias()  = x2;
+// m_system->velocities.noalias() = v2;
+
+// m_potHydro->update();
+// Eigen::VectorXd a2 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
+// accelerationUpdate(a2, m_system->tau() * (time + m_dt));
+// m_system->accelerations.noalias() = a2;
+
+// FIXME: UPDATE m_system->velocities as the accelerations depends on this
+// FIXME: UPDATE m_dt in light of the fact it already has tau built in
+// /* Step 2: k2 = f( y(t_0) + k1 * dt/2,  t_0 + dt/2 )
+//  * time rate-of-change k1 evaluated halfway through time step (midpoint) */
+// Eigen::VectorXd x2 = m_c1_2_dt * v1;
+// x2.noalias() += x1;
+// Eigen::VectorXd v2 = m_c1_2_dt * a1;
+// v2.noalias() += v1;
+
+// m_system->positions.noalias() =
+//     x2; // temporarily change positions to get correct hydro tensors during acceleration
+//     update
+// m_potHydro->update(); // update hydrodynamics tensors
+// Eigen::VectorXd a2 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
+// accelerationUpdate(a2, time + m_c1_2_dt);
+
+// /* Step 3: k3 = f( y(t_0) + k2 * dt/2,  t_0 + dt/2 )
+//  * time rate-of-change k2 evaluated halfway through time step (midpoint) */
+// Eigen::VectorXd x3 = m_c1_2_dt * v2;
+// x3.noalias() += x1;
+// Eigen::VectorXd v3 = m_c1_2_dt * a2;
+// v3.noalias() += v1;
+
+// m_system->positions.noalias() = x3;
+// m_potHydro->update();
+// Eigen::VectorXd a3 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
+// accelerationUpdate(a3, time + m_c1_2_dt);
+
+// /* Step 4: k4 = f( y(t_0) + k3 * dt,  t_0 + dt )
+//  * time rate-of-change k3 evaluated at end of step (endpoint) */
+// Eigen::VectorXd x4 = m_dt * v3;
+// x4.noalias() += x1;
+// Eigen::VectorXd v4 = m_dt * a3;
+// v4.noalias() += v1;
+
+// m_system->positions.noalias() = x4;
+// m_potHydro->update();
+// Eigen::VectorXd a4 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
+// accelerationUpdate(a4, time + m_dt);
+
+// /* Output calculated values */
+// m_system->positions.noalias() = v1;
+// m_system->positions.noalias() += m_c2 * v2;
+// m_system->positions.noalias() += m_c2 * v3;
+// m_system->positions.noalias() += v4;
+// m_system->positions *= m_c1_6_dt;
+// m_system->positions.noalias() += x1;
+
+// m_system->velocities.noalias() = a1;
+// m_system->velocities.noalias() += m_c2 * a2;
+// m_system->velocities.noalias() += m_c2 * a3;
+// m_system->velocities.noalias() += a4;
+// m_system->velocities *= m_c1_6_dt;
+// m_system->velocities.noalias() += v1;
+
+// m_potHydro->update();
+// Eigen::VectorXd a_out = Eigen::VectorXd::Zero(3 * m_system->numParticles());
+// accelerationUpdate(a_out, m_system->tau() * (time + m_dt));
+// m_system->accelerations.noalias() = a_out;
 
 void
 rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
