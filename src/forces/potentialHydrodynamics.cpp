@@ -128,8 +128,6 @@ potentialHydrodynamics::calcParticleDistances()
         spdlog::get(m_logName)->debug("Checking distance between pairs {0} & {1}", m_alphaVec[i],
                                       m_betaVec[i]);
         spdlog::get(m_logName)->debug("Interparticle distance is", m_r_mag_ab[i]);
-
-        assert(m_r_mag_ab[i] >= 2.0 && "Particle overlap found");
 #endif
     }
 }
