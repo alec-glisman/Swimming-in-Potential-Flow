@@ -69,8 +69,8 @@ def aggregate_plots(relative_path, output_dir):
         raise IOError(
             f"Failure to load data. Not exactly 1 file found in relPath {relative_path}")
 
-    # Data from header frame
-    gsd_file.snapshot = gsd_file.trajectory.read_frame(0)
+    # Data from initial frame (not 0)
+    gsd_file.snapshot = gsd_file.trajectory.read_frame(1)
     relDispEqbm = float(gsd_file.snapshot.log['swimmer/R_avg'])
     phaseShift = float(gsd_file.snapshot.log['swimmer/phase_shift'])
     U0 = float(gsd_file.snapshot.log['swimmer/U0'])
@@ -90,10 +90,10 @@ def aggregate_plots(relative_path, output_dir):
         current_snapshot = gsd_file.trajectory.read_frame(i)
 
         time[i-1] = current_snapshot.log['integrator/t']
-        positions[:, i-1] = current_snapshot.particles.position.flatten()
-        velocities[:, i-1] = current_snapshot.particles.velocity.flatten()
+        positions[:, i-1] = current_snapshot.log['particles/double_position'].flatten()
+        velocities[:, i-1] = current_snapshot.log['particles/double_velocity'].flatten()
         accelerations[:, i -
-                      1] = current_snapshot.particles.moment_inertia.flatten()
+                      1] = current_snapshot.log['particles/double_moment_inertia'].flatten()
 
 # !SECTION (Load data)
 
