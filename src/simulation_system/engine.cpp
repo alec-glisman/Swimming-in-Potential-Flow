@@ -47,8 +47,8 @@ engine::run()
     spdlog::get(m_logName)->info("Starting engine run");
     m_progressBar->display(); // display the bar
 
-    int write_step   = (int)floor(m_system->tf() / m_system->dt() / m_system->numStepsOutput());
-    int display_step = (int)floor(m_system->tf() / m_system->dt() * m_outputPercentile);
+    int write_step   = (int)ceil(m_system->tf() / m_system->dt() / m_system->numStepsOutput());
+    int display_step = (int)ceil(m_system->tf() / m_system->dt() * m_outputPercentile);
     spdlog::get(m_logName)->info("Write step: {0}", write_step);
     spdlog::get(m_logName)->info("Display step: {0}", display_step);
 
