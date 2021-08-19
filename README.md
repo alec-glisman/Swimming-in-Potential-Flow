@@ -55,3 +55,5 @@ cpanm --installdeps .
 * CMake: v3.21.1
 * GCC: v11.2.0
 * Python (Anaconda): v3.9.5
+* Perl: v5.30.0
+* ZSH: v5.8
