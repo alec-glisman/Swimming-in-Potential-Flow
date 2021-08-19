@@ -63,9 +63,8 @@ rungeKutta4::integrate()
     Eigen::VectorXd x2 = x1;
     v2.noalias() += m_c1_2_dt * v2;
 
-    m_system->accelerations.noalias() = a1;
-    m_system->velocities.noalias()    = v2;
-    m_system->positions.noalias()     = x2;
+    m_system->velocities.noalias() = v2;
+    m_system->positions.noalias()  = x2;
 
     m_potHydro->update();
 
@@ -79,9 +78,8 @@ rungeKutta4::integrate()
     Eigen::VectorXd x3 = x1;
     x3.noalias() += m_c1_2_dt * v3;
 
-    m_system->accelerations.noalias() = a2;
-    m_system->velocities.noalias()    = v3;
-    m_system->positions.noalias()     = x3;
+    m_system->velocities.noalias() = v3;
+    m_system->positions.noalias()  = x3;
 
     m_potHydro->update();
 
@@ -95,9 +93,8 @@ rungeKutta4::integrate()
     Eigen::VectorXd x4 = x1;
     x4.noalias() += m_dt * v3;
 
-    m_system->accelerations.noalias() = a3;
-    m_system->velocities.noalias()    = v4;
-    m_system->positions.noalias()     = x4;
+    m_system->velocities.noalias() = v4;
+    m_system->positions.noalias()  = x4;
 
     m_potHydro->update();
 
