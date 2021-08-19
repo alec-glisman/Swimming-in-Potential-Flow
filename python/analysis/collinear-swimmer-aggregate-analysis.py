@@ -107,10 +107,8 @@ def aggregate_plots(relative_path, output_dir):
             gsd_files[i].trajectory.file.nframes - 2)
         final_t = float(gsd_files[i].snapshot.log['integrator/t'])
         assert(isclose(1.0, final_t, rel_tol=1e-11))
-        CoM_disp_x[i] = float(
-            # particle 1, x-coordinate
-            gsd_files[i].snapshot.particles.position[1][0]
-        )
+        # particle 1, x-coordinate
+        CoM_disp_x[i] = float(gsd_files[i].snapshot.particles.position[1][0])
 
         # Data from header frame
         gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(0)
