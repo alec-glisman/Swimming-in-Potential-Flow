@@ -47,10 +47,13 @@ rungeKutta4::integrate()
     m_accArtic = articulationAcc(time + m_c1_2_dt);
     m_RLoc     = rLoc();
     momentumLinAngFree(m_RLoc, m_velArtic, m_accArtic);
+
     /* Step 2: Propagate positions to next time step */
     m_system->positions.noalias() += m_dt * m_system->velocities;
+
     /* Step 3: Update mass matrices with new configuration */
     m_potHydro->update();
+
     /* Step 4: Update velocity and acceleration at t + dt and recalculate forces */
     m_velArtic = articulationVel(time + m_dt);
     m_accArtic = articulationAcc(time + m_dt);
