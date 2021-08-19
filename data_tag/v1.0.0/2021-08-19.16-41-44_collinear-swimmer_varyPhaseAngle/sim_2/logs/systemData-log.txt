@@ -1,0 +1,4 @@
+[2021-08-19 16:41:49.525] [systemData] [info] Initializing system data
+[2021-08-19 16:41:49.525] [systemData] [info] Output path: temp_2021-08-19.16-41-44_collinear-swimmer_varyPhaseAngle/sim_2
+[2021-08-19 16:41:49.525] [systemData] [info] Starting to parse GSD file
+[2021-08-19 16:41:49.525] [systemData] [info] Input checking assertions

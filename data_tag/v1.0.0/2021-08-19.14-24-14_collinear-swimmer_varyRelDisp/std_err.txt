@@ -1,0 +1,8 @@
+/home/aglisman/Dropbox/3_Brady_Lab/Code/potential-flow/bodies-in-potential-flow/python/analysis/collinear-swimmer-aggregate-analysis.py:311: RankWarning: Polyfit may be poorly conditioned
+  aggregate_plots(relative_path, output_dir)
+/home/aglisman/Dropbox/3_Brady_Lab/Code/potential-flow/bodies-in-potential-flow/python/analysis/collinear-swimmer-aggregate-analysis.py:311: RankWarning: Polyfit may be poorly conditioned
+  aggregate_plots(relative_path, output_dir)
+/home/aglisman/Dropbox/3_Brady_Lab/Code/potential-flow/bodies-in-potential-flow/python/analysis/collinear-swimmer-aggregate-analysis.py:49: RuntimeWarning: divide by zero encountered in true_divide
+  return np.divide(np.abs(exact - approximate), np.abs(exact))
+/home/aglisman/Dropbox/3_Brady_Lab/Code/potential-flow/bodies-in-potential-flow/python/analysis/collinear-swimmer-aggregate-analysis.py:311: RankWarning: Polyfit may be poorly conditioned
+  aggregate_plots(relative_path, output_dir)
