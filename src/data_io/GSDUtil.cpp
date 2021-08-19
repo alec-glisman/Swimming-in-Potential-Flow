@@ -251,56 +251,56 @@ GSDUtil::readParticles()
 {
     // positions
     spdlog::get(m_logName)->info("GSD parsing position");
-    float pos[m_system->numDim() * m_system->numParticles()];
-    auto return_bool = readChunk(&pos, m_frame, "particles/position", m_system->numParticles() * 12,
-                                 m_system->numParticles());
+    double d_pos[m_system->numDim() * m_system->numParticles()];
+    auto   return_bool = readChunk(&d_pos, m_frame, "log/particles/double_position",
+                                 m_system->numParticles() * 3 * 8, m_system->numParticles());
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
     for (int i = 0; i < m_system->numParticles(); i++)
     {
-        m_system->positions(3 * i)     = pos[3 * i];
-        m_system->positions(3 * i + 1) = pos[3 * i + 1];
-        m_system->positions(3 * i + 2) = pos[3 * i + 2];
+        m_system->positions(3 * i)     = d_pos[3 * i];
+        m_system->positions(3 * i + 1) = d_pos[3 * i + 1];
+        m_system->positions(3 * i + 2) = d_pos[3 * i + 2];
         spdlog::get(m_logName)->info("Particle {0} position : [{1:03.3f}, {2:03.3f}, {3:03.3f}]",
-                                     i + 1, pos[m_system->numDim() * i],
-                                     pos[m_system->numDim() * i + 1],
-                                     pos[m_system->numDim() * i + 2]);
+                                     i + 1, d_pos[m_system->numDim() * i],
+                                     d_pos[m_system->numDim() * i + 1],
+                                     d_pos[m_system->numDim() * i + 2]);
     }
 
     // velocities
     spdlog::get(m_logName)->info("GSD parsing velocity");
-    float vel[m_system->numDim() * m_system->numParticles()];
-    return_bool = readChunk(&vel, m_frame, "particles/velocity", m_system->numParticles() * 12,
-                            m_system->numParticles());
+    double d_vel[m_system->numDim() * m_system->numParticles()];
+    return_bool = readChunk(&d_vel, m_frame, "log/particles/double_velocity",
+                            m_system->numParticles() * 3 * 8, m_system->numParticles());
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
     for (int i = 0; i < m_system->numParticles(); i++)
     {
-        m_system->velocities(3 * i)     = vel[3 * i];
-        m_system->velocities(3 * i + 1) = vel[3 * i + 1];
-        m_system->velocities(3 * i + 2) = vel[3 * i + 2];
+        m_system->velocities(3 * i)     = d_vel[3 * i];
+        m_system->velocities(3 * i + 1) = d_vel[3 * i + 1];
+        m_system->velocities(3 * i + 2) = d_vel[3 * i + 2];
         spdlog::get(m_logName)->info("Particle {0} velocity : [{1:03.3f}, {2:03.3f}, {3:03.3f}]",
-                                     i + 1, vel[m_system->numDim() * i],
-                                     vel[m_system->numDim() * i + 1],
-                                     vel[m_system->numDim() * i + 2]);
+                                     i + 1, d_vel[m_system->numDim() * i],
+                                     d_vel[m_system->numDim() * i + 1],
+                                     d_vel[m_system->numDim() * i + 2]);
     }
 
     // accelerations
     spdlog::get(m_logName)->info("GSD parsing acceleration");
-    float acc[m_system->numDim() * m_system->numParticles()];
-    return_bool = readChunk(&acc, m_frame, "particles/moment_inertia",
-                            m_system->numParticles() * 12, m_system->numParticles());
+    double d_acc[m_system->numDim() * m_system->numParticles()];
+    return_bool = readChunk(&d_acc, m_frame, "log/particles/double_moment_inertia",
+                            m_system->numParticles() * 3 * 8, m_system->numParticles());
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
     for (int i = 0; i < m_system->numParticles(); i++)
     {
-        m_system->accelerations(3 * i)     = acc[3 * i];
-        m_system->accelerations(3 * i + 1) = acc[3 * i + 1];
-        m_system->accelerations(3 * i + 2) = acc[3 * i + 2];
+        m_system->accelerations(3 * i)     = d_acc[3 * i];
+        m_system->accelerations(3 * i + 1) = d_acc[3 * i + 1];
+        m_system->accelerations(3 * i + 2) = d_acc[3 * i + 2];
         spdlog::get(m_logName)->info(
             "Particle {0} acceleration : [{1:03.3f}, {2:03.3f}, {3:03.3f}]", i + 1,
-            acc[m_system->numDim() * i], acc[m_system->numDim() * i + 1],
-            acc[m_system->numDim() * i + 2]);
+            d_acc[m_system->numDim() * i], d_acc[m_system->numDim() * i + 1],
+            d_acc[m_system->numDim() * i + 2]);
     }
 }
 
