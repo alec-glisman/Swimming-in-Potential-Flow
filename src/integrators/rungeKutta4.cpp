@@ -339,12 +339,12 @@ rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic
 
     // calculate M_tilde = Sigma * M_total * Sigma^T;  [6 x 6]
     Eigen::MatrixXd M_tilde_hold = m_potHydro->mTotal() * rbmconn_T;
-    Eigen::MatrixXd M_tilde      = rbmconn * M_tilde_hold;
+    Eigen::Matrix3d M_tilde      = rbmconn * M_tilde_hold;
 
     /* ANCHOR: Solve for rigid body motion velocity components */
     // calculate P_script = Sigma * M_total * V_articulation;  [6 x 1]
     Eigen::VectorXd P_script_hold = m_potHydro->mTotal() * v_artic;
-    Eigen::VectorXd P_script      = rbmconn * P_script_hold;
+    Eigen::Vector3d P_script      = rbmconn * P_script_hold;
 
     // calculate U_swim = - M_tilde_inv * P_script; U_swim has translation and rotation
     // components
