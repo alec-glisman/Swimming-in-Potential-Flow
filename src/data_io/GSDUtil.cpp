@@ -353,16 +353,16 @@ void
 GSDUtil::writeParameters()
 {
     spdlog::get(m_logName)->info("GSD writing log/integrator/dt");
-    float_t dt      = m_system->dt();
-    auto return_val = gsd_write_chunk(m_system->handle().get(), "log/integrator/dt", GSD_TYPE_FLOAT,
-                                      1, 1, 0, (void*)&dt);
+    double dt         = m_system->dt();
+    auto   return_val = gsd_write_chunk(m_system->handle().get(), "log/integrator/dt",
+                                      GSD_TYPE_DOUBLE, 1, 1, 0, (void*)&dt);
     m_system->setReturnVal(return_val);
     m_system->check_gsd_return();
 
     spdlog::get(m_logName)->info("GSD writing log/integrator/t");
-    float_t time = m_system->t();
-    return_val = gsd_write_chunk(m_system->handle().get(), "log/integrator/t", GSD_TYPE_FLOAT, 1, 1,
-                                 0, (void*)&time);
+    double time = m_system->t();
+    return_val  = gsd_write_chunk(m_system->handle().get(), "log/integrator/t", GSD_TYPE_DOUBLE, 1,
+                                 1, 0, (void*)&time);
     m_system->setReturnVal(return_val);
     m_system->check_gsd_return();
 }
