@@ -250,8 +250,24 @@ rungeKutta4::initializeSpecificVars()
     spdlog::get(m_logName)->info("phase_shift : {0}", m_phase_shift);
     assert(double(phase_shift) == m_phase_shift && "phase_shift not properly set");
 
+    // average separation
+    spdlog::get(m_logName)->info("GSD parsing R_avg");
+    float R_avg{-1.0};
+    return_bool = gsdParser->readChunk(&R_avg, gsdParser->frame(), "log/swimmer/R_avg", 4);
+    m_system->setReturnBool(return_bool);
+    m_system->check_gsd_return();
+    m_R_avg = double(R_avg);
+    spdlog::get(m_logName)->info("R_avg : {0}", m_R_avg);
+    assert(double(R_avg) == m_R_avg && "R_avg not properly set");
+
     /* ANCHOR: set initial conditions */
     spdlog::get(m_logName)->info("Setting initial conditions");
+
+    // reset initial positions
+    spdlog::get(m_logName)->warn("Setting initial positions");
+    m_system->positions.setZero();
+    m_system->positions(0) = m_R_avg;
+    m_system->positions(6) = -m_R_avg + m_U0 / m_omega * sin(m_phase_shift);
 
     // set articulation velocities
     spdlog::get(m_logName)->info("Calling articulationVel()");
