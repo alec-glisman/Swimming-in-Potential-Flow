@@ -28,18 +28,17 @@ parser.add_option("--R_avg", dest="u_R_avg",
 parser.add_option("--phase-angle", dest="u_phase_angle",
                   help="phase angle between oscillating pairs",
                   metavar="double")
-parser.add_option("--epsilon", dest="u_epsilon",
-                  help="(dimensionless) relative oscillation amplitude compared to average inter-particle separation",
+parser.add_option("--U0", dest="u_U0",
+                  help="velocity oscillation amplitude",
+                  metavar="double")
+parser.add_option("--omega", dest="u_omega",
+                  help="velocity oscillation frequency",
                   metavar="double")
 
 # !SECTION (Parse user input options)
 
 
 # SECTION: Parameters
-
-# Swimmer parameters
-omega = 1.0
-tau = (2.0 * np.pi) / omega
 
 # Integrator parameters
 t = 0.0
@@ -117,7 +116,7 @@ def setSystemData():
 # SECTION: For use when being called from command line
 
 if __name__ == "__main__":
-    global gsd_path, dt, R_avg, phase_angle, epsilon, U0
+    global gsd_path, dt, R_avg, phase_angle, U0, omega, epsilon, tau
 
     # Parse user input
     options, remainder = parser.parse_args(sys.argv[1:])
@@ -125,10 +124,11 @@ if __name__ == "__main__":
     dt = np.double(options.u_dt)
     R_avg = np.double(options.u_R_avg)
     phase_angle = np.double(options.u_phase_angle)
-    epsilon = np.double(options.u_epsilon)
+    U0 = np.double(options.u_U0)
+    omega = np.double(options.u_omega)
 
-    # Calculate parameters
-    U0 = epsilon * R_avg * omega
+    epsilon = (U0 / omega) / R_avg
+    tau = (2.0 * np.pi) / omega
 
     initializeGSD()         # Create GSD, set log parameters, set particle parameters
     setInitialConditions()  # set kinematics

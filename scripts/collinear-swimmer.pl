@@ -153,10 +153,11 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         my $gsd_path = ${simulation_dir} . "/" . "data.gsd";
 
         # Default parameters
-        my $dt          = 5e-7;
+        my $dt          = 1e-6;
         my $R_avg       = 10.0;
         my $phase_angle = -1.57079632679;
-        my $epsilon     = 1e-2;
+        my $U0          = 1e-3;
+        my $omega       = 1.0;
 
         # Modify default preferences for each simulation run
         switch($inputData[$i]) {
@@ -170,12 +171,13 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
                 $phase_angle = ${data[$j]};
             }
             case ( "varyEpsilon" ) {
-                $epsilon = ${data[$j]};
+                my $epsilon = ${data[$j]};
+                $U0 = $epsilon * $R_avg * $omega
             }
         }
 
         # Generate GSD file
-        system( "python " . ${pythonGSDCreation} . " --GSD-path=" . ${gsd_path} . " --dt=" . ${dt} . " --R_avg=" . ${R_avg} . " --phase-angle=" . ${phase_angle} . " --epsilon=" . ${epsilon} ) and die "Unable to generate GSD file: $?, $!";
+        system( "python " . ${pythonGSDCreation} . " --GSD-path=" . ${gsd_path} . " --dt=" . ${dt} . " --R_avg=" . ${R_avg} . " --phase-angle=" . ${phase_angle} . " --U0=" . ${U0} . " --omega=" . ${omega} ) and die "Unable to generate GSD file: $?, $!";
         
         # Prepare for simulation
         make_path( "${simulation_dir}/${analysisDir}" );
