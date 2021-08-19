@@ -25,10 +25,10 @@
             "cwd": "${workspaceFolder}",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/python/analysis/collinear-swimmer-aggregrate-analysis.py",
+            "program": "${workspaceFolder}/python/analysis/collinear-swimmer-aggregate-analysis.py",
             "console": "integratedTerminal",
             "args": [
-                "--relative-path=${workspaceFolder}/data/2021-08-18.11-48-49_collinear-swimmer_varyRelDisp",
+                "--relative-path=${workspaceFolder}/data/2021-08-19.09-18-08_collinear-swimmer_varyRelDisp",
                 "--output-dir=figures"
             ]
         },
