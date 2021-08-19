@@ -4,6 +4,18 @@ Study dynamics of inertial active matter in a potential fluid (irrotational, inc
 
 Author: Alec Glisman
 
+## Data I/O
+
+All data is input and output from simulation using the [HOOMD GSD format](https://gsd.readthedocs.io/en/stable/index.html).
+The [schema](https://gsd.readthedocs.io/en/stable/python-module-gsd.fl.html) is well-documeneted.
+
+I will be making a few modifications and make extensive use of the `log` section of the schema to save data I desire.
+Many variables are stored as floats, but I output a number of variables as doubles in the logs section for accuracy in further computations.
+
+Frame 0 is created using a Python script and passed into the C++ simulation.
+The simulation then updates parameters (such as kinematics), and outputs the "true" initial frame as Frame 1.
+For this reason, there could be issues when loading data from frame 0 and any data that is not an input parameter should not be used for further work.
+
 ## External Dependencies
 
 ### Must install separately
