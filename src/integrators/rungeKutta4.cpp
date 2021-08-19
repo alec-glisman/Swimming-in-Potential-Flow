@@ -56,7 +56,8 @@ rungeKutta4::integrate()
     Eigen::VectorXd a1 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a1, time);
 
-    /* Step 2: k2 = dt * f ( y(t_0) + 1/2 * k1, t_0 + 1/2 dt ) */
+    /* Step 2: k2 = f( y(t_0) + k1 * dt/2,  t_0 + dt/2 )
+     * time rate-of-change k1 evaluated halfway through time step (midpoint) */
     Eigen::VectorXd v2 = v1;
     v2.noalias() += m_c1_2_dt * a1;
     Eigen::VectorXd x2 = x1;
@@ -71,7 +72,8 @@ rungeKutta4::integrate()
     Eigen::VectorXd a2 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a2, time + m_c1_2_dt);
 
-    /* Step 3 */
+    /* Step 3: k3 = f( y(t_0) + k2 * dt/2,  t_0 + dt/2 )
+     * time rate-of-change k2 evaluated halfway through time step (midpoint) */
     Eigen::VectorXd v3 = v1;
     v3.noalias() += m_c1_2_dt * a2;
     Eigen::VectorXd x3 = x1;
@@ -86,7 +88,8 @@ rungeKutta4::integrate()
     Eigen::VectorXd a3 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a3, time + m_c1_2_dt);
 
-    /* Step 4 */
+    /* Step 4: k4 = f( y(t_0) + k3 * dt,  t_0 + dt )
+     * time rate-of-change k3 evaluated at end of step (endpoint) */
     Eigen::VectorXd v4 = v1;
     v4.noalias() += m_dt * a3;
     Eigen::VectorXd x4 = x1;
