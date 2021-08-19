@@ -99,10 +99,10 @@ def setSystemData():
     snapshot = gsd_class.snapshot
 
     # convert data to GSD expected type
-    l_R_avg = np.array([R_avg], dtype=np.single)
-    l_U0 = np.array([U0], dtype=np.single)
-    l_omega = np.array([omega], dtype=np.single)
-    l_phase_angle = np.array([phase_angle], dtype=np.single)
+    l_R_avg = np.array([R_avg], dtype=np.double)
+    l_U0 = np.array([U0], dtype=np.double)
+    l_omega = np.array([omega], dtype=np.double)
+    l_phase_angle = np.array([phase_angle], dtype=np.double)
 
     # output data
     snapshot.log['swimmer/R_avg'] = l_R_avg
