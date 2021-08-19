@@ -75,7 +75,7 @@ def initializeGSD():
 def setInitialConditions():
 
     # position
-    pos = np.zeros((3*n), dtype=np.float32)
+    pos = np.zeros((3*n), dtype=np.float64)
     pos[0] = R_avg  # particle 0
     pos[6] = - R_avg + (U0 / omega) * np.sin(phase_angle)
 
