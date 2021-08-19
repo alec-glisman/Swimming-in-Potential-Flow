@@ -95,7 +95,7 @@ rungeKutta4::integrate()
     Eigen::VectorXd a4 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a4, time + m_dt);
 
-    /* Output data */
+    /* ANCHOR: Output data */
     m_system->positions.noalias() = v1;
     m_system->positions.noalias() += 2.0 * v2;
     m_system->positions.noalias() += 2.0 * v3;
