@@ -120,42 +120,6 @@ def aggregate_plots(relative_path, output_dir):
 # !SECTION (Load data)
 
 
-# SECTION: Output data
-
-    # Output data to log file
-    file = output_dir + "output.txt"
-
-    with open(file, "w") as f:
-
-        # Find scaling of CoM_disp_x vs. relDispEqbm
-        try:
-            idx = np.argsort(relDispEqbm)
-            CoM_disp_x_srt = CoM_disp_x[idx]
-            relDispEqbm_srt = relDispEqbm[idx]
-
-            m, b = np.polyfit(np.log(np.abs(relDispEqbm_srt)),
-                              np.log(np.abs(CoM_disp_x_srt)), 1)
-
-            print(f"ln(CoM_disp_x) = {m} * ln(relDispEqbm) + {b}",  file=f)
-            print("\n", file=f)
-
-        except:
-            pass
-
-        print("CoM_disp_x:", file=f)
-        print(CoM_disp_x,   file=f)
-        print("", file=f)
-
-        print("relDispEqbm:", file=f)
-        print(relDispEqbm,    file=f)
-        print("", file=f)
-
-        print("final_t:", file=f)
-        print(final_t,    file=f)
-
-# !SECTION (Output data)
-
-
 # SECTION: Analysis
 
     # Calculate leading order net motion over one period of articulation (for varying distance between spheres)
@@ -297,6 +261,42 @@ def aggregate_plots(relative_path, output_dir):
             loc='best', bbox_to_anchor=(0.05, 0.01, 0.5, 0.98))
         epsLL_Plot.save_plot()
 # !SECTION (Plots)
+
+
+# SECTION: Output data
+
+    # Output data to log file
+    file = output_dir + "output.txt"
+
+    with open(file, "w") as f:
+
+        # Find scaling of CoM_disp_x vs. relDispEqbm
+        try:
+            idx = np.argsort(relDispEqbm)
+            CoM_disp_x_srt = CoM_disp_x[idx]
+            relDispEqbm_srt = relDispEqbm[idx]
+
+            m, b = np.polyfit(np.log(np.abs(relDispEqbm_srt)),
+                              np.log(np.abs(CoM_disp_x_srt)), 1)
+
+            print(f"ln(CoM_disp_x) = {m} * ln(relDispEqbm) + {b}",  file=f)
+            print("\n", file=f)
+
+        except:
+            pass
+
+        print("CoM_disp_x:", file=f)
+        print(CoM_disp_x,   file=f)
+        print("", file=f)
+
+        print("relDispEqbm:", file=f)
+        print(relDispEqbm,    file=f)
+        print("", file=f)
+
+        print("final_t:", file=f)
+        print(final_t,    file=f)
+
+# !SECTION (Output data)
 
 
 # SECTION: For use when being called from command line
