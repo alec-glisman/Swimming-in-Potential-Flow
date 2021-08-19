@@ -100,14 +100,14 @@ def aggregate_plots(relative_path, output_dir):
     U0 = np.zeros(len(gsd_files))
     omega = np.zeros(len(gsd_files))
     epsilon = np.zeros(len(gsd_files))
+    final_t = np.zeros(len(gsd_files))
 
     for i in range(len(gsd_files)):
 
         # Data from final frame
         gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(
             gsd_files[i].trajectory.file.nframes - 1)
-        final_t = float(gsd_files[i].snapshot.log['integrator/t'])
-        assert(isclose(1.0, final_t, rel_tol=1e-11))
+        final_t[i] = float(gsd_files[i].snapshot.log['integrator/t'])
         # particle 1, x-coordinate
         CoM_disp_x[i] = float(gsd_files[i].snapshot.particles.position[1][0])
 
@@ -137,6 +137,10 @@ def aggregate_plots(relative_path, output_dir):
 
         print("relDispEqbm:", file=f)
         print(relDispEqbm,    file=f)
+        print("", file=f)
+
+        print("final_t:", file=f)
+        print(final_t,    file=f)
 
 # !SECTION (Output data)
 
