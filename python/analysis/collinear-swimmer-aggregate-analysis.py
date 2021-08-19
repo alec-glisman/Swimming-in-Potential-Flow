@@ -33,10 +33,8 @@ parser.add_option("--output-dir", dest="u_output_dir",
 # Function for D: derivative of mass matrix elements, dimensionless
 def f_D(x):
     # In R/a coordinates
-    numerator = 36.0 * (-1045.0 + 1632.0 * np.power(x, 3) -
-                        1564.0 * np.power(x, 6) + 744.0 * np.power(x, 9))
-    denominator = x * \
-        np.square(209.0 - 204.0 * np.power(x, 3) + 144 * np.power(x, 6))
+    numerator = 3.0 * (-68.0 + 93.0 * np.power(x, 3))
+    denominator = x * np.square(17.0 - 18.0 * np.power(x, 3))
     return np.divide(numerator, denominator)
 
 
