@@ -7,7 +7,7 @@ Author: Alec Glisman
 ## Data I/O
 
 All data is input and output from simulation using the [HOOMD GSD format](https://gsd.readthedocs.io/en/stable/index.html).
-The [schema](https://gsd.readthedocs.io/en/stable/python-module-gsd.fl.html) is well-documeneted.
+The [schema](https://gsd.readthedocs.io/en/stable/python-module-gsd.fl.html) is well-documented.
 
 I will be making a few modifications and make extensive use of the `log` section of the schema to save data I desire.
 Many variables are stored as floats, but I output a number of variables as doubles in the logs section for accuracy in further computations.
