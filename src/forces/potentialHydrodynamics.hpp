@@ -95,9 +95,8 @@ class potentialHydrodynamics
     Eigen::MatrixXd m_r_ab;     // [1]; dim = (3)  x (r)
 
     // Identity Matrices
-    Eigen::MatrixXd m_I3N;      // dim = (3N) x (3N)
-    Eigen::MatrixXd m_c1_2_I3N; // dim = (3N) x (3N)
-
+    Eigen::MatrixXd       m_I3N;                                  // dim = (3N) x (3N)
+    Eigen::MatrixXd       m_c1_2_I3N;                             // dim = (3N) x (3N)
     const Eigen::Matrix3d m_I3 = Eigen::Matrix3d::Identity(3, 3); // dim = 3 x 3
 
     // hydrodynamic quantities

@@ -167,8 +167,8 @@ potentialHydrodynamics::calcAddedMass()
     /* Construct full added mass matrix
      * M = 1/2 I + M^{(1)}
      */
-    m_M_added.noalias() += m_c1_2_I3N;                       // Add diagonal elements
-    m_M_added *= m_system->fluidDensity() * m_unitSphereVol; // mass units
+    m_M_added.noalias() += m_c1_2_I3N;                         // Add diagonal elements
+    m_M_added *= (m_system->fluidDensity() * m_unitSphereVol); // mass units
 }
 
 void
@@ -190,10 +190,12 @@ potentialHydrodynamics::calcAddedMassGrad()
         double          r_mag_ij = m_r_mag_ab[k]; //! [1]; |r| between 2 particles
 
         //! Matrices to use in Calculation
-        Eigen::Matrix3d delta_Ri_x, delta_Ri_y, delta_Ri_z; // [1]
-        delta_Ri_x.noalias() = Eigen::Matrix3d::Zero(); //! (\delta_{j x} r_i) + (\delta_{i x} r_j)
-        delta_Ri_y.noalias() = Eigen::Matrix3d::Zero(); //! (\delta_{j y} r_i) + (\delta_{i y} r_j)
-        delta_Ri_z.noalias() = Eigen::Matrix3d::Zero(); //! (\delta_{j z} r_i) + (\delta_{i z} r_j)
+        Eigen::Matrix3d delta_Ri_x =
+            Eigen::Matrix3d::Zero(); //! (\delta_{j x} r_i) + (\delta_{i x} r_j)
+        Eigen::Matrix3d delta_Ri_y =
+            Eigen::Matrix3d::Zero(); //! (\delta_{j y} r_i) + (\delta_{i y} r_j)
+        Eigen::Matrix3d delta_Ri_z =
+            Eigen::Matrix3d::Zero(); //! (\delta_{j z} r_i) + (\delta_{i z} r_j)
 
         /* (\delta_{j x} r_i) Adds all components of \bm{r} as a column vector to the first column
          * (j=x) The indexing comes from a M_{i j, k} index scheme, where k=x in this case */
@@ -209,23 +211,22 @@ potentialHydrodynamics::calcAddedMassGrad()
         double gradM1_c2 = m_c15_2 / std::pow(r_mag_ij, 7); // [1]
 
         //! Full matrix elements for M_{ij, i}
-        Eigen::Matrix3d Mij_ix, Mij_iy, Mij_iz;             // [1]
         Eigen::Matrix3d r_dyad_r = r_ij * r_ij.transpose(); // [1]; Outer product of \bm{r} \bm{r}
 
         // Mij_ix
-        Mij_ix.noalias() = delta_Ri_x;
+        Eigen::Matrix3d Mij_ix = delta_Ri_x;
         Mij_ix.noalias() += r_ij[0] * m_I3;
         Mij_ix *= gradM1_c1;                                  // sub-term 1 complete
         Mij_ix.noalias() += (gradM1_c2 * r_ij[0]) * r_dyad_r; // sub-term 2 complete
 
         // Mij_iy
-        Mij_iy.noalias() = delta_Ri_y;
+        Eigen::Matrix3d Mij_iy = delta_Ri_y;
         Mij_iy.noalias() += r_ij[1] * m_I3;
         Mij_iy *= gradM1_c1;                                  // sub-term 1 complete
         Mij_iy.noalias() += (gradM1_c2 * r_ij[1]) * r_dyad_r; // sub-term 2 complete
 
         // Mij_iz
-        Mij_iz.noalias() = delta_Ri_z;
+        Eigen::Matrix3d Mij_iz = delta_Ri_z;
         Mij_iz.noalias() += r_ij[2] * m_I3;
         Mij_iz *= gradM1_c1;                                  // sub-term 1 complete
         Mij_iz.noalias() += (gradM1_c2 * r_ij[2]) * r_dyad_r; // sub-term 2 complete
@@ -279,7 +280,7 @@ potentialHydrodynamics::calcAddedMassGrad()
     /* Construct full added mass matrix
      * \nabla M = \nabla M^{(1)}
      */
-    m_grad_M_added *= m_system->fluidDensity() * m_unitSphereVol; // mass units
+    m_grad_M_added *= (m_system->fluidDensity() * m_unitSphereVol); // mass units
 }
 
 void
