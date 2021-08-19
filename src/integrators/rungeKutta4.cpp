@@ -327,9 +327,8 @@ rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic
     {
         int i3{3 * i};
 
-        Eigen::Vector3d n_dr = m_system->positions.segment<3>(i3);
-        n_dr.noalias() -= r_loc;
-        n_dr *= -1;
+        Eigen::Vector3d n_dr = -m_system->positions.segment<3>(i3);
+        n_dr.noalias() += r_loc;
         Eigen::Matrix3d n_dr_cross;
         crossProdMat(n_dr, n_dr_cross);
 
