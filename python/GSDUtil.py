@@ -98,6 +98,16 @@ class GSDUtil:
             self.snapshot.particles.diameter = [2] * int(N)
 
     def setKinematics(self, X, U, A):
+        # Convert data types to personal expected type
+        X = np.array(X, dtype=np.float64)
+        U = np.array(U, dtype=np.float64)
+        A = np.array(A, dtype=np.float64)
+
+        # Save kinematics
+        self.snapshot.log['particles/double_position'] = X
+        self.snapshot.log['particles/double_velocity'] = U
+        self.snapshot.log['particles/double_moment_inertia'] = A
+
         # Convert data types to GSD expected type
         X = np.array(X, dtype=np.float32)
         U = np.array(U, dtype=np.float32)
