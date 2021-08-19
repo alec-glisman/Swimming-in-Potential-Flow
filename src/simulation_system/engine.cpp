@@ -52,7 +52,7 @@ engine::run()
     spdlog::get(m_logName)->info("Write step: {0}", write_step);
     spdlog::get(m_logName)->info("Display step: {0}", display_step);
 
-    while (m_system->t() <= m_system->tf())
+    while (m_system->t() + m_system->dt() <= m_system->tf())
     {
         // Integrate system forward in time
         integrate();
