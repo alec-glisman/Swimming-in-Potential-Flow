@@ -83,6 +83,7 @@ class rungeKutta4
     double m_U0{-1.0};
     double m_omega{-1.0};
     double m_phase_shift{-1.0};
+    double m_R_avg{-1.0};
 
     // time step variables
     double m_dt{-1.0};
