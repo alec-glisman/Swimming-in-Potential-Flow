@@ -48,71 +48,61 @@ rungeKutta4::integrate()
 
     /* Step 1: k1 = f( y(t_0),  t_0 ),
      * initial conditions at current step */
-    Eigen::VectorXd x1 = m_system->positions;
     Eigen::VectorXd v1 = m_system->velocities;
-    Eigen::VectorXd a1 = m_system->accelerations;
+    Eigen::VectorXd x1 = m_system->positions;
 
-    /* Step 2: k2 = f( y(t_0) + k1 * dt/2,  t_0 + dt/2 )
-     * time rate-of-change k1 evaluated halfway through time step (midpoint) */
-    Eigen::VectorXd x2 = m_c1_2_dt * v1;
-    x2.noalias() += x1;
-    Eigen::VectorXd v2 = m_c1_2_dt * a1;
-    v2.noalias() += v1;
+    m_potHydro->update();
 
-    // temporarily change kinematics to get correct hydro tensors during acceleration update
-    m_system->positions.noalias()  = x2;
-    m_system->velocities.noalias() = v2;
-    m_potHydro->update(); // update hydrodynamics tensors
+    Eigen::VectorXd a1 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
+    accelerationUpdate(a1, time);
+
+    /* Step 2: k2 = dt * f ( y(t_0) + 1/2 * k1, t_0 + 1/2 dt ) */
+    Eigen::VectorXd v2 = v1 + m_c1_2_dt * a1;
+    Eigen::VectorXd x2 = x1 + m_c1_2_dt * v2;
+
+    m_system->accelerations.noalias() = a1;
+    m_system->velocities.noalias()    = v2;
+    m_system->positions.noalias()     = x2;
+
+    m_potHydro->update();
 
     Eigen::VectorXd a2 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a2, time + m_c1_2_dt);
 
-    /* Step 3: k3 = f( y(t_0) + k2 * dt/2,  t_0 + dt/2 )
-     * time rate-of-change k2 evaluated halfway through time step (midpoint) */
-    Eigen::VectorXd x3 = m_c1_2_dt * v2;
-    x3.noalias() += x1;
-    Eigen::VectorXd v3 = m_c1_2_dt * a2;
-    v3.noalias() += v1;
+    /* Step 3 */
+    Eigen::VectorXd v3 = v1 + m_c1_2_dt * a2;
+    Eigen::VectorXd x3 = x1 + m_c1_2_dt * v3;
 
-    m_system->positions.noalias()  = x3;
-    m_system->velocities.noalias() = v3;
+    m_system->accelerations.noalias() = a2;
+    m_system->velocities.noalias()    = v3;
+    m_system->positions.noalias()     = x3;
+
     m_potHydro->update();
 
     Eigen::VectorXd a3 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a3, time + m_c1_2_dt);
 
-    /* Step 4: k4 = f( y(t_0) + k3 * dt,  t_0 + dt )
-     * time rate-of-change k3 evaluated at end of step (endpoint) */
-    Eigen::VectorXd x4 = m_dt * v3;
-    x4.noalias() += x1;
-    Eigen::VectorXd v4 = m_dt * a3;
-    v4.noalias() += v1;
+    /* Step 4 */
+    Eigen::VectorXd v4 = v1 + m_dt * a3;
+    Eigen::VectorXd x4 = x1 + m_dt * v3;
 
-    m_system->positions.noalias()  = x4;
-    m_system->velocities.noalias() = v4;
+    m_system->accelerations.noalias() = a3;
+    m_system->velocities.noalias()    = v4;
+    m_system->positions.noalias()     = x4;
+
     m_potHydro->update();
 
     Eigen::VectorXd a4 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a4, time + m_dt);
 
-    /* Output calculated values */
-    m_system->positions.noalias() = v1;
-    m_system->positions.noalias() += m_c2 * v2;
-    m_system->positions.noalias() += m_c2 * v3;
-    m_system->positions.noalias() += v4;
-    m_system->positions *= m_c1_6_dt;
-    m_system->positions.noalias() += x1;
-
-    m_system->velocities.noalias() = a1;
-    m_system->velocities.noalias() += m_c2 * a2;
-    m_system->velocities.noalias() += m_c2 * a3;
-    m_system->velocities.noalias() += a4;
-    m_system->velocities *= m_c1_6_dt;
-    m_system->velocities.noalias() += v1;
+    /* Output data */
+    m_system->positions.noalias()  = x1 + m_c1_6_dt * (v1 + 2.0 * v2 + 2.0 * v3 + v4);
+    m_system->velocities.noalias() = v1 + m_c1_6_dt * (a1 + 2.0 * a2 + 2.0 * a3 + a4);
 
     m_potHydro->update();
+
     Eigen::VectorXd a_out = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a_out, m_system->tau() * (time + m_dt));
+    accelerationUpdate(a_out, time + m_dt);
     m_system->accelerations.noalias() = a_out;
 }
 
@@ -139,10 +129,10 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
     // REVIEW[epic=Change,order=5]: alter constraint linear system for each system
     // calculate A
     Eigen::MatrixXd A = Eigen::MatrixXd::Zero(2, 9);
-    A(0, 0)           = 1;
-    A(0, 3)           = -1;
-    A(1, 3)           = -1;
-    A(1, 6)           = 1;
+    A(0, 0)           = 1.0;
+    A(0, 3)           = -1.0;
+    A(1, 3)           = -1.0;
+    A(1, 6)           = 1.0;
     // calculate B
     Eigen::Vector2d b = Eigen::Vector2d::Zero(2, 1);
     b(0)              = -m_U0 * m_omega * sin(m_omega * dimensional_time);
