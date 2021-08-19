@@ -28,12 +28,11 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
 
     // set identity matrices
     m_I3N      = Eigen::MatrixXd::Identity(m_len_tensor, m_len_tensor);
-    m_c1_2_I3N = m_I3N;
-    m_c1_2_I3N *= m_c1_2;
+    m_c1_2_I3N = m_c1_2 * m_I3N;
 
     // Initialize mass matrices
     spdlog::get(m_logName)->info("Initializing mass tensors");
-    m_M_intrinsic = m_system->particleDensity() * m_unitSphereVol * m_I3N;
+    m_M_intrinsic = (m_system->particleDensity() * m_unitSphereVol) * m_I3N;
     m_M_added     = Eigen::MatrixXd::Zero(m_len_tensor, m_len_tensor);
 
     m_M_total.noalias() = m_M_added;
