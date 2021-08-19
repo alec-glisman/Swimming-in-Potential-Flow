@@ -127,9 +127,9 @@ GSDUtil::readHeader()
     auto     return_bool = readChunk(&timestep, m_frame, "log/configuration/step", 8);
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
-    m_system->setTimestep(int(timestep) + 1);
+    m_system->setTimestep(int(timestep));
     spdlog::get(m_logName)->info("time step: {0}", timestep);
-    assert(int(timestep) + 1 == m_system->timestep() && "time step not properly set");
+    assert(int(timestep) == m_system->timestep() && "time step not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing dimensions");
     uint8_t dim = 0;
