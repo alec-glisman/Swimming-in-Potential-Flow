@@ -16,7 +16,14 @@ Frame 0 is created using a Python script and passed into the C++ simulation.
 The simulation then updates parameters (such as kinematics), and outputs the "true" initial frame as Frame 1.
 For this reason, there could be issues when loading data from frame 0 and any data that is not an input parameter should not be used for further work.
 
-## External Dependencies
+## Modifications for other systems
+
+The simulation system can be easily adapted for other configurations and constraints.
+The code that must be changed inside the C++ framework is tagged with comments of the form `// REVIEW[epic=Change,order=5]: Change constraint linear system for each system`.
+The relevant class is the `rungeKutta4` integration class.
+Of course, separate Python scripts for GSD initialization and numerical analysis must also be generated.
+
+## External dependencies
 
 ### Must install separately
 
