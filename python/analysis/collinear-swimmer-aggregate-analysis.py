@@ -43,7 +43,7 @@ def f_D(x):
 # Function for \Delta Z / a
 def dZ_leadingOrder(phi, U0, omega, a, x):
     # In R/a coordinates
-    return (np.pi * np.sin(phi)) * np.square(U0 / (a * omega)) * f_D(x)
+    return -(np.pi * np.sin(phi)) * np.square(U0 / (a * omega)) * f_D(x)
 
 
 # Function to calculate relative error
