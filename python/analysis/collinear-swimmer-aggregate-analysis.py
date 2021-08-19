@@ -128,7 +128,26 @@ def aggregate_plots(relative_path, output_dir):
 
     # Output data to log file
     file = output_dir + "output.txt"
+
     with open(file, "w") as f:
+
+        Empty_Plot = PlotStyling(1, r"", r"",
+                                 title=None, loglog=False,
+                                 outputDir=output_dir, figName="", eps=epsOutput,
+                                 continuousColors=False)
+
+        # Find scaling of CoM_dis_x vs. relDispEqbm the simulation data points
+        if (len(np.unique(relDispEqbm)) > 1):
+            try:
+                with Empty_Plot.suppress_stdout():
+                    m, b = np.polyfit(np.log(np.abs(relDispEqbm)), np.log(
+                        np.abs(CoM_disp_x), 1)
+                    print(
+                        f"ln(CoM_disp_x) = {m} * ln(relDispEqbm) + {b}", file=f)
+                    print("\n", file=f)
+            except:
+                pass
+
         print("CoM_disp_x:", file=f)
         print(CoM_disp_x,   file=f)
         print("", file=f)
@@ -146,19 +165,19 @@ def aggregate_plots(relative_path, output_dir):
 # SECTION: Analysis
 
     # Calculate leading order net motion over one period of articulation (for varying distance between spheres)
-    xAnalyticalRng = np.array(np.linspace(
+    xAnalyticalRng=np.array(np.linspace(
         2.0, 40.0, num=1000), dtype=np.float64)
-    dZAnalyticalDist = dZ_leadingOrder(
+    dZAnalyticalDist=dZ_leadingOrder(
         phaseShift[0], U0[0], omega[0], a, xAnalyticalRng)
     # Calculate leading order net motion over one period of articulation (for varying phase Shift)
-    deltaAnalyticalRng = np.array(np.linspace(
+    deltaAnalyticalRng=np.array(np.linspace(
         0, 2 * np.pi, num=1000), dtype=np.float64)
-    dZAnalyticaldelt = dZ_leadingOrder(
+    dZAnalyticaldelt=dZ_leadingOrder(
         deltaAnalyticalRng, U0[0], omega[0], a, relDispEqbm[0])
     # Calculate leading order net motion (for varying epsilon)
-    epsAnalyticalRng = np.array(np.linspace(
+    epsAnalyticalRng=np.array(np.linspace(
         0, np.max(epsilon), num=1000), dtype=np.float64)
-    dZAnalyticaleps = dZ_leadingOrder(
+    dZAnalyticaleps=dZ_leadingOrder(
         phaseShift[0], epsAnalyticalRng * omega[0] * relDispEqbm[0], omega[0], a, relDispEqbm[0])
 
 # !SECTION (Analysis)
@@ -168,8 +187,8 @@ def aggregate_plots(relative_path, output_dir):
 
     if (len(np.unique(relDispEqbm)) > 1):
         # PLOT: net displacement of swimmer vs. distance between spheres
-        numLines = 2
-        CoM_Plot = PlotStyling(numLines,
+        numLines=2
+        CoM_Plot=PlotStyling(numLines,
                                r"$\mathrm{R}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
                                title=None, loglog=False,
                                outputDir=output_dir, figName="collinear-swimmer-CoM_x-disp", eps=epsOutput,
@@ -191,8 +210,8 @@ def aggregate_plots(relative_path, output_dir):
         CoM_Plot.save_plot()
 
         # PLOT: log-log of net displacement of swimmer vs. distance between spheres
-        numLines = 2
-        CoM_PlotLL = PlotStyling(numLines,
+        numLines=2
+        CoM_PlotLL=PlotStyling(numLines,
                                  r"$\mathrm{R}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
                                  title=None, loglog=True,
                                  outputDir=output_dir, figName="collinear-swimmer-CoM_x-disp-loglog", eps=epsOutput,
@@ -207,10 +226,10 @@ def aggregate_plots(relative_path, output_dir):
         CoM_PlotLL.save_plot()
 
         # PLOT: Relative error of displacement with relDisp
-        numLines = 1
-        relDisErr = relErr(dZ_leadingOrder(phaseShift[0], U0[0], omega[0], a, relDispEqbm),
+        numLines=1
+        relDisErr=relErr(dZ_leadingOrder(phaseShift[0], U0[0], omega[0], a, relDispEqbm),
                            CoM_disp_x)
-        CoMDispErr_Plot = PlotStyling(numLines,
+        CoMDispErr_Plot=PlotStyling(numLines,
                                       r"$\mathrm{R}_0 / a $", r"Relative Error",
                                       title=None, loglog=True,
                                       outputDir=output_dir, figName="collinear-swimmer-CoM_x-disp-error", eps=epsOutput,
@@ -222,8 +241,8 @@ def aggregate_plots(relative_path, output_dir):
 
     if (len(np.unique(phaseShift)) > 1):
         # PLOT: net displacement of swimmer vs phase Shift
-        numLines = 2
-        phaseShift_Plot = PlotStyling(numLines,
+        numLines=2
+        phaseShift_Plot=PlotStyling(numLines,
                                       r"Phase Shift, $\delta$", r"$\Delta \mathrm{R}_{2} / a$",
                                       title=None, loglog=False,
                                       outputDir=output_dir, figName="collinear-swimmer-phaseShift", eps=epsOutput,
@@ -239,10 +258,10 @@ def aggregate_plots(relative_path, output_dir):
         phaseShift_Plot.save_plot()
 
         # PLOT: Relative error of displacement with delta
-        relPhErr = relErr(dZ_leadingOrder(phaseShift, U0[0], omega[0], a, relDispEqbm[0]),
+        relPhErr=relErr(dZ_leadingOrder(phaseShift, U0[0], omega[0], a, relDispEqbm[0]),
                           CoM_disp_x)
-        numLines = 1
-        phaseShiftErr_Plot = PlotStyling(numLines,
+        numLines=1
+        phaseShiftErr_Plot=PlotStyling(numLines,
                                          r"Phase Shift, $\delta$", r"Relative Error",
                                          title=None, loglog=True,
                                          outputDir=output_dir, figName="collinear-swimmer-phaseShift-error", eps=epsOutput,
@@ -254,8 +273,8 @@ def aggregate_plots(relative_path, output_dir):
 
     if (len(np.unique(epsilon)) > 1):
         # PLOT: net displacement of swimmer vs epsilon
-        numLines = 2
-        eps_Plot = PlotStyling(numLines,
+        numLines=2
+        eps_Plot=PlotStyling(numLines,
                                r"$\epsilon = \frac{\mathrm{U}_0 / \omega}{\mathrm{R}_0}$", r"$\Delta \mathrm{R}_{2} / a$",
                                title=None, loglog=False,
                                outputDir=output_dir, figName="collinear-swimmer-eps-scaling-CoM_x-disp", eps=epsOutput,
@@ -269,8 +288,8 @@ def aggregate_plots(relative_path, output_dir):
         eps_Plot.save_plot()
 
         # PLOT: log-log net displacement of swimmer vs epsilon
-        numLines = 2
-        epsLL_Plot = PlotStyling(numLines,
+        numLines=2
+        epsLL_Plot=PlotStyling(numLines,
                                  r"$\epsilon = \frac{\mathrm{U}_0 / \omega}{\mathrm{R}_0}$", r"$\Delta \mathrm{R}_{2} / a$",
                                  title=None, loglog=True,
                                  outputDir=output_dir, figName="collinear-swimmer-eps-scaling-CoM_x-disp-loglog", eps=epsOutput,
@@ -290,9 +309,9 @@ def aggregate_plots(relative_path, output_dir):
 if __name__ == "__main__":
 
     # parse user input
-    options, remainder = parser.parse_args(sys.argv[1:])
-    relative_path = str(options.u_relative_path)
-    output_dir = str(options.u_output_dir)
+    options, remainder=parser.parse_args(sys.argv[1:])
+    relative_path=str(options.u_relative_path)
+    output_dir=str(options.u_output_dir)
 
     # generate plots
     aggregate_plots(relative_path, output_dir)
