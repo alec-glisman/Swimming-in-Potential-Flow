@@ -78,7 +78,8 @@ def aggregate_plots(relative_path, output_dir):
     try:
         # Loop through all subdirectories in the 'data' directory
         for root, dirs, files in os.walk(relative_path, topdown=True):
-            dirs.sort()  # Sort the directories
+            dirs.sort()
+            files.sort()
 
             for file in files:  # Loop through all files in given directory
                 if (".gsd" in file):
@@ -125,6 +126,21 @@ def aggregate_plots(relative_path, output_dir):
 # !SECTION (Load data)
 
 
+# SECTION: Output data
+
+    # Output data to log file
+    file = output_dir + "output.txt"
+    with open(file, "w") as f:
+        print("CoM_disp_x:", file=f)
+        print(CoM_disp_x,   file=f)
+        print("", file=f)
+
+        print("relDispEqbm:", file=f)
+        print(relDispEqbm,    file=f)
+
+# !SECTION (Output data)
+
+
 # SECTION: Analysis
 
     # Calculate leading order net motion over one period of articulation (for varying distance between spheres)
@@ -158,17 +174,17 @@ def aggregate_plots(relative_path, output_dir):
                                continuousColors=False)
         # Show numerical data points
         CoM_Plot.make_plot()
-        CoM_Plot.curve(np.abs(xAnalyticalRng),
-                       dZAnalyticalDist, zorder=1, label="Leading Order")
+        # CoM_Plot.curve(np.abs(xAnalyticalRng),
+        #                dZAnalyticalDist, zorder=1, label="Leading Order")
         CoM_Plot.scatter(relDispEqbm, CoM_disp_x,
                          zorder=2, label="Simulation")
         # Add legend
         CoM_Plot.legend(title=r"$\epsilon \leq$" + "{}".format(fmt(np.max(epsilon))),
                         loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
         # Adjust ticks and tick labels
-        CoM_Plot.ax.set_xlim([1.9, 6])
-        CoM_Plot.set_major_minor_ticks(
-            xMajorLoc=1, xMinorLoc=0.5, yMajorLoc=None, yMinorLoc=None)
+        # CoM_Plot.ax.set_xlim([1.9, 6])
+        # CoM_Plot.set_major_minor_ticks(
+        #     xMajorLoc=1, xMinorLoc=0.5, yMajorLoc=None, yMinorLoc=None)
         CoM_Plot.set_yaxis_scientific()
         CoM_Plot.save_plot()
 
