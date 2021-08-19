@@ -110,16 +110,13 @@ def aggregate_plots(relative_path, output_dir):
         CoM_disp_x[i] = float(
             gsd_files[i].snapshot.log['particles/double_position'][1][0])
 
-        # Data from header frame
-        gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(0)
+        # Data from initial frame (not 0)
+        gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(1)
         relDispEqbm[i] = float(gsd_files[i].snapshot.log['swimmer/R_avg'])
         phaseShift[i] = float(gsd_files[i].snapshot.log['swimmer/phase_shift'])
         U0[i] = float(gsd_files[i].snapshot.log['swimmer/U0'])
         omega[i] = float(gsd_files[i].snapshot.log['swimmer/omega'])
         epsilon[i] = U0[i] / relDispEqbm[i] / omega[i]
-
-        # Data from initial frame
-        gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(1)
         CoM_disp_x[i] -= float(gsd_files[i].snapshot.log['particles/double_position'][1][0])
 
 # !SECTION (Load data)
