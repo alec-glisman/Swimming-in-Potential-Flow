@@ -137,7 +137,7 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
      * Linear proportionality: K = M_total^{1/2} * (A * M_total^{-1/2})^{+};
      * + is Moore-Penrose inverse */
 
-    // REVIEW[epic=Change,order=5]: alter constraint linear system for each system
+    // REVIEW[epic=Change,order=5]: Change constraint linear system for each system
     // calculate A
     Eigen::MatrixXd A = Eigen::MatrixXd::Zero(2, 9);
     A(0, 0)           = 1.0;
@@ -179,7 +179,7 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
     acc.noalias() = m_potHydro->mTotal().llt().solve(Q_total);
 }
 
-/* REVIEW[epic=Change,order=1]: Change initializeSpecificVars() for different systems*/
+/* REVIEW[epic=Change,order=1]: Change initializeSpecificVars() for different systems */
 void
 rungeKutta4::initializeSpecificVars()
 {
