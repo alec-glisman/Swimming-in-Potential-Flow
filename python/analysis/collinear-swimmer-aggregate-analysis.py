@@ -92,13 +92,13 @@ def aggregate_plots(relative_path, output_dir):
             f"Failure to load data. No files found in relPath {relative_path}")
 
     # Loop through all simulations and grab the final CoM displacement (x-axis)
-    CoM_disp_x = np.zeros(len(gsd_files), dtype=np.float64)
-    relDispEqbm = np.zeros(len(gsd_files), dtype=np.float64)
-    phaseShift = np.zeros(len(gsd_files), dtype=np.float64)
-    U0 = np.zeros(len(gsd_files), dtype=np.float64)
-    omega = np.zeros(len(gsd_files), dtype=np.float64)
-    epsilon = np.zeros(len(gsd_files), dtype=np.float64)
-    final_t = np.zeros(len(gsd_files), dtype=np.float64)
+    CoM_disp_x = np.zeros(len(gsd_files), dtype=np.double)
+    relDispEqbm = np.zeros(len(gsd_files), dtype=np.double)
+    phaseShift = np.zeros(len(gsd_files), dtype=np.double)
+    U0 = np.zeros(len(gsd_files), dtype=np.double)
+    omega = np.zeros(len(gsd_files), dtype=np.double)
+    epsilon = np.zeros(len(gsd_files), dtype=np.double)
+    final_t = np.zeros(len(gsd_files), dtype=np.double)
 
     for i in range(len(gsd_files)):
 
@@ -124,17 +124,17 @@ def aggregate_plots(relative_path, output_dir):
 
     # Calculate leading order net motion over one period of articulation (for varying distance between spheres)
     xAnalyticalRng = np.array(np.linspace(
-        2.0, 40.0, num=1000), dtype=np.float64)
+        2.0, 40.0, num=1000), dtype=np.double)
     dZAnalyticalDist = dZ_leadingOrder(
         phaseShift[0], U0[0], omega[0], a, xAnalyticalRng)
     # Calculate leading order net motion over one period of articulation (for varying phase Shift)
     deltaAnalyticalRng = np.array(np.linspace(
-        0, 2 * np.pi, num=1000), dtype=np.float64)
+        0, 2 * np.pi, num=1000), dtype=np.double)
     dZAnalyticaldelt = dZ_leadingOrder(
         deltaAnalyticalRng, U0[0], omega[0], a, relDispEqbm[0])
     # Calculate leading order net motion (for varying epsilon)
     epsAnalyticalRng = np.array(np.linspace(
-        0, np.max(epsilon), num=1000), dtype=np.float64)
+        0, np.max(epsilon), num=1000), dtype=np.double)
     dZAnalyticaleps = dZ_leadingOrder(
         phaseShift[0], epsAnalyticalRng * omega[0] * relDispEqbm[0], omega[0], a, relDispEqbm[0])
 
