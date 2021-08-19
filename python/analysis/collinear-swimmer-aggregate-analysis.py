@@ -131,22 +131,20 @@ def aggregate_plots(relative_path, output_dir):
 
     with open(file, "w") as f:
 
-        Empty_Plot = PlotStyling(1, r"", r"",
-                                 title=None, loglog=False,
-                                 outputDir=output_dir, figName="", eps=epsOutput,
-                                 continuousColors=False)
+        # Find scaling of CoM_disp_x vs. relDispEqbm
+        try:
+            idx = np.argsort(relDispEqbm)
+            CoM_disp_x_srt = CoM_disp_x[idx]
+            relDispEqbm_srt = relDispEqbm[idx]
 
-        # Find scaling of CoM_dis_x vs. relDispEqbm the simulation data points
-        if (len(np.unique(relDispEqbm)) > 1):
-            try:
-                with Empty_Plot.suppress_stdout():
-                    m, b = np.polyfit(np.log(np.abs(relDispEqbm)), np.log(
-                        np.abs(CoM_disp_x), 1))
-                    print(
-                        f"ln(CoM_disp_x) = {m} * ln(relDispEqbm) + {b}",  file=f)
-                    print("\n", file=f)
-            except:
-                pass
+            m, b = np.polyfit(np.log(np.abs(relDispEqbm_srt)),
+                              np.log(np.abs(CoM_disp_x_srt)), 1)
+
+            print(f"ln(CoM_disp_x) = {m} * ln(relDispEqbm) + {b}",  file=f)
+            print("\n", file=f)
+
+        except:
+            pass
 
         print("CoM_disp_x:", file=f)
         print(CoM_disp_x,   file=f)
