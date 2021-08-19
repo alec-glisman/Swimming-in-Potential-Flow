@@ -157,11 +157,11 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
                                       m_system->t());
         throw std::runtime_error("Computing eigendecomposition of M_total failed");
     }
-    Eigen::MatrixXd M_total_halfPower    = eigensolver.operatorSqrt();
-    Eigen::MatrixXd M_total_negativeHalf = eigensolver.operatorInverseSqrt();
+    Eigen::MatrixXd M_total_halfPower         = eigensolver.operatorSqrt();
+    Eigen::MatrixXd M_total_negativeHalfPower = eigensolver.operatorInverseSqrt();
 
     // calculate K
-    Eigen::MatrixXd AM_nHalf      = A * M_total_negativeHalf;
+    Eigen::MatrixXd AM_nHalf      = A * M_total_negativeHalfPower;
     Eigen::MatrixXd AM_nHalf_pInv = AM_nHalf.completeOrthogonalDecomposition().pseudoInverse();
     Eigen::MatrixXd K             = M_total_halfPower * AM_nHalf_pInv;
 
