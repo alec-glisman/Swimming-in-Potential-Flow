@@ -75,19 +75,19 @@ def initializeGSD():
 def setInitialConditions():
 
     # position
-    pos = np.zeros((3*n), dtype=np.float64)
-    pos[0] = R_avg  # particle 0
-    pos[6] = - R_avg + (U0 / omega) * np.sin(phase_angle)
+    pos = np.zeros((n, 3), dtype=np.double)
+    pos[0][0] = R_avg  # particle 0
+    pos[2][0] = - R_avg + (U0 / omega) * np.sin(phase_angle)
 
     # REVIEW[epic=Debug]: vel and acc cannot be all zeros, as hoomd calls these "default" values and will not write them to save space
 
     # velocity NOTE[epic=Assumptions]: must be calculated in simulation system (C++)
-    vel = np.zeros_like(pos, dtype=np.float32)
-    vel[0] = 1e-15
+    vel = np.zeros_like(pos, dtype=np.single)
+    vel[0][0] = 1e-15
 
     # acceleration NOTE[epic=Assumptions]: must be calculated in simulation system (C++)
-    acc = np.zeros_like(pos, dtype=np.float32)
-    acc[0] = 1e-15
+    acc = np.zeros_like(pos, dtype=np.single)
+    acc[0][0] = 1e-15
 
     # output data
     gsd_class.setKinematics(pos, vel, acc)
@@ -99,10 +99,10 @@ def setSystemData():
     snapshot = gsd_class.snapshot
 
     # convert data to GSD expected type
-    l_R_avg = np.array([R_avg], dtype=np.float32)
-    l_U0 = np.array([U0], dtype=np.float32)
-    l_omega = np.array([omega], dtype=np.float32)
-    l_phase_angle = np.array([phase_angle], dtype=np.float32)
+    l_R_avg = np.array([R_avg], dtype=np.single)
+    l_U0 = np.array([U0], dtype=np.single)
+    l_omega = np.array([omega], dtype=np.single)
+    l_phase_angle = np.array([phase_angle], dtype=np.single)
 
     # output data
     snapshot.log['swimmer/R_avg'] = l_R_avg
