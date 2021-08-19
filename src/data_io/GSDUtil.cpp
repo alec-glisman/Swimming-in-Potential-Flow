@@ -162,40 +162,40 @@ void
 GSDUtil::readParameters()
 {
     spdlog::get(m_logName)->info("GSD parsing dt");
-    float dt{-1.0};
-    auto  return_bool = readChunk(&dt, m_frame, "log/integrator/dt", 4);
+    double dt{-1.0};
+    auto   return_bool = readChunk(&dt, m_frame, "log/integrator/dt", 8);
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
-    m_system->setDt(double(dt));
+    m_system->setDt(dt);
     spdlog::get(m_logName)->info("dt : {0}", dt);
-    assert(double(dt) == m_system->dt() && "dt not properly set");
+    assert(dt == m_system->dt() && "dt not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing t");
-    float t{-1.0};
-    return_bool = readChunk(&t, m_frame, "log/integrator/t", 4);
+    double t{-1.0};
+    return_bool = readChunk(&t, m_frame, "log/integrator/t", 8);
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
-    m_system->setT(double(t));
+    m_system->setT(t);
     spdlog::get(m_logName)->info("t : {0}", t);
-    assert(double(t) == m_system->t() && "t not properly set");
+    assert(t == m_system->t() && "t not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing tf");
-    float tf{-1.0};
-    return_bool = readChunk(&tf, m_frame, "log/integrator/tf", 4);
+    double tf{-1.0};
+    return_bool = readChunk(&tf, m_frame, "log/integrator/tf", 8);
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
-    m_system->setTf(double(tf));
+    m_system->setTf(tf);
     spdlog::get(m_logName)->info("tf : {0}", tf);
-    assert(double(tf) == m_system->tf() && "tf not properly set");
+    assert(tf == m_system->tf() && "tf not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing tau");
-    float tau{-1.0};
-    return_bool = readChunk(&tau, m_frame, "log/integrator/tau", 4);
+    double tau{-1.0};
+    return_bool = readChunk(&tau, m_frame, "log/integrator/tau", 8);
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
-    m_system->setTau(double(tau));
+    m_system->setTau(tau);
     spdlog::get(m_logName)->info("tau : {0}", tau);
-    assert(double(tau) == m_system->tau() && "tau not properly set");
+    assert(tau == m_system->tau() && "tau not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing num_steps_output");
     uint64_t num_steps_output{0};
@@ -208,42 +208,41 @@ GSDUtil::readParameters()
            "num_steps_output not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing fluid_density");
-    float fluid_density{-1.0};
-    return_bool = readChunk(&fluid_density, m_frame, "log/material_parameters/fluid_density", 4);
+    double fluid_density{-1.0};
+    return_bool = readChunk(&fluid_density, m_frame, "log/material_parameters/fluid_density", 8);
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
-    m_system->setFluidDensity(double(fluid_density));
+    m_system->setFluidDensity(fluid_density);
     spdlog::get(m_logName)->info("fluid_density : {0}", fluid_density);
-    assert(double(fluid_density) == m_system->fluidDensity() && "fluid_density not properly set");
+    assert(fluid_density == m_system->fluidDensity() && "fluid_density not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing particle_density");
-    float particle_density{-1.0};
+    double particle_density{-1.0};
     return_bool =
-        readChunk(&particle_density, m_frame, "log/material_parameters/particle_density", 4);
+        readChunk(&particle_density, m_frame, "log/material_parameters/particle_density", 8);
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
-    m_system->setParticleDensity(double(particle_density));
+    m_system->setParticleDensity(particle_density);
     spdlog::get(m_logName)->info("particle_density : {0}", particle_density);
-    assert(double(particle_density) == m_system->particleDensity() &&
-           "particle_density not properly set");
+    assert(particle_density == m_system->particleDensity() && "particle_density not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing wca_epsilon");
-    float wca_epsilon{-1.0};
-    return_bool = readChunk(&wca_epsilon, m_frame, "log/wca/epsilon", 4);
+    double wca_epsilon{-1.0};
+    return_bool = readChunk(&wca_epsilon, m_frame, "log/wca/epsilon", 8);
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
-    m_system->setWcaEpsilon(double(wca_epsilon));
+    m_system->setWcaEpsilon(wca_epsilon);
     spdlog::get(m_logName)->info("wca_epsilon : {0}", wca_epsilon);
-    assert(double(wca_epsilon) == m_system->wcaEpsilon() && "wca_epsilon not properly set");
+    assert(wca_epsilon == m_system->wcaEpsilon() && "wca_epsilon not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing wca_sigma");
-    float wca_sigma{-1.0};
-    return_bool = readChunk(&wca_sigma, m_frame, "log/wca/sigma", 4);
+    double wca_sigma{-1.0};
+    return_bool = readChunk(&wca_sigma, m_frame, "log/wca/sigma", 8);
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
-    m_system->setWcaSigma(double(wca_sigma));
+    m_system->setWcaSigma(wca_sigma);
     spdlog::get(m_logName)->info("wca_sigma : {0}", wca_sigma);
-    assert(double(wca_sigma) == m_system->wcaSigma() && "wca_sigma not properly set");
+    assert(wca_sigma == m_system->wcaSigma() && "wca_sigma not properly set");
 }
 
 void
@@ -442,7 +441,7 @@ GSDUtil::writeParticles()
         d_vel[3 * i + 1] = m_system->velocities(3 * i + 1);
         d_vel[3 * i + 2] = m_system->velocities(3 * i + 2);
     }
-    spdlog::get(m_logName)->info("GSD writing log/particles/double_velocity");
+    spdlog::get(m_logName)->info("GSD wri ting log/particles/double_velocity");
     return_val = gsd_write_chunk(m_system->handle().get(), "log/particles/double_velocity",
                                  GSD_TYPE_DOUBLE, N, 3, 0, (void*)&d_vel[0]);
     m_system->setReturnVal(return_val);
