@@ -156,7 +156,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         my $dt          = 5e-7;
         my $R_avg       = 10.0;
         my $phase_angle = -1.57079632679;
-        my $epsilon     = 1e-3;
+        my $epsilon     = 1e-2;
 
         # Modify default preferences for each simulation run
         switch($inputData[$i]) {
