@@ -1,9 +1,8 @@
 # SECTION: DATA
 # Data directories
 *data
-data*
+data/**
 temp*
-!dataIO*
 
 # Simulation data input
 *.in
