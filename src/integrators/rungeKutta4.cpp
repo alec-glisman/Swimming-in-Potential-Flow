@@ -43,10 +43,10 @@ rungeKutta4::integrate()
 
     /* ANCHOR: use momentum free method to integrate system with velocity verlet */
     /* Step 1: Get current articulation velocity at t + 1/2 * dt */
-    m_velArtic = articulationVel(time + m_c1_2_dt);
-    m_accArtic = articulationAcc(time + m_c1_2_dt);
-    m_RLoc     = rLoc();
-    momentumLinAngFree(m_RLoc, m_velArtic, m_accArtic);
+    articulationVel(time + m_c1_2_dt);
+    articulationAcc(time + m_c1_2_dt);
+    rLoc();
+    momentumLinAngFree();
 
     /* Step 2: Propagate positions to next time step */
     m_system->positions.noalias() += m_dt * m_system->velocities;
@@ -55,10 +55,10 @@ rungeKutta4::integrate()
     m_potHydro->update();
 
     /* Step 4: Update velocity and acceleration at t + dt and recalculate forces */
-    m_velArtic = articulationVel(time + m_dt);
-    m_accArtic = articulationAcc(time + m_dt);
-    m_RLoc     = rLoc();
-    momentumLinAngFree(m_RLoc, m_velArtic, m_accArtic);
+    articulationVel(time + m_dt);
+    articulationAcc(time + m_dt);
+    rLoc();
+    momentumLinAngFree();
 }
 
 // /* ANCHOR: Solve system of form: y'(t) = f( y(t),  t )
@@ -255,16 +255,16 @@ rungeKutta4::initializeSpecificVars()
 
     // set articulation velocities
     spdlog::get(m_logName)->info("Calling articulationVel()");
-    Eigen::VectorXd v_artic = articulationVel(0.0);
+    articulationVel(0.0);
     spdlog::get(m_logName)->info("Calling articulationAcc()");
-    Eigen::VectorXd a_artic = articulationAcc(0.0);
+    articulationAcc(0.0);
     // calculate locater point motion via linear and angular momentum free conditions
     spdlog::get(m_logName)->info("Calling rLoc()");
-    Eigen::Vector3d rloc = rLoc();
+    rLoc();
     spdlog::get(m_logName)->info("Updating (for first time) hydrodynamic tensors");
     m_potHydro->update();
     spdlog::get(m_logName)->info("Calling momentumLinAngFree()");
-    momentumLinAngFree(rloc, v_artic, a_artic);
+    momentumLinAngFree();
 
     // write updated kinematics to original frame (appending current file)
     spdlog::get(m_logName)->info("Updating input GSD with updated kinematic initial conditions");
@@ -276,46 +276,34 @@ rungeKutta4::initializeSpecificVars()
 }
 
 /* REVIEW[epic=Change,order=2]: Change articulationVel() for different systems*/
-const Eigen::VectorXd&
+void
 rungeKutta4::articulationVel(double dimensional_time)
 {
     m_velArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
 
-    double part0_x_vel = m_U0 * cos(m_omega * dimensional_time);
-    double part2_x_vel = m_U0 * cos(m_omega * dimensional_time + m_phase_shift);
-
-    m_velArtic(0)     = part0_x_vel;
-    m_velArtic(3 * 2) = part2_x_vel;
-
-    return m_velArtic;
+    m_velArtic(0) = m_U0 * cos(m_omega * dimensional_time);
+    m_velArtic(6) = m_U0 * cos(m_omega * dimensional_time + m_phase_shift);
 }
 
 /* REVIEW[epic=Change,order=3]: Change articulationAcc() for different systems*/
-const Eigen::VectorXd&
+void
 rungeKutta4::articulationAcc(double dimensional_time)
 {
     m_accArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
 
-    double part0_x_acc = -m_U0 * m_omega * sin(m_omega * dimensional_time);
-    double part2_x_acc = -m_U0 * m_omega * sin(m_omega * dimensional_time + m_phase_shift);
-
-    m_accArtic(0)     = part0_x_acc;
-    m_accArtic(3 * 2) = part2_x_acc;
-
-    return m_accArtic;
+    m_accArtic(0) = -m_U0 * m_omega * sin(m_omega * dimensional_time);
+    m_accArtic(6) = -m_U0 * m_omega * sin(m_omega * dimensional_time + m_phase_shift);
 }
 
 /* REVIEW[epic=Change,order=4]: Change rLoc() for different systems*/
-const Eigen::Vector3d&
+void
 rungeKutta4::rLoc()
 {
-    m_RLoc = m_system->positions.segment<3>(3 * 1);
-    return m_RLoc;
+    m_RLoc = m_system->positions.segment<3>(3);
 }
 
 void
-rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic,
-                                Eigen::VectorXd a_artic)
+rungeKutta4::momentumLinAngFree()
 {
     /* ANCHOR: Solve for rigid body motion (rbm) tensors */
     // initialize variables
@@ -328,7 +316,7 @@ rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic
         int i3{3 * i};
 
         Eigen::Vector3d n_dr = -m_system->positions.segment<3>(i3);
-        n_dr.noalias() += r_loc;
+        n_dr.noalias() += m_RLoc;
         Eigen::Matrix3d n_dr_cross;
         crossProdMat(n_dr, n_dr_cross);
 
@@ -343,7 +331,7 @@ rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic
 
     /* ANCHOR: Solve for rigid body motion velocity components */
     // calculate P_script = Sigma * M_total * V_articulation;  [6 x 1]
-    Eigen::VectorXd P_script_hold = m_potHydro->mTotal() * v_artic;
+    Eigen::VectorXd P_script_hold = m_potHydro->mTotal() * m_velArtic;
     Eigen::Vector3d P_script      = rbmconn * P_script_hold;
 
     // calculate U_swim = - M_tilde_inv * P_script; U_swim has translation and rotation
@@ -354,7 +342,7 @@ rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic
     /* ANCHOR: Output velocity data back to m_system */
     // calculate U = Sigma^T * U_swim + v_artic
     m_system->velocities.noalias() = rbmconn_T * U_swim;
-    m_system->velocities.noalias() += v_artic;
+    m_system->velocities.noalias() += m_velArtic;
 
     // // update hydrodynamic force terms for acceleration components
     // m_potHydro->updateForcesOnly();

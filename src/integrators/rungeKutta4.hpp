@@ -41,17 +41,17 @@ class rungeKutta4
     void
     initializeSpecificVars();
 
-    const Eigen::VectorXd&
+    void
     articulationVel(double dimensional_time);
 
-    const Eigen::VectorXd&
+    void
     articulationAcc(double dimensional_time);
 
-    const Eigen::Vector3d&
+    void
     rLoc();
 
     void
-    momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic, Eigen::VectorXd a_artic);
+    momentumLinAngFree();
 
     void
     crossProdMat(const Eigen::Vector3d& vec, Eigen::Matrix3d& mat)
