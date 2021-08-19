@@ -335,9 +335,10 @@ rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic
         rbmconn.block<3, 3>(0, i3).noalias() = I; // translation-translation couple
         // rbmconn.block<3, 3>(3, i3).noalias() = n_dr_cross; // translation-rotation couple
     }
+    Eigen::MatrixXd rbmconn_T = rbmconn.transpose();
 
     // calculate M_tilde = Sigma * M_total * Sigma^T;  [6 x 6]
-    Eigen::MatrixXd M_tilde_hold = m_potHydro->mTotal() * rbmconn.transpose();
+    Eigen::MatrixXd M_tilde_hold = m_potHydro->mTotal() * rbmconn_T;
     Eigen::MatrixXd M_tilde      = rbmconn * M_tilde_hold;
 
     /* ANCHOR: Solve for rigid body motion velocity components */
@@ -352,7 +353,7 @@ rungeKutta4::momentumLinAngFree(Eigen::Vector3d& r_loc, Eigen::VectorXd& v_artic
 
     /* ANCHOR: Output velocity data back to m_system */
     // calculate U = Sigma^T * U_swim + v_artic
-    m_system->velocities.noalias() = rbmconn.transpose() * U_swim;
+    m_system->velocities.noalias() = rbmconn_T * U_swim;
     m_system->velocities.noalias() += v_artic;
 
     // // update hydrodynamic force terms for acceleration components
