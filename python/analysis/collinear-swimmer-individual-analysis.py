@@ -98,17 +98,6 @@ def aggregate_plots(relative_path, output_dir):
 # !SECTION (Load data)
 
 
-# SECTION: Output data
-
-    # Output data to log file
-    file = output_dir + "output.txt"
-    with open(file, "w") as f:
-        print(f"R_avg = {relDispEqbm}", file=f)
-        print(f"\Delta R_2 = {positions[3, -1] - positions[3, 0]}", file=f)
-
-# !SECTION (Output data)
-
-
 # SECTION: Plots
     # PLOT: Locater point position (x-axis)
     numLines = 1
@@ -243,6 +232,17 @@ def aggregate_plots(relative_path, output_dir):
     oscAcc_Plot.save_plot()
 
 # !SECTION (Plots)
+
+
+# SECTION: Output data
+
+    # Output data to log file
+    file = output_dir + "output.txt"
+    with open(file, "w") as f:
+        print(f"R_avg = {relDispEqbm}", file=f)
+        print(f"\Delta R_2 = {positions[3, -1] - positions[3, 0]}", file=f)
+
+# !SECTION (Output data)
 
 
 # SECTION: For use when being called from command line
