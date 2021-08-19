@@ -71,19 +71,19 @@ def aggregate_plots(relative_path, output_dir):
 
     # Data from initial frame (not 0)
     gsd_file.snapshot = gsd_file.trajectory.read_frame(1)
-    relDispEqbm = float(gsd_file.snapshot.log['swimmer/R_avg'])
-    phaseShift = float(gsd_file.snapshot.log['swimmer/phase_shift'])
-    U0 = float(gsd_file.snapshot.log['swimmer/U0'])
-    omega = float(gsd_file.snapshot.log['swimmer/omega'])
-    tau = float(gsd_file.snapshot.log['integrator/tau'])
+    relDispEqbm = gsd_file.snapshot.log['swimmer/R_avg']
+    phaseShift = gsd_file.snapshot.log['swimmer/phase_shift']
+    U0 = gsd_file.snapshot.log['swimmer/U0']
+    omega = gsd_file.snapshot.log['swimmer/omega']
+    tau = gsd_file.snapshot.log['integrator/tau']
     epsilon = U0 / relDispEqbm / omega
 
     # Initialize temporal data
     nframes = gsd_file.trajectory.file.nframes
-    time = np.zeros((nframes - 2))
-    positions = np.zeros((9, nframes - 2))
-    velocities = np.zeros_like(positions)
-    accelerations = np.zeros_like(positions)
+    time = np.zeros((nframes - 2), dtype=np.float64)
+    positions = np.zeros((9, nframes - 2), dtype=np.float64)
+    velocities = np.zeros_like(positions, dtype=np.float64)
+    accelerations = np.zeros_like(positions, dtype=np.float64)
 
     # Loop over all snapshots in GSD (skipping header with incorrect kinematics)
     for i in range(1, nframes-1):
