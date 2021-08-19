@@ -324,7 +324,7 @@ rungeKutta4::momentumLinAngFree()
     /* ANCHOR: Solve for rigid body motion (rbm) tensors */
     // initialize variables
     Eigen::Matrix3d I       = Eigen::Matrix3d::Identity(3, 3);                        // [3 x 3]
-    Eigen::MatrixXd rbmconn = Eigen::MatrixXd::Zero(3, 3 * m_system->numParticles()); // [6 x 3N]
+    Eigen::MatrixXd rbmconn = Eigen::MatrixXd::Zero(6, 3 * m_system->numParticles()); // [6 x 3N]
 
     // assemble the rigid body motion connectivity tensor (Sigma);  [6 x 3N]
     for (int i = 0; i < m_system->numParticles(); i++)
@@ -336,24 +336,23 @@ rungeKutta4::momentumLinAngFree()
         Eigen::Matrix3d n_dr_cross;
         crossProdMat(n_dr, n_dr_cross);
 
-        rbmconn.block<3, 3>(0, i3).noalias() = I; // translation-translation couple
-        // rbmconn.block<3, 3>(3, i3).noalias() = n_dr_cross; // translation-rotation couple
+        rbmconn.block<3, 3>(0, i3).noalias() = I;          // translation-translation couple
+        rbmconn.block<3, 3>(3, i3).noalias() = n_dr_cross; // translation-rotation couple
     }
     Eigen::MatrixXd rbmconn_T = rbmconn.transpose();
 
     // calculate M_tilde = Sigma * M_total * Sigma^T;  [6 x 6]
     Eigen::MatrixXd M_tilde_hold = m_potHydro->mTotal() * rbmconn_T;
-    Eigen::Matrix3d M_tilde      = rbmconn * M_tilde_hold;
+    Eigen::MatrixXd M_tilde      = rbmconn * M_tilde_hold;
 
     /* ANCHOR: Solve for rigid body motion velocity components */
     // calculate P_script = Sigma * M_total * V_articulation;  [6 x 1]
     Eigen::VectorXd P_script_hold = m_potHydro->mTotal() * m_velArtic;
-    Eigen::Vector3d P_script      = rbmconn * P_script_hold;
+    Eigen::VectorXd P_script      = rbmconn * P_script_hold;
 
     // calculate U_swim = - M_tilde_inv * P_script; U_swim has translation and rotation
     // components
-    Eigen::Matrix3d M_tilde_inv = M_tilde.inverse();
-    Eigen::Vector3d U_swim      = -M_tilde_inv * P_script;
+    Eigen::VectorXd U_swim = -M_tilde.fullPivLu().solve(P_script);
 
     /* ANCHOR: Output velocity data back to m_system */
     // calculate U = Sigma^T * U_swim + v_artic
