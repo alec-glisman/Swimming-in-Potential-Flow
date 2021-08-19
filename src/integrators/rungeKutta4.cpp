@@ -191,44 +191,44 @@ rungeKutta4::initializeSpecificVars()
 
     // oscillation velocity amplitude
     spdlog::get(m_logName)->info("GSD parsing U0");
-    float U0{-1.0};
-    auto  return_bool = gsdParser->readChunk(&U0, gsdParser->frame(), "log/swimmer/U0", 4);
+    double U0{-1.0};
+    auto   return_bool = gsdParser->readChunk(&U0, gsdParser->frame(), "log/swimmer/U0", 8);
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
-    m_U0 = double(U0);
+    m_U0 = U0;
     spdlog::get(m_logName)->info("U_0 : {0}", m_U0);
-    assert(double(U0) == m_U0 && "U0 not properly set");
+    assert(U0 == m_U0 && "U0 not properly set");
 
     // oscillation frequency
     spdlog::get(m_logName)->info("GSD parsing omega");
-    float omega{-1.0};
-    return_bool = gsdParser->readChunk(&omega, gsdParser->frame(), "log/swimmer/omega", 4);
+    double omega{-1.0};
+    return_bool = gsdParser->readChunk(&omega, gsdParser->frame(), "log/swimmer/omega", 8);
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
-    m_omega = double(omega);
+    m_omega = omega;
     spdlog::get(m_logName)->info("omega : {0}", m_omega);
-    assert(double(omega) == m_omega && "omega not properly set");
+    assert(omega == m_omega && "omega not properly set");
 
     // phase shift between oscillators
     spdlog::get(m_logName)->info("GSD parsing phase_shift");
-    float phase_shift{-1.0};
+    double phase_shift{-1.0};
     return_bool =
-        gsdParser->readChunk(&phase_shift, gsdParser->frame(), "log/swimmer/phase_shift", 4);
+        gsdParser->readChunk(&phase_shift, gsdParser->frame(), "log/swimmer/phase_shift", 8);
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
-    m_phase_shift = double(phase_shift);
+    m_phase_shift = phase_shift;
     spdlog::get(m_logName)->info("phase_shift : {0}", m_phase_shift);
-    assert(double(phase_shift) == m_phase_shift && "phase_shift not properly set");
+    assert(phase_shift == m_phase_shift && "phase_shift not properly set");
 
     // average separation
     spdlog::get(m_logName)->info("GSD parsing R_avg");
-    float R_avg{-1.0};
-    return_bool = gsdParser->readChunk(&R_avg, gsdParser->frame(), "log/swimmer/R_avg", 4);
+    double R_avg{-1.0};
+    return_bool = gsdParser->readChunk(&R_avg, gsdParser->frame(), "log/swimmer/R_avg", 8);
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
-    m_R_avg = double(R_avg);
+    m_R_avg = R_avg;
     spdlog::get(m_logName)->info("R_avg : {0}", m_R_avg);
-    assert(double(R_avg) == m_R_avg && "R_avg not properly set");
+    assert(R_avg == m_R_avg && "R_avg not properly set");
 
     /* ANCHOR: set initial conditions */
     spdlog::get(m_logName)->info("Setting initial conditions");
