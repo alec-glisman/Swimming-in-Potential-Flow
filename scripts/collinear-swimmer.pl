@@ -141,7 +141,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
     my $simulationIter = 1;
 
     # Loop through the number of simulations of each type
-    for (my $j = 0; $j < $numSimulations; $j += 5 )
+    for (my $j = 0; $j < $numSimulations; $j += 1 )
     {  
         # Print the number of simulation runs
         my $jj = $j + 1;
@@ -153,7 +153,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         my $gsd_path = ${simulation_dir} . "/" . "data.gsd";
 
         # Default parameters
-        my $dt          = 1e-6;
+        my $dt          = 5e-7;
         my $R_avg       = 10.0;
         my $phase_angle = -1.57079632679;
         my $U0          = 1e-1;
