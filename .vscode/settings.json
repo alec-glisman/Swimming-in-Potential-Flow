@@ -176,7 +176,10 @@
         "unordered_set": "cpp",
         "valarray": "cpp",
         "typeindex": "cpp",
-        "*.main": "cpp"
+        "*.main": "cpp",
+        "cfenv": "cpp",
+        "ranges": "cpp",
+        "shared_mutex": "cpp"
     },
     "python.analysis.extraPaths": [
         "./python"
