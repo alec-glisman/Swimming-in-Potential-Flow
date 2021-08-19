@@ -376,6 +376,7 @@ GSDUtil::writeParticles()
     uint64_t nframes = gsd_get_nframes(m_system->handle().get());
     spdlog::get(m_logName)->debug("vectors are assumed to have 3 spatial DoF");
 
+    /* ANCHOR: Write kinematics using standard data structures, which are floats */
     std::vector<float> pos(uint64_t(N) * uint64_t(num_dim));
     pos.reserve(1); //! make sure we allocate
     for (uint32_t i = 0; i < N; i++)
@@ -415,6 +416,49 @@ GSDUtil::writeParticles()
     spdlog::get(m_logName)->info("GSD writing particles/moment_inertia");
     return_val = gsd_write_chunk(m_system->handle().get(), "particles/moment_inertia",
                                  GSD_TYPE_FLOAT, N, 3, 0, (void*)&acc[0]);
+    m_system->setReturnVal(return_val);
+    m_system->check_gsd_return();
+
+    /* ANCHOR: Write kinematics as doubles for higher precision */
+    std::vector<double> d_pos(uint64_t(N) * uint64_t(num_dim));
+    d_pos.reserve(1); //! make sure we allocate
+    for (uint32_t i = 0; i < N; i++)
+    {
+        d_pos[3 * i]     = m_system->positions(3 * i);
+        d_pos[3 * i + 1] = m_system->positions(3 * i + 1);
+        d_pos[3 * i + 2] = m_system->positions(3 * i + 2);
+    }
+    spdlog::get(m_logName)->info("GSD writing log/particles/double_position");
+    return_val = gsd_write_chunk(m_system->handle().get(), "log/particles/double_position",
+                                 GSD_TYPE_DOUBLE, N, 3, 0, (void*)&d_pos[0]);
+    m_system->setReturnVal(return_val);
+    m_system->check_gsd_return();
+
+    std::vector<double> d_vel(uint64_t(N) * uint64_t(num_dim));
+    d_vel.reserve(1); //! make sure we allocate
+    for (uint32_t i = 0; i < N; i++)
+    {
+        d_vel[3 * i]     = m_system->velocities(3 * i);
+        d_vel[3 * i + 1] = m_system->velocities(3 * i + 1);
+        d_vel[3 * i + 2] = m_system->velocities(3 * i + 2);
+    }
+    spdlog::get(m_logName)->info("GSD writing log/particles/double_velocity");
+    return_val = gsd_write_chunk(m_system->handle().get(), "log/particles/double_velocity",
+                                 GSD_TYPE_DOUBLE, N, 3, 0, (void*)&d_vel[0]);
+    m_system->setReturnVal(return_val);
+    m_system->check_gsd_return();
+
+    std::vector<double> d_acc(uint64_t(N) * uint64_t(num_dim));
+    d_acc.reserve(1); //! make sure we allocate
+    for (uint32_t i = 0; i < N; i++)
+    {
+        d_acc[3 * i]     = m_system->accelerations(3 * i);
+        d_acc[3 * i + 1] = m_system->accelerations(3 * i + 1);
+        d_acc[3 * i + 2] = m_system->accelerations(3 * i + 2);
+    }
+    spdlog::get(m_logName)->info("GSD writing log/particles/double_moment_inertia");
+    return_val = gsd_write_chunk(m_system->handle().get(), "log/particles/double_moment_inertia",
+                                 GSD_TYPE_DOUBLE, N, 3, 0, (void*)&d_acc[0]);
     m_system->setReturnVal(return_val);
     m_system->check_gsd_return();
 }
