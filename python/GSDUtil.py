@@ -43,17 +43,17 @@ class GSDUtil:
                          fluid_density=1.0, particle_density=1.0,
                          wca_epsilon=0.0, wca_sigma=0.0):
         # Convert data types to GSD expected type
-        dt = np.array([dt], dtype=np.single)
-        t = np.array([t], dtype=np.single)
-        tf = np.array([tf], dtype=np.single)
-        tau = np.array([tau], dtype=np.single)
+        dt = np.array([dt], dtype=np.double)
+        t = np.array([t], dtype=np.double)
+        tf = np.array([tf], dtype=np.double)
+        tau = np.array([tau], dtype=np.double)
         num_steps_output = np.array([num_steps_output], dtype=np.uint64)
 
-        fluid_density = np.array([fluid_density], dtype=np.single)
-        particle_density = np.array([particle_density], dtype=np.single)
+        fluid_density = np.array([fluid_density], dtype=np.double)
+        particle_density = np.array([particle_density], dtype=np.double)
 
-        wca_epsilon = np.array([wca_epsilon], dtype=np.single)
-        wca_sigma = np.array([wca_sigma], dtype=np.single)
+        wca_epsilon = np.array([wca_epsilon], dtype=np.double)
+        wca_sigma = np.array([wca_sigma], dtype=np.double)
 
         # Save data
         self.snapshot.log['integrator/dt'] = dt
