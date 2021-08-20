@@ -135,21 +135,22 @@ def aggregate_plots(relative_path, output_dir):
     oscDis_Plot.save_plot()
 
     numLines = 2
-    oscDis_Plot = PlotStyling(numLines,
-                              r"$t/\tau$", r"Error $\Delta x \, \omega / U_0$",
-                              title=None, loglog=False,
-                              outputDir=output_dir, figName="osc-disp-x-err", eps=epsOutput,
-                              continuousColors=False)
+    oscDisErr_Plot = PlotStyling(numLines,
+                                 r"$t/\tau$", r"Error $\Delta x \, \omega / U_0$",
+                                 title=None, loglog=False,
+                                 outputDir=output_dir, figName="osc-disp-x-err", eps=epsOutput,
+                                 continuousColors=False)
     # Show numerical data points
-    oscDis_Plot.make_plot()
-    oscDis_Plot.curve(
+    oscDisErr_Plot.make_plot()
+    oscDisErr_Plot.curve(
         time, (positions[0, :] - positions[3, :] - relDispEqbm) * omega / U0 - np.sin(omega * tau * time), zorder=1, label=r"$1-2$")
-    oscDis_Plot.curve(
+    oscDisErr_Plot.curve(
         time, (positions[3, :] - positions[6, :] - relDispEqbm) * omega / U0 + np.sin(omega * tau * time + phaseShift), zorder=2, label=r"$2-3$")
+    oscDisErr_Plot.set_yaxis_scientific()
     # Add legend
-    oscDis_Plot.legend(
+    oscDisErr_Plot.legend(
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
-    oscDis_Plot.save_plot()
+    oscDisErr_Plot.save_plot()
 
     # PLOT: Relative oscillator velocity (x-axis)
     numLines = 4
@@ -174,21 +175,22 @@ def aggregate_plots(relative_path, output_dir):
     oscVel_Plot.save_plot()
 
     numLines = 2
-    oscVel_Plot = PlotStyling(numLines,
-                              r"$t/\tau$", r"$\Delta U / U_0$",
-                              title=None, loglog=False,
-                              outputDir=output_dir, figName="osc-vel-x-err", eps=epsOutput,
-                              continuousColors=False)
+    oscVelErr_Plot = PlotStyling(numLines,
+                                 r"$t/\tau$", r"$\Delta U / U_0$",
+                                 title=None, loglog=False,
+                                 outputDir=output_dir, figName="osc-vel-x-err", eps=epsOutput,
+                                 continuousColors=False)
     # Show numerical data points
-    oscVel_Plot.make_plot()
-    oscVel_Plot.curve(time, (velocities[0, :] - velocities[3, :]) / (
+    oscVelErr_Plot.make_plot()
+    oscVelErr_Plot.curve(time, (velocities[0, :] - velocities[3, :]) / (
         U0) - np.cos(omega * tau * time), zorder=1, label=r"$1-2$ Simulation")
-    oscVel_Plot.curve(time, (velocities[6, :] - velocities[3, :]) / (
+    oscVelErr_Plot.curve(time, (velocities[6, :] - velocities[3, :]) / (
         U0) - np.cos(omega * tau * time + phaseShift), zorder=2, label=r"$3-2$ Simulation")
+    oscVelErr_Plot.set_yaxis_scientific()
     # Add legend
-    oscVel_Plot.legend(
+    oscVelErr_Plot.legend(
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
-    oscVel_Plot.save_plot()
+    oscVelErr_Plot.save_plot()
 
     # PLOT: Relative oscillator acceleration (x-axis)
     numLines = 4
@@ -214,22 +216,23 @@ def aggregate_plots(relative_path, output_dir):
     oscAcc_Plot.save_plot()
 
     numLines = 2
-    oscAcc_Plot = PlotStyling(numLines,
-                              r"$t/\tau$", r"$\Delta \dot{U} / (U_0 \, \omega)$",
-                              title=None, loglog=False,
-                              outputDir=output_dir, figName="osc-acc-x-err", eps=epsOutput,
-                              continuousColors=False)
+    oscAccErr_Plot = PlotStyling(numLines,
+                                 r"$t/\tau$", r"$\Delta \dot{U} / (U_0 \, \omega)$",
+                                 title=None, loglog=False,
+                                 outputDir=output_dir, figName="osc-acc-x-err", eps=epsOutput,
+                                 continuousColors=False)
 
     # Show numerical data points
-    oscAcc_Plot.make_plot()
-    oscAcc_Plot.curve(time, (accelerations[0, :] - accelerations[3, :]) / (
+    oscAccErr_Plot.make_plot()
+    oscAccErr_Plot.curve(time, (accelerations[0, :] - accelerations[3, :]) / (
         U0 * omega) + np.sin(omega * tau * time), zorder=1, label=r"$1-2$ Simulation")
-    oscAcc_Plot.curve(time, (accelerations[6, :] - accelerations[3, :]) / (
+    oscAccErr_Plot.curve(time, (accelerations[6, :] - accelerations[3, :]) / (
         U0 * omega) + np.sin(omega * tau * time + phaseShift), zorder=2, label=r"$3-2$ Simulation")
+    oscAccErr_Plot.set_yaxis_scientific()
     # Add legend
-    oscAcc_Plot.legend(
+    oscAccErr_Plot.legend(
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
-    oscAcc_Plot.save_plot()
+    oscAccErr_Plot.save_plot()
 
 # !SECTION (Plots)
 
