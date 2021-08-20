@@ -13,7 +13,7 @@ Further information can be found at the end of this readme.
 `input`: Data files that are used in Perl scripts to modify parameters of interest across a range of simulations.
 `profile`: Scripts to profile code on various platforms and find performance improvement areas.  
 `python`: Python scripts to generate GSD files to input to simulation as well as analyze GSD files output from simulation.  
-`requirements`: Data relevant for loading Python and Perl dependencies.  
+`requirements`: Files and scripts relevant for loading C++, Perl, and Python dependencies.  
 `scripts`: Perl scripts to run many simulations simultaneously and analyze the results.  
 `src`: C++ code for the simulation.  
 `tests`: C++ code containing unit tests for simulation.
@@ -39,6 +39,8 @@ Of course, separate Python scripts for GSD initialization and numerical analysis
 
 ## External dependencies
 
+Further information found in `requirements` directory readme.
+
 ### Must install separately
 
 * [Intel MKL](https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html#gs.7owc4e) (oneAPI v2021.1.1): Optimized mathematical instructions
@@ -46,26 +48,6 @@ Of course, separate Python scripts for GSD initialization and numerical analysis
 * [Eigen3](https://gitlab.com/libeigen/eigen) (master 66499f0f): Linear algebra
 * [spdlog](https://github.com/gabime/spdlog) (v1.9.1): Logging
 * [Catch2](https://github.com/catchorg/Catch2) (v2.13.6): Unit testing
-
-```[shell]
-# Install using homebrew (works on MacOS and Linux)
-brew install boost spdlog catch2
-brew install eigen --HEAD  # Needed for Eigen::seqN()
-
-# Intel OneAPI must be downloaded online
-# @SOURCE: https://software.intel.com/content/www/us/en/develop/tools/oneapi/base-toolkit/download.html
-```
-
-Note that there are more dependencies for python scripts via a conda environment and perl scripts via cpan. The relevant files to generate these environments are located in the `requirements` directory.
-
-```[shell]
-conda env export --from-history  > requirements/Python/environment.yml  # Export conda environment
-conda env create -f requirements/Python/environment.yml # Create conda environment
-
-# Install Perl modules via cpanm
-cd requirements/Perl
-cpanm --installdeps .
-```
 
 ### Integrated into project
 
