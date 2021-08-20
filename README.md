@@ -4,6 +4,19 @@ Study dynamics of inertial active matter in a potential fluid (irrotational, inc
 
 Author: Alec Glisman
 
+## Project structure
+
+`.vscode`: Files relevant for developing the project in VSCode.  
+`data_tag`: Data relevant for validating results for a selection of git tags.  
+`include`: External dependencies required for the project.
+Further information can be found at the end of this readme.  
+`profile`: Scripts to profile code on various platforms and find performance improvement areas.  
+`python`: Python scripts to generate GSD files to input to simulation as well as analyze GSD files output from simulation.  
+`requirements`: Data relevant for loading Python and Perl dependencies.  
+`scripts`: Perl scripts to run many simulations simultaneously and analyze the results.  
+`src`: C++ code for the simulation.  
+`tests`: C++ code containing unit tests for simulation.
+
 ## Data I/O
 
 All data is input and output from simulation using the [HOOMD GSD format](https://gsd.readthedocs.io/en/stable/index.html).
