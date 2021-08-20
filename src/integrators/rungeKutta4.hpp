@@ -66,24 +66,30 @@ class rungeKutta4
         mat << 0, -vec(2), vec(1), vec(2), 0, -vec(0), -vec(1), vec(0), 0;
     };
 
+    // system specific data
+    struct systemParameters
+    {
+        double U0{-1.0};
+        double omega{-1.0};
+        double phaseShift{-1.0};
+        double RAvg{-1.0};
+    };
+
     // classes
     std::shared_ptr<systemData>             m_system;
     std::shared_ptr<potentialHydrodynamics> m_potHydro;
+
+    // structs
+    systemParameters m_systemParam;
 
     // logging
     std::string m_logFile;
     std::string m_logName{"rungeKutta4"};
 
-    // swimmer parameters
+    // (linear and angular) "momentum" and "force" balance parameters
     Eigen::Vector3d m_RLoc;
     Eigen::VectorXd m_velArtic;
     Eigen::VectorXd m_accArtic;
-
-    // specific parameters
-    double m_U0{-1.0};
-    double m_omega{-1.0};
-    double m_phase_shift{-1.0};
-    double m_R_avg{-1.0};
 
     // time step variables
     double m_dt{-1.0};

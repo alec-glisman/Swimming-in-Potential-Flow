@@ -133,9 +133,9 @@ rungeKutta4::initializeSpecificVars()
     auto   return_bool = gsdParser->readChunk(&U0, gsdParser->frame(), "log/swimmer/U0", 8);
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
-    m_U0 = U0;
-    spdlog::get(m_logName)->info("U_0 : {0}", m_U0);
-    assert(U0 == m_U0 && "U0 not properly set");
+    m_systemParam.U0 = U0;
+    spdlog::get(m_logName)->info("U_0 : {0}", U0);
+    assert(m_systemParam.U0 == U0 && "U0 not properly set");
 
     // oscillation frequency
     spdlog::get(m_logName)->info("GSD parsing omega");
@@ -143,30 +143,30 @@ rungeKutta4::initializeSpecificVars()
     return_bool = gsdParser->readChunk(&omega, gsdParser->frame(), "log/swimmer/omega", 8);
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
-    m_omega = omega;
-    spdlog::get(m_logName)->info("omega : {0}", m_omega);
-    assert(omega == m_omega && "omega not properly set");
+    m_systemParam.omega = omega;
+    spdlog::get(m_logName)->info("omega : {0}", omega);
+    assert(m_systemParam.omega == omega && "omega not properly set");
 
     // phase shift between oscillators
-    spdlog::get(m_logName)->info("GSD parsing phase_shift");
-    double phase_shift{-1.0};
+    spdlog::get(m_logName)->info("GSD parsing phaseShift");
+    double phaseShift{-1.0};
     return_bool =
-        gsdParser->readChunk(&phase_shift, gsdParser->frame(), "log/swimmer/phase_shift", 8);
+        gsdParser->readChunk(&phaseShift, gsdParser->frame(), "log/swimmer/phase_shift", 8);
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
-    m_phase_shift = phase_shift;
-    spdlog::get(m_logName)->info("phase_shift : {0}", m_phase_shift);
-    assert(phase_shift == m_phase_shift && "phase_shift not properly set");
+    m_systemParam.phaseShift = phaseShift;
+    spdlog::get(m_logName)->info("phaseShift : {0}", phaseShift);
+    assert(m_systemParam.phaseShift == phaseShift && "phaseShift not properly set");
 
     // average separation
-    spdlog::get(m_logName)->info("GSD parsing R_avg");
-    double R_avg{-1.0};
-    return_bool = gsdParser->readChunk(&R_avg, gsdParser->frame(), "log/swimmer/R_avg", 8);
+    spdlog::get(m_logName)->info("GSD parsing Ravg");
+    double RAvg{-1.0};
+    return_bool = gsdParser->readChunk(&RAvg, gsdParser->frame(), "log/swimmer/R_avg", 8);
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
-    m_R_avg = R_avg;
-    spdlog::get(m_logName)->info("R_avg : {0}", m_R_avg);
-    assert(R_avg == m_R_avg && "R_avg not properly set");
+    m_systemParam.RAvg = RAvg;
+    spdlog::get(m_logName)->info("RAvg : {0}", RAvg);
+    assert(m_systemParam.RAvg == RAvg && "Ravg not properly set");
 
     /* ANCHOR: set initial conditions */
     spdlog::get(m_logName)->info("Setting initial conditions");
@@ -222,8 +222,9 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
     A(1, 6)           = 1.0;
     // calculate B
     Eigen::Vector2d b = Eigen::Vector2d::Zero(2, 1);
-    b(0)              = -m_U0 * m_omega * sin(m_omega * dimensional_time);
-    b(1)              = -m_U0 * m_omega * sin(m_omega * dimensional_time + m_phase_shift);
+    b(0) = -m_systemParam.U0 * m_systemParam.omega * sin(m_systemParam.omega * dimensional_time);
+    b(1) = -m_systemParam.U0 * m_systemParam.omega *
+           sin(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
 
     // calculate M^{1/2} & M^{-1/2}
     Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> eigensolver(m_potHydro->mTotal());
@@ -345,8 +346,9 @@ rungeKutta4::articulationVel(double dimensional_time)
 {
     m_velArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
 
-    m_velArtic(0) = m_U0 * cos(m_omega * dimensional_time);
-    m_velArtic(6) = m_U0 * cos(m_omega * dimensional_time + m_phase_shift);
+    m_velArtic(0) = m_systemParam.U0 * cos(m_systemParam.omega * dimensional_time);
+    m_velArtic(6) =
+        m_systemParam.U0 * cos(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
 }
 
 /* REVIEW[epic=Change,order=4]: Change m_accArtic for different systems*/
@@ -355,8 +357,10 @@ rungeKutta4::articulationAcc(double dimensional_time)
 {
     m_accArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
 
-    m_accArtic(0) = -m_U0 * m_omega * sin(m_omega * dimensional_time);
-    m_accArtic(6) = -m_U0 * m_omega * sin(m_omega * dimensional_time + m_phase_shift);
+    m_accArtic(0) =
+        -m_systemParam.U0 * m_systemParam.omega * sin(m_systemParam.omega * dimensional_time);
+    m_accArtic(6) = -m_systemParam.U0 * m_systemParam.omega *
+                    sin(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
 }
 
 /* REVIEW[epic=Change,order=5]: Change m_RLoc for different systems*/
