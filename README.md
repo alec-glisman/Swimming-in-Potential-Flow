@@ -10,6 +10,7 @@ Author: Alec Glisman
 `data_tag`: Data relevant for validating results for a selection of git tags.  
 `include`: External dependencies required for the project.
 Further information can be found at the end of this readme.  
+`input`: Data files that are used in Perl scripts to modify parameters of interest across a range of simulations.
 `profile`: Scripts to profile code on various platforms and find performance improvement areas.  
 `python`: Python scripts to generate GSD files to input to simulation as well as analyze GSD files output from simulation.  
 `requirements`: Data relevant for loading Python and Perl dependencies.  
