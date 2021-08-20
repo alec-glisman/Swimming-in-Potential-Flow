@@ -340,7 +340,7 @@ rungeKutta4::momentumLinAngFree()
     m_system->accelerations.noalias() += b;
 }
 
-/* REVIEW[epic=Change,order=3]: Change m_velArtic for different systems*/
+/* REVIEW[epic=Change,order=3]: Change assignment of m_velArtic for different systems */
 void
 rungeKutta4::articulationVel(double dimensional_time)
 {
@@ -351,7 +351,7 @@ rungeKutta4::articulationVel(double dimensional_time)
         m_systemParam.U0 * cos(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
 }
 
-/* REVIEW[epic=Change,order=4]: Change m_accArtic for different systems*/
+/* REVIEW[epic=Change,order=4]: Change assignment of m_accArtic for different systems */
 void
 rungeKutta4::articulationAcc(double dimensional_time)
 {
@@ -363,7 +363,7 @@ rungeKutta4::articulationAcc(double dimensional_time)
                     sin(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
 }
 
-/* REVIEW[epic=Change,order=5]: Change m_RLoc for different systems*/
+/* REVIEW[epic=Change,order=5]: Change assignment of m_RLoc for different systems */
 void
 rungeKutta4::rLoc()
 {

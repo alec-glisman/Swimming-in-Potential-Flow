@@ -38,34 +38,45 @@ class rungeKutta4
     integrate();
 
   private:
+    /* REVIEW[epic=Change]: Change initializeSpecificVars() for different systems and load data into
+     * m_systemParam */
     void
     initializeSpecificVars();
 
+    /* REVIEW[epic=Change]: Change constraint linear system (A, b) for each system. May need to
+     * change dimensions of Eigen matrixes and vectors */
     void
     accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time);
 
+    /* REVIEW[epic=Change]: Change rbmconn if particles do not all move identically with respect to
+     * a single locater point */
+    /* NOTE: before calling this method, make sure to call articulationVel(), articulationAcc(), and
+     * rLoc() */
     void
     momentumLinAngFree();
 
+    /* REVIEW[epic=Change]: Change assignment of m_velArtic for different systems */
     void
     articulationVel(double dimensional_time);
 
+    /* REVIEW[epic=Change]: Change assignment of m_accArtic for different systems */
     void
     articulationAcc(double dimensional_time);
 
+    /* REVIEW[epic=Change]: Change assignment of m_RLoc for different systems */
     void
     rLoc();
 
+    /* Function takes in vector in vector cross-product expression: c = a \times b
+     * vec must be 'a' in above equation
+     * Output is the matrix representation of 'a \times' operator */
     void
     crossProdMat(const Eigen::Vector3d& vec, Eigen::Matrix3d& mat)
     {
-        /* Function takes in vector in vector cross-product expression: c = a \times b
-         * vec must be 'a' in above equation
-         * Output is the matrix representation of 'a \times' operator
-         */
         mat << 0, -vec(2), vec(1), vec(2), 0, -vec(0), -vec(1), vec(0), 0;
     };
 
+    /* REVIEW[epic=Change,order=0]: change parameters stored for different systems */
     // system specific data
     struct systemParameters
     {
