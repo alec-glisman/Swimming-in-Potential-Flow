@@ -237,8 +237,8 @@ class systemData : public std::enable_shared_from_this<systemData>
     std::string m_outputDir;
 
     // logging
-    std::string m_logFile;
-    std::string m_logName{"systemData"};
+    std::string       m_logFile;
+    const std::string m_logName{"systemData"};
 
     // GSD
     std::shared_ptr<gsd_handle> m_handle{new gsd_handle};

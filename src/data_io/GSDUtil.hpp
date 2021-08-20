@@ -77,8 +77,8 @@ class GSDUtil
     uint64_t m_frame;
 
     // logging
-    std::string m_logFile;
-    std::string m_logName{"GSDUtil"};
+    std::string       m_logFile;
+    const std::string m_logName{"GSDUtil"};
 };
 
 #endif // BODIES_IN_POTENTIAL_FLOW_GSD_READER_H

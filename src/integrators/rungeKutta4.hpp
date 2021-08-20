@@ -83,8 +83,8 @@ class rungeKutta4
     systemParameters m_systemParam;
 
     // logging
-    std::string m_logFile;
-    std::string m_logName{"rungeKutta4"};
+    std::string       m_logFile;
+    const std::string m_logName{"rungeKutta4"};
 
     // (linear and angular) "momentum" and "force" balance parameters
     Eigen::Vector3d m_RLoc;

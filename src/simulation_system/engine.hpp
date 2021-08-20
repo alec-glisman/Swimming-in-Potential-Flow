@@ -54,8 +54,8 @@ class engine
     std::shared_ptr<ProgressBar>            m_progressBar;
 
     // logging
-    std::string m_logFile;
-    std::string m_logName{"engine"};
+    std::string       m_logFile;
+    const std::string m_logName{"engine"};
 
     // ProgressBar output
     const double m_outputPercentile{0.02};

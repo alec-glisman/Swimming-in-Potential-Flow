@@ -79,8 +79,8 @@ class potentialHydrodynamics
     std::shared_ptr<systemData> m_system;
 
     // logging
-    std::string m_logFile;
-    std::string m_logName{"potentialHydrodynamics"};
+    std::string       m_logFile;
+    const std::string m_logName{"potentialHydrodynamics"};
 
     // For-loop variables
     int m_num_inter{-1}; // Number of pairwise interactions to count
