@@ -4,19 +4,19 @@ Study dynamics of inertial active matter in a potential fluid (irrotational, inc
 
 Author: Alec Glisman
 
-## Project structure
+## Project structure: links to relevant readme files
 
-`.vscode`: Files relevant for developing the project in VSCode.  
+`.vscode`: [Files relevant for developing the project in VSCode.](.vscode/)
 `data_tag`: Data relevant for validating results for a selection of git tags.  
 `include`: External dependencies required for the project.
 Further information can be found at the end of this readme.  
-`input`: Data files that are used in Perl scripts to modify parameters of interest across a range of simulations.
-`profile`: Scripts to profile code on various platforms and find performance improvement areas.  
-`python`: Python scripts to generate GSD files to input to simulation as well as analyze GSD files output from simulation.  
-`requirements`: Files and scripts relevant for loading C++, Perl, and Python dependencies.  
+`input`: Data files that are used in Perl scripts to modify parameters of interest across a range of simulations.  
+`profile`: [Scripts to profile code on various platforms and find performance improvement areas.](profile/README.md)  
+`python`: [Python scripts to generate GSD files to input to simulation as well as analyze GSD files output from simulation.](python/README.md)  
+`requirements`: [Files and scripts relevant for loading C++, Perl, and Python dependencies.](requirements/README.md)  
 `scripts`: Perl scripts to run many simulations simultaneously and analyze the results.  
-`src`: C++ code for the simulation.  
-`tests`: C++ code containing unit tests for simulation.
+`src`: [C++ code for the simulation.](src/README.md)  
+`tests`: [C++ code containing unit tests for simulation.](tests/README.md)
 
 ## Data I/O
 
