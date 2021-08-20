@@ -117,68 +117,6 @@ rungeKutta4::integrate()
     m_system->accelerations.noalias() = a_out;
 }
 
-void
-rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
-{
-    /* NOTE: Following the formalism developed in Udwadia & Kalaba (1992) Proc. R. Soc. Lond. A
-     * Solve system of the form M_total * acc = Q + Q_con
-     * Q is the forces present in unconstrained system
-     * Q_con is the generalized constraint forces */
-
-    // calculate Q
-    Eigen::VectorXd Q = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    if (m_system->fluidDensity() > 0) // hydrodynamic force
-    {
-        Q.noalias() += m_potHydro->fHydroNoInertia();
-    }
-
-    /* calculate Q_con = K (b - A * M_total^{-1} * Q)
-     * Linear constraint system: A * acc = b
-     * Linear proportionality: K = M_total^{1/2} * (A * M_total^{-1/2})^{+};
-     * + is Moore-Penrose inverse */
-
-    // REVIEW[epic=Change,order=5]: Change constraint linear system for each system
-    // calculate A
-    Eigen::MatrixXd A = Eigen::MatrixXd::Zero(2, 9);
-    A(0, 0)           = 1.0;
-    A(0, 3)           = -1.0;
-    A(1, 3)           = -1.0;
-    A(1, 6)           = 1.0;
-    // calculate B
-    Eigen::Vector2d b = Eigen::Vector2d::Zero(2, 1);
-    b(0)              = -m_U0 * m_omega * sin(m_omega * dimensional_time);
-    b(1)              = -m_U0 * m_omega * sin(m_omega * dimensional_time + m_phase_shift);
-
-    // calculate M^{1/2} & M^{-1/2}
-    Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> eigensolver(m_potHydro->mTotal());
-    if (eigensolver.info() != Eigen::Success)
-    {
-        spdlog::get(m_logName)->error("Computing eigendecomposition of M_total failed at t={0}",
-                                      m_system->t());
-        throw std::runtime_error("Computing eigendecomposition of M_total failed");
-    }
-    Eigen::MatrixXd M_total_halfPower         = eigensolver.operatorSqrt();
-    Eigen::MatrixXd M_total_negativeHalfPower = eigensolver.operatorInverseSqrt();
-
-    // calculate K
-    Eigen::MatrixXd AM_nHalf      = A * M_total_negativeHalfPower;
-    Eigen::MatrixXd AM_nHalf_pInv = AM_nHalf.completeOrthogonalDecomposition().pseudoInverse();
-    Eigen::MatrixXd K             = M_total_halfPower * AM_nHalf_pInv;
-
-    // calculate Q_con
-    Eigen::MatrixXd M_total_inv   = m_potHydro->mTotal().inverse();
-    Eigen::MatrixXd M_total_invQ  = M_total_inv * Q;
-    Eigen::VectorXd AM_total_invQ = A * M_total_invQ;
-    Eigen::VectorXd b_tilde       = b;
-    b_tilde.noalias() -= AM_total_invQ;
-    Eigen::VectorXd Q_con = K * b_tilde;
-
-    // calculate accelerations
-    Eigen::VectorXd Q_total = Q;
-    Q_total.noalias() += Q_con;
-    acc.noalias() = m_potHydro->mTotal().llt().solve(Q_total);
-}
-
 /* REVIEW[epic=Change,order=1]: Change initializeSpecificVars() for different systems */
 void
 rungeKutta4::initializeSpecificVars()
@@ -255,31 +193,66 @@ rungeKutta4::initializeSpecificVars()
     gsdParser->writeFrame();
 }
 
-/* REVIEW[epic=Change,order=2]: Change articulationVel() for different systems*/
+/* REVIEW[epic=Change,order=2]: Change constraint linear system (A, b) for each system */
 void
-rungeKutta4::articulationVel(double dimensional_time)
+rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
 {
-    m_velArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
+    /* NOTE: Following the formalism developed in Udwadia & Kalaba (1992) Proc. R. Soc. Lond. A
+     * Solve system of the form M_total * acc = Q + Q_con
+     * Q is the forces present in unconstrained system
+     * Q_con is the generalized constraint forces */
 
-    m_velArtic(0) = m_U0 * cos(m_omega * dimensional_time);
-    m_velArtic(6) = m_U0 * cos(m_omega * dimensional_time + m_phase_shift);
-}
+    // calculate Q
+    Eigen::VectorXd Q = Eigen::VectorXd::Zero(3 * m_system->numParticles());
+    if (m_system->fluidDensity() > 0) // hydrodynamic force
+    {
+        Q.noalias() += m_potHydro->fHydroNoInertia();
+    }
 
-/* REVIEW[epic=Change,order=3]: Change articulationAcc() for different systems*/
-void
-rungeKutta4::articulationAcc(double dimensional_time)
-{
-    m_accArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
+    /* calculate Q_con = K (b - A * M_total^{-1} * Q)
+     * Linear constraint system: A * acc = b
+     * Linear proportionality: K = M_total^{1/2} * (A * M_total^{-1/2})^{+};
+     * + is Moore-Penrose inverse */
 
-    m_accArtic(0) = -m_U0 * m_omega * sin(m_omega * dimensional_time);
-    m_accArtic(6) = -m_U0 * m_omega * sin(m_omega * dimensional_time + m_phase_shift);
-}
+    // calculate A
+    Eigen::MatrixXd A = Eigen::MatrixXd::Zero(2, 9);
+    A(0, 0)           = 1.0;
+    A(0, 3)           = -1.0;
+    A(1, 3)           = -1.0;
+    A(1, 6)           = 1.0;
+    // calculate B
+    Eigen::Vector2d b = Eigen::Vector2d::Zero(2, 1);
+    b(0)              = -m_U0 * m_omega * sin(m_omega * dimensional_time);
+    b(1)              = -m_U0 * m_omega * sin(m_omega * dimensional_time + m_phase_shift);
 
-/* REVIEW[epic=Change,order=4]: Change rLoc() for different systems*/
-void
-rungeKutta4::rLoc()
-{
-    m_RLoc = m_system->positions.segment<3>(3);
+    // calculate M^{1/2} & M^{-1/2}
+    Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> eigensolver(m_potHydro->mTotal());
+    if (eigensolver.info() != Eigen::Success)
+    {
+        spdlog::get(m_logName)->error("Computing eigendecomposition of M_total failed at t={0}",
+                                      m_system->t());
+        throw std::runtime_error("Computing eigendecomposition of M_total failed");
+    }
+    Eigen::MatrixXd M_total_halfPower         = eigensolver.operatorSqrt();
+    Eigen::MatrixXd M_total_negativeHalfPower = eigensolver.operatorInverseSqrt();
+
+    // calculate K
+    Eigen::MatrixXd AM_nHalf      = A * M_total_negativeHalfPower;
+    Eigen::MatrixXd AM_nHalf_pInv = AM_nHalf.completeOrthogonalDecomposition().pseudoInverse();
+    Eigen::MatrixXd K             = M_total_halfPower * AM_nHalf_pInv;
+
+    // calculate Q_con
+    Eigen::MatrixXd M_total_inv   = m_potHydro->mTotal().inverse();
+    Eigen::MatrixXd M_total_invQ  = M_total_inv * Q;
+    Eigen::VectorXd AM_total_invQ = A * M_total_invQ;
+    Eigen::VectorXd b_tilde       = b;
+    b_tilde.noalias() -= AM_total_invQ;
+    Eigen::VectorXd Q_con = K * b_tilde;
+
+    // calculate accelerations
+    Eigen::VectorXd Q_total = Q;
+    Q_total.noalias() += Q_con;
+    acc.noalias() = m_potHydro->mTotal().llt().solve(Q_total);
 }
 
 void
@@ -364,4 +337,31 @@ rungeKutta4::momentumLinAngFree()
     // calculate A = Sigma^T * A_swim + b
     m_system->accelerations.noalias() = rbmconn_T * A_swim;
     m_system->accelerations.noalias() += b;
+}
+
+/* REVIEW[epic=Change,order=3]: Change m_velArtic for different systems*/
+void
+rungeKutta4::articulationVel(double dimensional_time)
+{
+    m_velArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
+
+    m_velArtic(0) = m_U0 * cos(m_omega * dimensional_time);
+    m_velArtic(6) = m_U0 * cos(m_omega * dimensional_time + m_phase_shift);
+}
+
+/* REVIEW[epic=Change,order=4]: Change m_accArtic for different systems*/
+void
+rungeKutta4::articulationAcc(double dimensional_time)
+{
+    m_accArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
+
+    m_accArtic(0) = -m_U0 * m_omega * sin(m_omega * dimensional_time);
+    m_accArtic(6) = -m_U0 * m_omega * sin(m_omega * dimensional_time + m_phase_shift);
+}
+
+/* REVIEW[epic=Change,order=5]: Change m_RLoc for different systems*/
+void
+rungeKutta4::rLoc()
+{
+    m_RLoc = m_system->positions.segment<3>(3);
 }

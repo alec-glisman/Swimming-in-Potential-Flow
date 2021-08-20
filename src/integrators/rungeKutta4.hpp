@@ -42,6 +42,12 @@ class rungeKutta4
     initializeSpecificVars();
 
     void
+    accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time);
+
+    void
+    momentumLinAngFree();
+
+    void
     articulationVel(double dimensional_time);
 
     void
@@ -49,9 +55,6 @@ class rungeKutta4
 
     void
     rLoc();
-
-    void
-    momentumLinAngFree();
 
     void
     crossProdMat(const Eigen::Vector3d& vec, Eigen::Matrix3d& mat)
@@ -62,9 +65,6 @@ class rungeKutta4
          */
         mat << 0, -vec(2), vec(1), vec(2), 0, -vec(0), -vec(1), vec(0), 0;
     };
-
-    void
-    accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time);
 
     // classes
     std::shared_ptr<systemData>             m_system;
