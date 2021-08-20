@@ -23,7 +23,7 @@ Directory contains Python scripts that analyze GSD files (output from C++ simula
 `plotStyling.py`: Python class to create plots in a consistent format using matplotlib.pyplot
 
 - Initializer sets all class parameters
-- `make_plot()` should be called after initializer and creates the matplotlib.pyplot object. 
+- `make_plot()` should be called after initializer and creates the matplotlib.pyplot object.
 If running interactively (jupyter notebook), set `showPlot=True` to use backend that can show plot live.
 Otherwise, use `showPlot=False` to use more efficient backend.
 - `save_plot()` save plot to desired output path.
@@ -39,4 +39,3 @@ Otherwise, use `showPlot=False` to use more efficient backend.
   - `set_xaxis_tick_scalar_formatter()` and `set_yaxis_tick_scalar_formatter()` convert specified axis labelling to use traditional decimal notation.
   - `set_major_minor_ticks()` specify tick spacing for major (x) and minor (y) axes.
   - `set_latex_axis_labels()` convert axis label to use LaTeX symbol.
-  
