@@ -1,4 +1,6 @@
-# Profiling Code
+# Directory: profile
+
+Scripts to profile code on various platforms and find performance improvement areas.
 
 ## MacOS
 
