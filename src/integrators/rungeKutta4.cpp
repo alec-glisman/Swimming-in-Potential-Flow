@@ -48,8 +48,8 @@ rungeKutta4::integrate()
 
     /* Step 1: k1 = f( y(t_0),  t_0 ),
      * initial conditions at current step */
-    Eigen::VectorXd v1 = m_system->velocities;
-    Eigen::VectorXd x1 = m_system->positions;
+    Eigen::VectorXd v1 = m_system->velocities();
+    Eigen::VectorXd x1 = m_system->positions();
     Eigen::VectorXd a1 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a1, time);
 
@@ -60,8 +60,8 @@ rungeKutta4::integrate()
     Eigen::VectorXd x2 = x1;
     v2.noalias() += m_c1_2_dt * v2;
 
-    m_system->velocities.noalias() = v2;
-    m_system->positions.noalias()  = x2;
+    m_system->setVelocities(v2);
+    m_system->setPositions(x2);
     m_potHydro->update();
 
     Eigen::VectorXd a2 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
@@ -74,8 +74,8 @@ rungeKutta4::integrate()
     Eigen::VectorXd x3 = x1;
     x3.noalias() += m_c1_2_dt * v3;
 
-    m_system->velocities.noalias() = v3;
-    m_system->positions.noalias()  = x3;
+    m_system->setVelocities(v3);
+    m_system->setPositions(x3);
     m_potHydro->update();
 
     Eigen::VectorXd a3 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
@@ -88,33 +88,35 @@ rungeKutta4::integrate()
     Eigen::VectorXd x4 = x1;
     x4.noalias() += m_dt * v3;
 
-    m_system->velocities.noalias() = v4;
-    m_system->positions.noalias()  = x4;
+    m_system->setVelocities(v4);
+    m_system->setPositions(x4);
     m_potHydro->update();
 
     Eigen::VectorXd a4 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a4, time + m_dt);
 
-    /* ANCHOR: Output data */
-    m_system->positions.noalias() = v1;
-    m_system->positions.noalias() += 2.0 * v2;
-    m_system->positions.noalias() += 2.0 * v3;
-    m_system->positions.noalias() += v4;
-    m_system->positions *= m_c1_6_dt;
-    m_system->positions.noalias() += x1;
+    /* ANCHOR: Calculate kinematics at end of time step */
+    Eigen::VectorXd v_out = a1;
+    v_out.noalias() += 2.0 * a2;
+    v_out.noalias() += 2.0 * a3;
+    v_out.noalias() += a4;
+    v_out *= m_c1_6_dt;
+    v_out.noalias() += v1;
 
-    m_system->velocities.noalias() = a1;
-    m_system->velocities.noalias() += 2.0 * a2;
-    m_system->velocities.noalias() += 2.0 * a3;
-    m_system->velocities.noalias() += a4;
-    m_system->velocities *= m_c1_6_dt;
-    m_system->velocities.noalias() += v1;
+    Eigen::VectorXd x_out = v1;
+    x_out.noalias() += 2.0 * v2;
+    x_out.noalias() += 2.0 * v3;
+    x_out.noalias() += v4;
+    x_out *= m_c1_6_dt;
+    x_out.noalias() += x1;
 
+    m_system->setVelocities(v_out);
+    m_system->setPositions(x_out);
     m_potHydro->update();
 
     Eigen::VectorXd a_out = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a_out, time + m_dt);
-    m_system->accelerations.noalias() = a_out;
+    m_system->setAccelerations(a_out);
 }
 
 /* REVIEW[epic=Change,order=1]: Change initializeSpecificVars() for different systems */
@@ -269,7 +271,7 @@ rungeKutta4::momentumLinAngFree()
     {
         int i3{3 * i};
 
-        Eigen::Vector3d n_dr = -m_system->positions.segment<3>(i3);
+        Eigen::Vector3d n_dr = -m_system->positions().segment<3>(i3);
         n_dr.noalias() += m_RLoc;
         Eigen::Matrix3d n_dr_cross;
         crossProdMat(n_dr, n_dr_cross);
@@ -294,8 +296,9 @@ rungeKutta4::momentumLinAngFree()
 
     /* ANCHOR: Output velocity data back to m_system */
     // calculate U = Sigma^T * U_swim + v_artic
-    m_system->velocities.noalias() = rbmconn_T * U_swim;
-    m_system->velocities.noalias() += m_velArtic;
+    Eigen::VectorXd U_out = rbmconn_T * U_swim;
+    U_out.noalias() += m_velArtic;
+    m_system->setVelocities(U_out);
 
     // update hydrodynamic force terms for acceleration components
     m_potHydro->updateForcesOnly();
@@ -314,7 +317,7 @@ rungeKutta4::momentumLinAngFree()
     {
         int i3{3 * i};
 
-        Eigen::Vector3d dr = m_system->positions.segment<3>(i3);
+        Eigen::Vector3d dr = m_system->positions().segment<3>(i3);
         dr.noalias() -= m_RLoc;
         b.segment<3>(i3).noalias() += W * dr;
 
@@ -336,8 +339,9 @@ rungeKutta4::momentumLinAngFree()
 
     /* ANCHOR: Output acceleration data back to m_system */
     // calculate A = Sigma^T * A_swim + b
-    m_system->accelerations.noalias() = rbmconn_T * A_swim;
-    m_system->accelerations.noalias() += b;
+    Eigen::VectorXd A_out = rbmconn_T * A_swim;
+    A_out.noalias() += b;
+    m_system->setAccelerations(A_out);
 }
 
 /* REVIEW[epic=Change,order=3]: Change assignment of m_velArtic for different systems */
@@ -367,5 +371,5 @@ rungeKutta4::articulationAcc(double dimensional_time)
 void
 rungeKutta4::rLoc()
 {
-    m_RLoc = m_system->positions.segment<3>(3);
+    m_RLoc = m_system->positions().segment<3>(3);
 }

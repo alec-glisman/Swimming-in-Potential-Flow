@@ -33,11 +33,6 @@ class GSDUtil;
 class systemData : public std::enable_shared_from_this<systemData>
 {
   public:
-    // kinematics
-    Eigen::VectorXd positions;
-    Eigen::VectorXd velocities;
-    Eigen::VectorXd accelerations;
-
     systemData(std::string inputGSDFile, std::string outputDir);
 
     ~systemData();
@@ -225,6 +220,39 @@ class systemData : public std::enable_shared_from_this<systemData>
         return m_GSD_parsed;
     }
 
+    const Eigen::VectorXd&
+    positions() const
+    {
+        return m_positions;
+    }
+    void
+    setPositions(const Eigen::VectorXd& positions)
+    {
+        m_positions = positions;
+    }
+
+    const Eigen::VectorXd&
+    velocities() const
+    {
+        return m_velocities;
+    }
+    void
+    setVelocities(const Eigen::VectorXd& velocities)
+    {
+        m_velocities = velocities;
+    }
+
+    const Eigen::VectorXd&
+    accelerations() const
+    {
+        return m_accelerations;
+    }
+    void
+    setAccelerations(const Eigen::VectorXd& accelerations)
+    {
+        m_accelerations = accelerations;
+    }
+
   private:
     void
     checkInput();
@@ -245,6 +273,11 @@ class systemData : public std::enable_shared_from_this<systemData>
     int                         m_return_val{0};
     bool                        m_return_bool{true};
     bool                        m_GSD_parsed{false};
+
+    // kinematics
+    Eigen::VectorXd m_positions;
+    Eigen::VectorXd m_velocities;
+    Eigen::VectorXd m_accelerations;
 
     // degrees of freedom
     int m_num_dim{-1};

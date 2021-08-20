@@ -118,8 +118,8 @@ potentialHydrodynamics::calcParticleDistances()
      * particles \alpha and \beta) */
     for (int i = 0; i < m_num_inter; i++)
     {
-        m_r_ab.col(i).noalias() = m_system->positions(Eigen::seqN(3 * m_alphaVec[i], 3));
-        m_r_ab.col(i).noalias() -= m_system->positions(Eigen::seqN(3 * m_betaVec[i], 3));
+        m_r_ab.col(i).noalias() = m_system->positions()(Eigen::seqN(3 * m_alphaVec[i], 3));
+        m_r_ab.col(i).noalias() -= m_system->positions()(Eigen::seqN(3 * m_betaVec[i], 3));
 
         m_r_mag_ab[i] = m_r_ab.col(i).norm(); //! [1]; |r| between 2 particles
 
@@ -295,10 +295,10 @@ void
 potentialHydrodynamics::calcHydroForces()
 {
     // calculate requisite configurational tensors
-    Eigen::MatrixXd U_dyad_U = m_system->velocities * m_system->velocities.transpose();
+    Eigen::MatrixXd U_dyad_U = m_system->velocities() * m_system->velocities().transpose();
 
     //! Term 1: - M_kj * U_dot_j
-    m_t1_Inertia.noalias() = -m_M_total * m_system->accelerations; //! dim = (3N) x 1
+    m_t1_Inertia.noalias() = -m_M_total * m_system->accelerations(); //! dim = (3N) x 1
 
     //! Term 2: - d(M_kj)/d(R_l) * U_l * U_j;
     Eigen::MatrixXd hat_dMkj = Eigen::MatrixXd::Zero(m_len_tensor, m_len_tensor);
@@ -306,11 +306,11 @@ potentialHydrodynamics::calcHydroForces()
     // variable
     for (int l = 0; l < m_len_tensor; l += 1)
     {
-        hat_dMkj.noalias() += m_system->velocities[l] *
+        hat_dMkj.noalias() += m_system->velocities()[l] *
                               m_grad_M_added.block(0, l * m_len_tensor, m_len_tensor, m_len_tensor);
     }
     // Reduce along gradient (index: l) via matrix-vector product
-    m_t2_VelGrad.noalias() = -hat_dMkj * m_system->velocities;
+    m_t2_VelGrad.noalias() = -hat_dMkj * m_system->velocities();
 
     //! Term 3: (1/2) U_i * d(M_ij)/d(R_k) * U_j
     m_t3_PosGrad.noalias() = Eigen::VectorXd::Zero(m_len_tensor);
