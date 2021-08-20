@@ -183,9 +183,9 @@ def aggregate_plots(relative_path, output_dir):
     # Show numerical data points
     oscVelErr_Plot.make_plot()
     oscVelErr_Plot.curve(time, (velocities[0, :] - velocities[3, :]) / (
-        U0) - np.cos(omega * tau * time), zorder=1, label=r"$1-2$ Simulation")
+        U0) - np.cos(omega * tau * time), zorder=1, label=r"$1-2$")
     oscVelErr_Plot.curve(time, (velocities[6, :] - velocities[3, :]) / (
-        U0) - np.cos(omega * tau * time + phaseShift), zorder=2, label=r"$3-2$ Simulation")
+        U0) - np.cos(omega * tau * time + phaseShift), zorder=2, label=r"$3-2$")
     oscVelErr_Plot.set_yaxis_scientific()
     # Add legend
     oscVelErr_Plot.legend(
@@ -225,9 +225,9 @@ def aggregate_plots(relative_path, output_dir):
     # Show numerical data points
     oscAccErr_Plot.make_plot()
     oscAccErr_Plot.curve(time, (accelerations[0, :] - accelerations[3, :]) / (
-        U0 * omega) + np.sin(omega * tau * time), zorder=1, label=r"$1-2$ Simulation")
+        U0 * omega) + np.sin(omega * tau * time), zorder=1, label=r"$1-2$")
     oscAccErr_Plot.curve(time, (accelerations[6, :] - accelerations[3, :]) / (
-        U0 * omega) + np.sin(omega * tau * time + phaseShift), zorder=2, label=r"$3-2$ Simulation")
+        U0 * omega) + np.sin(omega * tau * time + phaseShift), zorder=2, label=r"$3-2$")
     oscAccErr_Plot.set_yaxis_scientific()
     # Add legend
     oscAccErr_Plot.legend(
