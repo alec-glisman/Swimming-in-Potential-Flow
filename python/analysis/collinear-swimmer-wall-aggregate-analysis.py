@@ -256,20 +256,42 @@ def aggregate_plots(relative_path, output_dir):
 
     with open(file, "w") as f:
 
-        # Find scaling of CoM_disp_x vs. relDispEqbm
-        try:
-            idx = np.argsort(R_avg)
-            CoM_disp_x_srt = CoM_disp[idx]
-            relDispEqbm_srt = R_avg[idx]
+        Empty_Plot = PlotStyling(r"", r"",
+                                 title=None, loglog=False,
+                                 outputDir=output_dir, figName="", eps=epsOutput,
+                                 continuousColors=False)
 
-            m, b = np.polyfit(np.log(np.abs(relDispEqbm_srt)),
-                              np.log(np.abs(CoM_disp_x_srt)), 1)
+        # scaling of CoM_disp vs. R_avg the simulation data points
+        if (len(np.unique(R_avg)) > 1):
+            try:
+                with Empty_Plot.suppress_stdout():
+                    idx = np.argsort(R_avg)
+                    CoM_disp_srt = CoM_disp[idx]
+                    R_avg_srt = R_avg[idx]
 
-            print(f"ln(CoM_disp_x) = {m} * ln(R_avg) + {b}",  file=f)
-            print("\n", file=f)
+                    m, b = np.polyfit(np.log(np.abs(R_avg_srt)),
+                                      np.log(np.abs(CoM_disp_srt)), 1)
 
-        except:
-            pass
+                print(f"ln(CoM_disp) = {m} * ln(R_avg) + {b}",  file=f)
+                print("\n", file=f)
+            except:
+                pass
+
+        # scaling of CoM_disp vs. Z_height the simulation data points
+        if (len(np.unique(R_avg)) > 1):
+            try:
+                with Empty_Plot.suppress_stdout():
+                    idx = np.argsort(Z_height)
+                    CoM_disp_srt = CoM_disp[idx]
+                    Z_height_srt = Z_height[idx]
+
+                    m, b = np.polyfit(np.log(np.abs(Z_height)),
+                                      np.log(np.abs(CoM_disp_srt)), 1)
+
+                print(f"ln(CoM_disp) = {m} * ln(Z_height) + {b}",  file=f)
+                print("\n", file=f)
+            except:
+                pass
 
         print("CoM_disp:", file=f)
         print(CoM_disp,   file=f)
