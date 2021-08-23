@@ -71,12 +71,13 @@ def aggregate_plots(relative_path, output_dir):
 
     # Data from initial frame (not 0)
     gsd_file.snapshot = gsd_file.trajectory.read_frame(1)
-    relDispEqbm = gsd_file.snapshot.log['swimmer/R_avg']
+    R_avg = gsd_file.snapshot.log['swimmer/R_avg']
+    Z_height = gsd_file.snapshot.log['swimmer/Z_height']
     phaseShift = gsd_file.snapshot.log['swimmer/phase_shift']
     U0 = gsd_file.snapshot.log['swimmer/U0']
     omega = gsd_file.snapshot.log['swimmer/omega']
     tau = gsd_file.snapshot.log['integrator/tau']
-    epsilon = U0 / relDispEqbm / omega
+    epsilon = U0 / R_avg / omega
 
     # Initialize temporal data
     nframes = gsd_file.trajectory.file.nframes
@@ -110,6 +111,9 @@ def aggregate_plots(relative_path, output_dir):
     locPos_Plot.make_plot()
     locPos_Plot.curve(
         time, positions[3, :], zorder=1, label=r"$2$")
+    locPos_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
+        fmt(np.max(Z_height))),
+        loc='best', ncol=1, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
     locPos_Plot.save_plot()
 
     # PLOT: Relative oscillator displacement (x-axis)
@@ -122,15 +126,16 @@ def aggregate_plots(relative_path, output_dir):
     # Show numerical data points
     oscDis_Plot.make_plot()
     oscDis_Plot.curve(
-        time, (positions[0, :] - positions[3, :] - relDispEqbm) * omega / U0, zorder=1, label=r"$1-2$")
+        time, (positions[0, :] - positions[3, :] - R_avg) * omega / U0, zorder=1, label=r"$1-2$")
     oscDis_Plot.curve(
-        time, (positions[3, :] - positions[6, :] - relDispEqbm) * omega / U0, zorder=2, label=r"$2-3$")
+        time, (positions[3, :] - positions[6, :] - R_avg) * omega / U0, zorder=2, label=r"$2-3$")
     oscDis_Plot.curve(
         time, np.sin(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
     oscDis_Plot.curve(
         time, -np.sin(omega * tau * time + phaseShift), thin_curve=True, zorder=4, label=r"$2-3$ Constraint")
     # Add legend
-    oscDis_Plot.legend(
+    oscDis_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
+        fmt(np.max(Z_height))),
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
     oscDis_Plot.save_plot()
 
@@ -143,12 +148,13 @@ def aggregate_plots(relative_path, output_dir):
     # Show numerical data points
     oscDisErr_Plot.make_plot()
     oscDisErr_Plot.curve(
-        time, (positions[0, :] - positions[3, :] - relDispEqbm) * omega / U0 - np.sin(omega * tau * time), zorder=1, label=r"$1-2$")
+        time, (positions[0, :] - positions[3, :] - R_avg) * omega / U0 - np.sin(omega * tau * time), zorder=1, label=r"$1-2$")
     oscDisErr_Plot.curve(
-        time, (positions[3, :] - positions[6, :] - relDispEqbm) * omega / U0 + np.sin(omega * tau * time + phaseShift), zorder=2, label=r"$2-3$")
+        time, (positions[3, :] - positions[6, :] - R_avg) * omega / U0 + np.sin(omega * tau * time + phaseShift), zorder=2, label=r"$2-3$")
     oscDisErr_Plot.set_yaxis_scientific()
     # Add legend
-    oscDisErr_Plot.legend(
+    oscDisErr_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
+        fmt(np.max(Z_height))),
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
     oscDisErr_Plot.save_plot()
 
@@ -170,7 +176,8 @@ def aggregate_plots(relative_path, output_dir):
     oscVel_Plot.curve(
         time, np.cos(omega * tau * time + phaseShift), thin_curve=True, zorder=4, label=r"$3-2$ Constraint")
     # Add legend
-    oscVel_Plot.legend(
+    oscVel_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
+        fmt(np.max(Z_height))),
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
     oscVel_Plot.save_plot()
 
@@ -188,7 +195,8 @@ def aggregate_plots(relative_path, output_dir):
         U0) - np.cos(omega * tau * time + phaseShift), zorder=2, label=r"$3-2$")
     oscVelErr_Plot.set_yaxis_scientific()
     # Add legend
-    oscVelErr_Plot.legend(
+    oscVelErr_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
+        fmt(np.max(Z_height))),
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
     oscVelErr_Plot.save_plot()
 
@@ -211,7 +219,8 @@ def aggregate_plots(relative_path, output_dir):
     oscAcc_Plot.curve(
         time, -np.sin(omega * tau * time + phaseShift), thin_curve=True, zorder=4, label=r"$3-2$ Constraint")
     # Add legend
-    oscAcc_Plot.legend(
+    oscAcc_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
+        fmt(np.max(Z_height))),
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
     oscAcc_Plot.save_plot()
 
@@ -230,7 +239,8 @@ def aggregate_plots(relative_path, output_dir):
         U0 * omega) + np.sin(omega * tau * time + phaseShift), zorder=2, label=r"$3-2$")
     oscAccErr_Plot.set_yaxis_scientific()
     # Add legend
-    oscAccErr_Plot.legend(
+    oscAccErr_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
+        fmt(np.max(Z_height))),
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
     oscAccErr_Plot.save_plot()
 
@@ -242,7 +252,8 @@ def aggregate_plots(relative_path, output_dir):
     # Output data to log file
     file = output_dir + "output.txt"
     with open(file, "w") as f:
-        print(f"R_avg = {relDispEqbm}", file=f)
+        print(f"R_avg = {R_avg}", file=f)
+        print(f"Z_height = {Z_height}", file=f)
         print(f"\Delta R_2 = {positions[3, -1] - positions[3, 0]}", file=f)
 
 # !SECTION (Output data)
