@@ -22,8 +22,11 @@ parser.add_option("--GSD-path", dest="u_gsd_path",
 parser.add_option("--dt", dest="u_dt",
                   help="(dimensionless) time-step for numerical integration",
                   metavar="double")
-parser.add_option("--R_avg", dest="u_R_avg",
+parser.add_option("--R-avg", dest="u_R_avg",
                   help="(dimensionless) average inter-particle pair separation during articulation period",
+                  metavar="double")
+parser.add_option("--Z-height", dest="u_Z_height",
+                  help="(dimensionless) Initial height of collinear swimmer above wall",
                   metavar="double")
 parser.add_option("--phase-angle", dest="u_phase_angle",
                   help="phase angle between oscillating pairs",
@@ -51,12 +54,12 @@ particle_density = 1.0
 
 # Potential parameters
 wca_epsilon = 0.0
-wca_sigma = 3.0
+wca_sigma = 0.0
 
 # Particle parameters
-n = 3
-types = ['Swimmer']
-typeid = [0, 0, 0]
+n = 6
+types = ['Swimmer', 'Image']
+typeid = [0, 0, 0, 1, 1, 1]
 
 # !SECTION (Parameters)
 
@@ -76,8 +79,12 @@ def setInitialConditions():
 
     # position
     pos = np.zeros((n, 3), dtype=np.double)
-    pos[0][0] = R_avg  # particle 0
-    pos[2][0] = - R_avg + (U0 / omega) * np.sin(phase_angle)
+    pos[0] = [R_avg, 0.0, Z_height]
+    pos[1] = [0.0, 0.0, Z_height]
+    pos[2] = [- R_avg + (U0 / omega) * np.sin(phase_angle), 0.0, Z_height]
+    pos[3] = [R_avg, 0.0, -Z_height]
+    pos[4] = [0.0, 0.0, -Z_height]
+    pos[5] = [- R_avg + (U0 / omega) * np.sin(phase_angle), 0.0, -Z_height]
 
     # velocity NOTE[epic=Assumptions]: must be calculated in simulation system (C++)
     vel = np.zeros_like(pos, dtype=np.double)
@@ -96,12 +103,14 @@ def setSystemData():
 
     # convert data to GSD expected type
     l_R_avg = np.array([R_avg], dtype=np.double)
+    l_Z_height = np.array([Z_height], dtype=np.double)
     l_U0 = np.array([U0], dtype=np.double)
     l_omega = np.array([omega], dtype=np.double)
     l_phase_angle = np.array([phase_angle], dtype=np.double)
 
     # output data
     snapshot.log['swimmer/R_avg'] = l_R_avg
+    snapshot.log['swimmer/Z_height'] = l_Z_height
     snapshot.log['swimmer/U0'] = l_U0
     snapshot.log['swimmer/omega'] = l_omega
     snapshot.log['swimmer/phase_shift'] = l_phase_angle
@@ -112,13 +121,14 @@ def setSystemData():
 # SECTION: For use when being called from command line
 
 if __name__ == "__main__":
-    global gsd_path, dt, R_avg, phase_angle, U0, omega, epsilon, tau
+    global gsd_path, dt, R_avg, Z_height, phase_angle, U0, omega, epsilon, tau
 
     # Parse user input
     options, remainder = parser.parse_args(sys.argv[1:])
     gsd_path = str(options.u_gsd_path)
     dt = np.double(options.u_dt)
     R_avg = np.double(options.u_R_avg)
+    Z_height = np.double(options.u_Z_height)
     phase_angle = np.double(options.u_phase_angle)
     U0 = np.double(options.u_U0)
     omega = np.double(options.u_omega)
