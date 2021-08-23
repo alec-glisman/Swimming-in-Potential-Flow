@@ -2,7 +2,9 @@
 
 # External Dependencies
 import os                          # Access system file-tree
-import sys                         # Modify system parameters
+import sys
+# Modify system parameters
+from matplotlib.pyplot import axis
 import numpy as np                 # Data structures
 from optparse import OptionParser  # Get user input
 import matplotlib.ticker as mticker  # Scientific notation in labels
@@ -71,6 +73,8 @@ def aggregate_plots(relative_path, output_dir):
 
     # Data from initial frame (not 0)
     gsd_file.snapshot = gsd_file.trajectory.read_frame(1)
+    N_particles = gsd_file.snapshot.particles.N
+    nframes = gsd_file.trajectory.file.nframes
     R_avg = gsd_file.snapshot.log['swimmer/R_avg']
     Z_height = gsd_file.snapshot.log['swimmer/Z_height']
     phaseShift = gsd_file.snapshot.log['swimmer/phase_shift']
@@ -80,9 +84,8 @@ def aggregate_plots(relative_path, output_dir):
     epsilon = U0 / R_avg / omega
 
     # Initialize temporal data
-    nframes = gsd_file.trajectory.file.nframes
     time = np.zeros((nframes - 2), dtype=np.float64)
-    positions = np.zeros((9, nframes - 2), dtype=np.float64)
+    positions = np.zeros((N_particles, 3, nframes - 2), dtype=np.float64)
     velocities = np.zeros_like(positions, dtype=np.float64)
     accelerations = np.zeros_like(positions, dtype=np.float64)
 
@@ -91,12 +94,49 @@ def aggregate_plots(relative_path, output_dir):
         current_snapshot = gsd_file.trajectory.read_frame(i)
 
         time[i-1] = current_snapshot.log['integrator/t']
-        positions[:, i-1] = current_snapshot.log['particles/double_position'].flatten()
-        velocities[:, i-1] = current_snapshot.log['particles/double_velocity'].flatten()
-        accelerations[:, i -
-                      1] = current_snapshot.log['particles/double_moment_inertia'].flatten()
+        positions[:, :, i-1] = current_snapshot.log['particles/double_position']
+        velocities[:, :, i-1] = current_snapshot.log['particles/double_velocity']
+        accelerations[:, :, i -
+                      1] = current_snapshot.log['particles/double_moment_inertia']
 
 # !SECTION (Load data)
+
+
+# SECTION: Analysis
+
+    # relative separation between particle pairs
+    R_loc = positions[1, :, :]
+    DR_loc = positions[1, :, :] - positions[1, :, 0]
+    R_12 = positions[0, :, :] - R_loc
+    R_32 = positions[2, :, :] - R_loc
+    # distance between particle pairs
+    Dr_Loc = np.linalg.norm(DR_loc, axis=0)
+    r_12 = np.linalg.norm(R_12, axis=0)
+    r_32 = np.linalg.norm(R_12, axis=0)
+
+    # relative velocities between particle pairs
+    U_loc = velocities[1, :, :]
+    U_12 = velocities[0, :, :] - U_loc
+    U_32 = velocities[2, :, :] - U_loc
+    # relative velocity norms between particle pairs
+    u_12 = np.linalg.norm(U_12, axis=0)
+    u_32 = np.linalg.norm(U_32, axis=0)
+
+    # relative accelerations between particle pairs
+    A_loc = accelerations[1, :, :]
+    A_12 = accelerations[0, :, :] - A_loc
+    A_32 = accelerations[2, :, :] - A_loc
+    # relative acceleration norms between particle pairs
+    a_12 = np.linalg.norm(A_12, axis=0)
+    a_32 = np.linalg.norm(A_32, axis=0)
+
+    # characteristic scales
+    char_time = 1.0 / omega
+    char_vel = U0
+    char_len = char_vel * char_time
+    char_acc = char_vel / char_time
+
+# !SECTION (Analysis)
 
 
 # SECTION: Plots
@@ -110,7 +150,7 @@ def aggregate_plots(relative_path, output_dir):
     # Show numerical data points
     locPos_Plot.make_plot()
     locPos_Plot.curve(
-        time, positions[3, :], zorder=1, label=r"$2$")
+        time, Dr_Loc, zorder=1, label=r"$2$")
     locPos_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
         fmt(np.max(Z_height))),
         loc='best', ncol=1, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
@@ -126,9 +166,9 @@ def aggregate_plots(relative_path, output_dir):
     # Show numerical data points
     oscDis_Plot.make_plot()
     oscDis_Plot.curve(
-        time, (positions[0, :] - positions[3, :] - R_avg) * omega / U0, zorder=1, label=r"$1-2$")
+        time, (r_12 - R_avg) / char_len, zorder=1, label=r"$1-2$")
     oscDis_Plot.curve(
-        time, (positions[3, :] - positions[6, :] - R_avg) * omega / U0, zorder=2, label=r"$2-3$")
+        time, (-r_32 - R_avg) / char_len, zorder=2, label=r"$2-3$")
     oscDis_Plot.curve(
         time, np.sin(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
     oscDis_Plot.curve(
@@ -148,9 +188,9 @@ def aggregate_plots(relative_path, output_dir):
     # Show numerical data points
     oscDisErr_Plot.make_plot()
     oscDisErr_Plot.curve(
-        time, (positions[0, :] - positions[3, :] - R_avg) * omega / U0 - np.sin(omega * tau * time), zorder=1, label=r"$1-2$")
+        time, (r_12 - R_avg) / char_len - np.sin(omega * tau * time), zorder=1, label=r"$1-2$")
     oscDisErr_Plot.curve(
-        time, (positions[3, :] - positions[6, :] - R_avg) * omega / U0 + np.sin(omega * tau * time + phaseShift), zorder=2, label=r"$2-3$")
+        time, (-r_32 - R_avg) / char_len + np.sin(omega * tau * time + phaseShift), zorder=2, label=r"$2-3$")
     oscDisErr_Plot.set_yaxis_scientific()
     # Add legend
     oscDisErr_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
@@ -167,10 +207,10 @@ def aggregate_plots(relative_path, output_dir):
                               continuousColors=False)
     # Show numerical data points
     oscVel_Plot.make_plot()
-    oscVel_Plot.curve(time, (velocities[0, :] - velocities[3, :]) / (
-        U0), zorder=1, label=r"$1-2$ Simulation")
-    oscVel_Plot.curve(time, (velocities[6, :] - velocities[3, :]) / (
-        U0), zorder=2, label=r"$3-2$ Simulation")
+    oscVel_Plot.curve(time,  u_12 / char_vel, zorder=1,
+                      label=r"$1-2$ Simulation")
+    oscVel_Plot.curve(time, u_32 / char_vel, zorder=2,
+                      label=r"$3-2$ Simulation")
     oscVel_Plot.curve(
         time, np.cos(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
     oscVel_Plot.curve(
@@ -189,10 +229,10 @@ def aggregate_plots(relative_path, output_dir):
                                  continuousColors=False)
     # Show numerical data points
     oscVelErr_Plot.make_plot()
-    oscVelErr_Plot.curve(time, (velocities[0, :] - velocities[3, :]) / (
-        U0) - np.cos(omega * tau * time), zorder=1, label=r"$1-2$")
-    oscVelErr_Plot.curve(time, (velocities[6, :] - velocities[3, :]) / (
-        U0) - np.cos(omega * tau * time + phaseShift), zorder=2, label=r"$3-2$")
+    oscVelErr_Plot.curve(time, u_12 / char_vel -
+                         np.cos(omega * tau * time), zorder=1, label=r"$1-2$")
+    oscVelErr_Plot.curve(time, u_32 / char_vel - np.cos(omega *
+                         tau * time + phaseShift), zorder=2, label=r"$3-2$")
     oscVelErr_Plot.set_yaxis_scientific()
     # Add legend
     oscVelErr_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
@@ -210,10 +250,10 @@ def aggregate_plots(relative_path, output_dir):
 
     # Show numerical data points
     oscAcc_Plot.make_plot()
-    oscAcc_Plot.curve(time, (accelerations[0, :] - accelerations[3, :]) / (
-        U0 * omega), zorder=1, label=r"$1-2$ Simulation")
-    oscAcc_Plot.curve(time, (accelerations[6, :] - accelerations[3, :]) / (
-        U0 * omega), zorder=2, label=r"$3-2$ Simulation")
+    oscAcc_Plot.curve(time, a_12 / char_acc, zorder=1,
+                      label=r"$1-2$ Simulation")
+    oscAcc_Plot.curve(time, a_32 / char_acc, zorder=2,
+                      label=r"$3-2$ Simulation")
     oscAcc_Plot.curve(
         time, -np.sin(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
     oscAcc_Plot.curve(
@@ -233,10 +273,10 @@ def aggregate_plots(relative_path, output_dir):
 
     # Show numerical data points
     oscAccErr_Plot.make_plot()
-    oscAccErr_Plot.curve(time, (accelerations[0, :] - accelerations[3, :]) / (
-        U0 * omega) + np.sin(omega * tau * time), zorder=1, label=r"$1-2$")
-    oscAccErr_Plot.curve(time, (accelerations[6, :] - accelerations[3, :]) / (
-        U0 * omega) + np.sin(omega * tau * time + phaseShift), zorder=2, label=r"$3-2$")
+    oscAccErr_Plot.curve(time, a_12 / char_acc -
+                         np.sin(omega * tau * time), zorder=1, label=r"$1-2$")
+    oscAccErr_Plot.curve(time, a_32 / char_acc - np.sin(omega *
+                         tau * time + phaseShift), zorder=2, label=r"$3-2$")
     oscAccErr_Plot.set_yaxis_scientific()
     # Add legend
     oscAccErr_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
