@@ -46,6 +46,12 @@ class rungeKutta4
     /* REVIEW[epic=Change]: Change constraint linear system (A, b) for each system. May need to
      * change dimensions of Eigen matrixes and vectors */
     void
+    initializeConstraintLinearSystem();
+
+    void
+    constraintLinearSystem(double dimensional_time);
+
+    void
     accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time);
 
     /* REVIEW[epic=Change]: Change rbmconn if particles do not all move identically with respect to
@@ -101,6 +107,14 @@ class rungeKutta4
     Eigen::Vector3d m_RLoc;
     Eigen::VectorXd m_velArtic;
     Eigen::VectorXd m_accArtic;
+
+    // constraint parameters
+    Eigen::MatrixXd m_A;
+    Eigen::VectorXd m_b;
+
+    // "identity" tensors
+    const Eigen::Matrix3d m_I = Eigen::Matrix3d::Identity(3, 3);
+    Eigen::Matrix3d       m_I_tilde;
 
     // time step variables
     double m_dt{-1.0};

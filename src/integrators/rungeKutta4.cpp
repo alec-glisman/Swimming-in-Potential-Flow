@@ -27,8 +27,12 @@ rungeKutta4::rungeKutta4(std::shared_ptr<systemData>             sys,
     m_c1_6_dt = m_c1_6 * m_dt;
     spdlog::get(m_logName)->info("1/6 * dt (dimensional): {0}", m_c1_6_dt);
 
+    m_I_tilde       = m_I;
+    m_I_tilde(2, 2) = -1.0;
+
     // Set specific variables to each system
     initializeSpecificVars();
+    initializeConstraintLinearSystem();
 }
 
 rungeKutta4::~rungeKutta4()
@@ -195,6 +199,42 @@ rungeKutta4::initializeSpecificVars()
     gsdParser->writeFrame();
 }
 
+/* REVIEW[epic=Change,order=1]: Change initializeConstraintLinearSystem() for different systems */
+void
+rungeKutta4::initializeConstraintLinearSystem()
+{
+    // calculate A, not a function of time
+    m_A = Eigen::MatrixXd::Zero(15, 18);
+
+    m_A.block<3, 3>(0, 0).noalias() = m_I;
+    m_A.block<3, 3>(6, 0).noalias() = m_I;
+
+    m_A.block<3, 3>(0, 3).noalias()  = -m_I;
+    m_A.block<3, 3>(3, 3).noalias()  = -m_I;
+    m_A.block<3, 3>(12, 3).noalias() = m_I;
+
+    m_A.block<3, 3>(3, 6).noalias()  = m_I;
+    m_A.block<3, 3>(12, 6).noalias() = m_I;
+
+    m_A.block<3, 3>(6, 9).noalias() = -m_I_tilde;
+
+    m_A.block<3, 3>(9, 12).noalias() = -m_I_tilde;
+
+    m_A.block<3, 3>(12, 15).noalias() = -m_I_tilde;
+}
+
+void
+rungeKutta4::constraintLinearSystem(double dimensional_time)
+{
+    // update articulation velocities for constraint calculation
+    articulationAcc(dimensional_time);
+
+    // calculate b, function of time
+    m_b                         = Eigen::VectorXd::Zero(3 * 6, 1);
+    m_b.segment<3>(0).noalias() = m_accArtic.segment<3>(0);
+    m_b.segment<3>(3).noalias() = m_accArtic.segment<3>(6);
+}
+
 /* REVIEW[epic=Change,order=2]: Change constraint linear system (A, b) for each system */
 void
 rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
@@ -203,6 +243,8 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
      * Solve system of the form M_total * acc = Q + Q_con
      * Q is the forces present in unconstrained system
      * Q_con is the generalized constraint forces */
+
+    constraintLinearSystem(dimensional_time);
 
     // calculate Q
     Eigen::VectorXd Q = Eigen::VectorXd::Zero(3 * m_system->numParticles());
@@ -216,18 +258,6 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
      * Linear proportionality: K = M_total^{1/2} * (A * M_total^{-1/2})^{+};
      * + is Moore-Penrose inverse */
 
-    // calculate A
-    Eigen::MatrixXd A = Eigen::MatrixXd::Zero(2, 9);
-    A(0, 0)           = 1.0;
-    A(0, 3)           = -1.0;
-    A(1, 3)           = -1.0;
-    A(1, 6)           = 1.0;
-    // calculate B
-    Eigen::Vector2d b = Eigen::Vector2d::Zero(2, 1);
-    b(0) = -m_systemParam.U0 * m_systemParam.omega * sin(m_systemParam.omega * dimensional_time);
-    b(1) = -m_systemParam.U0 * m_systemParam.omega *
-           sin(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
-
     // calculate M^{1/2} & M^{-1/2}
     Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> eigensolver(m_potHydro->mTotal());
     if (eigensolver.info() != Eigen::Success)
@@ -240,15 +270,15 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
     Eigen::MatrixXd M_total_negativeHalfPower = eigensolver.operatorInverseSqrt();
 
     // calculate K
-    Eigen::MatrixXd AM_nHalf      = A * M_total_negativeHalfPower;
+    Eigen::MatrixXd AM_nHalf      = m_A * M_total_negativeHalfPower;
     Eigen::MatrixXd AM_nHalf_pInv = AM_nHalf.completeOrthogonalDecomposition().pseudoInverse();
     Eigen::MatrixXd K             = M_total_halfPower * AM_nHalf_pInv;
 
     // calculate Q_con
     Eigen::MatrixXd M_total_inv   = m_potHydro->mTotal().inverse();
     Eigen::MatrixXd M_total_invQ  = M_total_inv * Q;
-    Eigen::VectorXd AM_total_invQ = A * M_total_invQ;
-    Eigen::VectorXd b_tilde       = b;
+    Eigen::VectorXd AM_total_invQ = m_A * M_total_invQ;
+    Eigen::VectorXd b_tilde       = m_b;
     b_tilde.noalias() -= AM_total_invQ;
     Eigen::VectorXd Q_con = K * b_tilde;
 
@@ -263,7 +293,6 @@ rungeKutta4::momentumLinAngFree()
 {
     /* ANCHOR: Solve for rigid body motion (rbm) tensors */
     // initialize variables
-    Eigen::Matrix3d I       = Eigen::Matrix3d::Identity(3, 3);                        // [3 x 3]
     Eigen::MatrixXd rbmconn = Eigen::MatrixXd::Zero(6, 3 * m_system->numParticles()); // [6 x 3N]
 
     // assemble the rigid body motion connectivity tensor (Sigma);  [6 x 3N]
@@ -276,7 +305,7 @@ rungeKutta4::momentumLinAngFree()
         Eigen::Matrix3d n_dr_cross;
         crossProdMat(n_dr, n_dr_cross);
 
-        rbmconn.block<3, 3>(0, i3).noalias() = I;          // translation-translation couple
+        rbmconn.block<3, 3>(0, i3).noalias() = m_I;        // translation-translation couple
         rbmconn.block<3, 3>(3, i3).noalias() = n_dr_cross; // translation-rotation couple
     }
     Eigen::MatrixXd rbmconn_T = rbmconn.transpose();
@@ -308,7 +337,7 @@ rungeKutta4::momentumLinAngFree()
     Eigen::Vector3d Omega_C = U_swim.segment<3>(3);
 
     Eigen::Matrix3d W = Omega_C * Omega_C.transpose();
-    W.noalias() -= Omega_C.squaredNorm() * I;
+    W.noalias() -= Omega_C.squaredNorm() * m_I;
 
     Eigen::Matrix3d n_v_artic_cross;
     Eigen::VectorXd b = m_accArtic;
@@ -348,14 +377,9 @@ rungeKutta4::momentumLinAngFree()
 void
 rungeKutta4::articulationVel(double dimensional_time)
 {
-    // "identity tensors"
-    Eigen::Matrix3d I       = Eigen::Matrix3d::Identity(3, 3); // [3 x 3]
-    Eigen::Matrix3d I_tilde = Eigen::Matrix3d::Identity(3, 3); // [3 x 3]
-    I_tilde(2, 2)           = -1;
-
     // ANCHOR: Orientation vectors, q = R_1 - R_3
     Eigen::Vector3d q = m_system->positions().segment<3>(0) - m_system->positions().segment<3>(6);
-    Eigen::Vector3d q_tilde = I_tilde * q;
+    Eigen::Vector3d q_tilde = m_I_tilde * q;
 
     // articulation velocity magnitudes
     double v1_mag = m_systemParam.U0 * cos(m_systemParam.omega * dimensional_time);
@@ -374,14 +398,9 @@ rungeKutta4::articulationVel(double dimensional_time)
 void
 rungeKutta4::articulationAcc(double dimensional_time)
 {
-    // "identity tensors"
-    Eigen::Matrix3d I       = Eigen::Matrix3d::Identity(3, 3); // [3 x 3]
-    Eigen::Matrix3d I_tilde = Eigen::Matrix3d::Identity(3, 3); // [3 x 3]
-    I_tilde(2, 2)           = -1;
-
     // ANCHOR: Orientation vectors, q = R_1 - R_3
     Eigen::Vector3d q = m_system->positions().segment<3>(0) - m_system->positions().segment<3>(6);
-    Eigen::Vector3d q_tilde = I_tilde * q;
+    Eigen::Vector3d q_tilde = m_I_tilde * q;
 
     // articulation acceleration magnitudes
     double a1_mag =
