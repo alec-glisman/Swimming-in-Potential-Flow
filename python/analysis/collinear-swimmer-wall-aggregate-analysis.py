@@ -119,7 +119,7 @@ def aggregate_plots(relative_path, output_dir):
         epsilon[i] = U0[i] / R_avg[i] / omega[i]
         CoM_disp_comp -= gsd_files[i].snapshot.log['particles/double_position'][1]
 
-        CoM_disp = np.linalg.norm(CoM_disp_comp)
+        CoM_disp[i] = np.linalg.norm(CoM_disp_comp)
 
 # !SECTION (Load data)
 
