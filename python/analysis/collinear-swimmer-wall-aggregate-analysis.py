@@ -126,22 +126,6 @@ def aggregate_plots(relative_path, output_dir):
 
 # SECTION: Analysis
 
-    # Calculate leading order net motion over one period of articulation (for varying distance between spheres)
-    xAnalyticalRng = np.array(np.linspace(
-        2.0, 40.0, num=1000), dtype=np.double)
-    dZAnalyticalDist = dZ_leadingOrder(
-        phaseShift[0], U0[0], omega[0], a, xAnalyticalRng)
-    # Calculate leading order net motion over one period of articulation (for varying phase Shift)
-    deltaAnalyticalRng = np.array(np.linspace(
-        0, 2 * np.pi, num=1000), dtype=np.double)
-    dZAnalyticaldelt = dZ_leadingOrder(
-        deltaAnalyticalRng, U0[0], omega[0], a, R_avg[0])
-    # Calculate leading order net motion (for varying epsilon)
-    epsAnalyticalRng = np.array(np.linspace(
-        0, np.max(epsilon), num=1000), dtype=np.double)
-    dZAnalyticaleps = dZ_leadingOrder(
-        phaseShift[0], epsAnalyticalRng * omega[0] * R_avg[0], omega[0], a, R_avg[0])
-
 # !SECTION (Analysis)
 
 
