@@ -93,7 +93,7 @@ def aggregate_plots(relative_path, output_dir):
 
     # Loop through all simulations and grab the final CoM displacement (x-axis)
     CoM_disp_x = np.zeros(len(gsd_files), dtype=np.double)
-    relDispEqbm = np.zeros(len(gsd_files), dtype=np.double)
+    R_avg = np.zeros(len(gsd_files), dtype=np.double)
     phaseShift = np.zeros(len(gsd_files), dtype=np.double)
     U0 = np.zeros(len(gsd_files), dtype=np.double)
     omega = np.zeros(len(gsd_files), dtype=np.double)
@@ -111,11 +111,11 @@ def aggregate_plots(relative_path, output_dir):
 
         # Data from initial frame (not 0)
         gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(1)
-        relDispEqbm[i] = gsd_files[i].snapshot.log['swimmer/R_avg']
+        R_avg[i] = gsd_files[i].snapshot.log['swimmer/R_avg']
         phaseShift[i] = gsd_files[i].snapshot.log['swimmer/phase_shift']
         U0[i] = gsd_files[i].snapshot.log['swimmer/U0']
         omega[i] = gsd_files[i].snapshot.log['swimmer/omega']
-        epsilon[i] = U0[i] / relDispEqbm[i] / omega[i]
+        epsilon[i] = U0[i] / R_avg[i] / omega[i]
 
 # !SECTION (Load data)
 
@@ -131,19 +131,19 @@ def aggregate_plots(relative_path, output_dir):
     deltaAnalyticalRng = np.array(np.linspace(
         0, 2 * np.pi, num=1000), dtype=np.double)
     dZAnalyticaldelt = dZ_leadingOrder(
-        deltaAnalyticalRng, U0[0], omega[0], a, relDispEqbm[0])
+        deltaAnalyticalRng, U0[0], omega[0], a, R_avg[0])
     # Calculate leading order net motion (for varying epsilon)
     epsAnalyticalRng = np.array(np.linspace(
         0, np.max(epsilon), num=1000), dtype=np.double)
     dZAnalyticaleps = dZ_leadingOrder(
-        phaseShift[0], epsAnalyticalRng * omega[0] * relDispEqbm[0], omega[0], a, relDispEqbm[0])
+        phaseShift[0], epsAnalyticalRng * omega[0] * R_avg[0], omega[0], a, R_avg[0])
 
 # !SECTION (Analysis)
 
 
 # SECTION: Plots
 
-    if (len(np.unique(relDispEqbm)) > 1):
+    if (len(np.unique(R_avg)) > 1):
         # PLOT: net displacement of swimmer vs. distance between spheres
         numLines = 2
         CoM_Plot = PlotStyling(numLines,
@@ -155,7 +155,7 @@ def aggregate_plots(relative_path, output_dir):
         CoM_Plot.make_plot()
         CoM_Plot.curve(np.abs(xAnalyticalRng),
                        dZAnalyticalDist, zorder=1, label="Leading Order")
-        CoM_Plot.scatter(relDispEqbm, CoM_disp_x,
+        CoM_Plot.scatter(R_avg, CoM_disp_x,
                          zorder=2, label="Simulation")
         # Add legend
         CoM_Plot.legend(title=r"$\epsilon \leq$" + "{}".format(fmt(np.max(epsilon))),
@@ -177,7 +177,7 @@ def aggregate_plots(relative_path, output_dir):
         CoM_PlotLL.make_plot()
         CoM_PlotLL.curve(np.abs(xAnalyticalRng), np.abs(
             dZAnalyticalDist), zorder=1, label="Leading Order")
-        CoM_PlotLL.scatter(relDispEqbm, np.abs(
+        CoM_PlotLL.scatter(R_avg, np.abs(
             CoM_disp_x), zorder=2, label="Simulation")
         CoM_PlotLL.legend(title=r"$\epsilon \leq$" + "{}".format(
             fmt(np.max(epsilon))), loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
@@ -185,7 +185,7 @@ def aggregate_plots(relative_path, output_dir):
 
         # PLOT: Relative error of displacement with relDisp
         numLines = 1
-        relDisErr = relErr(dZ_leadingOrder(phaseShift[0], U0[0], omega[0], a, relDispEqbm),
+        relDisErr = relErr(dZ_leadingOrder(phaseShift[0], U0[0], omega[0], a, R_avg),
                            CoM_disp_x)
         CoMDispErr_Plot = PlotStyling(numLines,
                                       r"$\mathrm{R}_0 / a $", r"Relative Error",
@@ -194,7 +194,7 @@ def aggregate_plots(relative_path, output_dir):
                                       continuousColors=False)
         CoMDispErr_Plot.make_plot()
         CoMDispErr_Plot.scatter(
-            relDispEqbm, relDisErr, zorder=1, label="Relative Error")
+            R_avg, relDisErr, zorder=1, label="Relative Error")
         CoMDispErr_Plot.save_plot()
 
     if (len(np.unique(phaseShift)) > 1):
@@ -216,7 +216,7 @@ def aggregate_plots(relative_path, output_dir):
         phaseShift_Plot.save_plot()
 
         # PLOT: Relative error of displacement with delta
-        relPhErr = relErr(dZ_leadingOrder(phaseShift, U0[0], omega[0], a, relDispEqbm[0]),
+        relPhErr = relErr(dZ_leadingOrder(phaseShift, U0[0], omega[0], a, R_avg[0]),
                           CoM_disp_x)
         numLines = 1
         phaseShiftErr_Plot = PlotStyling(numLines,
@@ -272,9 +272,9 @@ def aggregate_plots(relative_path, output_dir):
 
         # Find scaling of CoM_disp_x vs. relDispEqbm
         try:
-            idx = np.argsort(relDispEqbm)
+            idx = np.argsort(R_avg)
             CoM_disp_x_srt = CoM_disp_x[idx]
-            relDispEqbm_srt = relDispEqbm[idx]
+            relDispEqbm_srt = R_avg[idx]
 
             m, b = np.polyfit(np.log(np.abs(relDispEqbm_srt)),
                               np.log(np.abs(CoM_disp_x_srt)), 1)
@@ -290,7 +290,7 @@ def aggregate_plots(relative_path, output_dir):
         print("", file=f)
 
         print("relDispEqbm:", file=f)
-        print(relDispEqbm,    file=f)
+        print(R_avg,    file=f)
         print("", file=f)
 
         print("final_t:", file=f)
