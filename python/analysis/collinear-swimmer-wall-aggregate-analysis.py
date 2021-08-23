@@ -167,20 +167,6 @@ def aggregate_plots(relative_path, output_dir):
             fmt(np.max(epsilon))), loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
         CoM_PlotLL.save_plot()
 
-        # PLOT: Relative error of displacement with relDisp
-        numLines = 1
-        relDisErr = relErr(dZ_leadingOrder(
-            phaseShift[0], U0[0], omega[0], a, R_avg), CoM_disp)
-        CoMDispErr_Plot = PlotStyling(numLines,
-                                      r"$\mathrm{R}_0 / a $", r"Relative Error",
-                                      title=None, loglog=True,
-                                      outputDir=output_dir, figName="collinear-swimmer-wall-CoM_x-disp-error", eps=epsOutput,
-                                      continuousColors=False)
-        CoMDispErr_Plot.make_plot()
-        CoMDispErr_Plot.scatter(
-            R_avg, relDisErr, zorder=1, label="Relative Error")
-        CoMDispErr_Plot.save_plot()
-
     if (len(np.unique(phaseShift)) > 1):
         # PLOT: net displacement of swimmer vs phase Shift
         numLines = 1
@@ -196,20 +182,6 @@ def aggregate_plots(relative_path, output_dir):
             fmt(np.max(epsilon))), loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
         phaseShift_Plot.set_yaxis_scientific()
         phaseShift_Plot.save_plot()
-
-        # PLOT: Relative error of displacement with delta
-        relPhErr = relErr(dZ_leadingOrder(
-            phaseShift, U0[0], omega[0], a, R_avg[0]), CoM_disp)
-        numLines = 1
-        phaseShiftErr_Plot = PlotStyling(numLines,
-                                         r"Phase Shift, $\delta$", r"Relative Error",
-                                         title=None, loglog=True,
-                                         outputDir=output_dir, figName="collinear-swimmer-wall-phaseShift-error", eps=epsOutput,
-                                         continuousColors=False)
-        phaseShiftErr_Plot.make_plot()
-        phaseShiftErr_Plot.scatter(
-            phaseShift, relPhErr, zorder=1, label="Relative Error")
-        phaseShiftErr_Plot.save_plot()
 
     if (len(np.unique(epsilon)) > 1):
         # PLOT: net displacement of swimmer vs epsilon
