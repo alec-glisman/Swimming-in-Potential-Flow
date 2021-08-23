@@ -90,6 +90,25 @@
                 "trace": false,
                 "traceResponse": false
             }
+        },
+        {
+            "name": "(lldb) Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            // Resolved by CMake Tools:
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Debug: build",
+            "program": "${workspaceFolder}/build_debug/tests/./tests",
+            "args": [],
+            "stopAtEntry": false,
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "setupCommands": [],
+            "logging": {
+                "engineLogging": false,
+                "trace": false,
+                "traceResponse": false
+            }
         }
     ]
 }
