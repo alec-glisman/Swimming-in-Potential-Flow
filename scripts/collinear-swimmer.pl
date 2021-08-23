@@ -26,7 +26,7 @@ use warnings;                     # give warnings
 my $simulationTag    = "collinear-swimmer";
 my $projectName      = "bodies_in_potential_flow";
 my $inputDir         = "input";
-my @inputData        = ( "varyRelDisp", "varyDt", "varyEpsilon", "varyPhaseAngle" );
+my @inputData        = ( "varyRelDisp", "varyDt", "varyZHeight", "varyEpsilon", "varyPhaseAngle" );
 my $numSimulationTypes = scalar @inputData;
 my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
 
@@ -155,6 +155,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         # Default parameters
         my $dt          = 1e-6;
         my $R_avg       = 10.0;
+        my $Z_height    = 100.0;
         my $phase_angle = -1.57079632679;
         my $U0          = 1e-2;
         my $omega       = 1.0;
@@ -167,6 +168,9 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
             case ( "varyRelDisp" ) {
                 $R_avg = ${data[$j]};
             }
+            case ( "varyZHeight" ) {
+                $Z_height = ${data[$j]};
+            }        
             case ( "varyPhaseAngle" ) {
                 $phase_angle = ${data[$j]};
             }
@@ -177,7 +181,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         }
 
         # Generate GSD file
-        system( "python " . ${pythonGSDCreation} . " --GSD-path=" . ${gsd_path} . " --dt=" . ${dt} . " --R_avg=" . ${R_avg} . " --phase-angle=" . ${phase_angle} . " --U0=" . ${U0} . " --omega=" . ${omega} ) and die "Unable to generate GSD file: $?, $!";
+        system( "python " . ${pythonGSDCreation} . " --GSD-path=" . ${gsd_path} . " --dt=" . ${dt} . " --R-avg=" . ${R_avg} . " --Z-height=" . ${Z_height} . " --phase-angle=" . ${phase_angle} . " --U0=" . ${U0} . " --omega=" . ${omega} ) and die "Unable to generate GSD file: $?, $!";
         
         # Prepare for simulation
         make_path( "${simulation_dir}/${analysisDir}" );
