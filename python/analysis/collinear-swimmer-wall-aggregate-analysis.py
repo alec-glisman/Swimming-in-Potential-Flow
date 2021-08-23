@@ -92,14 +92,14 @@ def aggregate_plots(relative_path, output_dir):
             f"Failure to load data. No files found in relPath {relative_path}")
 
     # Loop through all simulations and grab the final CoM displacement (x-axis)
-    CoM_disp_x = np.zeros_like(len(gsd_files), dtype=np.double)
-    R_avg = np.zeros_like(CoM_disp_x, dtype=np.double)
-    Z_height = np.zeros_like(CoM_disp_x, dtype=np.double)
-    phaseShift = np.zeros_like(CoM_disp_x, dtype=np.double)
-    U0 = np.zeros_like(CoM_disp_x, dtype=np.double)
-    omega = np.zeros_like(CoM_disp_x, dtype=np.double)
-    epsilon = np.zeros_like(CoM_disp_x, dtype=np.double)
-    final_t = np.zeros_like(CoM_disp_x, dtype=np.double)
+    CoM_disp = np.zeros_like(len(gsd_files), dtype=np.double)
+    R_avg = np.zeros_like(CoM_disp, dtype=np.double)
+    Z_height = np.zeros_like(CoM_disp, dtype=np.double)
+    phaseShift = np.zeros_like(CoM_disp, dtype=np.double)
+    U0 = np.zeros_like(CoM_disp, dtype=np.double)
+    omega = np.zeros_like(CoM_disp, dtype=np.double)
+    epsilon = np.zeros_like(CoM_disp, dtype=np.double)
+    final_t = np.zeros_like(CoM_disp, dtype=np.double)
 
     for i in range(len(gsd_files)):
 
@@ -107,16 +107,19 @@ def aggregate_plots(relative_path, output_dir):
         gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(
             gsd_files[i].trajectory.file.nframes - 1)
         final_t[i] = gsd_files[i].snapshot.log['integrator/t']
-        # particle 1, x-coordinate
-        CoM_disp_x[i] = gsd_files[i].snapshot.log['particles/double_position'][1][0]
+        CoM_disp_comp = gsd_files[i].snapshot.log['particles/double_position'][1]
 
         # Data from initial frame (not 0)
         gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(1)
         R_avg[i] = gsd_files[i].snapshot.log['swimmer/R_avg']
+        Z_height[i] = gsd_files[i].snapshot.log['swimmer/Z_height']
         phaseShift[i] = gsd_files[i].snapshot.log['swimmer/phase_shift']
         U0[i] = gsd_files[i].snapshot.log['swimmer/U0']
         omega[i] = gsd_files[i].snapshot.log['swimmer/omega']
         epsilon[i] = U0[i] / R_avg[i] / omega[i]
+        CoM_disp_comp -= gsd_files[i].snapshot.log['particles/double_position'][1]
+
+        CoM_disp = np.linalg.norm(CoM_disp_comp)
 
 # !SECTION (Load data)
 
