@@ -261,24 +261,28 @@ def aggregate_plots(relative_path, output_dir):
         # Find scaling of CoM_disp_x vs. relDispEqbm
         try:
             idx = np.argsort(R_avg)
-            CoM_disp_x_srt = CoM_disp_x[idx]
+            CoM_disp_x_srt = CoM_disp[idx]
             relDispEqbm_srt = R_avg[idx]
 
             m, b = np.polyfit(np.log(np.abs(relDispEqbm_srt)),
                               np.log(np.abs(CoM_disp_x_srt)), 1)
 
-            print(f"ln(CoM_disp_x) = {m} * ln(relDispEqbm) + {b}",  file=f)
+            print(f"ln(CoM_disp_x) = {m} * ln(R_avg) + {b}",  file=f)
             print("\n", file=f)
 
         except:
             pass
 
-        print("CoM_disp_x:", file=f)
-        print(CoM_disp_x,   file=f)
+        print("CoM_disp:", file=f)
+        print(CoM_disp,   file=f)
         print("", file=f)
 
-        print("relDispEqbm:", file=f)
+        print("R_avg:", file=f)
         print(R_avg,    file=f)
+        print("", file=f)
+
+        print("Z_height:", file=f)
+        print(Z_height,    file=f)
         print("", file=f)
 
         print("final_t:", file=f)
