@@ -156,7 +156,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         # Simulation variables
         my $dt          = 1e-6;
         my $R_avg       = 10.0;
-        my $Z_height    = 100.0;
+        my $Z_height    = 10.0;
         my $phase_angle = -1.57079632679;
         my $U0          = 1e-1;
         my $omega       = 1.0;
