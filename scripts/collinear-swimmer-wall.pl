@@ -23,7 +23,7 @@ use warnings;                     # give warnings
 # SECTION: Input variables that user must specify before running script
 
 # Input variables
-my $simulationTag    = "collinear-swimmer";
+my $simulationTag    = "collinear-swimmer-wall";
 my $projectName      = "bodies_in_potential_flow";
 my $inputDir         = "input";
 my @inputData        = ( "varyRelDisp", "varyDt", "varyZHeight", "varyEpsilon", "varyPhaseAngle" );
@@ -31,9 +31,9 @@ my $numSimulationTypes = scalar @inputData;
 my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
 
 # Python variables
-my $pythonGSDCreation = "python/initial_configurations/" . "collinear-swimmer-configuration.py";
-my $pythonAggregrateAnalysis   = "python/analysis/" . "collinear-swimmer-aggregate-analysis.py";
-my $pythonIndividualAnalysis   = "python/analysis/" . "collinear-swimmer-individual-analysis.py";
+my $pythonGSDCreation = "python/initial_configurations/" . "collinear-swimmer-wall-configuration.py";
+my $pythonAggregrateAnalysis   = "python/analysis/" . "collinear-swimmer-wall-aggregate-analysis.py";
+my $pythonIndividualAnalysis   = "python/analysis/" . "collinear-swimmer-wall-individual-analysis.py";
 
 # Output variables
 my $curDate          = strftime('%Y-%m-%d', localtime);
