@@ -137,7 +137,7 @@ def aggregate_plots(relative_path, output_dir):
         CoM_Plot = PlotStyling(numLines,
                                r"$\mathrm{R}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
                                title=None, loglog=False,
-                               outputDir=output_dir, figName="collinear-swimmer-CoM_x-disp", eps=epsOutput,
+                               outputDir=output_dir, figName="collinear-swimmer-wall-CoM_x-disp", eps=epsOutput,
                                continuousColors=False)
         # Show numerical data points
         CoM_Plot.make_plot()
@@ -158,7 +158,7 @@ def aggregate_plots(relative_path, output_dir):
         CoM_PlotLL = PlotStyling(numLines,
                                  r"$\mathrm{R}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
                                  title=None, loglog=True,
-                                 outputDir=output_dir, figName="collinear-swimmer-CoM_x-disp-loglog", eps=epsOutput,
+                                 outputDir=output_dir, figName="collinear-swimmer-wall-CoM_x-disp-loglog", eps=epsOutput,
                                  continuousColors=False)
         CoM_PlotLL.make_plot()
         CoM_PlotLL.scatter_dashed(R_avg, np.abs(
@@ -174,7 +174,7 @@ def aggregate_plots(relative_path, output_dir):
         CoMDispErr_Plot = PlotStyling(numLines,
                                       r"$\mathrm{R}_0 / a $", r"Relative Error",
                                       title=None, loglog=True,
-                                      outputDir=output_dir, figName="collinear-swimmer-CoM_x-disp-error", eps=epsOutput,
+                                      outputDir=output_dir, figName="collinear-swimmer-wall-CoM_x-disp-error", eps=epsOutput,
                                       continuousColors=False)
         CoMDispErr_Plot.make_plot()
         CoMDispErr_Plot.scatter(
@@ -187,7 +187,7 @@ def aggregate_plots(relative_path, output_dir):
         phaseShift_Plot = PlotStyling(numLines,
                                       r"Phase Shift, $\delta$", r"$\Delta \mathrm{R}_{2} / a$",
                                       title=None, loglog=False,
-                                      outputDir=output_dir, figName="collinear-swimmer-phaseShift", eps=epsOutput,
+                                      outputDir=output_dir, figName="collinear-swimmer-wall-phaseShift", eps=epsOutput,
                                       continuousColors=False)
         phaseShift_Plot.make_plot()
         phaseShift_Plot.scatter_dashed(
@@ -204,7 +204,7 @@ def aggregate_plots(relative_path, output_dir):
         phaseShiftErr_Plot = PlotStyling(numLines,
                                          r"Phase Shift, $\delta$", r"Relative Error",
                                          title=None, loglog=True,
-                                         outputDir=output_dir, figName="collinear-swimmer-phaseShift-error", eps=epsOutput,
+                                         outputDir=output_dir, figName="collinear-swimmer-wall-phaseShift-error", eps=epsOutput,
                                          continuousColors=False)
         phaseShiftErr_Plot.make_plot()
         phaseShiftErr_Plot.scatter(
@@ -217,7 +217,7 @@ def aggregate_plots(relative_path, output_dir):
         eps_Plot = PlotStyling(numLines,
                                r"$\epsilon = \frac{\mathrm{U}_0 / \omega}{\mathrm{R}_0}$", r"$\Delta \mathrm{R}_{2} / a$",
                                title=None, loglog=False,
-                               outputDir=output_dir, figName="collinear-swimmer-eps-scaling-CoM_x-disp", eps=epsOutput,
+                               outputDir=output_dir, figName="collinear-swimmer-wall-eps-scaling-CoM_x-disp", eps=epsOutput,
                                continuousColors=False)
         eps_Plot.make_plot()
         eps_Plot.scatter(epsilon, CoM_disp,
@@ -230,7 +230,7 @@ def aggregate_plots(relative_path, output_dir):
         epsLL_Plot = PlotStyling(numLines,
                                  r"$\epsilon = \frac{\mathrm{U}_0 / \omega}{\mathrm{R}_0}$", r"$\Delta \mathrm{R}_{2} / a$",
                                  title=None, loglog=True,
-                                 outputDir=output_dir, figName="collinear-swimmer-eps-scaling-CoM_x-disp-loglog", eps=epsOutput,
+                                 outputDir=output_dir, figName="collinear-swimmer-wall-eps-scaling-CoM_x-disp-loglog", eps=epsOutput,
                                  continuousColors=False)
         epsLL_Plot.make_plot()
         epsLL_Plot.scatter_dashed(epsilon, CoM_disp,
