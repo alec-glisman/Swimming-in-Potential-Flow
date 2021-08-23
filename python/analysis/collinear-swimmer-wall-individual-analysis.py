@@ -106,7 +106,7 @@ def aggregate_plots(relative_path, output_dir):
 
     # relative separation between particle pairs
     R_loc = positions[1, :, :]
-    DR_loc = positions[1, :, :] - positions[1, :, 0]
+    DR_loc = R_loc - positions[1, :, 0].transpose()
     R_12 = positions[0, :, :] - R_loc
     R_32 = positions[2, :, :] - R_loc
     # distance between particle pairs
