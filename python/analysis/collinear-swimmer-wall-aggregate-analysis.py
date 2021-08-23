@@ -158,10 +158,46 @@ def aggregate_plots(relative_path, output_dir):
         CoM_PlotLL = PlotStyling(numLines,
                                  r"$\mathrm{R}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
                                  title=None, loglog=True,
-                                 outputDir=output_dir, figName="collinear-swimmer-wall-CoM_x-disp-loglog", eps=epsOutput,
+                                 outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-loglog", eps=epsOutput,
                                  continuousColors=False)
         CoM_PlotLL.make_plot()
         CoM_PlotLL.scatter_dashed(R_avg, np.abs(
+            CoM_disp), zorder=2, label="Simulation")
+        CoM_PlotLL.legend(title=r"$\epsilon \leq$" + "{}".format(
+            fmt(np.max(epsilon))), loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
+        CoM_PlotLL.save_plot()
+
+    if (len(np.unique(Z_height)) > 1):
+        # PLOT: net displacement of swimmer vs. distance between spheres
+        numLines = 1
+        CoM_Plot = PlotStyling(numLines,
+                               r"$\mathrm{Z}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
+                               title=None, loglog=False,
+                               outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-height", eps=epsOutput,
+                               continuousColors=False)
+        # Show numerical data points
+        CoM_Plot.make_plot()
+        CoM_Plot.scatter_dashed(Z_height, CoM_disp,
+                                zorder=1, label="Simulation")
+        # Add legend
+        CoM_Plot.legend(title=r"$\epsilon \leq$" + "{}".format(fmt(np.max(epsilon))),
+                        loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
+        # Adjust ticks and tick labels
+        CoM_Plot.ax.set_xlim([1.9, 6])
+        # CoM_Plot.set_major_minor_ticks(
+        #     xMajorLoc=1, xMinorLoc=0.5, yMajorLoc=None, yMinorLoc=None)
+        CoM_Plot.set_yaxis_scientific()
+        CoM_Plot.save_plot()
+
+        # PLOT: log-log of net displacement of swimmer vs. distance between spheres
+        numLines = 1
+        CoM_PlotLL = PlotStyling(numLines,
+                                 r"$\mathrm{Z}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
+                                 title=None, loglog=True,
+                                 outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-height-loglog", eps=epsOutput,
+                                 continuousColors=False)
+        CoM_PlotLL.make_plot()
+        CoM_PlotLL.scatter_dashed(Z_height, np.abs(
             CoM_disp), zorder=2, label="Simulation")
         CoM_PlotLL.legend(title=r"$\epsilon \leq$" + "{}".format(
             fmt(np.max(epsilon))), loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
@@ -189,7 +225,7 @@ def aggregate_plots(relative_path, output_dir):
         eps_Plot = PlotStyling(numLines,
                                r"$\epsilon = \frac{\mathrm{U}_0 / \omega}{\mathrm{R}_0}$", r"$\Delta \mathrm{R}_{2} / a$",
                                title=None, loglog=False,
-                               outputDir=output_dir, figName="collinear-swimmer-wall-eps-scaling-CoM_x-disp", eps=epsOutput,
+                               outputDir=output_dir, figName="collinear-swimmer-wall-eps-scaling-CoM-disp", eps=epsOutput,
                                continuousColors=False)
         eps_Plot.make_plot()
         eps_Plot.scatter(epsilon, CoM_disp,
@@ -202,7 +238,7 @@ def aggregate_plots(relative_path, output_dir):
         epsLL_Plot = PlotStyling(numLines,
                                  r"$\epsilon = \frac{\mathrm{U}_0 / \omega}{\mathrm{R}_0}$", r"$\Delta \mathrm{R}_{2} / a$",
                                  title=None, loglog=True,
-                                 outputDir=output_dir, figName="collinear-swimmer-wall-eps-scaling-CoM_x-disp-loglog", eps=epsOutput,
+                                 outputDir=output_dir, figName="collinear-swimmer-wall-eps-scaling-CoM-disp-loglog", eps=epsOutput,
                                  continuousColors=False)
         epsLL_Plot.make_plot()
         epsLL_Plot.scatter_dashed(epsilon, CoM_disp,
