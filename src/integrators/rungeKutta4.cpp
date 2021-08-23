@@ -348,11 +348,26 @@ rungeKutta4::momentumLinAngFree()
 void
 rungeKutta4::articulationVel(double dimensional_time)
 {
-    m_velArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
+    // "identity tensors"
+    Eigen::Matrix3d I       = Eigen::Matrix3d::Identity(3, 3); // [3 x 3]
+    Eigen::Matrix3d I_tilde = Eigen::Matrix3d::Identity(3, 3); // [3 x 3]
+    I_tilde(2, 2)           = -1;
 
-    m_velArtic(0) = m_systemParam.U0 * cos(m_systemParam.omega * dimensional_time);
-    m_velArtic(6) =
+    // ANCHOR: Orientation vectors, q = R_1 - R_3
+    Eigen::Vector3d q = m_system->positions().segment<3>(0) - m_system->positions().segment<3>(6);
+    Eigen::Vector3d q_tilde = I_tilde * q;
+
+    // articulation velocity magnitudes
+    double v1_mag = m_systemParam.U0 * cos(m_systemParam.omega * dimensional_time);
+    double v3_mag =
         m_systemParam.U0 * cos(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
+
+    // Zero and then calculate m_velArtic
+    m_velArtic                             = Eigen::VectorXd::Zero(3 * m_system->numParticles());
+    m_velArtic.segment<3>(3 * 0).noalias() = v1_mag * q;
+    m_velArtic.segment<3>(3 * 2).noalias() = v3_mag * q;
+    m_velArtic.segment<3>(3 * 3).noalias() = v1_mag * q_tilde;
+    m_velArtic.segment<3>(3 * 5).noalias() = v3_mag * q_tilde;
 }
 
 /* REVIEW[epic=Change,order=4]: Change assignment of m_accArtic for different systems */
