@@ -22,6 +22,20 @@ use warnings;                     # give warnings
 
 # SECTION: Input variables that user must specify before running script
 
+# Simulation variables
+my $dt          = 1e-6;
+my $R_avg       = 10.0;
+my $Z_height    = 100.0;
+my $phase_angle = -1.57079632679;
+my $U0          = 1e-1;
+my $omega       = 1.0;
+
+# Compiler variables
+my $build         = "Release";                # OPTIONS: Release, Debug, Profile
+my $enableTesting = "True";                   # OPTIONS: (False) OFF, (True) ON
+my $buildDir      = "build";                  # Title whatever you want build folder to be
+my $generator     = "Unix Makefiles";         # ONLY TESTED WITH UNIX
+
 # Input variables
 my $simulationTag    = "collinear-swimmer-wall";
 my $projectName      = "bodies_in_potential_flow";
@@ -42,6 +56,7 @@ my $analysisDir      = "figures";
 # Get the name of computer script is running on
 my $host = `uname -n`;
 chomp(my $home = `echo ~`);
+my $cwd           = cwd();
 
 # Compiler variables
 my $compiler = "";
@@ -56,12 +71,6 @@ if ( (index($host, "MacBook-Pro") != -1) or (index($host, "MBP") != -1) ) {
     $compiler    = "shear";
     $numThreads  = "";
 }
-
-my $build         = "Release";                # OPTIONS: Release, Debug, Profile
-my $enableTesting = "True";                   # OPTIONS: (False) OFF, (True) ON
-my $buildDir      = "build";                  # Title whatever you want build folder to be
-my $generator     = "Unix Makefiles";         # ONLY TESTED WITH UNIX
-my $cwd           = cwd();
 
 # !SECTION (Input variables that user must specify before running script)
 
@@ -151,14 +160,6 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         my $simulation_dir = ${tempOutputDir} . "/" . "sim_" . ${simulationIter};
         make_path( $simulation_dir );
         my $gsd_path = ${simulation_dir} . "/" . "data.gsd";
-
-        # Default parameters
-        my $dt          = 1e-6;
-        my $R_avg       = 10.0;
-        my $Z_height    = 100.0;
-        my $phase_angle = -1.57079632679;
-        my $U0          = 1e-2;
-        my $omega       = 1.0;
 
         # Modify default preferences for each simulation run
         switch($inputData[$i]) {
