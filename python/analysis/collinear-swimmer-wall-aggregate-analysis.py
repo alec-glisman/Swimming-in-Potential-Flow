@@ -92,13 +92,14 @@ def aggregate_plots(relative_path, output_dir):
             f"Failure to load data. No files found in relPath {relative_path}")
 
     # Loop through all simulations and grab the final CoM displacement (x-axis)
-    CoM_disp_x = np.zeros(len(gsd_files), dtype=np.double)
-    R_avg = np.zeros(len(gsd_files), dtype=np.double)
-    phaseShift = np.zeros(len(gsd_files), dtype=np.double)
-    U0 = np.zeros(len(gsd_files), dtype=np.double)
-    omega = np.zeros(len(gsd_files), dtype=np.double)
-    epsilon = np.zeros(len(gsd_files), dtype=np.double)
-    final_t = np.zeros(len(gsd_files), dtype=np.double)
+    CoM_disp_x = np.zeros_like(len(gsd_files), dtype=np.double)
+    R_avg = np.zeros_like(CoM_disp_x, dtype=np.double)
+    Z_height = np.zeros_like(CoM_disp_x, dtype=np.double)
+    phaseShift = np.zeros_like(CoM_disp_x, dtype=np.double)
+    U0 = np.zeros_like(CoM_disp_x, dtype=np.double)
+    omega = np.zeros_like(CoM_disp_x, dtype=np.double)
+    epsilon = np.zeros_like(CoM_disp_x, dtype=np.double)
+    final_t = np.zeros_like(CoM_disp_x, dtype=np.double)
 
     for i in range(len(gsd_files)):
 
