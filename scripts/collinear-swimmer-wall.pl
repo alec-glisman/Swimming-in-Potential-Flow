@@ -55,7 +55,7 @@ my $compiler = "";
 my $numThreads = "";
 if ( (index($host, "MacBook-Pro") != -1) or (index($host, "MBP") != -1) ) {
     $compiler    = "macOS"; 
-    $numThreads = "16";
+    $numThreads = "8";
 } elsif (( index($host, "Alec-Glisman-PC-Ubuntu") != -1 ) or ( index($host, "Alec-Glisman-PC-Windows") != -1 ) or ( index($host, "s") != -1 )) {
     $compiler    = "PC-Ubuntu";
     $numThreads  = "24";
