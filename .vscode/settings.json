@@ -67,6 +67,7 @@
         "rloc",
         "scipy",
         "spdlog",
+        "submodule",
         "telli",
         "traj",
         "viridis",
