@@ -27,7 +27,7 @@ flame_graph_base_dir="${base_dir}/profile/FlameGraph"
 # perf instruments arguments
 trace_name="bodies-in-potential-flow-profile.perf"
 trace_output="${output_dir}/${trace_name}"
-executable="${base_dir}/build_profile/src/bodies_in_potential_flow"
+executable="${base_dir}/build_profile/src/./bodies_in_potential_flow"
 args="${base_dir}/input/starter_gsd/collinear_swimmer_wall.gsd ${output_dir}/output"
 
 # configure project
@@ -37,8 +37,10 @@ cmake -G "Unix Makefiles" -B "build_profile" -DCMAKE_BUILD_TYPE=Profile -DENABLE
 cmake --build "build_profile" -j
 
 # profile project
-perf record --all-cpus -g --output="${trace_output}" "./${executable}" ${args}
-cp "${trace_output}" "${flame_graph_base_dir}/${trace_name}"
+sudo perf record --all-cpus -g "${executable}" ${args}  # default output is 'perf.data'
+cp "perf.data" "${flame_graph_base_dir}/perf.data"
+cp "perf.data" "${output_dir}/perf.data"
+rm "perf.data"
 
-perf script | "./${flame_graph_base_dir}/stackcollapse-perf.pl" > out.perf_folded
-"./${flame_graph_base_dir}/flamegraph.pl" out.perf-folded > perf-kernel.svg
+perf script | ".${flame_graph_base_dir}/./stackcollapse-perf.pl" > out.perf_folded
+".${flame_graph_base_dir}/./flamegraph.pl" out.perf-folded > perf-kernel.svg
