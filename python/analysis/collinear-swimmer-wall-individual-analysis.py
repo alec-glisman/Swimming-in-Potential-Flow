@@ -295,7 +295,7 @@ def aggregate_plots(relative_path, output_dir):
     with open(file, "w") as f:
         print(f"R_avg = {R_avg}", file=f)
         print(f"Z_height = {Z_height}", file=f)
-        print(f"\Delta R_2 = {positions[3, -1] - positions[3, 0]}", file=f)
+        print(f"\Delta R_2 = {DR_loc[:,-1]}", file=f)
 
 # !SECTION (Output data)
 
