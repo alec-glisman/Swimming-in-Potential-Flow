@@ -28,13 +28,13 @@ use warnings;                     # give warnings
 
 # SECTION: Input variables that user must specify before running script
 
-# Compiler variables
+# Compiler
 my $build         = "Release";                # OPTIONS: Release, Debug, Profile
 my $enableTesting = "True";                   # OPTIONS: (False) OFF, (True) ON
 my $buildDir      = "build";                  # Title whatever you want build folder to be
 my $generator     = "Unix Makefiles";         # ONLY TESTED WITH UNIX
 
-# Input variables
+# C++ Simulation
 my $simulationTag    = "collinear-swimmer-wall";
 my $projectName      = "bodies_in_potential_flow";
 my $inputDir         = "input";
@@ -42,21 +42,22 @@ my @inputData        = ( "varyRelDisp", "varyDt", "varyZHeight", "varyEpsilon", 
 my $numSimulationTypes = scalar @inputData;
 my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
 
-# Python variables
+# Python Numerical Analysis
 my $pythonGSDCreation = "python/initial_configurations/" . "collinear-swimmer-wall-configuration.py";
 my $pythonAggregrateAnalysis   = "python/analysis/" . "collinear-swimmer-wall-aggregate-analysis.py";
 my $pythonIndividualAnalysis   = "python/analysis/" . "collinear-swimmer-wall-individual-analysis.py";
 
-# Output variables
+# Output path
 my $curDate          = strftime('%Y-%m-%d', localtime);
 my $analysisDir      = "figures";
 
-# Host variables
+# Host hardware
 my %options;
 my $info = Sys::Info->new;
 my $cpu  = $info->device( CPU => %options );
 my $numThreads = $cpu->count;
 
+# Host path
 chomp(my $home = `echo ~`);
 my $cwd           = cwd();
 
