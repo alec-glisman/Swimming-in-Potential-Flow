@@ -25,10 +25,10 @@
             "cwd": "${workspaceFolder}",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/python/analysis/collinear-swimmer-aggregate-analysis.py",
+            "program": "${workspaceFolder}/python/analysis/collinear-swimmer-wall-aggregate-analysis.py",
             "console": "integratedTerminal",
             "args": [
-                "--relative-path=${workspaceFolder}/data/2021-08-19.09-18-08_collinear-swimmer_varyRelDisp",
+                "--relative-path=${workspaceFolder}/data/2021-08-23.17-05-55_collinear-swimmer-wall_varyRelDisp",
                 "--output-dir=figures"
             ]
         },
@@ -37,7 +37,7 @@
             "cwd": "${workspaceFolder}",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/python/analysis/collinear-swimmer-individual-analysis.py",
+            "program": "${workspaceFolder}/python/analysis/collinear-swimmer-wall-individual-analysis.py",
             "console": "integratedTerminal",
             "args": [
                 "--relative-path=${workspaceFolder}/temp_2021-08-18.14-20-10_collinear-swimmer_varyRelDisp/sim_6",
