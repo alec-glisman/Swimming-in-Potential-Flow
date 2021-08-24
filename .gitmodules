@@ -10,3 +10,6 @@
 [submodule "include/gsd"]
 	path = include/gsd
 	url = https://github.com/glotzerlab/gsd.git
+[submodule "profile/FlameGraph"]
+	path = profile/FlameGraph
+	url = https://github.com/brendangregg/FlameGraph.git
