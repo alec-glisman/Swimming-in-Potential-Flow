@@ -271,7 +271,7 @@ def aggregate_plots(relative_path, output_dir):
 
     with open(file, "w") as f:
 
-        Empty_Plot = PlotStyling(r"", r"",
+        Empty_Plot = PlotStyling(1, r"", r"",
                                  title=None, loglog=False,
                                  outputDir=output_dir, figName="", eps=epsOutput,
                                  continuousColors=False)
