@@ -379,6 +379,7 @@ rungeKutta4::articulationVel(double dimensional_time)
 {
     // ANCHOR: Orientation vectors, q = R_1 - R_3
     Eigen::Vector3d q = m_system->positions().segment<3>(0) - m_system->positions().segment<3>(6);
+    q.normalize();
     Eigen::Vector3d q_tilde = m_I_tilde * q;
 
     // articulation velocity magnitudes
@@ -400,6 +401,7 @@ rungeKutta4::articulationAcc(double dimensional_time)
 {
     // ANCHOR: Orientation vectors, q = R_1 - R_3
     Eigen::Vector3d q = m_system->positions().segment<3>(0) - m_system->positions().segment<3>(6);
+    q.normalize();
     Eigen::Vector3d q_tilde = m_I_tilde * q;
 
     // articulation acceleration magnitudes
