@@ -154,7 +154,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         my $gsd_path = ${simulation_dir} . "/" . "data.gsd";
 
         # Simulation variables
-        my $dt          = 1e-6;
+        my $dt          = 1e-2;
         my $R_avg       = 10.0;
         my $Z_height    = 10.0;
         my $phase_angle = -1.57079632679;

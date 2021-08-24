@@ -154,7 +154,7 @@ def aggregate_plots(relative_path, output_dir):
         time, Dr_Loc, zorder=1, label=r"$2$")
     locPos_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
         fmt(np.max(Z_height))),
-        loc='best', ncol=1, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
+        loc='best', ncol=1, bbox_to_anchor=(0.05, 0.05, 0.9, 0.9))
     locPos_Plot.save_plot()
 
     # PLOT: Relative oscillator displacement (x-axis)
@@ -196,7 +196,7 @@ def aggregate_plots(relative_path, output_dir):
     # Add legend
     oscDisErr_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
         fmt(np.max(Z_height))),
-        loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
+        loc='best', ncol=2, bbox_to_anchor=(0.05, 0.05, 0.9, 0.9))
     oscDisErr_Plot.save_plot()
 
     # PLOT: Relative oscillator velocity (x-axis)
@@ -238,7 +238,7 @@ def aggregate_plots(relative_path, output_dir):
     # Add legend
     oscVelErr_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
         fmt(np.max(Z_height))),
-        loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
+        loc='best', ncol=2, bbox_to_anchor=(0.05, 0.05, 0.9, 0.9))
     oscVelErr_Plot.save_plot()
 
     # PLOT: Relative oscillator acceleration (x-axis)
