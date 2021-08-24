@@ -146,13 +146,12 @@ def aggregate_plots(relative_path, output_dir):
                                continuousColors=False)
         # Show numerical data points
         CoM_Plot.make_plot()
-        CoM_Plot.scatter_dashed(R_avg_srt, CoM_disp_srt,
+        CoM_Plot.scatter_dashed(R_avg_srt[R_avg_srt <= 6.0], CoM_disp_srt[R_avg_srt <= 6.0],
                                 zorder=1, label="Simulation")
         # Add legend
         CoM_Plot.legend(title=r"$\epsilon \leq$" + "{}".format(fmt(np.max(epsilon))),
                         loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
         # Adjust ticks and tick labels
-        CoM_Plot.ax.set_xlim([1.9, 6])
         # CoM_Plot.set_major_minor_ticks(
         #     xMajorLoc=1, xMinorLoc=0.5, yMajorLoc=None, yMinorLoc=None)
         CoM_Plot.set_yaxis_scientific()
