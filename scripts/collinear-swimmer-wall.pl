@@ -55,7 +55,7 @@ my $analysisDir      = "figures";
 my %options;
 my $info = Sys::Info->new;
 my $cpu  = $info->device( CPU => %options );
-my $numThreads = $cpu->count;
+my $numThreads = $cpu->count / 2;
 
 # Host path
 chomp(my $home = `echo ~`);
