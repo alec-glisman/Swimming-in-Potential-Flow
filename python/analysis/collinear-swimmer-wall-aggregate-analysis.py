@@ -92,7 +92,7 @@ def aggregate_plots(relative_path, output_dir):
             f"Failure to load data. No files found in relPath {relative_path}")
 
     # Loop through all simulations and grab the final CoM displacement (x-axis)
-    CoM_disp = np.zeros_like(len(gsd_files), dtype=np.double)
+    CoM_disp = np.zeros(len(gsd_files), dtype=np.double)
     R_avg = np.zeros_like(CoM_disp, dtype=np.double)
     Z_height = np.zeros_like(CoM_disp, dtype=np.double)
     phaseShift = np.zeros_like(CoM_disp, dtype=np.double)
@@ -132,6 +132,11 @@ def aggregate_plots(relative_path, output_dir):
 # SECTION: Plots
 
     if (len(np.unique(R_avg)) > 1):
+
+        idx = np.argsort(R_avg)
+        CoM_disp_srt = CoM_disp[idx]
+        R_avg_srt = R_avg[idx]
+
         # PLOT: net displacement of swimmer vs. distance between spheres
         numLines = 1
         CoM_Plot = PlotStyling(numLines,
@@ -141,7 +146,7 @@ def aggregate_plots(relative_path, output_dir):
                                continuousColors=False)
         # Show numerical data points
         CoM_Plot.make_plot()
-        CoM_Plot.scatter_dashed(R_avg, CoM_disp,
+        CoM_Plot.scatter_dashed(R_avg_srt, CoM_disp_srt,
                                 zorder=1, label="Simulation")
         # Add legend
         CoM_Plot.legend(title=r"$\epsilon \leq$" + "{}".format(fmt(np.max(epsilon))),
@@ -161,13 +166,18 @@ def aggregate_plots(relative_path, output_dir):
                                  outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-loglog", eps=epsOutput,
                                  continuousColors=False)
         CoM_PlotLL.make_plot()
-        CoM_PlotLL.scatter_dashed(R_avg, np.abs(
-            CoM_disp), zorder=2, label="Simulation")
+        CoM_PlotLL.scatter_dashed(R_avg_srt, np.abs(
+            CoM_disp_srt), zorder=2, label="Simulation")
         CoM_PlotLL.legend(title=r"$\epsilon \leq$" + "{}".format(
             fmt(np.max(epsilon))), loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
         CoM_PlotLL.save_plot()
 
     if (len(np.unique(Z_height)) > 1):
+
+        idx = np.argsort(Z_height)
+        CoM_disp_srt = CoM_disp[idx]
+        Z_height_srt = Z_height[idx]
+
         # PLOT: net displacement of swimmer vs. distance between spheres
         numLines = 1
         CoM_Plot = PlotStyling(numLines,
@@ -177,7 +187,7 @@ def aggregate_plots(relative_path, output_dir):
                                continuousColors=False)
         # Show numerical data points
         CoM_Plot.make_plot()
-        CoM_Plot.scatter_dashed(Z_height, CoM_disp,
+        CoM_Plot.scatter_dashed(Z_height_srt, CoM_disp_srt,
                                 zorder=1, label="Simulation")
         # Add legend
         CoM_Plot.legend(title=r"$\epsilon \leq$" + "{}".format(fmt(np.max(epsilon))),
@@ -197,13 +207,18 @@ def aggregate_plots(relative_path, output_dir):
                                  outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-height-loglog", eps=epsOutput,
                                  continuousColors=False)
         CoM_PlotLL.make_plot()
-        CoM_PlotLL.scatter_dashed(Z_height, np.abs(
-            CoM_disp), zorder=2, label="Simulation")
+        CoM_PlotLL.scatter_dashed(Z_height_srt, np.abs(
+            CoM_disp_srt), zorder=2, label="Simulation")
         CoM_PlotLL.legend(title=r"$\epsilon \leq$" + "{}".format(
             fmt(np.max(epsilon))), loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
         CoM_PlotLL.save_plot()
 
     if (len(np.unique(phaseShift)) > 1):
+
+        idx = np.argsort(phaseShift)
+        CoM_disp_srt = CoM_disp[idx]
+        phaseShift_srt = phaseShift[idx]
+
         # PLOT: net displacement of swimmer vs phase Shift
         numLines = 1
         phaseShift_Plot = PlotStyling(numLines,
@@ -213,7 +228,7 @@ def aggregate_plots(relative_path, output_dir):
                                       continuousColors=False)
         phaseShift_Plot.make_plot()
         phaseShift_Plot.scatter_dashed(
-            phaseShift, CoM_disp, zorder=2, label="Simulation")
+            phaseShift_srt, CoM_disp_srt, zorder=2, label="Simulation")
         phaseShift_Plot.legend(title=r"$\epsilon \leq$" + "{}".format(
             fmt(np.max(epsilon))), loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
         phaseShift_Plot.set_yaxis_scientific()
@@ -241,8 +256,8 @@ def aggregate_plots(relative_path, output_dir):
                                  outputDir=output_dir, figName="collinear-swimmer-wall-eps-scaling-CoM-disp-loglog", eps=epsOutput,
                                  continuousColors=False)
         epsLL_Plot.make_plot()
-        epsLL_Plot.scatter_dashed(epsilon, CoM_disp,
-                                  zorder=2, label="Simulation")
+        epsLL_Plot.scatter(epsilon, CoM_disp,
+                           zorder=2, label="Simulation")
         epsLL_Plot.legend(
             loc='best', bbox_to_anchor=(0.05, 0.01, 0.5, 0.98))
         epsLL_Plot.save_plot()
