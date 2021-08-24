@@ -51,24 +51,14 @@ my $pythonIndividualAnalysis   = "python/analysis/" . "collinear-swimmer-wall-in
 my $curDate          = strftime('%Y-%m-%d', localtime);
 my $analysisDir      = "figures";
 
-# Get the name of computer script is running on
-my $host = `uname -n`;
+# Host variables
+my %options;
+my $info = Sys::Info->new;
+my $cpu  = $info->device( CPU => %options );
+my $numThreads = $cpu->count;
+
 chomp(my $home = `echo ~`);
 my $cwd           = cwd();
-
-# Compiler variables
-my $compiler = "";
-my $numThreads = "";
-if ( (index($host, "MacBook-Pro") != -1) or (index($host, "MBP") != -1) ) {
-    $compiler    = "macOS"; 
-    $numThreads = "8";
-} elsif (( index($host, "Alec-Glisman-PC-Ubuntu") != -1 ) or ( index($host, "Alec-Glisman-PC-Windows") != -1 ) or ( index($host, "s") != -1 )) {
-    $compiler    = "PC-Ubuntu";
-    $numThreads  = "24";
-} elsif (( index($host, "shear") != -1 ) or ( index($host, "s") != -1 )) {
-    $compiler    = "shear";
-    $numThreads  = "";
-}
 
 # !SECTION (Input variables that user must specify before running script)
 
