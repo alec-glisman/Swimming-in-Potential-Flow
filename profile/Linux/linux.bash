@@ -4,19 +4,21 @@
 
 # Commonly used perf commands
 # perf stat
-#   This command provides overall statistics for common performance events, including instructions executed and clock cycles consumed. Options allow for selection of events other than the default measurement events.
+#   provides overall statistics for common performance events, including instructions executed and clock cycles consumed. Options allow for selection of events other than the default measurement events.
 # perf record
-#   This command records performance data into a file, 'perf.data', which can be later analyzed using the 'perf report' command.
+#   records performance data into a file, 'perf.data', which can be later analyzed using the 'perf report' command.
 # perf report
-#   This command reads and displays the performance data from the 'perf.data' file created by 'perf record'.
+#   reads and displays the performance data from the 'perf.data' file created by 'perf record'.
 # perf list
-#   This command lists the events available on a particular machine. These events will vary based on performance monitoring hardware and software configuration of the system.
+#   lists the events available on a particular machine. These events will vary based on performance monitoring hardware and software configuration of the system.
 # perf top
-#   This command performs a similar function to the 'top' utility. It generates and displays a performance counter profile in realtime.
+#   performs a similar function to the 'top' utility. It generates and displays a performance counter profile in realtime.
 # perf trace
-#   This command performs a similar function to the 'strace' tool. It monitors the system calls used by a specified thread or process and all signals received by that application.
+#   performs a similar function to the 'strace' tool. It monitors the system calls used by a specified thread or process and all signals received by that application.
 # perf help
-#   This command displays a complete list of 'perf' commands.
+#   displays a complete list of 'perf' commands.
+# perf script
+#   reads perf.data (created by perf record) and display trace output
 
 
 # variables
@@ -38,9 +40,9 @@ cmake --build "build_profile" -j
 
 # profile project
 sudo perf record --all-cpus -g "${executable}" ${args}  # default output is 'perf.data'
-cp "perf.data" "${flame_graph_base_dir}/perf.data"
-cp "perf.data" "${output_dir}/perf.data"
-rm "perf.data"
+cp "perf.data" "${flame_graph_base_dir}/perf.data"      # copy output to FlameGraph repo
+mv "perf.data" "${output_dir}/perf.data"                # move output to simulation output
 
+# visualize results
 perf script | ".${flame_graph_base_dir}/./stackcollapse-perf.pl" > out.perf_folded
-".${flame_graph_base_dir}/./flamegraph.pl" out.perf-folded > perf-kernel.svg
+".${flame_graph_base_dir}/./flamegraph.pl" out.perf-folded > perf-kernel.svg         # generate flame graph of perf events
