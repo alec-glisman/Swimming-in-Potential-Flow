@@ -75,7 +75,7 @@ GSDUtil::~GSDUtil()
 void
 GSDUtil::truncateGSD()
 {
-    spdlog::get(m_logName)->info("truncating GSD file: {0}", m_system->inputGSDFile());
+    spdlog::get(m_logName)->critical("truncating GSD file: {0}", m_system->inputGSDFile());
     auto return_val = gsd_truncate(m_system->handle().get());
     m_system->setReturnVal(return_val);
     m_system->check_gsd_return();
@@ -383,7 +383,7 @@ GSDUtil::writeParticles()
     uint32_t num_dim = m_system->numDim();
     int      return_val;
     uint64_t nframes = gsd_get_nframes(m_system->handle().get());
-    spdlog::get(m_logName)->debug("vectors are assumed to have 3 spatial DoF");
+    spdlog::get(m_logName)->critical("vectors are assumed to have 3 spatial DoF");
 
     /* ANCHOR: Write kinematics using standard data structures, which are floats */
     std::vector<float> pos(uint64_t(N) * uint64_t(num_dim));
