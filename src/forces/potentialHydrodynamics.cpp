@@ -86,11 +86,13 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
     update();
 
     spdlog::get(m_logName)->info("Constructor complete");
+    spdlog::get(m_logName)->flush();
 }
 
 potentialHydrodynamics::~potentialHydrodynamics()
 {
     spdlog::get(m_logName)->info("Destructing potential hydrodynamics");
+    spdlog::get(m_logName)->flush();
 }
 
 void
@@ -127,6 +129,7 @@ potentialHydrodynamics::calcParticleDistances()
         spdlog::get(m_logName)->debug("Checking distance between pairs {0} & {1}", m_alphaVec[i],
                                       m_betaVec[i]);
         spdlog::get(m_logName)->debug("Interparticle distance is", m_r_mag_ab[i]);
+        spdlog::get(m_logName)->flush();
 #endif
     }
 }

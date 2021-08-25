@@ -34,11 +34,15 @@ engine::engine(std::shared_ptr<systemData> sys)
     spdlog::get(m_logName)->info("Numer of integration steps: {0}", num_step);
     unsigned int barWidth = 70;
     m_progressBar = std::make_shared<ProgressBar>(static_cast<unsigned int>(num_step), barWidth);
+
+    spdlog::get(m_logName)->info("Constructor complete");
+    spdlog::get(m_logName)->flush();
 }
 
 engine::~engine()
 {
     spdlog::get(m_logName)->info("Destructing engine");
+    spdlog::get(m_logName)->flush();
 }
 
 void
@@ -74,6 +78,7 @@ engine::run()
         {
             m_progressBar->display(); // display the bar
         }
+        spdlog::get(m_logName)->flush();
     }
 }
 

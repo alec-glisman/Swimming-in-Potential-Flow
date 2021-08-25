@@ -43,6 +43,9 @@ GSDUtil::GSDUtil(std::shared_ptr<systemData> sys)
     readHeader();
     readParameters();
     readParticles();
+
+    spdlog::get(m_logName)->info("Constructor complete");
+    spdlog::get(m_logName)->flush();
 }
 
 GSDUtil::GSDUtil(std::shared_ptr<systemData> sys, uint64_t frame) : GSDUtil(sys)
@@ -66,6 +69,7 @@ GSDUtil::GSDUtil(std::shared_ptr<systemData> sys, uint64_t frame) : GSDUtil(sys)
 GSDUtil::~GSDUtil()
 {
     spdlog::get(m_logName)->info("GSDUtil destructor called");
+    spdlog::get(m_logName)->flush();
 }
 
 void

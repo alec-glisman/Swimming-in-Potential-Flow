@@ -33,11 +33,15 @@ rungeKutta4::rungeKutta4(std::shared_ptr<systemData>             sys,
     // Set specific variables to each system
     initializeSpecificVars();
     initializeConstraintLinearSystem();
+
+    spdlog::get(m_logName)->info("Constructor complete");
+    spdlog::get(m_logName)->flush();
 }
 
 rungeKutta4::~rungeKutta4()
 {
     spdlog::get(m_logName)->info("Destructing Runge-Kutta 4th order");
+    spdlog::get(m_logName)->flush();
 }
 
 void
@@ -417,6 +421,8 @@ rungeKutta4::momentumLinAngFree()
                                  (void*)&d_A_swim[0]);
     m_system->setReturnVal(return_val);
     m_system->check_gsd_return();
+
+    spdlog::get(m_logName)->flush();
 }
 
 /* REVIEW[epic=Change,order=3]: Change assignment of m_velArtic for different systems */
