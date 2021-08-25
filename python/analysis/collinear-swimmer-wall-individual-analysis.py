@@ -113,7 +113,7 @@ def aggregate_plots(relative_path, output_dir):
     # distance between particle pairs
     Dr_Loc = np.linalg.norm(DR_loc, axis=0)
     r_12 = np.linalg.norm(R_12, axis=0)
-    r_32 = np.linalg.norm(R_12, axis=0)
+    r_32 = np.linalg.norm(R_32, axis=0)
 
     # relative velocities between particle pairs
     U_loc = velocities[1, :, :]
@@ -137,6 +137,14 @@ def aggregate_plots(relative_path, output_dir):
     char_len = char_vel * char_time
     char_acc = char_vel / char_time
 
+    # kinematic constraints
+    r_12_con_mag = char_len * np.sin(omega * tau * time)
+    r_32_con_mag = char_len * np.sin(omega * tau * time + phaseShift)
+    u_12_con_mag = char_vel * np.cos(omega * tau * time)
+    u_32_con_mag = char_vel * np.cos(omega * tau * time + phaseShift)
+    a_12_con_mag = - char_acc * np.sin(omega * tau * time)
+    a_32_con_mag = - char_acc * np.sin(omega * tau * time + phaseShift)
+
 # !SECTION (Analysis)
 
 
@@ -144,7 +152,7 @@ def aggregate_plots(relative_path, output_dir):
     # PLOT: Locater point position (x-axis)
     numLines = 1
     locPos_Plot = PlotStyling(numLines,
-                              r"$t/\tau$", r"$\Delta R_2$",
+                              r"$t/\tau$", r"$|| \Delta R_2 ||$",
                               title=None, loglog=False,
                               outputDir=output_dir, figName="loc-pos-x", eps=epsOutput,
                               continuousColors=False)
@@ -160,20 +168,20 @@ def aggregate_plots(relative_path, output_dir):
     # PLOT: Relative oscillator displacement (x-axis)
     numLines = 4
     oscDis_Plot = PlotStyling(numLines,
-                              r"$t/\tau$", r"$\Delta x \, \omega / U_0$",
+                              r"$t/\tau$", r"$|| \Delta x || \omega / U_0$",
                               title=None, loglog=False,
                               outputDir=output_dir, figName="osc-disp-x", eps=epsOutput,
                               continuousColors=False)
     # Show numerical data points
     oscDis_Plot.make_plot()
     oscDis_Plot.curve(
-        time, (r_12 - R_avg) / char_len, zorder=1, label=r"$1-2$")
+        time, np.abs(r_12 - R_avg) / char_len, zorder=1, label=r"$1-2$ Simulation")
     oscDis_Plot.curve(
-        time, (-r_32 - R_avg) / char_len, zorder=2, label=r"$2-3$")
+        time, np.abs(r_32 - R_avg) / char_len, zorder=2, label=r"$3-2$ Simulation")
     oscDis_Plot.curve(
-        time, np.sin(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
+        time, np.abs(r_12_con_mag) / char_len, thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
     oscDis_Plot.curve(
-        time, -np.sin(omega * tau * time + phaseShift), thin_curve=True, zorder=4, label=r"$2-3$ Constraint")
+        time, np.abs(r_32_con_mag) / char_len, thin_curve=True, zorder=4, label=r"$3-2$ Constraint")
     # Add legend
     oscDis_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
         fmt(np.max(Z_height))),
@@ -182,16 +190,16 @@ def aggregate_plots(relative_path, output_dir):
 
     numLines = 2
     oscDisErr_Plot = PlotStyling(numLines,
-                                 r"$t/\tau$", r"Error $\Delta x \, \omega / U_0$",
+                                 r"$t/\tau$", r"Error $|| \Delta x || \omega / U_0$",
                                  title=None, loglog=False,
                                  outputDir=output_dir, figName="osc-disp-x-err", eps=epsOutput,
                                  continuousColors=False)
     # Show numerical data points
     oscDisErr_Plot.make_plot()
     oscDisErr_Plot.curve(
-        time, (r_12 - R_avg) / char_len - np.sin(omega * tau * time), zorder=1, label=r"$1-2$")
+        time, np.abs(r_12 - R_avg) / char_len - np.abs(r_12_con_mag) / char_len, zorder=1, label=r"$1-2$")
     oscDisErr_Plot.curve(
-        time, (-r_32 - R_avg) / char_len + np.sin(omega * tau * time + phaseShift), zorder=2, label=r"$2-3$")
+        time, np.abs(r_32 - R_avg) / char_len - np.abs(r_32_con_mag) / char_len, zorder=2, label=r"$2-3$")
     oscDisErr_Plot.set_yaxis_scientific()
     # Add legend
     oscDisErr_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
@@ -202,7 +210,7 @@ def aggregate_plots(relative_path, output_dir):
     # PLOT: Relative oscillator velocity (x-axis)
     numLines = 4
     oscVel_Plot = PlotStyling(numLines,
-                              r"$t/\tau$", r"$\Delta U / U_0$",
+                              r"$t/\tau$", r"$|| \Delta U || / U_0$",
                               title=None, loglog=False,
                               outputDir=output_dir, figName="osc-vel-x", eps=epsOutput,
                               continuousColors=False)
@@ -213,9 +221,9 @@ def aggregate_plots(relative_path, output_dir):
     oscVel_Plot.curve(time, u_32 / char_vel, zorder=2,
                       label=r"$3-2$ Simulation")
     oscVel_Plot.curve(
-        time, np.cos(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
+        time, np.abs(u_12_con_mag) / char_vel, thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
     oscVel_Plot.curve(
-        time, np.cos(omega * tau * time + phaseShift), thin_curve=True, zorder=4, label=r"$3-2$ Constraint")
+        time, np.abs(u_32_con_mag) / char_vel, thin_curve=True, zorder=4, label=r"$3-2$ Constraint")
     # Add legend
     oscVel_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
         fmt(np.max(Z_height))),
@@ -224,16 +232,16 @@ def aggregate_plots(relative_path, output_dir):
 
     numLines = 2
     oscVelErr_Plot = PlotStyling(numLines,
-                                 r"$t/\tau$", r"$\Delta U / U_0$",
+                                 r"$t/\tau$", r"$|| \Delta U || / U_0$",
                                  title=None, loglog=False,
                                  outputDir=output_dir, figName="osc-vel-x-err", eps=epsOutput,
                                  continuousColors=False)
     # Show numerical data points
     oscVelErr_Plot.make_plot()
     oscVelErr_Plot.curve(time, u_12 / char_vel -
-                         np.cos(omega * tau * time), zorder=1, label=r"$1-2$")
-    oscVelErr_Plot.curve(time, u_32 / char_vel - np.cos(omega *
-                         tau * time + phaseShift), zorder=2, label=r"$3-2$")
+                         np.abs(u_12_con_mag) / char_vel, zorder=1, label=r"$1-2$")
+    oscVelErr_Plot.curve(time, u_32 / char_vel -
+                         np.abs(u_32_con_mag) / char_vel, zorder=2, label=r"$3-2$")
     oscVelErr_Plot.set_yaxis_scientific()
     # Add legend
     oscVelErr_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
@@ -244,7 +252,7 @@ def aggregate_plots(relative_path, output_dir):
     # PLOT: Relative oscillator acceleration (x-axis)
     numLines = 4
     oscAcc_Plot = PlotStyling(numLines,
-                              r"$t/\tau$", r"$\Delta \dot{U} / (U_0 \, \omega)$",
+                              r"$t/\tau$", r"$|| \Delta \dot{U} || / (U_0 \, \omega)$",
                               title=None, loglog=False,
                               outputDir=output_dir, figName="osc-acc-x", eps=epsOutput,
                               continuousColors=False)
@@ -256,9 +264,9 @@ def aggregate_plots(relative_path, output_dir):
     oscAcc_Plot.curve(time, a_32 / char_acc, zorder=2,
                       label=r"$3-2$ Simulation")
     oscAcc_Plot.curve(
-        time, -np.sin(omega * tau * time), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
+        time, np.abs(a_12_con_mag) / char_acc, thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
     oscAcc_Plot.curve(
-        time, -np.sin(omega * tau * time + phaseShift), thin_curve=True, zorder=4, label=r"$3-2$ Constraint")
+        time, np.abs(a_32_con_mag) / char_acc, thin_curve=True, zorder=4, label=r"$3-2$ Constraint")
     # Add legend
     oscAcc_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
         fmt(np.max(Z_height))),
@@ -267,7 +275,7 @@ def aggregate_plots(relative_path, output_dir):
 
     numLines = 2
     oscAccErr_Plot = PlotStyling(numLines,
-                                 r"$t/\tau$", r"$\Delta \dot{U} / (U_0 \, \omega)$",
+                                 r"$t/\tau$", r"$|| \Delta \dot{U} || / (U_0 \, \omega)$",
                                  title=None, loglog=False,
                                  outputDir=output_dir, figName="osc-acc-x-err", eps=epsOutput,
                                  continuousColors=False)
@@ -275,9 +283,9 @@ def aggregate_plots(relative_path, output_dir):
     # Show numerical data points
     oscAccErr_Plot.make_plot()
     oscAccErr_Plot.curve(time, a_12 / char_acc -
-                         np.sin(omega * tau * time), zorder=1, label=r"$1-2$")
-    oscAccErr_Plot.curve(time, a_32 / char_acc - np.sin(omega *
-                         tau * time + phaseShift), zorder=2, label=r"$3-2$")
+                         np.abs(a_12_con_mag) / char_acc, zorder=1, label=r"$1-2$")
+    oscAccErr_Plot.curve(time, a_32 / char_acc -
+                         np.abs(a_32_con_mag) / char_acc, zorder=2, label=r"$3-2$")
     oscAccErr_Plot.set_yaxis_scientific()
     # Add legend
     oscAccErr_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
