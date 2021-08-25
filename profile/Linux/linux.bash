@@ -40,9 +40,13 @@ cmake --build "build_profile" -j
 
 # profile project
 sudo perf record --all-cpus -g "${executable}" ${args}  # default output is 'perf.data'
-cp "perf.data" "${flame_graph_base_dir}/perf.data"      # copy output to FlameGraph repo
-mv "perf.data" "${output_dir}/perf.data"                # move output to simulation output
+sudo cp "perf.data" "${flame_graph_base_dir}/perf.data"      # copy output to FlameGraph repo
+# mv "perf.data" "${output_dir}/perf.data"                # move output to simulation output
 
 # visualize results
-perf script | ".${flame_graph_base_dir}/./stackcollapse-perf.pl" > out.perf_folded
-".${flame_graph_base_dir}/./flamegraph.pl" out.perf-folded > perf-kernel.svg         # generate flame graph of perf events
+perf script | "${flame_graph_base_dir}/./stackcollapse-perf.pl" > out.perf_folded
+"${flame_graph_base_dir}/./flamegraph.pl" out.perf-folded > perf-kernel.svg         # generate flame graph of perf events
+
+# cleanup
+mv "out.perf-folded" "${flame_graph_base_dir}/out.perf-folded"
+mv "perf-kernel.svg" "${flame_graph_base_dir}/perf-kernel.svg"
