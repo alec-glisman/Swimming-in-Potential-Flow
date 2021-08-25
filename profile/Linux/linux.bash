@@ -31,20 +31,21 @@ executable="${base_dir}/build_profile/src/./bodies_in_potential_flow"
 args="${base_dir}/input/starter_gsd/collinear_swimmer_wall.gsd ${output_dir}/output"
 
 # configure project
-# cmake -G "Unix Makefiles" -B "build_profile" -DCMAKE_BUILD_TYPE=Profile -DENABLE_TESTING=True -DCMAKE_EXPORT_COMPILE_COMMANDS=True
+cmake -G "Unix Makefiles" -B "build_profile" -DCMAKE_BUILD_TYPE=Profile -DENABLE_TESTING=True -DCMAKE_EXPORT_COMPILE_COMMANDS=True
 
 # build project
-# cmake --build "build_profile" -j
+cmake --build "build_profile" -j
 
 # profile project
-# sudo perf record --all-cpus -g "${executable}" ${args}  # default output is 'perf.data'
+sudo perf record --all-cpus -g "${executable}" ${args}  # default output is 'perf.data'
 
 # visualize results
 sudo chmod a+wrx "perf.data"
-cp "perf.data" "${flame_graph_base_dir}/perf.data"
+mv "perf.data" "${flame_graph_base_dir}/perf.data"
 cd "${flame_graph_base_dir}"
 perf script | ./stackcollapse-perf.pl |./flamegraph.pl > perf.svg
 
 # cleanup
 mv "perf.svg" "${output_dir}/perf.svg"
 mv "perf.data" "${output_dir}/perf.data"
+cd "${base_dir}"
