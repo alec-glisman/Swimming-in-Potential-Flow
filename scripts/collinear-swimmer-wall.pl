@@ -29,7 +29,7 @@ use warnings;                     # give warnings
 # SECTION: Input variables that user must specify before running script
 
 # Compiler
-my $build         = "Debug";                # OPTIONS: Release, Debug, Profile
+my $build         = "Release";                # OPTIONS: Release, Debug, Profile
 my $enableTesting = "True";                   # OPTIONS: (False) OFF, (True) ON
 my $buildDir      = "build";                  # Title whatever you want build folder to be
 my $generator     = "Unix Makefiles";         # ONLY TESTED WITH UNIX
