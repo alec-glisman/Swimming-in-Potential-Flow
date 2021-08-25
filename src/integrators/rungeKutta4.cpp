@@ -206,19 +206,24 @@ rungeKutta4::initializeConstraintLinearSystem()
     // calculate A, not a function of time
     m_A = Eigen::MatrixXd::Zero(15, 18);
 
+    // U_1 - U_2 = V_1
     m_A.block<3, 3>(0, 0).noalias() = m_I;
+    m_A.block<3, 3>(0, 3).noalias() = -m_I;
+
+    // U_3 - U_2 = V_3
+    m_A.block<3, 3>(3, 6).noalias() = m_I;
+    m_A.block<3, 3>(3, 3).noalias() = -m_I;
+
+    //  U_1 - I_tilde * U_4 = 0
     m_A.block<3, 3>(6, 0).noalias() = m_I;
-
-    m_A.block<3, 3>(0, 3).noalias()  = -m_I;
-    m_A.block<3, 3>(3, 3).noalias()  = -m_I;
-    m_A.block<3, 3>(12, 3).noalias() = m_I;
-
-    m_A.block<3, 3>(3, 6).noalias()  = m_I;
-    m_A.block<3, 3>(12, 6).noalias() = m_I;
-
     m_A.block<3, 3>(6, 9).noalias() = -m_I_tilde;
 
+    //  U_2 - I_tilde * U_5 = 0
     m_A.block<3, 3>(9, 12).noalias() = -m_I_tilde;
+
+    //  U_3 - I_tilde * U_6 = 0
+    m_A.block<3, 3>(12, 3).noalias() = m_I;
+    m_A.block<3, 3>(12, 6).noalias() = m_I;
 
     m_A.block<3, 3>(12, 15).noalias() = -m_I_tilde;
 }
