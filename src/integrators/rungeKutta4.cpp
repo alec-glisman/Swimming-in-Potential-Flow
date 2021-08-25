@@ -190,7 +190,7 @@ rungeKutta4::initializeSpecificVars()
     spdlog::get(m_logName)->info("Calling momentumLinAngFree()");
     momentumLinAngFree();
 
-    // write updated kinematics to original frame (appending current file)
+    /* ANCHOR: write updated kinematics to original frame (appending current file) */
     spdlog::get(m_logName)->info("Updating input GSD with updated kinematic initial conditions");
     spdlog::get(m_logName)->critical(
         "Frame 0 contains header information but incorrect kinematics");
@@ -203,7 +203,7 @@ rungeKutta4::initializeSpecificVars()
 void
 rungeKutta4::initializeConstraintLinearSystem()
 {
-    // calculate A, not a function of time
+    /* calculate A, not a function of time */
     m_A = Eigen::MatrixXd::Zero(15, 18);
 
     // (1): U_1 - U_2 = V_1 (Indexing: (constraint #, particle #))
@@ -225,10 +225,19 @@ rungeKutta4::initializeConstraintLinearSystem()
     //  (5): U_3 - I_tilde * U_6 = 0
     m_A.block<3, 3>(3 * 4, 3 * 2).noalias() = m_I;
     m_A.block<3, 3>(3 * 4, 3 * 5).noalias() = -m_I_tilde;
+
+    /* calculate b, function of time */
+    // update articulation velocities for constraint calculation
+    double dimensional_time{0.0};
+    articulationAcc(dimensional_time);
+
+    m_b                             = Eigen::VectorXd::Zero(15, 1);
+    m_b.segment<3>(3 * 0).noalias() = m_accArtic.segment<3>(3 * 0);
+    m_b.segment<3>(3 * 1).noalias() = m_accArtic.segment<3>(3 * 2);
 }
 
 void
-rungeKutta4::constraintLinearSystem(double dimensional_time)
+rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
 {
     // update articulation velocities for constraint calculation
     articulationAcc(dimensional_time);
@@ -248,8 +257,6 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
      * Q is the forces present in unconstrained system
      * Q_con is the generalized constraint forces */
 
-    constraintLinearSystem(dimensional_time);
-
     // calculate Q
     Eigen::VectorXd Q = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     if (m_system->fluidDensity() > 0) // hydrodynamic force
@@ -261,6 +268,9 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
      * Linear constraint system: A * acc = b
      * Linear proportionality: K = M_total^{1/2} * (A * M_total^{-1/2})^{+};
      * + is Moore-Penrose inverse */
+
+    // update constraint linear system
+    updateConstraintLinearSystem(dimensional_time);
 
     // calculate M^{1/2} & M^{-1/2}
     Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> eigensolver(m_potHydro->mTotal());
