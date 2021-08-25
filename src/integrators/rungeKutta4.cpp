@@ -400,11 +400,11 @@ rungeKutta4::momentumLinAngFree()
     {
         d_U_swim[i] = U_swim(i);
     }
-    spdlog::get(m_logName)->info("Writing log/U_swim data to GSD");
+    spdlog::get(m_logName)->info("Writing swimmer/U_swim data to GSD");
     spdlog::get(m_logName)->info("[{0}, {1}, {2}, {3}, {4}, {5}]", d_U_swim[0], d_U_swim[1],
                                  d_U_swim[2], d_U_swim[3], d_U_swim[4], d_U_swim[5]);
-    auto return_val = gsd_write_chunk(m_system->handle().get(), "log/U_swim", GSD_TYPE_DOUBLE, 6, 1,
-                                      0, (void*)&d_U_swim[0]);
+    auto return_val = gsd_write_chunk(m_system->handle().get(), "swimmer/U_swim", GSD_TYPE_DOUBLE,
+                                      6, 1, 0, (void*)&d_U_swim[0]);
     m_system->setReturnVal(return_val);
     m_system->check_gsd_return();
 
@@ -414,11 +414,11 @@ rungeKutta4::momentumLinAngFree()
     {
         d_A_swim[i] = A_swim(i);
     }
-    spdlog::get(m_logName)->info("Writing log/A_swim data to GSD");
+    spdlog::get(m_logName)->info("Writing swimmer/A_swim data to GSD");
     spdlog::get(m_logName)->info("[{0}, {1}, {2}, {3}, {4}, {5}]", d_A_swim[0], d_A_swim[1],
                                  d_A_swim[2], d_A_swim[3], d_A_swim[4], d_A_swim[5]);
-    return_val = gsd_write_chunk(m_system->handle().get(), "log/A_swim", GSD_TYPE_DOUBLE, 6, 1, 0,
-                                 (void*)&d_A_swim[0]);
+    return_val = gsd_write_chunk(m_system->handle().get(), "swimmer/A_swim", GSD_TYPE_DOUBLE, 6, 1,
+                                 0, (void*)&d_A_swim[0]);
     m_system->setReturnVal(return_val);
     m_system->check_gsd_return();
 

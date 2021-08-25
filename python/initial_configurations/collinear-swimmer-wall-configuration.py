@@ -107,6 +107,8 @@ def setSystemData():
     l_U0 = np.array([U0], dtype=np.double)
     l_omega = np.array([omega], dtype=np.double)
     l_phase_angle = np.array([phase_angle], dtype=np.double)
+    l_U_swim = np.zeros(6, dtype=np.double)
+    l_A_swim = np.zeros(6, dtype=np.double)
 
     # output data
     snapshot.log['swimmer/R_avg'] = l_R_avg
@@ -114,6 +116,8 @@ def setSystemData():
     snapshot.log['swimmer/U0'] = l_U0
     snapshot.log['swimmer/omega'] = l_omega
     snapshot.log['swimmer/phase_shift'] = l_phase_angle
+    snapshot.log['swimmer/U_swim'] = l_U_swim
+    snapshot.log['swimmer/A_swim'] = l_A_swim
 
 # !SECTION: (GSD Creation)
 
