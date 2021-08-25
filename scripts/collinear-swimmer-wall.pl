@@ -152,11 +152,11 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
 
         # Simulation variables
         my $dt          = 1e-6;
-        my $R_avg       = 4.0;
-        my $Z_height    = 6.0;
-        my $phase_angle = -1.57079632679;
-        my $U0          = 1e-1;
-        my $omega       = 1.0;
+        my $R_avg       = 4.0e0;
+        my $Z_height    = 6.0e0;
+        my $phase_angle = -1.57079632679e0;
+        my $U0          = 1.0e0;
+        my $omega       = 1.0e0;
 
         # Modify default preferences for each simulation run
         switch($inputData[$i]) {
