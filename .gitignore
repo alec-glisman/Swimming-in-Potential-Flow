@@ -12,6 +12,7 @@ temp*
 *.xlsx
 *.png
 *.eps
+*.svg
 *.txt
 *.out
 *.json
@@ -23,6 +24,7 @@ Testing
 
 # traces
 *.trace
+*.data
 
 # !SECTION (DATA)
 
