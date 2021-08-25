@@ -43,7 +43,7 @@ sudo perf record --all-cpus -g "${executable}" ${args}  # default output is 'per
 sudo chmod a+wrx "perf.data"
 mv "perf.data" "${flame_graph_base_dir}/perf.data"
 cd "${flame_graph_base_dir}"
-perf script | ./stackcollapse-perf.pl |./flamegraph.pl > perf.svg
+perf script | ./stackcollapse-perf.pl | ./flamegraph.pl > perf.svg
 
 # cleanup
 mv "perf.svg" "${output_dir}/perf.svg"
