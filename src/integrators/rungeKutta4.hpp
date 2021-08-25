@@ -49,7 +49,7 @@ class rungeKutta4
     initializeConstraintLinearSystem();
 
     void
-    constraintLinearSystem(double dimensional_time);
+    updateConstraintLinearSystem(double dimensional_time);
 
     void
     accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time);
