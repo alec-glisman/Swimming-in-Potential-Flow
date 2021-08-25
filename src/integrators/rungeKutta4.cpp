@@ -234,9 +234,9 @@ rungeKutta4::constraintLinearSystem(double dimensional_time)
     articulationAcc(dimensional_time);
 
     // calculate b, function of time
-    m_b                         = Eigen::VectorXd::Zero(15, 1);
-    m_b.segment<3>(0).noalias() = m_accArtic.segment<3>(0);
-    m_b.segment<3>(3).noalias() = m_accArtic.segment<3>(6);
+    m_b                             = Eigen::VectorXd::Zero(15, 1);
+    m_b.segment<3>(3 * 0).noalias() = m_accArtic.segment<3>(3 * 0);
+    m_b.segment<3>(3 * 1).noalias() = m_accArtic.segment<3>(3 * 2);
 }
 
 /* REVIEW[epic=Change,order=2]: Change constraint linear system (A, b) for each system */
