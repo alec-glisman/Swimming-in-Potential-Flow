@@ -418,8 +418,6 @@ rungeKutta4::articulationAcc(double dimensional_time)
     m_accArtic.segment<3>(3 * 2).noalias() = a3_mag * q;
     m_accArtic.segment<3>(3 * 3).noalias() = a1_mag * q_tilde;
     m_accArtic.segment<3>(3 * 5).noalias() = a3_mag * q_tilde;
-
-    m_accArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
 }
 
 /* REVIEW[epic=Change,order=5]: Change assignment of m_RLoc for different systems */
