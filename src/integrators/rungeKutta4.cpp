@@ -381,10 +381,42 @@ rungeKutta4::momentumLinAngFree()
     Eigen::VectorXd A_swim = -M_tilde.fullPivLu().solve(F_script);
 
     /* ANCHOR: Output acceleration data back to m_system */
+    spdlog::get(m_logName)->info("Writing momentumLinAngFree() data to systemData");
     // calculate A = Sigma^T * A_swim + b
     Eigen::VectorXd A_out = rbmconn_T * A_swim;
     A_out.noalias() += b;
     m_system->setAccelerations(A_out);
+
+    /* ANCHOR: Output data to GSD */
+    spdlog::get(m_logName)->info("Writing momentumLinAngFree() data to GSD");
+
+    std::vector<double> d_U_swim(6);
+    d_U_swim.reserve(1); //! make sure we allocate
+    for (uint32_t i = 0; i < 6; i++)
+    {
+        d_U_swim[i] = U_swim(i);
+    }
+    spdlog::get(m_logName)->info("Writing log/U_swim data to GSD");
+    spdlog::get(m_logName)->info("[{0}, {1}, {2}, {3}, {4}, {5}]", d_U_swim[0], d_U_swim[1],
+                                 d_U_swim[2], d_U_swim[3], d_U_swim[4], d_U_swim[5]);
+    auto return_val = gsd_write_chunk(m_system->handle().get(), "log/U_swim", GSD_TYPE_DOUBLE, 6, 1,
+                                      0, (void*)&d_U_swim[0]);
+    m_system->setReturnVal(return_val);
+    m_system->check_gsd_return();
+
+    std::vector<double> d_A_swim(6);
+    d_A_swim.reserve(1); //! make sure we allocate
+    for (uint32_t i = 0; i < 6; i++)
+    {
+        d_A_swim[i] = A_swim(i);
+    }
+    spdlog::get(m_logName)->info("Writing log/A_swim data to GSD");
+    spdlog::get(m_logName)->info("[{0}, {1}, {2}, {3}, {4}, {5}]", d_A_swim[0], d_A_swim[1],
+                                 d_A_swim[2], d_A_swim[3], d_A_swim[4], d_A_swim[5]);
+    return_val = gsd_write_chunk(m_system->handle().get(), "log/A_swim", GSD_TYPE_DOUBLE, 6, 1, 0,
+                                 (void*)&d_A_swim[0]);
+    m_system->setReturnVal(return_val);
+    m_system->check_gsd_return();
 }
 
 /* REVIEW[epic=Change,order=3]: Change assignment of m_velArtic for different systems */
