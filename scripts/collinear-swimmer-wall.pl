@@ -151,12 +151,12 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         my $gsd_path = ${simulation_dir} . "/" . "data.gsd";
 
         # Simulation variables
-        my $dt          = 1e-6;
-        my $R_avg       = 4.0e0;
-        my $Z_height    = 6.0e0;
-        my $phase_angle = -1.57079632679e0;
-        my $U0          = 1.0e0;
-        my $omega       = 1.0e0;
+        my $dt          = 1.00e-6;
+        my $R_avg       = 4.00e+0;
+        my $Z_height    = 6.00e+0;
+        my $phase_angle = -1.57079632679e+0;
+        my $U0          = 1.00e+0;
+        my $omega       = 1.00e+0;
 
         # Modify default preferences for each simulation run
         switch($inputData[$i]) {
