@@ -38,7 +38,7 @@ my $generator     = "Unix Makefiles";         # ONLY TESTED WITH UNIX
 my $simulationTag    = "collinear-swimmer-wall";
 my $projectName      = "bodies_in_potential_flow";
 my $inputDir         = "input";
-my @inputData        = ( "varyZHeight",  "varyRelDisp", "varyPhaseAngle", "varyEpsilon", "varyDt" );
+my @inputData        = ( "varyRelDisp", "varyZHeight", "varyPhaseAngle", "varyEpsilon", "varyDt" );
 my $numSimulationTypes = scalar @inputData;
 my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
 
