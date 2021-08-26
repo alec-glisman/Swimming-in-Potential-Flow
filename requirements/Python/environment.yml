@@ -11,4 +11,5 @@ dependencies:
   - pylint
   - autopep8
   - pathlib
+  - ipykernel
 prefix: /home/aglisman/anaconda3/envs/bodies-in-potential-flow
