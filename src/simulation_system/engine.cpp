@@ -75,6 +75,12 @@ engine::run()
             m_progressBar->display(); // display the bar
         }
     }
+
+    // Final data output
+    spdlog::get(m_logName)->info("Ending engine run");
+    m_progressBar->display(); // display the bar
+    spdlog::get(m_logName)->info("Writing frame at t = {0}", m_system->t());
+    m_system->gsdUtil()->writeFrame();
 }
 
 void
