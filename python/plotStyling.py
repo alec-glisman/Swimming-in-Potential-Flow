@@ -442,11 +442,11 @@ class PlotStyling:
         if (self.figName is not None) and (self.eps == True):
             with self.suppress_stdout():
                 plt.savefig(self.outputDir + self.figName + '.eps',
-                            format='eps', bbox_inches='tight')
+                            format='eps', bbox_inches='tight', pad_inches=0.1)
 
         elif (self.figName is not None) and (self.eps == False):
             plt.savefig(self.outputDir + self.figName + '.png',
-                        format='png', bbox_inches='tight')
+                        format='png', bbox_inches='tight', pad_inches=0.1)
 
         if showPlot:
             plt.show()
