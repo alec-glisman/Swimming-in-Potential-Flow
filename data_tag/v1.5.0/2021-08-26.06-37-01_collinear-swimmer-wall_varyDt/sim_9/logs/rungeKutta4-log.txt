@@ -1,0 +1,31 @@
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] Initializing Runge-Kutta 4th order integrator
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] Creating integrator
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] dt (dimensional): 1.2566370614359173e-06
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] 1/2 * dt (dimensional): 6.283185307179586e-07
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] 1/6 * dt (dimensional): 2.0943951023931955e-07
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] Running initializeSpecificVars()
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] GSD parsing U0
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] U_0 : 1
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] GSD parsing omega
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] omega : 1
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] GSD parsing phaseShift
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] phaseShift : -1.57079632679
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] GSD parsing Ravg
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] RAvg : 4
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] Setting initial conditions
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] Calling articulationVel()
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] Calling articulationAcc()
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] Calling rLoc()
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] Updating (for first time) hydrodynamic tensors
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] Calling momentumLinAngFree()
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] Writing momentumLinAngFree() data to systemData
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] Writing momentumLinAngFree() data to GSD
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] Writing swimmer/U_swim data to GSD
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] [-0.33325179988284537, 0, 8.832088755290267e-19, 0, 4.800008250859442e-18, -0]
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] Writing swimmer/A_swim data to GSD
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] [-0.3340471720264819, 0, 2.1930646749186775e-18, 0, 1.8341171112665923e-18, -0]
+[2021-08-26 06:37:42.045] [rungeKutta4] [info] Updating input GSD with updated kinematic initial conditions
+[2021-08-26 06:37:42.045] [rungeKutta4] [critical] Frame 0 contains header information but incorrect kinematics
+[2021-08-26 06:37:42.045] [rungeKutta4] [critical] Frame 1 should be treated as correct starting frame for analysis
+[2021-08-26 06:37:42.048] [rungeKutta4] [info] Constructor complete
+[2021-08-26 12:43:33.457] [rungeKutta4] [info] Destructing Runge-Kutta 4th order
