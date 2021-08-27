@@ -68,8 +68,7 @@ class PlotStyling:
     # either 'tableau-colorblind10' or 'seaborn-colorblind'
     plt.style.use(["tableau-colorblind10"])
     # Set the packages required for LaTeX rendering
-    mpl.rcParams['text.latex.preamble'] = [
-        r"\usepackage{amsfonts,amsmath,amsbsy,amssymb,bm,amsthm,mathrsfs,fixmath}"]
+    mpl.rcParams['text.latex.preamble'] = r"\usepackage{amsfonts,amsmath,amsbsy,amssymb,bm,amsthm,mathrsfs,fixmath}"
 
     # Use mathtext, not LaTeX
     mpl.rcParams.update({
