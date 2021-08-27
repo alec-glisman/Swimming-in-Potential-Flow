@@ -43,6 +43,9 @@ parser.add_option("--omega", dest="u_omega",
 
 # SECTION: Parameters
 
+# Time-averaged parameters
+U_avg = np.array(3.168988311545325e-06, dtype=np.double)
+
 # Integrator parameters
 t = 0.0
 tf = 25.0
@@ -81,13 +84,14 @@ def setInitialConditions():
     pos = np.zeros((n, 3), dtype=np.double)
     pos[0] = [R_avg, 0.0, Z_height]
     pos[1] = [0.0, 0.0, Z_height]
-    pos[2] = [- R_avg + (U0 / omega) * np.sin(phase_angle), 0.0, Z_height]
+    pos[2] = [- R_avg, 0.0, Z_height]
     pos[3] = [R_avg, 0.0, -Z_height]
     pos[4] = [0.0, 0.0, -Z_height]
-    pos[5] = [- R_avg + (U0 / omega) * np.sin(phase_angle), 0.0, -Z_height]
+    pos[5] = [- R_avg, 0.0, -Z_height]
 
     # velocity NOTE[epic=Assumptions]: must be calculated in simulation system (C++)
     vel = np.zeros_like(pos, dtype=np.double)
+    vel[:, 0] = U_avg
 
     # acceleration NOTE[epic=Assumptions]: must be calculated in simulation system (C++)
     acc = np.zeros_like(pos, dtype=np.double)
@@ -133,9 +137,13 @@ if __name__ == "__main__":
     dt = np.double(options.u_dt)
     R_avg = np.double(options.u_R_avg)
     Z_height = np.double(options.u_Z_height)
-    phase_angle = np.double(options.u_phase_angle)
-    U0 = np.double(options.u_U0)
-    omega = np.double(options.u_omega)
+    # phase_angle = np.double(options.u_phase_angle)
+    # U0 = np.double(options.u_U0)
+    # omega = np.double(options.u_omega)
+
+    phase_angle = 0.0
+    omega = 1.0
+    U0 = 0.0
 
     epsilon = (U0 / omega) / R_avg
     tau = (2.0 * np.pi) / omega
