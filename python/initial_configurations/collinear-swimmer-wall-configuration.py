@@ -46,7 +46,7 @@ parser.add_option("--omega", dest="u_omega",
 # Integrator parameters
 t = 0.0
 tf = 25.0
-num_steps_output = 1000
+num_steps_output = 10000
 
 # Material parameters
 fluid_density = 1.0
