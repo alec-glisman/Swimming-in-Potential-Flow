@@ -232,26 +232,26 @@ rungeKutta4::initializeConstraintLinearSystem()
     m_A.block<3, 3>(3 * 4, 3 * 2).noalias() = m_I;
     m_A.block<3, 3>(3 * 4, 3 * 5).noalias() = -m_I_tilde;
 
-    /* calculate b, function of time */
+    /* calculate b, constant in time */
     // update articulation velocities for constraint calculation
     double dimensional_time{0.0};
     articulationAcc(dimensional_time);
 
-    m_b                             = Eigen::VectorXd::Zero(15, 1);
-    m_b.segment<3>(3 * 0).noalias() = m_accArtic.segment<3>(3 * 0);
-    m_b.segment<3>(3 * 1).noalias() = m_accArtic.segment<3>(3 * 2);
+    m_b = Eigen::VectorXd::Zero(15, 1);
+    // m_b.segment<3>(3 * 0).noalias() = m_accArtic.segment<3>(3 * 0);
+    // m_b.segment<3>(3 * 1).noalias() = m_accArtic.segment<3>(3 * 2);
 }
 
 void
 rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
 {
     // update articulation velocities for constraint calculation
-    articulationAcc(dimensional_time);
+    // articulationAcc(dimensional_time);
 
     // calculate b, function of time
-    m_b                             = Eigen::VectorXd::Zero(15, 1);
-    m_b.segment<3>(3 * 0).noalias() = m_accArtic.segment<3>(3 * 0);
-    m_b.segment<3>(3 * 1).noalias() = m_accArtic.segment<3>(3 * 2);
+    // m_b                             = Eigen::VectorXd::Zero(15, 1);
+    // m_b.segment<3>(3 * 0).noalias() = m_accArtic.segment<3>(3 * 0);
+    // m_b.segment<3>(3 * 1).noalias() = m_accArtic.segment<3>(3 * 2);
 }
 
 /* REVIEW[epic=Change,order=2]: Change constraint linear system (A, b) for each system */
