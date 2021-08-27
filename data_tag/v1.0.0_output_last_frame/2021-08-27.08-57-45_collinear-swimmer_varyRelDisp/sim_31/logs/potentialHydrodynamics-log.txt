@@ -1,0 +1,10 @@
+[2021-08-27 09:00:53.528] [potentialHydrodynamics] [info] Initializing potential hydrodynamics
+[2021-08-27 09:00:53.528] [potentialHydrodynamics] [info] Setting number of interactions to count: 3
+[2021-08-27 09:00:53.528] [potentialHydrodynamics] [info] Length of tensor quantities: 9
+[2021-08-27 09:00:53.528] [potentialHydrodynamics] [info] Initializing mass tensors
+[2021-08-27 09:00:53.528] [potentialHydrodynamics] [info] Initializing hydrodynamic force tensors
+[2021-08-27 09:00:53.528] [potentialHydrodynamics] [info] Initializing particle pair information tensors
+[2021-08-27 09:00:53.528] [potentialHydrodynamics] [info] Filling particle pair information tensors
+[2021-08-27 09:00:53.528] [potentialHydrodynamics] [info] Calling update()
+[2021-08-27 09:00:53.528] [potentialHydrodynamics] [info] Constructor complete
+[2021-08-27 09:01:30.809] [potentialHydrodynamics] [info] Destructing potential hydrodynamics
