@@ -35,7 +35,7 @@ my $buildDir      = "build";                  # Title whatever you want build fo
 my $generator     = "Unix Makefiles";         # ONLY TESTED WITH UNIX
 
 # C++ Simulation
-my $simulationTag    = "collinear-swimmer-wall";
+my $simulationTag    = "collinear-swimmer-wall-no-internal-dynamics";
 my $projectName      = "bodies_in_potential_flow";
 my $inputDir         = "input";
 my @inputData        = ( "varyRelDisp", "varyZHeight", "varyPhaseAngle", "varyEpsilon", "varyDt" );
