@@ -84,13 +84,13 @@ def aggregate_plots(relative_path, output_dir):
     epsilon = U0 / R_avg / omega
 
     # Initialize temporal data
-    time = np.zeros((nframes - 2), dtype=np.float64)
-    positions = np.zeros((N_particles, 3, nframes - 2), dtype=np.float64)
+    time = np.zeros((nframes - 1), dtype=np.float64)
+    positions = np.zeros((N_particles, 3, nframes - 1), dtype=np.float64)
     velocities = np.zeros_like(positions, dtype=np.float64)
     accelerations = np.zeros_like(positions, dtype=np.float64)
 
     # Loop over all snapshots in GSD (skipping header with incorrect kinematics)
-    for i in range(1, nframes-1):
+    for i in range(1, nframes):
         current_snapshot = gsd_file.trajectory.read_frame(i)
 
         time[i-1] = current_snapshot.log['integrator/t']
@@ -135,7 +135,6 @@ def aggregate_plots(relative_path, output_dir):
     char_time = 1.0 / omega
     char_vel = U_loc[0, 0]
     char_len = char_vel * char_time
-    char_acc = char_vel / char_time
 
     # kinematic constraints
     r_12_con_mag = np.zeros_like(time, dtype=np.double)
@@ -252,21 +251,21 @@ def aggregate_plots(relative_path, output_dir):
     # PLOT: Relative oscillator acceleration (x-axis)
     numLines = 4
     oscAcc_Plot = PlotStyling(numLines,
-                              r"$t/\tau$", r"$|| \Delta \dot{U} || / (U_0 \, \omega)$",
+                              r"$t/\tau$", r"$|| \Delta \dot{U} ||$",
                               title=None, loglog=False,
                               outputDir=output_dir, figName="osc-acc-x", eps=epsOutput,
                               continuousColors=False)
 
     # Show numerical data points
     oscAcc_Plot.make_plot()
-    oscAcc_Plot.curve(time, a_12 / char_acc, zorder=1,
+    oscAcc_Plot.curve(time, a_12, zorder=1,
                       label=r"$1-2$ Simulation")
-    oscAcc_Plot.curve(time, a_32 / char_acc, zorder=2,
+    oscAcc_Plot.curve(time, a_32, zorder=2,
                       label=r"$3-2$ Simulation")
     oscAcc_Plot.curve(
-        time, np.abs(a_12_con_mag) / char_acc, thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
+        time, np.abs(a_12_con_mag), thin_curve=True, zorder=3, label=r"$1-2$ Constraint")
     oscAcc_Plot.curve(
-        time, np.abs(a_32_con_mag) / char_acc, thin_curve=True, zorder=4, label=r"$3-2$ Constraint")
+        time, np.abs(a_32_con_mag), thin_curve=True, zorder=4, label=r"$3-2$ Constraint")
     # Add legend
     oscAcc_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
         fmt(np.max(Z_height))),
@@ -275,17 +274,17 @@ def aggregate_plots(relative_path, output_dir):
 
     numLines = 2
     oscAccErr_Plot = PlotStyling(numLines,
-                                 r"$t/\tau$", r"$|| \Delta \dot{U} || / (U_0 \, \omega)$",
+                                 r"$t/\tau$", r"$|| \Delta \dot{U} ||$",
                                  title=None, loglog=False,
                                  outputDir=output_dir, figName="osc-acc-x-err", eps=epsOutput,
                                  continuousColors=False)
 
     # Show numerical data points
     oscAccErr_Plot.make_plot()
-    oscAccErr_Plot.curve(time, a_12 / char_acc -
-                         np.abs(a_12_con_mag) / char_acc, zorder=1, label=r"$1-2$")
-    oscAccErr_Plot.curve(time, a_32 / char_acc -
-                         np.abs(a_32_con_mag) / char_acc, zorder=2, label=r"$3-2$")
+    oscAccErr_Plot.curve(time, a_12 -
+                         np.abs(a_12_con_mag), zorder=1, label=r"$1-2$")
+    oscAccErr_Plot.curve(time, a_32 -
+                         np.abs(a_32_con_mag), zorder=2, label=r"$3-2$")
     oscAccErr_Plot.set_yaxis_scientific()
     # Add legend
     oscAccErr_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
