@@ -180,6 +180,8 @@ rungeKutta4::initializeSpecificVars()
 
     /* ANCHOR: set initial conditions */
     spdlog::get(m_logName)->info("Setting initial conditions");
+    spdlog::get(m_logName)->critical("NOTE THAT NO INFORMATION IS CHANGED FOR COLLINEAR SWIMMER "
+                                     "WALL SYSTEM WITH NO INTERNAL DYNAMICS");
 
     // set articulation velocities
     spdlog::get(m_logName)->info("Calling articulationVel()");
@@ -191,8 +193,8 @@ rungeKutta4::initializeSpecificVars()
     rLoc();
     spdlog::get(m_logName)->info("Updating (for first time) hydrodynamic tensors");
     m_potHydro->update();
-    spdlog::get(m_logName)->info("Calling momentumLinAngFree()");
-    momentumLinAngFree();
+    // spdlog::get(m_logName)->info("Calling momentumLinAngFree()");
+    // momentumLinAngFree();
 
     /* ANCHOR: write updated kinematics to original frame (appending current file) */
     spdlog::get(m_logName)->info("Updating input GSD with updated kinematic initial conditions");
