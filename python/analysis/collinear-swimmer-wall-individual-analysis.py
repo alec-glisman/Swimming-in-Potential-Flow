@@ -153,7 +153,7 @@ def aggregate_plots(relative_path, output_dir):
     locPos_Plot = PlotStyling(numLines,
                               r"$t/\tau$", r"$|| \Delta R_2 ||$",
                               title=None, loglog=False,
-                              outputDir=output_dir, figName="loc-pos-x", eps=epsOutput,
+                              outputDir=output_dir, figName="loc-pos-mag", eps=epsOutput,
                               continuousColors=False)
     # Show numerical data points
     locPos_Plot.make_plot(showPlot=False)
@@ -169,7 +169,7 @@ def aggregate_plots(relative_path, output_dir):
     oscDis_Plot = PlotStyling(numLines,
                               r"$t/\tau$", r"$|| \Delta x || \omega / U_0$",
                               title=None, loglog=False,
-                              outputDir=output_dir, figName="osc-disp-x", eps=epsOutput,
+                              outputDir=output_dir, figName="osc-disp-mag", eps=epsOutput,
                               continuousColors=False)
     # Show numerical data points
     oscDis_Plot.make_plot()
@@ -191,7 +191,7 @@ def aggregate_plots(relative_path, output_dir):
     oscDisErr_Plot = PlotStyling(numLines,
                                  r"$t/\tau$", r"Error $|| \Delta x || \omega / U_0$",
                                  title=None, loglog=False,
-                                 outputDir=output_dir, figName="osc-disp-x-err", eps=epsOutput,
+                                 outputDir=output_dir, figName="osc-disp-mag-err", eps=epsOutput,
                                  continuousColors=False)
     # Show numerical data points
     oscDisErr_Plot.make_plot(showPlot=False)
@@ -211,7 +211,7 @@ def aggregate_plots(relative_path, output_dir):
     oscVel_Plot = PlotStyling(numLines,
                               r"$t/\tau$", r"$|| \Delta U || / U_0$",
                               title=None, loglog=False,
-                              outputDir=output_dir, figName="osc-vel-x", eps=epsOutput,
+                              outputDir=output_dir, figName="osc-vel-mag", eps=epsOutput,
                               continuousColors=False)
     # Show numerical data points
     oscVel_Plot.make_plot(showPlot=False)
@@ -233,7 +233,7 @@ def aggregate_plots(relative_path, output_dir):
     oscVelErr_Plot = PlotStyling(numLines,
                                  r"$t/\tau$", r"$|| \Delta U || / U_0$",
                                  title=None, loglog=False,
-                                 outputDir=output_dir, figName="osc-vel-x-err", eps=epsOutput,
+                                 outputDir=output_dir, figName="osc-vel-mag-err", eps=epsOutput,
                                  continuousColors=False)
     # Show numerical data points
     oscVelErr_Plot.make_plot(showPlot=False)
@@ -253,7 +253,7 @@ def aggregate_plots(relative_path, output_dir):
     oscAcc_Plot = PlotStyling(numLines,
                               r"$t/\tau$", r"$|| \Delta \dot{U} ||$",
                               title=None, loglog=False,
-                              outputDir=output_dir, figName="osc-acc-x", eps=epsOutput,
+                              outputDir=output_dir, figName="osc-acc-mag", eps=epsOutput,
                               continuousColors=False)
 
     # Show numerical data points
@@ -276,7 +276,7 @@ def aggregate_plots(relative_path, output_dir):
     oscAccErr_Plot = PlotStyling(numLines,
                                  r"$t/\tau$", r"$|| \Delta \dot{U} ||$",
                                  title=None, loglog=False,
-                                 outputDir=output_dir, figName="osc-acc-x-err", eps=epsOutput,
+                                 outputDir=output_dir, figName="osc-acc-mag-err", eps=epsOutput,
                                  continuousColors=False)
 
     # Show numerical data points
