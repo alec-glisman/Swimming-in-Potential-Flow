@@ -180,7 +180,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         }
 
         # Generate GSD file
-        system( "python " . ${pythonGSDCreation} . " --GSD-path=" . ${gsd_path} . " --dt=" . ${dt} . " --R-avg=" . ${R_avg} . " --Z-height=" . ${Z_height} . " --phase-angle=" . ${phase_angle} . " --U0=" . ${U0} . " --omega=" . ${omega} ) and die "Unable to generate GSD file: $?, $!";
+        system( "python " . ${pythonGSDCreation} . " --GSD-path=" . ${gsd_path} . " --dt=" . ${dt} . " --R-avg=" . ${R_avg} . " --Z-height=" . ${Z_height} ) and die "Unable to generate GSD file: $?, $!";
         
         # Prepare for simulation
         make_path( "${simulation_dir}/${analysisDir}" );
