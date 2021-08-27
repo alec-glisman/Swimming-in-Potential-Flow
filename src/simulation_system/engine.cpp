@@ -48,7 +48,7 @@ engine::~engine()
 void
 engine::run()
 {
-    spdlog::get(m_logName)->info("Starting engine run");
+    spdlog::get(m_logName)->critical("Starting engine run");
     m_progressBar->display(); // display the bar
 
     int tot_step     = (int)ceil(m_system->tf() / m_system->dt());
@@ -80,6 +80,13 @@ engine::run()
         }
         spdlog::get(m_logName)->flush();
     }
+
+    // Final data writing and shut down
+    spdlog::get(m_logName)->info("Ending engine run");
+    spdlog::get(m_logName)->info("Writing frame at t = {0}", m_system->t());
+    m_system->gsdUtil()->writeFrame();
+    m_progressBar->display();
+    spdlog::get(m_logName)->flush();
 }
 
 void
