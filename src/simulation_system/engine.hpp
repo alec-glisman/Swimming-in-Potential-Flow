@@ -58,7 +58,7 @@ class engine
     const std::string m_logName{"engine"};
 
     // ProgressBar output
-    const double m_outputPercentile{0.02};
+    const double m_outputPercentile{0.01};
 };
 
 #endif // BODIES_IN_POTENTIAL_FLOW_ENGINE_H
