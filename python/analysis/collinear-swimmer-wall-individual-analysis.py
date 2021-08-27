@@ -133,17 +133,17 @@ def aggregate_plots(relative_path, output_dir):
 
     # characteristic scales
     char_time = 1.0 / omega
-    char_vel = U0
+    char_vel = U_loc[0, 0]
     char_len = char_vel * char_time
     char_acc = char_vel / char_time
 
     # kinematic constraints
-    r_12_con_mag = 0.0
-    r_32_con_mag = 0.0
-    u_12_con_mag = 0.0
-    u_32_con_mag = 0.0
-    a_12_con_mag = 0.0
-    a_32_con_mag = 0.0
+    r_12_con_mag = np.zeros_like(time, dtype=np.double)
+    r_32_con_mag = np.zeros_like(time, dtype=np.double)
+    u_12_con_mag = np.zeros_like(time, dtype=np.double)
+    u_32_con_mag = np.zeros_like(time, dtype=np.double)
+    a_12_con_mag = np.zeros_like(time, dtype=np.double)
+    a_32_con_mag = np.zeros_like(time, dtype=np.double)
 
 # !SECTION (Analysis)
 
