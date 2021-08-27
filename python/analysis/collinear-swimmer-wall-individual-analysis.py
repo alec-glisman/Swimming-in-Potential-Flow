@@ -138,12 +138,12 @@ def aggregate_plots(relative_path, output_dir):
     char_acc = char_vel / char_time
 
     # kinematic constraints
-    r_12_con_mag = char_len * np.sin(omega * tau * time)
-    r_32_con_mag = char_len * np.sin(omega * tau * time + phaseShift)
-    u_12_con_mag = char_vel * np.cos(omega * tau * time)
-    u_32_con_mag = char_vel * np.cos(omega * tau * time + phaseShift)
-    a_12_con_mag = - char_acc * np.sin(omega * tau * time)
-    a_32_con_mag = - char_acc * np.sin(omega * tau * time + phaseShift)
+    r_12_con_mag = 0.0
+    r_32_con_mag = 0.0
+    u_12_con_mag = 0.0
+    u_32_con_mag = 0.0
+    a_12_con_mag = 0.0
+    a_32_con_mag = 0.0
 
 # !SECTION (Analysis)
 
