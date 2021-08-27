@@ -12,6 +12,7 @@ temp*
 *.xlsx
 *.png
 *.eps
+*.svg
 *.txt
 *.out
 *.json
