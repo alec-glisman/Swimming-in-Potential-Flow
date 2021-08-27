@@ -28,15 +28,15 @@ parser.add_option("--R-avg", dest="u_R_avg",
 parser.add_option("--Z-height", dest="u_Z_height",
                   help="(dimensionless) Initial height of collinear swimmer above wall",
                   metavar="double")
-parser.add_option("--phase-angle", dest="u_phase_angle",
-                  help="phase angle between oscillating pairs",
-                  metavar="double")
-parser.add_option("--U0", dest="u_U0",
-                  help="velocity oscillation amplitude",
-                  metavar="double")
-parser.add_option("--omega", dest="u_omega",
-                  help="velocity oscillation frequency",
-                  metavar="double")
+# parser.add_option("--phase-angle", dest="u_phase_angle",
+#                   help="phase angle between oscillating pairs",
+#                   metavar="double")
+# parser.add_option("--U0", dest="u_U0",
+#                   help="velocity oscillation amplitude",
+#                   metavar="double")
+# parser.add_option("--omega", dest="u_omega",
+#                   help="velocity oscillation frequency",
+#                   metavar="double")
 
 # !SECTION (Parse user input options)
 
