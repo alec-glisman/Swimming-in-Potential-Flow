@@ -72,7 +72,7 @@ class PlotStyling:
 
     # Use mathtext, not LaTeX
     mpl.rcParams.update({
-        'text.usetex': True,
+        'text.usetex': False,
 
         # Use the Computer modern font
         'font.family': 'serif',
