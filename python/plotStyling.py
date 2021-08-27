@@ -68,11 +68,12 @@ class PlotStyling:
     # either 'tableau-colorblind10' or 'seaborn-colorblind'
     plt.style.use(["tableau-colorblind10"])
     # Set the packages required for LaTeX rendering
-    plt.rcParams['text.latex.preamble'] = r'\usepackage{amsfonts,amsmath,amssymb,amsthm,mathrsfs}'
+    mpl.rcParams['text.latex.preamble'] = [
+        r"\usepackage{amsfonts,amsmath,amsbsy,amssymb,bm,amsthm,mathrsfs,fixmath}"]
 
     # Use mathtext, not LaTeX
     mpl.rcParams.update({
-        'text.usetex': False,
+        'text.usetex': True,
 
         # Use the Computer modern font
         'font.family': 'serif',
@@ -123,7 +124,6 @@ class PlotStyling:
 
 
 # SECTION: Initializer
-
 
     def __init__(self, numLines,
                  x_label, y_label,
@@ -187,7 +187,6 @@ class PlotStyling:
 
 # SECTION: Make the plot figure
 
-
     def make_plot(self, showPlot=False):
 
         if showPlot:
@@ -246,7 +245,6 @@ class PlotStyling:
 
 # SECTION: Continuous curves
 
-
     def curve(self, x_data, y_data,
               thin_curve=False, dashed_curve=False,
               zorder=None, label=None, color=None):
@@ -283,7 +281,6 @@ class PlotStyling:
 
 
 # SECTION: Discrete data points
-
 
     def scatter(self, x_data, y_data,
                 marker=None, zorder=None, label=None, color=None):
@@ -347,7 +344,6 @@ class PlotStyling:
 
 # SECTION: Legend
 
-
     def legend(self, title=None, loc='best', bbox_to_anchor=None, ncol=1):
 
         legend = self.ax.legend(title=title, loc=loc, bbox_to_anchor=bbox_to_anchor,
@@ -364,6 +360,7 @@ class PlotStyling:
 
 # SECTION: Text elements
 
+
     def textbox(self, text, x_loc, y_loc,
                 horz_align="center", vert_align="center"):
 
@@ -375,7 +372,6 @@ class PlotStyling:
 
 
 # SECTION: Axes
-
 
     def set_yaxis_scientific(self):
 
@@ -440,7 +436,6 @@ class PlotStyling:
 
 # SECTION: Save figure
 
-
     def save_plot(self, showPlot=False):
 
         self.fix_unicode_chars()
@@ -464,7 +459,6 @@ class PlotStyling:
 
     # Removes issue with \times character in mathTex output of plots:
     # @Source: https://stackoverflow.com/questions/47253462/matplotlib-2-mathtext-glyph-errors-in-tick-labels
-
 
     def fix_unicode_chars(self):
 
