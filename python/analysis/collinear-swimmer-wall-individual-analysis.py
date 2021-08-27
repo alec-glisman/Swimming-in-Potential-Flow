@@ -156,13 +156,13 @@ def aggregate_plots(relative_path, output_dir):
                               outputDir=output_dir, figName="loc-pos-x", eps=epsOutput,
                               continuousColors=False)
     # Show numerical data points
-    locPos_Plot.make_plot()
+    locPos_Plot.make_plot(showPlot=False)
     locPos_Plot.curve(
         time, Dr_Loc, zorder=1, label=r"$2$")
     locPos_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
         fmt(np.max(Z_height))),
         loc='best', ncol=1, bbox_to_anchor=(0.05, 0.05, 0.9, 0.9))
-    locPos_Plot.save_plot()
+    locPos_Plot.save_plot(showPlot=False)
 
     # PLOT: Relative oscillator displacement (x-axis)
     numLines = 4
@@ -185,7 +185,7 @@ def aggregate_plots(relative_path, output_dir):
     oscDis_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
         fmt(np.max(Z_height))),
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
-    oscDis_Plot.save_plot()
+    oscDis_Plot.save_plot(showPlot=False)
 
     numLines = 2
     oscDisErr_Plot = PlotStyling(numLines,
@@ -194,7 +194,7 @@ def aggregate_plots(relative_path, output_dir):
                                  outputDir=output_dir, figName="osc-disp-x-err", eps=epsOutput,
                                  continuousColors=False)
     # Show numerical data points
-    oscDisErr_Plot.make_plot()
+    oscDisErr_Plot.make_plot(showPlot=False)
     oscDisErr_Plot.curve(
         time, np.abs(r_12 - R_avg) / char_len - np.abs(r_12_con_mag) / char_len, zorder=1, label=r"$1-2$")
     oscDisErr_Plot.curve(
@@ -204,7 +204,7 @@ def aggregate_plots(relative_path, output_dir):
     oscDisErr_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
         fmt(np.max(Z_height))),
         loc='best', ncol=2, bbox_to_anchor=(0.05, 0.05, 0.9, 0.9))
-    oscDisErr_Plot.save_plot()
+    oscDisErr_Plot.save_plot(showPlot=False)
 
     # PLOT: Relative oscillator velocity (x-axis)
     numLines = 4
@@ -214,7 +214,7 @@ def aggregate_plots(relative_path, output_dir):
                               outputDir=output_dir, figName="osc-vel-x", eps=epsOutput,
                               continuousColors=False)
     # Show numerical data points
-    oscVel_Plot.make_plot()
+    oscVel_Plot.make_plot(showPlot=False)
     oscVel_Plot.curve(time,  u_12 / char_vel, zorder=1,
                       label=r"$1-2$ Simulation")
     oscVel_Plot.curve(time, u_32 / char_vel, zorder=2,
@@ -227,7 +227,7 @@ def aggregate_plots(relative_path, output_dir):
     oscVel_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
         fmt(np.max(Z_height))),
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
-    oscVel_Plot.save_plot()
+    oscVel_Plot.save_plot(showPlot=False)
 
     numLines = 2
     oscVelErr_Plot = PlotStyling(numLines,
@@ -236,7 +236,7 @@ def aggregate_plots(relative_path, output_dir):
                                  outputDir=output_dir, figName="osc-vel-x-err", eps=epsOutput,
                                  continuousColors=False)
     # Show numerical data points
-    oscVelErr_Plot.make_plot()
+    oscVelErr_Plot.make_plot(showPlot=False)
     oscVelErr_Plot.curve(time, u_12 / char_vel -
                          np.abs(u_12_con_mag) / char_vel, zorder=1, label=r"$1-2$")
     oscVelErr_Plot.curve(time, u_32 / char_vel -
@@ -246,7 +246,7 @@ def aggregate_plots(relative_path, output_dir):
     oscVelErr_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
         fmt(np.max(Z_height))),
         loc='best', ncol=2, bbox_to_anchor=(0.05, 0.05, 0.9, 0.9))
-    oscVelErr_Plot.save_plot()
+    oscVelErr_Plot.save_plot(showPlot=False)
 
     # PLOT: Relative oscillator acceleration (x-axis)
     numLines = 4
@@ -257,7 +257,7 @@ def aggregate_plots(relative_path, output_dir):
                               continuousColors=False)
 
     # Show numerical data points
-    oscAcc_Plot.make_plot()
+    oscAcc_Plot.make_plot(showPlot=False)
     oscAcc_Plot.curve(time, a_12, zorder=1,
                       label=r"$1-2$ Simulation")
     oscAcc_Plot.curve(time, a_32, zorder=2,
@@ -270,7 +270,7 @@ def aggregate_plots(relative_path, output_dir):
     oscAcc_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
         fmt(np.max(Z_height))),
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
-    oscAcc_Plot.save_plot()
+    oscAcc_Plot.save_plot(showPlot=False)
 
     numLines = 2
     oscAccErr_Plot = PlotStyling(numLines,
@@ -280,7 +280,7 @@ def aggregate_plots(relative_path, output_dir):
                                  continuousColors=False)
 
     # Show numerical data points
-    oscAccErr_Plot.make_plot()
+    oscAccErr_Plot.make_plot(showPlot=False)
     oscAccErr_Plot.curve(time, a_12 -
                          np.abs(a_12_con_mag), zorder=1, label=r"$1-2$")
     oscAccErr_Plot.curve(time, a_32 -
@@ -290,7 +290,7 @@ def aggregate_plots(relative_path, output_dir):
     oscAccErr_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
         fmt(np.max(Z_height))),
         loc='best', ncol=2, bbox_to_anchor=(0.0, 1.0, 0.9, 0.1))
-    oscAccErr_Plot.save_plot()
+    oscAccErr_Plot.save_plot(showPlot=False)
 
 # !SECTION (Plots)
 
