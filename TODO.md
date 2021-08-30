@@ -32,6 +32,7 @@
 
 - [x] Make kinematic variables in systemData class private
   - [x] Add getter and setter functions
+- [ ] **Try to speed-up code execution by explicitly declaring size of all matrices at compile time in Eigen types.**
 - [ ] Write WCA potential
 - [ ] Calculate constraint forces
 - [ ] Write RKF45 integration function
