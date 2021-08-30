@@ -47,6 +47,10 @@ my $pythonGSDCreation = "python/initial_configurations/" . "collinear-swimmer-wa
 my $pythonAggregrateAnalysis   = "python/analysis/" . "collinear-swimmer-wall-aggregate-analysis.py";
 my $pythonIndividualAnalysis   = "python/analysis/" . "collinear-swimmer-wall-individual-analysis.py";
 
+# Host path
+chomp(my $home = `echo ~`);
+my $cwd           = cwd();
+
 # Output path
 my $curDate          = strftime('%Y-%m-%d', localtime);
 my $analysisDir      = "figures";
@@ -60,11 +64,6 @@ if ($numThreads == 0) {
     $numThreads = 1;
 }
 print "\n\nNUMBER OF THREADS TO UTILIZE SIMULTANEOUSLY: $numThreads\n\n\n";
-
-
-# Host path
-chomp(my $home = `echo ~`);
-my $cwd           = cwd();
 
 # !SECTION (Input variables that user must specify before running script)
 
