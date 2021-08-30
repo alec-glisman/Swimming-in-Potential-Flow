@@ -59,6 +59,7 @@ my $numThreads = $cpu->count / 2;
 if ($numThreads == 0) {
     $numThreads = 1;
 }
+print "\n\nNUMBER OF THREADS TO UTILIZE SIMULTANEOUSLY: $numThreads\n\n\n";
 
 
 # Host path
