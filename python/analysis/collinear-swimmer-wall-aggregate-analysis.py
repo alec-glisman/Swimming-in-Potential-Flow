@@ -100,6 +100,7 @@ def aggregate_plots(relative_path, output_dir):
     omega = np.zeros_like(CoM_disp, dtype=np.double)
     epsilon = np.zeros_like(CoM_disp, dtype=np.double)
     final_t = np.zeros_like(CoM_disp, dtype=np.double)
+    dt = np.zeros_like(CoM_disp, dtype=np.double)
 
     for i in range(len(gsd_files)):
 
@@ -107,6 +108,7 @@ def aggregate_plots(relative_path, output_dir):
         gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(
             gsd_files[i].trajectory.file.nframes - 1)
         final_t[i] = gsd_files[i].snapshot.log['integrator/t']
+        dt[i] = gsd_files[i].snapshot.log['integrator/dt']
         CoM_disp_comp = gsd_files[i].snapshot.log['particles/double_position'][1]
 
         # Data from initial frame (not 0)
@@ -166,6 +168,46 @@ def aggregate_plots(relative_path, output_dir):
                                  continuousColors=False)
         CoM_PlotLL.make_plot()
         CoM_PlotLL.scatter_dashed(R_avg_srt, np.abs(
+            CoM_disp_srt), zorder=2, label="Simulation")
+        CoM_PlotLL.legend(title=r"$\epsilon \leq$" + "{}".format(
+            fmt(np.max(epsilon))), loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
+        CoM_PlotLL.save_plot()
+
+    if (len(np.unique(dt)) > 1):
+
+        idx = np.argsort(dt)
+        CoM_disp_srt = CoM_disp[idx]
+        dt_srt = dt[idx]
+
+        # PLOT: net displacement of swimmer vs. distance between spheres
+        numLines = 1
+        CoM_Plot = PlotStyling(numLines,
+                               r"$\Delta t / \tau$", r"$\Delta \mathrm{R}_{2} / a$",
+                               title=None, loglog=False,
+                               outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-dtVary", eps=epsOutput,
+                               continuousColors=False)
+        # Show numerical data points
+        CoM_Plot.make_plot()
+        CoM_Plot.scatter_dashed(dt_srt, CoM_disp_srt,
+                                zorder=1, label="Simulation")
+        # Add legend
+        CoM_Plot.legend(title=r"$\epsilon \leq$" + "{}".format(fmt(np.max(epsilon))),
+                        loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
+        # Adjust ticks and tick labels
+        # CoM_Plot.set_major_minor_ticks(
+        #     xMajorLoc=1, xMinorLoc=0.5, yMajorLoc=None, yMinorLoc=None)
+        CoM_Plot.set_yaxis_scientific()
+        CoM_Plot.save_plot()
+
+        # PLOT: log-log of net displacement of swimmer vs. distance between spheres
+        numLines = 1
+        CoM_PlotLL = PlotStyling(numLines,
+                                 r"$\Delta t / \tau$", r"$\Delta \mathrm{R}_{2} / a$",
+                                 title=None, loglog=True,
+                                 outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-loglog-dtVary", eps=epsOutput,
+                                 continuousColors=False)
+        CoM_PlotLL.make_plot()
+        CoM_PlotLL.scatter_dashed(dt_srt, np.abs(
             CoM_disp_srt), zorder=2, label="Simulation")
         CoM_PlotLL.legend(title=r"$\epsilon \leq$" + "{}".format(
             fmt(np.max(epsilon))), loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
@@ -320,6 +362,10 @@ def aggregate_plots(relative_path, output_dir):
 
         print("final_t:", file=f)
         print(final_t,    file=f)
+        print("", file=f)
+
+        print("dt:", file=f)
+        print(dt, file=f)
 
 # !SECTION (Output data)
 
