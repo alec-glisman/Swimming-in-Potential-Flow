@@ -214,6 +214,20 @@ def aggregate_plots(relative_path, output_dir):
             fmt(np.max(epsilon))), loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
         CoM_PlotLL.save_plot()
 
+        # PLOT: log-log of net displacement of swimmer vs. distance between spheres
+        numLines = 1
+        CoM_PlotLL = PlotStyling(numLines,
+                                 r"$\Delta t / \tau$", r"$\Delta \mathrm{R}_{2} / a - ($ val @ $\mathrm{min}(dt)$)",
+                                 title=None, loglog=True,
+                                 outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-loglog-dtVary-diffFromLast", eps=epsOutput,
+                                 continuousColors=False)
+        CoM_PlotLL.make_plot()
+        CoM_PlotLL.scatter_dashed(dt_srt, np.abs(
+            CoM_disp_srt - CoM_disp_srt[0]), zorder=2, label="Simulation")
+        CoM_PlotLL.legend(title=r"$\epsilon \leq$" + "{}".format(
+            fmt(np.max(epsilon))), loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
+        CoM_PlotLL.save_plot()
+
     if (len(np.unique(Z_height)) > 1):
 
         idx = np.argsort(Z_height)
