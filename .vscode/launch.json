@@ -40,7 +40,7 @@
             "program": "${workspaceFolder}/python/analysis/collinear-swimmer-wall-individual-analysis.py",
             "console": "integratedTerminal",
             "args": [
-                "--relative-path=${workspaceFolder}/temp_2021-08-18.14-20-10_collinear-swimmer_varyRelDisp/sim_6",
+                "--relative-path=${workspaceFolder}/temp_2021-08-30.12-25-21_collinear-swimmer-wall_varyDt/sim_1",
                 "--output-dir=figures"
             ]
         },
