@@ -92,6 +92,7 @@ def aggregate_plots(relative_path, output_dir):
             f"Failure to load data. No files found in relPath {relative_path}")
 
     # Loop through all simulations and grab the final CoM displacement (x-axis)
+    CoM_disp_comp = np.zeros((len(gsd_files), 3), dtype=np.double)
     CoM_disp = np.zeros(len(gsd_files), dtype=np.double)
     R_avg = np.zeros_like(CoM_disp, dtype=np.double)
     Z_height = np.zeros_like(CoM_disp, dtype=np.double)
@@ -109,7 +110,7 @@ def aggregate_plots(relative_path, output_dir):
             gsd_files[i].trajectory.file.nframes - 1)
         final_t[i] = gsd_files[i].snapshot.log['integrator/t']
         dt[i] = gsd_files[i].snapshot.log['integrator/dt']
-        CoM_disp_comp = gsd_files[i].snapshot.log['particles/double_position'][1]
+        CoM_disp_comp[i, :] = gsd_files[i].snapshot.log['particles/double_position'][1]
 
         # Data from initial frame (not 0)
         gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(1)
@@ -119,9 +120,9 @@ def aggregate_plots(relative_path, output_dir):
         U0[i] = gsd_files[i].snapshot.log['swimmer/U0']
         omega[i] = gsd_files[i].snapshot.log['swimmer/omega']
         epsilon[i] = U0[i] / R_avg[i] / omega[i]
-        CoM_disp_comp -= gsd_files[i].snapshot.log['particles/double_position'][1]
+        CoM_disp_comp[i, :] -= gsd_files[i].snapshot.log['particles/double_position'][1]
 
-        CoM_disp[i] = np.linalg.norm(CoM_disp_comp)
+        CoM_disp[i] = np.linalg.norm(CoM_disp_comp[i, :])
 
 # !SECTION (Load data)
 
@@ -347,6 +348,10 @@ def aggregate_plots(relative_path, output_dir):
                 print("\n", file=f)
             except:
                 pass
+
+        print("CoM_disp_comp:", file=f)
+        print(CoM_disp_comp,   file=f)
+        print("", file=f)
 
         print("CoM_disp:", file=f)
         print(CoM_disp,   file=f)
