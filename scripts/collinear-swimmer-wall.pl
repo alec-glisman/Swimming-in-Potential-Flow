@@ -56,6 +56,10 @@ my %options;
 my $info = Sys::Info->new;
 my $cpu  = $info->device( CPU => %options );
 my $numThreads = $cpu->count / 2;
+if ($numThreads == 0) {
+    $numThreads = 1;
+}
+
 
 # Host path
 chomp(my $home = `echo ~`);
