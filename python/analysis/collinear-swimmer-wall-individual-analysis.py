@@ -122,6 +122,10 @@ def aggregate_plots(relative_path, output_dir):
     for i in range(q.shape[1]):
         q[:, i] /= q_norms[i]
 
+    # swimmer angular rotation from initial configuration
+    cos_theta = np.dot(q.T, q[:, 0])
+    theta = np.arccos(cos_theta)
+
     # relative velocities between particle pairs
     U_loc = velocities[1, :, :]
     U_1 = velocities[0, :, :]
@@ -156,7 +160,23 @@ def aggregate_plots(relative_path, output_dir):
 
 
 # SECTION: Plots
-    # PLOT: Locater point position (x-axis)
+    # PLOT: Angular displacement
+    numLines = 1
+    angDisp_Plot = PlotStyling(numLines,
+                               r"$t/\tau$", r"$\Delta \theta / (2 \pi)$",
+                               title=None, loglog=False,
+                               outputDir=output_dir, figName="angular-displacement", eps=epsOutput,
+                               continuousColors=False)
+    # Show numerical data points
+    angDisp_Plot.make_plot()
+    angDisp_Plot.curve(
+        time, theta / (2.0 * np.pi), zorder=1, label=r"Collinear Swimmer")
+    angDisp_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
+        fmt(np.max(Z_height))),
+        loc='best', ncol=1, bbox_to_anchor=(0.05, 0.05, 0.9, 0.9))
+    angDisp_Plot.save_plot()
+
+    # PLOT: Locater point position
     numLines = 1
     locPos_Plot = PlotStyling(numLines,
                               r"$t/\tau$", r"$\Delta \mathbf{R}_2 \cdot \mathbf{q}$",
@@ -310,7 +330,12 @@ def aggregate_plots(relative_path, output_dir):
     with open(file, "w") as f:
         print(f"R_avg = {R_avg}", file=f)
         print(f"Z_height = {Z_height}", file=f)
-        print(f"\Delta R_2 = {DR_loc[:,-1]}", file=f)
+        print(f"Delta R_2 = {DR_loc[:,-1]}", file=f)
+        print("", file=f)
+
+        print("Final frame:", file=f)
+        print(f"cos(Delta theta) = {cos_theta[-1]}", file=f)
+        print(f"Delta theta = {theta[-1]}", file=f)
 
 # !SECTION (Output data)
 
