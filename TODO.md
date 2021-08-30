@@ -30,8 +30,8 @@
 
 ## Additional features
 
-- [ ] Make kinematic variables in systemData class private
-  - [ ] Add getter and setter functions
+- [x] Make kinematic variables in systemData class private
+  - [x] Add getter and setter functions
 - [ ] Write WCA potential
 - [ ] Calculate constraint forces
 - [ ] Write RKF45 integration function
