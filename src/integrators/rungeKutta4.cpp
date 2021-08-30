@@ -207,49 +207,56 @@ rungeKutta4::initializeSpecificVars()
 void
 rungeKutta4::initializeConstraintLinearSystem()
 {
-    /* calculate A, not a function of time */
-    m_A = Eigen::MatrixXd::Zero(15, 18);
-
-    // (1): U_1 - U_2 = V_1 (Indexing: (constraint #, particle #))
-    m_A.block<3, 3>(3 * 0, 3 * 0).noalias() = m_I;
-    m_A.block<3, 3>(3 * 0, 3 * 1).noalias() = -m_I;
-
-    // (2): U_3 - U_2 = V_3
-    m_A.block<3, 3>(3 * 1, 3 * 2).noalias() = m_I;
-    m_A.block<3, 3>(3 * 1, 3 * 1).noalias() = -m_I;
-
-    //  (3): U_1 - I_tilde * U_4 = 0
-    m_A.block<3, 3>(3 * 2, 3 * 0).noalias() = m_I;
-    m_A.block<3, 3>(3 * 2, 3 * 3).noalias() = -m_I_tilde;
-
-    //  (4): U_2 - I_tilde * U_5 = 0
-    m_A.block<3, 3>(3 * 3, 3 * 1).noalias() = m_I;
-    m_A.block<3, 3>(3 * 3, 3 * 4).noalias() = -m_I_tilde;
-
-    //  (5): U_3 - I_tilde * U_6 = 0
-    m_A.block<3, 3>(3 * 4, 3 * 2).noalias() = m_I;
-    m_A.block<3, 3>(3 * 4, 3 * 5).noalias() = -m_I_tilde;
-
-    /* calculate b, function of time */
-    // update articulation velocities for constraint calculation
-    double dimensional_time{0.0};
-    articulationAcc(dimensional_time);
-
-    m_b                             = Eigen::VectorXd::Zero(15, 1);
-    m_b.segment<3>(3 * 0).noalias() = m_accArtic.segment<3>(3 * 0);
-    m_b.segment<3>(3 * 1).noalias() = m_accArtic.segment<3>(3 * 2);
+    updateConstraintLinearSystem(0.0);
 }
 
 void
 rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
 {
-    // update articulation velocities for constraint calculation
-    articulationAcc(dimensional_time);
+    /* ANCHOR: Calculate quantities for linear system */
+    // orientation vector, q = R_1 - R_3
+    Eigen::Vector3d q = m_system->positions().segment<3>(3 * 0);
+    q.noalias() -= m_system->positions().segment<3>(3 * 2);
+    q.normalize();
 
-    // calculate b, function of time
-    m_b                             = Eigen::VectorXd::Zero(15, 1);
-    m_b.segment<3>(3 * 0).noalias() = m_accArtic.segment<3>(3 * 0);
-    m_b.segment<3>(3 * 1).noalias() = m_accArtic.segment<3>(3 * 2);
+    // tensor dimensions
+    int num_constraints{11};
+    int num_DoF{3 * 6};
+
+    /* ANCHOR: Calculate A, function of time (Indexing: (constraint #, particle DoF #)) */
+    m_A.setZero(num_constraints, num_DoF);
+
+    // (1): q^T * U_1 - q^T * U_2 = || V_1 ||
+    m_A.block<1, 3>(0, 0).noalias() = q;
+    m_A.block<1, 3>(0, 3).noalias() = -q;
+
+    // (2): q^T * U_3 - q^T * U_2 = || V_3 ||
+    m_A.block<1, 3>(1, 6).noalias() = q;
+    m_A.block<1, 3>(1, 3).noalias() = -q;
+
+    // (3-5): U_1 - I_tilde * U_4 = 0
+    m_A.block<3, 3>(2, 0).noalias() = m_I;
+    m_A.block<3, 3>(2, 9).noalias() = -m_I_tilde;
+
+    //  (6-8): U_2 - I_tilde * U_5 = 0
+    m_A.block<3, 3>(5, 3).noalias()  = m_I;
+    m_A.block<3, 3>(5, 12).noalias() = -m_I_tilde;
+
+    //  (9-11): U_3 - I_tilde * U_6 = 0
+    m_A.block<3, 3>(8, 6).noalias()  = m_I;
+    m_A.block<3, 3>(8, 15).noalias() = -m_I_tilde;
+
+    /* ANCHOR: Calculate b, function of time */
+    // articulation acceleration magnitudes
+    double a1_mag =
+        -m_systemParam.U0 * m_systemParam.omega * sin(m_systemParam.omega * dimensional_time);
+    double a3_mag = -m_systemParam.U0 * m_systemParam.omega *
+                    sin(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
+
+    // output results
+    m_b.setZero(num_constraints, 1);
+    m_b(0) = a1_mag; // (1)
+    m_b(1) = a3_mag; // (2)
 }
 
 /* REVIEW[epic=Change,order=2]: Change constraint linear system (A, b) for each system */
