@@ -125,6 +125,8 @@ def aggregate_plots(relative_path, output_dir):
     # swimmer angular rotation from initial configuration
     cos_theta = np.dot(q.T, q[:, 0])
     theta = np.arccos(cos_theta)
+    theta_dot = np.gradient(theta, time)
+    theta_ddot = np.gradient(theta_dot, time)
 
     # relative velocities between particle pairs
     U_loc = velocities[1, :, :]
@@ -175,6 +177,38 @@ def aggregate_plots(relative_path, output_dir):
         fmt(np.max(Z_height))),
         loc='best', ncol=1, bbox_to_anchor=(0.05, 0.05, 0.9, 0.9))
     angDisp_Plot.save_plot()
+
+    # PLOT: Angular velocity
+    numLines = 1
+    angVel_Plot = PlotStyling(numLines,
+                               r"$t/\tau$", r"$\Delta \dot{\theta} / (2 \pi)$",
+                               title=None, loglog=False,
+                               outputDir=output_dir, figName="angular-velocity", eps=epsOutput,
+                               continuousColors=False)
+    # Show numerical data points
+    angVel_Plot.make_plot()
+    angVel_Plot.curve(
+        time, theta_dot / (2.0 * np.pi), zorder=1, label=r"Collinear Swimmer")
+    angVel_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
+        fmt(np.max(Z_height))),
+        loc='best', ncol=1, bbox_to_anchor=(0.05, 0.05, 0.9, 0.9))
+    angVel_Plot.save_plot()
+
+    # PLOT: Angular acceleration
+    numLines = 1
+    angAcc_Plot = PlotStyling(numLines,
+                               r"$t/\tau$", r"$\Delta \ddot{\theta} / (2 \pi)$",
+                               title=None, loglog=False,
+                               outputDir=output_dir, figName="angular-acceleration", eps=epsOutput,
+                               continuousColors=False)
+    # Show numerical data points
+    angAcc_Plot.make_plot()
+    angAcc_Plot.curve(
+        time, theta_ddot / (2.0 * np.pi), zorder=1, label=r"Collinear Swimmer")
+    angAcc_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
+        fmt(np.max(Z_height))),
+        loc='best', ncol=1, bbox_to_anchor=(0.05, 0.05, 0.9, 0.9))
+    angAcc_Plot.save_plot()
 
     # PLOT: Locater point position
     numLines = 1
