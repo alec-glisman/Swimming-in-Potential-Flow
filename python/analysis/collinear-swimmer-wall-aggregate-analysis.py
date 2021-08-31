@@ -217,13 +217,13 @@ def aggregate_plots(relative_path, output_dir):
         # PLOT: log-log of net displacement of swimmer vs. distance between spheres
         numLines = 1
         CoM_PlotLL = PlotStyling(numLines,
-                                 r"$\Delta t / \tau$", r"$\Delta \mathrm{R}_{2} / a - ($ val @ $\mathrm{min}(dt)$)",
+                                 r"$\Delta t / \tau$", r"Relative Error $\Delta \mathrm{R}_{2}$",
                                  title=None, loglog=True,
                                  outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-loglog-dtVary-diffFromLast", eps=epsOutput,
                                  continuousColors=False)
         CoM_PlotLL.make_plot()
         CoM_PlotLL.scatter_dashed(dt_srt, np.abs(
-            CoM_disp_srt - CoM_disp_srt[0]), zorder=2, label="Simulation")
+            CoM_disp_srt - CoM_disp_srt[0]) / np.abs(CoM_disp_srt[0]), zorder=2, label="Simulation")
         CoM_PlotLL.legend(title=r"$\epsilon \leq$" + "{}".format(
             fmt(np.max(epsilon))), loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
         CoM_PlotLL.save_plot()
@@ -359,6 +359,24 @@ def aggregate_plots(relative_path, output_dir):
                                       np.log(np.abs(CoM_disp_srt)), 1)
 
                 print(f"ln(CoM_disp) = {m} * ln(Z_height) + {b}",  file=f)
+                print("\n", file=f)
+            except:
+                pass
+
+        if (len(np.unique(dt)) > 1):
+            try:
+                with Empty_Plot.suppress_stdout():
+                    idx = np.argsort(dt)
+                    CoM_disp_srt = CoM_disp[idx]
+                    CoM_disp_err_srt = np.abs(
+                        CoM_disp_srt - CoM_disp_srt[0]) / np.abs(CoM_disp_srt[0])
+                    dt_srt = dt[idx]
+
+                    m, b = np.polyfit(np.log(np.abs(dt_srt[1:])),
+                                      np.log(np.abs(CoM_disp_err_srt[1:])), 1)
+
+                print(
+                    f"ln(CoM_disp relative error from smallest dt) = {m} * ln(dt) + {b}",  file=f)
                 print("\n", file=f)
             except:
                 pass
