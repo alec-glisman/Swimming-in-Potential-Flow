@@ -111,7 +111,6 @@ input/.DS_Store
 !src/**
 !tests/**
 tests/output/**
-!data_tag/**
 
 # Important configurations
 !.cmake-format.json
