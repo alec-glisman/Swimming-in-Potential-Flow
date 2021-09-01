@@ -180,26 +180,26 @@ rungeKutta4::initializeSpecificVars()
 
     /* ANCHOR: set initial conditions */
     spdlog::get(m_logName)->info("Setting initial conditions");
+    spdlog::get(m_logName)->critical("NOTHING CHANGES HERE DUE TO NO INTERNAL CONSTRAINTS.");
 
     // set articulation velocities
-    spdlog::get(m_logName)->info("Calling articulationVel()");
-    articulationVel(0.0);
-    spdlog::get(m_logName)->info("Calling articulationAcc()");
-    articulationAcc(0.0);
-    // calculate locater point motion via linear and angular momentum free conditions
-    spdlog::get(m_logName)->info("Calling rLoc()");
-    rLoc();
+    // spdlog::get(m_logName)->info("Calling articulationVel()");
+    // articulationVel(0.0);
+    // spdlog::get(m_logName)->info("Calling articulationAcc()");
+    // articulationAcc(0.0);
+    // // calculate locater point motion via linear and angular momentum free conditions
+    // spdlog::get(m_logName)->info("Calling rLoc()");
+    // rLoc();
     spdlog::get(m_logName)->info("Updating (for first time) hydrodynamic tensors");
     m_potHydro->update();
-    spdlog::get(m_logName)->info("Calling momentumLinAngFree()");
-    momentumLinAngFree();
+    // spdlog::get(m_logName)->info("Calling momentumLinAngFree()");
+    // momentumLinAngFree();
 
     /* ANCHOR: write updated kinematics to original frame (appending current file) */
     spdlog::get(m_logName)->info("Updating input GSD with updated kinematic initial conditions");
-    spdlog::get(m_logName)->critical(
-        "Frame 0 contains header information but incorrect kinematics");
-    spdlog::get(m_logName)->critical(
-        "Frame 1 should be treated as correct starting frame for analysis");
+    spdlog::get(m_logName)->critical("Frame 0 contains header information and correct kinematics.");
+    spdlog::get(m_logName)->critical("Frame 1 should be treated as correct starting frame for "
+                                     "compatibility with previous simulations.");
     gsdParser->writeFrame();
 }
 
@@ -207,6 +207,10 @@ rungeKutta4::initializeSpecificVars()
 void
 rungeKutta4::initializeConstraintLinearSystem()
 {
+    /* ANCHOR: Calculate b, independent of time */
+    int num_constraints{11};
+    m_b.setZero(num_constraints, 1);
+
     updateConstraintLinearSystem(0.0);
 }
 
@@ -226,11 +230,11 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     /* ANCHOR: Calculate A, function of time (Indexing: (constraint #, particle DoF #)) */
     m_A.setZero(num_constraints, num_DoF);
 
-    // (1): q^T * U_1 - q^T * U_2 = || V_1 ||
+    // (1): q^T * U_1 - q^T * U_2 = 0
     m_A.block<1, 3>(0, 0).noalias() = q;
     m_A.block<1, 3>(0, 3).noalias() = -q;
 
-    // (2): q^T * U_3 - q^T * U_2 = || V_3 ||
+    // (2): q^T * U_3 - q^T * U_2 = 0
     m_A.block<1, 3>(1, 6).noalias() = q;
     m_A.block<1, 3>(1, 3).noalias() = -q;
 
@@ -245,18 +249,6 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     //  (9-11): U_3 - I_tilde * U_6 = 0
     m_A.block<3, 3>(8, 6).noalias()  = m_I;
     m_A.block<3, 3>(8, 15).noalias() = -m_I_tilde;
-
-    /* ANCHOR: Calculate b, function of time */
-    // articulation acceleration magnitudes
-    double a1_mag =
-        -m_systemParam.U0 * m_systemParam.omega * sin(m_systemParam.omega * dimensional_time);
-    double a3_mag = -m_systemParam.U0 * m_systemParam.omega *
-                    sin(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
-
-    // output results
-    m_b.setZero(num_constraints, 1);
-    m_b(0) = a1_mag; // (1)
-    m_b(1) = a3_mag; // (2)
 }
 
 /* REVIEW[epic=Change,order=2]: Change constraint linear system (A, b) for each system */
@@ -436,47 +428,14 @@ rungeKutta4::momentumLinAngFree()
 void
 rungeKutta4::articulationVel(double dimensional_time)
 {
-    // ANCHOR: Orientation vectors, q = R_1 - R_3
-    Eigen::Vector3d q =
-        m_system->positions().segment<3>(3 * 0) - m_system->positions().segment<3>(3 * 2);
-    q.normalize();
-    Eigen::Vector3d q_tilde = m_I_tilde * q;
-
-    // articulation velocity magnitudes
-    double v1_mag = m_systemParam.U0 * cos(m_systemParam.omega * dimensional_time);
-    double v3_mag =
-        m_systemParam.U0 * cos(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
-
-    // Zero and then calculate m_velArtic
-    m_velArtic                             = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    m_velArtic.segment<3>(3 * 0).noalias() = v1_mag * q;
-    m_velArtic.segment<3>(3 * 2).noalias() = v3_mag * q;
-    m_velArtic.segment<3>(3 * 3).noalias() = v1_mag * q_tilde;
-    m_velArtic.segment<3>(3 * 5).noalias() = v3_mag * q_tilde;
+    m_velArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
 }
 
 /* REVIEW[epic=Change,order=4]: Change assignment of m_accArtic for different systems */
 void
 rungeKutta4::articulationAcc(double dimensional_time)
 {
-    // ANCHOR: Orientation vectors, q = R_1 - R_3
-    Eigen::Vector3d q =
-        m_system->positions().segment<3>(3 * 0) - m_system->positions().segment<3>(3 * 2);
-    q.normalize();
-    Eigen::Vector3d q_tilde = m_I_tilde * q;
-
-    // articulation acceleration magnitudes
-    double a1_mag =
-        -m_systemParam.U0 * m_systemParam.omega * sin(m_systemParam.omega * dimensional_time);
-    double a3_mag = -m_systemParam.U0 * m_systemParam.omega *
-                    sin(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
-
-    // Zero and then calculate m_accArtic
-    m_accArtic                             = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    m_accArtic.segment<3>(3 * 0).noalias() = a1_mag * q;
-    m_accArtic.segment<3>(3 * 2).noalias() = a3_mag * q;
-    m_accArtic.segment<3>(3 * 3).noalias() = a1_mag * q_tilde;
-    m_accArtic.segment<3>(3 * 5).noalias() = a3_mag * q_tilde;
+    m_accArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
 }
 
 /* REVIEW[epic=Change,order=5]: Change assignment of m_RLoc for different systems */
