@@ -35,7 +35,7 @@ my $buildDir      = "build";                  # Title whatever you want build fo
 my $generator     = "Unix Makefiles";         # ONLY TESTED WITH UNIX
 
 # C++ Simulation
-my $simulationTag    = "collinear-swimmer-wall-no-internal-dynamics";
+my $simulationTag    = "collinear-swimmer-wall";
 my $projectName      = "bodies_in_potential_flow";
 my $inputDir         = "input";
 my @inputData        = ( "varyRelDisp", "varyZHeight", "varyPhaseAngle", "varyEpsilon", "varyDt" );
@@ -47,19 +47,41 @@ my $pythonGSDCreation = "python/initial_configurations/" . "collinear-swimmer-wa
 my $pythonAggregrateAnalysis   = "python/analysis/" . "collinear-swimmer-wall-aggregate-analysis.py";
 my $pythonIndividualAnalysis   = "python/analysis/" . "collinear-swimmer-wall-individual-analysis.py";
 
+# Host path
+my $host = `uname -n`;
+chomp(my $home = `echo ~`);
+my $cwd           = cwd();
+
 # Output path
 my $curDate          = strftime('%Y-%m-%d', localtime);
 my $analysisDir      = "figures";
 
 # Host hardware
-my %options;
-my $info = Sys::Info->new;
-my $cpu  = $info->device( CPU => %options );
-my $numThreads = $cpu->count / 2;
+my $numThreads = 0;
+if ((index($host, "MacBook-Pro") != -1) or (index($host, "MBP") != -1)) {
+    $numThreads = 8;
+} elsif ((index($host, "alec-glisman-PC-Ubuntu") != -1) or (index($host, "alec-glisman-PC-Windows") != -1)) {
+    $numThreads  = 16;
+} elsif ((index($host, "stokes") != -1 )) {
+    $numThreads  = 8;
+} elsif ((index($host, "shear") != -1 ) or ( index($host, "s") != -1 )) {
+    $numThreads  = 1;
+} else {
+    my %options;
+    my $info = Sys::Info->new;
+    my $cpu  = $info->device( CPU => %options );
+    my $numThreads = $cpu->count / 2;
+}
+if ($numThreads == 0) {
+    $numThreads = 1;
+}
 
-# Host path
-chomp(my $home = `echo ~`);
-my $cwd           = cwd();
+# Terminal display outputs
+print "\n";
+print "WELCOME TO PERL SIMULATION SCRIPT\n";
+print "HOST: $host";
+print "NUMBER OF THREADS TO UTILIZE SIMULTANEOUSLY: $numThreads";
+print "\n\n\n";
 
 # !SECTION (Input variables that user must specify before running script)
 
