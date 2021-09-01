@@ -1,4 +1,0 @@
-[2021-08-19 14:34:13.747] [systemData] [info] Initializing system data
-[2021-08-19 14:34:13.747] [systemData] [info] Output path: temp_2021-08-19.14-33-32_collinear-swimmer_varyDt/sim_9
-[2021-08-19 14:34:13.747] [systemData] [info] Starting to parse GSD file
-[2021-08-19 14:34:13.747] [systemData] [info] Input checking assertions
