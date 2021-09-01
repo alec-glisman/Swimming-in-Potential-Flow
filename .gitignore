@@ -18,6 +18,7 @@ temp*
 *.json
 *.lammpstrj
 *.gsd
+*.tar.xz
 
 # Testing data output
 Testing
@@ -111,7 +112,6 @@ input/.DS_Store
 !src/**
 !tests/**
 tests/output/**
-!data_tag/**
 
 # Important configurations
 !.cmake-format.json
