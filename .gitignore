@@ -18,6 +18,7 @@ temp*
 *.json
 *.lammpstrj
 *.gsd
+*.tar.xz
 
 # Testing data output
 Testing
