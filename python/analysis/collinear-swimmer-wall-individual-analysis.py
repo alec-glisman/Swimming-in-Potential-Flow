@@ -147,6 +147,13 @@ def aggregate_plots(relative_path, output_dir):
     # characteristic scales
     char_time = 1.0 / omega
     char_vel = U0
+
+    if (char_time == 0.0):
+        char_time = 1.0
+
+    if (char_vel == 0.0):
+        char_vel = 1.0
+
     char_len = char_vel * char_time
     char_acc = char_vel / char_time
 
@@ -181,10 +188,10 @@ def aggregate_plots(relative_path, output_dir):
     # PLOT: Angular velocity
     numLines = 1
     angVel_Plot = PlotStyling(numLines,
-                               r"$t/\tau$", r"$\Delta \dot{\theta} / (2 \pi)$",
-                               title=None, loglog=False,
-                               outputDir=output_dir, figName="angular-velocity", eps=epsOutput,
-                               continuousColors=False)
+                              r"$t/\tau$", r"$\Delta \dot{\theta} / (2 \pi)$",
+                              title=None, loglog=False,
+                              outputDir=output_dir, figName="angular-velocity", eps=epsOutput,
+                              continuousColors=False)
     # Show numerical data points
     angVel_Plot.make_plot()
     angVel_Plot.curve(
@@ -197,10 +204,10 @@ def aggregate_plots(relative_path, output_dir):
     # PLOT: Angular acceleration
     numLines = 1
     angAcc_Plot = PlotStyling(numLines,
-                               r"$t/\tau$", r"$\Delta \ddot{\theta} / (2 \pi)$",
-                               title=None, loglog=False,
-                               outputDir=output_dir, figName="angular-acceleration", eps=epsOutput,
-                               continuousColors=False)
+                              r"$t/\tau$", r"$\Delta \ddot{\theta} / (2 \pi)$",
+                              title=None, loglog=False,
+                              outputDir=output_dir, figName="angular-acceleration", eps=epsOutput,
+                              continuousColors=False)
     # Show numerical data points
     angAcc_Plot.make_plot()
     angAcc_Plot.curve(
