@@ -8,6 +8,7 @@
         "!**/Modules/**": true
     },
     "cSpell.words": [
+        "amsbsy",
         "amsfonts",
         "amsmath",
         "amssymb",
@@ -43,6 +44,9 @@
         "Kalaba",
         "KUTTA",
         "lseeki",
+        "𝑙𝑥",
+        "𝑙𝑦",
+        "𝑙𝑧",
         "mathbf",
         "mathcal",
         "mathrm",
@@ -80,10 +84,13 @@
         "xlim",
         "xminorticklabels",
         "xticklabels",
+        "𝑥𝑦",
+        "𝑥𝑧",
         "yaxis",
         "ylabel",
         "yminorticklabels",
         "yticklabels",
+        "𝑦𝑧",
         "zorder"
     ],
     "python.pythonPath": "/home/aglisman/anaconda3/envs/bodies-in-potential-flow/bin/python",
