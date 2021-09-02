@@ -3,6 +3,7 @@ import os                          # Access system file-tree
 import sys                         # Modify system parameters
 import tarfile                     # data I/O
 from pathlib import Path           # removing filename extension
+import warnings
 
 import glob                        # get files matching pattern
 import re                          # regex
@@ -34,8 +35,8 @@ def find_compressed_data(relative_path_base_dir, sim_parameters_varied):
             matched = list(filter(regex.search, file_paths))
 
             if (len(matched) == 0):
-                raise IOError(
-                    "Failure to find data. No data path found in parameter: {p}, relative path: {r}")
+                warnings.warn(
+                    f"Failure to find data. No data path found in parameter: {p}, relative path: {r}")
 
             desired_file_paths.append(matched)
 
