@@ -200,17 +200,28 @@ def parse_loaded_data(gsd_files):
         "epsilon": epsilon,
 
         "time": list(time),
-
         "positions": list(positions),
         "velocities": list(velocities),
         "accelerations": list(accelerations),
+
+        "initial_time": list(time[:, 0]),
+        "initial_positions": list(positions[:, :, :, 0]),
+        "initial_velocities": list(velocities[:, :, :, 0]),
+        "initial_accelerations": list(accelerations[:, :, :, 0]),
+
+        "final_time": list(time[:, -1]),
+        "final_positions": list(positions[:, :, :, -1]),
+        "final_velocities": list(velocities[:, :, :, -1]),
+        "final_accelerations": list(accelerations[:, :, :, -1]),
 
         "q": list(q),
         "q0": list(q0),
 
         "theta": list(theta),
         "theta_dot": list(theta_dot),
-        "theta_ddot": list(theta_ddot)
+        "theta_ddot": list(theta_ddot),
+
+        "final_theta": list(theta[:, -1])
     }
 
     # Output data
