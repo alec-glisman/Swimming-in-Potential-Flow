@@ -44,7 +44,7 @@ parser.add_option("--Z-height", dest="u_Z_height",
 # SECTION: Parameters
 
 # Time-averaged parameters
-U_avg = np.array(0.0019947205179305, dtype=np.double)
+U_avg = np.array(0.0020282479819682, dtype=np.double)
 
 # Integrator parameters
 t = 0.0
