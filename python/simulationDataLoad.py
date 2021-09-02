@@ -191,9 +191,12 @@ def parse_loaded_data(gsd_files):
         "gsd_path": gsd_paths,
 
         "CoM_disp": CoM_disp,
-        "CoM_disp_comp": list(CoM_disp_comp),
+        "CoM_disp_x": CoM_disp_comp[:, 0],
+        "CoM_disp_y": CoM_disp_comp[:, 1],
+        "CoM_disp_z": CoM_disp_comp[:, 2],
 
         "R_avg": R_avg,
+        "Z_0": positions[:, 0, 2, 0],
         "phase_shift": phaseShift,
         "U0": U0,
         "omega": omega,
@@ -221,7 +224,7 @@ def parse_loaded_data(gsd_files):
         "theta_dot": list(theta_dot),
         "theta_ddot": list(theta_ddot),
 
-        "final_theta": list(theta[:, -1])
+        "final_theta": theta[:, -1]
     }
 
     # Output data
