@@ -233,8 +233,11 @@ def gsd_df(relative_path_base_dir, sim_parameters_varied):
         for j in range(len(comp_data_path[i])):  # loop over parameters varied
 
             # Load GSD files from compressed data
-            data_source_gsd_files.append(
-                load_compressed_data(comp_data_path[i][j]))
+            gsd_current = load_compressed_data(comp_data_path[i][j])
+
+            # Parse GSD files
+            if (len(gsd_current) > 0):
+                data_source_gsd_files.append(gsd_current)
 
         # Flatten output
         data_source_gsd_files = [
