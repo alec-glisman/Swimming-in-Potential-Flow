@@ -220,7 +220,7 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     q.normalize();
 
     // tensor dimensions
-    int num_constraints{11};
+    int num_constraints{12};
     int num_DoF{3 * 6};
 
     /* ANCHOR: Calculate A, function of time (Indexing: (constraint #, particle DoF #)) */
@@ -246,6 +246,39 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     m_A.block<3, 3>(8, 6).noalias()  = m_I;
     m_A.block<3, 3>(8, 15).noalias() = -m_I_tilde;
 
+    // (12): Collinear body constraint FIXME
+    // relative positions
+    Eigen::Vector3d rLoc = m_system->positions().segment<3>(3);
+    Eigen::Vector3d r1   = m_system->positions().segment<3>(0);
+    r1.noalias() -= rLoc;
+    Eigen::Vector3d r3 = m_system->positions().segment<3>(6);
+    r3.noalias() -= rLoc;
+    // relative velocities
+    Eigen::Vector3d rLoc_dot = m_system->velocities().segment<3>(3);
+    Eigen::Vector3d r1_dot   = m_system->velocities().segment<3>(0);
+    r1_dot.noalias() -= rLoc_dot;
+    Eigen::Vector3d r3_dot = m_system->velocities().segment<3>(6);
+    r3_dot.noalias() -= rLoc_dot;
+    // scalar constants
+    double a{r1.norm()};
+    double b{r3.norm()};
+    double c{r1_dot.dot(r1_dot)};
+    double d{r1.dot(r1_dot)};
+    double e{r3_dot.dot(r3)};
+    double f{r3_dot.dot(r3_dot)};
+    double g{r1_dot.dot(r3_dot)};
+    double alpha{(b / a) * (c - std::pow(d / a, 2)) + 2.0 * (d * e) / (a * b) +
+                 (a / b) * (f - std::pow(e / b, 2)) + 2.0 * g};
+    // vector constants
+    Eigen::VectorXd beta = r3;
+    beta.noalias() += (b / a) * r1;
+    Eigen::VectorXd gamma = r1;
+    beta.noalias() += (a / b) * r3;
+    // output values
+    m_A.block<1, 3>(11, 0).noalias() = beta;
+    m_A.block<1, 3>(11, 0).noalias() = -beta - gamma;
+    m_A.block<1, 3>(11, 0).noalias() = gamma;
+
     /* ANCHOR: Calculate b, function of time */
     // articulation acceleration magnitudes
     double a1_mag =
@@ -255,8 +288,9 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
 
     // output results
     m_b.setZero(num_constraints, 1);
-    m_b(0) = a1_mag; // (1)
-    m_b(1) = a3_mag; // (2)
+    m_b(0)  = a1_mag; // (1)
+    m_b(1)  = a3_mag; // (2)
+    m_b(11) = -alpha; // (12) FIXME
 }
 
 /* REVIEW[epic=Change,order=2]: Change constraint linear system (A, b) for each system */
