@@ -32,8 +32,8 @@ class GSDUtil:
                 self.trajectory.file.nframes - 1)
 
         # box parameters (not currently used)
-        #   box[0:3]: (𝑙𝑥,𝑙𝑦,𝑙𝑧)  the box length in each direction, in length units
-        #   box[3:]: (𝑥𝑦, 𝑥𝑧, 𝑦𝑧) the tilt factors, unitless values
+        #   box[0:3]: (l_x, l_y, l_z)  the box length in each direction, in length units
+        #   box[3:]: (xy, xz, yz) the tilt factors, unitless values
         self.snapshot.configuration.box = [30, 30, 30, 0, 0, 0]
     # !SECTION (Initializer)
 
