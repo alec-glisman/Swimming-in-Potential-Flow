@@ -192,7 +192,8 @@ rungeKutta4::initializeSpecificVars()
     spdlog::get(m_logName)->info("Updating (for first time) hydrodynamic tensors");
     m_potHydro->update();
     spdlog::get(m_logName)->info("Calling momentumLinAngFree()");
-    momentumLinAngFree();
+    Eigen::VectorXd acc = m_system->accelerations();
+    momentumLinAngFree(acc, 0.0);
 
     /* ANCHOR: write updated kinematics to original frame (appending current file) */
     spdlog::get(m_logName)->info("Updating input GSD with updated kinematic initial conditions");
@@ -297,6 +298,21 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
 void
 rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
 {
+    bool useUdwadiaMethod{true};
+
+    if (useUdwadiaMethod)
+    {
+        udwadiaKalaba(acc, dimensional_time);
+    }
+    else
+    {
+        momentumLinAngFree(acc, dimensional_time);
+    }
+}
+
+void
+rungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc, double dimensional_time)
+{
     /* NOTE: Following the formalism developed in Udwadia & Kalaba (1992) Proc. R. Soc. Lond. A
      * Solve system of the form M_total * acc = Q + Q_con
      * Q is the forces present in unconstrained system
@@ -348,8 +364,13 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
 }
 
 void
-rungeKutta4::momentumLinAngFree()
+rungeKutta4::momentumLinAngFree(Eigen::VectorXd& acc, double dimensional_time)
 {
+    /* ANCHOR: Compute articulation data */
+    articulationAcc(dimensional_time);
+    articulationVel(dimensional_time);
+    rLoc();
+
     /* ANCHOR: Solve for rigid body motion (rbm) tensors */
     // initialize variables
     Eigen::MatrixXd rbmconn = Eigen::MatrixXd::Zero(6, 3 * m_system->numParticles()); // [6 x 3N]
@@ -431,6 +452,10 @@ rungeKutta4::momentumLinAngFree()
     Eigen::VectorXd A_out = rbmconn_T * A_swim;
     A_out.noalias() += b;
     m_system->setAccelerations(A_out);
+
+    /* ANCHOR: Output acceleration data back to input variable */
+    spdlog::get(m_logName)->info("Writing momentumLinAngFree() data to input variable");
+    acc = A_out;
 
     /* ANCHOR: Output data to GSD */
     spdlog::get(m_logName)->info("Writing momentumLinAngFree() data to GSD");

@@ -54,12 +54,15 @@ class rungeKutta4
     void
     accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time);
 
+    void
+    udwadiaKalaba(Eigen::VectorXd& acc, double dimensional_time);
+
     /* REVIEW[epic=Change]: Change rbmconn if particles do not all move identically with respect to
      * a single locater point */
     /* NOTE: before calling this method, make sure to call articulationVel(), articulationAcc(), and
      * rLoc() */
     void
-    momentumLinAngFree();
+    momentumLinAngFree(Eigen::VectorXd& acc, double dimensional_time);
 
     /* REVIEW[epic=Change]: Change assignment of m_velArtic for different systems */
     void
