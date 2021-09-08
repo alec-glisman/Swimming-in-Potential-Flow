@@ -401,11 +401,11 @@ rungeKutta4::momentumLinAngFree(Eigen::VectorXd& acc, double dimensional_time)
 
     // calculate U_swim = - M_tilde_inv * P_script; U_swim has translation and rotation
     // components
-    Eigen::VectorXd U_swim = -M_tilde.fullPivLu().solve(P_script);
+    m_systemParam.U_swim.noalias() = -M_tilde.fullPivLu().solve(P_script);
 
     /* ANCHOR: Output velocity data back to m_system */
     // calculate U = Sigma^T * U_swim + v_artic
-    Eigen::VectorXd U_out = rbmconn_T * U_swim;
+    Eigen::VectorXd U_out = rbmconn_T * m_systemParam.U_swim;
     U_out.noalias() += m_velArtic;
     m_system->setVelocities(U_out);
 
@@ -414,7 +414,7 @@ rungeKutta4::momentumLinAngFree(Eigen::VectorXd& acc, double dimensional_time)
 
     /* ANCHOR: Solve for rigid body motion acceleration components */
     // calculate b = a_artic + W * r + [v_artic ^ ]^T * Omega_C;  Omega_C = U_swim(3::5)
-    Eigen::Vector3d Omega_C = U_swim.segment<3>(3);
+    Eigen::Vector3d Omega_C = m_systemParam.U_swim.segment<3>(3);
 
     Eigen::Matrix3d W = Omega_C * Omega_C.transpose();
     W.noalias() -= Omega_C.squaredNorm() * m_I;
@@ -444,27 +444,28 @@ rungeKutta4::momentumLinAngFree(Eigen::VectorXd& acc, double dimensional_time)
 
     // calculate A_swim = - M_tilde_inv * F_script; A_swim has translation and rotation
     // components
-    Eigen::VectorXd A_swim = -M_tilde.fullPivLu().solve(F_script);
+    m_systemParam.A_swim.noalias() = -M_tilde.fullPivLu().solve(F_script);
 
     /* ANCHOR: Output acceleration data back to m_system */
-    spdlog::get(m_logName)->info("Writing momentumLinAngFree() data to systemData");
     // calculate A = Sigma^T * A_swim + b
-    Eigen::VectorXd A_out = rbmconn_T * A_swim;
+    Eigen::VectorXd A_out = rbmconn_T * m_systemParam.A_swim;
     A_out.noalias() += b;
     m_system->setAccelerations(A_out);
 
     /* ANCHOR: Output acceleration data back to input variable */
-    spdlog::get(m_logName)->info("Writing momentumLinAngFree() data to input variable");
     acc = A_out;
-
-    /* ANCHOR: Output data to GSD */
+}
+/* ANCHOR: Output data to GSD */
+void
+rungeKutta4::GSDOutput()
+{
     spdlog::get(m_logName)->info("Writing momentumLinAngFree() data to GSD");
 
     std::vector<double> d_U_swim(6);
     d_U_swim.reserve(1); //! make sure we allocate
     for (uint32_t i = 0; i < 6; i++)
     {
-        d_U_swim[i] = U_swim(i);
+        d_U_swim[i] = m_systemParam.U_swim(i);
     }
     spdlog::get(m_logName)->info("Writing swimmer/U_swim data to GSD");
     spdlog::get(m_logName)->info("[{0}, {1}, {2}, {3}, {4}, {5}]", d_U_swim[0], d_U_swim[1],
@@ -478,7 +479,7 @@ rungeKutta4::momentumLinAngFree(Eigen::VectorXd& acc, double dimensional_time)
     d_A_swim.reserve(1); //! make sure we allocate
     for (uint32_t i = 0; i < 6; i++)
     {
-        d_A_swim[i] = A_swim(i);
+        d_A_swim[i] = m_systemParam.A_swim(i);
     }
     spdlog::get(m_logName)->info("Writing swimmer/A_swim data to GSD");
     spdlog::get(m_logName)->info("[{0}, {1}, {2}, {3}, {4}, {5}]", d_A_swim[0], d_A_swim[1],

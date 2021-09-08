@@ -37,9 +37,12 @@ class rungeKutta4
     void
     integrate();
 
+    void
+    GSDOutput();
+
   private:
-    /* REVIEW[epic=Change]: Change initializeSpecificVars() for different systems and load data into
-     * m_systemParam */
+    /* REVIEW[epic=Change]: Change initializeSpecificVars() for different systems and load data
+     * into m_systemParam */
     void
     initializeSpecificVars();
 
@@ -89,10 +92,12 @@ class rungeKutta4
     // system specific data
     struct systemParameters
     {
-        double U0{-1.0};
-        double omega{-1.0};
-        double phaseShift{-1.0};
-        double RAvg{-1.0};
+        double          U0{-1.0};
+        double          omega{-1.0};
+        double          phaseShift{-1.0};
+        double          RAvg{-1.0};
+        Eigen::VectorXd U_swim;
+        Eigen::VectorXd A_swim;
     };
 
     // classes
