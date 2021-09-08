@@ -298,7 +298,7 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
 void
 rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
 {
-    bool useUdwadiaMethod{true};
+    bool useUdwadiaMethod{false};
 
     if (useUdwadiaMethod)
     {
