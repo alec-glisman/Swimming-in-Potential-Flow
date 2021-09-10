@@ -86,6 +86,6 @@ RUN cpanm --installdeps .
 
 
 # REVIEW: Other options of commands to run in Docker container
-#     CMD ["zsh"] # launches zsh terminal to test run commands after build
 WORKDIR "/bodies-in-potential-flow"
 ENTRYPOINT [ "perl", "scripts/collinear-swimmer-wall.pl" ]
+# CMD ["zsh"] # launches zsh terminal to test run commands after build
