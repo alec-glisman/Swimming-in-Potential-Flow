@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  simulation:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        buildno: 1
+        gitcommithash: HEAD
+    image: bodies-in-potential-flow:latest
+    volumes: 
+      - "docker_output:/bodies-in-potential-flow/data"
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1024M
+        reservations:
+          memory: 50M
+volumes:
+  docker_output:
+    external: false
