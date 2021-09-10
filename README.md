@@ -4,6 +4,19 @@ Study dynamics of inertial active matter in a potential fluid (irrotational, inc
 
 Author: Alec Glisman
 
+## Software tested
+
+Simulations can also be built and run inside a docker container.
+More information can be found in `DOCKER-INFO.md`.
+
+* ZSH: $\geq$ v5.8
+* Intel oneAPI: $\geq$ v2021.1.1
+* CUDA (not currently used): $\geq$ v11.3
+* CMake: $\geq$ v3.16.3
+* GCC: $\geq$ v11.1.0
+* Python (Anaconda): $\geq$ v3.9.5
+* Perl: $\geq$ v5.30.0
+
 ## Project structure: links to relevant readme files
 
 `.vscode`: [Files relevant for developing the project in VSCode.](.vscode/)
@@ -52,13 +65,3 @@ Further information found in `requirements` directory readme.
 ### Integrated into project
 
 * [gsd](https://github.com/glotzerlab/gsd) (v2.4.2): Simulation data output
-
-## Software tested
-
-* ZSH: $\geq$ v5.8
-* Intel oneAPI: $\geq$ v2021.1.1
-* CUDA (not currently used): $\geq$ v11.3
-* CMake: $\geq$ v3.16.3
-* GCC: $\geq$ v11.1.0
-* Python (Anaconda): $\geq$ v3.9.5
-* Perl: $\geq$ v5.30.0

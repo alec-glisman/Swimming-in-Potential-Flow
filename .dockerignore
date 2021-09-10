@@ -1,0 +1,28 @@
+# Other Docker files and directories
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# git elements
+.gitignore
+
+# VSCode and CLion specific folders
+.vscode
+.idea
+
+# Local environment
+.env
+
+# Standard repository non-code elements
+README.md
+LICENSE
+
+# Compiled and other build projects
+*build*/
+*/bin
+*/obj
+
+# Data produced
+*data*/
+jupyter-*/
+*output*/
