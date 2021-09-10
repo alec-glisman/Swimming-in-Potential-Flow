@@ -75,7 +75,16 @@ ELSEIF($ENV{USER} STREQUAL "alec")  # Build on Brady group servers
 ELSE()
 
     MESSAGE(STATUS "** Compiling on unknown machine **")
-    SET(CMAKE_CXX_STANDARD 14)
+    
+    SET(CMAKE_CXX_STANDARD 17)
+    SET(CMAKE_CUDA_STANDARD 14)
+    
+    SET(CMAKE_CXX_COMPILER
+        "/usr/bin/g++-11"
+        CACHE PATH "" FORCE)
+    SET(CMAKE_C_COMPILER
+        "/usr/bin/gcc-11"
+        CACHE PATH "" FORCE)
 
 ENDIF()
 
