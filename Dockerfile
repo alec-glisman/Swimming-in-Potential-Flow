@@ -23,8 +23,9 @@ RUN add-apt-repository ppa:ubuntu-toolchain-r/test
 RUN apt-get update && apt-get install -y \
     git wget curl file \
     zsh fonts-powerline \
-    gcc-11 g++-11 \
     cmake \
+    gcc-11 g++-11 \
+    nvidia-cuda-toolkit \
     perl cpanminus \
     python3 python3-dev python3-pip \
     libboost-all-dev libspdlog-dev catch \
@@ -69,6 +70,7 @@ RUN apt-get autoclean && apt-get autoremove
 
 # Python requirements
 WORKDIR "/bodies-in-potential-flow/requirements/Python"
+RUN python3 -m pip install --upgrade pip
 RUN python3 -m pip install -r requirements.txt
 
 # Perl requirements
