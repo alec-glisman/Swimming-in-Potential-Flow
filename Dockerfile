@@ -70,6 +70,7 @@ RUN chsh -s $(which zsh)
 
 # Conda requirements
 WORKDIR "/bodies-in-potential-flow"
+RUN conda config --add channels conda-forge && conda config --set channel_priority strict
 RUN conda env create -f requirements/Python/environment.yml 
 
 # Perl requirements
