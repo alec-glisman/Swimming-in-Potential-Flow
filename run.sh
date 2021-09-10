@@ -13,9 +13,8 @@
 set -e
 
 # activate conda environment
-conda init bash
+source ~/anaconda3/etc/profile.d/conda.sh
 conda activate bodies-in-potential-flow
-echo $(which python)
 
 # run script in shell
 exec perl scripts/"$@".pl
