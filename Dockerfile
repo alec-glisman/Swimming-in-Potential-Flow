@@ -56,8 +56,8 @@ RUN chsh -s $(which zsh)
 
 
 # Copy the folders that are not ignored into the Docker image
+WORKDIR "/"
 COPY . /bodies-in-potential-flow/
-WORKDIR "/bodies-in-potential-flow"
 
 
 # Encoding
