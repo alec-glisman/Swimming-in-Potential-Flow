@@ -22,14 +22,19 @@ RUN add-apt-repository ppa:ubuntu-toolchain-r/test
 # Install APT packages
 RUN apt-get update && apt-get install -y \
     git wget curl file \
-    zsh fonts-powerline \
+    zsh fonts-powerline
+# command line packages
+RUN apt-get update && apt-get install -y \
     cmake \
     gcc-11 g++-11 \
     nvidia-cuda-toolkit \
     perl cpanminus \
-    python3 python3-dev python3-pip \
+    python3 python3-dev python3-pip
+# coding languages
+RUN apt-get update && apt-get install -y \
     libboost-all-dev libspdlog-dev catch \
     locales tzdata
+# library depdencencies
 
 # Install eigen3 (v3.3.9-2)
 WORKDIR "/tmp"
