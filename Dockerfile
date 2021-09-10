@@ -15,32 +15,39 @@ COPY . /bodies-in-potential-flow/
 WORKDIR "/bodies-in-potential-flow"
 
 # Update packages on base image
-RUN sudo apt update
-RUN sudo apt upgrade -y
+RUN apt-get -y update
+RUN apt-get upgrade -y
+RUN apt-get install -y sudo
 
 
 # Install APT packages
-RUN sudo apt install -y \
-    build-essential software-properties-common \
-    git wget curl \
-    zsh fonts-powerline \
+RUN apt-get install -y build-essential \        
+    software-properties-common \
+    git \
+    wget \
+    curl \
+    zsh \
+    fonts-powerline \
     cmake \
-    perl cpanminus \
-    libboost-all-dev libspdlog-dev catch \
+    perl \
+    cpanminus \
+    libboost-all-dev \
+    libspdlog-dev \
+    catch \
     tzdata
 
 # Install gcc-11
-RUN sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-RUN sudo apt update && sudo apt install gcc-11 g++-11
+RUN add-apt-repository ppa:ubuntu-toolchain-r/test
+RUN apt-get update && apt-get install gcc-11 g++-11
 # Set gcc-11 as default
-RUN sudo update-alternatives --install \
+RUN update-alternatives --install \
     /usr/bin/gcc gcc /usr/bin/gcc-9 90 \
     --slave /usr/bin/g++ g++ /usr/bin/g++-9 \
     --slave /usr/bin/gcov gcov /usr/bin/gcov-9 \
     --slave /usr/bin/gcc-ar gcc-ar /usr/bin/gcc-ar-9 \
     --slave /usr/bin/gcc-ranlib gcc-ranlib /usr/bin/gcc-ranlib-9 \
     --slave /usr/bin/cpp cpp /usr/bin/cpp-9 
-RUN sudo update-alternatives --install \
+RUN update-alternatives --install \
     /usr/bin/gcc gcc /usr/bin/gcc-11 110 \
     --slave /usr/bin/g++ g++ /usr/bin/g++-11 \
     --slave /usr/bin/gcov gcov /usr/bin/gcov-11 \
@@ -59,11 +66,11 @@ RUN conda update -y conda
 # Install Intel MKL via OneAPI
 WORKDIR "/tmp"
 RUN wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
-RUN sudo apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
+RUN apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
 RUN rm GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
 RUN echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
-RUN sudo apt update
-RUN sudo apt install -y intel-basekit
+RUN apt-get update
+RUN apt-get install -y intel-basekit
 
 # Install homebrew
 WORKDIR "$HOME"
