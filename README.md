@@ -6,9 +6,6 @@ Author: Alec Glisman
 
 ## Software tested
 
-Simulations can also be built and run inside a docker container.
-More information can be found in `DOCKER-INFO.md`.
-
 * ZSH: $\geq$ v5.8
 * Intel oneAPI: $\geq$ v2021.1.1
 * CUDA (not currently used): $\geq$ v11.3
@@ -16,6 +13,19 @@ More information can be found in `DOCKER-INFO.md`.
 * GCC: $\geq$ v11.1.0
 * Python (Anaconda): $\geq$ v3.9.5
 * Perl: $\geq$ v5.30.0
+
+## Docker integration
+
+The project can be built and run inside a Docker container.
+The `docker-compose.yml` file will specify all build options and `Dockerfile` builds the image using a Ubuntu 20.04 base image.
+Data I/O is handled automatically with an attached volume.
+
+Commands:
+
+```[shell]
+docker-compose up --detach  # build
+docker-compose down         # tear down
+```
 
 ## Project structure: links to relevant readme files
 
