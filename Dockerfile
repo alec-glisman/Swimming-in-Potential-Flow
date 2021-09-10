@@ -75,8 +75,9 @@ RUN apt-get autoclean && apt-get autoremove
 
 # Python requirements
 WORKDIR "/bodies-in-potential-flow/requirements/Python"
-RUN python3 -m pip install --upgrade pip
-RUN python3 -m pip install -r requirements.txt
+RUN pip3 install --upgrade pip && \
+    pip3 install --upgrade virtualenv
+RUN pip3 install -r requirements.txt
 
 # Perl requirements
 WORKDIR "/bodies-in-potential-flow/requirements/Perl"
