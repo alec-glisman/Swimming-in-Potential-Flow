@@ -41,16 +41,11 @@ RUN apt-get update && apt-get install -y \
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test
 RUN apt-get update && apt-get install -y gcc-11 g++-11
 
-# Install homebrew
-WORKDIR "/"
-RUN mkdir -p .linuxbrew/bin \
-    && git clone https://github.com/Homebrew/brew .linuxbrew/Homebrew \
-    && ln -s ../Homebrew/bin/brew .linuxbrew/bin \
-    && eval $(.linuxbrew/bin/brew shellenv) \
-    && brew --version
-ENV PATH=".linuxbrew/bin:${PATH}"
-# Install eigen3 head
-RUN brew install eigen --HEAD
+# Install eigen3 (v3.3.9-2)
+WORKDIR "/tmp"
+RUN wget -O libeigen3-dev_3.3.9-2_all.deb http://launchpadlibrarian.net/519614686/libeigen3-dev_3.3.9-2_all.deb
+RUN apt-get install -y ./libeigen3-dev_3.3.9-2_all.deb
+RUN rm libeigen3-dev_3.3.9-2_all.deb
 
 # Install miniconda3 to /miniconda
 WORKDIR "/"
