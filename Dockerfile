@@ -15,50 +15,29 @@ COPY . /bodies-in-potential-flow/
 WORKDIR "/bodies-in-potential-flow"
 
 
+# Add additional package repositories
+RUN add-apt-repository ppa:ubuntu-toolchain-r/test
+
 # Update packages on base image and install sudo
 RUN apt-get update && apt-get upgrade -y && apt-get install -y sudo
 
 # Install APT packages
 RUN apt-get update --fix-missing && apt-get install -y \
-    build-essential \        
-    software-properties-common \
-    git \
-    wget \
-    curl \
-    file \
-    zsh \
-    fonts-powerline \
+    build-essential software-properties-common \
+    git wget curl file \
+    zsh fonts-powerline \
+    gcc-11 g++-11 \
     cmake \
-    perl \
-    cpanminus \
-    libboost-all-dev \
-    libspdlog-dev \
-    catch \
-    locales \
-    tzdata
-
-# Install gcc-11
-RUN add-apt-repository ppa:ubuntu-toolchain-r/test
-RUN apt-get update && apt-get install -y gcc-11 g++-11
+    perl cpanminus \
+    python3 python3-pip \
+    libboost-all-dev libspdlog-dev catch \
+    locales tzdata
 
 # Install eigen3 (v3.3.9-2)
 WORKDIR "/tmp"
 RUN wget -O libeigen3-dev_3.3.9-2_all.deb http://launchpadlibrarian.net/519614686/libeigen3-dev_3.3.9-2_all.deb
 RUN apt-get install -y ./libeigen3-dev_3.3.9-2_all.deb
 RUN rm libeigen3-dev_3.3.9-2_all.deb
-
-# Install miniconda3 to /miniconda (modified from @SOURCE: https://hub.docker.com/r/continuumio/miniconda3/dockerfile)
-RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.5.11-Linux-x86_64.sh -O ~/miniconda.sh && \
-    /bin/bash ~/miniconda.sh -b -p /miniconda && \
-    rm ~/miniconda.sh && \
-    /miniconda/bin/conda clean -tipsy && \
-    ln -s /miniconda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
-    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
-    echo "conda activate base" >> ~/.bashrc && \
-    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.zshrc && \
-    echo "conda activate base" >> ~/.zshrc
-ENV PATH="/miniconda/bin:${PATH}"
-RUN conda update -y conda
 
 # Install Intel MKL via Intel OneAPI
 WORKDIR "/tmp"
@@ -73,7 +52,7 @@ RUN wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/i
 RUN chsh -s $(which zsh)
 
 
-# Conda requirements
+# Python requirements
 WORKDIR "/bodies-in-potential-flow"
 RUN conda config --add channels conda-forge && conda config --set channel_priority strict
 RUN conda env create -f requirements/Python/environment.yml 
@@ -95,6 +74,7 @@ RUN sudo dpkg-reconfigure -f noninteractive tzdata
 # Reduce image size
 RUN rm -rf /var/lib/apt/lists/*
 RUN apt-get autoclean && apt-get autoremove
+
 
 # REVIEW: Other options of commands to run in Docker container
 #     CMD ["zsh"] # launches zsh terminal to test run commands after build
