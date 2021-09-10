@@ -1,5 +1,47 @@
 # Information on Docker Integration and Data Syncing
 
+## Build and run this project
+
+[Source](https://unix.stackexchange.com/a/531575)
+
+Build the project:
+
+```[bash]
+docker build --tag aglisman/bodies-in-potential-flow:latest .
+```
+
+Run the container and have volume for data output shared between VM and host:
+
+```[bash]
+docker run -it --volume "$(pwd)/Docker_output/:/bodies-in-potential-flow/data" aglisman/bodies-in-potential-flow:latest
+```
+
+**All together:**
+
+```[bash]
+docker build --tag aglisman/bodies-in-potential-flow:latest . && docker run -it --volume "$(pwd)/Docker_output/:/bodies-in-potential-flow/data" aglisman/bodies-in-potential-flow:latest
+```
+
+### Save to version control and image
+
+```[bash]
+git add .
+git commit -m "Message"
+git push origin master
+
+docker push aglisman/bodies-in-potential-flow:latest
+```
+
+### Free space on local machine
+
+```[bash]
+# Remove all resources not associated with a container
+docker system prune
+
+# Remove any stopped containers and all unused images
+docker system prune -a
+```
+
 ## `rsync` Use between server and local machine
 
 - Final slash in folder path will sync ALL FILE CONTENTS, NOT FILE ITSELF
@@ -49,57 +91,7 @@ rsync -ravh --progress --exclude '*build*' --exclude '.*'    \
 "CLionProjects/cpp-explorations/"
 ```
 
-## Docker Build and Run this Project
-
----
-
-[Source](https://unix.stackexchange.com/a/531575)
-
-Build the project:
-
-```[bash]
-docker build --tag aglisman/potential-swimmer-dynamics:latest .
-```
-
-Run the container and have volume for data output shared between VM and host:
-
-```[bash]
-docker run -it --volume "$(pwd)/Docker_output/:/potential-swimmer-dynamics/data" aglisman/potential-swimmer-dynamics:latest
-```
-
-**All together:**
-
-```[bash]
-docker build --tag aglisman/potential-swimmer-dynamics:latest . && docker run -it --volume "$(pwd)/Docker_output/:/potential-swimmer-dynamics/data" aglisman/potential-swimmer-dynamics:latest
-```
-
-### Save to version control and image
-
----
-
-```[bash]
-git add .
-git commit -m "Message"
-git push origin master
-
-docker push aglisman/potential-swimmer-dynamics:latest
-```
-
-### Free space on local machine
-
----
-
-```[bash]
-# Remove all resources not associated with a container
-docker system prune
-
-# Remove any stopped containers and all unused images
-docker system prune -a
-```
-
 ## Set-up Docker and Git in a new Repository
-
----
 
 ```[bash]
 # Start repo
