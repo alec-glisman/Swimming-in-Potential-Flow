@@ -53,10 +53,8 @@ RUN chsh -s $(which zsh)
 
 
 # Python requirements
-WORKDIR "/bodies-in-potential-flow"
-RUN conda config --add channels conda-forge && conda config --set channel_priority strict
-RUN conda env create -f requirements/Python/environment.yml 
-RUN conda init zsh && conda init bash
+WORKDIR "/bodies-in-potential-flow/requirements/Python"
+RUN python3 -m pip install -r requirements.txt
 
 # Perl requirements
 WORKDIR "/bodies-in-potential-flow/requirements/Perl"
@@ -79,5 +77,4 @@ RUN apt-get autoclean && apt-get autoremove
 # REVIEW: Other options of commands to run in Docker container
 #     CMD ["zsh"] # launches zsh terminal to test run commands after build
 WORKDIR "/bodies-in-potential-flow"
-ENTRYPOINT [ "run.sh" ] 
-CMD [ "collinear-swimmer-wall"]
+ENTRYPOINT [ "perl", "scripts/collinear-swimmer-wall.pl" ]
