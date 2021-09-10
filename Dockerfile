@@ -19,7 +19,7 @@ WORKDIR "/bodies-in-potential-flow"
 RUN apt-get update && apt-get upgrade -y && apt-get install -y sudo
 
 # Install APT packages
-RUN apt-get update && apt-get install -y \
+RUN apt-get update --fix-missing && apt-get install -y \
     build-essential \        
     software-properties-common \
     git \
@@ -47,11 +47,16 @@ RUN wget -O libeigen3-dev_3.3.9-2_all.deb http://launchpadlibrarian.net/51961468
 RUN apt-get install -y ./libeigen3-dev_3.3.9-2_all.deb
 RUN rm libeigen3-dev_3.3.9-2_all.deb
 
-# Install miniconda3 to /miniconda
-WORKDIR "/"
-RUN curl -LO http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-RUN bash Miniconda3-latest-Linux-x86_64.sh -p /miniconda -b
-RUN rm Miniconda3-latest-Linux-x86_64.sh
+# Install miniconda3 to /miniconda (modified from @SOURCE: https://hub.docker.com/r/continuumio/miniconda3/dockerfile)
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.5.11-Linux-x86_64.sh -O ~/miniconda.sh && \
+    /bin/bash ~/miniconda.sh -b -p /miniconda && \
+    rm ~/miniconda.sh && \
+    /miniconda/bin/conda clean -tipsy && \
+    ln -s /miniconda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
+    echo "conda activate base" >> ~/.bashrc && \
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.zshrc && \
+    echo "conda activate base" >> ~/.zshrc
 ENV PATH="/miniconda/bin:${PATH}"
 RUN conda update -y conda
 
@@ -72,6 +77,7 @@ RUN chsh -s $(which zsh)
 WORKDIR "/bodies-in-potential-flow"
 RUN conda config --add channels conda-forge && conda config --set channel_priority strict
 RUN conda env create -f requirements/Python/environment.yml 
+RUN conda init zsh && conda init bash
 
 # Perl requirements
 WORKDIR "/bodies-in-potential-flow/requirements/Perl"
@@ -88,9 +94,10 @@ RUN sudo dpkg-reconfigure -f noninteractive tzdata
 
 # Reduce image size
 RUN rm -rf /var/lib/apt/lists/*
-
+RUN apt-get autoclean && apt-get autoremove
 
 # REVIEW: Other options of commands to run in Docker container
 #     CMD ["zsh"] # launches zsh terminal to test run commands after build
 WORKDIR "/bodies-in-potential-flow"
-ENTRYPOINT ["perl", "scripts/collinear-swimmer-wall.pl"]  # Run the program to build from CMAKE
+ENTRYPOINT [ "run.sh" ] 
+CMD [ "collinear-swimmer-wall"]
