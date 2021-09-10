@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh --login
+#!/usr/bin/env bash --login
 
 # Script to activate python environment (for data analysis) and
 # run perl script (to build and call C++ project).
@@ -13,7 +13,9 @@
 set -e
 
 # activate conda environment
+conda init bash
 conda activate bodies-in-potential-flow
+echo $(which python)
 
 # run script in shell
 exec perl scripts/"$@".pl
