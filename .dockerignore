@@ -1,20 +1,24 @@
-# Other Docker files and directories
-Dockerfile*
-docker-compose*
-.dockerignore
-
 # git elements
+.git
 .gitignore
 
 # VSCode and CLion specific folders
 .vscode
 .idea
 
-# Local environment
-.env
+# Formatting files
+.clang-format
+.cmake-format.json
+
+# Docker files and directories
+Dockerfile*
+docker-compose*
+.dockerignore
 
 # Standard repository non-code elements
 README.md
+DOCKER_INFO.md
+TODO.md
 LICENSE
 
 # Compiled and other build projects
@@ -26,3 +30,6 @@ LICENSE
 *data*/
 jupyter-*/
 *output*/
+
+# Other directories
+profile/*
