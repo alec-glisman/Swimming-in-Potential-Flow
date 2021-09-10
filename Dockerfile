@@ -43,11 +43,12 @@ RUN apt-get update && apt-get install -y gcc-11 g++-11
 
 # Install homebrew
 WORKDIR "/"
-RUN mkdir /homebrew
-RUN curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew \
-    && eval $(/homebrew/bin/brew shellenv) \
+RUN mkdir -p .linuxbrew/bin \
+    && git clone https://github.com/Homebrew/brew .linuxbrew/Homebrew \
+    && ln -s ../Homebrew/bin/brew .linuxbrew/bin \
+    && eval $(.linuxbrew/bin/brew shellenv) \
     && brew --version
-ENV PATH="/homebrew/bin:${PATH}"
+ENV PATH=".linuxbrew/bin:${PATH}"
 # Install eigen3 head
 RUN brew install eigen --HEAD
 
