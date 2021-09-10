@@ -10,10 +10,6 @@ LABEL environment=dev
 # General environment directives
 ENV DEBIAN_FRONTEND=noninteractive 
 
-# Copy the folders that are not ignored into the Docker image
-COPY . /bodies-in-potential-flow/
-WORKDIR "/bodies-in-potential-flow"
-
 
 # Update packages on base image and install sudo
 RUN apt-get update --fix-missing && \
@@ -53,13 +49,9 @@ RUN wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/i
 RUN chsh -s $(which zsh)
 
 
-# Python requirements
-WORKDIR "/bodies-in-potential-flow/requirements/Python"
-RUN python3 -m pip install -r requirements.txt
-
-# Perl requirements
-WORKDIR "/bodies-in-potential-flow/requirements/Perl"
-RUN cpanm --installdeps .
+# Copy the folders that are not ignored into the Docker image
+COPY . /bodies-in-potential-flow/
+WORKDIR "/bodies-in-potential-flow"
 
 
 # Encoding
@@ -73,6 +65,15 @@ RUN sudo dpkg-reconfigure -f noninteractive tzdata
 # Reduce image size
 RUN rm -rf /var/lib/apt/lists/*
 RUN apt-get autoclean && apt-get autoremove
+
+
+# Python requirements
+WORKDIR "/bodies-in-potential-flow/requirements/Python"
+RUN python3 -m pip install -r requirements.txt
+
+# Perl requirements
+WORKDIR "/bodies-in-potential-flow/requirements/Perl"
+RUN cpanm --installdeps .
 
 
 # REVIEW: Other options of commands to run in Docker container
