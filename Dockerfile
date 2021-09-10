@@ -48,7 +48,7 @@ RUN wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCT
 RUN apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
 RUN rm GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
 RUN echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
-RUN apt-get update && apt-get install -y intel-oneapi-mkl
+RUN apt-get update && apt-get install -y intel-basekit
 ENV PATH="/opt/intel/oneapi/compiler/latest/linux/bin/intel64:${PATH}"
 
 # Download oh-my-zsh and make it the default terminal
@@ -87,5 +87,5 @@ RUN cpanm --installdeps .
 
 # REVIEW: Other options of commands to run in Docker container
 WORKDIR "/bodies-in-potential-flow"
-ENTRYPOINT [ "perl", "scripts/collinear-swimmer-wall.pl" ]
-# CMD ["zsh"] # launches zsh terminal to test run commands after build
+# ENTRYPOINT [ "perl", "scripts/collinear-swimmer-wall.pl" ]
+CMD ["zsh"] # launches zsh terminal to test run commands after build
