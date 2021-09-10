@@ -25,6 +25,7 @@ RUN apt-get update && apt-get install -y \
     git \
     wget \
     curl \
+    file \
     zsh \
     fonts-powerline \
     cmake \
@@ -56,13 +57,11 @@ RUN echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/s
 RUN apt-get update && apt-get install -y intel-basekit
 
 # Install homebrew
-WORKDIR "$HOME"
-RUN git clone https://github.com/Homebrew/brew $HOME/.linuxbrew/Homebrew \
-    && mkdir $HOME/.linuxbrew/bin \
-    && ln -s ../Homebrew/bin/brew $HOME/.linuxbrew/bin \
-    && eval $($HOME/.linuxbrew/bin/brew shellenv) \
+WORKDIR "/"
+RUN curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew \
+    && eval $(/homebrew/bin/brew shellenv) \
     && brew --version
-ENV PATH=$HOME/.linuxbrew/bin:$PATH
+ENV PATH=/homebrew/bin:$PATH
 
 # Install eigen3 head
 RUN brew install eigen --HEAD
