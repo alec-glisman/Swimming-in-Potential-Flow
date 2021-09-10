@@ -49,6 +49,7 @@ RUN apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
 RUN rm GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
 RUN echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
 RUN apt-get update && apt-get install -y intel-oneapi-mkl
+ENV PATH="/opt/intel/oneapi/compiler/latest/linux/bin/intel64:${PATH}"
 
 # Download oh-my-zsh and make it the default terminal
 RUN wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | zsh || true
