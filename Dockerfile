@@ -67,6 +67,7 @@ RUN apt-get update && apt-get install -y intel-oneapi-mkl
 RUN wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | zsh || true
 RUN chsh -s $(which zsh)
 
+
 # Conda requirements
 WORKDIR "/bodies-in-potential-flow"
 RUN conda env create -f requirements/Python/environment.yml 
