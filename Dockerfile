@@ -34,6 +34,7 @@ RUN apt-get update && apt-get install -y \
     libboost-all-dev \
     libspdlog-dev \
     catch \
+    locales \
     tzdata
 
 # Install gcc-11
@@ -45,7 +46,7 @@ WORKDIR "/"
 RUN curl -LO http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
 RUN bash Miniconda3-latest-Linux-x86_64.sh -p /miniconda -b
 RUN rm Miniconda3-latest-Linux-x86_64.sh
-ENV PATH=/miniconda/bin:${PATH}
+ENV PATH="/miniconda/bin:${PATH}"
 RUN conda update -y conda
 
 # Install Intel MKL via OneAPI
@@ -61,7 +62,7 @@ WORKDIR "/"
 RUN curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew \
     && eval $(/homebrew/bin/brew shellenv) \
     && brew --version
-ENV PATH=/homebrew/bin:$PATH
+ENV PATH="/homebrew/bin:${PATH}"
 
 # Install eigen3 head
 RUN brew install eigen --HEAD
@@ -79,6 +80,9 @@ RUN cpanm --installdeps .
 # Download oh-my-zsh and make it the default terminal
 RUN wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | zsh || true
 RUN chsh -s $(which zsh)
+
+# Encoding
+RUN localedef -i en_US -f UTF-8 en_US.UTF-8
 
 # Change terminal timezone to PDT 
 ENV TZ=America/Los_Angeles
