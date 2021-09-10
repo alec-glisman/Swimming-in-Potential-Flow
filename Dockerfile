@@ -55,7 +55,7 @@ RUN wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCT
 RUN apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
 RUN rm GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
 RUN echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
-RUN apt-get update && apt-get install -y intel-basekit
+RUN apt-get update && apt-get install -y intel-oneapi-mkl
 
 # Install homebrew
 WORKDIR "/"
