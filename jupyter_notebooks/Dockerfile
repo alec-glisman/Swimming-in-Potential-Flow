@@ -1,48 +1,39 @@
+# Base image
 FROM ubuntu:20.04
-FROM gcc:5.4.0
-FROM perl:5.22.1
-FROM python:3.7.7
 
-# Avoid user prompts
+# Label directives
+LABEL maintainer=alec.glisman@gmail.com
+LABEL project=bodies-in-potential-flow
+LABEL version=0.1
+LABEL environment=dev
+
+# Environment directives
 ENV DEBIAN_FRONTEND=noninteractive 
 
+# Update packages on base image
+RUN apt install -y sudo
+RUN sudo apt update
+RUN sudo apt upgrade -y
 
-# Update apps on the base image
-
-
-
-RUN sudo apt-get install -y \
-    aptitude \
-    apt-utils \
-    autotools-dev \
-    build-essential \
-    cpanminus \
-    cmake \
-    fonts-powerline \
-    git \
-    gcc \
+# Install APT packages
+RUN sudo apt install -y \
+    build-essential software-properties-common \
+    git wget \
+    zsh cmake gcc cpanminus \
+    python3-pip python-dev \
     libboost-all-dev \
-    libblas-dev \
-    liblapack-dev \
-    libicu-dev \
-    libio-socket-ssl-perl \
-    libnet-ssleay-perl \
-    libbz2-dev \ 
-    python3-pip \
-    python-dev \
-    sendemail \
-    software-properties-common \
-    tree \
-    wget \
-    zsh 
+    fonts-powerline \
+    tzdata
 
-RUN apt-get install -y tzdata
 
-RUN aptitude search boost
+# Install Python requirements
+RUN pip3 install -r requirements/Python/requirements.txt
 
-# Update and upgrade all packages
-RUN sudo apt-get -y update
-RUN sudo apt-get -y upgrade
+# Install Perl requirements
+RUN cpanm File::Slurp
+RUN cpanm File::Tee
+RUN cpanm Path::Tiny
+RUN cpanm Switch
 
 
 # Install Intel MKL, Source: https://software.intel.com/content/www/us/en/develop/articles/installing-intel-free-libs-and-python-apt-repo.html
@@ -59,14 +50,6 @@ RUN sudo apt-get -y update
 # Install MKL
 RUN sudo apt-get install intel-mkl-2020.0-088 -y
 
-
-# Install Perl requirements
-RUN cpanm File::Slurp
-RUN cpanm File::Tee
-RUN cpanm Path::Tiny
-RUN cpanm Switch
-
-
 # Install Boost, Source: https://stackoverflow.com/questions/12578499/how-to-install-boost-on-ubuntu
 RUN wget -O boost_1_72_0.tar.gz https://sourceforge.net/projects/boost/files/boost/1.72.0/boost_1_72_0.tar.gz/download
 RUN tar xzvf boost_1_72_0.tar.gz
@@ -76,11 +59,9 @@ RUN sudo ./b2 toolset=gcc cxxflags="-std=c++11" linkflags="-std=c++11" -j 10 || 
 RUN sudo ./b2 install toolset=gcc cxxflags="-std=c++11" linkflags="-std=c++11" -j 10 || true
 WORKDIR "/"
 
-
 # Download oh-my-zsh and make it the default terminal
 RUN wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | zsh || true
 RUN chsh -s $(which zsh)
-
 
 
 # Change terminal timezone to PDT 
@@ -92,10 +73,6 @@ RUN sudo dpkg-reconfigure -f noninteractive tzdata
 # Copy the folders that are not ignored into the Docker image
 COPY . /potential-swimmer-dynamics/
 WORKDIR "/potential-swimmer-dynamics"
-
-
-# Install Python requirements
-RUN pip3 install -r requirements/Python/requirements.txt
 
 
 # Run the program to build from CMAKE
