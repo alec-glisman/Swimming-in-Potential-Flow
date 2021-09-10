@@ -41,6 +41,16 @@ RUN apt-get update && apt-get install -y \
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test
 RUN apt-get update && apt-get install -y gcc-11 g++-11
 
+# Install homebrew
+WORKDIR "/"
+RUN mkdir /homebrew
+RUN curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew \
+    && eval $(/homebrew/bin/brew shellenv) \
+    && brew --version
+ENV PATH="/homebrew/bin:${PATH}"
+# Install eigen3 head
+RUN brew install eigen --HEAD
+
 # Install miniconda to /miniconda
 WORKDIR "/"
 RUN curl -LO http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
@@ -56,16 +66,6 @@ RUN apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
 RUN rm GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
 RUN echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
 RUN apt-get update && apt-get install -y intel-oneapi-mkl
-
-# Install homebrew
-WORKDIR "/"
-RUN curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew \
-    && eval $(/homebrew/bin/brew shellenv) \
-    && brew --version
-ENV PATH="/homebrew/bin:${PATH}"
-
-# Install eigen3 head
-RUN brew install eigen --HEAD
 
 
 # Conda requirements
