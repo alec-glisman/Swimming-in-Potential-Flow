@@ -15,13 +15,12 @@ COPY . /bodies-in-potential-flow/
 WORKDIR "/bodies-in-potential-flow"
 
 # Update packages on base image
-RUN apt-get -y update
-RUN apt-get upgrade -y
-RUN apt-get install -y sudo
+RUN apt-get update && apt-get upgrade -y && apt-get install -y sudo
 
 
 # Install APT packages
-RUN apt-get install -y build-essential \        
+RUN apt-get update && apt-get install -y \
+    build-essential \        
     software-properties-common \
     git \
     wget \
@@ -38,7 +37,7 @@ RUN apt-get install -y build-essential \
 
 # Install gcc-11
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test
-RUN apt-get update && apt-get install gcc-11 g++-11
+RUN apt-get update && apt-get install -y gcc-11 g++-11
 # Set gcc-11 as default
 RUN update-alternatives --install \
     /usr/bin/gcc gcc /usr/bin/gcc-9 90 \
@@ -69,8 +68,7 @@ RUN wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCT
 RUN apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
 RUN rm GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
 RUN echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
-RUN apt-get update
-RUN apt-get install -y intel-basekit
+RUN apt-get update && apt-get install -y intel-basekit
 
 # Install homebrew
 WORKDIR "$HOME"
@@ -106,5 +104,6 @@ RUN sudo dpkg-reconfigure -f noninteractive tzdata
 
 # REVIEW: Other options of commands to run in Docker container
 #     CMD ["zsh"] # launches zsh terminal to test run commands after build
+WORKDIR "/bodies-in-potential-flow"
 # Run the program to build from CMAKE
 ENTRYPOINT ["perl", "scripts/collinear-swimmer-wall.pl"]  
