@@ -15,15 +15,16 @@ COPY . /bodies-in-potential-flow/
 WORKDIR "/bodies-in-potential-flow"
 
 
+# Update packages on base image and install sudo
+RUN apt-get update --fix-missing && \
+    apt-get upgrade -y && \
+    apt-get install -y sudo build-essential software-properties-common
+
 # Add additional package repositories
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test
 
-# Update packages on base image and install sudo
-RUN apt-get update && apt-get upgrade -y && apt-get install -y sudo
-
 # Install APT packages
-RUN apt-get update --fix-missing && apt-get install -y \
-    build-essential software-properties-common \
+RUN apt-get update && apt-get install -y \
     git wget curl file \
     zsh fonts-powerline \
     gcc-11 g++-11 \
