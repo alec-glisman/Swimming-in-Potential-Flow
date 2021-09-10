@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y \
     gcc-11 g++-11 \
     cmake \
     perl cpanminus \
-    python3 python3-pip \
+    python3 python3-dev python3-pip \
     libboost-all-dev libspdlog-dev catch \
     locales tzdata
 
