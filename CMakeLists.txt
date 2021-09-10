@@ -11,8 +11,8 @@
 
 # SECTION: Startup Messages
 MESSAGE("WELCOME TO BODIES-IN-POTENTIAL-FLOW")
-MESSAGE("-- USER environment variable is set to: " $ENV{USER})
-MESSAGE("-- HOSTNAME environment variable is set to: " $ENV{HOSTNAME})
+MESSAGE("-- USER environment variable is set to: " "$ENV{USER}")
+MESSAGE("-- HOSTNAME environment variable is set to: " "$ENV{HOSTNAME}")
 # !SECTION
 
 
@@ -39,7 +39,7 @@ IF(APPLE)  # Build on laptop PC
     ADD_DEFINITIONS(-DMACOS_COMPILE)
 
 
-ELSEIF($ENV{USER} STREQUAL "aglisman")  # Build on desktop PC
+ELSEIF("$ENV{USER}" STREQUAL "aglisman")  # Build on desktop PC
 
     MESSAGE(STATUS "** Compiling with gcc-11 on PC-Ubuntu **")
 
@@ -58,7 +58,7 @@ ELSEIF($ENV{USER} STREQUAL "aglisman")  # Build on desktop PC
     SET(CMAKE_CUDA_COMPILER "/opt/nvidia/hpc_sdk/Linux_x86_64/21.5/cuda/bin/nvcc")
 
     
-ELSEIF($ENV{USER} STREQUAL "alec")  # Build on Brady group servers
+ELSEIF("$ENV{USER}" STREQUAL "alec")  # Build on Brady group servers
 
     MESSAGE(STATUS "** Compiling on Brady group servers **")      
     
