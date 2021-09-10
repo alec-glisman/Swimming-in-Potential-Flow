@@ -14,9 +14,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 COPY . /bodies-in-potential-flow/
 WORKDIR "/bodies-in-potential-flow"
 
-# Update packages on base image
-RUN apt-get update && apt-get upgrade -y && apt-get install -y sudo
 
+# Update packages on base image and install sudo
+RUN apt-get update && apt-get upgrade -y && apt-get install -y sudo
 
 # Install APT packages
 RUN apt-get update && apt-get install -y \
@@ -38,21 +38,6 @@ RUN apt-get update && apt-get install -y \
 # Install gcc-11
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test
 RUN apt-get update && apt-get install -y gcc-11 g++-11
-# Set gcc-11 as default
-RUN update-alternatives --install \
-    /usr/bin/gcc gcc /usr/bin/gcc-9 90 \
-    --slave /usr/bin/g++ g++ /usr/bin/g++-9 \
-    --slave /usr/bin/gcov gcov /usr/bin/gcov-9 \
-    --slave /usr/bin/gcc-ar gcc-ar /usr/bin/gcc-ar-9 \
-    --slave /usr/bin/gcc-ranlib gcc-ranlib /usr/bin/gcc-ranlib-9 \
-    --slave /usr/bin/cpp cpp /usr/bin/cpp-9 
-RUN update-alternatives --install \
-    /usr/bin/gcc gcc /usr/bin/gcc-11 110 \
-    --slave /usr/bin/g++ g++ /usr/bin/g++-11 \
-    --slave /usr/bin/gcov gcov /usr/bin/gcov-11 \
-    --slave /usr/bin/gcc-ar gcc-ar /usr/bin/gcc-ar-11 \
-    --slave /usr/bin/gcc-ranlib gcc-ranlib /usr/bin/gcc-ranlib-11  \ 
-    --slave /usr/bin/cpp cpp /usr/bin/cpp-11
 
 # Install miniconda to /miniconda
 WORKDIR "/"
