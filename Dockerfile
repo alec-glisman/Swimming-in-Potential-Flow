@@ -16,7 +16,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV ONEAPI_BASE="/opt/intel/oneapi"
 
 # Environment: Intel MKL
-ENV MKL_DEBUG_CPU_TYPE=5
+# ENV MKL_DEBUG_CPU_TYPE=5
 ENV MKLROOT="${ONEAPI_BASE}/mkl/latest"
 ENV PATH="${MKLROOT}/bin/intel64:${PATH}"
 ENV LDFLAGS="${LDFLAGS} -L${MKLROOT}/lib/intel64"
