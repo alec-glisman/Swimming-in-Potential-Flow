@@ -18,19 +18,15 @@ services:
           cpus: '1.00'
           memory: 50M
     volumes:
-      - type: volume
-        source: completed
+      - type: bind
+        source: docker/completed
         target: /bodies-in-potential-flow/data
-        volume:
-          nocopy: true
-      - type: volume
-        source: in_progress
+      - type: bind
+        source: docker/in_progress
         target: /bodies-in-potential-flow/temp
-        volume:
-          nocopy: true
 
 volumes:
-  completed:
+  docker_completed:
     external: false
-  in_progress:
+  docker_in_progress:
     external: false
