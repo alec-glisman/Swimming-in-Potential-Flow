@@ -27,7 +27,6 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get update && apt-get install -y \
     cmake \
     gcc-11 g++-11 \
-    nvidia-cuda-toolkit \
     perl cpanminus \
     python3 python3-dev python3-pip
 # coding languages
@@ -35,12 +34,6 @@ RUN apt-get update && apt-get install -y \
     libboost-all-dev libspdlog-dev \
     locales tzdata
 # library depdencencies
-
-# Install eigen3 (v3.3.9-2)
-WORKDIR "/tmp"
-RUN wget -O libeigen3-dev_3.3.9-2_all.deb http://launchpadlibrarian.net/519614686/libeigen3-dev_3.3.9-2_all.deb
-RUN apt-get install -y ./libeigen3-dev_3.3.9-2_all.deb
-RUN rm libeigen3-dev_3.3.9-2_all.deb
 
 # Install Catch2 (v2.13.7-1)
 WORKDIR "/tmp"
@@ -64,6 +57,11 @@ RUN chsh -s $(which zsh)
 # Copy the folders that are not ignored into the Docker image
 WORKDIR "/"
 COPY . /bodies-in-potential-flow/
+
+# Install eigen3 (git-repo)
+WORKDIR "/bodies-in-potential-flow/include/Eigen"
+RUN mkdir build && cd build
+RUN cmake .. && make install
 
 
 # Encoding
