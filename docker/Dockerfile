@@ -80,8 +80,6 @@ RUN apt-get update && apt-get install -y \
 
 # Intel MKL (v2021.3.0) via Intel OneAPI repositories
 RUN apt-get update && apt-get install -y \
-    intel-oneapi-mkl \
-    intel-oneapi-mkl-common-2021.3.0 \
     intel-oneapi-mkl-devel-2021.3.0
 
 # Reduce image size
@@ -110,7 +108,7 @@ RUN dpkg-reconfigure -f noninteractive tzdata
 
 # Copy requirements directory into docker image
 WORKDIR "/"
-COPY requirements/ /bodies-in-potential-flow/requirements
+COPY requirements /bodies-in-potential-flow/requirements
 
 # Perl dependencies
 WORKDIR "/bodies-in-potential-flow/requirements/Perl"
@@ -121,6 +119,10 @@ WORKDIR "/bodies-in-potential-flow/requirements/Python"
 RUN pip3 install --upgrade pip && \
     pip3 install -r requirements.txt
 
+# Reduce image size
+WORKDIR "/bodies-in-potential-flow"
+RUN rm -rf requirements
+
 # !SECTION (Language dependencies)
 
 
@@ -129,7 +131,7 @@ RUN pip3 install --upgrade pip && \
 
 # Copy include directory into docker image
 WORKDIR "/"
-COPY include/ /bodies-in-potential-flow/include
+COPY include /bodies-in-potential-flow/include
 
 # Install eigen3 (commit 8ce341caf2947e4b5ac4580c20254ae7d828b009 from git repo)
 WORKDIR "/bodies-in-potential-flow/include/Eigen"
@@ -149,6 +151,11 @@ RUN mkdir build
 WORKDIR "/bodies-in-potential-flow/include/Catch2/build"
 RUN cmake .. && make install
 
+# Reduce image size
+WORKDIR "/bodies-in-potential-flow"
+RUN rm -rf include
+COPY include/cmake_modules /bodies-in-potential-flow/include/cmake_modules
+
 # !SECTION (Repository include package installs)
 
 
@@ -166,11 +173,11 @@ RUN source "${MKLROOT}/env/vars.sh"
 # SECTION: Prepare simulation
 
 # Copy directories for simulation
-COPY input/ /bodies-in-potential-flow/input
-COPY python/ /bodies-in-potential-flow/python
-COPY scripts/ /bodies-in-potential-flow/scripts
-COPY src/ /bodies-in-potential-flow/src
-COPY tests/ /bodies-in-potential-flow/tests
+COPY input /bodies-in-potential-flow/input
+COPY python /bodies-in-potential-flow/python
+COPY scripts /bodies-in-potential-flow/scripts
+COPY src /bodies-in-potential-flow/src
+COPY tests /bodies-in-potential-flow/tests
 COPY CMakeLists.txt /bodies-in-potential-flow/CMakeLists.txt
 
 # Make output directories for data IO from container
