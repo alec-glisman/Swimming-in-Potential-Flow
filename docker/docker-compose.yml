@@ -5,7 +5,7 @@ services:
     image: bodies-in-potential-flow:latest
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: docker/Dockerfile
       args:
         buildno: 1
         gitcommithash: HEAD
