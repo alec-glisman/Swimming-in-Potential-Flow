@@ -154,7 +154,7 @@ ELSE()  # Use CUDA when not on MacOS
             "Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible)"
         HOMEPAGE_URL
             "https://github.com/alec-glisman/bodies-in-potential-flow"
-        LANGUAGES CXX C CUDA)
+        LANGUAGES CXX C)
 
 ENDIF()
 # !SECTION
