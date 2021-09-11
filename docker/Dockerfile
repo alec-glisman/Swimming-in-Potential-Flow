@@ -170,8 +170,12 @@ COPY src/ /bodies-in-potential-flow/src
 COPY tests/ /bodies-in-potential-flow/tests
 COPY CMakeLists.txt /bodies-in-potential-flow/CMakeLists.txt
 
-# Build simulation
+# Make output directories for data IO from container
 WORKDIR "/bodies-in-potential-flow"
+RUN mkdir data
+RUN mkdir temp
+
+# Build simulation
 ENTRYPOINT [ "perl", "scripts/collinear-swimmer-wall.pl" ]   # starts simulations from perl script
 
 # !SECTION (Prepare simulation)
