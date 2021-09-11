@@ -128,7 +128,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
     my $curDateTime = strftime('%Y-%m-%d.%H-%M-%S', localtime);
 
     # Make temp output directory
-    my $tempOutputDir = "temp_" . $curDateTime . "_" . ${simulationTag} . "_" .  ${inputData[$i]};
+    my $tempOutputDir = "temp/" . $curDateTime . "_" . ${simulationTag} . "_" .  ${inputData[$i]};
     make_path( $tempOutputDir );
 
     # tee the command line outputs
