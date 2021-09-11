@@ -1,4 +1,5 @@
 version: "3.9"
+
 services:
   simulation:
     image: bodies-in-potential-flow:latest
