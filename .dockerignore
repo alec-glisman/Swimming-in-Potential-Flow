@@ -30,6 +30,15 @@ LICENSE
 *data*/
 jupyter-*/
 *output*/
+temp*
 
 # Other directories
 profile/*
+
+# Python caches
+*.pyc
+*.pkl
+
+# MacOS files
+.DS_Store
+**/.DS_Store
