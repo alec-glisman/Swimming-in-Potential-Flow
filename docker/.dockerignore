@@ -1,0 +1,44 @@
+# git elements
+.git
+.gitignore
+
+# VSCode and CLion specific folders
+.vscode
+.idea
+
+# Formatting files
+.clang-format
+.cmake-format.json
+
+# Docker files and directories
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Standard repository non-code elements
+README.md
+DOCKER_INFO.md
+TODO.md
+LICENSE
+
+# Compiled and other build projects
+*build*/
+*/bin
+*/obj
+
+# Data produced
+*data*/
+jupyter-*/
+*output*/
+temp*
+
+# Other directories
+profile/*
+
+# Python caches
+*.pyc
+*.pkl
+
+# MacOS files
+.DS_Store
+**/.DS_Store
