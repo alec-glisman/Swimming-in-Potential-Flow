@@ -73,7 +73,7 @@ if ((index($host, "MacBook-Pro") != -1) or (index($host, "MBP") != -1)) {
     my $numThreads = $cpu->count / 2;
 }
 if ($numThreads == 0) {
-    $numThreads = 1;
+    $numThreads = 2;
 }
 
 # Terminal display outputs
