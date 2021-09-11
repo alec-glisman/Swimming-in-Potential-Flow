@@ -26,10 +26,9 @@ ENV CPPFLAGS="${CPPFLAGS} -L${MKLROOT}/include/intel64"
 RUN apt-get update --fix-missing && \
     apt-get upgrade -y && \
     apt-get install -y \
+    software-properties-common \
     sudo \
-    wget \
-    build-essential \
-    software-properties-common
+    wget
 
 # !SECTION: (Preamble and general set-up)
 
@@ -57,9 +56,13 @@ RUN echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/s
 RUN apt-get update && apt-get install -y \
     locales tzdata
 
-# C++ and CMAKE
+# MAKE
 RUN apt-get update && apt-get install -y \
-    cmake \
+    make \
+    cmake
+
+# C++ and libraries
+RUN apt-get update && apt-get install -y \
     gcc-11 \
     g++-11 \
     libboost-all-dev
@@ -97,7 +100,7 @@ RUN localedef -i en_US -f UTF-8 en_US.UTF-8
 # Change terminal timezone to America/Los_Angeles 
 ENV TZ=America/Los_Angeles
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN sudo dpkg-reconfigure -f noninteractive tzdata
+RUN dpkg-reconfigure -f noninteractive tzdata
 
 # !SECTION (OS Modifications)
 
