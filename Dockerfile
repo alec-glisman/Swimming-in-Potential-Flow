@@ -25,9 +25,11 @@ ENV CPPFLAGS="${CPPFLAGS} -L${MKLROOT}/include/intel64"
 # Update packages on base image and general use packages
 RUN apt-get update --fix-missing && \
     apt-get upgrade -y && \
-    apt-get install -y sudo build-essential software-properties-common \
-    git wget curl file \
-    zsh fonts-powerline
+    apt-get install -y \
+    sudo \
+    wget \
+    build-essential \
+    software-properties-common
 
 # !SECTION: (Preamble and general set-up)
 
@@ -51,19 +53,29 @@ RUN echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/s
 
 # SECTION: APT package manager installs
 
-# Coding languages
+# OS Date and time
 RUN apt-get update && apt-get install -y \
-    cmake \
-    gcc-11 g++-11 \
-    perl cpanminus \
-    python3 python3-dev python3-pip
-
-# Library depdencencies
-RUN apt-get update && apt-get install -y \
-    libboost-all-dev \
     locales tzdata
 
-# Install Intel MKL (v2021.3.0) via Intel OneAPI repositories
+# C++ and CMAKE
+RUN apt-get update && apt-get install -y \
+    cmake \
+    gcc-11 \
+    g++-11 \
+    libboost-all-dev
+
+# Perl and package manager
+RUN apt-get update && apt-get install -y \
+    perl \
+    cpanminus
+
+# Python
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-dev \
+    python3-pip
+
+# Intel MKL (v2021.3.0) via Intel OneAPI repositories
 RUN apt-get update && apt-get install -y \
     intel-oneapi-mkl \
     intel-oneapi-mkl-common-2021.3.0 \
@@ -97,15 +109,14 @@ RUN sudo dpkg-reconfigure -f noninteractive tzdata
 WORKDIR "/"
 COPY requirements/ /bodies-in-potential-flow/requirements
 
-# Python requirements
-WORKDIR "/bodies-in-potential-flow/requirements/Python"
-RUN pip3 install --upgrade pip && \
-    pip3 install --upgrade virtualenv
-RUN pip3 install -r requirements.txt
-
-# Perl requirements
+# Perl dependencies
 WORKDIR "/bodies-in-potential-flow/requirements/Perl"
 RUN cpanm --installdeps .
+
+# Python dependencies
+WORKDIR "/bodies-in-potential-flow/requirements/Python"
+RUN pip3 install --upgrade pip && \
+    pip3 install -r requirements.txt
 
 # !SECTION (Language dependencies)
 
@@ -159,10 +170,8 @@ COPY src/ /bodies-in-potential-flow/src
 COPY tests/ /bodies-in-potential-flow/tests
 COPY CMakeLists.txt /bodies-in-potential-flow/CMakeLists.txt
 
-
 # Build simulation
 WORKDIR "/bodies-in-potential-flow"
 ENTRYPOINT [ "perl", "scripts/collinear-swimmer-wall.pl" ]   # starts simulations from perl script
-# CMD ["zsh"] # launches zsh terminal to test run commands after build
 
 # !SECTION (Prepare simulation)
