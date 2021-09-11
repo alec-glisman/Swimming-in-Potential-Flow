@@ -42,12 +42,11 @@ RUN wget -O libeigen3-dev_3.3.9-2_all.deb http://launchpadlibrarian.net/51961468
 RUN apt-get install -y ./libeigen3-dev_3.3.9-2_all.deb
 RUN rm libeigen3-dev_3.3.9-2_all.deb
 
-# Install Catch2 (v2.13.4-2)
+# Install Catch2 (v2.13.7-1)
 WORKDIR "/tmp"
-RUN wget -O catch2_2.13.4-2.deb.tar.xz https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/catch2/2.13.4-2/catch2_2.13.4-2.debian.tar.xz && \
-    tar xf catch2_2.13.4-2.deb.tar.xz
-RUN apt-get install -y ./catch2_2.13.4-2.deb
-RUN rm catch2_2.13.4-2.deb.tar.xz && rm catch2_2.13.4-2.deb
+RUN wget -O catch2_2.13.7-1_amd64.deb http://ftp.us.debian.org/debian/pool/main/c/catch2/catch2_2.13.7-1_amd64.deb
+RUN apt-get install -y ./catch2_2.13.7-1_amd64.deb
+RUN rm catch2_2.13.7-1_amd64.deb
 
 # Install Intel MKL via Intel OneAPI
 WORKDIR "/tmp"
