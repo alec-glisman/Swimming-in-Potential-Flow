@@ -60,7 +60,8 @@ COPY . /bodies-in-potential-flow/
 
 # Install eigen3 (git-repo)
 WORKDIR "/bodies-in-potential-flow/include/Eigen"
-RUN mkdir build && cd build
+RUN mkdir build
+WORKDIR "/bodies-in-potential-flow/include/Eigen/build"
 RUN cmake .. && make install
 
 
