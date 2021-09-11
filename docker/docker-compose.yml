@@ -1,16 +1,33 @@
 version: "3.9"
 services:
   simulation:
+    image: bodies-in-potential-flow:latest
     build:
       context: .
       dockerfile: Dockerfile
       args:
         buildno: 1
         gitcommithash: HEAD
-    image: bodies-in-potential-flow:latest
-    volumes: 
-      - "./docker/completed:/bodies-in-potential-flow/data"
-      - "./docker/in_progress:/bodies-in-potential-flow/temp"
+    deploy:
+      resources:
+        limits:
+          cpus: '8.00'
+          memory: 2048M
+        reservations:
+          cpus: '1.00'
+          memory: 50M
+    volumes:
+      - type: volume
+        source: completed
+        target: /bodies-in-potential-flow/data
+        volume:
+          nocopy: true
+      - type: volume
+        source: in_progress
+        target: /bodies-in-potential-flow/temp
+        volume:
+          nocopy: true
+
 volumes:
   completed:
     external: false
