@@ -97,12 +97,16 @@ class rungeKutta4
     // system specific data
     struct systemParameters
     {
-        double          U0{-1.0};
-        double          omega{-1.0};
-        double          phaseShift{-1.0};
-        double          RAvg{-1.0};
+        // Swimming kinematic constraints
+        double U0{-1.0};
+        double omega{-1.0};
+        double phaseShift{-1.0};
+        double RAvg{-1.0};
+        // Swimmer locater point kinematics
         Eigen::VectorXd U_swim;
         Eigen::VectorXd A_swim;
+        // Image system transform
+        Eigen::MatrixXd sigma;
     };
 
     // classes

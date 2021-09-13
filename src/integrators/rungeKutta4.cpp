@@ -202,6 +202,22 @@ rungeKutta4::initializeSpecificVars()
     spdlog::get(m_logName)->critical(
         "Frame 1 should be treated as correct starting frame for analysis");
     gsdParser->writeFrame();
+
+    /* ANCHOR: Other member variables */
+    int numRealPart{m_system->numParticles() / 2};
+    m_systemParam.sigma     = Eigen::MatrixXd::Zero(3 * m_system->numParticles(), 3 * numRealPart);
+    Eigen::Matrix3d I       = Eigen::Matrix3d::Identity(3, 3);
+    Eigen::Matrix3d I_tilde = I;
+    I_tilde(2, 2)           = -1;
+
+    for (int i = 0; i < numRealPart; i++)
+    {
+        int i3{3 * i};
+        int halfMat{numRealPart * i3};
+
+        m_systemParam.sigma.block<3, 3>(i3, i3).noalias()           = I;
+        m_systemParam.sigma.block<3, 3>(i3 + halfMat, i3).noalias() = I_tilde;
+    }
 }
 
 /* REVIEW[epic=Change,order=1]: Change initializeConstraintLinearSystem() for different systems */
@@ -488,6 +504,12 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
         rbmconn.block<3, 3>(3, i3).noalias() = n_dr_cross; // translation-rotation couple
     }
     Eigen::MatrixXd rbmconn_T = rbmconn.transpose();
+
+    // assemble rbm_conn for only "real" (not "image") particles
+    Eigen::MatrixXd rbmconn_hat   = rbmconn.block(0, 0, 6, 3 * (m_system->numParticles() / 2));
+    Eigen::MatrixXd rmbconn_hat_T = rbmconn_hat.transpose();
+
+    // assemble articulation velocity and acceleration for only "real" particles
 
     // calculate M_tilde = Sigma * M_total * Sigma^T;  [6 x 6]
     Eigen::MatrixXd M_tilde_hold = m_potHydro->mTotal() * rbmconn_T;
