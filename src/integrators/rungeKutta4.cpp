@@ -211,6 +211,7 @@ rungeKutta4::initializeConstraintLinearSystem()
     updateConstraintLinearSystem(0.0);
 }
 
+/* REVIEW[epic=Change,order=2]: Change constraint linear system (A, b) for each system */
 void
 rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
 {
@@ -294,15 +295,20 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     m_b(11) = -alpha; // (12) FIXME
 }
 
-/* REVIEW[epic=Change,order=2]: Change constraint linear system (A, b) for each system */
 void
 rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
 {
+    /* REVIEW[epic=Change]: Change booleans for different systems */
     bool useUdwadiaMethod{false};
+    bool useImageMethod{true};
 
     if (useUdwadiaMethod)
     {
         udwadiaKalaba(acc, dimensional_time);
+    }
+    else if (useImageMethod && !useUdwadiaMethod)
+    {
+        momentumLinAngFreeImageSystem(acc, dimensional_time);
     }
     else
     {
@@ -365,6 +371,99 @@ rungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc, double dimensional_time)
 
 void
 rungeKutta4::momentumLinAngFree(Eigen::VectorXd& acc, double dimensional_time)
+{
+    /* ANCHOR: Compute articulation data */
+    articulationAcc(dimensional_time);
+    articulationVel(dimensional_time);
+    rLoc();
+
+    /* ANCHOR: Solve for rigid body motion (rbm) tensors */
+    // initialize variables
+    Eigen::MatrixXd rbmconn = Eigen::MatrixXd::Zero(6, 3 * m_system->numParticles()); // [6 x 3N]
+
+    // assemble the rigid body motion connectivity tensor (Sigma);  [6 x 3N]
+    for (int i = 0; i < m_system->numParticles(); i++)
+    {
+        int i3{3 * i};
+
+        Eigen::Vector3d n_dr = -m_system->positions().segment<3>(i3);
+        n_dr.noalias() += m_RLoc;
+        Eigen::Matrix3d n_dr_cross;
+        crossProdMat(n_dr, n_dr_cross);
+
+        rbmconn.block<3, 3>(0, i3).noalias() = m_I;        // translation-translation couple
+        rbmconn.block<3, 3>(3, i3).noalias() = n_dr_cross; // translation-rotation couple
+    }
+    Eigen::MatrixXd rbmconn_T = rbmconn.transpose();
+
+    // calculate M_tilde = Sigma * M_total * Sigma^T;  [6 x 6]
+    Eigen::MatrixXd M_tilde_hold = m_potHydro->mTotal() * rbmconn_T;
+    Eigen::MatrixXd M_tilde      = rbmconn * M_tilde_hold;
+
+    /* ANCHOR: Solve for rigid body motion velocity components */
+    // calculate P_script = Sigma * M_total * V_articulation;  [6 x 1]
+    Eigen::VectorXd P_script_hold = m_potHydro->mTotal() * m_velArtic;
+    Eigen::VectorXd P_script      = rbmconn * P_script_hold;
+
+    // calculate U_swim = - M_tilde_inv * P_script; U_swim has translation and rotation
+    // components
+    m_systemParam.U_swim.noalias() = -M_tilde.fullPivLu().solve(P_script);
+
+    /* ANCHOR: Output velocity data back to m_system */
+    // calculate U = Sigma^T * U_swim + v_artic
+    Eigen::VectorXd U_out = rbmconn_T * m_systemParam.U_swim;
+    U_out.noalias() += m_velArtic;
+    m_system->setVelocities(U_out);
+
+    // update hydrodynamic force terms for acceleration components
+    m_potHydro->updateForcesOnly();
+
+    /* ANCHOR: Solve for rigid body motion acceleration components */
+    // calculate b = a_artic + W * r + [v_artic ^ ]^T * Omega_C;  Omega_C = U_swim(3::5)
+    Eigen::Vector3d Omega_C = m_systemParam.U_swim.segment<3>(3);
+
+    Eigen::Matrix3d W = Omega_C * Omega_C.transpose();
+    W.noalias() -= Omega_C.squaredNorm() * m_I;
+
+    Eigen::Matrix3d n_v_artic_cross;
+    Eigen::VectorXd b = m_accArtic;
+
+    for (int i = 0; i < m_system->numParticles(); i++)
+    {
+        int i3{3 * i};
+
+        Eigen::Vector3d dr = m_system->positions().segment<3>(i3);
+        dr.noalias() -= m_RLoc;
+        b.segment<3>(i3).noalias() += W * dr;
+
+        crossProdMat(-m_velArtic.segment<3>(i3), n_v_artic_cross);
+        b.segment<3>(i3).noalias() += n_v_artic_cross * Omega_C;
+    }
+
+    // calculate gMUU = \nabla M_added : U jdU
+    Eigen::VectorXd gMUU = m_potHydro->t2VelGrad();
+
+    // calculate F_script = Sigma * (M_total * b + gMUU)
+    Eigen::VectorXd F_script_hold = m_potHydro->mTotal() * b;
+    F_script_hold.noalias() += gMUU;
+    Eigen::VectorXd F_script = rbmconn * F_script_hold;
+
+    // calculate A_swim = - M_tilde_inv * F_script; A_swim has translation and rotation
+    // components
+    m_systemParam.A_swim.noalias() = -M_tilde.fullPivLu().solve(F_script);
+
+    /* ANCHOR: Output acceleration data back to m_system */
+    // calculate A = Sigma^T * A_swim + b
+    Eigen::VectorXd A_out = rbmconn_T * m_systemParam.A_swim;
+    A_out.noalias() += b;
+    m_system->setAccelerations(A_out);
+
+    /* ANCHOR: Output acceleration data back to input variable */
+    acc = A_out;
+}
+
+void
+rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensional_time)
 {
     /* ANCHOR: Compute articulation data */
     articulationAcc(dimensional_time);

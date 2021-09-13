@@ -67,6 +67,11 @@ class rungeKutta4
     void
     momentumLinAngFree(Eigen::VectorXd& acc, double dimensional_time);
 
+    /* REVIEW[epic=Change]: Same method as momentumLinAngFree() but assumes we have identical bodies
+     * mirrored across the z-axis (xy-plane) */
+    void
+    momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensional_time);
+
     /* REVIEW[epic=Change]: Change assignment of m_velArtic for different systems */
     void
     articulationVel(double dimensional_time);
