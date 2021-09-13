@@ -455,6 +455,7 @@ rungeKutta4::momentumLinAngFree(Eigen::VectorXd& acc, double dimensional_time)
     /* ANCHOR: Output acceleration data back to input variable */
     acc = A_out;
 }
+
 /* ANCHOR: Output data to GSD */
 void
 rungeKutta4::GSDOutput()
