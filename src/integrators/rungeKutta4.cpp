@@ -509,10 +509,8 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
     Eigen::MatrixXd rbmconn_hat   = rbmconn.block(0, 0, 6, 3 * (m_system->numParticles() / 2));
     Eigen::MatrixXd rmbconn_hat_T = rbmconn_hat.transpose();
 
-    // assemble articulation velocity and acceleration for only "real" particles
-
-    // calculate M_tilde = Sigma * M_total * Sigma^T;  [6 x 6]
-    Eigen::MatrixXd M_tilde_hold = m_potHydro->mTotal() * rbmconn_T;
+    // calculate M_tilde = Sigma * M_total * Sigma_hat^T;  [6 x 3]
+    Eigen::MatrixXd M_tilde_hold = m_potHydro->mTotal() * rmbconn_hat_T;
     Eigen::MatrixXd M_tilde      = rbmconn * M_tilde_hold;
 
     /* ANCHOR: Solve for rigid body motion velocity components */
