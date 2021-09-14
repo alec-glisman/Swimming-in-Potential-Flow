@@ -8,19 +8,21 @@ use Sys::Hostname;                           # get the hostname
 use Sys::Info;                               # hardware information
 use Sys::Info::Constants qw( :device_cpu );  # CPU information
 
-use File::Path qw(make_path);     # make directories like 'mkdir -p'
-use File::Copy;                   # copy files like 'cp'
-use File::Slurp;                  # load data files
-use File::Tee qw(tee);            # Have std-out and std-err print and save to file like 'tee'
-use Path::Tiny qw(path);          # more data I/O
+use File::Path qw(make_path);      # make directories like 'mkdir -p'
+use File::Copy;                    # copy files like 'cp'
+use File::Slurp;                   # load data files
+use File::Tee qw(tee);             # Have std-out and std-err print and save to file like 'tee'
+use Path::Tiny qw(path);           # more data I/O
 
 use English;                       # use nice English (or awk) names for ugly punctuation variables
 use English qw( -no_match_vars );  # Avoids regex performance penalty in perl 5.18 and earlier
 use POSIX;                         # datetime
+use Term::ANSIColor;               # color in print statements
 
-use Switch;                       # switch-case control flow statements
-use strict;                       # conform to better style and conventions
-use warnings;                     # give warnings
+
+use Switch;                        # switch-case control flow statements
+use strict;                        # conform to better style and conventions
+use warnings;                      # give warnings
 
 # !SECTION (Dependencies)
 
@@ -38,7 +40,7 @@ my $generator     = "Unix Makefiles";         # ONLY TESTED WITH UNIX
 my $simulationTag    = "collinear-swimmer-wall";
 my $projectName      = "bodies_in_potential_flow";
 my $inputDir         = "input";
-my @inputData        = ( "varyRelDisp", "varyZHeight", "varyPhaseAngle", "varyEpsilon", "varyDt" );
+my @inputData        = ( "varyZHeight", "varyRelDisp", "varyPhaseAngle", "varyEpsilon", "varyDt" );
 my $numSimulationTypes = scalar @inputData;
 my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
 
