@@ -26,6 +26,7 @@ ENV CPPFLAGS="${CPPFLAGS} -L${MKLROOT}/include/intel64"
 RUN apt-get update --fix-missing && \
     apt-get upgrade -y && \
     apt-get install -y \
+    apt-utils \
     software-properties-common \
     sudo \
     wget
