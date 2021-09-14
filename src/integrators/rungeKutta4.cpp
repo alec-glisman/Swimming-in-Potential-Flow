@@ -509,9 +509,10 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
     Eigen::MatrixXd rbmconn_hat   = rbmconn.block(0, 0, 6, 3 * (m_system->numParticles() / 2));
     Eigen::MatrixXd rmbconn_hat_T = rbmconn_hat.transpose();
 
-    // calculate M_tilde = Sigma * M_total * Sigma_hat^T;  [6 x 3]
-    Eigen::MatrixXd M_tilde_hold = m_potHydro->mTotal() * rmbconn_hat_T;
-    Eigen::MatrixXd M_tilde      = rbmconn * M_tilde_hold;
+    // calculate M_tilde = Sigma * M_total * Sigma_hat^T;  [6 x 6]
+    Eigen::MatrixXd M_tilde_hold_1 = m_systemParam.sigma * rmbconn_hat_T;
+    Eigen::MatrixXd M_tilde_hold_2 = m_potHydro->mTotal() * M_tilde_hold_1;
+    Eigen::MatrixXd M_tilde        = rbmconn * M_tilde_hold_2;
 
     /* ANCHOR: Solve for rigid body motion velocity components */
     // calculate P_script = Sigma * M_total * V_articulation;  [6 x 1]
