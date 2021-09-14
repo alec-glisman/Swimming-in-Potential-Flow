@@ -67,8 +67,8 @@ Further information found in `requirements` directory readme.
 ### Must install separately
 
 * [Intel MKL](https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html#gs.7owc4e) (oneAPI v2021.1.1): Optimized mathematical instructions
-* [Boost](https://www.boost.org/) (v1.76.0): All-purpose STL extension
-* [Eigen3](https://gitlab.com/libeigen/eigen) (master 66499f0f): Linear algebra
+* [Boost](https://www.boost.org/) (v1.71.0): All-purpose STL extension
+* [Eigen3](https://gitlab.com/libeigen/eigen) (3.4.0): Linear algebra
 * [spdlog](https://github.com/gabime/spdlog) (v1.9.1): Logging
 * [Catch2](https://github.com/catchorg/Catch2) (v2.13.6): Unit testing
 
