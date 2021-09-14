@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.8"
 
 services:
   simulation:
@@ -15,15 +15,15 @@ services:
           cpus: '8.00'
           memory: 2048M
         reservations:
-          cpus: '1.00'
+          cpus: '${MAX_CPUS}'
           memory: 50M
     volumes:
       - type: bind
-        source: docker/completed
-        target: /bodies-in-potential-flow/data
+        source: "${PROJ_PATH}/docker/completed"
+        target: "/bodies-in-potential-flow/data"
       - type: bind
-        source: docker/in_progress
-        target: /bodies-in-potential-flow/temp
+        source: "${PROJ_PATH}/docker/in_progress"
+        target: "/bodies-in-potential-flow/temp"
 
 volumes:
   docker_completed:

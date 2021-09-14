@@ -23,7 +23,7 @@ Data I/O is handled automatically with an attached volume.
 Commands:
 
 ```[shell]
-docker-compose up --detach  # build
+docker-compose --env-file [docker_environment_file] up --detach  # build
 docker-compose down         # tear down
 ```
 
