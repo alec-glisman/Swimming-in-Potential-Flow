@@ -7,12 +7,35 @@
 #       "Unix Makefiles"   
 #!SECTION
 
+# SECTION: Color output variables
+
+if(NOT WIN32)
+  string(ASCII 27 Esc)
+  set(ColourReset "${Esc}[m")
+  set(ColourBold  "${Esc}[1m")
+  set(Red         "${Esc}[31m")
+  set(Green       "${Esc}[32m")
+  set(Yellow      "${Esc}[33m")
+  set(Blue        "${Esc}[34m")
+  set(Magenta     "${Esc}[35m")
+  set(Cyan        "${Esc}[36m")
+  set(White       "${Esc}[37m")
+  set(BoldRed     "${Esc}[1;31m")
+  set(BoldGreen   "${Esc}[1;32m")
+  set(BoldYellow  "${Esc}[1;33m")
+  set(BoldBlue    "${Esc}[1;34m")
+  set(BoldMagenta "${Esc}[1;35m")
+  set(BoldCyan    "${Esc}[1;36m")
+  set(BoldWhite   "${Esc}[1;37m")
+endif()
+
+# !SECTION
 
 
 # SECTION: Startup Messages
-MESSAGE("WELCOME TO BODIES-IN-POTENTIAL-FLOW")
-MESSAGE("-- USER environment variable is set to: " "$ENV{USER}")
-MESSAGE("-- HOSTNAME environment variable is set to: " "$ENV{HOSTNAME}")
+MESSAGE("${BoldYellow}" "WELCOME TO BODIES-IN-POTENTIAL-FLOW" "${ColourReset}")
+MESSAGE("${BoldGreen}" "USER environment variable is set to: " "$ENV{USER}" "${ColourReset}")
+MESSAGE("${BoldGreen}" "HOSTNAME environment variable is set to: " "$ENV{HOSTNAME}" "${ColourReset}" "\n")
 # !SECTION
 
 
@@ -21,7 +44,7 @@ MESSAGE("-- HOSTNAME environment variable is set to: " "$ENV{HOSTNAME}")
 IF(APPLE)  # Build on laptop PC
 
     # Special considerations for MacOS Builds
-    MESSAGE(STATUS "** Building on MacOS, do not use frameworks **")
+    MESSAGE(STATUS "${BoldGreen}" "Building on MacOS, do not use frameworks" "${ColourReset}")
     # Try to avoid frameworks
     SET(CMAKE_MACOSX_RPATH OFF)
     SET(CMAKE_FIND_FRAMEWORK NEVER)
@@ -30,7 +53,7 @@ IF(APPLE)  # Build on laptop PC
     OPTION(USE_CLANG "build application with clang" OFF) # OFF is the default
 
     # Use GNU-10 Compilers on MacOS
-    MESSAGE(STATUS "** Compiling with gcc-11 on MacOS **")
+    MESSAGE(STATUS "${BoldGreen}" "Compiling with gcc-11 on MacOS" "${ColourReset}")
     CMAKE_POLICY(SET CMP0048 NEW)
     SET(CMAKE_CXX_STANDARD 17)
     SET(CMAKE_CXX_COMPILER "/usr/local/bin/g++-11" CACHE PATH "" FORCE)
@@ -41,7 +64,7 @@ IF(APPLE)  # Build on laptop PC
 
 ELSEIF("$ENV{USER}" STREQUAL "aglisman")  # Build on desktop PC
 
-    MESSAGE(STATUS "** Compiling with gcc-11 on PC-Ubuntu **")
+    MESSAGE(STATUS "${BoldGreen}" "Compiling with gcc-11 on PC-Ubuntu" "${ColourReset}")
 
     SET(CMAKE_CXX_STANDARD 17)
     SET(CMAKE_CUDA_STANDARD 14)
@@ -55,12 +78,12 @@ ELSEIF("$ENV{USER}" STREQUAL "aglisman")  # Build on desktop PC
         "/usr/bin/gcc-11"
         CACHE PATH "" FORCE)
         
-    SET(CMAKE_CUDA_COMPILER "/opt/nvidia/hpc_sdk/Linux_x86_64/21.5/cuda/bin/nvcc")
+    SET(CMAKE_CUDA_COMPILER "/opt/nvidia/hpc_sdk/Linux_x86_64/21.7/cuda/bin/nvcc")
 
     
 ELSEIF("$ENV{USER}" STREQUAL "alec")  # Build on Brady group servers
 
-    MESSAGE(STATUS "** Compiling on Brady group servers **")      
+    MESSAGE(STATUS "${BoldGreen}" "Compiling on Brady group servers" "${ColourReset}")      
     
     SET(CMAKE_CXX_STANDARD 14)
     CMAKE_POLICY(SET CMP0048 OLD)
@@ -74,7 +97,7 @@ ELSEIF("$ENV{USER}" STREQUAL "alec")  # Build on Brady group servers
 
 ELSE()
 
-    MESSAGE(STATUS "** Compiling on unknown machine **")
+    MESSAGE(STATUS "${BoldGreen}" "Compiling on unknown machine" "${ColourReset}")
     
     SET(CMAKE_CXX_STANDARD 17)
     SET(CMAKE_CUDA_STANDARD 14)
@@ -114,16 +137,16 @@ CMAKE_POLICY(SET CMP0074 NEW)
 # SECTION: Build configuration
 IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
 
-    MESSAGE(STATUS "** Debug mode **")
+    MESSAGE(STATUS "${BoldWhite}" "Debug mode" "${ColourReset}")
     # SET(CMAKE_VERBOSE_MAKEFILE ON)
 
 ELSEIF(CMAKE_BUILD_TYPE STREQUAL "Release")
 
-    MESSAGE(STATUS "** Release mode **")
+    MESSAGE(STATUS "${BoldWhite}" "Release mode" "${ColourReset}")
 
 ELSEIF(CMAKE_BUILD_TYPE STREQUAL "Profile")
 
-    MESSAGE(STATUS "** Profile mode **")
+    MESSAGE(STATUS "${BoldWhite}" "Profile mode" "${ColourReset}")
 
 ENDIF()
 
@@ -185,6 +208,8 @@ ENDIF()
 
 
 # SECTION: External libraries
+MESSAGE("")
+
 # BOOST libraries
 SET(Boost_USE_STATIC_LIBS OFF)
 SET(Boost_USE_DEBUG_LIBS OFF)
@@ -192,50 +217,42 @@ SET(Boost_USE_RELEASE_LIBS ON)
 SET(Boost_USE_MULTITHREADED ON)
 SET(Boost_USE_STATIC_RUNTIME OFF)
 
-FIND_PACKAGE(Boost REQUIRED)
-IF(Boost_FOUND)
-
-    INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
-    LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
-    MESSAGE( "** Boost **" )
-    MESSAGE(STATUS "Found: ${Boost_FOUND}")
-    MESSAGE(STATUS "Version: ${Boost_VERSION}")
-    MESSAGE(STATUS "Include Dir: ${Boost_INCLUDE_DIR}")
-
-ELSE()
-
-    MESSAGE(FATAL_ERROR "Boost was not located")
-
-ENDIF()
+FIND_PACKAGE(Boost 1.76.0 REQUIRED)
+INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
+LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
+MESSAGE( "${BoldMagenta}" "External Dependency: Boost" "${ColourReset}" )
+MESSAGE(STATUS "${Cyan}" "Found: ${Boost_FOUND}" "${ColourReset}")
+MESSAGE(STATUS "${Cyan}" "Version: ${Boost_VERSION}" "${ColourReset}")
+MESSAGE(STATUS "${Cyan}" "Include Dir: ${Boost_INCLUDE_DIR}" "${ColourReset}")
 MESSAGE("")
 
 # Optimization libraries
-MESSAGE( "** MKL **" )
+MESSAGE( "${BoldMagenta}" "External Dependency: Intel MKL" "${ColourReset}" )
 FIND_PACKAGE(MKL REQUIRED)
-MESSAGE( STATUS "Found: ${MKL_FOUND}" )
-MESSAGE( STATUS "Include Dir: ${MKL_INCLUDE_DIR}" )
+MESSAGE( STATUS "${Cyan}" "Found: ${MKL_FOUND}" "${ColourReset}")
+MESSAGE( STATUS "${Cyan}" "Include Dir: ${MKL_INCLUDE_DIR}" "${ColourReset}")
 MESSAGE("")
 
 # Linear algebra libraries
-MESSAGE( "** EIGEN3 **" )
-FIND_PACKAGE(Eigen3 REQUIRED)
-MESSAGE( STATUS "Found: ${EIGEN3_FOUND}" )
-MESSAGE( STATUS "Include Dir: ${EIGEN3_INCLUDE_DIR}" )
+MESSAGE( "${BoldMagenta}" "External Dependency: Eigen3" "${ColourReset}" )
+FIND_PACKAGE(Eigen3 3.4.0 REQUIRED)
+MESSAGE( STATUS "${Cyan}" "Found: ${EIGEN3_FOUND}" "${ColourReset}")
+MESSAGE( STATUS "${Cyan}" "Include Dir: ${EIGEN3_INCLUDE_DIR}" "${ColourReset}")
 MESSAGE("")
 
 # Logging library
-MESSAGE( "** SPDLOG **" )
-FIND_PACKAGE(Spdlog REQUIRED)
-MESSAGE( STATUS "Found: ${SPDLOG_FOUND}" )
-MESSAGE( STATUS "Include Dir: ${SPDLOG_INCLUDE_DIRS}" )
-MESSAGE( STATUS "Libraries: ${SPDLOG_LIBRARIES}" )
+MESSAGE( "${BoldMagenta}" "External Dependency: spdlog" "${ColourReset}" )
+FIND_PACKAGE(Spdlog 1.9.1 REQUIRED)
+MESSAGE( STATUS "${Cyan}" "Found: ${SPDLOG_FOUND}" )
+MESSAGE( STATUS "${Cyan}" "Include Dir: ${SPDLOG_INCLUDE_DIRS}" "${ColourReset}")
+MESSAGE( STATUS "${Cyan}" "Libraries: ${SPDLOG_LIBRARIES}" "${ColourReset}")
 MESSAGE("")
 
 # Unit testing libraries
-MESSAGE( "** CATCH2 **" )
-FIND_PACKAGE(Catch2 REQUIRED)
-MESSAGE( STATUS "Found: ${Catch2_FOUND}" )
-MESSAGE( STATUS "Include Dir: ${Catch2_INCLUDE_DIRS}" )
+MESSAGE( "${BoldMagenta}" "External Dependency: Catch2" "${ColourReset}" )
+FIND_PACKAGE(Catch2 2.13.6 REQUIRED)
+MESSAGE( STATUS "${Cyan}" "Found: ${Catch2_FOUND}" "${ColourReset}")
+MESSAGE( STATUS "${Cyan}" "Include Dir: ${Catch2_INCLUDE_DIRS}" "${ColourReset}")
 INCLUDE(CTest)
 INCLUDE(Catch)
 MESSAGE("")
