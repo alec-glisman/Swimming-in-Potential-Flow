@@ -525,7 +525,8 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
 
     /* ANCHOR: Output velocity data back to m_system */
     // calculate U = Sigma^T * U_swim + v_artic
-    Eigen::VectorXd U_out = rbmconn_T * m_systemParam.U_swim;
+    Eigen::VectorXd U_out_hold = rmbconn_hat_T * m_systemParam.U_swim;
+    Eigen::VectorXd U_out      = m_systemParam.sigma * U_out_hold;
     U_out.noalias() += m_velArtic;
     m_system->setVelocities(U_out);
 
