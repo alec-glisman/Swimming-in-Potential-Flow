@@ -22,7 +22,9 @@ TODO.md
 LICENSE
 
 # Compiled and other build projects
-*build*/
+build
+build-*
+**/build
 */bin
 */obj
 
