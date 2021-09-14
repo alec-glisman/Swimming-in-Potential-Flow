@@ -142,7 +142,13 @@ def parse_loaded_data(gsd_files):
         gsd_paths.append(gsd_current.gsdPath)
 
         # Data from final frame
-        gsd_files[i].snapshot = gsd_current.trajectory.read_frame(nframes - 1)
+        try:
+            gsd_files[i].snapshot = gsd_current.trajectory.read_frame(
+                nframes - 1)
+
+        except:
+            RuntimeError(f"Failed at {gsd_files[i]}")
+
         CoM_disp_comp[i, :] = gsd_current.snapshot.log['particles/double_position'][1]
 
         # Data from initial frame (not 0)
@@ -162,7 +168,12 @@ def parse_loaded_data(gsd_files):
 
         for j in range(1, nframes - 1):  # loop over all frames in GSD file
 
-            snapshot_current = gsd_current.trajectory.read_frame(j)
+            try:
+                snapshot_current = gsd_current.trajectory.read_frame(j)
+
+            except:
+                RuntimeError(f"Failed on {gsd_current} at frame {j}")
+
             jj = j - 1
 
             q_current[:, jj] = snapshot_current.log['particles/double_position'][0]
@@ -258,7 +269,11 @@ def gsd_df(relative_path_base_dir, sim_parameters_varied):
             item for sublist in data_source_gsd_files for item in sublist]
 
         # Parse GSD files
-        data_df.append(parse_loaded_data(data_source_gsd_files))
+        try:
+            data_df.append(parse_loaded_data(data_source_gsd_files))
+
+        except:
+            RuntimeError(f"Failed on iteration {i}")
 
     # Combine all data
     all_data_df = pd.concat(data_df)
