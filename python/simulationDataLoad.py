@@ -147,7 +147,7 @@ def parse_loaded_data(gsd_files):
                 nframes - 1)
 
         except:
-            RuntimeError(f"Failed at {gsd_files[i]}")
+            raise RuntimeError(f"Failed at {gsd_files[i]}")
 
         CoM_disp_comp[i, :] = gsd_current.snapshot.log['particles/double_position'][1]
 
@@ -172,7 +172,7 @@ def parse_loaded_data(gsd_files):
                 snapshot_current = gsd_current.trajectory.read_frame(j)
 
             except:
-                RuntimeError(f"Failed on {gsd_current} at frame {j}")
+                raise RuntimeError(f"Failed on {gsd_current} at frame {j}")
 
             jj = j - 1
 
@@ -273,7 +273,7 @@ def gsd_df(relative_path_base_dir, sim_parameters_varied):
             data_df.append(parse_loaded_data(data_source_gsd_files))
 
         except:
-            RuntimeError(f"Failed on iteration {i}")
+            raise RuntimeError(f"Failed on iteration {i}")
 
     # Combine all data
     all_data_df = pd.concat(data_df)
