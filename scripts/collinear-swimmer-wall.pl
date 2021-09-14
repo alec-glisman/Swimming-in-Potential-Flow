@@ -78,12 +78,11 @@ if ($numThreads == 0) {
     $numThreads = 2;
 }
 
-# Terminal display outputs
+# Terminal display outputs (@DOCS: https://perldoc.perl.org/Term::ANSIColor#Constant-Interface)
 print "\n";
-print "WELCOME TO PERL SIMULATION SCRIPT\n";
-print "HOST: $host";
-print "NUMBER OF THREADS TO UTILIZE SIMULTANEOUSLY: $numThreads";
-print "\n\n\n";
+print colored ("WELCOME TO PERL SIMULATION SCRIPT", 'bold bright_yellow'), "\n";
+print colored ("HOST: $host", 'bold green');
+print colored ("NUMBER OF THREADS TO UTILIZE SIMULTANEOUSLY: $numThreads", 'bold green'), "\n\n\n";
 
 # !SECTION (Input variables that user must specify before running script)
 
