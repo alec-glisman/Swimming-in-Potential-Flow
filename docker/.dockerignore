@@ -30,7 +30,7 @@ LICENSE
 *data*/
 jupyter-*/
 *output*/
-temp*
+temp*/
 
 # Other directories
 profile/*
