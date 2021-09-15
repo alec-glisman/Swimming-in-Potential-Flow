@@ -515,7 +515,7 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
     Eigen::MatrixXd rbmconn_T = rbmconn.transpose();
 
     // assemble rbm_conn for only "real" (not "image") particles
-    Eigen::MatrixXd rbmconn_hat   = rbmconn.block(0, 0, 6, 3 * numRealPart);
+    Eigen::MatrixXd rbmconn_hat   = rbmconn.block(0, 0, 6, halfMat);
     Eigen::MatrixXd rbmconn_hat_T = rbmconn_hat.transpose();
 
     // calculate M_tilde = Sigma * M_total * sigma * Sigma_hat^T;  [6 x 6]
