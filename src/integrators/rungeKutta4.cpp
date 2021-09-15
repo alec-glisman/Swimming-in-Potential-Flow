@@ -543,33 +543,34 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
     m_potHydro->updateForcesOnly();
 
     /* ANCHOR: Solve for rigid body motion acceleration components */
-    // calculate b_hat = a_artic_hat + W * r + [ v_artic ^ ]^T * Omega_C;
-    // Omega_C = U_swim(3::5)
+    // calculate b_hat = [ (U_c - U_hat_alpha) ^ ] * Omega_C
+    Eigen::Vector3d U_C     = m_systemParam.U_swim.segment<3>(0);
     Eigen::Vector3d Omega_C = m_systemParam.U_swim.segment<3>(3);
 
-    Eigen::Matrix3d W = Omega_C * Omega_C.transpose();
-    W.noalias() -= Omega_C.squaredNorm() * m_I;
-
-    Eigen::Matrix3d n_v_artic_cross;
-    Eigen::VectorXd b_hat = m_accArtic.segment(0, 3 * numRealPart);
+    Eigen::Matrix3d Uc_minus_Ualpha_cross;
+    Eigen::VectorXd b_hat = Eigen::VectorXd::Zero(halfMat);
 
     for (int i = 0; i < numRealPart; i++)
     {
         int i3{3 * i};
 
-        Eigen::Vector3d dr = m_system->positions().segment<3>(i3);
-        dr.noalias() -= m_RLoc;
-        b_hat.segment<3>(i3).noalias() += W * dr;
+        Eigen::Vector3d Uc_minus_Ualpha = U_C;
+        Uc_minus_Ualpha.noalias() -= m_system->velocities().segment<3>(i3);
 
-        crossProdMat(-m_velArtic.segment<3>(i3), n_v_artic_cross);
-        b_hat.segment<3>(i3).noalias() += n_v_artic_cross * Omega_C;
+        crossProdMat(Uc_minus_Ualpha, Uc_minus_Ualpha_cross);
+        b_hat.segment<3>(i3).noalias() += Uc_minus_Ualpha_cross * Omega_C;
     }
+
+    // calculate c = sigma * b_hat + A_artic
+    Eigen::VectorXd c = m_systemParam.sigma * b_hat;
+    c.noalias() += m_accArtic;
 
     // calculate gMUU = \nabla M_added : ( U U )
     Eigen::VectorXd gMUU = m_potHydro->t2VelGrad();
 
-    // calculate F_script = Sigma * (M_total * sigma * b_hat + gMUU)
-    Eigen::VectorXd F_script_hold = M_sigma * b_hat;
+    // FIXME
+    // calculate F_script = Sigma * (M_total * c + gMUU)
+    Eigen::VectorXd F_script_hold = m_potHydro->mTotal() * c;
     F_script_hold.noalias() += gMUU;
     Eigen::VectorXd F_script = rbmconn * F_script_hold;
 
