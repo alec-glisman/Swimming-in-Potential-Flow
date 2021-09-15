@@ -313,7 +313,7 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
 void
 rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
 {
-    /* REVIEW[epic=Change]: Change booleans for different systems */
+    /* REVIEW[epic=Change,seq=1]: Change integration schemes for different systems */
     bool useUdwadiaMethod{false};
     bool useImageMethod{true};
 
