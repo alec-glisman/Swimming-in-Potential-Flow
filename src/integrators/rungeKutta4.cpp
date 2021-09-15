@@ -205,18 +205,15 @@ rungeKutta4::initializeSpecificVars()
 
     /* ANCHOR: Other member variables */
     int numRealPart{m_system->numParticles() / 2};
-    m_systemParam.sigma     = Eigen::MatrixXd::Zero(3 * m_system->numParticles(), 3 * numRealPart);
-    Eigen::Matrix3d I       = Eigen::Matrix3d::Identity(3, 3);
-    Eigen::Matrix3d I_tilde = I;
-    I_tilde(2, 2)           = -1;
+    m_systemParam.sigma = Eigen::MatrixXd::Zero(3 * m_system->numParticles(), 3 * numRealPart);
 
     for (int i = 0; i < numRealPart; i++)
     {
         int i3{3 * i};
         int halfMat{numRealPart * i3};
 
-        m_systemParam.sigma.block<3, 3>(i3, i3).noalias()           = I;
-        m_systemParam.sigma.block<3, 3>(i3 + halfMat, i3).noalias() = I_tilde;
+        m_systemParam.sigma.block<3, 3>(i3, i3).noalias()           = m_I;
+        m_systemParam.sigma.block<3, 3>(i3 + halfMat, i3).noalias() = m_I_tilde;
     }
 }
 
