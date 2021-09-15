@@ -205,12 +205,12 @@ rungeKutta4::initializeSpecificVars()
 
     /* ANCHOR: Other member variables */
     int numRealPart{m_system->numParticles() / 2};
+    int halfMat{3 * numRealPart};
     m_systemParam.sigma = Eigen::MatrixXd::Zero(3 * m_system->numParticles(), 3 * numRealPart);
 
     for (int i = 0; i < numRealPart; i++)
     {
         int i3{3 * i};
-        int halfMat{numRealPart * i3};
 
         m_systemParam.sigma.block<3, 3>(i3, i3).noalias()           = m_I;
         m_systemParam.sigma.block<3, 3>(i3 + halfMat, i3).noalias() = m_I_tilde;
@@ -491,12 +491,12 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
     /* ANCHOR: Solve for rigid body motion (rbm) tensors */
     // initialize variables
     Eigen::MatrixXd rbmconn = Eigen::MatrixXd::Zero(6, 3 * m_system->numParticles()); // [6 x 3N]
+    int             halfMat{3 * numRealPart};
 
     // assemble the rigid body motion connectivity tensor (Sigma);  [6 x 3N]
     for (int i = 0; i < numRealPart; i++)
     {
         int i3{3 * i};
-        int halfMat{numRealPart * i3};
 
         Eigen::Vector3d n_dr = -m_system->positions().segment<3>(i3);
         n_dr.noalias() += m_RLoc;
@@ -508,8 +508,8 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
         rbmconn.block<3, 3>(3, i3).noalias() = n_dr_cross; // translation-rotation couple
 
         // "image" particles
-        rbmconn.block<3, 3>(0, i3).noalias() = m_I; // translation-translation couple
-        rbmconn.block<3, 3>(3, i3).noalias() =
+        rbmconn.block<3, 3>(0, i3 + halfMat).noalias() = m_I; // translation-translation couple
+        rbmconn.block<3, 3>(3, i3 + halfMat).noalias() =
             m_I_tilde * n_dr_cross; // translation-rotation couple
     }
     Eigen::MatrixXd rbmconn_T = rbmconn.transpose();
