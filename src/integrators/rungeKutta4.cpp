@@ -280,9 +280,9 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     double a{r1.norm()};
     double b{r3.norm()};
     double c{r1_dot.dot(r1_dot)};
-    double d{r1.dot(r1_dot)};
-    double e{r3_dot.dot(r3)};
     double f{r3_dot.dot(r3_dot)};
+    double d{r1_dot.dot(r1)};
+    double e{r3_dot.dot(r3)};
     double g{r1_dot.dot(r3_dot)};
     double alpha{(b / a) * (c - std::pow(d / a, 2)) + 2.0 * (d * e) / (a * b) +
                  (a / b) * (f - std::pow(e / b, 2)) + 2.0 * g};
@@ -290,7 +290,7 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     Eigen::VectorXd beta = r3;
     beta.noalias() += (b / a) * r1;
     Eigen::VectorXd gamma = r1;
-    beta.noalias() += (a / b) * r3;
+    gamma.noalias() += (a / b) * r3;
     // output values
     m_A.block<1, 3>(11, 0).noalias() = beta;
     m_A.block<1, 3>(11, 3).noalias() = -beta - gamma;
