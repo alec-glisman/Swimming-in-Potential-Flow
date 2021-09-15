@@ -565,7 +565,7 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
         b_hat.segment<3>(i3).noalias() += n_v_artic_cross * Omega_C;
     }
 
-    // calculate gMUU = \nabla M_added : U jdU
+    // calculate gMUU = \nabla M_added : ( U U )
     Eigen::VectorXd gMUU = m_potHydro->t2VelGrad();
 
     // calculate F_script = Sigma * (M_total * sigma * b_hat + gMUU)
