@@ -107,6 +107,7 @@ class rungeKutta4
         Eigen::VectorXd A_swim;
         // Image system transform
         Eigen::MatrixXd sigma;
+        Eigen::MatrixXd sigma_T;
     };
 
     // classes

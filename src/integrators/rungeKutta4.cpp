@@ -215,6 +215,8 @@ rungeKutta4::initializeSpecificVars()
         m_systemParam.sigma.block<3, 3>(i3, i3).noalias()           = m_I;
         m_systemParam.sigma.block<3, 3>(i3 + halfMat, i3).noalias() = m_I_tilde;
     }
+
+    m_systemParam.sigma_T = m_systemParam.sigma.transpose();
 }
 
 /* REVIEW[epic=Change,order=1]: Change initializeConstraintLinearSystem() for different systems */
