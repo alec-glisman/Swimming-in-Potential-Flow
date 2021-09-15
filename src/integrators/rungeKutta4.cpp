@@ -493,17 +493,24 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
     Eigen::MatrixXd rbmconn = Eigen::MatrixXd::Zero(6, 3 * m_system->numParticles()); // [6 x 3N]
 
     // assemble the rigid body motion connectivity tensor (Sigma);  [6 x 3N]
-    for (int i = 0; i < m_system->numParticles(); i++)
+    for (int i = 0; i < numRealPart; i++)
     {
         int i3{3 * i};
+        int halfMat{numRealPart * i3};
 
         Eigen::Vector3d n_dr = -m_system->positions().segment<3>(i3);
         n_dr.noalias() += m_RLoc;
         Eigen::Matrix3d n_dr_cross;
         crossProdMat(n_dr, n_dr_cross);
 
+        // "real" particles
         rbmconn.block<3, 3>(0, i3).noalias() = m_I;        // translation-translation couple
         rbmconn.block<3, 3>(3, i3).noalias() = n_dr_cross; // translation-rotation couple
+
+        // "image" particles
+        rbmconn.block<3, 3>(0, i3).noalias() = m_I; // translation-translation couple
+        rbmconn.block<3, 3>(3, i3).noalias() =
+            m_I_tilde * n_dr_cross; // translation-rotation couple
     }
     Eigen::MatrixXd rbmconn_T = rbmconn.transpose();
 
