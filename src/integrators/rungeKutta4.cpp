@@ -524,8 +524,7 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
     Eigen::MatrixXd M_tilde      = rbmconn * M_tilde_hold;
 
     /* ANCHOR: Solve for rigid body motion velocity components */
-    // calculate P_script = Sigma * M_total * sigma * V_hat;  [6 x 1]
-    // V = sigma * V_hat
+    // calculate P_script = Sigma * M_total * V;  [6 x 1]
     Eigen::VectorXd P_script_hold = m_potHydro->mTotal() * m_velArtic;
     Eigen::VectorXd P_script      = rbmconn * P_script_hold;
 
@@ -534,7 +533,7 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
     m_systemParam.U_swim.noalias() = -M_tilde.fullPivLu().solve(P_script);
 
     /* ANCHOR: Output velocity data back to m_system */
-    // calculate U =  sigma * ( Sigma_hat^T * U_swim + V_hat )
+    // calculate U = (sigma * Sigma_hat^T) * U_swim + V
     Eigen::VectorXd U_out_hold = rbmconn_hat_T * m_systemParam.U_swim;
     Eigen::VectorXd U_out      = m_systemParam.sigma * U_out_hold;
     U_out.noalias() += m_velArtic;
