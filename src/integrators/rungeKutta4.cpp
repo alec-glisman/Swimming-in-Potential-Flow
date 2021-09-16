@@ -182,18 +182,11 @@ rungeKutta4::initializeSpecificVars()
     spdlog::get(m_logName)->info("Setting initial conditions");
 
     // set articulation velocities
-    spdlog::get(m_logName)->info("Calling articulationVel()");
-    articulationVel(0.0);
-    spdlog::get(m_logName)->info("Calling articulationAcc()");
-    articulationAcc(0.0);
-    // calculate locater point motion via linear and angular momentum free conditions
-    spdlog::get(m_logName)->info("Calling rLoc()");
-    rLoc();
     spdlog::get(m_logName)->info("Updating (for first time) hydrodynamic tensors");
     m_potHydro->update();
-    spdlog::get(m_logName)->info("Calling momentumLinAngFree()");
+    spdlog::get(m_logName)->info("Calling accelerationUpdate()");
     Eigen::VectorXd acc = m_system->accelerations();
-    momentumLinAngFree(acc, 0.0);
+    accelerationUpdate(acc, 0.0);
 
     /* ANCHOR: write updated kinematics to original frame (appending current file) */
     spdlog::get(m_logName)->info("Updating input GSD with updated kinematic initial conditions");
