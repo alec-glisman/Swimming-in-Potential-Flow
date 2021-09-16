@@ -10,15 +10,8 @@
         {
             "name": "Mac",
             "includePath": [
-                "${workspaceFolder}/**",
-                "${workspaceFolder}/include/**",
-                "${workspaceFolder}/include/spdlog/include",
-                "${workspaceFolder}/include/Eigen/",
-                "${workspaceFolder}/src/integrators",
-                "${workspaceFolder}/src/data_io",
-                "/usr/local/include",
-                "${workspaceFolder}/src/simulation_system",
-                "${workspaceFolder}/src/integrators"
+                "/usr/local/include/**",
+                "${workspaceFolder}/**"
             ],
             "defines": [],
             "compilerPath": "/usr/local/bin/gcc-11",
@@ -32,7 +25,9 @@
                     "${workspaceFolder}/**"
                 ],
                 "limitSymbolsToIncludedHeaders": true
-            }
+            },
+            "macFrameworkPath": [],
+            "compileCommands": "${workspaceFolder}/build_debug/compile_commands.json"
         },
         {
             "name": "Linux",
