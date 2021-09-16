@@ -234,15 +234,15 @@ rungeKutta4::initializeConstraintLinearSystem()
 void
 rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
 {
+    // tensor dimensions
+    int num_constraints{12};
+    int num_DoF{3 * 6};
+
     /* ANCHOR: Calculate quantities for linear system */
     // orientation vector, q = R_1 - R_3
     Eigen::Vector3d q = m_system->positions().segment<3>(3 * 0);
     q.noalias() -= m_system->positions().segment<3>(3 * 2);
     q.normalize();
-
-    // tensor dimensions
-    int num_constraints{12};
-    int num_DoF{3 * 6};
 
     /* ANCHOR: Calculate A, function of time (Indexing: (constraint #, particle DoF #)) */
     m_A.setZero(num_constraints, num_DoF);
@@ -288,17 +288,17 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     double d{r1_dot.dot(r1)};
     double e{r3_dot.dot(r3)};
     double g{r1_dot.dot(r3_dot)};
-    double alpha{(b / a) * (c - std::pow(d / a, 2)) + 2.0 * (d * e) / (a * b) +
-                 (a / b) * (f - std::pow(e / b, 2)) + 2.0 * g};
+    double alpha{(b / a) * (c - std::pow(d / a, 2.0)) + 2.0 * (d * e) / (a * b) +
+                 (a / b) * (f - std::pow(e / b, 2.0)) + 2.0 * g};
     // vector constants
     Eigen::VectorXd beta = r3;
     beta.noalias() += (b / a) * r1;
     Eigen::VectorXd gamma = r1;
     gamma.noalias() += (a / b) * r3;
     // output values
-    m_A.block<1, 3>(11, 0).noalias() = beta;
-    m_A.block<1, 3>(11, 3).noalias() = -beta - gamma;
-    m_A.block<1, 3>(11, 6).noalias() = gamma;
+    m_A.row(11).segment<3>(0).noalias() = beta.transpose();
+    m_A.row(11).segment<3>(3).noalias() = -beta.transpose() - gamma.transpose();
+    m_A.row(11).segment<3>(6).noalias() = gamma.transpose();
 
     /* ANCHOR: Calculate b, function of time */
     // articulation acceleration magnitudes
@@ -308,10 +308,10 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
                     sin(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
 
     // output results
-    m_b.setZero(num_constraints, 1);
+    m_b.setZero(num_constraints);
     m_b(0)  = a1_mag; // (1)
     m_b(1)  = a3_mag; // (2)
-    m_b(11) = -alpha; // (12) FIXME
+    m_b(11) = -alpha; // (12)
 }
 
 void
