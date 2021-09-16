@@ -218,7 +218,16 @@ rungeKutta4::initializeSpecificVars()
 void
 rungeKutta4::initializeConstraintLinearSystem()
 {
-    updateConstraintLinearSystem(0.0);
+    // tensor dimensions
+    int    num_constraints{12};
+    int    num_DoF{3 * 6};
+    double t_initial{0.0};
+
+    // Initialize matrices
+    m_A = Eigen::MatrixXd::Zero(num_constraints, num_DoF);
+    m_b = Eigen::VectorXd::Zero(num_constraints);
+
+    updateConstraintLinearSystem(t_initial);
 }
 
 /* REVIEW[epic=Change,order=2]: Change constraint linear system (A, b) for each system */
