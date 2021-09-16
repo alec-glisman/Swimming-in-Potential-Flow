@@ -12,17 +12,17 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '8.00'
+          cpus: '${MAX_CPUS}'
           memory: 2048M
         reservations:
-          cpus: '${MAX_CPUS}'
+          cpus: '1.00'
           memory: 50M
     volumes:
       - type: bind
-        source: "${PROJ_PATH}/docker/completed"
+        source: "./docker/completed"
         target: "/bodies-in-potential-flow/data"
       - type: bind
-        source: "${PROJ_PATH}/docker/in_progress"
+        source: "./docker/in_progress"
         target: "/bodies-in-potential-flow/temp"
 
 volumes:
