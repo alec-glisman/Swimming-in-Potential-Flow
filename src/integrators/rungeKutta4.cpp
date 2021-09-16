@@ -218,14 +218,11 @@ rungeKutta4::initializeSpecificVars()
 void
 rungeKutta4::initializeConstraintLinearSystem()
 {
-    // tensor dimensions
-    int    num_constraints{12};
-    int    num_DoF{3 * 6};
     double t_initial{0.0};
 
     // Initialize matrices
-    m_A = Eigen::MatrixXd::Zero(num_constraints, num_DoF);
-    m_b = Eigen::VectorXd::Zero(num_constraints);
+    m_A = Eigen::MatrixXd::Zero(m_systemParam.num_constraints, m_systemParam.num_DoF);
+    m_b = Eigen::VectorXd::Zero(m_systemParam.num_constraints);
 
     updateConstraintLinearSystem(t_initial);
 }
@@ -234,10 +231,6 @@ rungeKutta4::initializeConstraintLinearSystem()
 void
 rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
 {
-    // tensor dimensions
-    int num_constraints{12};
-    int num_DoF{3 * 6};
-
     /* ANCHOR: Calculate quantities for linear system */
     // orientation vector, q = R_1 - R_3
     Eigen::Vector3d q = m_system->positions().segment<3>(3 * 0);
@@ -245,7 +238,7 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     q.normalize();
 
     /* ANCHOR: Calculate A, function of time (Indexing: (constraint #, particle DoF #)) */
-    m_A.setZero(num_constraints, num_DoF);
+    m_A.setZero(m_systemParam.num_constraints, m_systemParam.num_DoF);
 
     // (1): q^T * U_1 - q^T * U_2 = || V_1 ||
     m_A.block<1, 3>(0, 0).noalias() = q;
@@ -308,7 +301,7 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
                     sin(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
 
     // output results
-    m_b.setZero(num_constraints);
+    m_b.setZero(m_systemParam.num_constraints);
     m_b(0)  = a1_mag; // (1)
     m_b(1)  = a3_mag; // (2)
     m_b(11) = -alpha; // (12)

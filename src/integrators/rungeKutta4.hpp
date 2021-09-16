@@ -102,6 +102,9 @@ class rungeKutta4
         double omega{-1.0};
         double phaseShift{-1.0};
         double RAvg{-1.0};
+        // Udwadia linear system dimensions
+        int num_constraints{12};
+        int num_DoF{18};
         // Swimmer locater point kinematics
         Eigen::VectorXd U_swim;
         Eigen::VectorXd A_swim;
