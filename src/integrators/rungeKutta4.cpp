@@ -314,8 +314,8 @@ void
 rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
 {
     /* REVIEW[epic=Change,seq=1]: Change integration schemes for different systems */
-    bool useUdwadiaMethod{false};
-    bool useImageMethod{true};
+    bool useUdwadiaMethod{true};
+    bool useImageMethod{false};
 
     if (useUdwadiaMethod)
     {
