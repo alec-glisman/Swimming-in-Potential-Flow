@@ -199,7 +199,9 @@ rungeKutta4::initializeSpecificVars()
     /* ANCHOR: Other member variables */
     int numRealPart{m_system->numParticles() / 2};
     int halfMat{3 * numRealPart};
-    m_systemParam.sigma = Eigen::MatrixXd::Zero(3 * m_system->numParticles(), 3 * numRealPart);
+    int fullMat{3 * m_system->numParticles()};
+
+    m_systemParam.sigma = Eigen::MatrixXd::Zero(fullMat, halfMat);
 
     for (int i = 0; i < numRealPart; i++)
     {
