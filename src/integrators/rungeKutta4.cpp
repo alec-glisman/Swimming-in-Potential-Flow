@@ -178,6 +178,24 @@ rungeKutta4::initializeSpecificVars()
     spdlog::get(m_logName)->info("RAvg : {0}", RAvg);
     assert(m_systemParam.RAvg == RAvg && "Ravg not properly set");
 
+    /* ANCHOR: Other member variables */
+    int numRealPart{m_system->numParticles() / 2};
+    int halfMat{3 * numRealPart};
+    int fullMat{3 * m_system->numParticles()};
+
+    spdlog::get(m_logName)->info("Setting sigma");
+    m_systemParam.sigma = Eigen::MatrixXd::Zero(fullMat, halfMat);
+
+    for (int i = 0; i < numRealPart; i++)
+    {
+        int i3{3 * i};
+
+        m_systemParam.sigma.block<3, 3>(i3, i3).noalias()           = m_I;
+        m_systemParam.sigma.block<3, 3>(i3 + halfMat, i3).noalias() = m_I_tilde;
+    }
+
+    m_systemParam.sigma_T = m_systemParam.sigma.transpose();
+
     /* ANCHOR: set initial conditions */
     spdlog::get(m_logName)->info("Setting initial conditions");
 
@@ -195,23 +213,6 @@ rungeKutta4::initializeSpecificVars()
     spdlog::get(m_logName)->critical(
         "Frame 1 should be treated as correct starting frame for analysis");
     gsdParser->writeFrame();
-
-    /* ANCHOR: Other member variables */
-    int numRealPart{m_system->numParticles() / 2};
-    int halfMat{3 * numRealPart};
-    int fullMat{3 * m_system->numParticles()};
-
-    m_systemParam.sigma = Eigen::MatrixXd::Zero(fullMat, halfMat);
-
-    for (int i = 0; i < numRealPart; i++)
-    {
-        int i3{3 * i};
-
-        m_systemParam.sigma.block<3, 3>(i3, i3).noalias()           = m_I;
-        m_systemParam.sigma.block<3, 3>(i3 + halfMat, i3).noalias() = m_I_tilde;
-    }
-
-    m_systemParam.sigma_T = m_systemParam.sigma.transpose();
 }
 
 /* REVIEW[epic=Change,order=1]: Change initializeConstraintLinearSystem() for different systems */
