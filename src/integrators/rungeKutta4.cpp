@@ -299,9 +299,9 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     double f3{-std::pow(a3, 3.0) * r3_dot.dot(r3_dot) + 3.0 * std::pow(c3, 2.0) / a3};
 
     double beta = 2.0 * b1 * b3 * r1_dot.dot(r3_dot);
-    beta += (f1 * a3 + a1 * f3 + c1 * c3) * r1.dot(r3);
     beta += (e1 * a3 + 2.0 * b1 * c3) * r1_dot.dot(r3);
     beta += (a1 * e3 + 2.0 * c1 * b3) * r1.dot(r3_dot);
+    beta += (f1 * a3 + a1 * f3 + c1 * c3) * r1.dot(r3);
 
     // vector constants
     Eigen::Vector3d alpha1 = (d1 * a3) * r3;
