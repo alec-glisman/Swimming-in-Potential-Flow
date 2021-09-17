@@ -287,10 +287,10 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     double c3{-std::pow(a3, 3.0) * r3.dot(r3_dot)};
 
     Eigen::Matrix3d d1 = r1 * r1.transpose();
-    d1 *= std::pow(a1, 3.0);
+    d1 *= -std::pow(a1, 3.0);
     d1.noalias() += a1 * m_I;
     Eigen::Matrix3d d3 = r3 * r3.transpose();
-    d3 *= std::pow(a3, 3.0);
+    d3 *= -std::pow(a3, 3.0);
     d3.noalias() += a3 * m_I;
 
     double e1{2.0 * c1};
@@ -310,7 +310,8 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
 
     // output values
     m_A.row(11).segment<3>(0).noalias() = alpha1.transpose();
-    m_A.row(11).segment<3>(3).noalias() = -alpha1.transpose() - alpha3.transpose();
+    m_A.row(11).segment<3>(3).noalias() = -alpha1.transpose();
+    m_A.row(11).segment<3>(3).noalias() -= alpha3.transpose();
     m_A.row(11).segment<3>(6).noalias() = alpha3.transpose();
 
     /* ANCHOR: Calculate b, function of time */
