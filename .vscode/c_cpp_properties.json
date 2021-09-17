@@ -16,7 +16,7 @@
             "defines": [],
             "compilerPath": "/usr/local/bin/gcc-11",
             "compilerArgs": [],
-            "cStandard": "c11",
+            "cStandard": "c17",
             "cppStandard": "c++17",
             "intelliSenseMode": "gcc-x64",
             "configurationProvider": "vector-of-bool.cmake-tools",
@@ -32,14 +32,15 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/home/aglisman/.linuxbrew/include/**"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/gcc",
+            "compilerPath": "/usr/bin/gcc-11",
             "compilerArgs": [],
-            "cStandard": "c11",
+            "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "gcc-x64",
+            "intelliSenseMode": "linux-gcc-x64",
             "configurationProvider": "vector-of-bool.cmake-tools",
             "browse": {
                 "path": [
