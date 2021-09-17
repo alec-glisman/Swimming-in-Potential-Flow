@@ -261,37 +261,57 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     m_A.block<3, 3>(8, 15).noalias() = -m_I_tilde;
 
     // (12): Collinear body constraint FIXME
+
     // relative positions
     Eigen::Vector3d rLoc = m_system->positions().segment<3>(3);
     Eigen::Vector3d r1   = m_system->positions().segment<3>(0);
     r1.noalias() -= rLoc;
     Eigen::Vector3d r3 = m_system->positions().segment<3>(6);
     r3.noalias() -= rLoc;
+
     // relative velocities
     Eigen::Vector3d rLoc_dot = m_system->velocities().segment<3>(3);
     Eigen::Vector3d r1_dot   = m_system->velocities().segment<3>(0);
     r1_dot.noalias() -= rLoc_dot;
     Eigen::Vector3d r3_dot = m_system->velocities().segment<3>(6);
     r3_dot.noalias() -= rLoc_dot;
+
     // scalar constants
-    double a{r1.norm()};
-    double b{r3.norm()};
-    double c{r1_dot.dot(r1_dot)};
-    double f{r3_dot.dot(r3_dot)};
-    double d{r1_dot.dot(r1)};
-    double e{r3_dot.dot(r3)};
-    double g{r1_dot.dot(r3_dot)};
-    double alpha{(b / a) * (c - std::pow(d / a, 2.0)) + 2.0 * (d * e) / (a * b) +
-                 (a / b) * (f - std::pow(e / b, 2.0)) + 2.0 * g};
+    double a1{1.0 / r1.norm()};
+    double a3{1.0 / r3.norm()};
+
+    double b1{a1};
+    double b3{a3};
+
+    double c1{-std::pow(a1, 3.0) * r1.dot(r1_dot)};
+    double c3{-std::pow(a3, 3.0) * r3.dot(r3_dot)};
+
+    Eigen::Matrix3d d1 = r1 * r1.transpose();
+    d1 *= std::pow(a1, 3.0);
+    d1.noalias() += a1 * m_I;
+    Eigen::Matrix3d d3 = r3 * r3.transpose();
+    d3 *= std::pow(a3, 3.0);
+    d3.noalias() += a3 * m_I;
+
+    double e1{2.0 * c1};
+    double e3{2.0 * c3};
+
+    double f1{-std::pow(a1, 3.0) * r1_dot.dot(r1_dot) + 3.0 * std::pow(c1, 2.0) / a1};
+    double f3{-std::pow(a3, 3.0) * r3_dot.dot(r3_dot) + 3.0 * std::pow(c3, 2.0) / a3};
+
+    double beta = 2.0 * b1 * b3 * r1_dot.dot(r3_dot);
+    beta += (f1 * a3 + a1 * f3 + c1 * c3) * r1.dot(r3);
+    beta += (e1 * a3 + 2.0 * b1 * c3) * r1_dot.dot(r3);
+    beta += (a1 * e3 + 2.0 * c1 * b3) * r1.dot(r3_dot);
+
     // vector constants
-    Eigen::VectorXd beta = r3;
-    beta.noalias() += (b / a) * r1;
-    Eigen::VectorXd gamma = r1;
-    gamma.noalias() += (a / b) * r3;
+    Eigen::Vector3d alpha1 = (d1 * a3) * r3;
+    Eigen::Vector3d alpha3 = (a1 * d3) * r1;
+
     // output values
-    m_A.row(11).segment<3>(0).noalias() = beta.transpose();
-    m_A.row(11).segment<3>(3).noalias() = -beta.transpose() - gamma.transpose();
-    m_A.row(11).segment<3>(6).noalias() = gamma.transpose();
+    m_A.row(11).segment<3>(0).noalias() = alpha1.transpose();
+    m_A.row(11).segment<3>(3).noalias() = -alpha1.transpose() - alpha3.transpose();
+    m_A.row(11).segment<3>(6).noalias() = alpha3.transpose();
 
     /* ANCHOR: Calculate b, function of time */
     // articulation acceleration magnitudes
@@ -304,7 +324,7 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     m_b.setZero(m_systemParam.num_constraints);
     m_b(0)  = a1_mag; // (1)
     m_b(1)  = a3_mag; // (2)
-    m_b(11) = -alpha; // (12)
+    m_b(11) = -beta;  // (12)
 }
 
 void
