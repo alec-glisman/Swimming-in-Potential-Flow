@@ -334,11 +334,11 @@ rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
     bool useUdwadiaMethod{true};
     bool useImageMethod{false};
 
-    if (useUdwadiaMethod)
+    if (useUdwadiaMethod && dimensional_time > 0.0)
     {
         udwadiaKalaba(acc, dimensional_time);
     }
-    else if (useImageMethod && !useUdwadiaMethod)
+    else if ((useImageMethod && !useUdwadiaMethod) || (useImageMethod && dimensional_time == 0.0))
     {
         momentumLinAngFreeImageSystem(acc, dimensional_time);
     }
