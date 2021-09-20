@@ -47,7 +47,8 @@
                     "${workspaceFolder}/**"
                 ],
                 "limitSymbolsToIncludedHeaders": true
-            }
+            },
+            "compileCommands": "${workspaceFolder}/build_debug/compile_commands.json"
         }
     ],
     "version": 4
