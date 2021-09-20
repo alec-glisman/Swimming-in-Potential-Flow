@@ -125,6 +125,13 @@ rungeKutta4::integrate()
     Eigen::VectorXd a_out = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a_out, time + m_dt);
     m_system->setAccelerations(a_out);
+
+    // // FIXME: debugging
+    // std::setprecision(10);
+    // Eigen::IOFormat CleanFmt(Eigen::FullPrecision, 0, ", ", ";\n", "", "", "[", "]");
+    // std::string     sep = "\n----------------------------------------\n";
+    // std::cout << "a_out at t = " << time + m_dt << std::endl;
+    // std::cout << a_out.format(CleanFmt) << sep << std::endl;
 }
 
 /* REVIEW[epic=Change,order=1]: Change initializeSpecificVars() for different systems */
@@ -276,23 +283,26 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     v3.noalias() -= vLoc;
 
     // Constants
-    const double b1 = 1.0 / r1.norm();
-    const double b3 = 1.0 / r3.norm();
+    const double r1norm = r1.norm();
+    const double r3norm = r3.norm();
 
-    const double b1_sqr = b1 * b1;
-    const double b1_cub = b1 * b1_sqr;
-    const double b3_sqr = b3 * b3;
-    const double b3_cub = b3 * b3_sqr;
+    const double b1 = 1.0 / r1norm;
+    const double b3 = 1.0 / r3norm;
+
+    const double b1_sqr = 1.0 / std::pow(r1norm, 2.0);
+    const double b1_cub = 1.0 / std::pow(r1norm, 3.0);
+    const double b3_sqr = 1.0 / std::pow(r3norm, 2.0);
+    const double b3_cub = 1.0 / std::pow(r3norm, 3.0);
 
     const double c1 = -b1_cub * r1.dot(v1);
     const double c3 = -b3_cub * r3.dot(v3);
 
-    Eigen::Matrix3d d1 = -b1_cub * r1 * r1.transpose() + b1 * m_I;
-    Eigen::Matrix3d d3 = -b3_cub * r3 * r3.transpose() + b3 * m_I;
+    const Eigen::Matrix3d d1 = -b1_cub * r1 * r1.transpose() + b1 * m_I;
+    const Eigen::Matrix3d d3 = -b3_cub * r3 * r3.transpose() + b3 * m_I;
 
-    Eigen::Vector3d e1 =
+    const Eigen::Vector3d e1 =
         2.0 * c1 * v1 - (3.0 * b1_sqr * c1 * r1.dot(v1) + b1_cub * v1.dot(v1)) * r1;
-    Eigen::Vector3d e3 =
+    const Eigen::Vector3d e3 =
         2.0 * c3 * v3 - (3.0 * b3_sqr * c3 * r3.dot(v3) + b3_cub * v3.dot(v3)) * r3;
 
     // kinematic vectors used in constraint
