@@ -1,15 +1,17 @@
 name: bodies-in-potential-flow
 channels:
   - defaults
+  - conda-forge
+  - intel
 dependencies:
-  - numpy
-  - matplotlib
-  - colorcet
-  - scipy
-  - pandas
-  - gsd
   - pylint
   - autopep8
   - pathlib
   - ipykernel
+  - matplotlib
+  - colorcet
+  - gsd
+  - scipy
+  - numpy
+  - pandas
 prefix: /home/aglisman/anaconda3/envs/bodies-in-potential-flow
