@@ -309,7 +309,7 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
 
     // output values
     m_A.block<1, 3>(11, 0).noalias() = alpha1;
-    m_A.block<1, 3>(11, 0).noalias() = -alpha1;
+    m_A.block<1, 3>(11, 3).noalias() = -alpha1;
     m_A.block<1, 3>(11, 3).noalias() -= alpha3;
     m_A.block<1, 3>(11, 6).noalias() = alpha3;
 
