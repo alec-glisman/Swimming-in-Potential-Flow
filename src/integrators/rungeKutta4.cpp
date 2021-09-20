@@ -262,50 +262,51 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     // (12): Collinear body constraint FIXME
 
     // relative positions
-    Eigen::Vector3d rLoc = m_system->positions().segment<3>(3);
-    Eigen::Vector3d r1   = m_system->positions().segment<3>(0);
+    Eigen::Vector3d rLoc = m_system->positions().segment<3>(3 * 1);
+    Eigen::Vector3d r1   = m_system->positions().segment<3>(3 * 0);
     r1.noalias() -= rLoc;
-    Eigen::Vector3d r3 = m_system->positions().segment<3>(6);
+    Eigen::Vector3d r3 = m_system->positions().segment<3>(3 * 2);
     r3.noalias() -= rLoc;
 
     // relative velocities
-    Eigen::Vector3d rLoc_dot = m_system->velocities().segment<3>(3);
-    Eigen::Vector3d r1_dot   = m_system->velocities().segment<3>(0);
-    r1_dot.noalias() -= rLoc_dot;
-    Eigen::Vector3d r3_dot = m_system->velocities().segment<3>(6);
-    r3_dot.noalias() -= rLoc_dot;
+    Eigen::Vector3d vLoc = m_system->velocities().segment<3>(3 * 1);
+    Eigen::Vector3d v1   = m_system->velocities().segment<3>(3 * 0);
+    v1.noalias() -= vLoc;
+    Eigen::Vector3d v3 = m_system->velocities().segment<3>(3 * 2);
+    v3.noalias() -= vLoc;
 
-    // scalar constants
-    double a1{1.0 / r1.norm()};
-    double a3{1.0 / r3.norm()};
+    // Constants
+    const double b1 = 1.0 / r1.norm();
+    const double b3 = 1.0 / r3.norm();
 
-    double b1{a1};
-    double b3{a3};
+    const double b1_sqr = b1 * b1;
+    const double b1_cub = b1 * b1_sqr;
+    const double b3_sqr = b3 * b3;
+    const double b3_cub = b3 * b3_sqr;
 
-    double c1{-std::pow(a1, 3.0) * r1.dot(r1_dot)};
-    double c3{-std::pow(a3, 3.0) * r3.dot(r3_dot)};
+    const double c1 = -b1_cub * r1.dot(v1);
+    const double c3 = -b3_cub * r3.dot(v3);
 
-    Eigen::Matrix3d d1 = r1 * r1.transpose();
-    d1 *= -std::pow(a1, 3.0);
-    d1.noalias() += a1 * m_I;
-    Eigen::Matrix3d d3 = r3 * r3.transpose();
-    d3 *= -std::pow(a3, 3.0);
-    d3.noalias() += a3 * m_I;
+    Eigen::Matrix3d d1 = -b1_cub * r1 * r1.transpose() + b1 * m_I;
+    Eigen::Matrix3d d3 = -b3_cub * r3 * r3.transpose() + b3 * m_I;
 
-    double e1{2.0 * c1};
-    double e3{2.0 * c3};
+    Eigen::Vector3d e1 =
+        2.0 * c1 * v1 - (3.0 * b1_sqr * c1 * r1.dot(v1) + b1_cub * v1.dot(v1)) * r1;
+    Eigen::Vector3d e3 =
+        2.0 * c3 * v3 - (3.0 * b3_sqr * c3 * r3.dot(v3) + b3_cub * v3.dot(v3)) * r3;
 
-    double f1{-std::pow(a1, 3.0) * r1_dot.dot(r1_dot) + 3.0 * std::pow(c1, 2.0) / a1};
-    double f3{-std::pow(a3, 3.0) * r3_dot.dot(r3_dot) + 3.0 * std::pow(c3, 2.0) / a3};
+    // kinematic vectors used in constraint
+    const Eigen::Vector3d r1_hat = b1 * r1;
+    const Eigen::Vector3d r3_hat = b3 * r3;
 
-    double beta = 2.0 * b1 * b3 * r1_dot.dot(r3_dot);
-    beta += (e1 * a3 + 2.0 * b1 * c3) * r1_dot.dot(r3);
-    beta += (a1 * e3 + 2.0 * c1 * b3) * r1.dot(r3_dot);
-    beta += (f1 * a3 + a1 * f3 + 2.0 * c1 * c3) * r1.dot(r3);
+    const Eigen::Vector3d v1_hat = c1 * r1 + b1 * v1;
+    const Eigen::Vector3d v3_hat = c3 * r3 + b3 * v3;
 
-    // vector constants
-    Eigen::Vector3d alpha1 = (d1 * a3) * r3;
-    Eigen::Vector3d alpha3 = (a1 * d3) * r1;
+    // output quantities
+    const double beta = r3_hat.dot(e1) + 2.0 * v1_hat.dot(v3_hat) + r1_hat.dot(e3);
+
+    const Eigen::Vector3d alpha1 = r3_hat.transpose() * d1;
+    const Eigen::Vector3d alpha3 = r1_hat.transpose() * d3;
 
     // output values
     m_A.block<1, 3>(11, 0).noalias() = alpha1;
