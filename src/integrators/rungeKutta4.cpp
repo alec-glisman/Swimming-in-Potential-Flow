@@ -268,74 +268,35 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
 
     // (12): Collinear body constraint FIXME
 
-    // relative positions
-    Eigen::Vector3d rLoc = m_system->positions().segment<3>(3 * 1);
-    Eigen::Vector3d r1   = m_system->positions().segment<3>(3 * 0);
-    r1.noalias() -= rLoc;
-    Eigen::Vector3d r3 = m_system->positions().segment<3>(3 * 2);
-    r3.noalias() -= rLoc;
+    // relative coordinates
+    Eigen::Vector3d d = m_system->positions().segment<3>(3 * 0);
+    d.noalias() -= m_system->positions().segment<3>(3 * 2);
 
-    // relative velocities
-    Eigen::Vector3d vLoc = m_system->velocities().segment<3>(3 * 1);
-    Eigen::Vector3d v1   = m_system->velocities().segment<3>(3 * 0);
-    v1.noalias() -= vLoc;
-    Eigen::Vector3d v3 = m_system->velocities().segment<3>(3 * 2);
-    v3.noalias() -= vLoc;
-
-    // Constants
-    const double r1norm = r1.norm();
-    const double r3norm = r3.norm();
-
-    const double b1 = 1.0 / r1norm;
-    const double b3 = 1.0 / r3norm;
-
-    const double b1_sqr = 1.0 / std::pow(r1norm, 2.0);
-    const double b1_cub = 1.0 / std::pow(r1norm, 3.0);
-    const double b3_sqr = 1.0 / std::pow(r3norm, 2.0);
-    const double b3_cub = 1.0 / std::pow(r3norm, 3.0);
-
-    const double c1 = -b1_cub * r1.dot(v1);
-    const double c3 = -b3_cub * r3.dot(v3);
-
-    const Eigen::Matrix3d d1 = -b1_cub * r1 * r1.transpose() + b1 * m_I;
-    const Eigen::Matrix3d d3 = -b3_cub * r3 * r3.transpose() + b3 * m_I;
-
-    const Eigen::Vector3d e1 =
-        2.0 * c1 * v1 - (3.0 * b1_sqr * c1 * r1.dot(v1) + b1_cub * v1.dot(v1)) * r1;
-    const Eigen::Vector3d e3 =
-        2.0 * c3 * v3 - (3.0 * b3_sqr * c3 * r3.dot(v3) + b3_cub * v3.dot(v3)) * r3;
-
-    // kinematic vectors used in constraint
-    const Eigen::Vector3d r1_hat = b1 * r1;
-    const Eigen::Vector3d r3_hat = b3 * r3;
-
-    const Eigen::Vector3d v1_hat = c1 * r1 + b1 * v1;
-    const Eigen::Vector3d v3_hat = c3 * r3 + b3 * v3;
+    Eigen::Vector3d d_dot = m_system->velocities().segment<3>(3 * 0);
+    d_dot.noalias() -= m_system->velocities().segment<3>(3 * 2);
 
     // output quantities
-    const double beta = r3_hat.dot(e1) + 2.0 * v1_hat.dot(v3_hat) + r1_hat.dot(e3);
-
-    const Eigen::Vector3d alpha1 = r3_hat.transpose() * d1;
-    const Eigen::Vector3d alpha3 = r1_hat.transpose() * d3;
+    const double beta =
+        4.0 * std::pow(m_systemParam.U0, 2.0) * std::pow(cos(0.5 * m_systemParam.phaseShift), 2.0) *
+            cos(2.0 * m_systemParam.omega * dimensional_time + m_systemParam.phaseShift) -
+        d_dot.dot(d_dot);
 
     // output values
-    // m_A.block<1, 3>(11, 0).noalias() = alpha1;
-    // m_A.block<1, 3>(11, 3).noalias() = -alpha1;
-    // m_A.block<1, 3>(11, 3).noalias() -= alpha3;
-    // m_A.block<1, 3>(11, 6).noalias() = alpha3;
+    m_A.block<1, 3>(11, 3 * 0).noalias() = d;
+    m_A.block<1, 3>(11, 3 * 2).noalias() = d;
 
     /* ANCHOR: Calculate b, function of time */
     // articulation acceleration magnitudes
-    double a1_mag =
+    const double a1_mag =
         -m_systemParam.U0 * m_systemParam.omega * sin(m_systemParam.omega * dimensional_time);
-    double a3_mag = -m_systemParam.U0 * m_systemParam.omega *
-                    sin(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
+    const double a3_mag = -m_systemParam.U0 * m_systemParam.omega *
+                          sin(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
 
     // output results
     m_b.setZero(m_systemParam.num_constraints);
-    m_b(0) = a1_mag; // (1)
-    m_b(1) = a3_mag; // (2)
-    // m_b(11) = -beta;  // (12)
+    m_b(0)  = a1_mag; // (1)
+    m_b(1)  = a3_mag; // (2)
+    m_b(11) = beta;   // (12)
 }
 
 void
