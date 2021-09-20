@@ -319,10 +319,10 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     const Eigen::Vector3d alpha3 = r1_hat.transpose() * d3;
 
     // output values
-    m_A.block<1, 3>(11, 0).noalias() = alpha1;
-    m_A.block<1, 3>(11, 3).noalias() = -alpha1;
-    m_A.block<1, 3>(11, 3).noalias() -= alpha3;
-    m_A.block<1, 3>(11, 6).noalias() = alpha3;
+    // m_A.block<1, 3>(11, 0).noalias() = alpha1;
+    // m_A.block<1, 3>(11, 3).noalias() = -alpha1;
+    // m_A.block<1, 3>(11, 3).noalias() -= alpha3;
+    // m_A.block<1, 3>(11, 6).noalias() = alpha3;
 
     /* ANCHOR: Calculate b, function of time */
     // articulation acceleration magnitudes
@@ -333,9 +333,9 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
 
     // output results
     m_b.setZero(m_systemParam.num_constraints);
-    m_b(0)  = a1_mag; // (1)
-    m_b(1)  = a3_mag; // (2)
-    m_b(11) = -beta;  // (12)
+    m_b(0) = a1_mag; // (1)
+    m_b(1) = a3_mag; // (2)
+    // m_b(11) = -beta;  // (12)
 }
 
 void
