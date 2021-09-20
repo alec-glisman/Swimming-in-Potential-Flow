@@ -277,7 +277,8 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
 
     // output quantities
     const double beta =
-        4.0 * std::pow(m_systemParam.U0, 2.0) * std::pow(cos(0.5 * m_systemParam.phaseShift), 2.0) *
+        -4.0 * std::pow(m_systemParam.U0, 2.0) *
+            std::pow(sin(0.5 * m_systemParam.phaseShift), 2.0) *
             cos(2.0 * m_systemParam.omega * dimensional_time + m_systemParam.phaseShift) -
         d_dot.dot(d_dot);
 
