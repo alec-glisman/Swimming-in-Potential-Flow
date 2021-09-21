@@ -246,23 +246,23 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     /* ANCHOR: Calculate A, function of time (Indexing: (constraint #, particle DoF #)) */
     m_A.setZero(m_systemParam.num_constraints, m_systemParam.num_DoF);
 
-    // (1): q^T * U_1 - q^T * U_2 = || V_1 ||
+    // (1): q^T * A_1 - q^T * A_2 = || A_artic_1 ||
     m_A.block<1, 3>(0, 0).noalias() = q;
     m_A.block<1, 3>(0, 3).noalias() = -q;
 
-    // (2): q^T * U_3 - q^T * U_2 = || V_3 ||
+    // (2): q^T * A_3 - q^T * A_2 = || A_artic_3 ||
     m_A.block<1, 3>(1, 6).noalias() = q;
     m_A.block<1, 3>(1, 3).noalias() = -q;
 
-    // (3-5): U_1 - I_tilde * U_4 = 0
+    // (3-5):  A_1 - I_tilde * A_4 = [0, 0, 0]^T
     m_A.block<3, 3>(2, 0).noalias() = m_I;
     m_A.block<3, 3>(2, 9).noalias() = -m_I_tilde;
 
-    //  (6-8): U_2 - I_tilde * U_5 = 0
+    //  (6-8): A_2 - I_tilde * A_5 = [0, 0, 0]^T
     m_A.block<3, 3>(5, 3).noalias()  = m_I;
     m_A.block<3, 3>(5, 12).noalias() = -m_I_tilde;
 
-    //  (9-11): U_3 - I_tilde * U_6 = 0
+    //  (9-11): A_3 - I_tilde * A_6 = [0, 0, 0]^T
     m_A.block<3, 3>(8, 6).noalias()  = m_I;
     m_A.block<3, 3>(8, 15).noalias() = -m_I_tilde;
 
