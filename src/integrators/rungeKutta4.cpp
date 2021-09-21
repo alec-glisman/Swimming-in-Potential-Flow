@@ -284,7 +284,7 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
 
     // output values
     m_A.block<1, 3>(11, 3 * 0).noalias() = d;
-    m_A.block<1, 3>(11, 3 * 2).noalias() = d;
+    m_A.block<1, 3>(11, 3 * 2).noalias() = -d;
 
     /* ANCHOR: Calculate b, function of time */
     // articulation acceleration magnitudes
