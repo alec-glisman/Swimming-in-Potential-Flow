@@ -316,6 +316,7 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
 
     /* ANCHOR: Calculate b, function of time */
     m_b.setZero(m_systemParam.num_constraints);
+
     m_b(0)  = A_artic_1_mag + U1_n_U2.dot(q_cross_Omega_c); // (1)
     m_b(1)  = A_artic_3_mag + U3_n_U2.dot(q_cross_Omega_c); // (2)
     m_b(11) = beta;                                         // (12)
