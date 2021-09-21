@@ -287,11 +287,11 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     /* ANCHOR: Calculate A, function of time (Indexing: (constraint #, particle DoF #)) */
     m_A.setZero(m_systemParam.num_constraints, m_systemParam.num_DoF);
 
-    // (1): q^T * A_1 - q^T * A_2 = || A_artic_1 || + q^T (Omega_C x (U_1 - U2))
+    // (1): q^T * A_1 - q^T * A_2 = || A_artic_1 || + q^T * (Omega_C x (U_1 - U2))
     m_A.block<1, 3>(0, 0).noalias() = q;
     m_A.block<1, 3>(0, 3).noalias() = -q;
 
-    // (2): q^T * A_3 - q^T * A_2 = || A_artic_3 || + q^T (Omega_C x (U_3 - U2))
+    // (2): q^T * A_3 - q^T * A_2 = || A_artic_3 || + q^T * (Omega_C x (U_3 - U2))
     m_A.block<1, 3>(1, 6).noalias() = q;
     m_A.block<1, 3>(1, 3).noalias() = -q;
 
@@ -307,7 +307,7 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     m_A.block<3, 3>(8, 6).noalias()  = m_I;
     m_A.block<3, 3>(8, 15).noalias() = -m_I_tilde;
 
-    // (12): Collinear body constraint FIXME
+    // (12): Collinear body constraint
     m_A.block<1, 3>(11, 0).noalias() = d;
     m_A.block<1, 3>(11, 6).noalias() = -d;
 
