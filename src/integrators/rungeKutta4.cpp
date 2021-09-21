@@ -266,28 +266,38 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     m_A.block<3, 3>(8, 6).noalias()  = m_I;
     m_A.block<3, 3>(8, 15).noalias() = -m_I_tilde;
 
-    // (12): Collinear body constraint FIXME
+    // (12): Collinear body constraint
 
-    // relative coordinates
-    Eigen::Vector3d d = m_system->positions().segment<3>(3 * 0);
-    d.noalias() -= m_system->positions().segment<3>(3 * 2);
+    // relative positions
+    Eigen::Vector3d rLoc = m_system->positions().segment<3>(3);
+    Eigen::Vector3d r1   = m_system->positions().segment<3>(0);
+    r1.noalias() -= rLoc;
+    Eigen::Vector3d r3 = m_system->positions().segment<3>(6);
+    r3.noalias() -= rLoc;
 
-    Eigen::Vector3d d_dot = m_system->velocities().segment<3>(3 * 0);
-    d_dot.noalias() -= m_system->velocities().segment<3>(3 * 2);
+    // relative velocities
+    Eigen::Vector3d rLoc_dot = m_system->velocities().segment<3>(3);
+    Eigen::Vector3d r1_dot   = m_system->velocities().segment<3>(0);
+    r1_dot.noalias() -= rLoc_dot;
+    Eigen::Vector3d r3_dot = m_system->velocities().segment<3>(6);
+    r3_dot.noalias() -= rLoc_dot;
 
-    // phase variables
-    const double gamma = m_systemParam.U0 * sin(0.5 * m_systemParam.phaseShift);
-    const double phi   = m_systemParam.omega * dimensional_time + 0.5 * m_systemParam.phaseShift;
+    // known constraint
+    const double c1 = m_systemParam.U0 * m_systemParam.RAvg * m_systemParam.omega;
+    const double c2 = 2.0 * std::pow(m_systemParam.U0, 2.0);
     const double f_ddot =
-        8.0 * gamma *
-        (m_systemParam.RAvg * m_systemParam.omega * cos(phi) - gamma * cos(2.0 * phi));
+        c1 * (sin(m_systemParam.omega * dimensional_time) -
+              sin(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift)) +
+        c2 * cos(2.0 * m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
 
-    // output quantities
-    const double beta = 0.5 * f_ddot - d_dot.dot(d_dot);
+    // output constants
+    const double beta = f_ddot - 2.0 * r1_dot.dot(r3_dot);
 
     // output values
-    m_A.block<1, 3>(11, 0).noalias() = d;
-    m_A.block<1, 3>(11, 6).noalias() = -d;
+    m_A.block<1, 3>(11, 0).noalias() = r3;
+    m_A.block<1, 3>(11, 3).noalias() = -r3;
+    m_A.block<1, 3>(11, 3).noalias() -= r1;
+    m_A.block<1, 3>(11, 6).noalias() = r1;
 
     /* ANCHOR: Calculate b, function of time */
     // articulation acceleration magnitudes
