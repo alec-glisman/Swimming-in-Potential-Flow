@@ -253,12 +253,6 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     const Eigen::Vector3d U3_n_U2 =
         m_system->velocities().segment<3>(3 * 2) - m_system->velocities().segment<3>(3 * 1);
 
-    const Eigen::Vector3d rLoc = m_system->positions().segment<3>(3);
-    Eigen::Vector3d       r1   = m_system->positions().segment<3>(0);
-    r1.noalias() -= rLoc;
-    Eigen::Vector3d r3 = m_system->positions().segment<3>(6);
-    r3.noalias() -= rLoc;
-
     // orientation vector, q = R_1 - R_3
     const Eigen::Vector3d q = d.stableNormalized();
 
@@ -283,14 +277,12 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     const Eigen::Vector3d q_cross_Omega_c = q.cross(Omega_C);
 
     // phase variables for collinear constraint
-    const double c1 = m_systemParam.U0 * m_systemParam.RAvg * m_systemParam.omega;
-    const double c2 = 2.0 * std::pow(m_systemParam.U0, 2.0);
+    const double gamma = m_systemParam.U0 * sin(0.5 * m_systemParam.phaseShift);
+    const double phi   = m_systemParam.omega * dimensional_time + 0.5 * m_systemParam.phaseShift;
     const double f_ddot =
-        c1 * (sin(m_systemParam.omega * dimensional_time) -
-              sin(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift)) +
-        c2 * cos(2.0 * m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
-    // output constants
-    const double beta = f_ddot - 2.0 * U1_n_U2.dot(U3_n_U2);
+        8.0 * gamma *
+        (m_systemParam.RAvg * m_systemParam.omega * cos(phi) - gamma * cos(2.0 * phi));
+    const double beta = 0.5 * f_ddot - d_dot.dot(d_dot);
 
     /* ANCHOR: Calculate A, function of time (Indexing: (constraint #, particle DoF #)) */
     m_A.setZero(m_systemParam.num_constraints, m_systemParam.num_DoF);
@@ -315,13 +307,12 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     m_A.block<3, 3>(8, 6).noalias()  = m_I;
     m_A.block<3, 3>(8, 15).noalias() = -m_I_tilde;
 
-    // (12): Collinear body constraint using properties of cosine in 3D
-    //           r_1^T r_3 = \cos( \pi ) || r_1 || || r_3 || = f(t),
-    //            where f(t) is kinematically enforced relative postion norms
-    m_A.block<1, 3>(11, 0).noalias() = r3;
-    m_A.block<1, 3>(11, 3).noalias() = -r3;
-    m_A.block<1, 3>(11, 3).noalias() -= r1;
-    m_A.block<1, 3>(11, 6).noalias() = r1;
+    // (12): Collinear body constraint
+    //     (r_1 - r_3)^T (r_1 - r_3)^T = f(t), where f(t) is kinematically enforced swimmer
+    //       body length
+    // Constraint enforced: d^T \ddot{d} = \ddot{f}(t), where d = r_1 - r_3
+    m_A.block<1, 3>(11, 0).noalias() = d;
+    m_A.block<1, 3>(11, 6).noalias() = -d;
 
     /* ANCHOR: Calculate b, function of time */
     m_b.setZero(m_systemParam.num_constraints);
