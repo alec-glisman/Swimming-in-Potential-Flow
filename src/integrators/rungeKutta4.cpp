@@ -275,10 +275,15 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     Eigen::Vector3d d_dot = m_system->velocities().segment<3>(3 * 0);
     d_dot.noalias() -= m_system->velocities().segment<3>(3 * 2);
 
+    // phase variables
+    const double gamma = 2.0 * m_systemParam.U0 * sin(0.5 * m_systemParam.phaseShift);
+    const double phi   = m_systemParam.omega * dimensional_time + 0.5 * m_systemParam.phaseShift;
+    const double f_ddot =
+        2.0 * gamma *
+        (m_systemParam.RAvg * m_systemParam.omega * cos(phi) - gamma * cos(2.0 * phi));
+
     // output quantities
-    double beta = -4.0 * std::pow(m_systemParam.U0 * sin(0.5 * m_systemParam.phaseShift), 2.0) *
-                  cos(2.0 * m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
-    beta -= d_dot.transpose() * d_dot;
+    const double beta = 0.5 * f_ddot - d_dot.dot(d_dot);
 
     // output values
     m_A.block<1, 3>(11, 0).noalias() = d;
