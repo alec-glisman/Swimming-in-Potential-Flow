@@ -276,15 +276,13 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     d_dot.noalias() -= m_system->velocities().segment<3>(3 * 2);
 
     // output quantities
-    const double beta =
-        -4.0 * std::pow(m_systemParam.U0, 2.0) *
-            std::pow(sin(0.5 * m_systemParam.phaseShift), 2.0) *
-            cos(2.0 * m_systemParam.omega * dimensional_time + m_systemParam.phaseShift) -
-        d_dot.dot(d_dot);
+    double beta = -4.0 * std::pow(m_systemParam.U0 * sin(0.5 * m_systemParam.phaseShift), 2.0) *
+                  cos(2.0 * m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
+    beta -= d_dot.transpose() * d_dot;
 
     // output values
-    m_A.block<1, 3>(11, 3 * 0).noalias() = d;
-    m_A.block<1, 3>(11, 3 * 2).noalias() = -d;
+    m_A.block<1, 3>(11, 0).noalias() = d;
+    m_A.block<1, 3>(11, 6).noalias() = -d;
 
     /* ANCHOR: Calculate b, function of time */
     // articulation acceleration magnitudes
