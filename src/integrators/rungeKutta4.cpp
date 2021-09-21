@@ -238,19 +238,60 @@ void
 rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
 {
     /* ANCHOR: Calculate quantities for linear system */
+
+    // articulation kinematics
+    articulationAcc(dimensional_time);
+    articulationVel(dimensional_time);
+
+    // relative coordinates
+    const Eigen::Vector3d d =
+        m_system->positions().segment<3>(3 * 0) - m_system->positions().segment<3>(3 * 2);
+    const Eigen::Vector3d d_dot =
+        m_system->velocities().segment<3>(3 * 0) - m_system->velocities().segment<3>(3 * 2);
+    const Eigen::Vector3d U1_n_U2 =
+        m_system->velocities().segment<3>(3 * 0) - m_system->velocities().segment<3>(3 * 1);
+    const Eigen::Vector3d U3_n_U2 =
+        m_system->velocities().segment<3>(3 * 2) - m_system->velocities().segment<3>(3 * 1);
+
     // orientation vector, q = R_1 - R_3
-    Eigen::Vector3d q = m_system->positions().segment<3>(3 * 0);
-    q.noalias() -= m_system->positions().segment<3>(3 * 2);
-    q.normalize();
+    const Eigen::Vector3d q = d.stableNormalized();
+
+    // articulation acceleration magnitudes
+    const double A_artic_1_mag = m_accArtic.segment<3>(3 * 0).dot(q);
+    const double A_artic_3_mag = m_accArtic.segment<3>(3 * 2).dot(q);
+
+    // angular velocity of body (use particle 1 as "test" particle)
+    // vector of linear system
+    Eigen::Vector3d b_omega = m_system->velocities().segment<3>(3 * 1);
+    b_omega.noalias() += m_accArtic.segment<3>(3 * 0);
+    b_omega.noalias() -= m_system->velocities().segment<3>(3 * 0);
+    // matrix of linear system
+    Eigen::Vector3d r_cross_vec = m_system->positions().segment<3>(3 * 0);
+    r_cross_vec.noalias() -= m_system->positions().segment<3>(3 * 1);
+    Eigen::Matrix3d r_cross_mat;
+    crossProdMat(r_cross_vec, r_cross_mat);
+    // solve linear system
+    const Eigen::Vector3d Omega_C = r_cross_mat.fullPivLu().solve(b_omega);
+
+    // rotation of body
+    const Eigen::Vector3d q_cross_Omega_c = q.cross(Omega_C);
+
+    // phase variables for collinear constraint
+    const double gamma = m_systemParam.U0 * sin(0.5 * m_systemParam.phaseShift);
+    const double phi   = m_systemParam.omega * dimensional_time + 0.5 * m_systemParam.phaseShift;
+    const double f_ddot =
+        8.0 * gamma *
+        (m_systemParam.RAvg * m_systemParam.omega * cos(phi) - gamma * cos(2.0 * phi));
+    const double beta = 0.5 * f_ddot - d_dot.dot(d_dot);
 
     /* ANCHOR: Calculate A, function of time (Indexing: (constraint #, particle DoF #)) */
     m_A.setZero(m_systemParam.num_constraints, m_systemParam.num_DoF);
 
-    // (1): q^T * A_1 - q^T * A_2 = || A_artic_1 ||
+    // (1): q^T * A_1 - q^T * A_2 = || A_artic_1 || + q^T (Omega_C x (U_1 - U2))
     m_A.block<1, 3>(0, 0).noalias() = q;
     m_A.block<1, 3>(0, 3).noalias() = -q;
 
-    // (2): q^T * A_3 - q^T * A_2 = || A_artic_3 ||
+    // (2): q^T * A_3 - q^T * A_2 = || A_artic_3 || + q^T (Omega_C x (U_3 - U2))
     m_A.block<1, 3>(1, 6).noalias() = q;
     m_A.block<1, 3>(1, 3).noalias() = -q;
 
@@ -267,40 +308,14 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     m_A.block<3, 3>(8, 15).noalias() = -m_I_tilde;
 
     // (12): Collinear body constraint FIXME
-
-    // relative coordinates
-    Eigen::Vector3d d = m_system->positions().segment<3>(3 * 0);
-    d.noalias() -= m_system->positions().segment<3>(3 * 2);
-
-    Eigen::Vector3d d_dot = m_system->velocities().segment<3>(3 * 0);
-    d_dot.noalias() -= m_system->velocities().segment<3>(3 * 2);
-
-    // phase variables
-    const double gamma = m_systemParam.U0 * sin(0.5 * m_systemParam.phaseShift);
-    const double phi   = m_systemParam.omega * dimensional_time + 0.5 * m_systemParam.phaseShift;
-    const double f_ddot =
-        8.0 * gamma *
-        (m_systemParam.RAvg * m_systemParam.omega * cos(phi) - gamma * cos(2.0 * phi));
-
-    // output quantities
-    const double beta = 0.5 * f_ddot - d_dot.dot(d_dot);
-
-    // output values
     m_A.block<1, 3>(11, 0).noalias() = d;
     m_A.block<1, 3>(11, 6).noalias() = -d;
 
     /* ANCHOR: Calculate b, function of time */
-    // articulation acceleration magnitudes
-    const double a1_mag =
-        -m_systemParam.U0 * m_systemParam.omega * sin(m_systemParam.omega * dimensional_time);
-    const double a3_mag = -m_systemParam.U0 * m_systemParam.omega *
-                          sin(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
-
-    // output results
     m_b.setZero(m_systemParam.num_constraints);
-    m_b(0)  = a1_mag; // (1)
-    m_b(1)  = a3_mag; // (2)
-    m_b(11) = beta;   // (12)
+    m_b(0)  = A_artic_1_mag + U1_n_U2.dot(q_cross_Omega_c); // (1)
+    m_b(1)  = A_artic_3_mag + U3_n_U2.dot(q_cross_Omega_c); // (2)
+    m_b(11) = beta;                                         // (12)
 }
 
 void
