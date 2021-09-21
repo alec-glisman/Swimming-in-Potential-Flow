@@ -308,6 +308,9 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     m_A.block<3, 3>(8, 15).noalias() = -m_I_tilde;
 
     // (12): Collinear body constraint
+    //     (r_1 - r_3)^T (r_1 - r_3)^T = f(t), where f(t) is kinematically enforced swimmer
+    //       body length
+    // Constraint enforced: d^T \ddot{d} = \ddot{f}(t), where d = r_1 - r_3
     m_A.block<1, 3>(11, 0).noalias() = d;
     m_A.block<1, 3>(11, 6).noalias() = -d;
 
