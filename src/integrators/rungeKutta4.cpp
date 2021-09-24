@@ -468,7 +468,7 @@ rungeKutta4::momentumLinAngFree(Eigen::VectorXd& acc, double dimensional_time)
     }
 
     // calculate gMUU = \nabla M_added : U jdU
-    Eigen::VectorXd gMUU = m_potHydro->t2VelGrad();
+    const Eigen::VectorXd gMUU = -m_potHydro->t2VelGrad();
 
     // calculate F_script = Sigma * (M_total * b + gMUU)
     Eigen::VectorXd F_script_hold = m_potHydro->mTotal() * b;
@@ -579,7 +579,7 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
     c.noalias() += m_accArtic;
 
     // calculate gMUU = \nabla M_added : ( U U )
-    const Eigen::VectorXd gMUU = m_potHydro->t2VelGrad();
+    const Eigen::VectorXd gMUU = -m_potHydro->t2VelGrad();
 
     // calculate F_script = Sigma * (M_total * c + gMUU)
     Eigen::VectorXd F_script_hold = m_potHydro->mTotal() * c;
