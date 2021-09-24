@@ -186,19 +186,19 @@ rungeKutta4::initializeSpecificVars()
     assert(m_systemParam.RAvg == RAvg && "Ravg not properly set");
 
     /* ANCHOR: Other member variables */
-    int numRealPart{m_system->numParticles() / 2};
-    int halfMat{3 * numRealPart};
+    int num_real_part{m_system->numParticles() / 2};
+    int len_half_mat{3 * num_real_part};
     int fullMat{3 * m_system->numParticles()};
 
     spdlog::get(m_logName)->info("Setting sigma");
-    m_systemParam.sigma = Eigen::MatrixXd::Zero(fullMat, halfMat);
+    m_systemParam.sigma = Eigen::MatrixXd::Zero(fullMat, len_half_mat);
 
-    for (int i = 0; i < numRealPart; i++)
+    for (int i = 0; i < num_real_part; i++)
     {
         int i3{3 * i};
 
-        m_systemParam.sigma.block<3, 3>(i3, i3).noalias()           = m_I;
-        m_systemParam.sigma.block<3, 3>(i3 + halfMat, i3).noalias() = m_I_tilde;
+        m_systemParam.sigma.block<3, 3>(i3, i3).noalias()                = m_I;
+        m_systemParam.sigma.block<3, 3>(i3 + len_half_mat, i3).noalias() = m_I_tilde;
     }
 
     m_systemParam.sigma_T = m_systemParam.sigma.transpose();
@@ -493,7 +493,10 @@ void
 rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensional_time)
 {
     /* ANCHOR: Method variables */
-    int numRealPart{m_system->numParticles() / 2};
+    int num_DoF{6};
+    int num_real_part{m_system->numParticles() / 2};
+    int len_half_mat{3 * num_real_part};
+    int len_mat{3 * m_system->numParticles()};
 
     /* ANCHOR: Compute articulation data */
     articulationAcc(dimensional_time);
@@ -502,11 +505,10 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
 
     /* ANCHOR: Solve for rigid body motion (rbm) tensors */
     // initialize variables
-    Eigen::MatrixXd rbmconn = Eigen::MatrixXd::Zero(6, 3 * m_system->numParticles()); // [6 x 3N]
-    int             halfMat{3 * numRealPart};
+    Eigen::MatrixXd rbmconn = Eigen::MatrixXd::Zero(num_DoF, len_mat); // [6 x 3N]
 
     // assemble the rigid body motion connectivity tensor (Sigma);  [6 x 3N]
-    for (int i = 0; i < numRealPart; i++)
+    for (int i = 0; i < num_real_part; i++)
     {
         int i3{3 * i};
 
@@ -520,14 +522,14 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
         rbmconn.block<3, 3>(3, i3).noalias() = n_dr_cross; // translation-rotation couple
 
         // "image" particles
-        rbmconn.block<3, 3>(0, i3 + halfMat).noalias() = m_I; // translation-translation couple
-        rbmconn.block<3, 3>(3, i3 + halfMat).noalias() =
+        rbmconn.block<3, 3>(0, i3 + len_half_mat).noalias() = m_I; // translation-translation couple
+        rbmconn.block<3, 3>(3, i3 + len_half_mat).noalias() =
             m_I_tilde * n_dr_cross; // translation-rotation couple
     }
     Eigen::MatrixXd rbmconn_T = rbmconn.transpose();
 
     // assemble rbm_conn for only "real" (not "image") particles
-    Eigen::MatrixXd rbmconn_hat   = rbmconn.block(0, 0, 6, halfMat);
+    Eigen::MatrixXd rbmconn_hat   = rbmconn.block(0, 0, num_DoF, len_half_mat);
     Eigen::MatrixXd rbmconn_hat_T = rbmconn_hat.transpose();
 
     // calculate M_tilde = Sigma * M_total * sigma * Sigma_hat^T;  [6 x 6]
@@ -560,9 +562,9 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
     Eigen::Vector3d Omega_C = m_systemParam.U_swim.segment<3>(3);
 
     Eigen::Matrix3d Uc_minus_Ualpha_cross;
-    Eigen::VectorXd b_hat = Eigen::VectorXd::Zero(halfMat);
+    Eigen::VectorXd b_hat = Eigen::VectorXd::Zero(len_half_mat);
 
-    for (int i = 0; i < numRealPart; i++)
+    for (int i = 0; i < num_real_part; i++)
     {
         int i3{3 * i};
 
@@ -580,7 +582,6 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
     // calculate gMUU = \nabla M_added : ( U U )
     Eigen::VectorXd gMUU = m_potHydro->t2VelGrad();
 
-    // FIXME
     // calculate F_script = Sigma * (M_total * c + gMUU)
     Eigen::VectorXd F_script_hold = m_potHydro->mTotal() * c;
     F_script_hold.noalias() += gMUU;
