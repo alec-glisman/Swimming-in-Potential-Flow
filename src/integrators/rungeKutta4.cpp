@@ -66,7 +66,7 @@ rungeKutta4::integrate()
     Eigen::VectorXd v2 = v1;
     v2.noalias() += m_c1_2_dt * a1;
     Eigen::VectorXd x2 = x1;
-    v2.noalias() += m_c1_2_dt * v2;
+    x2.noalias() += m_c1_2_dt * v2;
 
     m_system->setVelocities(v2);
     m_system->setPositions(x2);
@@ -94,7 +94,7 @@ rungeKutta4::integrate()
     Eigen::VectorXd v4 = v1;
     v4.noalias() += m_dt * a3;
     Eigen::VectorXd x4 = x1;
-    x4.noalias() += m_dt * v3;
+    x4.noalias() += m_dt * v4;
 
     m_system->setVelocities(v4);
     m_system->setPositions(x4);
