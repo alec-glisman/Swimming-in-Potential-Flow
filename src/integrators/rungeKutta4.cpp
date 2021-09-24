@@ -522,9 +522,8 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
         rbmconn.block<3, 3>(3, i3).noalias() = n_dr_cross; // translation-rotation couple
 
         // "image" particles
-        rbmconn.block<3, 3>(0, i3 + len_half_mat).noalias() = m_I; // translation-translation couple
-        rbmconn.block<3, 3>(3, i3 + len_half_mat).noalias() =
-            m_I_tilde * n_dr_cross; // translation-rotation couple
+        rbmconn.block<3, 3>(0, i3 + len_half_mat).noalias() = m_I;
+        rbmconn.block<3, 3>(3, i3 + len_half_mat).noalias() = m_I_tilde * n_dr_cross;
     }
     const Eigen::MatrixXd rbmconn_T = rbmconn.transpose();
 
