@@ -319,7 +319,7 @@ void
 rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
 {
     /* REVIEW[epic=Change,seq=1]: Change integration schemes for different systems */
-    bool useUdwadiaMethod{true};
+    bool useUdwadiaMethod{false};
     bool useImageMethod{true}; // can be used for initial conditions or total time integration
 
     if (useUdwadiaMethod && dimensional_time > 0.0)
