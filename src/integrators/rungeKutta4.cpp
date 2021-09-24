@@ -47,7 +47,22 @@ rungeKutta4::~rungeKutta4()
 void
 rungeKutta4::integrate()
 {
-    double time{m_system->t() * m_system->tau()};
+    const bool integrage_from_acc{false};
+
+    if (integrage_from_acc)
+    {
+        integrateSecondOrder();
+    }
+    else
+    {
+        integrateFirstOrder();
+    }
+}
+
+void
+rungeKutta4::integrateSecondOrder()
+{
+    const double time{m_system->t() * m_system->tau()};
 
     /* ANCHOR: Solve system of form: y'(t) = f( y(t),  t )
      * @REFERENCE:
@@ -125,6 +140,65 @@ rungeKutta4::integrate()
     Eigen::VectorXd a_out = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a_out, time + m_dt);
     m_system->setAccelerations(a_out);
+}
+
+void
+rungeKutta4::integrateFirstOrder()
+{
+    const double    time{m_system->t() * m_system->tau()};
+    Eigen::VectorXd unused = Eigen::VectorXd::Zero(3 * m_system->numParticles());
+
+    /* Step 1: k1 = f( y(t_0),  t_0 ),
+     * initial conditions at current step */
+    const Eigen::VectorXd x1 = m_system->positions();
+    accelerationUpdate(unused, time);
+    const Eigen::VectorXd v1 = m_system->velocities();
+
+    /* Step 2: k2 = f( y(t_0) + k1 * dt/2,  t_0 + dt/2 )
+     * time rate-of-change k1 evaluated halfway through time step (midpoint) */
+    Eigen::VectorXd x2 = x1;
+    x2.noalias() += m_c1_2_dt * v1;
+
+    m_system->setPositions(x2);
+    m_potHydro->update();
+
+    accelerationUpdate(unused, time);
+    const Eigen::VectorXd v2 = m_system->velocities();
+
+    /* Step 3: k3 = f( y(t_0) + k2 * dt/2,  t_0 + dt/2 )
+     * time rate-of-change k2 evaluated halfway through time step (midpoint) */
+    Eigen::VectorXd x3 = x1;
+    x3.noalias() += m_c1_2_dt * v2;
+
+    m_system->setPositions(x3);
+    m_potHydro->update();
+
+    accelerationUpdate(unused, time);
+    const Eigen::VectorXd v3 = m_system->velocities();
+
+    /* Step 4: k4 = f( y(t_0) + k3 * dt,  t_0 + dt )
+     * time rate-of-change k3 evaluated at end of step (endpoint) */
+    Eigen::VectorXd x4 = x1;
+    x4.noalias() += m_dt * v3;
+
+    m_system->setPositions(x4);
+    m_potHydro->update();
+
+    accelerationUpdate(unused, time);
+    const Eigen::VectorXd v4 = m_system->velocities();
+
+    /* ANCHOR: Calculate kinematics at end of time step */
+    Eigen::VectorXd x_out = v1;
+    x_out.noalias() += 2.0 * v2;
+    x_out.noalias() += 2.0 * v3;
+    x_out.noalias() += v4;
+    x_out *= m_c1_6_dt;
+    x_out.noalias() += x1;
+
+    m_system->setPositions(x_out);
+    m_potHydro->update();
+
+    accelerationUpdate(unused, time);
 }
 
 /* REVIEW[epic=Change,order=1]: Change initializeSpecificVars() for different systems */
@@ -215,7 +289,8 @@ rungeKutta4::initializeSpecificVars()
     gsdParser->writeFrame();
 }
 
-/* REVIEW[epic=Change,order=1]: Change initializeConstraintLinearSystem() for different systems */
+/* REVIEW[epic=Change,order=1]: Change initializeConstraintLinearSystem() for different systems
+ */
 void
 rungeKutta4::initializeConstraintLinearSystem()
 {
@@ -551,10 +626,8 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
     m_potHydro->updateForcesOnly();
 
     /* ANCHOR: Solve for rigid body motion acceleration components */
+    const Eigen::Vector3d U_C     = m_systemParam.U_swim.segment<3>(0);
     const Eigen::Vector3d Omega_C = m_systemParam.U_swim.segment<3>(3);
-
-    Eigen::Matrix3d W = Omega_C * Omega_C.transpose();
-    W.noalias() -= Omega_C.squaredNorm() * m_I;
 
     // calculate b_hat
     Eigen::VectorXd b_hat = m_accArtic.segment(0, len_half_mat);
@@ -563,13 +636,12 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
     {
         int i3{3 * i};
 
-        Eigen::Vector3d dr = m_system->positions().segment<3>(i3);
-        dr.noalias() -= m_RLoc;
-        b_hat.segment<3>(i3).noalias() += W * dr;
+        Eigen::Vector3d Uc_minus_Ualpha = U_C;
+        Uc_minus_Ualpha.noalias() -= m_system->velocities().segment<3>(i3);
 
-        Eigen::Matrix3d n_v_artic_cross;
-        crossProdMat(-m_velArtic.segment<3>(i3), n_v_artic_cross);
-        b_hat.segment<3>(i3).noalias() += n_v_artic_cross * Omega_C;
+        Eigen::Matrix3d Uc_minus_Ualpha_cross;
+        crossProdMat(Uc_minus_Ualpha, Uc_minus_Ualpha_cross);
+        b_hat.segment<3>(i3).noalias() += Uc_minus_Ualpha_cross * Omega_C;
     }
 
     // calculate d = sigma * b_hat
