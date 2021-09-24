@@ -309,7 +309,7 @@ potentialHydrodynamics::calcHydroForces()
     // variable
     for (int l = 0; l < m_len_tensor; l += 1)
     {
-        hat_dMkj.noalias() += m_system->velocities()[l] *
+        hat_dMkj.noalias() += m_system->velocities()(l) *
                               m_grad_M_added.block(0, l * m_len_tensor, m_len_tensor, m_len_tensor);
     }
     // Reduce along gradient (index: l) via matrix-vector product
@@ -321,14 +321,14 @@ potentialHydrodynamics::calcHydroForces()
     for (int k = 0; k < m_len_tensor; k += 3)
     { //! k: derivative variable, 3N loops
         // Unroll loop slightly (do 3 entries at a time)
-        m_t3_PosGrad[k] = m_grad_M_added.block(0, k * m_len_tensor, m_len_tensor, m_len_tensor)
+        m_t3_PosGrad(k) = m_grad_M_added.block(0, k * m_len_tensor, m_len_tensor, m_len_tensor)
                               .cwiseProduct(U_dyad_U)
                               .sum();
-        m_t3_PosGrad[k + 1] =
+        m_t3_PosGrad(k + 1) =
             m_grad_M_added.block(0, (k + 1) * m_len_tensor, m_len_tensor, m_len_tensor)
                 .cwiseProduct(U_dyad_U)
                 .sum();
-        m_t3_PosGrad[k + 2] =
+        m_t3_PosGrad(k + 2) =
             m_grad_M_added.block(0, (k + 2) * m_len_tensor, m_len_tensor, m_len_tensor)
                 .cwiseProduct(U_dyad_U)
                 .sum();
