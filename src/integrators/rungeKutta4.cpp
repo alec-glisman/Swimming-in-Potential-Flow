@@ -56,9 +56,9 @@ rungeKutta4::integrate()
 
     /* Step 1: k1 = f( y(t_0),  t_0 ),
      * initial conditions at current step */
-    Eigen::VectorXd v1 = m_system->velocities();
-    Eigen::VectorXd x1 = m_system->positions();
-    Eigen::VectorXd a1 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
+    const Eigen::VectorXd v1 = m_system->velocities();
+    const Eigen::VectorXd x1 = m_system->positions();
+    Eigen::VectorXd       a1 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a1, time);
 
     /* Step 2: k2 = f( y(t_0) + k1 * dt/2,  t_0 + dt/2 )
@@ -125,13 +125,6 @@ rungeKutta4::integrate()
     Eigen::VectorXd a_out = Eigen::VectorXd::Zero(3 * m_system->numParticles());
     accelerationUpdate(a_out, time + m_dt);
     m_system->setAccelerations(a_out);
-
-    // // FIXME: debugging
-    // std::setprecision(10);
-    // Eigen::IOFormat CleanFmt(Eigen::FullPrecision, 0, ", ", ";\n", "", "", "[", "]");
-    // std::string     sep = "\n----------------------------------------\n";
-    // std::cout << "a_out at t = " << time + m_dt << std::endl;
-    // std::cout << a_out.format(CleanFmt) << sep << std::endl;
 }
 
 /* REVIEW[epic=Change,order=1]: Change initializeSpecificVars() for different systems */
@@ -186,12 +179,12 @@ rungeKutta4::initializeSpecificVars()
     assert(m_systemParam.RAvg == RAvg && "Ravg not properly set");
 
     /* ANCHOR: Other member variables */
-    int num_real_part{m_system->numParticles() / 2};
-    int len_half_mat{3 * num_real_part};
-    int fullMat{3 * m_system->numParticles()};
+    const int num_real_part{m_system->numParticles() / 2};
+    const int len_half_mat{3 * num_real_part};
+    const int len_mat{3 * m_system->numParticles()};
 
     spdlog::get(m_logName)->info("Setting sigma");
-    m_systemParam.sigma = Eigen::MatrixXd::Zero(fullMat, len_half_mat);
+    m_systemParam.sigma = Eigen::MatrixXd::Zero(len_mat, len_half_mat);
 
     for (int i = 0; i < num_real_part; i++)
     {
@@ -374,21 +367,22 @@ rungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc, double dimensional_time)
                                       m_system->t());
         throw std::runtime_error("Computing eigendecomposition of M_total failed");
     }
-    Eigen::MatrixXd M_total_halfPower         = eigensolver.operatorSqrt();
-    Eigen::MatrixXd M_total_negativeHalfPower = eigensolver.operatorInverseSqrt();
+    const Eigen::MatrixXd M_total_halfPower         = eigensolver.operatorSqrt();
+    const Eigen::MatrixXd M_total_negativeHalfPower = eigensolver.operatorInverseSqrt();
 
     // calculate K
-    Eigen::MatrixXd AM_nHalf      = m_A * M_total_negativeHalfPower;
-    Eigen::MatrixXd AM_nHalf_pInv = AM_nHalf.completeOrthogonalDecomposition().pseudoInverse();
-    Eigen::MatrixXd K             = M_total_halfPower * AM_nHalf_pInv;
+    const Eigen::MatrixXd AM_nHalf = m_A * M_total_negativeHalfPower;
+    const Eigen::MatrixXd AM_nHalf_pInv =
+        AM_nHalf.completeOrthogonalDecomposition().pseudoInverse();
+    const Eigen::MatrixXd K = M_total_halfPower * AM_nHalf_pInv;
 
     // calculate Q_con
-    Eigen::MatrixXd M_total_inv   = m_potHydro->mTotal().inverse();
-    Eigen::MatrixXd M_total_invQ  = M_total_inv * Q;
-    Eigen::VectorXd AM_total_invQ = m_A * M_total_invQ;
-    Eigen::VectorXd b_tilde       = m_b;
+    const Eigen::MatrixXd M_total_inv   = m_potHydro->mTotal().inverse();
+    const Eigen::MatrixXd M_total_invQ  = M_total_inv * Q;
+    const Eigen::VectorXd AM_total_invQ = m_A * M_total_invQ;
+    Eigen::VectorXd       b_tilde       = m_b;
     b_tilde.noalias() -= AM_total_invQ;
-    Eigen::VectorXd Q_con = K * b_tilde;
+    const Eigen::VectorXd Q_con = K * b_tilde;
 
     // calculate accelerations
     Eigen::VectorXd Q_total = Q;
@@ -415,22 +409,23 @@ rungeKutta4::momentumLinAngFree(Eigen::VectorXd& acc, double dimensional_time)
 
         Eigen::Vector3d n_dr = -m_system->positions().segment<3>(i3);
         n_dr.noalias() += m_RLoc;
+
         Eigen::Matrix3d n_dr_cross;
         crossProdMat(n_dr, n_dr_cross);
 
         rbmconn.block<3, 3>(0, i3).noalias() = m_I;        // translation-translation couple
         rbmconn.block<3, 3>(3, i3).noalias() = n_dr_cross; // translation-rotation couple
     }
-    Eigen::MatrixXd rbmconn_T = rbmconn.transpose();
+    const Eigen::MatrixXd rbmconn_T = rbmconn.transpose();
 
     // calculate M_tilde = Sigma * M_total * Sigma^T;  [6 x 6]
-    Eigen::MatrixXd M_tilde_hold = m_potHydro->mTotal() * rbmconn_T;
-    Eigen::MatrixXd M_tilde      = rbmconn * M_tilde_hold;
+    const Eigen::MatrixXd M_tilde_hold = m_potHydro->mTotal() * rbmconn_T;
+    const Eigen::MatrixXd M_tilde      = rbmconn * M_tilde_hold;
 
     /* ANCHOR: Solve for rigid body motion velocity components */
     // calculate P_script = Sigma * M_total * V_articulation;  [6 x 1]
-    Eigen::VectorXd P_script_hold = m_potHydro->mTotal() * m_velArtic;
-    Eigen::VectorXd P_script      = rbmconn * P_script_hold;
+    const Eigen::VectorXd P_script_hold = m_potHydro->mTotal() * m_velArtic;
+    const Eigen::VectorXd P_script      = rbmconn * P_script_hold;
 
     // calculate U_swim = - M_tilde_inv * P_script; U_swim has translation and rotation
     // components
@@ -447,12 +442,11 @@ rungeKutta4::momentumLinAngFree(Eigen::VectorXd& acc, double dimensional_time)
 
     /* ANCHOR: Solve for rigid body motion acceleration components */
     // calculate b = a_artic + W * r + [v_artic ^ ]^T * Omega_C;  Omega_C = U_swim(3::5)
-    Eigen::Vector3d Omega_C = m_systemParam.U_swim.segment<3>(3);
+    const Eigen::Vector3d Omega_C = m_systemParam.U_swim.segment<3>(3);
 
     Eigen::Matrix3d W = Omega_C * Omega_C.transpose();
     W.noalias() -= Omega_C.squaredNorm() * m_I;
 
-    Eigen::Matrix3d n_v_artic_cross;
     Eigen::VectorXd b = m_accArtic;
 
     for (int i = 0; i < m_system->numParticles(); i++)
@@ -463,6 +457,7 @@ rungeKutta4::momentumLinAngFree(Eigen::VectorXd& acc, double dimensional_time)
         dr.noalias() -= m_RLoc;
         b.segment<3>(i3).noalias() += W * dr;
 
+        Eigen::Matrix3d n_v_artic_cross;
         crossProdMat(-m_velArtic.segment<3>(i3), n_v_artic_cross);
         b.segment<3>(i3).noalias() += n_v_artic_cross * Omega_C;
     }
@@ -473,7 +468,7 @@ rungeKutta4::momentumLinAngFree(Eigen::VectorXd& acc, double dimensional_time)
     // calculate F_script = Sigma * (M_total * b + gMUU)
     Eigen::VectorXd F_script_hold = m_potHydro->mTotal() * b;
     F_script_hold.noalias() += gMUU;
-    Eigen::VectorXd F_script = rbmconn * F_script_hold;
+    const Eigen::VectorXd F_script = rbmconn * F_script_hold;
 
     // calculate A_swim = - M_tilde_inv * F_script; A_swim has translation and rotation
     // components
@@ -486,7 +481,7 @@ rungeKutta4::momentumLinAngFree(Eigen::VectorXd& acc, double dimensional_time)
     m_system->setAccelerations(A_out);
 
     /* ANCHOR: Output acceleration data back to input variable */
-    acc = A_out;
+    acc.noalias() = A_out;
 }
 
 void
@@ -552,37 +547,39 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
     U_out.noalias() += m_velArtic;
     m_system->setVelocities(U_out);
 
-    // update hydrodynamic force terms for acceleration components
+    // update hydrodynamic force terms for acceleration calculations below
     m_potHydro->updateForcesOnly();
 
     /* ANCHOR: Solve for rigid body motion acceleration components */
-    // calculate b_hat = [ (U_c - U_hat_alpha) ^ ] * Omega_C
-    const Eigen::Vector3d U_C     = m_systemParam.U_swim.segment<3>(0);
     const Eigen::Vector3d Omega_C = m_systemParam.U_swim.segment<3>(3);
 
-    Eigen::Matrix3d Uc_minus_Ualpha_cross;
-    Eigen::VectorXd b_hat = Eigen::VectorXd::Zero(len_half_mat);
+    Eigen::Matrix3d W = Omega_C * Omega_C.transpose();
+    W.noalias() -= Omega_C.squaredNorm() * m_I;
+
+    // calculate b_hat
+    Eigen::VectorXd b_hat = m_accArtic.segment(0, len_half_mat);
 
     for (int i = 0; i < num_real_part; i++)
     {
         int i3{3 * i};
 
-        Eigen::Vector3d Uc_minus_Ualpha = U_C;
-        Uc_minus_Ualpha.noalias() -= m_system->velocities().segment<3>(i3);
+        Eigen::Vector3d dr = m_system->positions().segment<3>(i3);
+        dr.noalias() -= m_RLoc;
+        b_hat.segment<3>(i3).noalias() += W * dr;
 
-        crossProdMat(Uc_minus_Ualpha, Uc_minus_Ualpha_cross);
-        b_hat.segment<3>(i3).noalias() += Uc_minus_Ualpha_cross * Omega_C;
+        Eigen::Matrix3d n_v_artic_cross;
+        crossProdMat(-m_velArtic.segment<3>(i3), n_v_artic_cross);
+        b_hat.segment<3>(i3).noalias() += n_v_artic_cross * Omega_C;
     }
 
-    // calculate c = sigma * b_hat + A_artic
-    Eigen::VectorXd c = m_systemParam.sigma * b_hat;
-    c.noalias() += m_accArtic;
+    // calculate d = sigma * b_hat
+    const Eigen::VectorXd d = m_systemParam.sigma * b_hat;
 
     // calculate gMUU = \nabla M_added : ( U U )
     const Eigen::VectorXd gMUU = -m_potHydro->t2VelGrad();
 
-    // calculate F_script = Sigma * (M_total * c + gMUU)
-    Eigen::VectorXd F_script_hold = m_potHydro->mTotal() * c;
+    // calculate F_script = Sigma * (M_total * d + gMUU)
+    Eigen::VectorXd F_script_hold = m_potHydro->mTotal() * d;
     F_script_hold.noalias() += gMUU;
     const Eigen::VectorXd F_script = rbmconn * F_script_hold;
 
@@ -598,7 +595,7 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
     m_system->setAccelerations(A_out);
 
     /* ANCHOR: Output acceleration data back to input variable */
-    acc = A_out;
+    acc.noalias() = A_out;
 }
 
 /* ANCHOR: Output data to GSD */
@@ -649,8 +646,8 @@ rungeKutta4::articulationVel(double dimensional_time)
     Eigen::Vector3d q_tilde = m_I_tilde * q;
 
     // articulation velocity magnitudes
-    double v1_mag = m_systemParam.U0 * cos(m_systemParam.omega * dimensional_time);
-    double v3_mag =
+    const double v1_mag = m_systemParam.U0 * cos(m_systemParam.omega * dimensional_time);
+    const double v3_mag =
         m_systemParam.U0 * cos(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
 
     // Zero and then calculate m_velArtic
@@ -672,10 +669,10 @@ rungeKutta4::articulationAcc(double dimensional_time)
     Eigen::Vector3d q_tilde = m_I_tilde * q;
 
     // articulation acceleration magnitudes
-    double a1_mag =
+    const double a1_mag =
         -m_systemParam.U0 * m_systemParam.omega * sin(m_systemParam.omega * dimensional_time);
-    double a3_mag = -m_systemParam.U0 * m_systemParam.omega *
-                    sin(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
+    const double a3_mag = -m_systemParam.U0 * m_systemParam.omega *
+                          sin(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
 
     // Zero and then calculate m_accArtic
     m_accArtic                             = Eigen::VectorXd::Zero(3 * m_system->numParticles());
