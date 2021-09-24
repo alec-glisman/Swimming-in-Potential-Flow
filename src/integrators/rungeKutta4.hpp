@@ -55,6 +55,12 @@ class rungeKutta4
     updateConstraintLinearSystem(double dimensional_time);
 
     void
+    integrateSecondOrder();
+
+    void
+    integrateFirstOrder();
+
+    void
     accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time);
 
     void
