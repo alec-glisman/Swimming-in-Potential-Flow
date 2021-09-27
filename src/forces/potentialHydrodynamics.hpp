@@ -74,6 +74,12 @@ class potentialHydrodynamics
         return m_t2_VelGrad;
     }
 
+    const Eigen::MatrixXd&
+    gradMAdded() const
+    {
+        return m_grad_M_added;
+    }
+
   private:
     // classes
     std::shared_ptr<systemData> m_system;
