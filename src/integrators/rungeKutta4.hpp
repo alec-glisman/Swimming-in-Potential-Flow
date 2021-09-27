@@ -21,7 +21,6 @@
 #define EIGEN_USE_MKL_ALL
 #include <eigen3/Eigen/src/Core/util/MKL_support.h>
 // Logging
-// #include <iostream>
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
 
