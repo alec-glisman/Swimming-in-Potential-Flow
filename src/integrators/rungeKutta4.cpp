@@ -51,6 +51,7 @@ rungeKutta4::~rungeKutta4()
 void
 rungeKutta4::integrate()
 {
+    /* REVIEW[epic=Change,seq=1]: Change integration schemes for different systems */
     const bool integrage_from_acc{false};
 
     if (integrage_from_acc)
@@ -60,6 +61,27 @@ rungeKutta4::integrate()
     else
     {
         integrateFirstOrder();
+    }
+}
+
+void
+rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
+{
+    /* REVIEW[epic=Change,seq=1]: Change integration schemes for different systems */
+    const bool useUdwadiaMethod{false};
+    const bool useImageMethod{true}; // can be used for initial conditions or total time integration
+
+    if (useUdwadiaMethod && dimensional_time > 0.0)
+    {
+        udwadiaKalaba(acc, dimensional_time);
+    }
+    else if ((useImageMethod && !useUdwadiaMethod) || (useImageMethod && dimensional_time == 0.0))
+    {
+        momentumLinAngFreeImageSystem(acc, dimensional_time);
+    }
+    else
+    {
+        momentumLinAngFree(acc, dimensional_time);
     }
 }
 
@@ -392,27 +414,6 @@ rungeKutta4::updateConstraintLinearSystem(double dimensional_time)
     m_b(0)  = A_artic_1_mag + U1_n_U2.dot(q_cross_Omega_c); // (1)
     m_b(1)  = A_artic_3_mag + U3_n_U2.dot(q_cross_Omega_c); // (2)
     m_b(11) = beta;                                         // (12)
-}
-
-void
-rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
-{
-    /* REVIEW[epic=Change,seq=1]: Change integration schemes for different systems */
-    bool useUdwadiaMethod{false};
-    bool useImageMethod{true}; // can be used for initial conditions or total time integration
-
-    if (useUdwadiaMethod && dimensional_time > 0.0)
-    {
-        udwadiaKalaba(acc, dimensional_time);
-    }
-    else if ((useImageMethod && !useUdwadiaMethod) || (useImageMethod && dimensional_time == 0.0))
-    {
-        momentumLinAngFreeImageSystem(acc, dimensional_time);
-    }
-    else
-    {
-        momentumLinAngFree(acc, dimensional_time);
-    }
 }
 
 void
