@@ -21,6 +21,7 @@
 #define EIGEN_USE_MKL_ALL
 #include <eigen3/Eigen/src/Core/util/MKL_support.h>
 // Logging
+// #include <iostream>
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
 
@@ -142,6 +143,7 @@ class rungeKutta4
     // "identity" tensors
     const Eigen::Matrix3d m_I = Eigen::Matrix3d::Identity(3, 3);
     Eigen::Matrix3d       m_I_tilde;
+    Eigen::Matrix3d       m_I_tilde_tilde;
 
     // time step variables
     double m_dt{-1.0};
