@@ -635,7 +635,18 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
     const Eigen::Vector3d U_C     = m_systemParam.U_swim.segment<3>(0);
     const Eigen::Vector3d Omega_C = m_systemParam.U_swim.segment<3>(3);
 
-    // calculate b_hat
+    /* ANCHOR: Debugging */
+    Eigen::IOFormat CleanFmt(12, 0, ", ", "\n", "[", "]");
+
+    std::cout << "M_tilde" << std::endl;
+    std::cout << M_tilde.format(CleanFmt) << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "M_tilde_inv" << std::endl;
+    std::cout << M_tilde.inverse().format(CleanFmt) << std::endl;
+    std::cout << std::endl;
+
+    // calculate b
     Eigen::VectorXd b = m_accArtic.segment(0, len_tensor);
 
     for (int i = 0; i < num_real_part; i++)

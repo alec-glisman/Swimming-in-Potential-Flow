@@ -23,6 +23,8 @@
 // Logging
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
+// Debugging
+#include <iostream>
 
 /* Forward declarations */
 class systemData;
