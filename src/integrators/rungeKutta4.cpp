@@ -629,7 +629,7 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
     const Eigen::MatrixXd M_sigma      = m_potHydro->mTotal() * m_systemParam.sigma;
     const Eigen::MatrixXd M_tilde_hold = M_sigma * rbmconn_hat_T;
     Eigen::MatrixXd       M_tilde      = rbmconn * M_tilde_hold;
-    M_tilde.block<3, 3>(2, 2).noalias() += G;
+    M_tilde.block<3, 3>(3, 3).noalias() += G;
     const Eigen::MatrixXd M_tilde_inv = M_tilde.inverse();
 
     // Eigen::IOFormat CleanFmt(12, 0, ", ", "\n", "[", "]");
