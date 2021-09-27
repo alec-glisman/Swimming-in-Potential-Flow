@@ -178,7 +178,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         my $R_avg       = 4.00e+0;
         my $Z_height    = 6.00e+0;
         my $phase_angle = -1.57079632679e+0;
-        my $U0          = 1.00e+0;
+        my $U0          = 2.00e+0;
         my $omega       = 1.00e+0;
 
         # Modify default preferences for each simulation run
