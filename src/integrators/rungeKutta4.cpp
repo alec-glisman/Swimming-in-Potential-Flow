@@ -52,7 +52,7 @@ void
 rungeKutta4::integrate()
 {
     /* REVIEW[epic=Change,seq=1]: Change integration schemes for different systems */
-    const bool integrage_from_acc{false};
+    const bool integrage_from_acc{true};
 
     if (integrage_from_acc)
     {
@@ -628,16 +628,7 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
     const Eigen::MatrixXd M_sigma      = m_potHydro->mTotal() * m_systemParam.sigma;
     const Eigen::MatrixXd M_tilde_hold = M_sigma * rbmconn_hat_T;
     Eigen::MatrixXd       M_tilde      = rbmconn * M_tilde_hold;
-    M_tilde.block<3, 3>(2, 2).noalias() += G;
-    const Eigen::MatrixXd M_tilde_inv = M_tilde.inverse();
-
-    // Eigen::IOFormat CleanFmt(12, 0, ", ", "\n", "[", "]");
-
-    // std::cout << std::endl;
-    // std::cout << M_tilde.format(CleanFmt) << std::endl;
-
-    // std::cout << std::endl;
-    // std::cout << M_tilde_inv.format(CleanFmt) << std::endl;
+    M_tilde.block<3, 3>(3, 3).noalias() += G;
 
     /* ANCHOR: Solve for rigid body motion velocity components */
     // calculate P_script = Sigma * M_total * V;  [6 x 1]
@@ -646,7 +637,7 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
 
     // calculate U_swim = - M_tilde_inv * P_script;
     // U_swim has translation and rotation components
-    m_systemParam.U_swim.noalias() = -M_tilde_inv * P_script;
+    m_systemParam.U_swim.noalias() = -M_tilde.fullPivLu().solve(P_script);
 
     /* ANCHOR: Output velocity data back to m_system */
     // calculate U = (sigma * Sigma_hat^T) * U_swim + V
