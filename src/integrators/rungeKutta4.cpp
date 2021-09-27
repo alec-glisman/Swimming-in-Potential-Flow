@@ -52,7 +52,7 @@ void
 rungeKutta4::integrate()
 {
     /* REVIEW[epic=Change,seq=1]: Change integration schemes for different systems */
-    const bool integrage_from_acc{false};
+    const bool integrage_from_acc{true};
 
     if (integrage_from_acc)
     {
