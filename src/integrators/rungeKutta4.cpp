@@ -279,22 +279,6 @@ rungeKutta4::initializeSpecificVars()
     assert(m_systemParam.RAvg == RAvg && "Ravg not properly set");
 
     /* ANCHOR: Other member variables */
-    const int num_real_part{m_system->numParticles() / 2};
-    const int len_half_mat{3 * num_real_part};
-    const int len_mat{3 * m_system->numParticles()};
-
-    spdlog::get(m_logName)->info("Setting sigma");
-    m_systemParam.sigma = Eigen::MatrixXd::Zero(len_mat, len_half_mat);
-
-    for (int i = 0; i < num_real_part; i++)
-    {
-        int i3{3 * i};
-
-        m_systemParam.sigma.block<3, 3>(i3, i3).noalias()                = m_I;
-        m_systemParam.sigma.block<3, 3>(i3 + len_half_mat, i3).noalias() = m_I_tilde;
-    }
-
-    m_systemParam.sigma_T = m_systemParam.sigma.transpose();
 
     /* ANCHOR: set initial conditions */
     spdlog::get(m_logName)->info("Setting initial conditions");
@@ -570,8 +554,7 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
     const int num_DoF{6};
     const int num_real_part{m_system->numParticles() / 2};
 
-    const int len_half_mat{3 * num_real_part};
-    const int len_mat{3 * m_system->numParticles()};
+    const int len_tensor{3 * num_real_part};
 
     const double c_ang_mom{0.40}; // = 2/5 sphere moment of inertia constant
 
@@ -583,15 +566,14 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
 
     /* ANCHOR: Solve for rigid body motion (rbm) tensors */
     // initialize variables
-    Eigen::MatrixXd rbmconn = Eigen::MatrixXd::Zero(num_DoF, len_mat); // [6 x 3N]
-    Eigen::MatrixXd rbm_rot_conn =
-        Eigen::MatrixXd::Zero(num_DoF / 2, len_mat); // = Sigma_tilde_tilde [3 x 3N]
+    Eigen::MatrixXd rbmconn = Eigen::MatrixXd::Zero(num_DoF, len_tensor); // [6 x 3 N/2]
 
-    // assemble the rigid body motion connectivity tensor (Sigma);  [6 x 3N]
+    // assemble the rigid body motion connectivity tensor (Sigma);  [6 x 3 N/2]
     for (int i = 0; i < num_real_part; i++)
     {
         int i3{3 * i};
 
+        // second order skew-symmetric cross product tensor
         Eigen::Vector3d n_dr = -m_system->positions().segment<3>(i3);
         n_dr.noalias() += m_RLoc;
         Eigen::Matrix3d n_dr_cross;
@@ -600,40 +582,30 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
         // "real" particles
         rbmconn.block<3, 3>(0, i3).noalias() = m_I;        // translation-translation couple
         rbmconn.block<3, 3>(3, i3).noalias() = n_dr_cross; // translation-rotation couple
-
-        rbm_rot_conn.block<3, 3>(0, i3).noalias() = m_I;
-
-        // "image" particles
-        rbmconn.block<3, 3>(0, i3 + len_half_mat).noalias() = m_I;
-        rbmconn.block<3, 3>(3, i3 + len_half_mat).noalias() = m_I_tilde * n_dr_cross;
-
-        rbm_rot_conn.block<3, 3>(0, i3 + len_half_mat).noalias() = m_I_tilde_tilde;
     }
-    const Eigen::MatrixXd rbmconn_T      = rbmconn.transpose();
-    const Eigen::MatrixXd rbm_rot_conn_T = rbm_rot_conn.transpose();
+    const Eigen::MatrixXd rbmconn_T = rbmconn.transpose();
 
     const Eigen::MatrixXd rbm_trans_conn =
-        rbmconn.block(0, 0, num_DoF / 2, len_mat); // = Sigma_tilde [3 x 3N]
-
-    // assemble rbm_conn for only "real" (not "image") particles
-    const Eigen::MatrixXd rbmconn_hat   = rbmconn.block(0, 0, num_DoF, len_half_mat);
-    const Eigen::MatrixXd rbmconn_hat_T = rbmconn_hat.transpose();
+        rbmconn.block(0, 0, num_DoF / 2, len_tensor); // = Sigma_tilde [3 x 3 N/2]
+    const Eigen::MatrixXd rbm_trans_conn_T = rbm_trans_conn.transpose();
 
     // Add intrinsic inertia from spheres rotating about their centers
     // G = c_L * Sigma_tilde * M_intrinsic * Sigma_tilde_tilde_T
-    const Eigen::MatrixXd G_hold = m_potHydro->mIntrinsic() * rbm_rot_conn_T;
-    const Eigen::Matrix3d G      = c_ang_mom * rbm_trans_conn * G_hold;
+    const Eigen::MatrixXd G_hold =
+        m_potHydro->mIntrinsic().block(0, 0, len_tensor, len_tensor) * rbm_trans_conn_T;
+    const Eigen::Matrix3d G = c_ang_mom * rbm_trans_conn * G_hold;
 
-    // calculate M_tilde = Sigma * M_total * sigma * Sigma_hat^T + G;  [6 x 6]
-    const Eigen::MatrixXd M_sigma      = m_potHydro->mTotal() * m_systemParam.sigma;
-    const Eigen::MatrixXd M_tilde_hold = M_sigma * rbmconn_hat_T;
-    Eigen::MatrixXd       M_tilde      = rbmconn * M_tilde_hold;
+    // calculate M_tilde = Sigma * M_total * Sigma^T + G;  [6 x 6]
+    const Eigen::MatrixXd M_tilde_hold =
+        m_potHydro->mTotal().block(0, 0, len_tensor, len_tensor) * rbmconn_T;
+    Eigen::MatrixXd M_tilde = rbmconn * M_tilde_hold;
     M_tilde.block<3, 3>(3, 3).noalias() += G;
 
     /* ANCHOR: Solve for rigid body motion velocity components */
     // calculate P_script = Sigma * M_total * V;  [6 x 1]
-    const Eigen::VectorXd P_script_hold = m_potHydro->mTotal() * m_velArtic;
-    const Eigen::VectorXd P_script      = rbmconn * P_script_hold;
+    const Eigen::VectorXd P_script_hold = m_potHydro->mTotal().block(0, 0, len_tensor, len_tensor) *
+                                          m_velArtic.segment(0, len_tensor);
+    const Eigen::VectorXd P_script = rbmconn * P_script_hold;
 
     // calculate U_swim = - M_tilde_inv * P_script;
     // U_swim has translation and rotation components
@@ -641,20 +613,30 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
 
     /* ANCHOR: Output velocity data back to m_system */
     // calculate U = (sigma * Sigma_hat^T) * U_swim + V
-    const Eigen::VectorXd U_out_hold = rbmconn_hat_T * m_systemParam.U_swim;
-    Eigen::VectorXd       U_out      = m_systemParam.sigma * U_out_hold;
-    U_out.noalias() += m_velArtic;
-    m_system->setVelocities(U_out);
+    const Eigen::VectorXd U_out_real =
+        rbmconn_T * m_systemParam.U_swim + m_velArtic.segment(0, len_tensor);
 
-    // update hydrodynamic force terms for acceleration calculations below
-    m_potHydro->updateForcesOnly();
+    Eigen::VectorXd U_out = Eigen::VectorXd::Zero(2 * len_tensor);
+
+    for (int i = 0; i < num_real_part; i++)
+    {
+        int i3{3 * i};
+
+        // real particles
+        U_out.segment<3>(i3).noalias() = U_out_real.segment<3>(i3);
+
+        // image particles
+        U_out.segment<3>(i3 + len_tensor).noalias() = m_I_tilde * U_out_real.segment<3>(i3);
+    }
+
+    m_system->setVelocities(U_out);
 
     /* ANCHOR: Solve for rigid body motion acceleration components */
     const Eigen::Vector3d U_C     = m_systemParam.U_swim.segment<3>(0);
     const Eigen::Vector3d Omega_C = m_systemParam.U_swim.segment<3>(3);
 
     // calculate b_hat
-    Eigen::VectorXd b_hat = m_accArtic.segment(0, len_half_mat);
+    Eigen::VectorXd b = m_accArtic.segment(0, len_tensor);
 
     for (int i = 0; i < num_real_part; i++)
     {
@@ -665,17 +647,24 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
 
         Eigen::Matrix3d Uc_minus_Ualpha_cross;
         crossProdMat(Uc_minus_Ualpha, Uc_minus_Ualpha_cross);
-        b_hat.segment<3>(i3).noalias() += Uc_minus_Ualpha_cross * Omega_C;
+        b.segment<3>(i3).noalias() += Uc_minus_Ualpha_cross * Omega_C;
     }
 
-    // calculate d = sigma * b_hat
-    const Eigen::VectorXd d = m_systemParam.sigma * b_hat;
+    // calculate gMUU = \nabla M_added : ( U U ) FIXME: include only needed indices
+    Eigen::MatrixXd gMU = Eigen::MatrixXd::Zero(len_tensor, len_tensor);
+    // Reduce along derivative vars (index: l) via matrix-vector product for each derivative
+    // variable
+    for (int l = 0; l < len_tensor; l += 1)
+    {
+        gMU.noalias() +=
+            m_system->velocities()(l) *
+            m_potHydro->gradMAdded().block(0, l * (2 * len_tensor), len_tensor, len_tensor);
+    }
+    // Reduce along gradient (index: l) via matrix-vector product
+    const Eigen::VectorXd gMUU = gMU * m_system->velocities().segment(0, len_tensor);
 
-    // calculate gMUU = \nabla M_added : ( U U )
-    const Eigen::VectorXd gMUU = -m_potHydro->t2VelGrad();
-
-    // calculate F_script = Sigma * (M_total * d + gMUU)
-    Eigen::VectorXd F_script_hold = m_potHydro->mTotal() * d;
+    // calculate F_script = Sigma * (M_total * b + gMUU)
+    Eigen::VectorXd F_script_hold = m_potHydro->mTotal().block(0, 0, len_tensor, len_tensor) * b;
     F_script_hold.noalias() += gMUU;
     const Eigen::VectorXd F_script = rbmconn * F_script_hold;
 
@@ -685,9 +674,22 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
 
     /* ANCHOR: Output acceleration data back to m_system */
     // calculate A = sigma * ( Sigma_hat^T * A_swim + b_hat )
-    Eigen::VectorXd A_out_hold = rbmconn_hat_T * m_systemParam.A_swim;
-    A_out_hold.noalias() += b_hat;
-    const Eigen::VectorXd A_out = m_systemParam.sigma * A_out_hold;
+    const Eigen::VectorXd A_out_real =
+        rbmconn_T * m_systemParam.A_swim + m_accArtic.segment(0, len_tensor);
+
+    Eigen::VectorXd A_out = Eigen::VectorXd::Zero(2 * len_tensor);
+
+    for (int i = 0; i < num_real_part; i++)
+    {
+        int i3{3 * i};
+
+        // real particles
+        A_out.segment<3>(i3).noalias() = A_out_real.segment<3>(i3);
+
+        // image particles
+        A_out.segment<3>(i3 + len_tensor).noalias() = m_I_tilde * A_out_real.segment<3>(i3);
+    }
+
     m_system->setAccelerations(A_out);
 
     /* ANCHOR: Output acceleration data back to input variable */

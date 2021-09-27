@@ -114,9 +114,6 @@ class rungeKutta4
         // Swimmer locater point kinematics
         Eigen::VectorXd U_swim;
         Eigen::VectorXd A_swim;
-        // Image system transform
-        Eigen::MatrixXd sigma;
-        Eigen::MatrixXd sigma_T;
     };
 
     // classes
