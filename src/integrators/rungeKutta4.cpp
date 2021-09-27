@@ -52,7 +52,7 @@ void
 rungeKutta4::integrate()
 {
     /* REVIEW[epic=Change,seq=1]: Change integration schemes for different systems */
-    const bool integrage_from_acc{true};
+    const bool integrage_from_acc{false};
 
     if (integrage_from_acc)
     {
@@ -315,8 +315,7 @@ rungeKutta4::initializeSpecificVars()
     gsdParser->writeFrame();
 }
 
-/* REVIEW[epic=Change,order=1]: Change initializeConstraintLinearSystem() for different systems
- */
+/* REVIEW[epic=Change,order=1]: Change initializeConstraintLinearSystem() for different systems */
 void
 rungeKutta4::initializeConstraintLinearSystem()
 {
@@ -584,8 +583,9 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
 
     /* ANCHOR: Solve for rigid body motion (rbm) tensors */
     // initialize variables
-    Eigen::MatrixXd rbmconn      = Eigen::MatrixXd::Zero(num_DoF, len_mat);     // [6 x 3N]
-    Eigen::MatrixXd rbm_rot_conn = Eigen::MatrixXd::Zero(num_DoF / 2, len_mat); // [3 x 3N]
+    Eigen::MatrixXd rbmconn = Eigen::MatrixXd::Zero(num_DoF, len_mat); // [6 x 3N]
+    Eigen::MatrixXd rbm_rot_conn =
+        Eigen::MatrixXd::Zero(num_DoF / 2, len_mat); // = Sigma_tilde_tilde [3 x 3N]
 
     // assemble the rigid body motion connectivity tensor (Sigma);  [6 x 3N]
     for (int i = 0; i < num_real_part; i++)
@@ -607,8 +607,7 @@ rungeKutta4::momentumLinAngFreeImageSystem(Eigen::VectorXd& acc, double dimensio
         rbmconn.block<3, 3>(0, i3 + len_half_mat).noalias() = m_I;
         rbmconn.block<3, 3>(3, i3 + len_half_mat).noalias() = m_I_tilde * n_dr_cross;
 
-        rbm_rot_conn.block<3, 3>(0, i3 + len_half_mat).noalias() =
-            m_I_tilde_tilde; // = Sigma_tilde_tilde
+        rbm_rot_conn.block<3, 3>(0, i3 + len_half_mat).noalias() = m_I_tilde_tilde;
     }
     const Eigen::MatrixXd rbmconn_T      = rbmconn.transpose();
     const Eigen::MatrixXd rbm_rot_conn_T = rbm_rot_conn.transpose();
