@@ -140,9 +140,11 @@ GSDUtil::readHeader()
     return_bool = readChunk(&dim, m_frame, "log/configuration/dimensions", 1);
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
-    m_system->setNumDoF(int(dim));
+    m_system->setNumSpatialDim(int(dim));
     spdlog::get(m_logName)->info("dim : {0}", dim);
-    assert(int(dim) == m_system->numDoF() && "number of dimensions not properly set");
+    assert(int(dim) == m_system->numSpatialDim() && "number of dimensions not properly set");
+    assert(int(dim) == 3 &&
+           "number of spatial dimensions must be 3 for the potential hydrodynamics");
 
     spdlog::get(m_logName)->info("GSD parsing number of particles");
     uint32_t N  = 0;

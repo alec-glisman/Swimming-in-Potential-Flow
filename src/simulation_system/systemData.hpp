@@ -73,6 +73,7 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     // degrees of freedom
     int m_num_DoF{-1};
+    int m_num_spatial_dim{-1};
     int m_num_particles{-1};
     int m_num_bodies{-1};
 
@@ -144,10 +145,16 @@ class systemData : public std::enable_shared_from_this<systemData>
     {
         return m_num_DoF;
     }
-    void
-    setNumDoF(int num_dim)
+
+    int
+    numSpatialDim() const
     {
-        m_num_DoF = num_dim;
+        return m_num_spatial_dim;
+    }
+    void
+    setNumSpatialDim(int num_spatial_dim)
+    {
+        m_num_spatial_dim = num_spatial_dim;
     }
 
     int
