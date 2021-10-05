@@ -50,10 +50,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     void
     checkInput();
 
-    // classes
-    std::shared_ptr<GSDUtil> m_gsdUtil;
-
-    // constructor
+    // data i/o
     std::string m_inputGSDFile;
     std::string m_outputDir;
 
@@ -61,7 +58,8 @@ class systemData : public std::enable_shared_from_this<systemData>
     std::string       m_logFile;
     const std::string m_logName{"systemData"};
 
-    // GSD
+    // GSD data
+    std::shared_ptr<GSDUtil>    m_gsdUtil;
     std::shared_ptr<gsd_handle> m_handle{new gsd_handle};
     int                         m_return_val{0};
     bool                        m_return_bool{true};
@@ -73,8 +71,9 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::VectorXd m_accelerations;
 
     // degrees of freedom
-    int m_num_dim{-1};
+    int m_num_DoF{-1};
     int m_num_particles{-1};
+    int m_num_bodies{-1};
 
     // integrator
     double m_dt{-1.0};
@@ -136,14 +135,14 @@ class systemData : public std::enable_shared_from_this<systemData>
     }
 
     int
-    numDim()
+    numDoF()
     {
-        return m_num_dim;
+        return m_num_DoF;
     }
     void
-    setNumDim(int num_dim)
+    setNumDoF(int num_dim)
     {
-        m_num_dim = num_dim;
+        m_num_DoF = num_dim;
     }
 
     int

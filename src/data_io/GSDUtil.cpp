@@ -140,9 +140,9 @@ GSDUtil::readHeader()
     return_bool = readChunk(&dim, m_frame, "log/configuration/dimensions", 1);
     m_system->setReturnBool(return_bool);
     m_system->check_gsd_return();
-    m_system->setNumDim(int(dim));
+    m_system->setNumDoF(int(dim));
     spdlog::get(m_logName)->info("dim : {0}", dim);
-    assert(int(dim) == m_system->numDim() && "number of dimensions not properly set");
+    assert(int(dim) == m_system->numDoF() && "number of dimensions not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing number of particles");
     uint32_t N  = 0;
@@ -254,7 +254,7 @@ GSDUtil::readParticles()
 {
     // positions
     spdlog::get(m_logName)->info("GSD parsing position");
-    double d_pos[m_system->numDim() * m_system->numParticles()];
+    double d_pos[m_system->numDoF() * m_system->numParticles()];
     auto   return_bool = readChunk(&d_pos, m_frame, "log/particles/double_position",
                                  m_system->numParticles() * 3 * 8, m_system->numParticles());
     m_system->setReturnBool(return_bool);
@@ -266,15 +266,15 @@ GSDUtil::readParticles()
         positions(3 * i + 1) = d_pos[3 * i + 1];
         positions(3 * i + 2) = d_pos[3 * i + 2];
         spdlog::get(m_logName)->info("Particle {0} position : [{1:03.3f}, {2:03.3f}, {3:03.3f}]",
-                                     i + 1, d_pos[m_system->numDim() * i],
-                                     d_pos[m_system->numDim() * i + 1],
-                                     d_pos[m_system->numDim() * i + 2]);
+                                     i + 1, d_pos[m_system->numDoF() * i],
+                                     d_pos[m_system->numDoF() * i + 1],
+                                     d_pos[m_system->numDoF() * i + 2]);
     }
     m_system->setPositions(positions);
 
     // velocities
     spdlog::get(m_logName)->info("GSD parsing velocity");
-    double d_vel[m_system->numDim() * m_system->numParticles()];
+    double d_vel[m_system->numDoF() * m_system->numParticles()];
     return_bool = readChunk(&d_vel, m_frame, "log/particles/double_velocity",
                             m_system->numParticles() * 3 * 8, m_system->numParticles());
     m_system->setReturnBool(return_bool);
@@ -286,15 +286,15 @@ GSDUtil::readParticles()
         velocities(3 * i + 1) = d_vel[3 * i + 1];
         velocities(3 * i + 2) = d_vel[3 * i + 2];
         spdlog::get(m_logName)->info("Particle {0} velocity : [{1:03.3f}, {2:03.3f}, {3:03.3f}]",
-                                     i + 1, d_vel[m_system->numDim() * i],
-                                     d_vel[m_system->numDim() * i + 1],
-                                     d_vel[m_system->numDim() * i + 2]);
+                                     i + 1, d_vel[m_system->numDoF() * i],
+                                     d_vel[m_system->numDoF() * i + 1],
+                                     d_vel[m_system->numDoF() * i + 2]);
     }
     m_system->setVelocities(velocities);
 
     // accelerations
     spdlog::get(m_logName)->info("GSD parsing acceleration");
-    double d_acc[m_system->numDim() * m_system->numParticles()];
+    double d_acc[m_system->numDoF() * m_system->numParticles()];
     return_bool = readChunk(&d_acc, m_frame, "log/particles/double_moment_inertia",
                             m_system->numParticles() * 3 * 8, m_system->numParticles());
     m_system->setReturnBool(return_bool);
@@ -307,8 +307,8 @@ GSDUtil::readParticles()
         accelerations(3 * i + 2) = d_acc[3 * i + 2];
         spdlog::get(m_logName)->info(
             "Particle {0} acceleration : [{1:03.3f}, {2:03.3f}, {3:03.3f}]", i + 1,
-            d_acc[m_system->numDim() * i], d_acc[m_system->numDim() * i + 1],
-            d_acc[m_system->numDim() * i + 2]);
+            d_acc[m_system->numDoF() * i], d_acc[m_system->numDoF() * i + 1],
+            d_acc[m_system->numDoF() * i + 2]);
     }
     m_system->setAccelerations(accelerations);
 }
@@ -343,7 +343,7 @@ GSDUtil::writeHeader()
     if (gsd_get_nframes(m_system->handle().get()) == 0)
     {
         spdlog::get(m_logName)->info("GSD writing configuration/dimensions");
-        uint8_t dimensions = m_system->numDim();
+        uint8_t dimensions = m_system->numDoF();
         return_val         = gsd_write_chunk(m_system->handle().get(), "configuration/dimensions",
                                      GSD_TYPE_UINT8, 1, 1, 0, (void*)&dimensions);
         m_system->setReturnVal(return_val);
@@ -380,7 +380,7 @@ void
 GSDUtil::writeParticles()
 {
     uint32_t N       = m_system->numParticles();
-    uint32_t num_dim = m_system->numDim();
+    uint32_t num_dim = m_system->numDoF();
     int      return_val;
     uint64_t nframes = gsd_get_nframes(m_system->handle().get());
     spdlog::get(m_logName)->critical("vectors are assumed to have 3 spatial DoF");

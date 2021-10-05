@@ -40,11 +40,11 @@ systemData::checkInput()
     assert(m_wca_epsilon >= 0.0 && "WCA_epsilon must be non-negative");
     assert(m_wca_sigma >= 0.0 && "WCA_sigma must be non-negative");
 
-    assert(m_positions.size() == m_num_dim * m_num_particles &&
+    assert(m_positions.size() == m_num_DoF * m_num_particles &&
            "Position vector has incorrect length, not 3N");
-    assert(m_velocities.size() == m_num_dim * m_num_particles &&
+    assert(m_velocities.size() == m_num_DoF * m_num_particles &&
            "Velocity vector has incorrect length, not 3N");
-    assert(m_accelerations.size() == m_num_dim * m_num_particles &&
+    assert(m_accelerations.size() == m_num_DoF * m_num_particles &&
            "Acceleration vector has incorrect length, not 3N");
 }
 
@@ -75,7 +75,7 @@ systemData::check_gsd_return()
 void
 systemData::resizeTensors()
 {
-    int len = m_num_dim * m_num_particles;
+    int len = m_num_DoF * m_num_particles;
 
     m_positions.noalias()     = Eigen::VectorXd::Zero(len);
     m_velocities.noalias()    = Eigen::VectorXd::Zero(len);

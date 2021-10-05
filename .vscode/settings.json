@@ -102,6 +102,8 @@
         ".conkyrc": "properties",
         "*.cls": "latex",
         ".latexmkrc": "shellscript",
+        "*.j2": "yaml",
+        "*.dev": "properties",
         "random": "cpp",
         "__bit_reference": "cpp",
         "__config": "cpp",
@@ -198,7 +200,8 @@
         "*.main": "cpp",
         "cfenv": "cpp",
         "ranges": "cpp",
-        "shared_mutex": "cpp"
+        "shared_mutex": "cpp",
+        "__bits": "cpp"
     },
     "python.analysis.extraPaths": [
         "./python"
