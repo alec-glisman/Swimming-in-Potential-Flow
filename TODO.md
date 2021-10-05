@@ -32,8 +32,8 @@
 
 - Add quaternions to simulation
   - [x] Update GSD creation to also input quaternions
-  - [ ] Load quaternions on C++ startup
-  - [ ] Output quaternions on frame-write
+  - [x] Load quaternions on C++ startup
+  - [x] Output quaternions on frame-write
 
 - Create new hydrodynamics class
   - [ ] Update `CMakeLists.txt` to get new file version in build.
