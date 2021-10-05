@@ -17,6 +17,14 @@ systemData::systemData(std::string inputGSDFile, std::string outputDir)
     spdlog::get(m_logName)->flush();
 }
 
+systemData::~systemData()
+{
+    spdlog::get(m_logName)->info("systemData destructor called");
+    gsd_close(m_handle.get());
+    spdlog::get(m_logName)->flush();
+}
+
+
 void
 systemData::parseGSD()
 {
@@ -26,6 +34,23 @@ systemData::parseGSD()
     m_GSD_parsed = true;
 
     checkInput();
+}
+
+void
+systemData::check_gsd_return()
+{
+    if (m_return_val != 0)
+    {
+        spdlog::get(m_logName)->error("m_return_val = {0}", m_return_val);
+        spdlog::get(m_logName)->flush();
+        throw std::runtime_error("Error parsing GSD file");
+    }
+    if (m_return_bool == false)
+    {
+        spdlog::get(m_logName)->error("m_return_bool = {0}", m_return_bool);
+        spdlog::get(m_logName)->flush();
+        throw std::runtime_error("Error parsing GSD file");
+    }
 }
 
 void
@@ -46,30 +71,6 @@ systemData::checkInput()
            "Velocity vector has incorrect length, not 3N");
     assert(m_accelerations.size() == m_num_DoF * m_num_particles &&
            "Acceleration vector has incorrect length, not 3N");
-}
-
-systemData::~systemData()
-{
-    spdlog::get(m_logName)->info("systemData destructor called");
-    gsd_close(m_handle.get());
-    spdlog::get(m_logName)->flush();
-}
-
-void
-systemData::check_gsd_return()
-{
-    if (m_return_val != 0)
-    {
-        spdlog::get(m_logName)->error("m_return_val = {0}", m_return_val);
-        spdlog::get(m_logName)->flush();
-        throw std::runtime_error("Error parsing GSD file");
-    }
-    if (m_return_bool == false)
-    {
-        spdlog::get(m_logName)->error("m_return_bool = {0}", m_return_bool);
-        spdlog::get(m_logName)->flush();
-        throw std::runtime_error("Error parsing GSD file");
-    }
 }
 
 void
