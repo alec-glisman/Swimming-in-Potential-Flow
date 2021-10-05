@@ -52,7 +52,7 @@ void
 rungeKutta4::integrate()
 {
     /* REVIEW[epic=Change,seq=1]: Change integration schemes for different systems */
-    const bool integrage_from_acc{false};
+    const bool integrage_from_acc{true};
 
     if (integrage_from_acc)
     {
@@ -68,7 +68,7 @@ void
 rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
 {
     /* REVIEW[epic=Change,seq=1]: Change integration schemes for different systems */
-    const bool useUdwadiaMethod{false};
+    const bool useUdwadiaMethod{true};
     const bool useImageMethod{true}; // can be used for initial conditions or total time integration
 
     if (useUdwadiaMethod && dimensional_time > 0.0)
