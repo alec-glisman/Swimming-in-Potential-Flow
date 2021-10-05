@@ -58,8 +58,8 @@ wca_sigma = 0.0
 
 # Particle parameters
 n = 6
-types = ['Swimmer', 'Image']
-typeid = [0, 0, 0, 1, 1, 1]
+types = ['constrained', 'locater']
+typeid = [0, 1, 0, 0, 1, 0]
 
 # !SECTION (Parameters)
 
