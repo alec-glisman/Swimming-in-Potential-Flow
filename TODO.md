@@ -41,6 +41,7 @@
 
 - Move data and calculations to `simulationData` class
   - [ ] Load particle-typeID and group-ID on simulation startup (use for body and locater-point information)
+  - [ ] Make number of bodies a parameter
   - [ ] Add DoF vector (body center and orientation) for all kinematic quantities (used in integration and EoM).
   - [ ] Move kinematic constraints (velocities and accelerations) from integration to data class
     - [ ] Add setter/getter functions (pass as constant)
@@ -64,6 +65,7 @@
 
 - Integration
   - [ ] Check that udwadia method is being used
+  - [ ] Update linear constraint system such that the only constraint is the quaternion unit norm for each body.
   - [ ] move hyper-parameter booleans into `systemData` with clear comment anchors saying how to change (and when)
   - [ ] Update acceleration calculations
 
