@@ -75,9 +75,11 @@ systemData::check_gsd_return()
 void
 systemData::resizeTensors()
 {
-    int len = m_num_DoF * m_num_particles;
+    int orientational_tensor_len = 4 * m_num_particles;
+    int spatial_tensor_len       = m_num_spatial_dim * m_num_particles;
 
-    m_positions.noalias()     = Eigen::VectorXd::Zero(len);
-    m_velocities.noalias()    = Eigen::VectorXd::Zero(len);
-    m_accelerations.noalias() = Eigen::VectorXd::Zero(len);
+    m_orientations.noalias()  = Eigen::VectorXd::Zero(orientational_tensor_len);
+    m_positions.noalias()     = Eigen::VectorXd::Zero(spatial_tensor_len);
+    m_velocities.noalias()    = Eigen::VectorXd::Zero(spatial_tensor_len);
+    m_accelerations.noalias() = Eigen::VectorXd::Zero(spatial_tensor_len);
 }
