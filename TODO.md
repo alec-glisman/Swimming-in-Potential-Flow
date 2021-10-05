@@ -35,10 +35,6 @@
   - [x] Load quaternions on C++ startup
   - [x] Output quaternions on frame-write
 
-- Create new hydrodynamics class
-  - [ ] Update `CMakeLists.txt` to get new file version in build.
-  - [ ] Copy information from previous files
-
 - Move data and calculations to `simulationData` class
   - [ ] Load particle-typeID and group-ID on simulation startup (use for body and locater-point information)
   - [ ] Make number of bodies a parameter
