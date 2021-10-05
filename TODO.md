@@ -36,7 +36,7 @@
   - [x] Output quaternions on frame-write
 
 - Move data and calculations to `simulationData` class
-  - [ ] Load particle-typeID and group-ID on simulation startup (use for body and locater-point information)
+  - [x] Load particle-typeID and group-ID on simulation startup (use for body and locater-point information)
   - [ ] Make number of bodies a parameter
   - [ ] Add DoF vector (body center and orientation) for all kinematic quantities (used in integration and EoM).
   - [ ] Move kinematic constraints (velocities and accelerations) from integration to data class

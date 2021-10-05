@@ -249,12 +249,25 @@ GSDUtil::readParameters()
     m_system->setWcaSigma(wca_sigma);
     spdlog::get(m_logName)->info("wca_sigma : {0}", wca_sigma);
     assert(wca_sigma == m_system->wcaSigma() && "wca_sigma not properly set");
+
+    spdlog::get(m_logName)->info("GSD parsing typeid");
+    uint32_t types[m_system->numParticles()];
+    return_bool = readChunk(&types, m_frame, "particles/typeid", m_system->numParticles() * 4,
+                            m_system->numParticles());
+    m_system->setReturnBool(return_bool);
+    m_system->check_gsd_return();
+    Eigen::VectorXi type_id = Eigen::VectorXi::Zero(m_system->numParticles());
+    for (int i = 0; i < m_system->numParticles(); i++)
+    {
+        type_id(i) = types[i];
+        spdlog::get(m_logName)->info("Particle {0} typeid : {1}", i + 1, types[i]);
+    }
+    m_system->setParticleTypeId(type_id);
 }
 
 void
 GSDUtil::readParticles()
 {
-
     // quaternions
     spdlog::get(m_logName)->info("GSD parsing orientations");
     double d_quat[4 * m_system->numParticles()];
