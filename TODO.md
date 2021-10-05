@@ -31,7 +31,7 @@
 ## Updated hydrodynamics
 
 - Add quaternions to simulation
-  - [ ] Update GSD creation to also input quaternions
+  - [x] Update GSD creation to also input quaternions
   - [ ] Load quaternions on C++ startup
   - [ ] Output quaternions on frame-write
 
