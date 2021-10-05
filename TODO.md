@@ -28,6 +28,51 @@
 - [x] Perl script to run many simulations
 - [x] Python analysis script to analyze data and generate plots
 
+## Updated hydrodynamics
+
+- Add quaternions to simulation
+  - [ ] Update GSD creation to also input quaternions
+  - [ ] Load quaternions on C++ startup
+  - [ ] Output quaternions on frame-write
+
+- Create new hydrodynamics class
+  - [ ] Update `CMakeLists.txt` to get new file version in build.
+  - [ ] Copy information from previous files
+
+- Move data and calculations to `simulationData` class
+  - [ ] Load particle-typeID and group-ID on simulation startup (use for body and locater-point information)
+  - [ ] Add DoF vector (body center and orientation) for all kinematic quantities (used in integration and EoM).
+  - [ ] Move kinematic constraints (velocities and accelerations) from integration to data class
+    - [ ] Add setter/getter functions (pass as constant)
+  - [ ] Move mass matrices (and gradient) homes into this class.
+  - [ ] Update kinematic constraints in integration functions at each step (even intermediate steps)
+  - [ ] Add new data to `update()` function inside the class
+
+- General-use functions for data class
+  - [ ] Compute $\bm \epsilon$, $\tilde{\bm{\epsilon}}$, and $\tilde{\bm{\kappa}}$ in the constructor.
+  - [ ] Calculate $\bm{E}$ from an input 4-vector.
+  - [ ] Calculate rigid body motion tensors ($\bm{\Sigma}$, $\bm{A}$, $\nabla_{\xi} \bm{A}$)
+  - [ ] Calculate $\bm{C}^{(i)}$
+  - [ ] Calculate $\bm{\beta}$
+  - [ ] Move 3rd axis indexing function to data from hydrodynamics
+  - [ ] Write function to calculate contraction between 3rd order tensor with 2nd order tensor (both left and right)
+
+- General-use functions for hydrodynamics
+  - [ ] Update $\nabla_{R} \bm{M}$ calculation with $\bm{\beta}$
+  - [ ] Compute the $\bm{N}^{(i)}$ 3rd order tensors and $\tilde{\mathbf{M}}$ 2nd order tensors
+  - [ ] Update how hydrodynamic forces are calculated
+
+- Integration
+  - [ ] Check that udwadia method is being used
+  - [ ] move hyper-parameter booleans into `systemData` with clear comment anchors saying how to change (and when)
+  - [ ] Update acceleration calculations
+
+- Verifications
+  - [ ] Check that all quaternions obey the unit-norm requirement
+  - [ ] Check that the collinear swimmer (isolated) recovers the expected results
+  - [ ] Verify collinear constraint upheld for the wall system.
+  - [ ] Verify that the collinear swimmer wall system recovers the isolated result when swimmers are very far from wall.
+
 ## Additional features
 
 - [x] Make kinematic variables in systemData class private
