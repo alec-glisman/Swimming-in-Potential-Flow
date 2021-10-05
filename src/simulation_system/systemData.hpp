@@ -46,6 +46,54 @@ class systemData : public std::enable_shared_from_this<systemData>
     void
     resizeTensors();
 
+  private:
+    void
+    checkInput();
+
+    // classes
+    std::shared_ptr<GSDUtil> m_gsdUtil;
+
+    // constructor
+    std::string m_inputGSDFile;
+    std::string m_outputDir;
+
+    // logging
+    std::string       m_logFile;
+    const std::string m_logName{"systemData"};
+
+    // GSD
+    std::shared_ptr<gsd_handle> m_handle{new gsd_handle};
+    int                         m_return_val{0};
+    bool                        m_return_bool{true};
+    bool                        m_GSD_parsed{false};
+
+    // kinematics
+    Eigen::VectorXd m_positions;
+    Eigen::VectorXd m_velocities;
+    Eigen::VectorXd m_accelerations;
+
+    // degrees of freedom
+    int m_num_dim{-1};
+    int m_num_particles{-1};
+
+    // integrator
+    double m_dt{-1.0};
+    double m_tf{-1.0};
+    double m_t{0.0};
+    double m_tau{-1.0};
+    int    m_timestep{-1};
+    int    m_num_steps_output{-1};
+
+    // material parameters
+    double m_fluid_density{-1};
+    double m_particle_density{-1};
+
+    // potential parameters
+    double m_wca_epsilon{-1};
+    double m_wca_sigma{-1};
+
+    // setters/getters
+  public:
     std::string
     outputDir() const
     {
@@ -252,52 +300,6 @@ class systemData : public std::enable_shared_from_this<systemData>
     {
         m_accelerations = accelerations;
     }
-
-  private:
-    void
-    checkInput();
-
-    // classes
-    std::shared_ptr<GSDUtil> m_gsdUtil;
-
-    // constructor
-    std::string m_inputGSDFile;
-    std::string m_outputDir;
-
-    // logging
-    std::string       m_logFile;
-    const std::string m_logName{"systemData"};
-
-    // GSD
-    std::shared_ptr<gsd_handle> m_handle{new gsd_handle};
-    int                         m_return_val{0};
-    bool                        m_return_bool{true};
-    bool                        m_GSD_parsed{false};
-
-    // kinematics
-    Eigen::VectorXd m_positions;
-    Eigen::VectorXd m_velocities;
-    Eigen::VectorXd m_accelerations;
-
-    // degrees of freedom
-    int m_num_dim{-1};
-    int m_num_particles{-1};
-
-    // integrator
-    double m_dt{-1.0};
-    double m_tf{-1.0};
-    double m_t{0.0};
-    double m_tau{-1.0};
-    int    m_timestep{-1};
-    int    m_num_steps_output{-1};
-
-    // material parameters
-    double m_fluid_density{-1};
-    double m_particle_density{-1};
-
-    // potential parameters
-    double m_wca_epsilon{-1};
-    double m_wca_sigma{-1};
 };
 
 #endif
