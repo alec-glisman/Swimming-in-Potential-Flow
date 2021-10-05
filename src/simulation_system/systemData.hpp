@@ -71,6 +71,10 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::VectorXd m_velocities;
     Eigen::VectorXd m_accelerations;
 
+    // particle parameters
+    Eigen::VectorXi m_particle_type_id; // REVIEW[epic=assumptions] {0: locater particle, 1:
+                                        // constrained particle}
+
     // degrees of freedom
     int m_num_DoF{-1};
     int m_num_spatial_dim{-1};
@@ -324,6 +328,17 @@ class systemData : public std::enable_shared_from_this<systemData>
     setAccelerations(const Eigen::VectorXd& accelerations)
     {
         m_accelerations = accelerations;
+    }
+
+    const Eigen::VectorXi&
+    particleTypeId() const
+    {
+        return m_particle_type_id;
+    }
+    void
+    setParticleTypeId(const Eigen::VectorXi& particle_type_id)
+    {
+        m_particle_type_id = particle_type_id;
     }
 };
 
