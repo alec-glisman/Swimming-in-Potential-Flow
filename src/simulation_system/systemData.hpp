@@ -66,6 +66,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     bool                        m_GSD_parsed{false};
 
     // kinematics
+    Eigen::VectorXd m_orientations; // unit quaternions
     Eigen::VectorXd m_positions;
     Eigen::VectorXd m_velocities;
     Eigen::VectorXd m_accelerations;
@@ -93,39 +94,11 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     // setters/getters
   public:
+    // data i/o
     std::string
     outputDir() const
     {
         return m_outputDir;
-    }
-
-    void
-    setReturnVal(int return_val)
-    {
-        m_return_val = return_val;
-    }
-
-    std::shared_ptr<gsd_handle>
-    handle() const
-    {
-        return m_handle;
-    }
-
-    int
-    timestep() const
-    {
-        return m_timestep;
-    }
-    void
-    setTimestep(int timestep)
-    {
-        m_timestep = timestep;
-    }
-
-    void
-    setReturnBool(bool return_bool)
-    {
-        m_return_bool = return_bool;
     }
 
     std::string
@@ -134,6 +107,38 @@ class systemData : public std::enable_shared_from_this<systemData>
         return m_inputGSDFile;
     }
 
+    // GSD data
+    std::shared_ptr<gsd_handle>
+    handle() const
+    {
+        return m_handle;
+    }
+
+    std::shared_ptr<GSDUtil>
+    gsdUtil() const
+    {
+        return m_gsdUtil;
+    }
+
+    bool
+    gSDParsed() const
+    {
+        return m_GSD_parsed;
+    }
+
+    void
+    setReturnVal(int return_val)
+    {
+        m_return_val = return_val;
+    }
+
+    void
+    setReturnBool(bool return_bool)
+    {
+        m_return_bool = return_bool;
+    }
+
+    // degrees of freedom
     int
     numDoF()
     {
@@ -156,6 +161,7 @@ class systemData : public std::enable_shared_from_this<systemData>
         m_num_particles = num_particles;
     }
 
+    // integrator
     double
     dt() const
     {
@@ -189,6 +195,28 @@ class systemData : public std::enable_shared_from_this<systemData>
         m_tf = tf;
     }
 
+    double
+    tau() const
+    {
+        return m_tau;
+    }
+    void
+    setTau(double tau)
+    {
+        m_tau = tau;
+    }
+
+    int
+    timestep() const
+    {
+        return m_timestep;
+    }
+    void
+    setTimestep(int timestep)
+    {
+        m_timestep = timestep;
+    }
+
     int
     numStepsOutput() const
     {
@@ -200,6 +228,7 @@ class systemData : public std::enable_shared_from_this<systemData>
         m_num_steps_output = num_steps_output;
     }
 
+    // material parameters
     double
     fluidDensity() const
     {
@@ -222,6 +251,7 @@ class systemData : public std::enable_shared_from_this<systemData>
         m_particle_density = particle_density;
     }
 
+    // potential parameters
     double
     wcaSigma() const
     {
@@ -244,27 +274,16 @@ class systemData : public std::enable_shared_from_this<systemData>
         m_wca_epsilon = wca_epsilon;
     }
 
-    std::shared_ptr<GSDUtil>
-    gsdUtil() const
+    // kinematics
+    const Eigen::VectorXd&
+    orientations() const
     {
-        return m_gsdUtil;
-    }
-
-    double
-    tau() const
-    {
-        return m_tau;
+        return m_orientations;
     }
     void
-    setTau(double tau)
+    setOrientations(const Eigen::VectorXd& orientations)
     {
-        m_tau = tau;
-    }
-
-    bool
-    gSDParsed() const
-    {
-        return m_GSD_parsed;
+        m_orientations = orientations;
     }
 
     const Eigen::VectorXd&
