@@ -77,6 +77,12 @@ def initializeGSD():
 
 def setInitialConditions():
 
+    # orientation
+    quat = np.zeros((n, 4), dtype=np.double)
+    # unit quaternion with rotation angle = zero
+    no_rotation_quat = np.array([1.0, 0.0, 0.0, 0.0], dtype=np.double)
+    quat = np.tile(no_rotation_quat, (n, 1))
+
     # position
     pos = np.zeros((n, 3), dtype=np.double)
     pos[0] = [R_avg, 0.0, Z_height]
@@ -93,7 +99,7 @@ def setInitialConditions():
     acc = np.zeros_like(pos, dtype=np.double)
 
     # output data
-    gsd_class.setKinematics(pos, vel, acc)
+    gsd_class.setKinematics(quat, pos, vel, acc)
 
 
 def setSystemData():
