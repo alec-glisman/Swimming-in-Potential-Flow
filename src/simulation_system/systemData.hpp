@@ -143,6 +143,63 @@ class systemData : public std::enable_shared_from_this<systemData>
         m_return_bool = return_bool;
     }
 
+    // kinematics
+    const Eigen::VectorXd&
+    orientations() const
+    {
+        return m_orientations;
+    }
+    void
+    setOrientations(const Eigen::VectorXd& orientations)
+    {
+        m_orientations = orientations;
+    }
+
+    const Eigen::VectorXd&
+    positions() const
+    {
+        return m_positions;
+    }
+    void
+    setPositions(const Eigen::VectorXd& positions)
+    {
+        m_positions = positions;
+    }
+
+    const Eigen::VectorXd&
+    velocities() const
+    {
+        return m_velocities;
+    }
+    void
+    setVelocities(const Eigen::VectorXd& velocities)
+    {
+        m_velocities = velocities;
+    }
+
+    const Eigen::VectorXd&
+    accelerations() const
+    {
+        return m_accelerations;
+    }
+    void
+    setAccelerations(const Eigen::VectorXd& accelerations)
+    {
+        m_accelerations = accelerations;
+    }
+
+    // particle parameters
+    const Eigen::VectorXi&
+    particleTypeId() const
+    {
+        return m_particle_type_id;
+    }
+    void
+    setParticleTypeId(const Eigen::VectorXi& particle_type_id)
+    {
+        m_particle_type_id = particle_type_id;
+    }
+
     // degrees of freedom
     int
     numDoF()
@@ -283,62 +340,6 @@ class systemData : public std::enable_shared_from_this<systemData>
     setWcaEpsilon(double wca_epsilon)
     {
         m_wca_epsilon = wca_epsilon;
-    }
-
-    // kinematics
-    const Eigen::VectorXd&
-    orientations() const
-    {
-        return m_orientations;
-    }
-    void
-    setOrientations(const Eigen::VectorXd& orientations)
-    {
-        m_orientations = orientations;
-    }
-
-    const Eigen::VectorXd&
-    positions() const
-    {
-        return m_positions;
-    }
-    void
-    setPositions(const Eigen::VectorXd& positions)
-    {
-        m_positions = positions;
-    }
-
-    const Eigen::VectorXd&
-    velocities() const
-    {
-        return m_velocities;
-    }
-    void
-    setVelocities(const Eigen::VectorXd& velocities)
-    {
-        m_velocities = velocities;
-    }
-
-    const Eigen::VectorXd&
-    accelerations() const
-    {
-        return m_accelerations;
-    }
-    void
-    setAccelerations(const Eigen::VectorXd& accelerations)
-    {
-        m_accelerations = accelerations;
-    }
-
-    const Eigen::VectorXi&
-    particleTypeId() const
-    {
-        return m_particle_type_id;
-    }
-    void
-    setParticleTypeId(const Eigen::VectorXi& particle_type_id)
-    {
-        m_particle_type_id = particle_type_id;
     }
 };
 
