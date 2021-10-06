@@ -272,9 +272,11 @@ void
 GSDUtil::readParticles()
 {
     // initialize vectors
+    int combined_tensor_len      = 7 * m_system->numParticles();
     int orientational_tensor_len = 4 * m_system->numParticles();
     int spatial_tensor_len       = 3 * m_system->numParticles();
 
+    Eigen::VectorXd n7_vec = Eigen::VectorXd::Zero(combined_tensor_len);
     Eigen::VectorXd n4_vec = Eigen::VectorXd::Zero(orientational_tensor_len);
     Eigen::VectorXd n3_vec = Eigen::VectorXd::Zero(spatial_tensor_len);
 
@@ -282,6 +284,10 @@ GSDUtil::readParticles()
     m_system->setPositionsParticles(n3_vec);
     m_system->setVelocitiesParticles(n3_vec);
     m_system->setAccelerationsParticles(n3_vec);
+
+    m_system->setPositionsBodies(n7_vec);
+    m_system->setVelocitiesBodies(n7_vec);
+    m_system->setAccelerationsBodies(n7_vec);
 
     // quaternions
     spdlog::get(m_logName)->info("GSD parsing orientationsParticles");
@@ -357,6 +363,39 @@ GSDUtil::readParticles()
             d_acc[3 * i + 1], d_acc[3 * i + 2]);
     }
     m_system->setAccelerationsParticles(accelerations);
+
+    spdlog::get(m_logName)->info("Calculating body kinematics");
+    spdlog::get(m_logName)->critical(
+        "Time derivatives of orientational components are assumed zero.");
+    Eigen::VectorXd positions_bodies     = n7_vec;
+    Eigen::VectorXd velocities_bodies    = n7_vec;
+    Eigen::VectorXd accelerations_bodies = n7_vec;
+    int             body_count{0};
+
+    for (int i = 0; i < m_system->numParticles(); i++)
+    {
+        // only fill for locater particles
+        if (m_system->particleTypeId()(i) == 1)
+        {
+            positions_bodies.segment<3>(7 * body_count).noalias() =
+                m_system->positionsParticles().segment<3>(3 * i);
+            positions_bodies.segment<4>(7 * body_count + 3).noalias() =
+                m_system->orientationsParticles().segment<4>(3 * i);
+
+            velocities_bodies.segment<3>(7 * body_count).noalias() =
+                m_system->velocitiesParticles().segment<3>(3 * i);
+
+            accelerations_bodies.segment<3>(7 * body_count).noalias() =
+                m_system->accelerationsParticles().segment<3>(3 * i);
+
+            body_count += 1;
+        }
+    }
+    assert(body_count == m_system->numBodies() && "Incorrect number of bodies filled");
+
+    m_system->setPositionsBodies(positions_bodies);
+    m_system->setVelocitiesBodies(velocities_bodies);
+    m_system->setAccelerationsBodies(accelerations_bodies);
 }
 
 void

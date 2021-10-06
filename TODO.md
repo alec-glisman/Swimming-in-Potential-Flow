@@ -38,7 +38,7 @@
 - Move data and calculations to `simulationData` class
   - [x] Load particle-typeID and group-ID on simulation startup (use for body and locater-point information)
   - [x] Make number of bodies a parameter
-  - [ ] Add DoF vector (body center and orientation) for all kinematic quantities (used in integration and EoM).
+  - [x] Add DoF vector (body center and orientation) for all kinematic quantities (used in integration and EoM).
   - [ ] Move kinematic constraints (velocities and accelerations) from integration to data class
     - [ ] Add setter/getter functions (pass as constant)
   - [ ] Move mass matrices (and gradient) homes into this class.
