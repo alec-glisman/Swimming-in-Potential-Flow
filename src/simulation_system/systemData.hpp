@@ -229,6 +229,17 @@ class systemData : public std::enable_shared_from_this<systemData>
         m_num_particles = num_particles;
     }
 
+    int
+    numBodies() const
+    {
+        return m_num_bodies;
+    }
+    void
+    setNumBodies(int num_bodies)
+    {
+        m_num_bodies = num_bodies;
+    }
+
     // integrator
     double
     dt() const
