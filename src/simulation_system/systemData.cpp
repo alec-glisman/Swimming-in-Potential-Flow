@@ -87,15 +87,3 @@ systemData::checkInput()
     assert(m_wca_epsilon >= 0.0 && "WCA_epsilon must be non-negative.");
     assert(m_wca_sigma >= 0.0 && "WCA_sigma must be non-negative.");
 }
-
-void
-systemData::resizeTensors()
-{
-    int orientational_tensor_len = 4 * m_num_particles;
-    int spatial_tensor_len       = m_num_spatial_dim * m_num_particles;
-
-    m_orientations.noalias()  = Eigen::VectorXd::Zero(orientational_tensor_len);
-    m_positions.noalias()     = Eigen::VectorXd::Zero(spatial_tensor_len);
-    m_velocities.noalias()    = Eigen::VectorXd::Zero(spatial_tensor_len);
-    m_accelerations.noalias() = Eigen::VectorXd::Zero(spatial_tensor_len);
-}

@@ -43,9 +43,6 @@ class systemData : public std::enable_shared_from_this<systemData>
     void
     check_gsd_return();
 
-    void
-    resizeTensors();
-
   private:
     void
     checkInput();
