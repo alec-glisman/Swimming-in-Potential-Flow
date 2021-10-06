@@ -63,10 +63,14 @@ class systemData : public std::enable_shared_from_this<systemData>
     bool                        m_GSD_parsed{false};
 
     // kinematics
-    Eigen::VectorXd m_orientations_particles;
-    Eigen::VectorXd m_positions_particles;
-    Eigen::VectorXd m_velocities_particles;
-    Eigen::VectorXd m_accelerations_particles;
+    Eigen::VectorXd m_orientations_particles;  // [3N x 1]
+    Eigen::VectorXd m_positions_particles;     // [3N x 1]
+    Eigen::VectorXd m_velocities_particles;    // [3N x 1]
+    Eigen::VectorXd m_accelerations_particles; // [3N x 1]
+
+    Eigen::VectorXd m_positions_bodies;     // [7M x 1] (both linear and angular D.o.F.)
+    Eigen::VectorXd m_velocities_bodies;    // [7M x 1] (both linear and angular D.o.F.)
+    Eigen::VectorXd m_accelerations_bodies; // [7M x 1] (both linear and angular D.o.F.)
 
     // particle parameters
     Eigen::VectorXi m_particle_type_id; // REVIEW[epic=assumptions] {0: locater particle, 1:
@@ -183,6 +187,39 @@ class systemData : public std::enable_shared_from_this<systemData>
     setAccelerationsParticles(const Eigen::VectorXd& accelerations_particles)
     {
         m_accelerations_particles = accelerations_particles;
+    }
+
+    Eigen::VectorXd
+    positionsBodies() const
+    {
+        return m_positions_bodies;
+    }
+    void
+    setPositionsBodies(const Eigen::VectorXd& positions_bodies)
+    {
+        m_positions_bodies = positions_bodies;
+    }
+
+    Eigen::VectorXd
+    velocitiesBodies() const
+    {
+        return m_velocities_bodies;
+    }
+    void
+    setVelocitiesBodies(const Eigen::VectorXd& velocities_bodies)
+    {
+        m_velocities_bodies = velocities_bodies;
+    }
+
+    Eigen::VectorXd
+    accelerationsBodies() const
+    {
+        return m_accelerations_bodies;
+    }
+    void
+    setAccelerationsBodies(const Eigen::VectorXd& accelerations_bodies)
+    {
+        m_accelerations_bodies = accelerations_bodies;
     }
 
     // particle parameters
