@@ -63,10 +63,10 @@ class systemData : public std::enable_shared_from_this<systemData>
     bool                        m_GSD_parsed{false};
 
     // kinematics
-    Eigen::VectorXd m_orientations; // unit quaternions
-    Eigen::VectorXd m_positions;
-    Eigen::VectorXd m_velocities;
-    Eigen::VectorXd m_accelerations;
+    Eigen::VectorXd m_orientations_particles;
+    Eigen::VectorXd m_positions_particles;
+    Eigen::VectorXd m_velocities_particles;
+    Eigen::VectorXd m_accelerations_particles;
 
     // particle parameters
     Eigen::VectorXi m_particle_type_id; // REVIEW[epic=assumptions] {0: locater particle, 1:
@@ -142,47 +142,47 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     // kinematics
     const Eigen::VectorXd&
-    orientations() const
+    orientationsParticles() const
     {
-        return m_orientations;
+        return m_orientations_particles;
     }
     void
-    setOrientations(const Eigen::VectorXd& orientations)
+    setOrientationsParticles(const Eigen::VectorXd& orientations_particles)
     {
-        m_orientations = orientations;
+        m_orientations_particles = orientations_particles;
     }
 
     const Eigen::VectorXd&
-    positions() const
+    positionsParticles() const
     {
-        return m_positions;
+        return m_positions_particles;
     }
     void
-    setPositions(const Eigen::VectorXd& positions)
+    setPositionsParticles(const Eigen::VectorXd& positions_particles)
     {
-        m_positions = positions;
+        m_positions_particles = positions_particles;
     }
 
     const Eigen::VectorXd&
-    velocities() const
+    velocitiesParticles() const
     {
-        return m_velocities;
+        return m_velocities_particles;
     }
     void
-    setVelocities(const Eigen::VectorXd& velocities)
+    setVelocitiesParticles(const Eigen::VectorXd& velocities_particles)
     {
-        m_velocities = velocities;
+        m_velocities_particles = velocities_particles;
     }
 
     const Eigen::VectorXd&
-    accelerations() const
+    accelerationsParticles() const
     {
-        return m_accelerations;
+        return m_accelerations_particles;
     }
     void
-    setAccelerations(const Eigen::VectorXd& accelerations)
+    setAccelerationsParticles(const Eigen::VectorXd& accelerations_particles)
     {
-        m_accelerations = accelerations;
+        m_accelerations_particles = accelerations_particles;
     }
 
     // particle parameters

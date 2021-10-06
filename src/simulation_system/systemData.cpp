@@ -59,13 +59,13 @@ systemData::checkInput()
 {
     spdlog::get(m_logName)->info("Input checking assertions");
 
-    assert(m_positions.size() == 4 * m_num_particles &&
+    assert(m_positions_particles.size() == 4 * m_num_particles &&
            "Orientation (unit quaternions) vector has incorrect length, not 4N.");
-    assert(m_positions.size() == 3 * m_num_particles &&
+    assert(m_positions_particles.size() == 3 * m_num_particles &&
            "Position vector has incorrect length, not 3N.");
-    assert(m_velocities.size() == 3 * m_num_particles &&
+    assert(m_velocities_particles.size() == 3 * m_num_particles &&
            "Velocity vector has incorrect length, not 3N.");
-    assert(m_accelerations.size() == 3 * m_num_particles &&
+    assert(m_accelerations_particles.size() == 3 * m_num_particles &&
            "Acceleration vector has incorrect length, not 3N.");
 
     assert(m_particle_type_id.size() == m_num_particles &&
