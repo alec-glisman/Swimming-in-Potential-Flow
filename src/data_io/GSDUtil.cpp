@@ -159,9 +159,6 @@ GSDUtil::readHeader()
         throw std::runtime_error("Error reading GSD file");
     }
     assert(int(N) == m_system->numParticles() && "number of particles not properly set");
-
-    // Initialize tensors
-    m_system->resizeTensors();
 }
 
 void
@@ -274,6 +271,18 @@ GSDUtil::readParameters()
 void
 GSDUtil::readParticles()
 {
+    // initialize vectors
+    int orientational_tensor_len = 4 * m_system->numParticles();
+    int spatial_tensor_len       = 3 * m_system->numParticles();
+
+    Eigen::VectorXd n4_vec = Eigen::VectorXd::Zero(orientational_tensor_len);
+    Eigen::VectorXd n3_vec = Eigen::VectorXd::Zero(spatial_tensor_len);
+
+    m_system->setOrientations(n4_vec);
+    m_system->setPositions(n3_vec);
+    m_system->setVelocities(n3_vec);
+    m_system->setAccelerations(n3_vec);
+
     // quaternions
     spdlog::get(m_logName)->info("GSD parsing orientations");
     double d_quat[4 * m_system->numParticles()];
