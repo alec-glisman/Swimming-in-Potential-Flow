@@ -44,6 +44,8 @@ GSDUtil::GSDUtil(std::shared_ptr<systemData> sys)
     readParameters();
     readParticles();
 
+    readSystemSpecifics();
+
     spdlog::get(m_logName)->info("Constructor complete");
     spdlog::get(m_logName)->flush();
 }
@@ -396,6 +398,54 @@ GSDUtil::readParticles()
     m_system->setPositionsBodies(positions_bodies);
     m_system->setVelocitiesBodies(velocities_bodies);
     m_system->setAccelerationsBodies(accelerations_bodies);
+}
+
+void
+GSDUtil::readSystemSpecifics()
+{
+    spdlog::get(m_logName)->info("Running writeSystemSpecifics()");
+
+    /* REVIEW[epic=Change]: set specific parameters */
+
+    // oscillation velocity amplitude
+    spdlog::get(m_logName)->info("GSD parsing U0");
+    double U0{-1.0};
+    auto   return_bool = readChunk(&U0, m_frame, "log/swimmer/U0", 8);
+    m_system->setReturnBool(return_bool);
+    m_system->check_gsd_return();
+    m_system->setSysSpecU0(U0);
+    spdlog::get(m_logName)->info("U_0 : {0}", U0);
+    assert(m_system->sysSpecU0() == U0 && "U0 not properly set");
+
+    // oscillation frequency
+    spdlog::get(m_logName)->info("GSD parsing omega");
+    double omega{-1.0};
+    return_bool = readChunk(&omega, m_frame, "log/swimmer/omega", 8);
+    m_system->setReturnBool(return_bool);
+    m_system->check_gsd_return();
+    m_system->setSysSpecOmega(omega);
+    spdlog::get(m_logName)->info("omega : {0}", omega);
+    assert(m_system->sysSpecOmega() == omega && "omega not properly set");
+
+    // phase shift between oscillators
+    spdlog::get(m_logName)->info("GSD parsing phaseShift");
+    double phase_shift{-1.0};
+    return_bool = readChunk(&phase_shift, m_frame, "log/swimmer/phase_shift", 8);
+    m_system->setReturnBool(return_bool);
+    m_system->check_gsd_return();
+    m_system->setSysSpecPhaseShift(phase_shift);
+    spdlog::get(m_logName)->info("phase_shift : {0}", phase_shift);
+    assert(m_system->sysSpecPhaseShift() == phase_shift && "phase_shift not properly set");
+
+    // average separation
+    spdlog::get(m_logName)->info("GSD parsing Ravg");
+    double R_avg{-1.0};
+    return_bool = readChunk(&R_avg, m_frame, "log/swimmer/R_avg", 8);
+    m_system->setReturnBool(return_bool);
+    m_system->check_gsd_return();
+    m_system->setSysSpecRAvg(R_avg);
+    spdlog::get(m_logName)->info("RAvg : {0}", R_avg);
+    assert(m_system->sysSpecRAvg() == R_avg && "R_avg not properly set");
 }
 
 void

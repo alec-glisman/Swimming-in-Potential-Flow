@@ -39,9 +39,8 @@
   - [x] Load particle-typeID and group-ID on simulation startup (use for body and locater-point information)
   - [x] Make number of bodies a parameter
   - [x] Add DoF vector (body center and orientation) for all kinematic quantities (used in integration and EoM).
-  - [ ] Move kinematic constraints (velocities and accelerations) from integration to data class
-    - [ ] Add setter/getter functions (pass as constant)
-  - [ ] Move mass matrices (and gradient) homes into this class.
+  - [x] Move kinematic constraints (velocities and accelerations) from integration to data class
+    - [x] Add setter/getter functions (pass as constant)
   - [ ] Update kinematic constraints in integration functions at each step (even intermediate steps)
   - [ ] Add new data to `update()` function inside the class
 
@@ -52,6 +51,7 @@
   - [ ] Calculate $\bm{C}^{(i)}$
   - [ ] Calculate $\bm{\beta}$
   - [ ] Move 3rd axis indexing function to data from hydrodynamics
+  - [ ] Move crossProduct matrix function from hydrodynamics
   - [ ] Write function to calculate contraction between 3rd order tensor with 2nd order tensor (both left and right)
 
 - General-use functions for hydrodynamics
@@ -63,7 +63,7 @@
   - [ ] Check that udwadia method is being used
   - [ ] Update linear constraint system such that the only constraint is the quaternion unit norm for each body.
   - [ ] move hyper-parameter booleans into `systemData` with clear comment anchors saying how to change (and when)
-  - [ ] Update acceleration calculations
+  - [ ] Update acceleration calculations (only use body DoF and also output particle DoF)
 
 - Verifications
   - [ ] Check that all quaternions obey the unit-norm requirement

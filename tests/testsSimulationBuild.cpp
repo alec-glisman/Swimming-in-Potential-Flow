@@ -39,7 +39,7 @@ TEST_CASE("Load and parse data from GSD file", "[GSD][I/O]")
     SECTION("Initialize simulation")
     {
         REQUIRE_NOTHROW(system = std::make_shared<systemData>(inputDataFile, outputDir));
-        REQUIRE_NOTHROW(system->parseGSD());
+        REQUIRE_NOTHROW(system->initializeData());
 
         REQUIRE_NOTHROW(eng = std::make_shared<engine>(system));
     }

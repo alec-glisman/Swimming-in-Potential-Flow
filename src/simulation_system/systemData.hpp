@@ -38,14 +38,41 @@ class systemData : public std::enable_shared_from_this<systemData>
     ~systemData();
 
     void
-    parseGSD();
+    check_gsd_return();
 
     void
-    check_gsd_return();
+    initializeData();
+
+    void
+    updateConstraints(double time);
 
   private:
     void
+    parseGSD();
+
+    void
     checkInput();
+
+    void
+    velocitiesArticulation(double time);
+
+    void
+    accelerationsArticulation(double time);
+
+    void
+    locaterPointLocations();
+
+    void
+    udwadiaLinearSystem(double time);
+
+    /* Function takes in vector in vector cross-product expression: c = a \times b
+     * vec must be 'a' in above equation
+     * Output is the matrix representation of 'a \times' operator */
+    void
+    crossProdMat(const Eigen::Vector3d& vec, Eigen::Matrix3d& mat)
+    {
+        mat << 0, -vec(2), vec(1), vec(2), 0, -vec(0), -vec(1), vec(0), 0;
+    };
 
     // data i/o
     std::string m_inputGSDFile;
@@ -62,25 +89,47 @@ class systemData : public std::enable_shared_from_this<systemData>
     bool                        m_return_bool{true};
     bool                        m_GSD_parsed{false};
 
-    // kinematics
-    Eigen::VectorXd m_orientations_particles;  // [3N x 1]
-    Eigen::VectorXd m_positions_particles;     // [3N x 1]
-    Eigen::VectorXd m_velocities_particles;    // [3N x 1]
-    Eigen::VectorXd m_accelerations_particles; // [3N x 1]
+    /* REVIEW[epic=Change,order=0]: System specifi data, change parameters stored for different
+     * systems */
+    // Swimming kinematic constraints
+    double m_sys_spec_U0{-1.0};
+    double m_sys_spec_omega{-1.0};
+    double m_sys_spec_phase_shift{-1.0};
+    double m_sys_spec_R_avg{-1.0};
 
+    // Udwadia constraint linear system
+    Eigen::MatrixXd m_Udwadia_A;
+    Eigen::VectorXd m_Udwadia_b;
+
+    // "identity" tensors
+    const Eigen::Matrix3d m_I = Eigen::Matrix3d::Identity(3, 3);
+    Eigen::Matrix3d       m_I_tilde;
+    Eigen::Matrix3d       m_I_tilde_tilde;
+
+    // kinematics
     Eigen::VectorXd m_positions_bodies;     // [7M x 1] (both linear and angular D.o.F.)
     Eigen::VectorXd m_velocities_bodies;    // [7M x 1] (both linear and angular D.o.F.)
     Eigen::VectorXd m_accelerations_bodies; // [7M x 1] (both linear and angular D.o.F.)
 
+    Eigen::VectorXd m_orientations_particles;  // [4N x 1]
+    Eigen::VectorXd m_positions_particles;     // [3N x 1]
+    Eigen::VectorXd m_velocities_particles;    // [3N x 1]
+    Eigen::VectorXd m_accelerations_particles; // [3N x 1]
+
+    Eigen::VectorXd m_positions_locater_particles;          // [3M x 1]
+    Eigen::VectorXd m_velocities_particles_articulation;    // [3N x 1]
+    Eigen::VectorXd m_accelerations_particles_articulation; // [3N x 1]
+
     // particle parameters
-    Eigen::VectorXi m_particle_type_id; // REVIEW[epic=assumptions] {0: locater particle, 1:
-                                        // constrained particle}
+    Eigen::VectorXi m_particle_type_id; // REVIEW[epic=assumptions] {0: locater particle,
+                                        // 1: constrained particle}
 
     // degrees of freedom
-    int m_num_DoF{-1};
-    int m_num_spatial_dim{-1};
-    int m_num_particles{-1};
-    int m_num_bodies{-1};
+    int m_num_spatial_dim{-1}; // = 3
+    int m_num_particles{-1};   // = N
+    int m_num_bodies{-1};      // = M
+    int m_num_DoF{-1};         // = 6M
+    int m_num_constraints{-1}; // = M
 
     // integrator
     double m_dt{-1.0};
@@ -385,6 +434,74 @@ class systemData : public std::enable_shared_from_this<systemData>
     setWcaEpsilon(double wca_epsilon)
     {
         m_wca_epsilon = wca_epsilon;
+    }
+
+    const Eigen::VectorXd&
+    velocitiesParticlesArticulation() const
+    {
+        return m_velocities_particles_articulation;
+    }
+
+    const Eigen::VectorXd&
+    accelerationsParticlesArticulation() const
+    {
+        return m_accelerations_particles_articulation;
+    }
+
+    double
+    sysSpecRAvg() const
+    {
+        return m_sys_spec_R_avg;
+    }
+    void
+    setSysSpecRAvg(double sys_spec_RAvg)
+    {
+        m_sys_spec_R_avg = sys_spec_RAvg;
+    }
+
+    double
+    sysSpecPhaseShift() const
+    {
+        return m_sys_spec_phase_shift;
+    }
+    void
+    setSysSpecPhaseShift(double sys_spec_phaseShift)
+    {
+        m_sys_spec_phase_shift = sys_spec_phaseShift;
+    }
+
+    double
+    sysSpecOmega() const
+    {
+        return m_sys_spec_omega;
+    }
+    void
+    setSysSpecOmega(double sys_spec_omega)
+    {
+        m_sys_spec_omega = sys_spec_omega;
+    }
+
+    double
+    sysSpecU0() const
+    {
+        return m_sys_spec_U0;
+    }
+    void
+    setSysSpecU0(double sys_spec_U0)
+    {
+        m_sys_spec_U0 = sys_spec_U0;
+    }
+
+    const Eigen::MatrixXd&
+    udwadiaA() const
+    {
+        return m_Udwadia_A;
+    }
+
+    const Eigen::VectorXd&
+    udwadiaB() const
+    {
+        return m_Udwadia_b;
     }
 };
 

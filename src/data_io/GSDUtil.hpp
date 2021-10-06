@@ -62,6 +62,9 @@ class GSDUtil
     readParticles();
 
     void
+    readSystemSpecifics();
+
+    void
     writeHeader();
 
     void
