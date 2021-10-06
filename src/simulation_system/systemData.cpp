@@ -33,6 +33,7 @@ systemData::parseGSD()
     m_gsdUtil    = std::make_shared<GSDUtil>(shared_from_this());
     m_GSD_parsed = true;
 
+    // verify data is not a-physical
     checkInput();
 }
 
