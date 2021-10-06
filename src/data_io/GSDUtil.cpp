@@ -263,6 +263,12 @@ GSDUtil::readParameters()
         spdlog::get(m_logName)->info("Particle {0} typeid : {1}", i + 1, types[i]);
     }
     m_system->setParticleTypeId(type_id);
+
+    spdlog::get(m_logName)->info("Calculating number of bodies.");
+    int M = (type_id.array() == 1).count();
+    m_system->setNumBodies(M);
+    spdlog::get(m_logName)->info("num_bodies : {0}", M);
+    assert(M == m_system->numBodies() && "num_bodies not properly set");
 }
 
 void
