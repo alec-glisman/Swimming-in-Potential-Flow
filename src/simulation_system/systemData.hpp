@@ -18,10 +18,11 @@
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
 // eigen3(Linear algebra)
+#define EIGEN_NO_AUTOMATIC_RESIZING
+#define EIGEN_USE_MKL_ALL
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/Eigen>
-#define EIGEN_USE_MKL_ALL
-#include <eigen3/Eigen/src/Core/util/MKL_support.h>
+#include <eigen3/unsupported/Eigen/CXX11/Tensor>
 // STL
 #include <memory>    // for std::unique_ptr and std::shared_ptr
 #include <stdexcept> // std::errors
@@ -124,6 +125,10 @@ class systemData : public std::enable_shared_from_this<systemData>
     const Eigen::Matrix3d m_I = Eigen::Matrix3d::Identity(3, 3);
     Eigen::Matrix3d       m_I_tilde;
     Eigen::Matrix3d       m_I_tilde_tilde;
+
+    // general-use tensors
+    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> levi_cevita;
+    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> kappa_tilde;
 
     // kinematics
     Eigen::VectorXd m_positions_bodies;     // [7M x 1] (both linear and angular D.o.F.)
