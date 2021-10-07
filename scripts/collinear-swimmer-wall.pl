@@ -42,7 +42,7 @@ my $projectName      = "bodies_in_potential_flow";
 my $inputDir         = "input";
 my @inputData        = ( "varyZHeight", "varyRelDisp", "varyPhaseAngle", "varyEpsilon", "varyDt" );
 my $numSimulationTypes = scalar @inputData;
-my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
+my $runSimulationSimulan = 0; # NOTE: 0 only runs one simulation at a time
 
 # Python Numerical Analysis
 my $pythonGSDCreation = "python/initial_configurations/" . "collinear-swimmer-wall-configuration.py";
