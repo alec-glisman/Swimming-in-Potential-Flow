@@ -201,7 +201,9 @@
         "cfenv": "cpp",
         "ranges": "cpp",
         "shared_mutex": "cpp",
-        "__bits": "cpp"
+        "__bits": "cpp",
+        "eigen": "cpp",
+        "tensor": "cpp"
     },
     "python.analysis.extraPaths": [
         "./python"
