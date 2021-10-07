@@ -77,8 +77,8 @@ ELSEIF("$ENV{USER}" STREQUAL "aglisman")  # Build on desktop PC
     SET(CMAKE_C_COMPILER
         "/usr/bin/gcc-11"
         CACHE PATH "" FORCE)
-        
-    SET(CMAKE_CUDA_COMPILER "/opt/nvidia/hpc_sdk/Linux_x86_64/21.7/cuda/bin/nvcc")
+
+    SET(CMAKE_CUDA_COMPILER "/opt/nvidia/hpc_sdk/Linux_x86_64/21.9/cuda/bin/nvcc")
 
     
 ELSEIF("$ENV{USER}" STREQUAL "alec")  # Build on Brady group servers
@@ -180,7 +180,7 @@ ELSE()  # Use CUDA when not on MacOS
             "Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible)"
         HOMEPAGE_URL
             "https://github.com/alec-glisman/bodies-in-potential-flow"
-        LANGUAGES CXX C)
+        LANGUAGES CXX C CUDA)
 
 ENDIF()
 # !SECTION
