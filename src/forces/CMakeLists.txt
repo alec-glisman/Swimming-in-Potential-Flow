@@ -11,6 +11,7 @@ IF(DEFINED CMAKE_CUDA_COMPILER)
         forces
         PRIVATE
         spdlog::spdlog_header_only
+        ${MKL_LIBRARIES}
         Eigen3::Eigen
     )
 
@@ -31,6 +32,7 @@ ELSE()
         forces
         PRIVATE
         spdlog::spdlog_header_only
+        ${MKL_LIBRARIES}
         Eigen3::Eigen
     )
 

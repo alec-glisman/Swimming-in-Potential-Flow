@@ -20,6 +20,7 @@ TARGET_LINK_LIBRARIES(
     ${Boost_LIBRARIES}
     Catch2::Catch2
     spdlog::spdlog_header_only
+    ${MKL_LIBRARIES}
     data_io
     simulation_system
     forces

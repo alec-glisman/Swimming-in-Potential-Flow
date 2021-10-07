@@ -13,6 +13,8 @@ IF(DEFINED CMAKE_CUDA_COMPILER)
         data_io
         PRIVATE
         spdlog::spdlog_header_only
+        ${MKL_LIBRARIES}
+        Eigen3::Eigen
     )
 
     # COMPUTE ARCHITECTURES: GeForce RTX 3080: Compute Capability 8.6 GeForce
@@ -33,6 +35,8 @@ ELSE()
         data_io
         PRIVATE
         spdlog::spdlog_header_only
+        ${MKL_LIBRARIES}
+        Eigen3::Eigen
     )
 
 ENDIF()

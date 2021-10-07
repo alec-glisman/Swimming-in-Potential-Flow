@@ -22,6 +22,7 @@ TARGET_LINK_LIBRARIES(
     PRIVATE
     spdlog::spdlog_header_only
     ${Boost_LIBRARIES}
+    ${MKL_LIBRARIES}
     Eigen3::Eigen
     Catch2::Catch2
     data_io

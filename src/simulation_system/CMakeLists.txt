@@ -14,6 +14,7 @@ IF(DEFINED CMAKE_CUDA_COMPILER)
         simulation_system
         PRIVATE
         spdlog::spdlog_header_only
+        ${MKL_LIBRARIES}
         Eigen3::Eigen
         data_io
     )
@@ -38,6 +39,7 @@ ELSE()
         simulation_system
         PRIVATE
         spdlog::spdlog_header_only
+        ${MKL_LIBRARIES}
         Eigen3::Eigen
         data_io
     )
