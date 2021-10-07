@@ -42,6 +42,20 @@ systemData::initializeData()
     m_num_constraints = m_num_bodies;     // 1 unit quaternion constraint per body
 
     // initialize general-use tensors
+    levi_cevita.setZero();
+    levi_cevita(0, 1, 2) = 1;
+    levi_cevita(1, 2, 0) = 1;
+    levi_cevita(2, 0, 1) = 1;
+    levi_cevita(1, 0, 2) = -1;
+    levi_cevita(2, 1, 0) = -1;
+    levi_cevita(0, 2, 1) = -1;
+
+    kappa_tilde.setZero();
+    kappa_tilde(0, 1, 3) = 1;
+    kappa_tilde(1, 2, 3) = 1;
+    kappa_tilde(2, 3, 3) = 1;
+
+    kappa_tilde(0, 0, 4) = -1;
 
     // initialize constraints
     spdlog::get(m_logName)->info("Initializing constraints");
