@@ -239,24 +239,24 @@ potentialHydrodynamics::calcAddedMassGrad()
         int row_Rj = j_part;
 
         //! Columns for each block to start at: M_{ij, i}
-        int col_j_dRi_x = flattenedCol(j_part, i_part, 0, m_len_tensor);
-        int col_j_dRi_y = flattenedCol(j_part, i_part, 1, m_len_tensor);
-        int col_j_dRi_z = flattenedCol(j_part, i_part, 2, m_len_tensor);
+        int col_j_dRi_x = m_system->convert3dIdxTo2d(j_part, i_part, 0, m_len_tensor);
+        int col_j_dRi_y = m_system->convert3dIdxTo2d(j_part, i_part, 1, m_len_tensor);
+        int col_j_dRi_z = m_system->convert3dIdxTo2d(j_part, i_part, 2, m_len_tensor);
 
         //! M_{ij, j} elements
-        int col_j_dRj_x = flattenedCol(j_part, j_part, 0, m_len_tensor);
-        int col_j_dRj_y = flattenedCol(j_part, j_part, 1, m_len_tensor);
-        int col_j_dRj_z = flattenedCol(j_part, j_part, 2, m_len_tensor);
+        int col_j_dRj_x = m_system->convert3dIdxTo2d(j_part, j_part, 0, m_len_tensor);
+        int col_j_dRj_y = m_system->convert3dIdxTo2d(j_part, j_part, 1, m_len_tensor);
+        int col_j_dRj_z = m_system->convert3dIdxTo2d(j_part, j_part, 2, m_len_tensor);
 
         //! M_{ji, j} elements
-        int col_i_dRj_x = flattenedCol(i_part, j_part, 0, m_len_tensor);
-        int col_i_dRj_y = flattenedCol(i_part, j_part, 1, m_len_tensor);
-        int col_i_dRj_z = flattenedCol(i_part, j_part, 2, m_len_tensor);
+        int col_i_dRj_x = m_system->convert3dIdxTo2d(i_part, j_part, 0, m_len_tensor);
+        int col_i_dRj_y = m_system->convert3dIdxTo2d(i_part, j_part, 1, m_len_tensor);
+        int col_i_dRj_z = m_system->convert3dIdxTo2d(i_part, j_part, 2, m_len_tensor);
 
         //! M_{ji, i} elements
-        int col_i_dRi_x = flattenedCol(i_part, i_part, 0, m_len_tensor);
-        int col_i_dRi_y = flattenedCol(i_part, i_part, 1, m_len_tensor);
-        int col_i_dRi_z = flattenedCol(i_part, i_part, 2, m_len_tensor);
+        int col_i_dRi_x = m_system->convert3dIdxTo2d(i_part, i_part, 0, m_len_tensor);
+        int col_i_dRi_y = m_system->convert3dIdxTo2d(i_part, i_part, 1, m_len_tensor);
+        int col_i_dRi_z = m_system->convert3dIdxTo2d(i_part, i_part, 2, m_len_tensor);
 
         //! M_{ij, i}: Matrix Element (Anti-Symmetric upon exchange of derivative, Symmetric upon
         //! exchange of first two indices)
@@ -298,7 +298,8 @@ void
 potentialHydrodynamics::calcHydroForces()
 {
     // calculate requisite configurational tensors
-    Eigen::MatrixXd U_dyad_U = m_system->velocitiesParticles() * m_system->velocitiesParticles().transpose();
+    Eigen::MatrixXd U_dyad_U =
+        m_system->velocitiesParticles() * m_system->velocitiesParticles().transpose();
 
     //! Term 1: - M_kj * U_dot_j
     m_t1_Inertia.noalias() = -m_M_total * m_system->accelerationsParticles(); //! dim = (3N) x 1
@@ -343,23 +344,4 @@ potentialHydrodynamics::calcHydroForces()
     /* Compute complete potential pressure force */
     m_F_hydro.noalias() = m_t1_Inertia; // Full hydrodynamic force, dim = (3N) x 1
     m_F_hydro.noalias() += m_F_hydroNoInertia;
-}
-
-int
-potentialHydrodynamics::flattenedCol(int realColParticle, int depthParticle, int spatialDim,
-                                     int dim3N)
-{
-    /*
-     * Converts index a in (a, b, c) to index b' in (a, b')
-     *
-     * Function converts between three dimensional matrix (rowParticle, realColumnParticle,
-     * depthParticle) into a flattened two dimensional representation. "Layers" are concatenated
-     * together horizontally to make one short and very wide two dimensional matrix.
-     *
-     * int realColParticle: 3 * the particle number of the col in 3D matrix
-     * int depthParticle: 3 * the particle number of the 3rd dim in 3D matrix
-     * int spatialDim: spatial dimension of derivative var (x, y, z) denoted as (0, 1, or 2),
-     * respectively. int dim3N: nDim
-     */
-    return (realColParticle) + (depthParticle + spatialDim) * dim3N;
 }

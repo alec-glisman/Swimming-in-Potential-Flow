@@ -41,6 +41,8 @@ systemData::initializeData()
     m_num_DoF         = 6 * m_num_bodies; // D.o.F. are linear and angular positions of body centers
     m_num_constraints = m_num_bodies;     // 1 unit quaternion constraint per body
 
+    // initialize general-use tensors
+
     // initialize constraints
     spdlog::get(m_logName)->info("Initializing constraints");
     updateConstraints(0.0);

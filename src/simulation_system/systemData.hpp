@@ -46,6 +46,34 @@ class systemData : public std::enable_shared_from_this<systemData>
     void
     updateConstraints(double time);
 
+    /* Function takes in vector in vector cross-product expression: c = a \times b
+     * vec must be 'a' in above equation
+     * Output is the matrix representation of 'a \times' operator */
+    static void
+    crossProdMat(const Eigen::Vector3d& vec, Eigen::Matrix3d& mat)
+    {
+        mat << 0, -vec(2), vec(1), vec(2), 0, -vec(0), -vec(1), vec(0), 0;
+    };
+
+    /* Function converts index b in (a, b, c) -> index b' in (a, b')
+     *
+     * Conversion between 3D matrix (row_idx_3d, column_idx_3d, layer_idx_3d)
+     * into a flattened 2D representation. Layers are concatenated together
+     * horizontally along 2D column axis to make one short and very wide two
+     * dimensional matrix.
+     *
+     * int column_idx_3d:       column index of 3D matrix
+     * int layer_idx_3d:        layer index of 3D matrix
+     * int layer_deriv_dim:     spatial dimension of derivative var (x, y, z) denoted as (0, 1, 2)
+     * int layer_column_width:  number of columns in a layer of 3D matrix
+     */
+    static int
+    convert3dIdxTo2d(int column_idx_3d, int layer_idx_3d, int layer_deriv_dim,
+                     int layer_column_width)
+    {
+        return column_idx_3d + (layer_idx_3d + layer_deriv_dim) * layer_column_width;
+    };
+
   private:
     void
     parseGSD();
@@ -64,15 +92,6 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     void
     udwadiaLinearSystem(double time);
-
-    /* Function takes in vector in vector cross-product expression: c = a \times b
-     * vec must be 'a' in above equation
-     * Output is the matrix representation of 'a \times' operator */
-    void
-    crossProdMat(const Eigen::Vector3d& vec, Eigen::Matrix3d& mat)
-    {
-        mat << 0, -vec(2), vec(1), vec(2), 0, -vec(0), -vec(1), vec(0), 0;
-    };
 
     // data i/o
     std::string m_inputGSDFile;
