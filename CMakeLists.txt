@@ -189,15 +189,15 @@ ENDIF()
 
 # SECTION: Compilation flags
 SET(CMAKE_CXX_FLAGS_DEBUG
-    "-g -O0 -fno-omit-frame-pointer  -Wno-unknown-pragmas -Wall -Wextra -Wlogical-op -Wredundant-decls -Wshadow -Woverloaded-virtual -Wuninitialized -Warray-bounds -Wcast-align -Wcast-qual -Wdisabled-optimization -Wdiv-by-zero -Wendif-labels -Wformat-extra-args -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wimport -Winit-self -Winline -Winvalid-pch -Wlogical-op -Wmissing-declarations -Wno-missing-format-attribute -Wmissing-include-dirs -Wmultichar -Wpacked -Wpointer-arith -Wreturn-type -Wsequence-point -Wsign-compare -Wstrict-aliasing -Wstrict-aliasing=2 -Wswitch  -Wno-unused -Wvariadic-macros -Wwrite-strings"
+    "-g -O0 -fno-omit-frame-pointer -lboost_system -ltbb -lpthread -m64 -lmkl_intel_lp64 -lmkl_gnu_thread -lmkl_core -lm -ldl -Wno-unknown-pragmas -Wall -Wextra -Wlogical-op -Wredundant-decls -Wshadow -Woverloaded-virtual -Wuninitialized -Warray-bounds -Wcast-align -Wcast-qual -Wdisabled-optimization -Wdiv-by-zero -Wendif-labels -Wformat-extra-args -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wimport -Winit-self -Winline -Winvalid-pch -Wlogical-op -Wmissing-declarations -Wno-missing-format-attribute -Wmissing-include-dirs -Wmultichar -Wpacked -Wpointer-arith -Wreturn-type -Wsequence-point -Wsign-compare -Wstrict-aliasing -Wstrict-aliasing=2 -Wswitch -Wno-unused -Wno-sign-compare -Wno-cast-qual -Wno-redundant-decls -Wvariadic-macros -Wwrite-strings"
 )
 SET(CMAKE_C_FLAGS_DEBUG
-    "-g -O0 -fno-omit-frame-pointer -Wno-unknown-pragmas -Wall -Wextra -Wlogical-op -Wredundant-decls -Wshadow -Wuninitialized -Warray-bounds -Wcast-align -Wcast-qual -Wdisabled-optimization -Wdiv-by-zero -Wendif-labels -Wformat-extra-args -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wimport -Winit-self -Winline -Winvalid-pch -Wlogical-op -Wmissing-declarations -Wno-missing-format-attribute -Wmissing-include-dirs -Wmultichar -Wpacked -Wpointer-arith -Wreturn-type -Wsequence-point -Wsign-compare -Wstrict-aliasing -Wstrict-aliasing=2 -Wswitch -Wno-unused -Wvariadic-macros -Wwrite-strings"
+    "-g -O0 -fno-omit-frame-pointer -lboost_system -ltbb -lpthread -m64 -lmkl_intel_lp64 -lmkl_gnu_thread -lmkl_core -lm -ldl -Wno-unknown-pragmas -Wall -Wextra -Wlogical-op -Wredundant-decls -Wshadow -Wuninitialized -Warray-bounds -Wcast-align -Wcast-qual -Wdisabled-optimization -Wdiv-by-zero -Wendif-labels -Wformat-extra-args -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wimport -Winit-self -Winline -Winvalid-pch -Wlogical-op -Wmissing-declarations -Wno-missing-format-attribute -Wmissing-include-dirs -Wmultichar -Wpacked -Wpointer-arith -Wreturn-type -Wsequence-point -Wsign-compare -Wstrict-aliasing -Wstrict-aliasing=2 -Wswitch -Wno-unused -Wno-sign-compare -Wno-cast-qual -Wno-redundant-decls -Wvariadic-macros -Wwrite-strings"
 )
 
 
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native -O3 -mfpmath=sse -funroll-loops -lboost_system -Wno-deprecated-declarations")
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native -O3 -mfpmath=sse -funroll-loops -lboost_system -Wno-deprecated-declarations")
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native -O3 -mfpmath=sse -funroll-loops -lboost_system -ltbb -lpthread -m64 -lmkl_intel_lp64 -lmkl_gnu_thread -lmkl_core -lm -ldl -Wno-deprecated-declarations")
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native -O3 -mfpmath=sse -funroll-loops -lboost_system -ltbb -lpthread -m64 -lmkl_intel_lp64 -lmkl_gnu_thread -lmkl_core -lm -ldl -Wno-deprecated-declarations")
 
 
 IF(CMAKE_BUILD_TYPE STREQUAL "Profile")
@@ -231,9 +231,19 @@ MESSAGE("")
 
 # Optimization libraries
 MESSAGE( "${BoldMagenta}" "External Dependency: Intel MKL" "${ColourReset}" )
-FIND_PACKAGE(MKL REQUIRED)
+SET(MKL_THREADING tbb_thread)
+SET(MKL_INTERFACE_FULL intel_lp64)
+FIND_PACKAGE(MKL REQUIRED)    
 MESSAGE( STATUS "${Cyan}" "Found: ${MKL_FOUND}" "${ColourReset}")
 MESSAGE( STATUS "${Cyan}" "Include Dir: ${MKL_INCLUDE_DIR}" "${ColourReset}")
+MESSAGE( STATUS "${Cyan}" "Library Dir: ${MKL_LIBRARIES}" "${ColourReset}")
+MESSAGE("")
+
+MESSAGE( "${BoldMagenta}" "External Dependency: Intel TBB" "${ColourReset}" )
+FIND_PACKAGE(TBB REQUIRED)    
+MESSAGE( STATUS "${Cyan}" "Found: ${TBB_FOUND}" "${ColourReset}")
+MESSAGE( STATUS "${Cyan}" "Include Dir: ${TBB_INCLUDE_DIRS}" "${ColourReset}")
+MESSAGE( STATUS "${Cyan}" "Library Dir: ${TBB_LIBRARIES}" "${ColourReset}")
 MESSAGE("")
 
 # Linear algebra libraries
