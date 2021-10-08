@@ -78,7 +78,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     };
 
     /**
-     * @brief Function converts index \f$ b \f$ in \f$ (a, b, c) \to \f$ index \f$ b' \f$ in \f$ (a,
+     * @brief Converts index \f$ b \f$ in \f$ (a, b, c) \to \f$ index \f$ b' \f$ in \f$ (a,
      * b') \f$. Conversion between 3D matrix (row_idx_3d, column_idx_3d, layer_idx_3d) into a
      * flattened 2D representation. Layers are concatenated together horizontally along 2D column
      * axis to make one short and very wide two dimensional matrix.
@@ -98,6 +98,19 @@ class systemData : public std::enable_shared_from_this<systemData>
     };
 
   private:
+    /**
+     * @brief Computes the E matrix of quaternion (4-vector) input
+     *
+     * @param vec Input 4-vector
+     * @param mat Output matrix representation
+     */
+    static void
+    eMatrix(const Eigen::Vector4d& vec, Eigen::Matrix<double, 3, 4>& mat)
+    {
+        mat << -vec(1), vec(0), -vec(3), vec(2), -vec(2), vec(3), vec(0), -vec(1), -vec(3), -vec(2),
+            vec(1), vec(0);
+    };
+
     void
     parseGSD();
 
