@@ -2,13 +2,12 @@
 #   FLAGS ACCEPTED:
 #       CMAKE_BUILD_TYPE ["Release", "Debug", "Profile"]
 #       ENABLE_TESTING ["True", "False"]
-#       CMAKE_EXPORT_COMPILE_COMMANDS ["True"] (for coc.nvim)
+#       CMAKE_EXPORT_COMPILE_COMMANDS ["True"] (for IDE language server)
 #   GENERATORS TESTED:
 #       "Unix Makefiles"   
 #!SECTION
 
 # SECTION: Color output variables
-
 if(NOT WIN32)
   string(ASCII 27 Esc)
   set(ColourReset "${Esc}[m")
@@ -28,7 +27,6 @@ if(NOT WIN32)
   set(BoldCyan    "${Esc}[1;36m")
   set(BoldWhite   "${Esc}[1;37m")
 endif()
-
 # !SECTION
 
 
@@ -43,34 +41,30 @@ MESSAGE("${BoldGreen}" "HOSTNAME environment variable is set to: " "$ENV{HOSTNAM
 # SECTION: Compiler and language configuration
 IF(APPLE)  # Build on laptop PC
 
-    # Special considerations for MacOS Builds
     MESSAGE(STATUS "${BoldGreen}" "Building on MacOS, do not use frameworks" "${ColourReset}")
+    
     # Try to avoid frameworks
-    SET(CMAKE_MACOSX_RPATH OFF)
-    SET(CMAKE_FIND_FRAMEWORK NEVER)
-    SET(CMAKE_OSX_SYSROOT "")
+    # SET(CMAKE_MACOSX_RPATH OFF)
+    # SET(CMAKE_FIND_FRAMEWORK NEVER)
+    
     # Compiler options
     OPTION(USE_CLANG "build application with clang" OFF) # OFF is the default
 
-    # Use GNU-10 Compilers on MacOS
     MESSAGE(STATUS "${BoldGreen}" "Compiling with gcc-11 on MacOS" "${ColourReset}")
-    CMAKE_POLICY(SET CMP0048 NEW)
     SET(CMAKE_CXX_STANDARD 17)
-    SET(CMAKE_CXX_COMPILER "/usr/local/bin/g++-11" CACHE PATH "" FORCE)
-    SET(CMAKE_C_COMPILER "/usr/local/bin/gcc-11" CACHE PATH "" FORCE)
-
-    ADD_DEFINITIONS(-DMACOS_COMPILE)
+    
+    SET(CMAKE_CXX_COMPILER 
+        "/usr/local/bin/g++-11" 
+        CACHE PATH "" FORCE)
+    SET(CMAKE_C_COMPILER 
+        "/usr/local/bin/gcc-11" 
+        CACHE PATH "" FORCE)
 
 
 ELSEIF("$ENV{USER}" STREQUAL "aglisman")  # Build on desktop PC
 
     MESSAGE(STATUS "${BoldGreen}" "Compiling with gcc-11 on PC-Ubuntu" "${ColourReset}")
-
-    SET(CMAKE_CXX_STANDARD 17)
-    SET(CMAKE_CUDA_STANDARD 14)
     
-    ADD_DEFINITIONS(-DMACOS_COMPILE)
-
     SET(CMAKE_CXX_COMPILER
         "/usr/bin/g++-11"
         CACHE PATH "" FORCE)
@@ -85,22 +79,14 @@ ELSEIF("$ENV{USER}" STREQUAL "alec")  # Build on Brady group servers
 
     MESSAGE(STATUS "${BoldGreen}" "Compiling on Brady group servers" "${ColourReset}")      
     
-    SET(CMAKE_CXX_STANDARD 14)
-    CMAKE_POLICY(SET CMP0048 OLD)
-
-    INCLUDE_DIRECTORIES(
-        "/home/alec/local-new/intel/compilers_and_libraries/linux/mkl/include")
-    INCLUDE_DIRECTORIES(
-        "/home/alec/local-new/intel/compilers_and_libraries/linux")
+    INCLUDE_DIRECTORIES("/home/alec/local-new/intel/compilers_and_libraries/linux/mkl/include")
+    INCLUDE_DIRECTORIES("/home/alec/local-new/intel/compilers_and_libraries/linux")
     INCLUDE_DIRECTORIES("/usr/lib/x86_64-linux-gnu")
 
 
 ELSE()
 
     MESSAGE(STATUS "${BoldGreen}" "Compiling on unknown machine" "${ColourReset}")
-    
-    SET(CMAKE_CXX_STANDARD 17)
-    SET(CMAKE_CUDA_STANDARD 14)
     
     SET(CMAKE_CXX_COMPILER
         "/usr/bin/g++-11"
@@ -117,14 +103,15 @@ ENDIF()
 SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Mandate given C++/CUDA requirements
+SET(CMAKE_CXX_STANDARD 17)
+SET(CMAKE_CUDA_STANDARD 14)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(CMAKE_CUDA_STANDARD_REQUIRED ON)
+
 # COMPUTE ARCHITECTURES: 
 #     GeForce RTX 3080: Compute Capability 8.6 GeForce GTX,
 #     1080 Ti: Compute Capability 6.1
 SET(CMAKE_CUDA_ARCHITECTURES 86 61)
-
-
 
 # CMake requirements
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5.1 FATAL_ERROR)
