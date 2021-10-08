@@ -59,7 +59,7 @@ wca_sigma = 0.0
 # Particle parameters
 n = 6
 types = ['constrained', 'locater']
-typeid = [0, 0, 1, 0, 0, 1]
+typeid = [1, 0, 0, 1, 0, 0]
 
 # !SECTION (Parameters)
 
@@ -85,12 +85,12 @@ def setInitialConditions():
 
     # position
     pos = np.zeros((n, 3), dtype=np.double)
-    pos[0] = [R_avg, 0.0, Z_height]
-    pos[1] = [- R_avg + (U0 / omega) * np.sin(phase_angle), 0.0, Z_height]
-    pos[2] = [0.0, 0.0, Z_height]
-    pos[3] = [R_avg, 0.0, -Z_height]
-    pos[4] = [- R_avg + (U0 / omega) * np.sin(phase_angle), 0.0, -Z_height]
-    pos[5] = [0.0, 0.0, -Z_height]
+    pos[0] = [0.0, 0.0, Z_height]
+    pos[1] = [R_avg, 0.0, Z_height]
+    pos[2] = [- R_avg + (U0 / omega) * np.sin(phase_angle), 0.0, Z_height]
+    pos[3] = [0.0, 0.0, -Z_height]
+    pos[4] = [R_avg, 0.0, -Z_height]
+    pos[5] = [- R_avg + (U0 / omega) * np.sin(phase_angle), 0.0, -Z_height]
 
     # velocity NOTE[epic=Assumptions]: must be calculated in simulation system (C++)
     vel = np.zeros_like(pos, dtype=np.double)
