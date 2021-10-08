@@ -43,6 +43,7 @@ systemData::initializeData()
 
     // initialize general-use tensors
     levi_cevita.setZero();
+
     levi_cevita(1, 2, 0) = 1;
     levi_cevita(2, 1, 0) = -1;
 
@@ -53,11 +54,22 @@ systemData::initializeData()
     levi_cevita(1, 0, 2) = -1;
 
     kappa_tilde.setZero();
+
     kappa_tilde(0, 1, 3) = 1;
     kappa_tilde(1, 2, 3) = 1;
     kappa_tilde(2, 3, 3) = 1;
 
     kappa_tilde(0, 0, 4) = -1;
+    kappa_tilde(1, 3, 4) = -1;
+    kappa_tilde(2, 2, 4) = 1;
+
+    kappa_tilde(0, 3, 5) = 1;
+    kappa_tilde(1, 0, 5) = -1;
+    kappa_tilde(2, 1, 5) = -1;
+
+    kappa_tilde(0, 2, 6) = -1;
+    kappa_tilde(1, 1, 6) = 1;
+    kappa_tilde(2, 0, 6) = -1;
 
     // initialize constraints
     spdlog::get(m_logName)->info("Initializing constraints");
