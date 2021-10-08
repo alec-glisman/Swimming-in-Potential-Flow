@@ -132,29 +132,29 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> kappa_tilde;
 
     // kinematics
-    Eigen::VectorXd m_positions_bodies;     // [7M x 1] (both linear and angular D.o.F.)
-    Eigen::VectorXd m_velocities_bodies;    // [7M x 1] (both linear and angular D.o.F.)
-    Eigen::VectorXd m_accelerations_bodies; // [7M x 1] (both linear and angular D.o.F.)
+    Eigen::VectorXd m_positions_bodies;     //!< \[7M x 1\] both linear and angular D.o.F.
+    Eigen::VectorXd m_velocities_bodies;    //!< \[7M x 1\] both linear and angular D.o.F.
+    Eigen::VectorXd m_accelerations_bodies; //!< \[7M x 1\] both linear and angular D.o.F.
 
-    Eigen::VectorXd m_orientations_particles;  // [4N x 1]
-    Eigen::VectorXd m_positions_particles;     // [3N x 1]
-    Eigen::VectorXd m_velocities_particles;    // [3N x 1]
-    Eigen::VectorXd m_accelerations_particles; // [3N x 1]
+    Eigen::VectorXd m_orientations_particles;  //!< \[4N x 1\]
+    Eigen::VectorXd m_positions_particles;     //!< \[3N x 1\]
+    Eigen::VectorXd m_velocities_particles;    //!< \[3N x 1\]
+    Eigen::VectorXd m_accelerations_particles; //!< \[3N x 1\]
 
-    Eigen::VectorXd m_positions_locater_particles;          // [3M x 1]
-    Eigen::VectorXd m_velocities_particles_articulation;    // [3N x 1]
-    Eigen::VectorXd m_accelerations_particles_articulation; // [3N x 1]
+    Eigen::VectorXd m_positions_locater_particles;          //!< \[3M x 1\]
+    Eigen::VectorXd m_velocities_particles_articulation;    //!< \[3N x 1\]
+    Eigen::VectorXd m_accelerations_particles_articulation; //!< \[3N x 1\]
 
     // particle parameters
-    Eigen::VectorXi m_particle_type_id; // REVIEW[epic=assumptions] {0: locater particle,
-                                        // 1: constrained particle}
+    Eigen::VectorXi m_particle_type_id; //!< REVIEW[epic=assumptions] {0: locater particle,
+                                        //!< 1: constrained particle}
 
     // degrees of freedom
-    int m_num_spatial_dim{-1}; // = 3
-    int m_num_particles{-1};   // = N
-    int m_num_bodies{-1};      // = M
-    int m_num_DoF{-1};         // = 6M
-    int m_num_constraints{-1}; // = M
+    int m_num_spatial_dim{-1}; //!< = 3
+    int m_num_particles{-1};   //!< = N
+    int m_num_bodies{-1};      //!< = M
+    int m_num_DoF{-1};         //!< = 6M
+    int m_num_constraints{-1}; //!< = M
 
     // integrator
     double m_dt{-1.0};
