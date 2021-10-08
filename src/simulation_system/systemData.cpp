@@ -71,9 +71,35 @@ systemData::initializeData()
     kappa_tilde(1, 1, 6) = 1;
     kappa_tilde(2, 0, 6) = -1;
 
+    // initialize kinematic matrices
+    m_velocities_particles_articulation    = Eigen::VectorXd::Zero(3 * m_num_particles);
+    m_accelerations_particles_articulation = Eigen::VectorXd::Zero(3 * m_num_particles);
+
+    // initialize constraint matrices
+    m_Udwadia_A = Eigen::MatrixXd::Zero(m_num_constraints, m_num_DoF);
+    m_Udwadia_b = Eigen::VectorXd::Zero(m_num_constraints);
+
+    // initialize rigid body motion matrices
+    m_rbm_conn          = Eigen::MatrixXd::Zero(6 * m_num_bodies, 3 * m_num_particles);
+    m_psi_conv_quat_ang = Eigen::MatrixXd::Zero(6 * m_num_bodies, 7 * m_num_bodies);
+    m_C_conv_quat_part  = Eigen::MatrixXd::Zero(3 * m_num_particles, 7 * m_num_bodies);
+
+    // initialize gradient matrices
+    m_D_conv_quat_part = Eigen::MatrixXd::Zero(7 * m_num_bodies, 3 * m_num_particles);
+    m_C_conv_quat_part_grad =
+        Eigen::Tensor<double, 3>(3 * m_num_particles, 7 * m_num_bodies, 7 * m_num_bodies);
+    m_C_conv_quat_part_grad.setZero();
+
+    m_N1 = Eigen::Tensor<double, 3>(3 * m_num_particles, 3 * m_num_particles, 7 * m_num_bodies);
+    m_N1.setZero();
+    m_N2 = Eigen::Tensor<double, 3>(7 * m_num_bodies, 3 * m_num_particles, 7 * m_num_bodies);
+    m_N2.setZero();
+    m_N3 = Eigen::Tensor<double, 3>(7 * m_num_bodies, 7 * m_num_bodies, 7 * m_num_bodies);
+    m_N3.setZero();
+
     // initialize constraints
     spdlog::get(m_logName)->info("Initializing constraints");
-    updateConstraints(0.0);
+    updateConstraints(m_t);
 }
 
 void
@@ -163,7 +189,7 @@ systemData::velocitiesArticulation(double time)
         m_sys_spec_U0 * cos(m_sys_spec_omega * dimensional_time + m_sys_spec_phase_shift);
 
     // Zero and then calculate  m_velocities_particles_articulation
-    m_velocities_particles_articulation = Eigen::VectorXd::Zero(3 * m_num_particles);
+    m_velocities_particles_articulation.setZero();
     m_velocities_particles_articulation.segment<3>(3 * 0).noalias() = v1_mag * q;
     m_velocities_particles_articulation.segment<3>(3 * 2).noalias() = v3_mag * q;
     m_velocities_particles_articulation.segment<3>(3 * 3).noalias() = v1_mag * q_tilde;
@@ -190,7 +216,7 @@ systemData::accelerationsArticulation(double time)
                           sin(m_sys_spec_omega * dimensional_time + m_sys_spec_phase_shift);
 
     // Zero and then calculate m_accelerations_particles_articulation
-    m_accelerations_particles_articulation = Eigen::VectorXd::Zero(3 * m_num_particles);
+    m_accelerations_particles_articulation.setZero();
     m_accelerations_particles_articulation.segment<3>(3 * 0).noalias() = a1_mag * q;
     m_accelerations_particles_articulation.segment<3>(3 * 2).noalias() = a3_mag * q;
     m_accelerations_particles_articulation.segment<3>(3 * 3).noalias() = a1_mag * q_tilde;
@@ -224,9 +250,8 @@ systemData::locaterPointLocations()
 void
 systemData::udwadiaLinearSystem(double time)
 {
-    // Initialize matrices
-    m_Udwadia_A = Eigen::MatrixXd::Zero(m_num_constraints, m_num_DoF);
-    m_Udwadia_b = Eigen::VectorXd::Zero(m_num_constraints);
+    m_Udwadia_A.setZero();
+    m_Udwadia_b.setZero();
 
     // TODO: Implement the constraint linear system for the unit quaternions
 }
@@ -235,7 +260,7 @@ void
 systemData::rigidBodyMotionTensors()
 {
     /* ANCHOR: Compute m_rbm_conn */
-    m_rbm_conn = Eigen::MatrixXd::Zero(6 * m_num_bodies, 3 * m_num_particles);
+    m_rbm_conn.setZero();
 
     for (int i = 0; i < m_num_particles; i++)
     {
@@ -265,7 +290,7 @@ systemData::rigidBodyMotionTensors()
     }
 
     /* ANCHOR: Compute m_psi_conv_quat_ang */
-    m_psi_conv_quat_ang = Eigen::MatrixXd::Zero(6 * m_num_bodies, 7 * m_num_bodies);
+    m_psi_conv_quat_ang.setZero();
 
     for (int k = 0; k < m_num_bodies; k++)
     {
@@ -291,7 +316,7 @@ void
 systemData::gradientChangeOfVariableTensors()
 {
     /* ANCHOR: Compute m_D_conv_quat_part */
-    m_D_conv_quat_part = Eigen::MatrixXd::Zero(7 * m_num_bodies, 3 * m_num_particles);
+    m_D_conv_quat_part.setZero();
 
     for (int i = 0; i < m_num_particles; i++)
     {
