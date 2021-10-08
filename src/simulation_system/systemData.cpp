@@ -43,12 +43,14 @@ systemData::initializeData()
 
     // initialize general-use tensors
     levi_cevita.setZero();
-    levi_cevita(0, 1, 2) = 1;
     levi_cevita(1, 2, 0) = 1;
-    levi_cevita(2, 0, 1) = 1;
-    levi_cevita(1, 0, 2) = -1;
     levi_cevita(2, 1, 0) = -1;
+
     levi_cevita(0, 2, 1) = -1;
+    levi_cevita(2, 0, 1) = 1;
+
+    levi_cevita(0, 1, 2) = 1;
+    levi_cevita(1, 0, 2) = -1;
 
     kappa_tilde.setZero();
     kappa_tilde(0, 1, 3) = 1;
@@ -83,23 +85,6 @@ systemData::parseGSD()
 
     // verify data is not a-physical
     checkInput();
-}
-
-void
-systemData::check_gsd_return()
-{
-    if (m_return_val != 0)
-    {
-        spdlog::get(m_logName)->error("m_return_val = {0}", m_return_val);
-        spdlog::get(m_logName)->flush();
-        throw std::runtime_error("Error parsing GSD file");
-    }
-    if (m_return_bool == false)
-    {
-        spdlog::get(m_logName)->error("m_return_bool = {0}", m_return_bool);
-        spdlog::get(m_logName)->flush();
-        throw std::runtime_error("Error parsing GSD file");
-    }
 }
 
 void

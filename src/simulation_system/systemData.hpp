@@ -39,15 +39,13 @@ class systemData : public std::enable_shared_from_this<systemData>
     ~systemData();
 
     void
-    check_gsd_return();
-
-    void
     initializeData();
 
     void
     updateConstraints(double time);
 
-    /* Function takes in vector in vector cross-product expression: c = a \times b
+    /**
+     * Function takes in vector in vector cross-product expression: c = a \times b
      * vec must be 'a' in above equation
      * Output is the matrix representation of 'a \times' operator */
     static void
@@ -56,7 +54,8 @@ class systemData : public std::enable_shared_from_this<systemData>
         mat << 0, -vec(2), vec(1), vec(2), 0, -vec(0), -vec(1), vec(0), 0;
     };
 
-    /* Function converts index b in (a, b, c) -> index b' in (a, b')
+    /**
+     * Function converts index b in (a, b, c) -> index b' in (a, b').
      *
      * Conversion between 3D matrix (row_idx_3d, column_idx_3d, layer_idx_3d)
      * into a flattened 2D representation. Layers are concatenated together
@@ -210,11 +209,21 @@ class systemData : public std::enable_shared_from_this<systemData>
     {
         m_return_val = return_val;
     }
+    int
+    returnVal()
+    {
+        return m_return_val;
+    }
 
     void
     setReturnBool(bool return_bool)
     {
         m_return_bool = return_bool;
+    }
+    bool
+    returnBool()
+    {
+        return m_return_bool;
     }
 
     // kinematics

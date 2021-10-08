@@ -83,6 +83,23 @@ GSDUtil::truncateGSD()
     m_system->check_gsd_return();
 }
 
+void
+GSDUtil::check_gsd_return()
+{
+    if (m_system->returnVal() != 0)
+    {
+        spdlog::get(m_logName)->error("return_val = {0}", m_system->returnVal());
+        spdlog::get(m_logName)->flush();
+        throw std::runtime_error("Error parsing GSD file");
+    }
+    if (m_system->returnBool() == false)
+    {
+        spdlog::get(m_logName)->error("return_bool = {0}", m_system->returnBool());
+        spdlog::get(m_logName)->flush();
+        throw std::runtime_error("Error parsing GSD file");
+    }
+}
+
 /* NOTE:
  * Expected size is in units of bytes
  *     u_int8: 1

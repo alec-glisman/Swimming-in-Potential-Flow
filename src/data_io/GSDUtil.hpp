@@ -35,10 +35,6 @@ class GSDUtil
 
     ~GSDUtil();
 
-    bool
-    readChunk(void* data, uint64_t frame, const char* name, size_t expected_size,
-              unsigned int cur_n = 0);
-
     void
     truncateGSD();
 
@@ -52,6 +48,13 @@ class GSDUtil
     }
 
   private:
+    void
+    check_gsd_return();
+
+    bool
+    readChunk(void* data, uint64_t frame, const char* name, size_t expected_size,
+              unsigned int cur_n = 0);
+
     void
     readHeader();
 
