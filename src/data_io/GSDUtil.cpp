@@ -311,7 +311,7 @@ GSDUtil::readParticles()
     // quaternions
     spdlog::get(m_logName)->info("GSD parsing orientationsParticles");
     double d_quat[4 * m_system->numParticles()];
-    auto   return_bool = readChunk(&d_quat, m_frame, "log/particles/double_position",
+    auto   return_bool = readChunk(&d_quat, m_frame, "log/particles/double_orientation",
                                  m_system->numParticles() * 4 * 8, m_system->numParticles());
     m_system->setReturnBool(return_bool);
     checkGSDReturn();
@@ -322,9 +322,9 @@ GSDUtil::readParticles()
         quaternions(4 * i + 1) = d_quat[4 * i + 1];
         quaternions(4 * i + 2) = d_quat[4 * i + 2];
         quaternions(4 * i + 3) = d_quat[4 * i + 3];
-        spdlog::get(m_logName)->info("Particle {0} quaternion : [{1:03.3f}, {2:03.3f}, {3:03.3f}]",
-                                     i + 1, d_quat[4 * i], d_quat[4 * i + 1], d_quat[4 * i + 2],
-                                     d_quat[4 * i + 3]);
+        spdlog::get(m_logName)->info(
+            "Particle {0} quaternion : [{1:03.3f}, {2:03.3f}, {3:03.3f}, {4:03.3f}]", i + 1,
+            d_quat[4 * i], d_quat[4 * i + 1], d_quat[4 * i + 2], d_quat[4 * i + 3]);
     }
     m_system->setOrientationsParticles(quaternions);
 
@@ -461,7 +461,7 @@ GSDUtil::readSystemSpecifics()
     m_system->setReturnBool(return_bool);
     checkGSDReturn();
     m_system->setSysSpecRAvg(R_avg);
-    spdlog::get(m_logName)->info("RAvg : {0}", R_avg);
+    spdlog::get(m_logName)->info("R_avg : {0}", R_avg);
     assert(m_system->sysSpecRAvg() == R_avg && "R_avg not properly set");
 }
 

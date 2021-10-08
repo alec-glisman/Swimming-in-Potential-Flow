@@ -79,9 +79,13 @@ def setInitialConditions():
 
     # orientation
     quat = np.zeros((n, 4), dtype=np.double)
-    # unit quaternion with rotation angle = zero
     no_rotation_quat = np.array([1.0, 0.0, 0.0, 0.0], dtype=np.double)
-    quat = np.tile(no_rotation_quat, (n, 1))
+    quat[0] = no_rotation_quat
+    quat[1] = no_rotation_quat
+    quat[2] = no_rotation_quat
+    quat[3] = no_rotation_quat
+    quat[4] = no_rotation_quat
+    quat[5] = no_rotation_quat
 
     # position
     pos = np.zeros((n, 3), dtype=np.double)
