@@ -1,0 +1,5 @@
+<map id="StopWatchLinux::getDiffTime" name="StopWatchLinux::getDiffTime">
+<area shape="rect" id="node1" title="Get difference between start time and current time." alt="" coords="227,31,420,57"/>
+<area shape="rect" id="node2" href="$classStopWatchLinux.html#a7e211f57179ab20e6814127318e9f0f8" title=" " alt="" coords="5,5,179,32"/>
+<area shape="rect" id="node3" href="$classStopWatchLinux.html#aea4fb94c36ad6d01cb371afa0aae0926" title="Stop time measurement." alt="" coords="17,56,167,83"/>
+</map>

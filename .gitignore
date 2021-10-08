@@ -30,7 +30,7 @@ Testing
 
 # SECTION: DOCUMENTATION
 # Doxygen
-docs/html/**
+!docs/html/**
 docs/latex/**
 # !SECTION
 
