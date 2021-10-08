@@ -85,6 +85,8 @@ systemData::updateConstraints(double time)
     accelerationsArticulation(time);
 
     rigidBodyMotionTensors();
+    gradientChangeOfVariableTensors();
+
     udwadiaLinearSystem(time);
 }
 
@@ -261,7 +263,7 @@ systemData::rigidBodyMotionTensors()
                 n_dr_cross; // translation-rotation couple
         }
     }
-    
+
     /* ANCHOR: Compute m_psi_conv_quat_ang */
     m_psi_conv_quat_ang = Eigen::MatrixXd::Zero(6 * m_num_bodies, 7 * m_num_bodies);
 
@@ -275,8 +277,10 @@ systemData::rigidBodyMotionTensors()
         eMatrix(m_positions_bodies.segment<4>(k7 + 3), E_theta_i);
 
         // matrix elements of Psi
-        m_psi_conv_quat_ang.block<3, 3>(k6, k7).noalias() = m_I; // no conversion from linear components
-        m_psi_conv_quat_ang.block<3, 4>(k6 + 3, k7 + 3).noalias() = 2 * E_theta_i; // angular-quaternion velocity couple
+        m_psi_conv_quat_ang.block<3, 3>(k6, k7).noalias() =
+            m_I; // no conversion from linear components
+        m_psi_conv_quat_ang.block<3, 4>(k6 + 3, k7 + 3).noalias() =
+            2 * E_theta_i; // angular-quaternion velocity couple
     }
 
     /* ANCHOR: Compute m_C_conv_quat_part */
