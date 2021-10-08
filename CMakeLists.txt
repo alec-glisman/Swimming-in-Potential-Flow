@@ -2,9 +2,10 @@
 #   FLAGS ACCEPTED:
 #       CMAKE_BUILD_TYPE ["Release", "Debug", "Profile"]
 #       ENABLE_TESTING ["True", "False"]
-#       CMAKE_EXPORT_COMPILE_COMMANDS ["True"] (for IDE language server)
 #   GENERATORS TESTED:
 #       "Unix Makefiles"   
+#   COMPILERS TESTED:
+#       gcc
 #!SECTION
 
 # SECTION: Color output variables
@@ -39,38 +40,17 @@ MESSAGE("${BoldGreen}" "HOSTNAME environment variable is set to: " "$ENV{HOSTNAM
 
 
 # SECTION: Compiler and language configuration
-IF(APPLE)  # Build on laptop PC
+IF(APPLE)  # Build on laptop PC    
 
-    MESSAGE(STATUS "${BoldGreen}" "Building on MacOS, do not use frameworks" "${ColourReset}")
-    
-    # Try to avoid frameworks
-    # SET(CMAKE_MACOSX_RPATH OFF)
-    # SET(CMAKE_FIND_FRAMEWORK NEVER)
-    
-    # Compiler options
-    OPTION(USE_CLANG "build application with clang" OFF) # OFF is the default
+    MESSAGE(STATUS "${BoldGreen}" "Compiling on MacOS" "${ColourReset}")
 
-    MESSAGE(STATUS "${BoldGreen}" "Compiling with gcc-11 on MacOS" "${ColourReset}")
-    SET(CMAKE_CXX_STANDARD 17)
-    
-    SET(CMAKE_CXX_COMPILER 
-        "/usr/local/bin/g++-11" 
-        CACHE PATH "" FORCE)
-    SET(CMAKE_C_COMPILER 
-        "/usr/local/bin/gcc-11" 
-        CACHE PATH "" FORCE)
-
+    SET(CMAKE_MACOSX_RPATH 1)
+    set(CMAKE_SKIP_BUILD_RPATH FALSE)
+    set(CMAKE_BUILD_RPATH "/opt/intel/oneapi/mkl/latest/lib")
 
 ELSEIF("$ENV{USER}" STREQUAL "aglisman")  # Build on desktop PC
 
-    MESSAGE(STATUS "${BoldGreen}" "Compiling with gcc-11 on PC-Ubuntu" "${ColourReset}")
-    
-    SET(CMAKE_CXX_COMPILER
-        "/usr/bin/g++-11"
-        CACHE PATH "" FORCE)
-    SET(CMAKE_C_COMPILER
-        "/usr/bin/gcc-11"
-        CACHE PATH "" FORCE)
+    MESSAGE(STATUS "${BoldGreen}" "Compiling on PC-Ubuntu" "${ColourReset}")
 
     SET(CMAKE_CUDA_COMPILER "/opt/nvidia/hpc_sdk/Linux_x86_64/21.9/cuda/bin/nvcc")
 
@@ -88,13 +68,6 @@ ELSE()
 
     MESSAGE(STATUS "${BoldGreen}" "Compiling on unknown machine" "${ColourReset}")
     
-    SET(CMAKE_CXX_COMPILER
-        "/usr/bin/g++-11"
-        CACHE PATH "" FORCE)
-    SET(CMAKE_C_COMPILER
-        "/usr/bin/gcc-11"
-        CACHE PATH "" FORCE)
-
 ENDIF()
 
 
@@ -102,24 +75,37 @@ ENDIF()
 # Export compile commands
 SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Mandate given C++/CUDA requirements
+# GCC requirements
+IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+
+    IF(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 11)
+        MESSAGE(FATAL_ERROR "GCC version must be at least 11!")
+    ENDIF()
+
+ELSE()
+
+    MESSAGE(WARNING "You are using an unsupported compiler! Compilation has only been tested with Clang and GCC.")
+
+endif()
+
+
+
+# C++/CUDA requirements
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CUDA_STANDARD 14)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(CMAKE_CUDA_STANDARD_REQUIRED ON)
 
-# COMPUTE ARCHITECTURES: 
-#     GeForce RTX 3080: Compute Capability 8.6 GeForce GTX,
-#     1080 Ti: Compute Capability 6.1
+# CUDA COMPUTE ARCHITECTURES: 
+#     GeForce RTX 3080:    Compute Capability 8.6
+#     GeForce GTX 1080 Ti: Compute Capability 6.1
 SET(CMAKE_CUDA_ARCHITECTURES 86 61)
 
 # CMake requirements
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5.1 FATAL_ERROR)
-SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
-                      ${CMAKE_CURRENT_SOURCE_DIR}/include/cmake_modules)
-
-# Do not use <PackageName>_ROOT variables set in rc files
-CMAKE_POLICY(SET CMP0074 NEW)
+SET(CMAKE_MODULE_PATH 
+    ${CMAKE_MODULE_PATH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/cmake_modules)
 #!SECTION
 
 
