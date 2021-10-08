@@ -71,9 +71,16 @@
   - [ ] move hyper-parameter booleans into `systemData` with clear comment anchors saying how to change (and when)
   - [ ] Update acceleration calculations (only use body DoF and also output particle DoF)
 
-- Verifications
-  - [ ] Check that all quaternions obey the unit-norm requirement
-  - [ ] Check that the collinear swimmer (isolated) recovers the expected results
+## Bugs to Fix
+
+- Figure out why python configuration script is not outputting correct data
+  - [ ] Quaternions
+  - [ ] Particle ID type
+
+## Verifications
+
+- [ ] Check that all quaternions obey the unit-norm requirement
+- [ ] Check that the collinear swimmer (isolated) recovers the expected results
   - [ ] Verify collinear constraint upheld for the wall system.
   - [ ] Verify that the collinear swimmer wall system recovers the isolated result when swimmers are very far from wall.
 

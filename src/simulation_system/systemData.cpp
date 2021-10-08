@@ -269,9 +269,9 @@ systemData::rigidBodyMotionTensors()
         const int i3{3 * i};
 
         const Eigen::Vector3d R_i = m_positions_particles.segment<3>(i3);
-            
+
         // Calculate which body j particle i belongs to
-        const int body_j = (m_particle_type_id.segment(0, i).array() == 1).count() - 1;
+        const int body_j = (m_particle_type_id.segment(0, i + 1).array() == 1).count() - 1;
         const int j6{6 * body_j};
         const int j7{7 * body_j};
 
@@ -284,13 +284,12 @@ systemData::rigidBodyMotionTensors()
         crossProdMat(n_dr, n_dr_cross);
 
         // rigid body motion connectivity tensor elements
-        m_rbm_conn.block<3, 3>(j6, i3).noalias() = m_I; // translation-translation couple
-        m_rbm_conn.block<3, 3>(j6 + 3, i3).noalias() =
-            n_dr_cross; // translation-rotation couple
+        m_rbm_conn.block<3, 3>(j6, i3).noalias()     = m_I;        // translation-translation couple
+        m_rbm_conn.block<3, 3>(j6 + 3, i3).noalias() = n_dr_cross; // translation-rotation couple
 
         if (i == 0)
         {
-            assert(body_j == 0  && "First particle must be part of body 0.");
+            assert(body_j == 0 && "First particle must be part of body 0.");
         }
         if (i == m_num_particles - 1)
         {
