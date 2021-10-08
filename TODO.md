@@ -41,8 +41,8 @@
   - [x] Add DoF vector (body center and orientation) for all kinematic quantities (used in integration and EoM).
   - [x] Move kinematic constraints (velocities and accelerations) from integration to data class
     - [x] Add setter/getter functions (pass as constant)
-  - [ ] Update kinematic constraints in integration functions at each step (even intermediate steps)
-  - [ ] Add new data to `update()` function inside the class
+  - [x] Update kinematic constraints in integration functions at each step (even intermediate steps)
+  - [x] Add new data to `update()` function inside the class
 
 - General-use functions for data class
   - [ ] Compute $\bm \epsilon$, $\tilde{\bm{\epsilon}}$, and $\tilde{\bm{\kappa}}$ in the constructor.
@@ -50,8 +50,8 @@
   - [ ] Calculate rigid body motion tensors ($\bm{\Sigma}$, $\bm{A}$, $\nabla_{\xi} \bm{A}$)
   - [ ] Calculate $\bm{C}^{(i)}$
   - [ ] Calculate $\bm{\beta}$
-  - [ ] Move 3rd axis indexing function to data from hydrodynamics
-  - [ ] Move crossProduct matrix function from hydrodynamics
+  - [x] Move 3rd axis indexing function to data from hydrodynamics
+  - [x] Move crossProduct matrix function from hydrodynamics
   - [ ] Write function to calculate contraction between 3rd order tensor with 2nd order tensor (both left and right)
 
 - General-use functions for hydrodynamics
@@ -60,7 +60,7 @@
   - [ ] Update how hydrodynamic forces are calculated
 
 - Integration
-  - [ ] Check that udwadia method is being used
+  - [x] Check that udwadia method is being used
   - [ ] Update linear constraint system such that the only constraint is the quaternion unit norm for each body.
   - [ ] move hyper-parameter booleans into `systemData` with clear comment anchors saying how to change (and when)
   - [ ] Update acceleration calculations (only use body DoF and also output particle DoF)
