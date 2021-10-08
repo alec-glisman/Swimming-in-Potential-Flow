@@ -134,7 +134,7 @@ systemData::checkInput()
 {
     spdlog::get(m_logName)->info("Input checking assertions");
 
-    assert(m_positions_particles.size() == 4 * m_num_particles &&
+    assert(m_orientations_particles.size() == 4 * m_num_particles &&
            "Particle orientation (unit quaternions) vector has incorrect length, not 4N.");
     assert(m_positions_particles.size() == 3 * m_num_particles &&
            "Particle position vector has incorrect length, not 3N.");
@@ -143,12 +143,12 @@ systemData::checkInput()
     assert(m_accelerations_particles.size() == 3 * m_num_particles &&
            "Particle acceleration vector has incorrect length, not 3N.");
 
-    assert(m_positions_bodies.size() == 7 * m_num_particles &&
-           "Body position vector has incorrect length, not 7N.");
-    assert(m_velocities_bodies.size() == 7 * m_num_particles &&
-           "Body velocity vector has incorrect length, not 7N.");
-    assert(m_accelerations_bodies.size() == 7 * m_num_particles &&
-           "Body acceleration vector has incorrect length, not 7N.");
+    assert(m_positions_bodies.size() == 7 * m_num_bodies &&
+           "Body position vector has incorrect length, not 7M.");
+    assert(m_velocities_bodies.size() == 7 * m_num_bodies &&
+           "Body velocity vector has incorrect length, not 7M.");
+    assert(m_accelerations_bodies.size() == 7 * m_num_bodies &&
+           "Body acceleration vector has incorrect length, not 7M.");
 
     assert(m_particle_type_id.size() == m_num_particles &&
            "Particle type ID vector has incorrect length, not N.");
@@ -259,6 +259,7 @@ systemData::udwadiaLinearSystem(double time)
 void
 systemData::rigidBodyMotionTensors()
 {
+    // FIXME: Not correctly calculating dr (only non-zero when particle is member of given body)
     /* ANCHOR: Compute m_rbm_conn */
     m_rbm_conn.setZero();
 
@@ -289,6 +290,7 @@ systemData::rigidBodyMotionTensors()
         }
     }
 
+    // FIXME: Not correctly calculating dr (only non-zero when particle is member of given body)
     /* ANCHOR: Compute m_psi_conv_quat_ang */
     m_psi_conv_quat_ang.setZero();
 
@@ -315,6 +317,7 @@ systemData::rigidBodyMotionTensors()
 void
 systemData::gradientChangeOfVariableTensors()
 {
+    // FIXME: Not correctly calculating dr (only non-zero when particle is member of given body)
     /* ANCHOR: Compute m_D_conv_quat_part */
     m_D_conv_quat_part.setZero();
 

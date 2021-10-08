@@ -291,11 +291,11 @@ void
 GSDUtil::readParticles()
 {
     // initialize vectors
-    int combined_tensor_len      = 7 * m_system->numParticles();
+    int combined_body_tensor_len = 7 * m_system->numBodies();
     int orientational_tensor_len = 4 * m_system->numParticles();
     int spatial_tensor_len       = 3 * m_system->numParticles();
 
-    Eigen::VectorXd n7_vec = Eigen::VectorXd::Zero(combined_tensor_len);
+    Eigen::VectorXd n7_vec = Eigen::VectorXd::Zero(combined_body_tensor_len);
     Eigen::VectorXd n4_vec = Eigen::VectorXd::Zero(orientational_tensor_len);
     Eigen::VectorXd n3_vec = Eigen::VectorXd::Zero(spatial_tensor_len);
 
