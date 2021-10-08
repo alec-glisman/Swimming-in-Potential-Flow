@@ -203,7 +203,9 @@
         "shared_mutex": "cpp",
         "__bits": "cpp",
         "eigen": "cpp",
-        "tensor": "cpp"
+        "tensor": "cpp",
+        "core": "cpp",
+        "specialfunctions": "cpp"
     },
     "python.analysis.extraPaths": [
         "./python"
