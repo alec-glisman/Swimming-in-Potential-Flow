@@ -32,7 +32,6 @@ var searchData=
   ['cross_29',['cross',['../helper__math_8h.html#a2e4be24f36bc31a9d0b35540aaa5fb71',1,'helper_math.h']]],
   ['crossprodmat_30',['crossProdMat',['../classsystemData.html#a0a77c933b764fb36c64ec5e66011482c',1,'systemData']]],
   ['csr_5fmat_5fnorminf_31',['csr_mat_norminf',['../helper__cusolver_8h.html#acc115ad8f91197d469e02b12a5219c24',1,'helper_cusolver.h']]],
-  ['cuda_20helper_20files_32',['CUDA Helper Files',['../md_src_cuda_helpers_README.html',1,'']]],
-  ['cur_5fframe_33',['cur_frame',['../structgsd__handle.html#a144dc0976a1fe2f895423495689daea5',1,'gsd_handle']]],
-  ['curve_34',['curve',['../classplotStyling_1_1PlotStyling.html#a04d7b01c0a39c9749118441a35554923',1,'plotStyling::PlotStyling']]]
+  ['cur_5fframe_32',['cur_frame',['../structgsd__handle.html#a144dc0976a1fe2f895423495689daea5',1,'gsd_handle']]],
+  ['curve_33',['curve',['../classplotStyling_1_1PlotStyling.html#a04d7b01c0a39c9749118441a35554923',1,'plotStyling::PlotStyling']]]
 ];
