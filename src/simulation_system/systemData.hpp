@@ -131,16 +131,18 @@ class systemData : public std::enable_shared_from_this<systemData>
     bool                        m_return_bool{true};
     bool                        m_GSD_parsed{false};
 
-    /* REVIEW[epic=Change,order=0]: System specifi data, change parameters stored for different
+    /* REVIEW[epic=Change,order=0]: System specific data, change parameters stored for different
      * systems */
     // Swimming kinematic constraints
-    double m_sys_spec_U0{-1.0};
-    double m_sys_spec_omega{-1.0};
-    double m_sys_spec_phase_shift{-1.0};
-    double m_sys_spec_R_avg{-1.0};
+    double m_sys_spec_U0{
+        -1.0}; //!< velocity amplitude of kinematic constraint between particle pairs
+    double m_sys_spec_omega{-1.0};       //!< oscillation frequency
+    double m_sys_spec_phase_shift{-1.0}; //!< phase shift (in radians) between oscillators
+    double m_sys_spec_R_avg{
+        -1.0}; //!< Time-average spatial separation between a particle pair during oscillation
 
     // Udwadia constraint linear system
-    Eigen::MatrixXd m_Udwadia_A; //!< \[M x N\] Linear operator defining relationship between
+    Eigen::MatrixXd m_Udwadia_A; //!< \[M x N\] linear operator defining relationship between
                                  //!< constraints on \f$ \ddot{\boldsymbol{\xi}} \f$.
     Eigen::VectorXd
         m_Udwadia_b; //!< \[M x 1\] Result of \f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} \f$
@@ -183,20 +185,20 @@ class systemData : public std::enable_shared_from_this<systemData>
     int m_num_constraints{-1}; //!< = M
 
     // integrator
-    double m_dt{-1.0};
-    double m_tf{-1.0};
-    double m_t{0.0};
-    double m_tau{-1.0};
-    int    m_timestep{-1};
-    int    m_num_steps_output{-1};
+    double m_dt{-1.0};             //!< (dimensionless) integration \f$ \Delta t \f$
+    double m_tf{-1.0};             //!< (dimensionless) final simulation time
+    double m_t{0.0};               //!< (dimensionless) current simulation time
+    double m_tau{-1.0};            //!< simulation system characteristic timescale
+    int    m_timestep{-1};         //!< current simulation timestep (iteration)
+    int    m_num_steps_output{-1}; //!< how many simulation steps to output to GSD
 
     // material parameters
-    double m_fluid_density{-1};
-    double m_particle_density{-1};
+    double m_fluid_density{-1};    //!< mass density of fluid
+    double m_particle_density{-1}; //!< mass density of solid spheres
 
     // potential parameters
-    double m_wca_epsilon{-1};
-    double m_wca_sigma{-1};
+    double m_wca_epsilon{-1}; //!< \f$ \epsilon_{\mathrm{WCA}} \f$
+    double m_wca_sigma{-1};   //!< \f$ \sigma{\mathrm{WCA}} \f$
 
     // setters/getters
   public:
