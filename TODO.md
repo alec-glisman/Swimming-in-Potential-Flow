@@ -45,17 +45,23 @@
   - [x] Add new data to `update()` function inside the class
 
 - General-use functions for data class
-  - [ ] Compute $\bm \epsilon$, $\tilde{\bm{\epsilon}}$, and $\tilde{\bm{\kappa}}$ in the constructor.
-  - [ ] Calculate $\bm{E}$ from an input 4-vector.
-  - [ ] Calculate rigid body motion tensors ($\bm{\Sigma}$, $\bm{A}$, $\nabla_{\xi} \bm{A}$)
-  - [ ] Calculate $\bm{C}^{(i)}$
-  - [ ] Calculate $\bm{\beta}$
+  - [x] Calculate $\bm{E}$ from an input 4-vector.
+  - [ ] Compute general tensors
+    - [x] $\bm \epsilon$
+    - [x] $\tilde{\bm{\kappa}}$
+    - [ ] $\bm{C}^{(i)}$
+    - [ ] $\bm{\beta}$
+    - [ ] $\tilde{\bm{\epsilon}}$
+  - [ ] Calculate rigid body motion tensors
+    - [ ] $\bm{\Sigma}$
+    - [ ] $\bm{A}$
+    - [ ] $\nabla_{\xi} \bm{A}$
   - [x] Move 3rd axis indexing function to data from hydrodynamics
   - [x] Move crossProduct matrix function from hydrodynamics
-  - [ ] Write function to calculate contraction between 3rd order tensor with 2nd order tensor (both left and right)
 
 - General-use functions for hydrodynamics
   - [ ] Update $\nabla_{R} \bm{M}$ calculation with $\bm{\beta}$
+  - [ ] Make $\nabla_{R} \bm{M}$ 3rd order tensor
   - [ ] Compute the $\bm{N}^{(i)}$ 3rd order tensors and $\tilde{\mathbf{M}}$ 2nd order tensors
   - [ ] Update how hydrodynamic forces are calculated
 
@@ -75,7 +81,4 @@
 
 - [x] Make kinematic variables in systemData class private
   - [x] Add getter and setter functions
-- [ ] **Try to speed-up code execution by explicitly declaring size of all matrices at compile time in Eigen types.**
 - [ ] Write WCA potential
-- [ ] Calculate constraint forces
-- [ ] Write RKF45 integration function
