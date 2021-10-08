@@ -59,7 +59,7 @@ wca_sigma = 0.0
 # Particle parameters
 n = 6
 types = ['constrained', 'locater']
-typeid = [1, 0, 0, 1, 0, 0]
+typeid = np.array([1, 0, 0, 1, 0, 0], dtype=np.uint32)
 
 # !SECTION (Parameters)
 
@@ -72,7 +72,7 @@ def initializeGSD():
     gsd_class = GSDUtil(gsd_path, create_gsd=True)
     gsd_class.setLogParameters(dt, t, tf, tau, num_steps_output,
                                fluid_density, particle_density, wca_epsilon, wca_sigma)
-    gsd_class.setParticleParameters(n, types, typeid)
+    gsd_class.setParticleParameters(n, types=types, typeid=typeid)
 
 
 def setInitialConditions():
