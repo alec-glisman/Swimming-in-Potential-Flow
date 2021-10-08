@@ -84,7 +84,7 @@ IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
 ELSE()
 
-    MESSAGE(WARNING "You are using an unsupported compiler! Compilation has only been tested with Clang and GCC.")
+    MESSAGE(WARNING "You are using an unsupported compiler! Compilation has only been tested with GCC.")
 
 endif()
 
