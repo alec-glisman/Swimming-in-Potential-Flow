@@ -170,6 +170,7 @@ systemData::checkInput()
     assert(m_wca_sigma >= 0.0 && "WCA_sigma must be non-negative.");
 }
 
+// FIXME: Redo in light of new particle ordering
 /* REVIEW[epic=Change,order=3]: Change assignment of m_velocities_particles_articulation for
  * different systems */
 void
@@ -196,6 +197,7 @@ systemData::velocitiesArticulation(double time)
     m_velocities_particles_articulation.segment<3>(3 * 5).noalias() = v3_mag * q_tilde;
 }
 
+// FIXME: Redo in light of new particle ordering
 /* REVIEW[epic=Change,order=4]: Change assignment of m_accelerations_particles_articulation for
  * different systems */
 void
@@ -236,7 +238,7 @@ systemData::locaterPointLocations()
         // only fill for locater particles
         if (m_particle_type_id(i) == 1)
         {
-            m_positions_bodies.segment<3>(3 * body_count).noalias() =
+            m_positions_bodies.segment<3>(7 * body_count).noalias() =
                 m_positions_particles.segment<3>(3 * i);
 
             body_count += 1;
@@ -259,45 +261,50 @@ systemData::udwadiaLinearSystem(double time)
 void
 systemData::rigidBodyMotionTensors()
 {
-    // FIXME: Not correctly calculating dr (only non-zero when particle is member of given body)
     /* ANCHOR: Compute m_rbm_conn */
     m_rbm_conn.setZero();
 
     for (int i = 0; i < m_num_particles; i++)
     {
-        int i3{3 * i};
+        const int i3{3 * i};
 
         const Eigen::Vector3d R_i = m_positions_particles.segment<3>(i3);
+            
+        // Calculate which body j particle i belongs to
+        const int body_j = (m_particle_type_id.segment(0, i).array() == 1).count() - 1;
+        const int j6{6 * body_j};
+        const int j7{7 * body_j};
 
-        // Eigen3 is column-major by default so loop over rows (bodies) in inner loop
-        for (int j = 0; j < m_num_bodies; j++)
+        // (negative) moment arm of particle about its body's locater position
+        Eigen::Vector3d n_dr = m_positions_bodies.segment<3>(j7);
+        n_dr.noalias() -= R_i;
+
+        // skew-symmetric matrix representation of cross product
+        Eigen::Matrix3d n_dr_cross;
+        crossProdMat(n_dr, n_dr_cross);
+
+        // rigid body motion connectivity tensor elements
+        m_rbm_conn.block<3, 3>(j6, i3).noalias() = m_I; // translation-translation couple
+        m_rbm_conn.block<3, 3>(j6 + 3, i3).noalias() =
+            n_dr_cross; // translation-rotation couple
+
+        if (i == 0)
         {
-            int j6{6 * j};
-            int j7{7 * j};
-
-            // (negative) moment arm of particle about its body's locater position
-            Eigen::Vector3d n_dr = m_positions_bodies.segment<3>(j7);
-            n_dr.noalias() -= R_i;
-
-            // skew-symmetric matrix representation of cross product
-            Eigen::Matrix3d n_dr_cross;
-            crossProdMat(n_dr, n_dr_cross);
-
-            // rigid body motion connectivity tensor elements
-            m_rbm_conn.block<3, 3>(j6, i3).noalias() = m_I; // translation-translation couple
-            m_rbm_conn.block<3, 3>(j6 + 3, i3).noalias() =
-                n_dr_cross; // translation-rotation couple
+            assert(body_j == 0  && "First particle must be part of body 0.");
+        }
+        if (i == m_num_particles - 1)
+        {
+            assert(body_j + 1 == m_num_bodies && "Last particle must be part of body M.");
         }
     }
 
-    // FIXME: Not correctly calculating dr (only non-zero when particle is member of given body)
     /* ANCHOR: Compute m_psi_conv_quat_ang */
     m_psi_conv_quat_ang.setZero();
 
     for (int k = 0; k < m_num_bodies; k++)
     {
-        int k6{6 * k};
-        int k7{7 * k};
+        const int k6{6 * k};
+        const int k7{7 * k};
 
         // matrix E from quaterion of body k
         Eigen::Matrix<double, 3, 4> E_theta_k;
@@ -323,7 +330,7 @@ systemData::gradientChangeOfVariableTensors()
 
     for (int i = 0; i < m_num_particles; i++)
     {
-        int i3{3 * i};
+        const int i3{3 * i};
 
         // 4-vector version of particle i position (prepend zero element)
         Eigen::Vector4d R_i         = Eigen::Vector4d::Zero(4, 1);
@@ -332,7 +339,7 @@ systemData::gradientChangeOfVariableTensors()
         // Eigen3 is column-major by default so loop over rows (bodies) in inner loop
         for (int j = 0; j < m_num_bodies; j++)
         {
-            int j7{7 * j};
+            const int j7{7 * j};
 
             // moment arm of particle i about its body j locater position
             Eigen::Vector4d dr = R_i;

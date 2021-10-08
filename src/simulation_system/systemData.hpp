@@ -215,8 +215,11 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::VectorXd m_accelerations_particles_articulation; //!< \[3N x 1\]
 
     // particle parameters
-    Eigen::VectorXi m_particle_type_id; //!< REVIEW[epic=assumptions] {0: locater particle,
-                                        //!< 1: constrained particle}
+    Eigen::VectorXi m_particle_type_id; //!< \[N x 1\] REVIEW[epic=assumptions]
+                                        //!< 1) {0: constrained particle, 1: locater particle}.
+                                        //!< 2) locater particle listed first in order and denotes
+                                        //!< when to switch body index to next body
+                                        //!< ex: (1, 0, 0, 1, 0, 0)
 
     // degrees of freedom
     int m_num_spatial_dim{-1}; //!< = 3
