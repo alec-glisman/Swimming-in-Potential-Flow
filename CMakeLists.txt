@@ -189,8 +189,8 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native -O3 -mfpmath=s
 
 IF(CMAKE_BUILD_TYPE STREQUAL "Profile")
 
-    SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-omit-frame-pointer -march=native -O3 -mfpmath=sse -funroll-loops -lboost_system -Wno-deprecated-declarations")
-    SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fno-omit-frame-pointer -march=native -O3 -mfpmath=sse -funroll-loops -lboost_system -Wno-deprecated-declarations")
+    SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-omit-frame-pointer -march=native -O3 -mfpmath=sse -funroll-loops -lboost_system -ltbb -lpthread -m64 -lmkl_intel_lp64 -lmkl_tbb_thread -lmkl_core -lm -ldl -Wno-deprecated-declarations")
+    SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fno-omit-frame-pointer -march=native -O3 -mfpmath=sse -funroll-loops -lboost_system -ltbb -lpthread -m64 -lmkl_intel_lp64 -lmkl_tbb_thread -lmkl_core -lm -ldl -Wno-deprecated-declarations")
 
 ENDIF()
 # !SECTION
