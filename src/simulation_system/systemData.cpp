@@ -273,16 +273,57 @@ systemData::rigidBodyMotionTensors()
         int k7{7 * k};
 
         // matrix E from quaterion of body k
-        Eigen::Matrix<double, 3, 4> E_theta_i;
-        eMatrix(m_positions_bodies.segment<4>(k7 + 3), E_theta_i);
+        Eigen::Matrix<double, 3, 4> E_theta_k;
+        eMatrix(m_positions_bodies.segment<4>(k7 + 3), E_theta_k);
 
         // matrix elements of Psi
         m_psi_conv_quat_ang.block<3, 3>(k6, k7).noalias() =
             m_I; // no conversion from linear components
         m_psi_conv_quat_ang.block<3, 4>(k6 + 3, k7 + 3).noalias() =
-            2 * E_theta_i; // angular-quaternion velocity couple
+            2 * E_theta_k; // angular-quaternion velocity couple
     }
 
     /* ANCHOR: Compute m_C_conv_quat_part */
     m_C_conv_quat_part.noalias() = m_rbm_conn.transpose() * m_psi_conv_quat_ang;
+}
+
+void
+systemData::gradientChangeOfVariableTensors()
+{
+    /* ANCHOR: Compute m_D_conv_quat_part */
+    m_D_conv_quat_part = Eigen::MatrixXd::Zero(7 * m_num_bodies, 3 * m_num_particles);
+
+    for (int i = 0; i < m_num_particles; i++)
+    {
+        int i3{3 * i};
+
+        // 4-vector version of particle i position (prepend zero element)
+        Eigen::Vector4d R_i         = Eigen::Vector4d::Zero(4, 1);
+        R_i.segment<3>(1).noalias() = m_positions_particles.segment<3>(i3);
+
+        // Eigen3 is column-major by default so loop over rows (bodies) in inner loop
+        for (int j = 0; j < m_num_bodies; j++)
+        {
+            int j7{7 * j};
+
+            // moment arm of particle i about its body j locater position
+            Eigen::Vector4d dr = R_i;
+            dr.segment<3>(1).noalias() -= m_positions_bodies.segment<3>(j7);
+
+            // matrix E from quaterion of body j
+            Eigen::Matrix<double, 3, 4> E_theta_j;
+            eMatrix(m_positions_bodies.segment<4>(j7 + 3), E_theta_j);
+
+            // matrix P_tilde from moment arm
+            Eigen::Matrix<double, 3, 4> P_i_tilde_hold;
+            eMatrix(dr, P_i_tilde_hold);
+
+            // change of variables gradient tensor elements
+            m_D_conv_quat_part.block<3, 3>(j7, i3).noalias() =
+                -m_I; // translation-translation couple
+            m_D_conv_quat_part.block<3, 3>(j7 + 4, i3).noalias() =
+                2 * E_theta_j *
+                P_i_tilde_hold.transpose(); // quaternion-rotation couple (first row is zero)
+        }
+    }
 }

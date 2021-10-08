@@ -107,6 +107,9 @@ class systemData : public std::enable_shared_from_this<systemData>
     void
     rigidBodyMotionTensors();
 
+    void
+    gradientChangeOfVariableTensors();
+
     /**
      * @brief Computes the E matrix of quaternion (4-vector) input
      *
@@ -176,8 +179,9 @@ class systemData : public std::enable_shared_from_this<systemData>
                      //!< \boldsymbol{E}{(\boldsymbol{\theta})} \f$
 
     // change of gradient variable tensors TODO
-    Eigen::MatrixXd m_D_conv_quat_part; //!< [7M x 3N\] converts particle position D.o.F. to body
-                                        //!< position/quaternion D.o.F.
+    Eigen::MatrixXd
+        m_D_conv_quat_part; //!< [7M x 3N\] converts particle position D.o.F. to body
+                            //!< position/quaternion D.o.F. (NOTE: this was \beta in written work)
 
     // rigid body motion tensors TODO
     Eigen::MatrixXd m_rbm_conn; //!< \[6M x 3N\] \f$ \boldsymbol{\Sigma} \f$ rigid body motion
@@ -185,9 +189,9 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::MatrixXd
         m_psi_conv_quat_ang; //<! \[6M x 7M\] \f$ \boldsymbol{\Psi} \f$ converts linear/quaternion
                              //<! body velocity D.o.F. to linear/angular velocity D.o.F.
-    Eigen::MatrixXd
-        m_C_conv_quat_part; //!< \[3N x 7M\] \f$ \boldsymbol{C} \f$ converts linear/quaternion body
-                            //!< velocity D.o.F. to linear particle velocities
+    Eigen::MatrixXd m_C_conv_quat_part; //!< \[3N x 7M\] \f$ \boldsymbol{C} \f$ converts
+                                        //!< linear/quaternion body velocity D.o.F. to linear
+                                        //!< particle velocities (NOTE: this was A in written work)
     Eigen::Tensor<double, 3>
         m_C_conv_quat_part_grad; //!< \[3N x 7M x 7M\] \f$ \nabla_{\xi} \boldsymbol{C} \f$
 
