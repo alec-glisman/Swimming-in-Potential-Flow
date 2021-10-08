@@ -31,6 +31,13 @@
 /* Forward declarations */
 class GSDUtil;
 
+/**
+ * @class systemData
+ * @brief Class contains all data structures relevant to the simulation framework.
+ * Note that after construction, `initializeData()` must be called to properly load
+ * data from a GSD file.
+ *
+ */
 class systemData : public std::enable_shared_from_this<systemData>
 {
   public:
@@ -38,9 +45,23 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     ~systemData();
 
+    /**
+     * @brief Function loads data from GSD file using `GSDUtil` class.
+     * Must be called after class construction before data can properly
+     * be integrated using the `engine` class.
+     *
+     */
     void
     initializeData();
 
+    /**
+     * @brief Updates the kinematic constraints relative to the chosen locater particles
+     * for both velocity and acceleration degrees of freedom.
+     * The Udwadia linear constraint system (\f$ \mathbf{A} \, \boldsymbol{\xi} = \mathbf{b} \f$ )
+     * is also updated.
+     *
+     * @param time (dimensionless) simulation time to update parameters.
+     */
     void
     updateConstraints(double time);
 
