@@ -74,8 +74,8 @@
 ## Bugs to Fix
 
 - Figure out why python configuration script is not outputting correct data
-  - [ ] Quaternions
-  - [ ] Particle ID type
+  - [x] Quaternions
+  - [x] Particle ID type
 
 ## Verifications
 
