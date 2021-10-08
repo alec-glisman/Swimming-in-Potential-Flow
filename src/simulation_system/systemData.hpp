@@ -57,8 +57,8 @@ class systemData : public std::enable_shared_from_this<systemData>
     /**
      * @brief Updates the kinematic constraints relative to the chosen locater particles
      * for both velocity and acceleration degrees of freedom.
-     * The Udwadia linear constraint system (\f$ \mathbf{A} \, \boldsymbol{\xi} = \mathbf{b} \f$ )
-     * is also updated.
+     * The Udwadia linear constraint system (\f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} = \mathbf{b}
+     * \f$ ) is also updated.
      *
      * @param time (dimensionless) simulation time to update parameters.
      */
@@ -140,8 +140,10 @@ class systemData : public std::enable_shared_from_this<systemData>
     double m_sys_spec_R_avg{-1.0};
 
     // Udwadia constraint linear system
-    Eigen::MatrixXd m_Udwadia_A;
-    Eigen::VectorXd m_Udwadia_b;
+    Eigen::MatrixXd m_Udwadia_A; //!< \[M x N\] Linear operator defining relationship between
+                                 //!< constraints on \f$ \ddot{\boldsymbol{\xi}} \f$.
+    Eigen::VectorXd
+        m_Udwadia_b; //!< \[M x 1\] Result of \f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} \f$
 
     // "identity" tensors
     const Eigen::Matrix3d m_I =
@@ -152,7 +154,8 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>>
         levi_cevita; //!< \[3 x 3 x 3] (skew-symmetric) 3rd order identity tensor
     Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>>
-        kappa_tilde; //!< \[3 x 4 x 7\] \f$ \nabla_{\xi_{\alpha}} \boldsymbol{E}{(\boldsymbol{\theta})} \f$
+        kappa_tilde; //!< \[3 x 4 x 7\] \f$ \nabla_{\xi_{\alpha}}
+                     //!< \boldsymbol{E}{(\boldsymbol{\theta})} \f$
 
     // kinematics
     Eigen::VectorXd m_positions_bodies;     //!< \[7M x 1\] both linear and angular D.o.F.

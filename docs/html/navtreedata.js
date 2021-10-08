@@ -27,12 +27,12 @@ var NAVTREE =
   [ "bodies-in-potential-flow", "index.html", [
     [ "Directory: python", "md_python_README.html", [
       [ "Subdirectory: analysis", "md_python_README.html#autotoc_md2", null ],
-      [ "Subdirectory: initial_configurations", "md_python_README.html#autotoc_md3", null ],
-      [ "Files", "md_python_README.html#autotoc_md4", null ]
+      [ "Subdirectory: initial_configurations", "md_python_README.html#autotoc_md4", null ],
+      [ "Files", "md_python_README.html#autotoc_md6", null ]
     ] ],
     [ "Directory: requirements", "md_requirements_README.html", [
-      [ "Directory: C++", "md_requirements_README.html#autotoc_md5", null ],
-      [ "Directory: Perl", "md_requirements_README.html#autotoc_md6", null ],
+      [ "Directory: C++", "md_requirements_README.html#autotoc_md3", null ],
+      [ "Directory: Perl", "md_requirements_README.html#autotoc_md5", null ],
       [ "Directory: Python", "md_requirements_README.html#autotoc_md7", null ]
     ] ],
     [ "CUDA Helper Files", "md_src_cuda_helpers_README.html", null ],
