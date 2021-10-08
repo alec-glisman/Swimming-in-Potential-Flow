@@ -53,8 +53,8 @@
     - [ ] $\bm{\beta}$
     - [ ] $\tilde{\bm{\epsilon}}$
   - [ ] Calculate rigid body motion tensors
-    - [ ] $\bm{\Sigma}$
-    - [ ] $\bm{A}$
+    - [x] $\bm{\Sigma}$
+    - [x] $\bm{A}$
     - [ ] $\nabla_{\xi} \bm{A}$
   - [x] Move 3rd axis indexing function to data from hydrodynamics
   - [x] Move crossProduct matrix function from hydrodynamics
