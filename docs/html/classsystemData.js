@@ -93,7 +93,6 @@ var classsystemData =
     [ "m_Udwadia_b", "classsystemData.html#a307bdd3fe3c8084cf245a74688f2e1ae", null ],
     [ "m_I", "classsystemData.html#a393327dfc91c092d965f40fd6273f939", null ],
     [ "m_I_tilde", "classsystemData.html#a59fdcfd9cdb474de720a97f5f1488d0a", null ],
-    [ "m_I_tilde_tilde", "classsystemData.html#a74dc6d8adffa84bfb946c4748fcd126f", null ],
     [ "levi_cevita", "classsystemData.html#a006c0868ff3164abf982c1e6fdcabc3a", null ],
     [ "kappa_tilde", "classsystemData.html#abc2814ce3a5e02f29da3496db68466bb", null ],
     [ "m_positions_bodies", "classsystemData.html#a242328c57db4376e3bf83b4145a1cb29", null ],

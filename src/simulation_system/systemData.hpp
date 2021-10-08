@@ -144,13 +144,15 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::VectorXd m_Udwadia_b;
 
     // "identity" tensors
-    const Eigen::Matrix3d m_I = Eigen::Matrix3d::Identity(3, 3);
-    Eigen::Matrix3d       m_I_tilde;
-    Eigen::Matrix3d       m_I_tilde_tilde;
+    const Eigen::Matrix3d m_I =
+        Eigen::Matrix3d::Identity(3, 3); //!< \[3 x 3\] 2nd order identity tensor
+    Eigen::Matrix3d m_I_tilde;           //!< \[3 x 3\] reflection about z-axis tensor
 
     // general-use tensors
-    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> levi_cevita;
-    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> kappa_tilde;
+    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>>
+        levi_cevita; //!< \[3 x 3 x 3] (skew-symmetric) 3rd order identity tensor
+    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>>
+        kappa_tilde; //!< \[3 x 4 x 7\] \f$ \nabla_{\xi_{\alpha}} \boldsymbol{E}{(\boldsymbol{\theta})} \f$
 
     // kinematics
     Eigen::VectorXd m_positions_bodies;     //!< \[7M x 1\] both linear and angular D.o.F.

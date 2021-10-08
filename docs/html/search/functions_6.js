@@ -54,6 +54,7 @@ var searchData=
   ['gsd_5futil_5fzero_5fmemory_51',['gsd_util_zero_memory',['../gsd_8c.html#a9b05d58560daee2512f03bedf7b2926d',1,'gsd.c']]],
   ['gsd_5fwrite_5fchunk_52',['gsd_write_chunk',['../gsd_8h.html#ae22447904b925f284bf987fae448488a',1,'gsd_write_chunk(struct gsd_handle *handle, const char *name, enum gsd_type type, uint64_t N, uint32_t M, uint8_t flags, const void *data):&#160;gsd.c'],['../gsd_8c.html#ae22447904b925f284bf987fae448488a',1,'gsd_write_chunk(struct gsd_handle *handle, const char *name, enum gsd_type type, uint64_t N, uint32_t M, uint8_t flags, const void *data):&#160;gsd.c']]],
   ['gsdparsed_53',['gSDParsed',['../classsystemData.html#a455ac9e43a0e1ce6417c61f0c36ff8bd',1,'systemData']]],
-  ['gsdutil_54',['gsdUtil',['../classsystemData.html#ad002cc6617637d499b96829e5bb25a13',1,'systemData']]],
-  ['gsdutil_55',['GSDUtil',['../classGSDUtil.html#a2567bdb7f5952a76984552e0591fa330',1,'GSDUtil::GSDUtil(std::shared_ptr&lt; systemData &gt; sys)'],['../classGSDUtil.html#a2e27650b5d6bc1a874ee9fa070041dd5',1,'GSDUtil::GSDUtil(std::shared_ptr&lt; systemData &gt; sys, uint64_t frame)']]]
+  ['gsdutil_54',['GSDUtil',['../classGSDUtil.html#a2e27650b5d6bc1a874ee9fa070041dd5',1,'GSDUtil']]],
+  ['gsdutil_55',['gsdUtil',['../classsystemData.html#ad002cc6617637d499b96829e5bb25a13',1,'systemData']]],
+  ['gsdutil_56',['GSDUtil',['../classGSDUtil.html#a2567bdb7f5952a76984552e0591fa330',1,'GSDUtil']]]
 ];

@@ -71,7 +71,7 @@ var NAVTREE =
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", "functions_vars" ]
+        [ "Variables", "functions_vars.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
@@ -93,9 +93,9 @@ var NAVTREEINDEX =
 [
 "GSDUtil_8cpp.html",
 "classpotentialHydrodynamics.html#a8d8bc85bf9e45ee0099c490229b8ea8c",
-"functions_i.html",
-"helper__math_8h.html#a2be6e75cebfa87afcd004bccb00eab56",
-"helper__multiprocess_8h_source.html"
+"functions_k.html",
+"helper__math_8h.html#a4353229a68fe4399a971683a4ef6d0f0",
+"helper__timer_8h.html#aa0a197b1848bce4d73807f7297d708df"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
