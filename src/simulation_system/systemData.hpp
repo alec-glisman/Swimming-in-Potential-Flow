@@ -198,7 +198,7 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     // potential parameters
     double m_wca_epsilon{-1}; //!< \f$ \epsilon_{\mathrm{WCA}} \f$
-    double m_wca_sigma{-1};   //!< \f$ \sigma{\mathrm{WCA}} \f$
+    double m_wca_sigma{-1};   //!< \f$ \sigma_{\mathrm{WCA}} \f$
 
     // setters/getters
   public:
