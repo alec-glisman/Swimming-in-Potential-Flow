@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['directory_3a_20python_0',['Directory: python',['../md_python_README.html',1,'']]],
-  ['directory_3a_20requirements_1',['Directory: requirements',['../md_requirements_README.html',1,'']]],
-  ['directory_3a_20src_2',['Directory: src',['../md_src_README.html',1,'']]],
-  ['directory_3a_20tests_3',['Directory: tests',['../md_tests_README.html',1,'']]]
+  ['cuda_20helper_20files_0',['CUDA Helper Files',['../md_src_cuda_helpers_README.html',1,'']]]
 ];

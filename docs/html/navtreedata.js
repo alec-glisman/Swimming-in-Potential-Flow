@@ -26,34 +26,45 @@ var NAVTREE =
 [
   [ "bodies-in-potential-flow", "index.html", [
     [ "Directory: python", "md_python_README.html", [
-      [ "Subdirectory: analysis", "md_python_README.html#autotoc_md2", null ],
-      [ "Subdirectory: initial_configurations", "md_python_README.html#autotoc_md3", null ],
-      [ "Files", "md_python_README.html#autotoc_md4", null ]
+      [ "Subdirectory: analysis", "md_python_README.html#autotoc_md14", null ],
+      [ "Subdirectory: initial_configurations", "md_python_README.html#autotoc_md15", null ],
+      [ "Files", "md_python_README.html#autotoc_md16", null ]
+    ] ],
+    [ "Bodies in Potential Flow", "md_README.html", [
+      [ "Software tested", "md_README.html#autotoc_md3", null ],
+      [ "Docker integration", "md_README.html#autotoc_md4", null ],
+      [ "Project structure: links to relevant readme files", "md_README.html#autotoc_md5", null ],
+      [ "Data I/O", "md_README.html#autotoc_md6", null ],
+      [ "Modifications for other systems", "md_README.html#autotoc_md7", null ],
+      [ "External dependencies", "md_README.html#autotoc_md8", [
+        [ "Must install separately", "md_README.html#autotoc_md9", null ],
+        [ "Integrated into project", "md_README.html#autotoc_md10", null ]
+      ] ]
     ] ],
     [ "Directory: requirements", "md_requirements_README.html", [
-      [ "Directory: C++", "md_requirements_README.html#autotoc_md5", null ],
-      [ "Directory: Perl", "md_requirements_README.html#autotoc_md6", null ],
-      [ "Directory: Python", "md_requirements_README.html#autotoc_md7", null ]
+      [ "Directory: C++", "md_requirements_README.html#autotoc_md11", null ],
+      [ "Directory: Perl", "md_requirements_README.html#autotoc_md12", null ],
+      [ "Directory: Python", "md_requirements_README.html#autotoc_md13", null ]
     ] ],
     [ "CUDA Helper Files", "md_src_cuda_helpers_README.html", null ],
     [ "Directory: src", "md_src_README.html", [
-      [ "Subdirectory: cuda_helpers", "md_src_README.html#autotoc_md11", null ],
-      [ "Subdirectory: data_io", "md_src_README.html#autotoc_md13", [
-        [ "Class: gsd", "md_src_README.html#autotoc_md14", null ],
-        [ "Class: GSDUtil", "md_src_README.html#autotoc_md15", null ]
+      [ "Subdirectory: cuda_helpers", "md_src_README.html#autotoc_md20", null ],
+      [ "Subdirectory: data_io", "md_src_README.html#autotoc_md22", [
+        [ "Class: gsd", "md_src_README.html#autotoc_md23", null ],
+        [ "Class: GSDUtil", "md_src_README.html#autotoc_md24", null ]
       ] ],
-      [ "Subdirectory: forces", "md_src_README.html#autotoc_md17", [
-        [ "Class: potentialHydrodynamics", "md_src_README.html#autotoc_md18", null ]
+      [ "Subdirectory: forces", "md_src_README.html#autotoc_md26", [
+        [ "Class: potentialHydrodynamics", "md_src_README.html#autotoc_md27", null ]
       ] ],
-      [ "Subdirectory: integrators", "md_src_README.html#autotoc_md20", [
-        [ "Class: rungeKutta4", "md_src_README.html#autotoc_md21", null ]
+      [ "Subdirectory: integrators", "md_src_README.html#autotoc_md29", [
+        [ "Class: rungeKutta4", "md_src_README.html#autotoc_md30", null ]
       ] ],
-      [ "Subdirectory: simulation_system", "md_src_README.html#autotoc_md23", [
-        [ "Class: engine", "md_src_README.html#autotoc_md24", null ],
-        [ "Class: progressBar", "md_src_README.html#autotoc_md25", null ],
-        [ "Class: systemData", "md_src_README.html#autotoc_md26", null ]
+      [ "Subdirectory: simulation_system", "md_src_README.html#autotoc_md32", [
+        [ "Class: engine", "md_src_README.html#autotoc_md33", null ],
+        [ "Class: progressBar", "md_src_README.html#autotoc_md34", null ],
+        [ "Class: systemData", "md_src_README.html#autotoc_md35", null ]
       ] ],
-      [ "Files", "md_src_README.html#autotoc_md28", null ]
+      [ "Files", "md_src_README.html#autotoc_md37", null ]
     ] ],
     [ "Directory: tests", "md_tests_README.html", null ],
     [ "Namespaces", "namespaces.html", [
