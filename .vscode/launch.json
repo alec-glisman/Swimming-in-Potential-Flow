@@ -76,10 +76,10 @@
             // Resolved by CMake Tools:
             "cwd": "${workspaceFolder}",
             "preLaunchTask": "Debug: build",
-            "program": "${workspaceFolder}/build_debug/src/./bodies_in_potential_flow",
+            "program": "${workspaceFolder}/build_debug/src/bodies_in_potential_flow",
             "args": [
-                "tests/data.gsd",
-                "temp/output"
+                "${workspaceFolder}/tests/data.gsd",
+                "${workspaceFolder}/temp/output"
             ],
             "stopAtEntry": false,
             "externalConsole": false,
@@ -98,7 +98,7 @@
             // Resolved by CMake Tools:
             "cwd": "${workspaceFolder}",
             "preLaunchTask": "Debug: build",
-            "program": "${workspaceFolder}/build_debug/tests/./tests",
+            "program": "${workspaceFolder}/build_debug/tests/tests",
             "args": [],
             "stopAtEntry": false,
             "externalConsole": false,
