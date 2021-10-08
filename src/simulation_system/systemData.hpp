@@ -45,9 +45,11 @@ class systemData : public std::enable_shared_from_this<systemData>
     updateConstraints(double time);
 
     /**
-     * Function takes in vector in vector cross-product expression: c = a \times b
-     * vec must be 'a' in above equation
-     * Output is the matrix representation of 'a \times' operator */
+     * @brief Function takes in vector in vector cross-product expression: $c = a \times b$
+     *
+     * @param vec Input 3-vector must be $a$ in above equation.
+     * @param mat Matrix representation of $a \times$ operator.
+     */
     static void
     crossProdMat(const Eigen::Vector3d& vec, Eigen::Matrix3d& mat)
     {
@@ -55,17 +57,17 @@ class systemData : public std::enable_shared_from_this<systemData>
     };
 
     /**
-     * Function converts index b in (a, b, c) -> index b' in (a, b').
-     *
+     * @brief Function converts index $b$ in $(a, b, c) \to$ index $b'$ in $(a, b')$.
      * Conversion between 3D matrix (row_idx_3d, column_idx_3d, layer_idx_3d)
      * into a flattened 2D representation. Layers are concatenated together
      * horizontally along 2D column axis to make one short and very wide two
      * dimensional matrix.
      *
-     * int column_idx_3d:       column index of 3D matrix
-     * int layer_idx_3d:        layer index of 3D matrix
-     * int layer_deriv_dim:     spatial dimension of derivative var (x, y, z) denoted as (0, 1, 2)
-     * int layer_column_width:  number of columns in a layer of 3D matrix
+     * @param column_idx_3d column index of 3D matrix
+     * @param layer_idx_3d layer index of 3D matrix
+     * @param layer_deriv_dim spatial dimension of derivative var (x, y, z) denoted as (0, 1, 2)
+     * @param layer_column_width number of columns in a layer of 3D matrix
+     * @return int output column index for 2D matrix
      */
     static int
     convert3dIdxTo2d(int column_idx_3d, int layer_idx_3d, int layer_deriv_dim,
