@@ -26,9 +26,12 @@ Testing
 # traces
 *.trace
 *.data
-
 # !SECTION (DATA)
 
+# SECTION: DOCUMENTATION
+# Doxygen
+docs/html/**
+# !SECTION
 
 
 # SECTION PYTHON
