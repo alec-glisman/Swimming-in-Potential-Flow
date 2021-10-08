@@ -49,7 +49,7 @@ class GSDUtil
 
   private:
     void
-    check_gsd_return();
+    checkGSDReturn();
 
     bool
     readChunk(void* data, uint64_t frame, const char* name, size_t expected_size,
