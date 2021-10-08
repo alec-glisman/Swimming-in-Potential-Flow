@@ -57,15 +57,15 @@ class systemData : public std::enable_shared_from_this<systemData>
     };
 
     /**
-     * @brief Function converts index $b$ in $(a, b, c) \to$ index $b'$ in $(a, b')$.
-     * Conversion between 3D matrix (row_idx_3d, column_idx_3d, layer_idx_3d)
-     * into a flattened 2D representation. Layers are concatenated together
-     * horizontally along 2D column axis to make one short and very wide two
-     * dimensional matrix.
+     * @brief Function converts index \f$ b \f$ in \f$ (a, b, c) \to \f$ index \f$ b' \f$ in \f$ (a,
+     * b') \f$. Conversion between 3D matrix (row_idx_3d, column_idx_3d, layer_idx_3d) into a
+     * flattened 2D representation. Layers are concatenated together horizontally along 2D column
+     * axis to make one short and very wide two dimensional matrix.
      *
      * @param column_idx_3d column index of 3D matrix
      * @param layer_idx_3d layer index of 3D matrix
-     * @param layer_deriv_dim spatial dimension of derivative var (x, y, z) denoted as (0, 1, 2)
+     * @param layer_deriv_dim spatial dimension of derivative var \f$ (x, y, z) \f$ denoted as \f$
+     * (0, 1, 2) \f$
      * @param layer_column_width number of columns in a layer of 3D matrix
      * @return int output column index for 2D matrix
      */
