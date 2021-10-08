@@ -31,7 +31,7 @@ use warnings;                      # give warnings
 # SECTION: Input variables that user must specify before running script
 
 # Compiler
-my $build         = "Release";                # OPTIONS: Release, Debug, Profile
+my $build         = "Debug";                # OPTIONS: Release, Debug, Profile
 my $enableTesting = "True";                   # OPTIONS: (False) OFF, (True) ON
 my $buildDir      = "build";                  # Title whatever you want build folder to be
 my $generator     = "Unix Makefiles";         # ONLY TESTED WITH UNIX
@@ -174,7 +174,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 )
         my $gsd_path = ${simulation_dir} . "/" . "data.gsd";
 
         # Simulation variables
-        my $dt          = 1.00e-6;
+        my $dt          = 1.00e-4;
         my $R_avg       = 4.00e+0;
         my $Z_height    = 6.00e+0;
         my $phase_angle = -1.57079632679e+0;
