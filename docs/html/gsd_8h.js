@@ -37,6 +37,8 @@ var gsd_8h =
       [ "GSD_ERROR_FILE_MUST_BE_WRITABLE", "gsd_8h.html#a03a578779769ed7e288df22c6a75f07baa5cbc2efac6a7d90f89b616e791eac64", null ],
       [ "GSD_ERROR_FILE_MUST_BE_READABLE", "gsd_8h.html#a03a578779769ed7e288df22c6a75f07bac5de89b0da97d4df5b52f18ee0977b7c", null ]
     ] ],
+    [ "GSD_NAME_SIZE", "gsd_8h.html#a0411cd49bb5b71852cecd93bcbf0ca2dab1e8211d5344adb743238d82d369331d", null ],
+    [ "GSD_RESERVED_BYTES", "gsd_8h.html#abed82baf7f470b522273a3e37c24c600a7199f456f54bd738f291363298706f4a", null ],
     [ "gsd_make_version", "gsd_8h.html#a493ef951956c9f98adff89a80ddb3fa6", null ],
     [ "gsd_create", "gsd_8h.html#a58654880dd98b2bc32e429810b7d2623", null ],
     [ "gsd_create_and_open", "gsd_8h.html#a157d14770365926fde71a7787871bc63", null ],
@@ -45,10 +47,10 @@ var gsd_8h =
     [ "gsd_close", "gsd_8h.html#a08b4f76e3e19eda194def8c0c4b2b7a3", null ],
     [ "gsd_end_frame", "gsd_8h.html#aa03810337c5eebcbe716d8633eaefc5e", null ],
     [ "gsd_write_chunk", "gsd_8h.html#ae22447904b925f284bf987fae448488a", null ],
-    [ "gsd_find_chunk", "gsd_8h.html#ac00249e8c3030557711beb337c8424dd", null ],
+    [ "gsd_find_chunk", "gsd_8h.html#a3c76bbf6c28b953cff198a44852c732f", null ],
     [ "gsd_read_chunk", "gsd_8h.html#a2db2e3e8a72948bf413e7f09469ec8a6", null ],
     [ "gsd_get_nframes", "gsd_8h.html#a7479046d4d6e15c33cb24034ddd87562", null ],
     [ "gsd_sizeof_type", "gsd_8h.html#ab1d1a8a5f73b37df0c706f41df3bdd69", null ],
-    [ "gsd_find_matching_chunk_name", "gsd_8h.html#ad6f823bc40d0a28be983368adb42783e", null ],
+    [ "gsd_find_matching_chunk_name", "gsd_8h.html#a081b6fad5e27f4f8cfabd0030af7ebf5", null ],
     [ "gsd_upgrade", "gsd_8h.html#adb92d5142812c19bf4ee33cbde439131", null ]
 ];
