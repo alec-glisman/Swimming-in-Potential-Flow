@@ -72,27 +72,6 @@ class systemData : public std::enable_shared_from_this<systemData>
     void
     updateConstraints(double time);
 
-    /**
-     * @brief Conversion between 3D matrix (row_idx_3d, column_idx_3d, layer_idx_3d) into a
-     * flattened 2D representation.
-     *
-     * @details Layers are concatenated together horizontally along 2D column axis to make one
-     * short and very wide two dimensional matrix. Converts index
-     * \f$ b \f$ in \f$ (a, b, c) \to \f$ index \f$ b' \f$ in \f$ (a, b') \f$.
-     *
-     * @param column_idx_3d column index of 3D matrix
-     * @param layer_idx_3d layer index of 3D matrix
-     * @param layer_deriv_dim spatial dimension of derivative var \f$ (x, y, z) \f$ denoted as \f$
-     * (0, 1, 2) \f$
-     * @param layer_column_width number of columns in a layer of 3D matrix
-     * @return int output column index for 2D matrix
-     */
-    static int
-    convert3dIdxTo2d(int column_idx_3d, int layer_idx_3d, int layer_deriv_dim, int layer_column_width)
-    {
-        return column_idx_3d + (layer_idx_3d + layer_deriv_dim) * layer_column_width;
-    };
-
   private:
     void
     parseGSD();
