@@ -71,10 +71,6 @@ systemData::initializeData()
     kappa_tilde(1, 1, 6) = 1;
     kappa_tilde(2, 0, 6) = -1;
 
-    // initialize kinematic matrices
-    m_velocities_particles_articulation    = Eigen::VectorXd::Zero(3 * m_num_particles);
-    m_accelerations_particles_articulation = Eigen::VectorXd::Zero(3 * m_num_particles);
-
     // initialize constraint matrices
     m_Udwadia_A = Eigen::MatrixXd::Zero(m_num_constraints, m_num_DoF);
     m_Udwadia_b = Eigen::VectorXd::Zero(m_num_constraints);
@@ -323,7 +319,6 @@ systemData::rigidBodyMotionTensors()
 void
 systemData::gradientChangeOfVariableTensors()
 {
-    // FIXME: Not correctly calculating dr (only non-zero when particle is member of given body)
     /* ANCHOR: Compute m_D_conv_quat_part */
     m_D_conv_quat_part.setZero();
 
@@ -370,4 +365,6 @@ systemData::gradientChangeOfVariableTensors()
             P_j_tilde_hold.transpose(); // quaternion-rotation couple (first row is zero)
     }
     assert(body_num + 1 == m_num_bodies && "Not all bodies were indexed correctly");
+
+    /* TODO: ANCHOR : Compute m_C_conv_quat_part_grad */
 }
