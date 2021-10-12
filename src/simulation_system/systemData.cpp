@@ -18,6 +18,9 @@ systemData::systemData(std::string inputGSDFile, std::string outputDir)
     m_I_tilde       = m_I;
     m_I_tilde(2, 2) = -1.0;
 
+    // Eigen3 parallelization
+    Eigen::setNbThreads(m_num_physical_cores); // for Eigen OpenMP parallelization
+
     spdlog::get(m_logName)->info("Constructor complete");
     spdlog::get(m_logName)->flush();
 }
@@ -42,6 +45,7 @@ systemData::initializeData()
     m_num_constraints = m_num_bodies;     // 1 unit quaternion constraint per body
 
     // initialize general-use tensors
+    levi_cevita = Eigen::Tensor<double, 3>(3, 3, 3);
     levi_cevita.setZero();
 
     levi_cevita(1, 2, 0) = 1;
@@ -138,15 +142,12 @@ systemData::checkInput()
     assert(m_accelerations_particles.size() == 3 * m_num_particles &&
            "Particle acceleration vector has incorrect length, not 3N.");
 
-    assert(m_positions_bodies.size() == 7 * m_num_bodies &&
-           "Body position vector has incorrect length, not 7M.");
-    assert(m_velocities_bodies.size() == 7 * m_num_bodies &&
-           "Body velocity vector has incorrect length, not 7M.");
+    assert(m_positions_bodies.size() == 7 * m_num_bodies && "Body position vector has incorrect length, not 7M.");
+    assert(m_velocities_bodies.size() == 7 * m_num_bodies && "Body velocity vector has incorrect length, not 7M.");
     assert(m_accelerations_bodies.size() == 7 * m_num_bodies &&
            "Body acceleration vector has incorrect length, not 7M.");
 
-    assert(m_particle_type_id.size() == m_num_particles &&
-           "Particle type ID vector has incorrect length, not N.");
+    assert(m_particle_type_id.size() == m_num_particles && "Particle type ID vector has incorrect length, not N.");
 
     assert(m_num_particles > 0 && "Must have at least one particle to simulate.");
     assert(m_num_bodies > 0 && "Must have at least one body to simulate.");
@@ -255,8 +256,7 @@ systemData::rigidBodyMotionTensors()
 
     for (int i = 0; i < m_num_particles; i++)
     {
-        const int i3{3 * i};
-
+        const int             i3{3 * i};
         const Eigen::Vector3d R_i = m_positions_particles.segment<3>(i3);
 
         // Calculate which body j particle i belongs to
@@ -299,9 +299,8 @@ systemData::rigidBodyMotionTensors()
         eMatrix(m_positions_bodies.segment<4>(k7 + 3), E_theta_k);
 
         // matrix elements of Psi
-        m_psi_conv_quat_ang.block<3, 3>(k6, k7).noalias() = m_I; // no conversion from linear components
-        m_psi_conv_quat_ang.block<3, 4>(k6 + 3, k7 + 3).noalias() =
-            2 * E_theta_k; // angular-quaternion velocity couple
+        m_psi_conv_quat_ang.block<3, 3>(k6, k7).noalias()         = m_I; // no conversion from linear components
+        m_psi_conv_quat_ang.block<3, 4>(k6 + 3, k7 + 3).noalias() = 2 * E_theta_k; // angular-quaternion velocity couple
     }
 
     /* ANCHOR: Compute m_C_conv_quat_part */
@@ -311,12 +310,15 @@ systemData::rigidBodyMotionTensors()
 void
 systemData::gradientChangeOfVariableTensors()
 {
+    //!< thread pool device with access to all threads
+    Eigen::ThreadPoolDevice all_cores_device(&m_thread_pool, m_num_physical_cores);
+
     /* ANCHOR: Compute m_D_conv_quat_part */
     m_D_conv_quat_part.setZero();
 
-    int body_num{-1};                      // -1 as first particle should be locater particle and increment this
-    Eigen::Matrix<double, 3, 4> twoE_body; //!< 2 * E_body
-    Eigen::Vector4d             R_c_body;  //!< R_c^{(i)}, locater position
+    int                         body_num{-1}; // -1 as first particle should be locater particle and increment this
+    Eigen::Matrix<double, 3, 4> twoE_body;    //!< 2 * E_body
+    Eigen::Vector4d             R_c_body;     //!< R_c^{(i)}, locater position
 
     assert(m_particle_type_id(0) == 1 && "First particle index must be locater by convention");
     for (int j = 0; j < m_num_particles; j++)
@@ -360,6 +362,43 @@ systemData::gradientChangeOfVariableTensors()
     assert(body_num + 1 == m_num_bodies && "Not all bodies were indexed correctly");
 
     /* TODO: ANCHOR : Compute m_C_conv_quat_part_grad */
+    body_num = -1;
+
+    assert(m_particle_type_id(0) == 1 && "First particle index must be locater by convention");
+    for (int i = 0; i < m_num_particles; i++)
+    {
+        if (m_particle_type_id(i) == 1)
+        {
+            // Increment body count
+            body_num += 1;
+
+            // Continue to next loop as all elements are zero
+            continue;
+        }
+
+        // get moment arm to locater point from C
+        const Eigen::Matrix3d two_r_cross_mat = -2 * m_rbm_conn.block<3, 3>(6 * body_num + 3, 3 * i);
+
+        // get E matrix representation of body quaternion from m_psi_conv_quat_ang
+        const Eigen::Matrix<double, 3, 4> two_E_body =
+            m_psi_conv_quat_ang.block<3, 4>(6 * body_num + 3, 7 * body_num + 3);
+
+        // get change of variable matrix element D_{\alpha}
+        const Eigen::Matrix<double, 7, 3> n_D_alpha = -m_D_conv_quat_part.block<7, 3>(7 * body_num, 3 * i);
+
+        // ANCHOR: tensor contractions to produce result
+        // Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 7>> d_rCrossMat_d_xi;
+
+        // Compute result_{i m k} = levi_cevita{l i m} n_D_alpha_{k l}
+        Eigen::array<Eigen::IndexPair<int>, 1> prod_dim_1       = {Eigen::IndexPair<int>(0, 1)};
+        // Eigen::Tensor<double, 3>               d_rCrossMat_d_xi = levi_cevita.contract(n_D_alpha, prod_dim_1);
+
+        // output matrix indices
+        int row_start{3 * i};               // row_length = 3
+        int column_start{7 * body_num + 3}; // column_length = 4, first 3/7 indices are zero
+        int layer_start{7 * body_num};      // length 7
+    }
+    assert(body_num + 1 == m_num_bodies && "Not all bodies were indexed correctly");
 }
 
 void

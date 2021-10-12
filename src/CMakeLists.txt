@@ -5,8 +5,11 @@ INCLUDE_DIRECTORIES(forces)
 INCLUDE_DIRECTORIES(integrators)
 
 IF(DEFINED CMAKE_CUDA_COMPILER)
-    INCLUDE_DIRECTORIES(cuda_helpers)
+    INCLUDE_DIRECTORIES(helpers/cuda)
 ENDIF()
+
+INCLUDE_DIRECTORIES(helpers/eigen)
+
 
 # Add subdirectories to the build (processes CMakeLists.txt in these dirs)
 ADD_SUBDIRECTORY(data_io)

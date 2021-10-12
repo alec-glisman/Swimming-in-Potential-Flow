@@ -20,13 +20,18 @@
 // eigen3(Linear algebra)
 #define EIGEN_NO_AUTOMATIC_RESIZING
 #define EIGEN_USE_MKL_ALL
+#define EIGEN_USE_THREADS
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/Eigen>
+
+#include <eigen3/unsupported/Eigen/CXX11/ThreadPool>
+
 #include <eigen3/unsupported/Eigen/CXX11/Tensor>
 // STL
 #include <memory>    // for std::unique_ptr and std::shared_ptr
 #include <stdexcept> // std::errors
 #include <string>    // std::string
+#include <thread>    // std::thread::hardware_concurrency(); number of physical cores
 
 /* Forward declarations */
 class GSDUtil;
@@ -79,8 +84,7 @@ class systemData : public std::enable_shared_from_this<systemData>
      * @return int output column index for 2D matrix
      */
     static int
-    convert3dIdxTo2d(int column_idx_3d, int layer_idx_3d, int layer_deriv_dim,
-                     int layer_column_width)
+    convert3dIdxTo2d(int column_idx_3d, int layer_idx_3d, int layer_deriv_dim, int layer_column_width)
     {
         return column_idx_3d + (layer_idx_3d + layer_deriv_dim) * layer_column_width;
     };
@@ -122,8 +126,8 @@ class systemData : public std::enable_shared_from_this<systemData>
     static void
     eMatrix(const Eigen::Vector4d& vec, Eigen::Matrix<double, 3, 4>& mat)
     {
-        mat << -vec(1), vec(0), -vec(3), vec(2), -vec(2), vec(3), vec(0), -vec(1), -vec(3), -vec(2),
-            vec(1), vec(0);
+        mat << -vec(1), vec(0), -vec(3), vec(2), -vec(2), vec(3), vec(0), -vec(1), -vec(3), -vec(2), vec(1),
+            vec(0);
     };
 
     /**
@@ -153,11 +157,15 @@ class systemData : public std::enable_shared_from_this<systemData>
     bool                        m_return_bool{true};
     bool                        m_GSD_parsed{false};
 
+    // eigen parallelization data
+    int m_num_physical_cores = std::thread::hardware_concurrency();
+    //!< number of threads in pool for eigen calculations (set to number of physical cores on machine)
+    Eigen::ThreadPool m_thread_pool = Eigen::ThreadPool(m_num_physical_cores);
+
     /* REVIEW[epic=Change,order=0]: System specific data, change parameters stored for different
      * systems */
     // Swimming kinematic constraints
-    double m_sys_spec_U0{
-        -1.0}; //!< velocity amplitude of kinematic constraint between particle pairs
+    double m_sys_spec_U0{-1.0};          //!< velocity amplitude of kinematic constraint between particle pairs
     double m_sys_spec_omega{-1.0};       //!< oscillation frequency
     double m_sys_spec_phase_shift{-1.0}; //!< phase shift (in radians) between oscillators
     double m_sys_spec_R_avg{
@@ -166,35 +174,30 @@ class systemData : public std::enable_shared_from_this<systemData>
     // Udwadia constraint linear system
     Eigen::MatrixXd m_Udwadia_A; //!< \[M x N\] linear operator defining relationship between
                                  //!< constraints on \f$ \ddot{\boldsymbol{\xi}} \f$.
-    Eigen::VectorXd
-        m_Udwadia_b; //!< \[M x 1\] Result of \f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} \f$
+    Eigen::VectorXd m_Udwadia_b; //!< \[M x 1\] Result of \f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} \f$
 
     // "identity" tensors
-    const Eigen::Matrix3d m_I =
-        Eigen::Matrix3d::Identity(3, 3); //!< \[3 x 3\] 2nd order identity tensor
-    Eigen::Matrix3d m_I_tilde;           //!< \[3 x 3\] reflection about z-axis tensor
+    const Eigen::Matrix3d m_I = Eigen::Matrix3d::Identity(3, 3); //!< \[3 x 3\] 2nd order identity tensor
+    Eigen::Matrix3d       m_I_tilde;                             //!< \[3 x 3\] reflection about z-axis tensor
 
     // general-use tensors
-    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>>
-        levi_cevita; //!< \[3 x 3 x 3\] (skew-symmetric) 3rd order identity tensor
+    Eigen::Tensor<double, 3> levi_cevita; //!< \[3 x 3 x 3\] (skew-symmetric) 3rd order identity tensor
     Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>>
         kappa_tilde; //!< \[3 x 4 x 7\] \f$ \nabla_{\xi_{\alpha}}
                      //!< \boldsymbol{E}{(\boldsymbol{\theta})} \f$
 
     // change of gradient variable tensors TODO
-    Eigen::MatrixXd
-        m_D_conv_quat_part; //!< \[7M x 3N\] converts particle position D.o.F. to body
-                            //!< position/quaternion D.o.F. (NOTE: this was \beta in written work)
+    Eigen::MatrixXd m_D_conv_quat_part; //!< \[7M x 3N\] converts particle position D.o.F. to body
+                                        //!< position/quaternion D.o.F. (NOTE: this was \beta in written work)
 
     // rigid body motion tensors
-    Eigen::MatrixXd m_rbm_conn; //!< \[6M x 3N\] \f$ \boldsymbol{\Sigma} \f$ rigid body motion
-                                //!< connectivity tensor
-    Eigen::MatrixXd
-        m_psi_conv_quat_ang; //<! \[6M x 7M\] \f$ \boldsymbol{\Psi} \f$ converts linear/quaternion
-                             //<! body velocity D.o.F. to linear/angular velocity D.o.F.
-    Eigen::MatrixXd m_C_conv_quat_part; //!< \[3N x 7M\] \f$ \boldsymbol{C} \f$ converts
-                                        //!< linear/quaternion body velocity D.o.F. to linear
-                                        //!< particle velocities (NOTE: this was A in written work)
+    Eigen::MatrixXd m_rbm_conn;          //!< \[6M x 3N\] \f$ \boldsymbol{\Sigma} \f$ rigid body motion
+                                         //!< connectivity tensor
+    Eigen::MatrixXd m_psi_conv_quat_ang; //<! \[6M x 7M\] \f$ \boldsymbol{\Psi} \f$ converts linear/quaternion
+                                         //<! body velocity D.o.F. to linear/angular velocity D.o.F.
+    Eigen::MatrixXd m_C_conv_quat_part;  //!< \[3N x 7M\] \f$ \boldsymbol{C} \f$ converts
+                                         //!< linear/quaternion body velocity D.o.F. to linear
+                                         //!< particle velocities (NOTE: this was A in written work)
     Eigen::Tensor<double, 3>
         m_C_conv_quat_part_grad; //!< \[3N x 7M x 7M\] \f$ \nabla_{\xi} \boldsymbol{C} \f$ TODO
 
