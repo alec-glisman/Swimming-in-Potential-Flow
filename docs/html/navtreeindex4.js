@@ -1,8 +1,8 @@
 var NAVTREEINDEX4 =
 {
 "hierarchy.html":[2,2],
-"index.html":[],
 "index.html":[0],
+"index.html":[],
 "index.html#autotoc_md1":[0,0],
 "index.html#autotoc_md2":[0,1],
 "index.html#autotoc_md3":[0,2],
@@ -22,8 +22,8 @@ var NAVTREEINDEX4 =
 "namespacemembers.html":[1,1,0],
 "namespacemembers_func.html":[1,1,1],
 "namespacemembers_vars.html":[1,1,2],
-"namespaceplotStyling.html":[2,0,1],
 "namespaceplotStyling.html":[1,0,4],
+"namespaceplotStyling.html":[2,0,1],
 "namespaces.html":[1,0],
 "namespacesimulationDataLoad.html":[1,0,5],
 "pages.html":[],

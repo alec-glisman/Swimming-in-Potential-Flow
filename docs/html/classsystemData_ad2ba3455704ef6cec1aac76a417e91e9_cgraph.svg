@@ -94,66 +94,66 @@
 <path fill="none" stroke="midnightblue" d="M284.46,-161.56C309.2,-167.79 342.2,-176.11 371.53,-183.5"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="370.76,-186.91 381.31,-185.96 372.47,-180.13 370.76,-186.91"/>
 </g>
-<!-- Node8 -->
-<g id="node8" class="node">
-<title>Node8</title>
-<g id="a_node8"><a xlink:href="classsystemData.html#ab3fc7f3cc4c79bbad6e9bb73e127e8c3" target="_top" xlink:title=" ">
+<!-- Node9 -->
+<g id="node9" class="node">
+<title>Node9</title>
+<g id="a_node9"><a xlink:href="classsystemData.html#ab3fc7f3cc4c79bbad6e9bb73e127e8c3" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="378,-137 378,-167 506,-167 506,-137 378,-137"/>
 <text text-anchor="start" x="386" y="-155" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::locaterPoint</text>
 <text text-anchor="middle" x="442" y="-144" font-family="Helvetica,sans-Serif" font-size="10.00">Locations</text>
 </a>
 </g>
 </g>
-<!-- Node4&#45;&gt;Node8 -->
-<g id="edge7" class="edge">
-<title>Node4&#45;&gt;Node8</title>
+<!-- Node4&#45;&gt;Node9 -->
+<g id="edge8" class="edge">
+<title>Node4&#45;&gt;Node9</title>
 <path fill="none" stroke="midnightblue" d="M323.09,-152C337.86,-152 353.3,-152 367.95,-152"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="367.95,-155.5 377.95,-152 367.95,-148.5 367.95,-155.5"/>
 </g>
-<!-- Node9 -->
-<g id="node9" class="node">
-<title>Node9</title>
-<g id="a_node9"><a xlink:href="classsystemData.html#a415007558c07b03a6cfeb973ec97fa3f" target="_top" xlink:title=" ">
+<!-- Node10 -->
+<g id="node10" class="node">
+<title>Node10</title>
+<g id="a_node10"><a xlink:href="classsystemData.html#a415007558c07b03a6cfeb973ec97fa3f" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="369,-88 369,-118 515,-118 515,-88 369,-88"/>
 <text text-anchor="start" x="377" y="-106" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::rigidBodyMotion</text>
 <text text-anchor="middle" x="442" y="-95" font-family="Helvetica,sans-Serif" font-size="10.00">Tensors</text>
 </a>
 </g>
 </g>
-<!-- Node4&#45;&gt;Node9 -->
-<g id="edge8" class="edge">
-<title>Node4&#45;&gt;Node9</title>
+<!-- Node4&#45;&gt;Node10 -->
+<g id="edge9" class="edge">
+<title>Node4&#45;&gt;Node10</title>
 <path fill="none" stroke="midnightblue" d="M284.46,-142.44C309.2,-136.21 342.2,-127.89 371.53,-120.5"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="372.47,-123.87 381.31,-118.04 370.76,-117.09 372.47,-123.87"/>
 </g>
-<!-- Node11 -->
-<g id="node11" class="node">
-<title>Node11</title>
-<g id="a_node11"><a xlink:href="classsystemData.html#aa797226f69baaa83c559c481dee8381b" target="_top" xlink:title=" ">
+<!-- Node12 -->
+<g id="node12" class="node">
+<title>Node12</title>
+<g id="a_node12"><a xlink:href="classsystemData.html#aa797226f69baaa83c559c481dee8381b" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="373,-39 373,-69 511,-69 511,-39 373,-39"/>
 <text text-anchor="start" x="381" y="-57" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::udwadiaLinear</text>
 <text text-anchor="middle" x="442" y="-46" font-family="Helvetica,sans-Serif" font-size="10.00">System</text>
 </a>
 </g>
 </g>
-<!-- Node4&#45;&gt;Node11 -->
-<g id="edge11" class="edge">
-<title>Node4&#45;&gt;Node11</title>
+<!-- Node4&#45;&gt;Node12 -->
+<g id="edge12" class="edge">
+<title>Node4&#45;&gt;Node12</title>
 <path fill="none" stroke="midnightblue" d="M258.6,-142.27C278.48,-126.72 319.75,-96.16 359,-78 363.13,-76.09 367.44,-74.3 371.83,-72.61"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="373.33,-75.8 381.55,-69.11 370.95,-69.21 373.33,-75.8"/>
 </g>
-<!-- Node12 -->
-<g id="node12" class="node">
-<title>Node12</title>
-<g id="a_node12"><a xlink:href="classsystemData.html#a4b449c0f7702a7140fca05ca3722092b" target="_top" xlink:title=" ">
+<!-- Node13 -->
+<g id="node13" class="node">
+<title>Node13</title>
+<g id="a_node13"><a xlink:href="classsystemData.html#a4b449c0f7702a7140fca05ca3722092b" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="359,-0.5 359,-19.5 525,-19.5 525,-0.5 359,-0.5"/>
 <text text-anchor="middle" x="442" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::velocitiesArticulation</text>
 </a>
 </g>
 </g>
-<!-- Node4&#45;&gt;Node12 -->
-<g id="edge12" class="edge">
-<title>Node4&#45;&gt;Node12</title>
+<!-- Node4&#45;&gt;Node13 -->
+<g id="edge13" class="edge">
+<title>Node4&#45;&gt;Node13</title>
 <path fill="none" stroke="midnightblue" d="M252.45,-142.18C267.26,-118.61 308.28,-58.64 359,-29 362.87,-26.74 366.98,-24.75 371.23,-23"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="372.52,-26.25 380.7,-19.52 370.11,-19.68 372.52,-26.25"/>
 </g>
@@ -161,35 +161,50 @@
 <g id="node7" class="node">
 <title>Node7</title>
 <g id="a_node7"><a xlink:href="classsystemData.html#a19a83a255eb6f1de4bcfe2ea8e31ffa9" target="_top" xlink:title="Computes the E matrix of quaternion (4&#45;vector) input.">
-<polygon fill="none" stroke="black" points="575.5,-161.5 575.5,-180.5 683.5,-180.5 683.5,-161.5 575.5,-161.5"/>
-<text text-anchor="middle" x="629.5" y="-168.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::eMatrix</text>
+<polygon fill="none" stroke="black" points="575.5,-142.5 575.5,-161.5 683.5,-161.5 683.5,-142.5 575.5,-142.5"/>
+<text text-anchor="middle" x="629.5" y="-149.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::eMatrix</text>
 </a>
 </g>
 </g>
 <!-- Node6&#45;&gt;Node7 -->
 <g id="edge6" class="edge">
 <title>Node6&#45;&gt;Node7</title>
-<path fill="none" stroke="midnightblue" d="M514.19,-189.49C531.03,-186.76 548.87,-183.88 565.32,-181.22"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="566.05,-184.64 575.37,-179.59 564.94,-177.73 566.05,-184.64"/>
+<path fill="none" stroke="midnightblue" d="M499.92,-185.97C526.41,-178.97 557.51,-170.75 582.48,-164.16"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="583.66,-167.47 592.43,-161.53 581.87,-160.7 583.66,-167.47"/>
 </g>
-<!-- Node9&#45;&gt;Node7 -->
-<g id="edge10" class="edge">
-<title>Node9&#45;&gt;Node7</title>
-<path fill="none" stroke="midnightblue" d="M495.31,-118.11C505.23,-121.21 515.48,-124.58 525,-128 549.86,-136.93 577.47,-148.49 597.91,-157.37"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="596.77,-160.69 607.33,-161.49 599.57,-154.27 596.77,-160.69"/>
+<!-- Node8 -->
+<g id="node8" class="node">
+<title>Node8</title>
+<g id="a_node8"><a xlink:href="helper__eigenTensorConversion_8h.html#a3a32f7de3f099464192073a93b34d580" target="_top" xlink:title="Convert Eigen::Matrix &#45;&#45;&gt; Eigen::Tensor.">
+<polygon fill="none" stroke="black" points="596,-191.5 596,-210.5 663,-210.5 663,-191.5 596,-191.5"/>
+<text text-anchor="middle" x="629.5" y="-198.5" font-family="Helvetica,sans-Serif" font-size="10.00">TensorCast</text>
+</a>
 </g>
-<!-- Node10 -->
-<g id="node10" class="node">
-<title>Node10</title>
-<g id="a_node10"><a xlink:href="classsystemData.html#a0a77c933b764fb36c64ec5e66011482c" target="_top" xlink:title="Function takes in vector in vector cross&#45;product expression: $c = a \times b$.">
+</g>
+<!-- Node6&#45;&gt;Node8 -->
+<g id="edge7" class="edge">
+<title>Node6&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M514.19,-201C538.14,-201 564.12,-201 585.25,-201"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="585.51,-204.5 595.51,-201 585.51,-197.5 585.51,-204.5"/>
+</g>
+<!-- Node10&#45;&gt;Node7 -->
+<g id="edge11" class="edge">
+<title>Node10&#45;&gt;Node7</title>
+<path fill="none" stroke="midnightblue" d="M499.92,-118.03C526.41,-125.03 557.51,-133.25 582.48,-139.84"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="581.87,-143.3 592.43,-142.47 583.66,-136.53 581.87,-143.3"/>
+</g>
+<!-- Node11 -->
+<g id="node11" class="node">
+<title>Node11</title>
+<g id="a_node11"><a xlink:href="classsystemData.html#a0a77c933b764fb36c64ec5e66011482c" target="_top" xlink:title="Function takes in vector in vector cross&#45;product expression: $c = a \times b$.">
 <polygon fill="none" stroke="black" points="561,-93.5 561,-112.5 698,-112.5 698,-93.5 561,-93.5"/>
 <text text-anchor="middle" x="629.5" y="-100.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::crossProdMat</text>
 </a>
 </g>
 </g>
-<!-- Node9&#45;&gt;Node10 -->
-<g id="edge9" class="edge">
-<title>Node9&#45;&gt;Node10</title>
+<!-- Node10&#45;&gt;Node11 -->
+<g id="edge10" class="edge">
+<title>Node10&#45;&gt;Node11</title>
 <path fill="none" stroke="midnightblue" d="M515.25,-103C526.9,-103 538.99,-103 550.76,-103"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="551,-106.5 561,-103 551,-99.5 551,-106.5"/>
 </g>

@@ -116,6 +116,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     void
     udwadiaLinearSystem(double time);
 
+    /* SECTION: Static functions */
     /**
      * @brief Computes the E matrix of quaternion (4-vector) input
      *
@@ -139,7 +140,9 @@ class systemData : public std::enable_shared_from_this<systemData>
     {
         mat << 0, -vec(2), vec(1), vec(2), 0, -vec(0), -vec(1), vec(0), 0;
     };
+    /* !SECTION */
 
+    /* ANCHOR: general attributes */
     // data i/o
     std::string m_inputGSDFile;
     std::string m_outputDir;
@@ -155,7 +158,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     bool                        m_return_bool{true};
     bool                        m_GSD_parsed{false};
 
-    // eigen parallelization data
+    /* ANCHOR: eigen parallelization parameters */
     int m_num_physical_cores = std::thread::hardware_concurrency();
     //!< number of threads in pool for eigen calculations (set to number of physical cores on machine)
     Eigen::ThreadPool m_thread_pool = Eigen::ThreadPool(m_num_physical_cores);
@@ -168,11 +171,13 @@ class systemData : public std::enable_shared_from_this<systemData>
     double m_sys_spec_phase_shift{-1.0}; //!< phase shift (in radians) between oscillators
     double m_sys_spec_R_avg{-1.0};       //!< Time-average spatial separation between a particle pair during oscillation
 
-    // Udwadia constraint linear system
-    Eigen::MatrixXd m_Udwadia_A; //!< \[M x N\] linear operator defining relationship between
-                                 //!< constraints on \f$ \ddot{\boldsymbol{\xi}} \f$.
-    Eigen::VectorXd m_Udwadia_b; //!< \[M x 1\] Result of \f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} \f$
+    /* ANCHOR: Udwadia constraint linear system */
+    //! \[M x N\] linear operator defining relationship between constraints on \f$ \ddot{\boldsymbol{\xi}} \f$.
+    Eigen::MatrixXd m_Udwadia_A;
+    //! \[M x 1\] Result of \f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} \f$
+    Eigen::VectorXd m_Udwadia_b;
 
+    /* ANCHOR: Tensors set in constructor */
     // "identity" tensors
     const Eigen::Matrix3d m_I = Eigen::Matrix3d::Identity(3, 3); //!< \[3 x 3\] 2nd order identity tensor
     Eigen::Matrix3d       m_I_tilde;                             //!< \[3 x 3\] reflection about z-axis tensor
@@ -183,26 +188,31 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> kappa_tilde; //!< \[3 x 4 x 7\] \f$ \nabla_{\xi_{\alpha}}
                                                                        //!< \boldsymbol{E}{(\boldsymbol{\theta})} \f$
 
-    // change of gradient variable tensors TODO
-    Eigen::MatrixXd m_D_conv_quat_part; //!< \[7M x 3N\] converts particle position D.o.F. to body
-                                        //!< position/quaternion D.o.F. (NOTE: this was \beta in written work)
+    /* ANCHOR: rigid body motion tensors */
+    //! \[6M x 3N\] \f$ \boldsymbol{\Sigma} \f$ rigid body motion connectivity tensor
+    Eigen::MatrixXd m_rbm_conn;
+    //! \[6M x 7M\] \f$ \boldsymbol{\Psi} \f$ converts linear/quaternion body velocity D.o.F. to linear/angular
+    //! velocity D.o.F.
+    Eigen::MatrixXd m_psi_conv_quat_ang;
+    //! \[3N x 7M\] \f$ \boldsymbol{C} \f$ converts linear/quaternion body velocity D.o.F. to linear particle
+    //! velocities (NOTE: this was A in written work)
+    Eigen::MatrixXd m_C_conv_quat_part;
+    //! \[3N x 7M x 7M\] \f$ \nabla_{\xi} \boldsymbol{C} \f$
+    Eigen::Tensor<double, 3> m_C_conv_quat_part_grad;
 
-    // rigid body motion tensors
-    Eigen::MatrixXd m_rbm_conn;          //!< \[6M x 3N\] \f$ \boldsymbol{\Sigma} \f$ rigid body motion
-                                         //!< connectivity tensor
-    Eigen::MatrixXd m_psi_conv_quat_ang; //<! \[6M x 7M\] \f$ \boldsymbol{\Psi} \f$ converts linear/quaternion
-                                         //<! body velocity D.o.F. to linear/angular velocity D.o.F.
-    Eigen::MatrixXd m_C_conv_quat_part;  //!< \[3N x 7M\] \f$ \boldsymbol{C} \f$ converts
-                                         //!< linear/quaternion body velocity D.o.F. to linear
-                                         //!< particle velocities (NOTE: this was A in written work)
-    Eigen::Tensor<double, 3> m_C_conv_quat_part_grad; //!< \[3N x 7M x 7M\] \f$ \nabla_{\xi} \boldsymbol{C} \f$ TODO
+    /* ANCHOR: gradient tensors in E.o.M. */
 
-    // gradient tensors in E.o.M.
+    // change of gradient variable tensors
+    //! \[7M x 3N\] converts particle position D.o.F. to body position/quaternion D.o.F. (NOTE: this was \beta in
+    //! written work)
+    Eigen::MatrixXd m_D_conv_quat_part;
+
+    // linear combinations of gradient of rbm and C
     Eigen::Tensor<double, 3> m_N1; //!< \[3N x 3N x 7M\] TODO
     Eigen::Tensor<double, 3> m_N2; //!< \[7M x 3N x 7M\] TODO
     Eigen::Tensor<double, 3> m_N3; //!< \[7M x 7M x 7M\] TODO
 
-    // kinematics
+    /* ANCHOR: kinematic vectors */
     Eigen::VectorXd m_positions_bodies;     //!< \[7M x 1\] both linear and angular D.o.F.
     Eigen::VectorXd m_velocities_bodies;    //!< \[7M x 1\] both linear and angular D.o.F.
     Eigen::VectorXd m_accelerations_bodies; //!< \[7M x 1\] both linear and angular D.o.F.
@@ -216,21 +226,20 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::VectorXd m_velocities_particles_articulation;    //!< \[3N x 1\]
     Eigen::VectorXd m_accelerations_particles_articulation; //!< \[3N x 1\]
 
-    // particle parameters
-    Eigen::VectorXi m_particle_type_id; //!< \[N x 1\] REVIEW[epic=assumptions]
-                                        //!< 1) {0: constrained particle, 1: locater particle}.
-                                        //!< 2) locater particle listed first in order and denotes
-                                        //!< when to switch body index to next body
-                                        //!< ex: (1, 0, 0, 1, 0, 0)
+    /* ANCHOR: particle parameters */
+    //! \[N x 1\] REVIEW[epic=assumptions] 1) {0: constrained particle, 1: locater particle}.
+    //! 2) locater particle listed first in order and denotes when to switch body index to next body.
+    //! ex: (1, 0, 0, 1, 0, 0)
+    Eigen::VectorXi m_particle_type_id;
 
-    // degrees of freedom
+    /* ANCHOR: degrees of freedom */
     int m_num_spatial_dim{-1}; //!< = 3
     int m_num_particles{-1};   //!< = N
     int m_num_bodies{-1};      //!< = M
     int m_num_DoF{-1};         //!< = 6M
     int m_num_constraints{-1}; //!< = M
 
-    // integrator
+    /* ANCHOR: integrator parameters */
     double m_dt{-1.0};             //!< (dimensionless) integration \f$ \Delta t \f$
     double m_tf{-1.0};             //!< (dimensionless) final simulation time
     double m_t{0.0};               //!< (dimensionless) current simulation time
@@ -238,15 +247,15 @@ class systemData : public std::enable_shared_from_this<systemData>
     int    m_timestep{-1};         //!< current simulation timestep (iteration)
     int    m_num_steps_output{-1}; //!< how many simulation steps to output to GSD
 
-    // material parameters
+    /* ANCHOR: material parameters */
     double m_fluid_density{-1};    //!< mass density of fluid
     double m_particle_density{-1}; //!< mass density of solid spheres
 
-    // potential parameters
+    /* ANCHOR: potential parameters */
     double m_wca_epsilon{-1}; //!< \f$ \epsilon_{\mathrm{WCA}} \f$
     double m_wca_sigma{-1};   //!< \f$ \sigma_{\mathrm{WCA}} \f$
 
-    // setters/getters
+    /* SECTION: Setters and getters */
   public:
     // data i/o
     std::string
@@ -612,6 +621,8 @@ class systemData : public std::enable_shared_from_this<systemData>
     {
         return m_Udwadia_b;
     }
+
+    /* !SECTION */
 };
 
 #endif

@@ -36,11 +36,11 @@
 <text text-anchor="start" x="8" y="-1335.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; m_I_tilde</text>
 <text text-anchor="start" x="8" y="-1324.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; levi_cevita</text>
 <text text-anchor="start" x="8" y="-1313.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; kappa_tilde</text>
-<text text-anchor="start" x="8" y="-1302.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; m_D_conv_quat_part</text>
-<text text-anchor="start" x="8" y="-1291.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; m_rbm_conn</text>
-<text text-anchor="start" x="8" y="-1280.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; m_psi_conv_quat_ang</text>
-<text text-anchor="start" x="8" y="-1269.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; m_C_conv_quat_part</text>
-<text text-anchor="start" x="8" y="-1258.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; m_C_conv_quat_part_grad</text>
+<text text-anchor="start" x="8" y="-1302.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; m_rbm_conn</text>
+<text text-anchor="start" x="8" y="-1291.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; m_psi_conv_quat_ang</text>
+<text text-anchor="start" x="8" y="-1280.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; m_C_conv_quat_part</text>
+<text text-anchor="start" x="8" y="-1269.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; m_C_conv_quat_part_grad</text>
+<text text-anchor="start" x="8" y="-1258.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; m_D_conv_quat_part</text>
 <text text-anchor="start" x="8" y="-1247.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; m_N1</text>
 <text text-anchor="start" x="8" y="-1236.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; m_N2</text>
 <text text-anchor="start" x="8" y="-1225.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; m_N3</text>

@@ -5,7 +5,7 @@ var searchData=
   ['lda_1021',['lda',['../structtestOpts.html#a729ebeb38f9a110b747c59695cefe787',1,'testOpts']]],
   ['legend_5fsize_1022',['legend_size',['../classplotStyling_1_1PlotStyling.html#a657cd0ff5515994c79ab7b255b0d31eb',1,'plotStyling::PlotStyling']]],
   ['legend_5ftitle_5fsize_1023',['legend_title_size',['../classplotStyling_1_1PlotStyling.html#afdd3f98155fd2b5c928536014173dc7b',1,'plotStyling::PlotStyling']]],
-  ['levi_5fcevita_1024',['levi_cevita',['../classsystemData.html#ad1aa6be7352e19b08e7563d59eb9738e',1,'systemData']]],
+  ['levi_5fcevita_1024',['levi_cevita',['../classsystemData.html#a006c0868ff3164abf982c1e6fdcabc3a',1,'systemData']]],
   ['lightblue_1025',['lightBlue',['../classplotStyling_1_1PlotStyling.html#a4dbb430452fe5a9a3ee3dc08885c9978',1,'plotStyling::PlotStyling']]],
   ['lightgreen_1026',['lightGreen',['../classplotStyling_1_1PlotStyling.html#a22b52f77ea841102baa670086e36f32c',1,'plotStyling::PlotStyling']]],
   ['line_5fwidth_1027',['line_width',['../classplotStyling_1_1PlotStyling.html#aff94b3861f80c788ae9e14045b7c6106',1,'plotStyling::PlotStyling']]],

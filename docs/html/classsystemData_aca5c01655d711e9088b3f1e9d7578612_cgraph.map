@@ -1,4 +1,5 @@
 <map id="systemData::gradientChangeOfVariableTensors" name="systemData::gradientChangeOfVariableTensors">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,197,47"/>
-<area shape="rect" id="node2" href="$classsystemData.html#a19a83a255eb6f1de4bcfe2ea8e31ffa9" title="Computes the E matrix of quaternion (4&#45;vector) input." alt="" coords="245,13,389,39"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,23,197,65"/>
+<area shape="rect" id="node2" href="$classsystemData.html#a19a83a255eb6f1de4bcfe2ea8e31ffa9" title="Computes the E matrix of quaternion (4&#45;vector) input." alt="" coords="245,5,389,32"/>
+<area shape="rect" id="node3" href="$helper__eigenTensorConversion_8h.html#a3a32f7de3f099464192073a93b34d580" title="Convert Eigen::Matrix &#45;&#45;&gt; Eigen::Tensor." alt="" coords="273,56,362,83"/>
 </map>

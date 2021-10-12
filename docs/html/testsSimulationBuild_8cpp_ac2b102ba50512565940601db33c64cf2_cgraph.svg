@@ -316,66 +316,66 @@
 <path fill="none" stroke="midnightblue" d="M395.46,-161.56C420.2,-167.79 453.2,-176.11 482.53,-183.5"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="481.76,-186.91 492.31,-185.96 483.47,-180.13 481.76,-186.91"/>
 </g>
-<!-- Node22 -->
-<g id="node22" class="node">
-<title>Node22</title>
-<g id="a_node22"><a xlink:href="classsystemData.html#ab3fc7f3cc4c79bbad6e9bb73e127e8c3" target="_top" xlink:title=" ">
+<!-- Node23 -->
+<g id="node23" class="node">
+<title>Node23</title>
+<g id="a_node23"><a xlink:href="classsystemData.html#ab3fc7f3cc4c79bbad6e9bb73e127e8c3" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="489,-137 489,-167 617,-167 617,-137 489,-137"/>
 <text text-anchor="start" x="497" y="-155" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::locaterPoint</text>
 <text text-anchor="middle" x="553" y="-144" font-family="Helvetica,sans-Serif" font-size="10.00">Locations</text>
 </a>
 </g>
 </g>
-<!-- Node18&#45;&gt;Node22 -->
-<g id="edge23" class="edge">
-<title>Node18&#45;&gt;Node22</title>
+<!-- Node18&#45;&gt;Node23 -->
+<g id="edge24" class="edge">
+<title>Node18&#45;&gt;Node23</title>
 <path fill="none" stroke="midnightblue" d="M434.09,-152C448.86,-152 464.3,-152 478.95,-152"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="478.95,-155.5 488.95,-152 478.95,-148.5 478.95,-155.5"/>
 </g>
-<!-- Node23 -->
-<g id="node23" class="node">
-<title>Node23</title>
-<g id="a_node23"><a xlink:href="classsystemData.html#a415007558c07b03a6cfeb973ec97fa3f" target="_top" xlink:title=" ">
+<!-- Node24 -->
+<g id="node24" class="node">
+<title>Node24</title>
+<g id="a_node24"><a xlink:href="classsystemData.html#a415007558c07b03a6cfeb973ec97fa3f" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="480,-88 480,-118 626,-118 626,-88 480,-88"/>
 <text text-anchor="start" x="488" y="-106" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::rigidBodyMotion</text>
 <text text-anchor="middle" x="553" y="-95" font-family="Helvetica,sans-Serif" font-size="10.00">Tensors</text>
 </a>
 </g>
 </g>
-<!-- Node18&#45;&gt;Node23 -->
-<g id="edge24" class="edge">
-<title>Node18&#45;&gt;Node23</title>
+<!-- Node18&#45;&gt;Node24 -->
+<g id="edge25" class="edge">
+<title>Node18&#45;&gt;Node24</title>
 <path fill="none" stroke="midnightblue" d="M395.46,-142.44C420.2,-136.21 453.2,-127.89 482.53,-120.5"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="483.47,-123.87 492.31,-118.04 481.76,-117.09 483.47,-123.87"/>
 </g>
-<!-- Node25 -->
-<g id="node25" class="node">
-<title>Node25</title>
-<g id="a_node25"><a xlink:href="classsystemData.html#aa797226f69baaa83c559c481dee8381b" target="_top" xlink:title=" ">
+<!-- Node26 -->
+<g id="node26" class="node">
+<title>Node26</title>
+<g id="a_node26"><a xlink:href="classsystemData.html#aa797226f69baaa83c559c481dee8381b" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="484,-39 484,-69 622,-69 622,-39 484,-39"/>
 <text text-anchor="start" x="492" y="-57" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::udwadiaLinear</text>
 <text text-anchor="middle" x="553" y="-46" font-family="Helvetica,sans-Serif" font-size="10.00">System</text>
 </a>
 </g>
 </g>
-<!-- Node18&#45;&gt;Node25 -->
-<g id="edge27" class="edge">
-<title>Node18&#45;&gt;Node25</title>
+<!-- Node18&#45;&gt;Node26 -->
+<g id="edge28" class="edge">
+<title>Node18&#45;&gt;Node26</title>
 <path fill="none" stroke="midnightblue" d="M369.6,-142.27C389.48,-126.72 430.75,-96.16 470,-78 474.13,-76.09 478.44,-74.3 482.83,-72.61"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="484.33,-75.8 492.55,-69.11 481.95,-69.21 484.33,-75.8"/>
 </g>
-<!-- Node26 -->
-<g id="node26" class="node">
-<title>Node26</title>
-<g id="a_node26"><a xlink:href="classsystemData.html#a4b449c0f7702a7140fca05ca3722092b" target="_top" xlink:title=" ">
+<!-- Node27 -->
+<g id="node27" class="node">
+<title>Node27</title>
+<g id="a_node27"><a xlink:href="classsystemData.html#a4b449c0f7702a7140fca05ca3722092b" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="470,-0.5 470,-19.5 636,-19.5 636,-0.5 470,-0.5"/>
 <text text-anchor="middle" x="553" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::velocitiesArticulation</text>
 </a>
 </g>
 </g>
-<!-- Node18&#45;&gt;Node26 -->
-<g id="edge28" class="edge">
-<title>Node18&#45;&gt;Node26</title>
+<!-- Node18&#45;&gt;Node27 -->
+<g id="edge29" class="edge">
+<title>Node18&#45;&gt;Node27</title>
 <path fill="none" stroke="midnightblue" d="M363.45,-142.18C378.26,-118.61 419.28,-58.64 470,-29 473.87,-26.74 477.98,-24.75 482.23,-23"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="483.52,-26.25 491.7,-19.52 481.11,-19.68 483.52,-26.25"/>
 </g>
@@ -383,35 +383,50 @@
 <g id="node21" class="node">
 <title>Node21</title>
 <g id="a_node21"><a xlink:href="classsystemData.html#a19a83a255eb6f1de4bcfe2ea8e31ffa9" target="_top" xlink:title="Computes the E matrix of quaternion (4&#45;vector) input.">
-<polygon fill="none" stroke="black" points="686.5,-161.5 686.5,-180.5 794.5,-180.5 794.5,-161.5 686.5,-161.5"/>
-<text text-anchor="middle" x="740.5" y="-168.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::eMatrix</text>
+<polygon fill="none" stroke="black" points="686.5,-142.5 686.5,-161.5 794.5,-161.5 794.5,-142.5 686.5,-142.5"/>
+<text text-anchor="middle" x="740.5" y="-149.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::eMatrix</text>
 </a>
 </g>
 </g>
 <!-- Node20&#45;&gt;Node21 -->
 <g id="edge22" class="edge">
 <title>Node20&#45;&gt;Node21</title>
-<path fill="none" stroke="midnightblue" d="M625.19,-189.49C642.03,-186.76 659.87,-183.88 676.32,-181.22"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="677.05,-184.64 686.37,-179.59 675.94,-177.73 677.05,-184.64"/>
+<path fill="none" stroke="midnightblue" d="M610.92,-185.97C637.41,-178.97 668.51,-170.75 693.48,-164.16"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="694.66,-167.47 703.43,-161.53 692.87,-160.7 694.66,-167.47"/>
 </g>
-<!-- Node23&#45;&gt;Node21 -->
-<g id="edge26" class="edge">
-<title>Node23&#45;&gt;Node21</title>
-<path fill="none" stroke="midnightblue" d="M606.31,-118.11C616.23,-121.21 626.48,-124.58 636,-128 660.86,-136.93 688.47,-148.49 708.91,-157.37"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="707.77,-160.69 718.33,-161.49 710.57,-154.27 707.77,-160.69"/>
+<!-- Node22 -->
+<g id="node22" class="node">
+<title>Node22</title>
+<g id="a_node22"><a xlink:href="helper__eigenTensorConversion_8h.html#a3a32f7de3f099464192073a93b34d580" target="_top" xlink:title="Convert Eigen::Matrix &#45;&#45;&gt; Eigen::Tensor.">
+<polygon fill="none" stroke="black" points="707,-191.5 707,-210.5 774,-210.5 774,-191.5 707,-191.5"/>
+<text text-anchor="middle" x="740.5" y="-198.5" font-family="Helvetica,sans-Serif" font-size="10.00">TensorCast</text>
+</a>
 </g>
-<!-- Node24 -->
-<g id="node24" class="node">
-<title>Node24</title>
-<g id="a_node24"><a xlink:href="classsystemData.html#a0a77c933b764fb36c64ec5e66011482c" target="_top" xlink:title="Function takes in vector in vector cross&#45;product expression: $c = a \times b$.">
+</g>
+<!-- Node20&#45;&gt;Node22 -->
+<g id="edge23" class="edge">
+<title>Node20&#45;&gt;Node22</title>
+<path fill="none" stroke="midnightblue" d="M625.19,-201C649.14,-201 675.12,-201 696.25,-201"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="696.51,-204.5 706.51,-201 696.51,-197.5 696.51,-204.5"/>
+</g>
+<!-- Node24&#45;&gt;Node21 -->
+<g id="edge27" class="edge">
+<title>Node24&#45;&gt;Node21</title>
+<path fill="none" stroke="midnightblue" d="M610.92,-118.03C637.41,-125.03 668.51,-133.25 693.48,-139.84"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="692.87,-143.3 703.43,-142.47 694.66,-136.53 692.87,-143.3"/>
+</g>
+<!-- Node25 -->
+<g id="node25" class="node">
+<title>Node25</title>
+<g id="a_node25"><a xlink:href="classsystemData.html#a0a77c933b764fb36c64ec5e66011482c" target="_top" xlink:title="Function takes in vector in vector cross&#45;product expression: $c = a \times b$.">
 <polygon fill="none" stroke="black" points="672,-93.5 672,-112.5 809,-112.5 809,-93.5 672,-93.5"/>
 <text text-anchor="middle" x="740.5" y="-100.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::crossProdMat</text>
 </a>
 </g>
 </g>
-<!-- Node23&#45;&gt;Node24 -->
-<g id="edge25" class="edge">
-<title>Node23&#45;&gt;Node24</title>
+<!-- Node24&#45;&gt;Node25 -->
+<g id="edge26" class="edge">
+<title>Node24&#45;&gt;Node25</title>
 <path fill="none" stroke="midnightblue" d="M626.25,-103C637.9,-103 649.99,-103 661.76,-103"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="662,-106.5 672,-103 662,-99.5 662,-106.5"/>
 </g>

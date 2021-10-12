@@ -8,7 +8,7 @@ var searchData=
   ['legend_5ftitle_5fsize_253',['legend_title_size',['../classplotStyling_1_1PlotStyling.html#afdd3f98155fd2b5c928536014173dc7b',1,'plotStyling::PlotStyling']]],
   ['length_254',['length',['../helper__math_8h.html#a2fcd5057894d92219f3d8e11e6ace2ff',1,'length(float2 v):&#160;helper_math.h'],['../helper__math_8h.html#aa0ee40a3fc6118e9711f98a5087126b0',1,'length(float3 v):&#160;helper_math.h'],['../helper__math_8h.html#ad0e18f22f0bd104515d650409b5746bb',1,'length(float4 v):&#160;helper_math.h']]],
   ['lerp_255',['lerp',['../helper__math_8h.html#a0c247aca1e9207d5e20ae113f2a96ba5',1,'lerp(float a, float b, float t):&#160;helper_math.h'],['../helper__math_8h.html#afa01684596e75b742f63e0d41a1550c4',1,'lerp(float2 a, float2 b, float t):&#160;helper_math.h'],['../helper__math_8h.html#a6c6e32fb99074314ba8260052d28499c',1,'lerp(float3 a, float3 b, float t):&#160;helper_math.h'],['../helper__math_8h.html#a6d2ec5d361f7fba020dcd34c41fd84a5',1,'lerp(float4 a, float4 b, float t):&#160;helper_math.h']]],
-  ['levi_5fcevita_256',['levi_cevita',['../classsystemData.html#ad1aa6be7352e19b08e7563d59eb9738e',1,'systemData']]],
+  ['levi_5fcevita_256',['levi_cevita',['../classsystemData.html#a006c0868ff3164abf982c1e6fdcabc3a',1,'systemData']]],
   ['lightblue_257',['lightBlue',['../classplotStyling_1_1PlotStyling.html#a4dbb430452fe5a9a3ee3dc08885c9978',1,'plotStyling::PlotStyling']]],
   ['lightgreen_258',['lightGreen',['../classplotStyling_1_1PlotStyling.html#a22b52f77ea841102baa670086e36f32c',1,'plotStyling::PlotStyling']]],
   ['line_5fwidth_259',['line_width',['../classplotStyling_1_1PlotStyling.html#aff94b3861f80c788ae9e14045b7c6106',1,'plotStyling::PlotStyling']]],
