@@ -1,5 +1,5 @@
-<map id="src/cuda_helpers/exception.h" name="src/cuda_helpers/exception.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,197,32"/>
-<area shape="rect" id="node2" href="$helper__functions_8h.html" title=" " alt="" coords="21,169,181,211"/>
-<area shape="rect" id="node3" href="$helper__timer_8h.html" title=" " alt="" coords="80,80,240,121"/>
+<map id="src/helpers/cuda/exception.h" name="src/helpers/cuda/exception.h">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,195,32"/>
+<area shape="rect" id="node2" href="$helper__functions_8h.html" title=" " alt="" coords="21,169,179,211"/>
+<area shape="rect" id="node3" href="$helper__timer_8h.html" title=" " alt="" coords="80,80,237,121"/>
 </map>

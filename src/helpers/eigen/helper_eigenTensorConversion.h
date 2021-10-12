@@ -1,10 +1,29 @@
+
+//
+// Created by Alec Glisman on 07/30/21
+// @SOURCE: https://stackoverflow.com/a/48963679
+//
+
+#ifndef HELPER_EIGEN_TENSOR_CONVERSION_H
+#define HELPER_EIGEN_TENSOR_CONVERSION_H
+
+#ifdef NVCC
+#error This header cannot be compiled by nvcc
+#endif
+
+// eigen3(Linear algebra)
+#define EIGEN_NO_AUTOMATIC_RESIZING
+#define EIGEN_USE_MKL_ALL
+#define EIGEN_USE_THREADS
+#include <eigen3/Eigen/Core>
+#include <eigen3/Eigen/Eigen>
 #include <eigen3/unsupported/Eigen/CXX11/Tensor>
 
 template <typename T> using MatrixType = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>;
 template <typename T> using VectorType = Eigen::Matrix<T, Eigen::Dynamic, 1>;
 
 /**
- * @brief Convert Eigen::Tensor --> Eigen::Matrix
+ * @brief Convert between Eigen::Tensor and Eigen::Matrix classes
  *
  * @note example useage:
             Eigen::Tensor<double, 4> my_rank4(2, 2, 2, 2);
@@ -12,6 +31,12 @@ template <typename T> using VectorType = Eigen::Matrix<T, Eigen::Dynamic, 1>;
 
             Eigen::MatrixXd          mymatrix = MatrixCast(my_rank4, 4, 4);    // Cast Eigen::Tensor --> Eigen::Matrix
             Eigen::Tensor<double, 3> my_rank3 = TensorCast(mymatrix, 2, 2, 4); // Cast Eigen::Matrix --> Eigen::Tensor
+ *
+ */
+
+/**
+ *
+ * @brief Convert Eigen::Tensor  --> Eigen::Matrix
  *
  */
 
@@ -78,9 +103,9 @@ VectorMap(const Eigen::Tensor<Scalar, rank>& tensor)
     return Eigen::Map<const VectorType<Scalar>>(tensor.data(), tensor.size());
 }
 
-/*
+/**
  *
- *  Convert Eigen::Matrix --> Eigen::Tensor
+ * @brief Convert Eigen::Matrix --> Eigen::Tensor
  *
  */
 
@@ -163,3 +188,5 @@ TensorMap(const Eigen::PlainObjectBase<Derived>& matrix)
         return TensorMap(matrix, matrix.rows(), matrix.cols());
     }
 }
+
+#endif

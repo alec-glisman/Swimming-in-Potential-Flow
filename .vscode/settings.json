@@ -53,6 +53,7 @@
         "mathrsfs",
         "matplotlib",
         "mticker",
+        "mymatrix",
         "ncol",
         "nframes",
         "noalias",

@@ -23,10 +23,9 @@
 #define EIGEN_USE_THREADS
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/Eigen>
-
-#include <eigen3/unsupported/Eigen/CXX11/ThreadPool>
-
 #include <eigen3/unsupported/Eigen/CXX11/Tensor>
+#include <eigen3/unsupported/Eigen/CXX11/ThreadPool>
+#include <helper_eigenTensorConversion.h>
 // STL
 #include <memory>    // for std::unique_ptr and std::shared_ptr
 #include <stdexcept> // std::errors
@@ -126,8 +125,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     static void
     eMatrix(const Eigen::Vector4d& vec, Eigen::Matrix<double, 3, 4>& mat)
     {
-        mat << -vec(1), vec(0), -vec(3), vec(2), -vec(2), vec(3), vec(0), -vec(1), -vec(3), -vec(2), vec(1),
-            vec(0);
+        mat << -vec(1), vec(0), -vec(3), vec(2), -vec(2), vec(3), vec(0), -vec(1), -vec(3), -vec(2), vec(1), vec(0);
     };
 
     /**
@@ -168,8 +166,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     double m_sys_spec_U0{-1.0};          //!< velocity amplitude of kinematic constraint between particle pairs
     double m_sys_spec_omega{-1.0};       //!< oscillation frequency
     double m_sys_spec_phase_shift{-1.0}; //!< phase shift (in radians) between oscillators
-    double m_sys_spec_R_avg{
-        -1.0}; //!< Time-average spatial separation between a particle pair during oscillation
+    double m_sys_spec_R_avg{-1.0};       //!< Time-average spatial separation between a particle pair during oscillation
 
     // Udwadia constraint linear system
     Eigen::MatrixXd m_Udwadia_A; //!< \[M x N\] linear operator defining relationship between
@@ -182,9 +179,8 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     // general-use tensors
     Eigen::Tensor<double, 3> levi_cevita; //!< \[3 x 3 x 3\] (skew-symmetric) 3rd order identity tensor
-    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>>
-        kappa_tilde; //!< \[3 x 4 x 7\] \f$ \nabla_{\xi_{\alpha}}
-                     //!< \boldsymbol{E}{(\boldsymbol{\theta})} \f$
+    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> kappa_tilde; //!< \[3 x 4 x 7\] \f$ \nabla_{\xi_{\alpha}}
+                                                                       //!< \boldsymbol{E}{(\boldsymbol{\theta})} \f$
 
     // change of gradient variable tensors TODO
     Eigen::MatrixXd m_D_conv_quat_part; //!< \[7M x 3N\] converts particle position D.o.F. to body
@@ -198,8 +194,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::MatrixXd m_C_conv_quat_part;  //!< \[3N x 7M\] \f$ \boldsymbol{C} \f$ converts
                                          //!< linear/quaternion body velocity D.o.F. to linear
                                          //!< particle velocities (NOTE: this was A in written work)
-    Eigen::Tensor<double, 3>
-        m_C_conv_quat_part_grad; //!< \[3N x 7M x 7M\] \f$ \nabla_{\xi} \boldsymbol{C} \f$ TODO
+    Eigen::Tensor<double, 3> m_C_conv_quat_part_grad; //!< \[3N x 7M x 7M\] \f$ \nabla_{\xi} \boldsymbol{C} \f$ TODO
 
     // gradient tensors in E.o.M.
     Eigen::Tensor<double, 3> m_N1; //!< \[3N x 3N x 7M\] TODO
