@@ -178,7 +178,8 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::Matrix3d       m_I_tilde;                             //!< \[3 x 3\] reflection about z-axis tensor
 
     // general-use tensors
-    Eigen::Tensor<double, 3> levi_cevita; //!< \[3 x 3 x 3\] (skew-symmetric) 3rd order identity tensor
+    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>>
+        levi_cevita; //!< \[3 x 3 x 3\] (skew-symmetric) 3rd order identity tensor
     Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> kappa_tilde; //!< \[3 x 4 x 7\] \f$ \nabla_{\xi_{\alpha}}
                                                                        //!< \boldsymbol{E}{(\boldsymbol{\theta})} \f$
 

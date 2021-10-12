@@ -45,7 +45,6 @@ systemData::initializeData()
     m_num_constraints = m_num_bodies;     // 1 unit quaternion constraint per body
 
     // initialize general-use tensors
-    levi_cevita = Eigen::Tensor<double, 3>(3, 3, 3);
     levi_cevita.setZero();
 
     levi_cevita(1, 2, 0) = 1;
@@ -74,6 +73,11 @@ systemData::initializeData()
     kappa_tilde(0, 2, 6) = -1;
     kappa_tilde(1, 1, 6) = 1;
     kappa_tilde(2, 0, 6) = -1;
+
+    // initialize kinematic vectors
+    m_positions_locater_particles          = Eigen::VectorXd::Zero(3 * m_num_bodies);
+    m_velocities_particles_articulation    = Eigen::VectorXd::Zero(3 * m_num_particles);
+    m_accelerations_particles_articulation = Eigen::VectorXd::Zero(3 * m_num_particles);
 
     // initialize constraint matrices
     m_Udwadia_A = Eigen::MatrixXd::Zero(m_num_constraints, m_num_DoF);
