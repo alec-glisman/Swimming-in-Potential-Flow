@@ -13,12 +13,15 @@
 #include <systemData.hpp>
 
 /* Include all external project dependencies */
-// eigen3 (linear algebra)
+// eigen3(Linear algebra)
 #define EIGEN_NO_AUTOMATIC_RESIZING
 #define EIGEN_USE_MKL_ALL
+#define EIGEN_USE_THREADS
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/Eigen>
 #include <eigen3/unsupported/Eigen/CXX11/Tensor>
+#include <eigen3/unsupported/Eigen/CXX11/ThreadPool>
+#include <helper_eigenTensorConversion.h>
 // Logging
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
