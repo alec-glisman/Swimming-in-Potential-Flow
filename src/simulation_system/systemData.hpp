@@ -180,7 +180,7 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     // change of gradient variable tensors TODO
     Eigen::MatrixXd
-        m_D_conv_quat_part; //!< [7M x 3N\] converts particle position D.o.F. to body
+        m_D_conv_quat_part; //!< \[7M x 3N\] converts particle position D.o.F. to body
                             //!< position/quaternion D.o.F. (NOTE: this was \beta in written work)
 
     // rigid body motion tensors TODO
