@@ -81,9 +81,8 @@ systemData::initializeData()
     m_C_conv_quat_part  = Eigen::MatrixXd::Zero(3 * m_num_particles, 7 * m_num_bodies);
 
     // initialize gradient matrices
-    m_D_conv_quat_part = Eigen::MatrixXd::Zero(7 * m_num_bodies, 3 * m_num_particles);
-    m_C_conv_quat_part_grad =
-        Eigen::Tensor<double, 3>(3 * m_num_particles, 7 * m_num_bodies, 7 * m_num_bodies);
+    m_D_conv_quat_part      = Eigen::MatrixXd::Zero(7 * m_num_bodies, 3 * m_num_particles);
+    m_C_conv_quat_part_grad = Eigen::Tensor<double, 3>(3 * m_num_particles, 7 * m_num_bodies, 7 * m_num_bodies);
     m_C_conv_quat_part_grad.setZero();
 
     m_N1 = Eigen::Tensor<double, 3>(3 * m_num_particles, 3 * m_num_particles, 7 * m_num_bodies);
@@ -151,8 +150,7 @@ systemData::checkInput()
 
     assert(m_num_particles > 0 && "Must have at least one particle to simulate.");
     assert(m_num_bodies > 0 && "Must have at least one body to simulate.");
-    assert(m_num_spatial_dim == 3 &&
-           "Simulation framwork currently requires 3 spatial dimensions.");
+    assert(m_num_spatial_dim == 3 && "Simulation framwork currently requires 3 spatial dimensions.");
 
     assert(m_tf > 0. && "Must have positive integration time.");
     assert(m_dt > 0.0 && "Integration time step must be positive.");
@@ -175,15 +173,13 @@ systemData::velocitiesArticulation(double time)
     double dimensional_time{m_tau * time};
 
     // ANCHOR: Orientation vectors, q = R_1 - R_3
-    Eigen::Vector3d q =
-        m_positions_particles.segment<3>(3 * 0) - m_positions_particles.segment<3>(3 * 2);
+    Eigen::Vector3d q = m_positions_particles.segment<3>(3 * 0) - m_positions_particles.segment<3>(3 * 2);
     q.normalize();
     Eigen::Vector3d q_tilde = m_I_tilde * q;
 
     // articulation velocity magnitudes
     const double v1_mag = m_sys_spec_U0 * cos(m_sys_spec_omega * dimensional_time);
-    const double v3_mag =
-        m_sys_spec_U0 * cos(m_sys_spec_omega * dimensional_time + m_sys_spec_phase_shift);
+    const double v3_mag = m_sys_spec_U0 * cos(m_sys_spec_omega * dimensional_time + m_sys_spec_phase_shift);
 
     // Zero and then calculate  m_velocities_particles_articulation
     m_velocities_particles_articulation.setZero();
@@ -202,16 +198,14 @@ systemData::accelerationsArticulation(double time)
     double dimensional_time{m_tau * time};
 
     // ANCHOR: Orientation vectors, q = R_1 - R_3
-    Eigen::Vector3d q =
-        m_positions_particles.segment<3>(3 * 0) - m_positions_particles.segment<3>(3 * 2);
+    Eigen::Vector3d q = m_positions_particles.segment<3>(3 * 0) - m_positions_particles.segment<3>(3 * 2);
     q.normalize();
     Eigen::Vector3d q_tilde = m_I_tilde * q;
 
     // articulation acceleration magnitudes
-    const double a1_mag =
-        -m_sys_spec_U0 * m_sys_spec_omega * sin(m_sys_spec_omega * dimensional_time);
-    const double a3_mag = -m_sys_spec_U0 * m_sys_spec_omega *
-                          sin(m_sys_spec_omega * dimensional_time + m_sys_spec_phase_shift);
+    const double a1_mag = -m_sys_spec_U0 * m_sys_spec_omega * sin(m_sys_spec_omega * dimensional_time);
+    const double a3_mag =
+        -m_sys_spec_U0 * m_sys_spec_omega * sin(m_sys_spec_omega * dimensional_time + m_sys_spec_phase_shift);
 
     // Zero and then calculate m_accelerations_particles_articulation
     m_accelerations_particles_articulation.setZero();
@@ -234,8 +228,7 @@ systemData::locaterPointLocations()
         // only fill for locater particles
         if (m_particle_type_id(i) == 1)
         {
-            m_positions_bodies.segment<3>(7 * body_count).noalias() =
-                m_positions_particles.segment<3>(3 * i);
+            m_positions_bodies.segment<3>(7 * body_count).noalias() = m_positions_particles.segment<3>(3 * i);
 
             body_count += 1;
         }
@@ -306,8 +299,7 @@ systemData::rigidBodyMotionTensors()
         eMatrix(m_positions_bodies.segment<4>(k7 + 3), E_theta_k);
 
         // matrix elements of Psi
-        m_psi_conv_quat_ang.block<3, 3>(k6, k7).noalias() =
-            m_I; // no conversion from linear components
+        m_psi_conv_quat_ang.block<3, 3>(k6, k7).noalias() = m_I; // no conversion from linear components
         m_psi_conv_quat_ang.block<3, 4>(k6 + 3, k7 + 3).noalias() =
             2 * E_theta_k; // angular-quaternion velocity couple
     }
@@ -322,26 +314,27 @@ systemData::gradientChangeOfVariableTensors()
     /* ANCHOR: Compute m_D_conv_quat_part */
     m_D_conv_quat_part.setZero();
 
-    // i -> body number
-    int body_num{-1}; // -1 as first particle should be locater particle and increment this
-    int i3{3 * body_num};
-    int i7{7 * body_num};
+    int body_num{-1};                      // -1 as first particle should be locater particle and increment this
+    Eigen::Matrix<double, 3, 4> twoE_body; //!< 2 * E_body
+    Eigen::Vector4d             R_c_body;  //!< R_c^{(i)}, locater position
 
+    assert(m_particle_type_id(0) == 1 && "First particle index must be locater by convention");
     for (int j = 0; j < m_num_particles; j++)
     {
-        Eigen::Matrix<double, 3, 4> E_body   = Eigen::MatrixXd::Zero(4, 3);
-        Eigen::Vector4d             R_c_body = Eigen::Vector4d::Zero(4, 1);
 
         if (m_particle_type_id(j) == 1)
         {
-            // Increment body count indices
+            // Zero out the relevent locater values
+            twoE_body.setZero();
+            R_c_body.setZero();
+            // Increment body count
             body_num += 1;
-            i3 += 3;
-            i7 += 7;
-            // Set locater location
-            R_c_body.segment<3>(1).noalias() = m_positions_locater_particles.segment<3>(i3);
-            // Compute E
-            eMatrix(m_positions_bodies.segment<4>(i7 + 3), E_body);
+
+            // Get locater position of body i
+            R_c_body.segment<3>(1).noalias() = m_positions_locater_particles.segment<3>(3 * body_num);
+            // Get E matrix representation of body quaternion from m_psi_conv_quat_ang
+            twoE_body.noalias() = m_psi_conv_quat_ang.block<3, 4>(6 * body_num + 3, 7 * body_num + 3);
+
             // Continue to next loop as all elements are zero
             continue;
         }
@@ -357,12 +350,12 @@ systemData::gradientChangeOfVariableTensors()
         const Eigen::Vector4d       dr = R_j - R_c_body;
         Eigen::Matrix<double, 3, 4> P_j_tilde_hold;
         eMatrix(dr, P_j_tilde_hold);
+        Eigen::Matrix<double, 4, 3> P_j_tilde = P_j_tilde_hold.transpose();
 
         // change of variables gradient tensor elements
-        m_D_conv_quat_part.block<3, 3>(i7, j3).noalias() = -m_I; // translation-translation couple
-        m_D_conv_quat_part.block<3, 3>(i7 + 4, j3).noalias() =
-            2 * E_body *
-            P_j_tilde_hold.transpose(); // quaternion-rotation couple (first row is zero)
+        m_D_conv_quat_part.block<3, 3>(7 * body_num, j3).noalias() = -m_I; // translation-translation couple
+        m_D_conv_quat_part.block<3, 3>(7 * body_num + 4, j3).noalias() =
+            twoE_body * P_j_tilde; // quaternion-rotation couple (first row is zero)
     }
     assert(body_num + 1 == m_num_bodies && "Not all bodies were indexed correctly");
 
