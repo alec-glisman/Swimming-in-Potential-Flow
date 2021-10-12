@@ -1,7 +1,7 @@
 <map id="systemData::initializeData" name="systemData::initializeData">
-<area shape="rect" id="node1" title="Function loads data from GSD file using GSDUtil class. Must be called after class construction before..." alt="" coords="5,169,181,196"/>
+<area shape="rect" id="node1" title="Function loads data from GSD file using GSDUtil class." alt="" coords="5,169,181,196"/>
 <area shape="rect" id="node2" href="$classsystemData.html#a74a503e80869c3ef4a9b6edefd132726" title=" " alt="" coords="251,75,414,101"/>
-<area shape="rect" id="node4" href="$classsystemData.html#a3c7862901ce425c4d5e6001efa3ef61d" title="Updates the kinematic constraints relative to the chosen locater particles for both velocity and acce..." alt="" coords="229,195,436,221"/>
+<area shape="rect" id="node4" href="$classsystemData.html#a3c7862901ce425c4d5e6001efa3ef61d" title="Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constrain..." alt="" coords="229,195,436,221"/>
 <area shape="rect" id="node3" href="$classsystemData.html#a3f978844a3292e9ca096be6741c48dc2" title=" " alt="" coords="512,5,677,32"/>
 <area shape="rect" id="node5" href="$classsystemData.html#abdbaf4be474add633c79ce9f4812b438" title=" " alt="" coords="505,57,684,98"/>
 <area shape="rect" id="node6" href="$classsystemData.html#aca5c01655d711e9088b3f1e9d7578612" title=" " alt="" coords="499,122,691,163"/>

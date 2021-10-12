@@ -2,7 +2,7 @@
 <area shape="rect" id="node1" title="Convert Eigen::Matrix &#45;&#45;&gt; Eigen::Tensor." alt="" coords="872,42,961,69"/>
 <area shape="rect" id="node2" href="$classsystemData.html#aca5c01655d711e9088b3f1e9d7578612" title=" " alt="" coords="632,5,824,47"/>
 <area shape="rect" id="node6" href="$helper__eigenTensorConversion_8h.html#a1c806578084d178c05d1660894693538" title=" " alt="" coords="683,71,773,98"/>
-<area shape="rect" id="node3" href="$classsystemData.html#a3c7862901ce425c4d5e6001efa3ef61d" title="Updates the kinematic constraints relative to the chosen locater particles for both velocity and acce..." alt="" coords="377,13,584,39"/>
-<area shape="rect" id="node4" href="$classsystemData.html#ad2ba3455704ef6cec1aac76a417e91e9" title="Function loads data from GSD file using GSDUtil class. Must be called after class construction before..." alt="" coords="153,13,329,39"/>
+<area shape="rect" id="node3" href="$classsystemData.html#a3c7862901ce425c4d5e6001efa3ef61d" title="Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constrain..." alt="" coords="377,13,584,39"/>
+<area shape="rect" id="node4" href="$classsystemData.html#ad2ba3455704ef6cec1aac76a417e91e9" title="Function loads data from GSD file using GSDUtil class." alt="" coords="153,13,329,39"/>
 <area shape="rect" id="node5" href="$testsSimulationBuild_8cpp.html#ac2b102ba50512565940601db33c64cf2" title=" " alt="" coords="5,13,105,39"/>
 </map>

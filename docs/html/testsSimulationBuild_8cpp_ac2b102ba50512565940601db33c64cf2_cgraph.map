@@ -1,7 +1,7 @@
 <map id="TEST_CASE" name="TEST_CASE">
 <area shape="rect" id="node1" title=" " alt="" coords="5,335,105,361"/>
 <area shape="rect" id="node2" href="$gsd_8c.html#ad8933dcce55fd8101b5688f382c10a8e" title=" " alt="" coords="202,284,281,311"/>
-<area shape="rect" id="node15" href="$classsystemData.html#ad2ba3455704ef6cec1aac76a417e91e9" title="Function loads data from GSD file using GSDUtil class. Must be called after class construction before..." alt="" coords="153,360,329,387"/>
+<area shape="rect" id="node15" href="$classsystemData.html#ad2ba3455704ef6cec1aac76a417e91e9" title="Function loads data from GSD file using GSDUtil class." alt="" coords="153,360,329,387"/>
 <area shape="rect" id="node3" href="$gsd_8c.html#ac159dfbfd790607f85073ad2d8464a8b" title=" " alt="" coords="409,183,552,209"/>
 <area shape="rect" id="node14" href="$gsd_8c.html#a9b05d58560daee2512f03bedf7b2926d" title=" " alt="" coords="404,284,557,311"/>
 <area shape="rect" id="node4" href="$gsd_8c.html#aeaf487909ab334303fa478cf4a126d6f" title=" " alt="" coords="659,5,826,32"/>
@@ -15,7 +15,7 @@
 <area shape="rect" id="node9" href="$gsd_8c.html#ab1d1a8a5f73b37df0c706f41df3bdd69" title=" " alt="" coords="1132,107,1249,133"/>
 <area shape="rect" id="node13" href="$gsd_8c.html#a6d8087323ec29c58d907b9462b4a31da" title=" " alt="" coords="943,309,1043,336"/>
 <area shape="rect" id="node16" href="$classsystemData.html#a74a503e80869c3ef4a9b6edefd132726" title=" " alt="" coords="399,360,562,387"/>
-<area shape="rect" id="node18" href="$classsystemData.html#a3c7862901ce425c4d5e6001efa3ef61d" title="Updates the kinematic constraints relative to the chosen locater particles for both velocity and acce..." alt="" coords="377,549,584,576"/>
+<area shape="rect" id="node18" href="$classsystemData.html#a3c7862901ce425c4d5e6001efa3ef61d" title="Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constrain..." alt="" coords="377,549,584,576"/>
 <area shape="rect" id="node17" href="$classsystemData.html#a3f978844a3292e9ca096be6741c48dc2" title=" " alt="" coords="660,360,825,387"/>
 <area shape="rect" id="node19" href="$classsystemData.html#abdbaf4be474add633c79ce9f4812b438" title=" " alt="" coords="653,411,832,453"/>
 <area shape="rect" id="node20" href="$classsystemData.html#aca5c01655d711e9088b3f1e9d7578612" title=" " alt="" coords="647,477,839,518"/>

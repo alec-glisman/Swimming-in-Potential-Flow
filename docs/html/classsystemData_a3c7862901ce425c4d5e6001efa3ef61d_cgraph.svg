@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title="Updates the kinematic constraints relative to the chosen locater particles for both velocity and acce...">
+<g id="a_node1"><a xlink:title="Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constrain...">
 <polygon fill="#bfbfbf" stroke="black" points="0,-117.5 0,-136.5 155,-136.5 155,-117.5 0,-117.5"/>
 <text text-anchor="middle" x="77.5" y="-124.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::updateConstraints</text>
 </a>

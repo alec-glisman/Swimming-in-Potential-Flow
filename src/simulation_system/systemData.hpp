@@ -51,7 +51,8 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     /**
      * @brief Function loads data from GSD file using `GSDUtil` class.
-     * Must be called after class construction before data can properly
+     *
+     * @details Must be called after class construction before data can properly
      * be integrated using the `engine` class.
      *
      */
@@ -59,10 +60,12 @@ class systemData : public std::enable_shared_from_this<systemData>
     initializeData();
 
     /**
-     * @brief Updates the kinematic constraints relative to the chosen locater particles
-     * for both velocity and acceleration degrees of freedom.
-     * The Udwadia linear constraint system (\f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} = \mathbf{b}
-     * \f$ ) is also updated.
+     * @brief Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constraints
+     *
+     * @details Many functions are called and there is a dependency chain between them. All function calls can be run in
+     * any order besides gradientChangeOfVariableTensors(), which depends on rigidBodyMotionTensors() being run first.
+     * This is assuming the Udwadia linear constraint system (\f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} = \mathbf{b}
+     * \f$ ) is independent of configuration.
      *
      * @param time (dimensionless) simulation time to update parameters.
      */
@@ -70,10 +73,12 @@ class systemData : public std::enable_shared_from_this<systemData>
     updateConstraints(double time);
 
     /**
-     * @brief Converts index \f$ b \f$ in \f$ (a, b, c) \to \f$ index \f$ b' \f$ in \f$ (a,
-     * b') \f$. Conversion between 3D matrix (row_idx_3d, column_idx_3d, layer_idx_3d) into a
-     * flattened 2D representation. Layers are concatenated together horizontally along 2D column
-     * axis to make one short and very wide two dimensional matrix.
+     * @brief Conversion between 3D matrix (row_idx_3d, column_idx_3d, layer_idx_3d) into a
+     * flattened 2D representation.
+     *
+     * @details Layers are concatenated together horizontally along 2D column axis to make one
+     * short and very wide two dimensional matrix. Converts index
+     * \f$ b \f$ in \f$ (a, b, c) \to \f$ index \f$ b' \f$ in \f$ (a, b') \f$.
      *
      * @param column_idx_3d column index of 3D matrix
      * @param layer_idx_3d layer index of 3D matrix

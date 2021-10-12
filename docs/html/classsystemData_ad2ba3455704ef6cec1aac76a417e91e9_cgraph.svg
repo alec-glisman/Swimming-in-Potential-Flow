@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title="Function loads data from GSD file using GSDUtil class. Must be called after class construction before...">
+<g id="a_node1"><a xlink:title="Function loads data from GSD file using GSDUtil class.">
 <polygon fill="#bfbfbf" stroke="black" points="0,-161.5 0,-180.5 132,-180.5 132,-161.5 0,-161.5"/>
 <text text-anchor="middle" x="66" y="-168.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::initializeData</text>
 </a>
@@ -35,7 +35,7 @@
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="classsystemData.html#a3c7862901ce425c4d5e6001efa3ef61d" target="_top" xlink:title="Updates the kinematic constraints relative to the chosen locater particles for both velocity and acce...">
+<g id="a_node4"><a xlink:href="classsystemData.html#a3c7862901ce425c4d5e6001efa3ef61d" target="_top" xlink:title="Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constrain...">
 <polygon fill="none" stroke="black" points="168,-142.5 168,-161.5 323,-161.5 323,-142.5 168,-142.5"/>
 <text text-anchor="middle" x="245.5" y="-149.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::updateConstraints</text>
 </a>

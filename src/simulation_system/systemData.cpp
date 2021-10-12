@@ -108,12 +108,12 @@ systemData::initializeData()
 void
 systemData::updateConstraints(double time)
 {
-    locaterPointLocations();
-
     velocitiesArticulation(time);
     accelerationsArticulation(time);
 
+    locaterPointLocations();
     rigidBodyMotionTensors();
+
     gradientChangeOfVariableTensors();
 
     udwadiaLinearSystem(time);
