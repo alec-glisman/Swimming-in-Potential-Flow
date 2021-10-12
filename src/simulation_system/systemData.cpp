@@ -329,9 +329,6 @@ systemData::gradientChangeOfVariableTensors()
 
     for (int j = 0; j < m_num_particles; j++)
     {
-        // j -> particle number
-        const int j3{3 * j};
-
         Eigen::Matrix<double, 3, 4> E_body   = Eigen::MatrixXd::Zero(4, 3);
         Eigen::Vector4d             R_c_body = Eigen::Vector4d::Zero(4, 1);
 
@@ -348,6 +345,9 @@ systemData::gradientChangeOfVariableTensors()
             // Continue to next loop as all elements are zero
             continue;
         }
+
+        // j -> particle number
+        const int j3{3 * j};
 
         // 4-vector version of particle j position (prepend zero element)
         Eigen::Vector4d R_j         = Eigen::Vector4d::Zero(4, 1);
