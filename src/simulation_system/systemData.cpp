@@ -327,37 +327,47 @@ systemData::gradientChangeOfVariableTensors()
     /* ANCHOR: Compute m_D_conv_quat_part */
     m_D_conv_quat_part.setZero();
 
-    for (int i = 0; i < m_num_particles; i++)
+    // i -> body number
+    int body_num{-1}; // -1 as first particle should be locater particle and increment this
+    int i3{3 * body_num};
+    int i7{7 * body_num};
+
+    for (int j = 0; j < m_num_particles; j++)
     {
-        const int i3{3 * i};
+        // j -> particle number
+        const int j3{3 * j};
 
-        // 4-vector version of particle i position (prepend zero element)
-        Eigen::Vector4d R_i         = Eigen::Vector4d::Zero(4, 1);
-        R_i.segment<3>(1).noalias() = m_positions_particles.segment<3>(i3);
+        Eigen::Matrix<double, 3, 4> E_body   = Eigen::MatrixXd::Zero(4, 3);
+        Eigen::Vector4d             R_c_body = Eigen::Vector4d::Zero(4, 1);
 
-        // Eigen3 is column-major by default so loop over rows (bodies) in inner loop
-        for (int j = 0; j < m_num_bodies; j++)
+        if (m_particle_type_id(j) == 1)
         {
-            const int j7{7 * j};
-
-            // moment arm of particle i about its body j locater position
-            Eigen::Vector4d dr = R_i;
-            dr.segment<3>(1).noalias() -= m_positions_bodies.segment<3>(j7);
-
-            // matrix E from quaterion of body j
-            Eigen::Matrix<double, 3, 4> E_theta_j;
-            eMatrix(m_positions_bodies.segment<4>(j7 + 3), E_theta_j);
-
-            // matrix P_tilde from moment arm
-            Eigen::Matrix<double, 3, 4> P_i_tilde_hold;
-            eMatrix(dr, P_i_tilde_hold);
-
-            // change of variables gradient tensor elements
-            m_D_conv_quat_part.block<3, 3>(j7, i3).noalias() =
-                -m_I; // translation-translation couple
-            m_D_conv_quat_part.block<3, 3>(j7 + 4, i3).noalias() =
-                2 * E_theta_j *
-                P_i_tilde_hold.transpose(); // quaternion-rotation couple (first row is zero)
+            // Increment body count indices
+            body_num += 1;
+            i3 += 3;
+            i7 += 7;
+            // Set locater location
+            R_c_body.segment<3>(1).noalias() = m_positions_locater_particles.segment<3>(i3);
+            // Compute E
+            eMatrix(m_positions_bodies.segment<4>(i7 + 3), E_body);
+            // Continue to next loop as all elements are zero
+            continue;
         }
+
+        // 4-vector version of particle j position (prepend zero element)
+        Eigen::Vector4d R_j         = Eigen::Vector4d::Zero(4, 1);
+        R_j.segment<3>(1).noalias() = m_positions_particles.segment<3>(j3);
+
+        // matrix P_tilde from moment arm
+        const Eigen::Vector4d       dr = R_j - R_c_body;
+        Eigen::Matrix<double, 3, 4> P_j_tilde_hold;
+        eMatrix(dr, P_j_tilde_hold);
+
+        // change of variables gradient tensor elements
+        m_D_conv_quat_part.block<3, 3>(i7, j3).noalias() = -m_I; // translation-translation couple
+        m_D_conv_quat_part.block<3, 3>(i7 + 4, j3).noalias() =
+            2 * E_body *
+            P_j_tilde_hold.transpose(); // quaternion-rotation couple (first row is zero)
     }
+    assert(body_num + 1 == m_num_bodies && "Not all bodies were indexed correctly");
 }
