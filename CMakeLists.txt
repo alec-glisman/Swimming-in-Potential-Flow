@@ -54,6 +54,9 @@ ELSEIF("$ENV{USER}" STREQUAL "aglisman")  # Build on desktop PC
 
     SET(CMAKE_CUDA_COMPILER "/opt/nvidia/hpc_sdk/Linux_x86_64/21.9/cuda/bin/nvcc")
 
+    set(CMAKE_C_COMPILER /usr/bin/gcc-11 CACHE PATH "")
+    set(CMAKE_CXX_COMPILER /usr/bin/g++-11 CACHE PATH "")
+
     
 ELSEIF("$ENV{USER}" STREQUAL "alec")  # Build on Brady group servers
 
@@ -74,20 +77,6 @@ ENDIF()
 
 # Export compile commands
 SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
-# GCC requirements
-IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-
-    IF(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 11)
-        MESSAGE(FATAL_ERROR "GCC version must be at least 11!")
-    ENDIF()
-
-ELSE()
-
-    MESSAGE(WARNING "You are using an unsupported compiler! Compilation has only been tested with GCC.")
-    MESSAGE(WARNING "Compiler ID: ${CMAKE_CXX_COMPILER_ID}")
-
-endif()
 
 
 
@@ -155,6 +144,24 @@ ELSE()  # Use CUDA when not on MacOS
         HOMEPAGE_URL
             "https://github.com/alec-glisman/bodies-in-potential-flow"
         LANGUAGES CXX C CUDA)
+
+ENDIF()
+
+
+
+# GCC requirements
+IF("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
+
+    IF(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 11)
+
+        MESSAGE(FATAL_ERROR "GCC version must be at least 11! Using: ${CMAKE_CXX_COMPILER_VERSION}")
+
+    ENDIF()
+
+ELSE()
+
+    MESSAGE(WARNING "You are using an unsupported compiler! Compilation has only been tested with GCC.")
+    MESSAGE(WARNING "Compiler ID: ${CMAKE_CXX_COMPILER_ID}")
 
 ENDIF()
 # !SECTION
