@@ -386,12 +386,17 @@ systemData::gradientChangeOfVariableTensors()
         // get change of variable matrix element D_{\alpha}
         const Eigen::Matrix<double, 7, 3> n_D_alpha = -m_D_conv_quat_part.block<7, 3>(7 * body_num, 3 * i);
 
-        // ANCHOR: tensor contractions to produce result
-        // Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 7>> d_rCrossMat_d_xi;
+        /* ANCHOR: tensor contractions to produce result */
+
+        // convert Eigen::Matrix --> Eigen::Tensor
+        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4>> tens_two_E_body = TensorCast(two_E_body);
+        const Eigen::TensorFixedSize<double, Eigen::Sizes<7, 3>> tens_n_D_alpha  = TensorCast(n_D_alpha);
+        // derivative tensor of matrix element
+        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 7>> d_rCrossMat_d_xi;
 
         // Compute result_{i m k} = levi_cevita{l i m} n_D_alpha_{k l}
-        Eigen::array<Eigen::IndexPair<int>, 1> prod_dim_1       = {Eigen::IndexPair<int>(0, 1)};
-        // Eigen::Tensor<double, 3>               d_rCrossMat_d_xi = levi_cevita.contract(n_D_alpha, prod_dim_1);
+        Eigen::array<Eigen::IndexPair<int>, 1> prod_dim_1 = {Eigen::IndexPair<int>(0, 1)};
+        d_rCrossMat_d_xi.device(all_cores_device)         = levi_cevita.contract(tens_n_D_alpha, prod_dim_1);
 
         // output matrix indices
         int row_start{3 * i};               // row_length = 3
