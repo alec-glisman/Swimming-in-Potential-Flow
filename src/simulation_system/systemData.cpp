@@ -365,7 +365,8 @@ systemData::gradientChangeOfVariableTensors()
     }
     assert(body_num + 1 == m_num_bodies && "Not all bodies were indexed correctly");
 
-    /* TODO: ANCHOR : Compute m_C_conv_quat_part_grad */
+    /* ANCHOR : Compute m_C_conv_quat_part_grad */
+    m_C_conv_quat_part_grad.setZero();
     body_num = -1;
 
     assert(m_particle_type_id(0) == 1 && "First particle index must be locater by convention");
@@ -393,19 +394,33 @@ systemData::gradientChangeOfVariableTensors()
         /* ANCHOR: tensor contractions to produce result */
 
         // convert Eigen::Matrix --> Eigen::Tensor
-        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4>> tens_two_E_body = TensorCast(two_E_body);
-        const Eigen::TensorFixedSize<double, Eigen::Sizes<7, 3>> tens_n_D_alpha  = TensorCast(n_D_alpha);
-        // derivative tensor of matrix element
-        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 7>> d_rCrossMat_d_xi;
+        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_two_r_cross_mat = TensorCast(two_r_cross_mat);
+        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4>> tens_two_E_body      = TensorCast(two_E_body);
+        const Eigen::TensorFixedSize<double, Eigen::Sizes<7, 3>> tens_n_D_alpha       = TensorCast(n_D_alpha);
 
-        // Compute result_{i m k} = levi_cevita{l i m} n_D_alpha_{k l}
-        Eigen::array<Eigen::IndexPair<int>, 1> prod_dim_1 = {Eigen::IndexPair<int>(0, 1)};
-        d_rCrossMat_d_xi.device(all_cores_device)         = levi_cevita.contract(tens_n_D_alpha, prod_dim_1);
+        // 1) Compute result_{i m k} = levi_cevita{l i m} n_D_alpha_{k l}
+        Eigen::array<Eigen::IndexPair<int>, 1>                prod_dim_1 = {Eigen::IndexPair<int>(0, 1)};
+        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 7>> d_rCrossMat_d_xi;
+        d_rCrossMat_d_xi.device(all_cores_device) = levi_cevita.contract(tens_n_D_alpha, prod_dim_1);
+
+        // 2) Compute result_{i j k} = d_rCrossMat_d_xi_{i m k} two_E_body{m j}
+        Eigen::array<Eigen::IndexPair<int>, 1>                prod_dim_2 = {Eigen::IndexPair<int>(1, 0)};
+        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> d_rCrossMat_d_xi_times_two_E_body;
+        d_rCrossMat_d_xi_times_two_E_body.device(all_cores_device) =
+            d_rCrossMat_d_xi.contract(tens_two_E_body, prod_dim_2);
+
+        // 3) Compute result_{i j k} = two_r_cross_mat_{i m} Kappa_tilde_{m j k} (same indices as (2))
+        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> rCrossMat_times_d_E_body_d_xi;
+        rCrossMat_times_d_E_body_d_xi.device(all_cores_device) = tens_two_r_cross_mat.contract(kappa_tilde, prod_dim_2);
+
+        // Compute and output matrix element
+        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> angular_gradient;
+        angular_gradient.device(all_cores_device) = -d_rCrossMat_d_xi_times_two_E_body - rCrossMat_times_d_E_body_d_xi;
 
         // output matrix indices
-        int row_start{3 * i};               // row_length = 3
-        int column_start{7 * body_num + 3}; // column_length = 4, first 3/7 indices are zero
-        int layer_start{7 * body_num};      // length 7
+        Eigen::array<Eigen::Index, 3> offsets           = {3 * i, 7 * body_num + 3, 7 * body_num};
+        Eigen::array<Eigen::Index, 3> extents           = {3, 4, 7};
+        m_C_conv_quat_part_grad.slice(offsets, extents) = angular_gradient;
     }
     assert(body_num + 1 == m_num_bodies && "Not all bodies were indexed correctly");
 }
