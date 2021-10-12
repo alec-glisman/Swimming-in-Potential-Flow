@@ -5,8 +5,10 @@ INCLUDE_DIRECTORIES(../src/forces)
 INCLUDE_DIRECTORIES(../src/integrators)
 
 IF(DEFINED CMAKE_CUDA_COMPILER)
-    INCLUDE_DIRECTORIES(../src/cuda_helpers)
+    INCLUDE_DIRECTORIES(../src/helpers/cuda)
 ENDIF()
+    
+INCLUDE_DIRECTORIES(../src/helpers/eigen)
 
 # Add catch as an interface library
 ADD_LIBRARY(Catch INTERFACE)
