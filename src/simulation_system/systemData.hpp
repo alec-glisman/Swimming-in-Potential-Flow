@@ -102,13 +102,16 @@ class systemData : public std::enable_shared_from_this<systemData>
     locaterPointLocations();
 
     void
-    udwadiaLinearSystem(double time);
-
-    void
     rigidBodyMotionTensors();
 
     void
     gradientChangeOfVariableTensors();
+
+    void
+    nMatrices();
+
+    void
+    udwadiaLinearSystem(double time);
 
     /**
      * @brief Computes the E matrix of quaternion (4-vector) input

@@ -368,3 +368,9 @@ systemData::gradientChangeOfVariableTensors()
 
     /* TODO: ANCHOR : Compute m_C_conv_quat_part_grad */
 }
+
+void
+systemData::nMatrices()
+{
+    // TODO
+}
