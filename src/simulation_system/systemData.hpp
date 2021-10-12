@@ -183,7 +183,7 @@ class systemData : public std::enable_shared_from_this<systemData>
         m_D_conv_quat_part; //!< \[7M x 3N\] converts particle position D.o.F. to body
                             //!< position/quaternion D.o.F. (NOTE: this was \beta in written work)
 
-    // rigid body motion tensors TODO
+    // rigid body motion tensors
     Eigen::MatrixXd m_rbm_conn; //!< \[6M x 3N\] \f$ \boldsymbol{\Sigma} \f$ rigid body motion
                                 //!< connectivity tensor
     Eigen::MatrixXd
@@ -193,12 +193,12 @@ class systemData : public std::enable_shared_from_this<systemData>
                                         //!< linear/quaternion body velocity D.o.F. to linear
                                         //!< particle velocities (NOTE: this was A in written work)
     Eigen::Tensor<double, 3>
-        m_C_conv_quat_part_grad; //!< \[3N x 7M x 7M\] \f$ \nabla_{\xi} \boldsymbol{C} \f$
+        m_C_conv_quat_part_grad; //!< \[3N x 7M x 7M\] \f$ \nabla_{\xi} \boldsymbol{C} \f$ TODO
 
-    // gradient tensors in E.o.M. TODO
-    Eigen::Tensor<double, 3> m_N1; //!< \[3N x 3N x 7M\]
-    Eigen::Tensor<double, 3> m_N2; //!< \[7M x 3N x 7M\]
-    Eigen::Tensor<double, 3> m_N3; //!< \[7M x 7M x 7M\]
+    // gradient tensors in E.o.M.
+    Eigen::Tensor<double, 3> m_N1; //!< \[3N x 3N x 7M\] TODO
+    Eigen::Tensor<double, 3> m_N2; //!< \[7M x 3N x 7M\] TODO
+    Eigen::Tensor<double, 3> m_N3; //!< \[7M x 7M x 7M\] TODO
 
     // kinematics
     Eigen::VectorXd m_positions_bodies;     //!< \[7M x 1\] both linear and angular D.o.F.
