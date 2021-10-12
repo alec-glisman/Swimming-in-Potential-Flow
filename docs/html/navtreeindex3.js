@@ -1,5 +1,6 @@
 var NAVTREEINDEX3 =
 {
+"helper__math_8h.html#a58aa5970ff73f2d7f13bc0b49a5e6070":[3,0,2,0,4,83],
 "helper__math_8h.html#a5ac86555d5a546106ec01ed56f8d48b4":[3,0,2,0,4,35],
 "helper__math_8h.html#a5c0f140fc8c3250b61805836d0488bd6":[3,0,2,0,4,75],
 "helper__math_8h.html#a5c92bad3b3579fb468cf417278834d17":[3,0,2,0,4,104],
@@ -226,8 +227,8 @@ var NAVTREEINDEX3 =
 "helper__timer_8h.html#afef340cd9aa6f9fc7ddf20e2525bb531":[3,0,2,0,8,6],
 "helper__timer_8h_source.html":[3,0,2,0,8],
 "hierarchy.html":[2,2],
-"index.html":[0],
 "index.html":[],
+"index.html":[0],
 "index.html#autotoc_md1":[0,0],
 "index.html#autotoc_md2":[0,1],
 "index.html#autotoc_md3":[0,2],
@@ -239,8 +240,8 @@ var NAVTREEINDEX3 =
 "main_8cpp.html":[3,0,2,5],
 "main_8cpp.html#ad53223b8779f25caeddb70a3b9172967":[3,0,2,5,0],
 "main_8cpp_source.html":[3,0,2,5],
-"namespaceGSDUtil.html":[1,0,3],
 "namespaceGSDUtil.html":[2,0,0],
+"namespaceGSDUtil.html":[1,0,3],
 "namespacecollinear-swimmer-wall-aggregate-analysis.html":[1,0,0],
 "namespacecollinear-swimmer-wall-configuration.html":[1,0,1],
 "namespacecollinear-swimmer-wall-individual-analysis.html":[1,0,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX3 =
 "namespacemembers_func.html":[1,1,1],
 "namespacemembers_vars.html":[1,1,2],
 "namespaceplotStyling.html":[1,0,4],
-"namespaceplotStyling.html":[2,0,1],
-"namespaces.html":[1,0]
+"namespaceplotStyling.html":[2,0,1]
 };
