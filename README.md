@@ -1,6 +1,6 @@
-# Bodies in Potential Flow # {#mainpage}
+# Bodies in Potential Flow # {#index}
 
-Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible).
+Study dynamics of inertial active matter in potential flow (irrotational, incompressible).
 
 Author: Alec Glisman
 
@@ -24,7 +24,7 @@ Commands:
 
 ```[shell]
 docker-compose --env-file [docker_environment_file] up --detach  # build
-docker-compose down         # tear down
+docker-compose down                                              # tear down
 ```
 
 ## Project structure: links to relevant readme files
