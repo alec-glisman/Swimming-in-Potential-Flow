@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Bodied in Potential Flow: Class Members</title>
+<title>Bodies in Potential Flow: Class Members</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -16,13 +16,20 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX","output/HTML-CSS"],
-});
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  },
+  tex: {
+    macros: {},
+    packages: ['base','configmacros','TeX/ams','TeX/AMSmath','TeX/AMSsymbols','TeX/bm','TeX/bbm','TeX/dsfont','TeX/mathrsfs','TeX/upgreek']
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -33,9 +40,9 @@ MathJax.Hub.Config({
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Bodied in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
+   <div id="projectname">Bodies in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
    </div>
-   <div id="projectbrief">Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible).</div>
+   <div id="projectbrief">Study dynamics of inertial active matter in potential flow (irrotational, incompressible).</div>
   </td>
  </tr>
  </tbody>
@@ -93,21 +100,15 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 <div class="contents">
 <div class="textblock">Here is a list of all class members with links to the classes they belong to:</div>
 
-<h3><a id="index_a" name="index_a"></a>- a -</h3><ul>
-<li>accelerationsArticulation()&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#abdbaf4be474add633c79ce9f4812b438">systemData</a></li>
-<li>accelerationsBodies()&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#a2db524760f940b0c0c3f28916da25864">systemData</a></li>
-<li>accelerationsParticles()&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#a6682e43c1d09e5d0d14cbe7ce8b02702">systemData</a></li>
-<li>accelerationsParticlesArticulation()&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#a903f957ca9bf5d8faab0e9afbdc6c81b">systemData</a></li>
-<li>accelerationUpdate()&#160;:&#160;<a class="el" href="dd/d22/classrungeKutta4.html#ada94dc0b697b09e102b5a02682a34796">rungeKutta4</a></li>
-<li>addr&#160;:&#160;<a class="el" href="df/d3a/structsharedMemoryInfo__st.html#ac2cdf8965b877e223302a8c133c98f3d">sharedMemoryInfo_st</a></li>
-<li>application&#160;:&#160;<a class="el" href="d5/d56/structgsd__header.html#ad23681ad38d32167197a22e75a2605b1">gsd_header</a></li>
+<h3><a id="index__5F" name="index__5F"></a>- _ -</h3><ul>
+<li>__init__()&#160;:&#160;<a class="el" href="classGSDUtil_1_1GSDUtil.html#af4c8aebcb1687b8ec452186fd70ccf7b">GSDUtil.GSDUtil</a>, <a class="el" href="classplotStyling_1_1Multiple.html#ae44d0249c3c06d41afd6d8215956b825">plotStyling.Multiple</a>, <a class="el" href="classplotStyling_1_1PlotStyling.html#a0f673d692d653c5e5e3ffc0217f05ee3">plotStyling.PlotStyling</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Oct 13 2021 10:16:23 for Bodied in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Wed Oct 13 2021 11:23:17 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

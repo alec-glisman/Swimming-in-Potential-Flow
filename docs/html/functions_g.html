@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Bodied in Potential Flow: Class Members</title>
+<title>Bodies in Potential Flow: Class Members</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -16,13 +16,20 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX","output/HTML-CSS"],
-});
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  },
+  tex: {
+    macros: {},
+    packages: ['base','configmacros','TeX/ams','TeX/AMSmath','TeX/AMSsymbols','TeX/bm','TeX/bbm','TeX/dsfont','TeX/mathrsfs','TeX/upgreek']
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -33,9 +40,9 @@ MathJax.Hub.Config({
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Bodied in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
+   <div id="projectname">Bodies in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
    </div>
-   <div id="projectbrief">Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible).</div>
+   <div id="projectbrief">Study dynamics of inertial active matter in potential flow (irrotational, incompressible).</div>
   </td>
  </tr>
  </tbody>
@@ -94,22 +101,24 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <div class="textblock">Here is a list of all class members with links to the classes they belong to:</div>
 
 <h3><a id="index_g" name="index_g"></a>- g -</h3><ul>
-<li>getAverageTime()&#160;:&#160;<a class="el" href="de/dec/classStopWatchInterface.html#a049e581ad35895795be1e04763d40cc3">StopWatchInterface</a>, <a class="el" href="d2/dc3/classStopWatchLinux.html#a702b38009675968d5798796978007376">StopWatchLinux</a></li>
-<li>getDiffTime()&#160;:&#160;<a class="el" href="d2/dc3/classStopWatchLinux.html#a3f7b53a7d64f4ffaa243eceee6f44b83">StopWatchLinux</a></li>
-<li>getTime()&#160;:&#160;<a class="el" href="de/dec/classStopWatchInterface.html#ab2127ae16fd7cafec70246fa07f2025f">StopWatchInterface</a>, <a class="el" href="d2/dc3/classStopWatchLinux.html#a7e211f57179ab20e6814127318e9f0f8">StopWatchLinux</a></li>
-<li>gradientChangeOfVariableTensors()&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#aca5c01655d711e9088b3f1e9d7578612">systemData</a></li>
-<li>gradMAdded()&#160;:&#160;<a class="el" href="d8/d21/classpotentialHydrodynamics.html#a4da63359e9d7139ccc80dd1396af8965">potentialHydrodynamics</a></li>
-<li>gsd_version&#160;:&#160;<a class="el" href="d5/d56/structgsd__header.html#a5e2e07be01bcfa15c0834d6859878171">gsd_header</a></li>
-<li>gSDParsed()&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#a455ac9e43a0e1ce6417c61f0c36ff8bd">systemData</a></li>
-<li>GSDUtil()&#160;:&#160;<a class="el" href="de/d83/classGSDUtil.html#a2567bdb7f5952a76984552e0591fa330">GSDUtil</a></li>
-<li>gsdUtil()&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#ad002cc6617637d499b96829e5bb25a13">systemData</a></li>
+<li>getAverageTime()&#160;:&#160;<a class="el" href="classStopWatchInterface.html#a049e581ad35895795be1e04763d40cc3">StopWatchInterface</a>, <a class="el" href="classStopWatchLinux.html#a702b38009675968d5798796978007376">StopWatchLinux</a></li>
+<li>getDiffTime()&#160;:&#160;<a class="el" href="classStopWatchLinux.html#a3f7b53a7d64f4ffaa243eceee6f44b83">StopWatchLinux</a></li>
+<li>getTime()&#160;:&#160;<a class="el" href="classStopWatchInterface.html#ab2127ae16fd7cafec70246fa07f2025f">StopWatchInterface</a>, <a class="el" href="classStopWatchLinux.html#a7e211f57179ab20e6814127318e9f0f8">StopWatchLinux</a></li>
+<li>gradientChangeOfVariableTensors()&#160;:&#160;<a class="el" href="classsystemData.html#aca5c01655d711e9088b3f1e9d7578612">systemData</a></li>
+<li>gradMAdded()&#160;:&#160;<a class="el" href="classpotentialHydrodynamics.html#a4da63359e9d7139ccc80dd1396af8965">potentialHydrodynamics</a></li>
+<li>gsd_version&#160;:&#160;<a class="el" href="structgsd__header.html#a5e2e07be01bcfa15c0834d6859878171">gsd_header</a></li>
+<li>gsdName&#160;:&#160;<a class="el" href="classGSDUtil_1_1GSDUtil.html#afae9b3995db17303e6da60f2d6a3af3f">GSDUtil.GSDUtil</a></li>
+<li>gSDParsed()&#160;:&#160;<a class="el" href="classsystemData.html#a455ac9e43a0e1ce6417c61f0c36ff8bd">systemData</a></li>
+<li>gsdPath&#160;:&#160;<a class="el" href="classGSDUtil_1_1GSDUtil.html#af6aee201f14b0f9708d9cd017f1ca2ba">GSDUtil.GSDUtil</a></li>
+<li>GSDUtil()&#160;:&#160;<a class="el" href="classGSDUtil.html#a2567bdb7f5952a76984552e0591fa330">GSDUtil</a></li>
+<li>gsdUtil()&#160;:&#160;<a class="el" href="classsystemData.html#ad002cc6617637d499b96829e5bb25a13">systemData</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Oct 13 2021 10:16:23 for Bodied in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Wed Oct 13 2021 11:23:17 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

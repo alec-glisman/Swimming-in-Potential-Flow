@@ -24,49 +24,62 @@
 */
 var NAVTREE =
 [
-  [ "Bodied in Potential Flow", "index.html", [
-    [ "Bodies in Potential Flow", "index.html", [
-      [ "Software tested", "index.html#autotoc_md0", null ],
-      [ "Docker integration", "index.html#autotoc_md1", null ],
-      [ "Project structure: links to relevant readme files", "index.html#autotoc_md2", null ],
-      [ "Data I/O", "index.html#autotoc_md3", null ],
-      [ "Modifications for other systems", "index.html#autotoc_md4", null ],
-      [ "External dependencies", "index.html#autotoc_md5", [
-        [ "Must install separately", "index.html#autotoc_md6", null ],
-        [ "Integrated into project", "index.html#autotoc_md7", null ]
+  [ "Bodies in Potential Flow", "index.html", [
+    [ "README: Bodies in Potential Flow", "index.html", [
+      [ "Software tested", "index.html#autotoc_md3", null ],
+      [ "Docker integration", "index.html#autotoc_md4", null ],
+      [ "Project structure: links to relevant readme files", "index.html#autotoc_md5", null ],
+      [ "Data I/O", "index.html#autotoc_md8", null ],
+      [ "Modifications for other systems", "index.html#autotoc_md10", null ],
+      [ "External dependencies", "index.html#autotoc_md11", [
+        [ "Must install separately", "index.html#autotoc_md12", null ],
+        [ "Integrated into project", "index.html#autotoc_md13", null ]
       ] ]
     ] ],
-    [ "Classes", "annotated.html", [
-      [ "Class List", "annotated.html", "annotated_dup" ],
-      [ "Class Index", "classes.html", null ],
-      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
-      [ "Class Members", "functions.html", [
-        [ "All", "functions.html", "functions_dup" ],
-        [ "Functions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", null ]
-      ] ]
+    [ "Directory: python", "md_python_README.html", [
+      [ "Subdirectory: analysis", "md_python_README.html#autotoc_md14", null ],
+      [ "Subdirectory: initial_configurations", "md_python_README.html#autotoc_md15", null ],
+      [ "Files", "md_python_README.html#autotoc_md16", null ]
     ] ],
-    [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ],
-      [ "File Members", "globals.html", [
-        [ "All", "globals.html", "globals_dup" ],
-        [ "Functions", "globals_func.html", "globals_func" ],
-        [ "Variables", "globals_vars.html", null ],
-        [ "Typedefs", "globals_type.html", null ],
-        [ "Enumerations", "globals_enum.html", null ],
-        [ "Enumerator", "globals_eval.html", null ],
-        [ "Macros", "globals_defs.html", null ]
-      ] ]
-    ] ]
+    [ "Directory: requirements", "md_requirements_README.html", [
+      [ "Directory: C++", "md_requirements_README.html#autotoc_md6", null ],
+      [ "Directory: Perl", "md_requirements_README.html#autotoc_md7", null ],
+      [ "Directory: Python", "md_requirements_README.html#autotoc_md9", null ]
+    ] ],
+    [ "Subdirectory: CUDA helpers", "md_src_helpers_cuda_README.html", null ],
+    [ "Directory: src", "md_src_README.html", [
+      [ "Subdirectory: cuda_helpers", "md_src_README.html#autotoc_md20", null ],
+      [ "Subdirectory: data_io", "md_src_README.html#autotoc_md22", [
+        [ "Class: gsd", "md_src_README.html#autotoc_md23", null ],
+        [ "Class: GSDUtil", "md_src_README.html#autotoc_md24", null ]
+      ] ],
+      [ "Subdirectory: forces", "md_src_README.html#autotoc_md26", [
+        [ "Class: potentialHydrodynamics", "md_src_README.html#autotoc_md27", null ]
+      ] ],
+      [ "Subdirectory: integrators", "md_src_README.html#autotoc_md29", [
+        [ "Class: rungeKutta4", "md_src_README.html#autotoc_md30", null ]
+      ] ],
+      [ "Subdirectory: simulation_system", "md_src_README.html#autotoc_md32", [
+        [ "Class: engine", "md_src_README.html#autotoc_md33", null ],
+        [ "Class: progressBar", "md_src_README.html#autotoc_md34", null ],
+        [ "Class: systemData", "md_src_README.html#autotoc_md35", null ]
+      ] ],
+      [ "Files", "md_src_README.html#autotoc_md37", null ]
+    ] ],
+    [ "Directory: tests", "md_tests_README.html", null ],
+    [ "File List", "files.html", "files" ],
+    [ "Namespace List", "namespaces.html", "namespaces" ],
+    [ "Class List", "annotated.html", "annotated" ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"annotated.html",
-"d2/de2/helper__math_8h.html#aaea5bdeca43377b1ca682d020d6ed583",
-"d5/d67/classsystemData.html#ad849a3a0f0c6dfade122d3606ada9d66",
-"de/d83/classGSDUtil.html#a826abe90aa61b1530ad417c1fbede29e"
+"GSDUtil_8cpp.html",
+"classpotentialHydrodynamics.html#a81712d0e49b5f2bc062ba721183379c0",
+"exception_8h.html#a35bcf04d6841d8287e250ce19096e15d",
+"helper__math_8h.html#a5eff670232c718087a9066549273f601",
+"md_src_README.html#autotoc_md30"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

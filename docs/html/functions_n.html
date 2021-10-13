@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Bodied in Potential Flow: Class Members</title>
+<title>Bodies in Potential Flow: Class Members</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -16,13 +16,20 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX","output/HTML-CSS"],
-});
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  },
+  tex: {
+    macros: {},
+    packages: ['base','configmacros','TeX/ams','TeX/AMSmath','TeX/AMSsymbols','TeX/bm','TeX/bbm','TeX/dsfont','TeX/mathrsfs','TeX/upgreek']
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -33,9 +40,9 @@ MathJax.Hub.Config({
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Bodied in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
+   <div id="projectname">Bodies in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
    </div>
-   <div id="projectbrief">Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible).</div>
+   <div id="projectbrief">Study dynamics of inertial active matter in potential flow (irrotational, incompressible).</div>
   </td>
  </tr>
  </tbody>
@@ -94,26 +101,29 @@ $(document).ready(function(){initNavTree('functions_n.html',''); initResizable()
 <div class="textblock">Here is a list of all class members with links to the classes they belong to:</div>
 
 <h3><a id="index_n" name="index_n"></a>- n -</h3><ul>
-<li>N&#160;:&#160;<a class="el" href="de/d4e/structgsd__index__entry.html#ae913d46842b10fe8b5b74da3a7075726">gsd_index_entry</a></li>
-<li>n_names&#160;:&#160;<a class="el" href="d4/d77/structgsd__name__buffer.html#aee7f806d610d9c4b8e0f045024d4e1f6">gsd_name_buffer</a></li>
-<li>name&#160;:&#160;<a class="el" href="d8/d3e/structgsd__name__id__pair.html#a7ad4d0f48666c48af52cf76d54fffa71">gsd_name_id_pair</a></li>
-<li>name_map&#160;:&#160;<a class="el" href="d0/dc2/structgsd__handle.html#a17f63ed60cc1f9e456bf2d5ce301ecf8">gsd_handle</a></li>
-<li>namelist_allocated_entries&#160;:&#160;<a class="el" href="d5/d56/structgsd__header.html#aabd428d9147218283e07bad362c522da">gsd_header</a></li>
-<li>namelist_location&#160;:&#160;<a class="el" href="d5/d56/structgsd__header.html#a0d69a5886105e2e4cf210406c77f35f0">gsd_header</a></li>
-<li>next&#160;:&#160;<a class="el" href="d8/d3e/structgsd__name__id__pair.html#ab2cafab77fcdd289751cacec8ec77d0f">gsd_name_id_pair</a></li>
-<li>nMatrices()&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#af886ffa667be558d19f3570401312f18">systemData</a></li>
-<li>numBodies()&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#a4bae65ba30cfbf5a219002f272c8174e">systemData</a></li>
-<li>numDoF()&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#a82fe0627c354859fe57f99ed9f6f8ac6">systemData</a></li>
-<li>numParticles()&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#aa1b05ed68f83b878df7ad75596fa2e47">systemData</a></li>
-<li>numSpatialDim()&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#a7b937b16edd65ecedf3166b068a32e2c">systemData</a></li>
-<li>numStepsOutput()&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#a270d73e4d8536c7472c6df7353a6198b">systemData</a></li>
+<li>N&#160;:&#160;<a class="el" href="structgsd__index__entry.html#ae913d46842b10fe8b5b74da3a7075726">gsd_index_entry</a></li>
+<li>n_names&#160;:&#160;<a class="el" href="structgsd__name__buffer.html#aee7f806d610d9c4b8e0f045024d4e1f6">gsd_name_buffer</a></li>
+<li>name&#160;:&#160;<a class="el" href="structgsd__name__id__pair.html#a7ad4d0f48666c48af52cf76d54fffa71">gsd_name_id_pair</a></li>
+<li>name_map&#160;:&#160;<a class="el" href="structgsd__handle.html#a17f63ed60cc1f9e456bf2d5ce301ecf8">gsd_handle</a></li>
+<li>namelist_allocated_entries&#160;:&#160;<a class="el" href="structgsd__header.html#aabd428d9147218283e07bad362c522da">gsd_header</a></li>
+<li>namelist_location&#160;:&#160;<a class="el" href="structgsd__header.html#a0d69a5886105e2e4cf210406c77f35f0">gsd_header</a></li>
+<li>newGSD&#160;:&#160;<a class="el" href="classGSDUtil_1_1GSDUtil.html#ad2fa421ce150aba5a47c583f8d38b234">GSDUtil.GSDUtil</a></li>
+<li>next&#160;:&#160;<a class="el" href="structgsd__name__id__pair.html#ab2cafab77fcdd289751cacec8ec77d0f">gsd_name_id_pair</a></li>
+<li>nMatrices()&#160;:&#160;<a class="el" href="classsystemData.html#af886ffa667be558d19f3570401312f18">systemData</a></li>
+<li>number&#160;:&#160;<a class="el" href="classplotStyling_1_1Multiple.html#a27574110be73da12633882c3c94e0157">plotStyling.Multiple</a></li>
+<li>numBodies()&#160;:&#160;<a class="el" href="classsystemData.html#a4bae65ba30cfbf5a219002f272c8174e">systemData</a></li>
+<li>numDoF()&#160;:&#160;<a class="el" href="classsystemData.html#a82fe0627c354859fe57f99ed9f6f8ac6">systemData</a></li>
+<li>numLines&#160;:&#160;<a class="el" href="classplotStyling_1_1PlotStyling.html#a8373883e571c5750f123850b7346f0d8">plotStyling.PlotStyling</a></li>
+<li>numParticles()&#160;:&#160;<a class="el" href="classsystemData.html#aa1b05ed68f83b878df7ad75596fa2e47">systemData</a></li>
+<li>numSpatialDim()&#160;:&#160;<a class="el" href="classsystemData.html#a7b937b16edd65ecedf3166b068a32e2c">systemData</a></li>
+<li>numStepsOutput()&#160;:&#160;<a class="el" href="classsystemData.html#a270d73e4d8536c7472c6df7353a6198b">systemData</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Oct 13 2021 10:16:23 for Bodied in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Wed Oct 13 2021 11:23:17 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

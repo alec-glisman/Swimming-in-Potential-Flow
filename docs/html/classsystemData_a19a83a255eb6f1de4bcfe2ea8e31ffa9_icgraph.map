@@ -1,0 +1,7 @@
+<map id="systemData::eMatrix" name="systemData::eMatrix">
+<area shape="rect" id="node1" title="Computes the E matrix of quaternion (4&#45;vector) input." alt="" coords="729,46,873,73"/>
+<area shape="rect" id="node2" href="$classsystemData.html#aca5c01655d711e9088b3f1e9d7578612" title=" " alt="" coords="486,5,681,47"/>
+<area shape="rect" id="node5" href="$classsystemData.html#a415007558c07b03a6cfeb973ec97fa3f" title=" " alt="" coords="485,71,681,112"/>
+<area shape="rect" id="node3" href="$classsystemData.html#a3c7862901ce425c4d5e6001efa3ef61d" title="Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constrain..." alt="" coords="229,46,437,73"/>
+<area shape="rect" id="node4" href="$classsystemData.html#ad2ba3455704ef6cec1aac76a417e91e9" title="Function loads data from GSD file using GSDUtil class." alt="" coords="5,46,181,73"/>
+</map>

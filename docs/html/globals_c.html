@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Bodied in Potential Flow: File Members</title>
+<title>Bodies in Potential Flow: File Members</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -16,13 +16,20 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX","output/HTML-CSS"],
-});
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  },
+  tex: {
+    macros: {},
+    packages: ['base','configmacros','TeX/ams','TeX/AMSmath','TeX/AMSsymbols','TeX/bm','TeX/bbm','TeX/dsfont','TeX/mathrsfs','TeX/upgreek']
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -33,9 +40,9 @@ MathJax.Hub.Config({
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Bodied in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
+   <div id="projectname">Bodies in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
    </div>
-   <div id="projectbrief">Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible).</div>
+   <div id="projectbrief">Study dynamics of inertial active matter in potential flow (irrotational, incompressible).</div>
   </td>
  </tr>
  </tbody>
@@ -94,19 +101,20 @@ $(document).ready(function(){initNavTree('globals_c.html',''); initResizable(); 
 <div class="textblock">Here is a list of all file members with links to the files they belong to:</div>
 
 <h3><a id="index_c" name="index_c"></a>- c -</h3><ul>
-<li>check()&#160;:&#160;<a class="el" href="df/d7f/helper__cuda_8h.html#a8170bd02e7804fbab5e561bf676decd0">helper_cuda.h</a></li>
-<li>checkCmdLineFlag()&#160;:&#160;<a class="el" href="d9/d0c/helper__string_8h.html#ac4941870cb5a1c286453eccb73e2e2a6">helper_string.h</a></li>
-<li>checkIpcErrors&#160;:&#160;<a class="el" href="df/df9/helper__multiprocess_8h.html#a963c63f1d4be099ba2afec1e8d4af4b9">helper_multiprocess.h</a></li>
-<li>clamp()&#160;:&#160;<a class="el" href="d2/de2/helper__math_8h.html#a4e52302c6978bafbb9336fc91bc8aee6">helper_math.h</a></li>
-<li>cross()&#160;:&#160;<a class="el" href="d2/de2/helper__math_8h.html#a2e4be24f36bc31a9d0b35540aaa5fb71">helper_math.h</a></li>
-<li>csr_mat_norminf()&#160;:&#160;<a class="el" href="d5/d6a/helper__cusolver_8h.html#acc115ad8f91197d469e02b12a5219c24">helper_cusolver.h</a></li>
+<li>CATCH_CONFIG_MAIN&#160;:&#160;<a class="el" href="testsMain_8cpp.html#a656eb5868e824d59f489f910db438420">testsMain.cpp</a></li>
+<li>check()&#160;:&#160;<a class="el" href="helper__cuda_8h.html#a8170bd02e7804fbab5e561bf676decd0">helper_cuda.h</a></li>
+<li>checkCmdLineFlag()&#160;:&#160;<a class="el" href="helper__string_8h.html#ac4941870cb5a1c286453eccb73e2e2a6">helper_string.h</a></li>
+<li>checkIpcErrors&#160;:&#160;<a class="el" href="helper__multiprocess_8h.html#a963c63f1d4be099ba2afec1e8d4af4b9">helper_multiprocess.h</a></li>
+<li>clamp()&#160;:&#160;<a class="el" href="helper__math_8h.html#a4e52302c6978bafbb9336fc91bc8aee6">helper_math.h</a></li>
+<li>cross()&#160;:&#160;<a class="el" href="helper__math_8h.html#a2e4be24f36bc31a9d0b35540aaa5fb71">helper_math.h</a></li>
+<li>csr_mat_norminf()&#160;:&#160;<a class="el" href="helper__cusolver_8h.html#acc115ad8f91197d469e02b12a5219c24">helper_cusolver.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Oct 13 2021 10:16:23 for Bodied in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Wed Oct 13 2021 11:23:17 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Bodied in Potential Flow: File Members</title>
+<title>Bodies in Potential Flow: File Members</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -16,13 +16,20 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX","output/HTML-CSS"],
-});
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  },
+  tex: {
+    macros: {},
+    packages: ['base','configmacros','TeX/ams','TeX/AMSmath','TeX/AMSsymbols','TeX/bm','TeX/bbm','TeX/dsfont','TeX/mathrsfs','TeX/upgreek']
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -33,9 +40,9 @@ MathJax.Hub.Config({
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Bodied in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
+   <div id="projectname">Bodies in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
    </div>
-   <div id="projectbrief">Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible).</div>
+   <div id="projectbrief">Study dynamics of inertial active matter in potential flow (irrotational, incompressible).</div>
   </td>
  </tr>
  </tbody>
@@ -94,28 +101,28 @@ $(document).ready(function(){initNavTree('globals_func_m.html',''); initResizabl
 &#160;
 
 <h3><a id="index_m" name="index_m"></a>- m -</h3><ul>
-<li>main()&#160;:&#160;<a class="el" href="df/d0a/main_8cpp.html#ad53223b8779f25caeddb70a3b9172967">main.cpp</a></li>
-<li>make_float2()&#160;:&#160;<a class="el" href="d2/de2/helper__math_8h.html#ae157a97cf7d77e6a05db0e0d22b85fb7">helper_math.h</a></li>
-<li>make_float3()&#160;:&#160;<a class="el" href="d2/de2/helper__math_8h.html#aff0ce950ea54e88da8eb7226e215646e">helper_math.h</a></li>
-<li>make_float4()&#160;:&#160;<a class="el" href="d2/de2/helper__math_8h.html#a5ac86555d5a546106ec01ed56f8d48b4">helper_math.h</a></li>
-<li>make_int2()&#160;:&#160;<a class="el" href="d2/de2/helper__math_8h.html#a3be05aff487ded3c05aab21d24dd6439">helper_math.h</a></li>
-<li>make_int3()&#160;:&#160;<a class="el" href="d2/de2/helper__math_8h.html#aa72ad70768ab882bd2d74319b3afbcbe">helper_math.h</a></li>
-<li>make_int4()&#160;:&#160;<a class="el" href="d2/de2/helper__math_8h.html#a0438caa49958ffd7b60a6cd81bb7c4c0">helper_math.h</a></li>
-<li>make_uint2()&#160;:&#160;<a class="el" href="d2/de2/helper__math_8h.html#a0c63d36196448ce9bb8fb1d30db90a0c">helper_math.h</a></li>
-<li>make_uint3()&#160;:&#160;<a class="el" href="d2/de2/helper__math_8h.html#adcf40e92c44d3592e8a6b6c9c50a031b">helper_math.h</a></li>
-<li>make_uint4()&#160;:&#160;<a class="el" href="d2/de2/helper__math_8h.html#a71f7f876a3fbe496e2273c7dbe79c296">helper_math.h</a></li>
-<li>mat_norminf()&#160;:&#160;<a class="el" href="d5/d6a/helper__cusolver_8h.html#a66066542513544b6881c45e677b8f92e">helper_cusolver.h</a></li>
-<li>MatrixCast()&#160;:&#160;<a class="el" href="d1/df3/helper__eigenTensorConversion_8hpp.html#a556d08b55a6ad7cd703b6db06194e5cf">helper_eigenTensorConversion.hpp</a></li>
-<li>MatrixMap()&#160;:&#160;<a class="el" href="d1/df3/helper__eigenTensorConversion_8hpp.html#a1414cdfbb2b44f87a34f954e99044f57">helper_eigenTensorConversion.hpp</a></li>
-<li>max()&#160;:&#160;<a class="el" href="d2/de2/helper__math_8h.html#af082905f7eac6d03e92015146bbc1925">helper_math.h</a></li>
-<li>min()&#160;:&#160;<a class="el" href="d2/de2/helper__math_8h.html#abd8bbcfabb3ddef2ccaafb9928a37b95">helper_math.h</a></li>
+<li>main()&#160;:&#160;<a class="el" href="main_8cpp.html#ad53223b8779f25caeddb70a3b9172967">main.cpp</a></li>
+<li>make_float2()&#160;:&#160;<a class="el" href="helper__math_8h.html#ae157a97cf7d77e6a05db0e0d22b85fb7">helper_math.h</a></li>
+<li>make_float3()&#160;:&#160;<a class="el" href="helper__math_8h.html#aff0ce950ea54e88da8eb7226e215646e">helper_math.h</a></li>
+<li>make_float4()&#160;:&#160;<a class="el" href="helper__math_8h.html#a5ac86555d5a546106ec01ed56f8d48b4">helper_math.h</a></li>
+<li>make_int2()&#160;:&#160;<a class="el" href="helper__math_8h.html#a3be05aff487ded3c05aab21d24dd6439">helper_math.h</a></li>
+<li>make_int3()&#160;:&#160;<a class="el" href="helper__math_8h.html#aa72ad70768ab882bd2d74319b3afbcbe">helper_math.h</a></li>
+<li>make_int4()&#160;:&#160;<a class="el" href="helper__math_8h.html#a0438caa49958ffd7b60a6cd81bb7c4c0">helper_math.h</a></li>
+<li>make_uint2()&#160;:&#160;<a class="el" href="helper__math_8h.html#a0c63d36196448ce9bb8fb1d30db90a0c">helper_math.h</a></li>
+<li>make_uint3()&#160;:&#160;<a class="el" href="helper__math_8h.html#adcf40e92c44d3592e8a6b6c9c50a031b">helper_math.h</a></li>
+<li>make_uint4()&#160;:&#160;<a class="el" href="helper__math_8h.html#a71f7f876a3fbe496e2273c7dbe79c296">helper_math.h</a></li>
+<li>mat_norminf()&#160;:&#160;<a class="el" href="helper__cusolver_8h.html#a66066542513544b6881c45e677b8f92e">helper_cusolver.h</a></li>
+<li>MatrixCast()&#160;:&#160;<a class="el" href="helper__eigenTensorConversion_8hpp.html#a556d08b55a6ad7cd703b6db06194e5cf">helper_eigenTensorConversion.hpp</a></li>
+<li>MatrixMap()&#160;:&#160;<a class="el" href="helper__eigenTensorConversion_8hpp.html#a1414cdfbb2b44f87a34f954e99044f57">helper_eigenTensorConversion.hpp</a></li>
+<li>max()&#160;:&#160;<a class="el" href="helper__math_8h.html#af082905f7eac6d03e92015146bbc1925">helper_math.h</a></li>
+<li>min()&#160;:&#160;<a class="el" href="helper__math_8h.html#abd8bbcfabb3ddef2ccaafb9928a37b95">helper_math.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Oct 13 2021 10:16:23 for Bodied in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Wed Oct 13 2021 11:23:17 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

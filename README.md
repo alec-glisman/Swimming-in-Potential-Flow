@@ -1,4 +1,4 @@
-# Bodies in Potential Flow # {#index}
+# README: Bodies in Potential Flow
 
 Study dynamics of inertial active matter in potential flow (irrotational, incompressible).
 

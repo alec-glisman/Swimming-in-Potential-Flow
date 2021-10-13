@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Bodied in Potential Flow: File Members</title>
+<title>Bodies in Potential Flow: File Members</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -16,13 +16,20 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX","output/HTML-CSS"],
-});
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  },
+  tex: {
+    macros: {},
+    packages: ['base','configmacros','TeX/ams','TeX/AMSmath','TeX/AMSsymbols','TeX/bm','TeX/bbm','TeX/dsfont','TeX/mathrsfs','TeX/upgreek']
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -33,9 +40,9 @@ MathJax.Hub.Config({
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Bodied in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
+   <div id="projectname">Bodies in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
    </div>
-   <div id="projectbrief">Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible).</div>
+   <div id="projectbrief">Study dynamics of inertial active matter in potential flow (irrotational, incompressible).</div>
   </td>
  </tr>
  </tbody>
@@ -94,45 +101,45 @@ $(document).ready(function(){initNavTree('globals_eval.html',''); initResizable(
 &#160;
 
 <h3><a id="index_g" name="index_g"></a>- g -</h3><ul>
-<li>GSD_COPY_BUFFER_SIZE&#160;:&#160;<a class="el" href="dc/dcb/gsd_8c.html#a726ca809ffd3d67ab4b8476646f26635a4cede151f20532731cb30ac33609508f">gsd.c</a></li>
-<li>GSD_CURRENT_FILE_VERSION&#160;:&#160;<a class="el" href="dc/dcb/gsd_8c.html#abed82baf7f470b522273a3e37c24c600a9e41ab940950d400d353438f87a6f559">gsd.c</a></li>
-<li>GSD_ERROR_FILE_CORRUPT&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a03a578779769ed7e288df22c6a75f07ba4236f6900d8a81a3a4ccafa2170ad27c">gsd.h</a></li>
-<li>GSD_ERROR_FILE_MUST_BE_READABLE&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a03a578779769ed7e288df22c6a75f07bac5de89b0da97d4df5b52f18ee0977b7c">gsd.h</a></li>
-<li>GSD_ERROR_FILE_MUST_BE_WRITABLE&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a03a578779769ed7e288df22c6a75f07baa5cbc2efac6a7d90f89b616e791eac64">gsd.h</a></li>
-<li>GSD_ERROR_INVALID_ARGUMENT&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a03a578779769ed7e288df22c6a75f07baa3938911ea417ad6dfa297f203ededc2">gsd.h</a></li>
-<li>GSD_ERROR_INVALID_GSD_FILE_VERSION&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a03a578779769ed7e288df22c6a75f07ba72c4d63d4cbec5412ab1ab57716afe80">gsd.h</a></li>
-<li>GSD_ERROR_IO&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a03a578779769ed7e288df22c6a75f07ba8400aca2d73ab6a20336bfdc2aa60b96">gsd.h</a></li>
-<li>GSD_ERROR_MEMORY_ALLOCATION_FAILED&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a03a578779769ed7e288df22c6a75f07ba927545200d5ae6b308d536988ff37637">gsd.h</a></li>
-<li>GSD_ERROR_NAMELIST_FULL&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a03a578779769ed7e288df22c6a75f07ba4cca403d94a443c160073da8cf26a88b">gsd.h</a></li>
-<li>GSD_ERROR_NOT_A_GSD_FILE&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a03a578779769ed7e288df22c6a75f07ba84a9d0b912c0f9dd4ef7eda53560253b">gsd.h</a></li>
-<li>GSD_INITIAL_FRAME_INDEX_SIZE&#160;:&#160;<a class="el" href="dc/dcb/gsd_8c.html#adc29c2ff13d900c2f185ee95427fb06cabe3e9ee339884a28a33d20ea27d0c8a7">gsd.c</a></li>
-<li>GSD_INITIAL_INDEX_SIZE&#160;:&#160;<a class="el" href="dc/dcb/gsd_8c.html#a99fb83031ce9923c84392b4e92f956b5ab2d4762a429d1bedec72663852e3c4ba">gsd.c</a></li>
-<li>GSD_INITIAL_NAME_BUFFER_SIZE&#160;:&#160;<a class="el" href="dc/dcb/gsd_8c.html#abc6126af1d45847bc59afa0aa3216b04af18592611faceacda42f0c336394bae2">gsd.c</a></li>
-<li>GSD_NAME_MAP_SIZE&#160;:&#160;<a class="el" href="dc/dcb/gsd_8c.html#a0411cd49bb5b71852cecd93bcbf0ca2da09f6f8b0215767f2ed4321a8e26cc287">gsd.c</a></li>
-<li>GSD_NAME_SIZE&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a06fc87d81c62e9abb8790b6e5713c55bab1e8211d5344adb743238d82d369331d">gsd.h</a></li>
-<li>GSD_OPEN_APPEND&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a23a9970f53fda4e8902697670300ec98a987636cdb7cdac06ae7173d291abec40">gsd.h</a></li>
-<li>GSD_OPEN_READONLY&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a23a9970f53fda4e8902697670300ec98a22f5dee98250b8ead7d43cc1a347f205">gsd.h</a></li>
-<li>GSD_OPEN_READWRITE&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a23a9970f53fda4e8902697670300ec98a0f98b5182423243f10f362ddfb6d7d61">gsd.h</a></li>
-<li>GSD_RESERVED_BYTES&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a7199f456f54bd738f291363298706f4a">gsd.h</a></li>
-<li>GSD_SUCCESS&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a03a578779769ed7e288df22c6a75f07ba2320e5bf0746477ebd58b6e261eebde3">gsd.h</a></li>
-<li>GSD_TYPE_DOUBLE&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a2bf7336e70f8d15921952b6ec177d238">gsd.h</a></li>
-<li>GSD_TYPE_FLOAT&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a8f2fc103d16a251246a102c5477fc0be">gsd.h</a></li>
-<li>GSD_TYPE_INT16&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a6e5c1ccf3040cebc0dbcf562fd4291cb">gsd.h</a></li>
-<li>GSD_TYPE_INT32&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a58aacbcfef4ae23382d8b857cfba815a">gsd.h</a></li>
-<li>GSD_TYPE_INT64&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a25b4572782ed785491f8b5b666692212">gsd.h</a></li>
-<li>GSD_TYPE_INT8&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a5d13ce82d25b294b7300ea013396fb45">gsd.h</a></li>
-<li>GSD_TYPE_UINT16&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a154cf53ac1f09d58516ee90c5e50ee9b">gsd.h</a></li>
-<li>GSD_TYPE_UINT32&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a49225daa33e0c1f26dda21d22a6ffb10">gsd.h</a></li>
-<li>GSD_TYPE_UINT64&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a43c1b41755ac12b8611b8478eab5f377">gsd.h</a></li>
-<li>GSD_TYPE_UINT8&#160;:&#160;<a class="el" href="df/d8f/gsd_8h.html#a5813a2a637516567a2b42dc745ec1118addc1aa49964e9df18eca95586854564e">gsd.h</a></li>
-<li>GSD_WRITE_BUFFER_SIZE&#160;:&#160;<a class="el" href="dc/dcb/gsd_8c.html#a61dadd085c1777f559549e05962b2c9eadd62126eb596d9d505d4f4c33062528e">gsd.c</a></li>
+<li>GSD_COPY_BUFFER_SIZE&#160;:&#160;<a class="el" href="gsd_8c.html#a726ca809ffd3d67ab4b8476646f26635a4cede151f20532731cb30ac33609508f">gsd.c</a></li>
+<li>GSD_CURRENT_FILE_VERSION&#160;:&#160;<a class="el" href="gsd_8c.html#abed82baf7f470b522273a3e37c24c600a9e41ab940950d400d353438f87a6f559">gsd.c</a></li>
+<li>GSD_ERROR_FILE_CORRUPT&#160;:&#160;<a class="el" href="gsd_8h.html#a03a578779769ed7e288df22c6a75f07ba4236f6900d8a81a3a4ccafa2170ad27c">gsd.h</a></li>
+<li>GSD_ERROR_FILE_MUST_BE_READABLE&#160;:&#160;<a class="el" href="gsd_8h.html#a03a578779769ed7e288df22c6a75f07bac5de89b0da97d4df5b52f18ee0977b7c">gsd.h</a></li>
+<li>GSD_ERROR_FILE_MUST_BE_WRITABLE&#160;:&#160;<a class="el" href="gsd_8h.html#a03a578779769ed7e288df22c6a75f07baa5cbc2efac6a7d90f89b616e791eac64">gsd.h</a></li>
+<li>GSD_ERROR_INVALID_ARGUMENT&#160;:&#160;<a class="el" href="gsd_8h.html#a03a578779769ed7e288df22c6a75f07baa3938911ea417ad6dfa297f203ededc2">gsd.h</a></li>
+<li>GSD_ERROR_INVALID_GSD_FILE_VERSION&#160;:&#160;<a class="el" href="gsd_8h.html#a03a578779769ed7e288df22c6a75f07ba72c4d63d4cbec5412ab1ab57716afe80">gsd.h</a></li>
+<li>GSD_ERROR_IO&#160;:&#160;<a class="el" href="gsd_8h.html#a03a578779769ed7e288df22c6a75f07ba8400aca2d73ab6a20336bfdc2aa60b96">gsd.h</a></li>
+<li>GSD_ERROR_MEMORY_ALLOCATION_FAILED&#160;:&#160;<a class="el" href="gsd_8h.html#a03a578779769ed7e288df22c6a75f07ba927545200d5ae6b308d536988ff37637">gsd.h</a></li>
+<li>GSD_ERROR_NAMELIST_FULL&#160;:&#160;<a class="el" href="gsd_8h.html#a03a578779769ed7e288df22c6a75f07ba4cca403d94a443c160073da8cf26a88b">gsd.h</a></li>
+<li>GSD_ERROR_NOT_A_GSD_FILE&#160;:&#160;<a class="el" href="gsd_8h.html#a03a578779769ed7e288df22c6a75f07ba84a9d0b912c0f9dd4ef7eda53560253b">gsd.h</a></li>
+<li>GSD_INITIAL_FRAME_INDEX_SIZE&#160;:&#160;<a class="el" href="gsd_8c.html#adc29c2ff13d900c2f185ee95427fb06cabe3e9ee339884a28a33d20ea27d0c8a7">gsd.c</a></li>
+<li>GSD_INITIAL_INDEX_SIZE&#160;:&#160;<a class="el" href="gsd_8c.html#a99fb83031ce9923c84392b4e92f956b5ab2d4762a429d1bedec72663852e3c4ba">gsd.c</a></li>
+<li>GSD_INITIAL_NAME_BUFFER_SIZE&#160;:&#160;<a class="el" href="gsd_8c.html#abc6126af1d45847bc59afa0aa3216b04af18592611faceacda42f0c336394bae2">gsd.c</a></li>
+<li>GSD_NAME_MAP_SIZE&#160;:&#160;<a class="el" href="gsd_8c.html#a0411cd49bb5b71852cecd93bcbf0ca2da09f6f8b0215767f2ed4321a8e26cc287">gsd.c</a></li>
+<li>GSD_NAME_SIZE&#160;:&#160;<a class="el" href="gsd_8h.html#a06fc87d81c62e9abb8790b6e5713c55bab1e8211d5344adb743238d82d369331d">gsd.h</a></li>
+<li>GSD_OPEN_APPEND&#160;:&#160;<a class="el" href="gsd_8h.html#a23a9970f53fda4e8902697670300ec98a987636cdb7cdac06ae7173d291abec40">gsd.h</a></li>
+<li>GSD_OPEN_READONLY&#160;:&#160;<a class="el" href="gsd_8h.html#a23a9970f53fda4e8902697670300ec98a22f5dee98250b8ead7d43cc1a347f205">gsd.h</a></li>
+<li>GSD_OPEN_READWRITE&#160;:&#160;<a class="el" href="gsd_8h.html#a23a9970f53fda4e8902697670300ec98a0f98b5182423243f10f362ddfb6d7d61">gsd.h</a></li>
+<li>GSD_RESERVED_BYTES&#160;:&#160;<a class="el" href="gsd_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a7199f456f54bd738f291363298706f4a">gsd.h</a></li>
+<li>GSD_SUCCESS&#160;:&#160;<a class="el" href="gsd_8h.html#a03a578779769ed7e288df22c6a75f07ba2320e5bf0746477ebd58b6e261eebde3">gsd.h</a></li>
+<li>GSD_TYPE_DOUBLE&#160;:&#160;<a class="el" href="gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a2bf7336e70f8d15921952b6ec177d238">gsd.h</a></li>
+<li>GSD_TYPE_FLOAT&#160;:&#160;<a class="el" href="gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a8f2fc103d16a251246a102c5477fc0be">gsd.h</a></li>
+<li>GSD_TYPE_INT16&#160;:&#160;<a class="el" href="gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a6e5c1ccf3040cebc0dbcf562fd4291cb">gsd.h</a></li>
+<li>GSD_TYPE_INT32&#160;:&#160;<a class="el" href="gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a58aacbcfef4ae23382d8b857cfba815a">gsd.h</a></li>
+<li>GSD_TYPE_INT64&#160;:&#160;<a class="el" href="gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a25b4572782ed785491f8b5b666692212">gsd.h</a></li>
+<li>GSD_TYPE_INT8&#160;:&#160;<a class="el" href="gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a5d13ce82d25b294b7300ea013396fb45">gsd.h</a></li>
+<li>GSD_TYPE_UINT16&#160;:&#160;<a class="el" href="gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a154cf53ac1f09d58516ee90c5e50ee9b">gsd.h</a></li>
+<li>GSD_TYPE_UINT32&#160;:&#160;<a class="el" href="gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a49225daa33e0c1f26dda21d22a6ffb10">gsd.h</a></li>
+<li>GSD_TYPE_UINT64&#160;:&#160;<a class="el" href="gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a43c1b41755ac12b8611b8478eab5f377">gsd.h</a></li>
+<li>GSD_TYPE_UINT8&#160;:&#160;<a class="el" href="gsd_8h.html#a5813a2a637516567a2b42dc745ec1118addc1aa49964e9df18eca95586854564e">gsd.h</a></li>
+<li>GSD_WRITE_BUFFER_SIZE&#160;:&#160;<a class="el" href="gsd_8c.html#a61dadd085c1777f559549e05962b2c9eadd62126eb596d9d505d4f4c33062528e">gsd.c</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Oct 13 2021 10:16:23 for Bodied in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Wed Oct 13 2021 11:23:17 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

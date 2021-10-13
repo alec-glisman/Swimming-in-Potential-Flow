@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Bodied in Potential Flow: Bodies in Potential Flow</title>
+<title>Bodies in Potential Flow: README: Bodies in Potential Flow</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -16,13 +16,20 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX","output/HTML-CSS"],
-});
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  },
+  tex: {
+    macros: {},
+    packages: ['base','configmacros','TeX/ams','TeX/AMSmath','TeX/AMSsymbols','TeX/bm','TeX/bbm','TeX/dsfont','TeX/mathrsfs','TeX/upgreek']
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -33,9 +40,9 @@ MathJax.Hub.Config({
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Bodied in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
+   <div id="projectname">Bodies in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
    </div>
-   <div id="projectbrief">Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible).</div>
+   <div id="projectbrief">Study dynamics of inertial active matter in potential flow (irrotational, incompressible).</div>
   </td>
  </tr>
  </tbody>
@@ -91,52 +98,52 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Bodies in Potential Flow </div></div>
+  <div class="headertitle"><div class="title">README: Bodies in Potential Flow </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p ><a class="anchor" id="mainpage"></a> Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible).</p>
+<div class="textblock"><p ><a class="anchor" id="md_README"></a> Study dynamics of inertial active matter in potential flow (irrotational, incompressible).</p>
 <p >Author: Alec Glisman</p>
-<h1><a class="anchor" id="autotoc_md0"></a>
+<h1><a class="anchor" id="autotoc_md3"></a>
 Software tested</h1>
 <ul>
-<li>ZSH: &lt;= v5.8</li>
-<li>Intel oneAPI: $\geq$ v2021.1.1</li>
-<li>CUDA (not currently used): $\geq$ v11.3</li>
-<li>CMake: $\geq$ v3.16.3</li>
-<li>GCC: $\geq$ v11.1.0</li>
-<li>Python (Anaconda): $\geq$ v3.9.5</li>
-<li>Perl: $\geq$ v5.30.0</li>
+<li>ZSH &gt;= v5.8</li>
+<li>Intel oneAPI &gt;= v2021.1.1</li>
+<li>CUDA &gt;= v11.3</li>
+<li>CMake &gt;= v3.16.3</li>
+<li>GCC &gt;= v11.1.0</li>
+<li>Python (Miniconda3) &gt;= v3.9.5</li>
+<li>Perl &gt;= v5.30.0</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1"></a>
+<h1><a class="anchor" id="autotoc_md4"></a>
 Docker integration</h1>
 <p >The project can be built and run inside a Docker container. The <code>docker-compose.yml</code> file will specify all build options and <code>Dockerfile</code> builds the image using a Ubuntu 20.04 base image. Data I/O is handled automatically with an attached volume.</p>
 <p >Commands:</p>
 <div class="fragment"><div class="line"> {[shell]}</div>
 <div class="line">docker-compose --env-file [docker_environment_file] up --detach  # build</div>
-<div class="line">docker-compose down         # tear down</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2"></a>
+<div class="line">docker-compose down                                              # tear down</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
 Project structure: links to relevant readme files</h1>
 <p ><code>.vscode</code>: <a href=".vscode/">Files relevant for developing the project in VSCode.</a> <code>data_tag</code>: Data relevant for validating results for a selection of git tags. <br  />
  <code>include</code>: External dependencies required for the project. Further information can be found at the end of this readme. <br  />
  <code>input</code>: Data files that are used in Perl scripts to modify parameters of interest across a range of simulations. <br  />
  <code>profile</code>: Scripts to profile code on various platforms and find performance improvement areas. <br  />
- <code>python</code>: Python scripts to generate GSD files to input to simulation as well as analyze GSD files output from simulation. <br  />
- <code>requirements</code>: Files and scripts relevant for loading C++, Perl, and Python dependencies. <br  />
+ <code>python</code>: <a class="el" href="md_python_README.html">Python scripts to generate GSD files to input to simulation as well as analyze GSD files output from simulation.</a> <br  />
+ <code>requirements</code>: <a class="el" href="md_requirements_README.html">Files and scripts relevant for loading C++, Perl, and Python dependencies.</a> <br  />
  <code>scripts</code>: Perl scripts to run many simulations simultaneously and analyze the results. <br  />
- <code>src</code>: <a class="el" href="/Users/alecglisman/VSCodeProjects/bodies-in-potential-flow/src/README.md#md_src_README">C++ code for the simulation.</a> <br  />
- <code>tests</code>: C++ code containing unit tests for simulation.</p>
-<h1><a class="anchor" id="autotoc_md3"></a>
+ <code>src</code>: <a class="el" href="md_src_README.html">C++ code for the simulation.</a> <br  />
+ <code>tests</code>: <a class="el" href="md_tests_README.html">C++ code containing unit tests for simulation.</a></p>
+<h1><a class="anchor" id="autotoc_md8"></a>
 Data I/O</h1>
 <p >All data is input and output from simulation using the <a href="https://gsd.readthedocs.io/en/stable/index.html">HOOMD GSD format</a>. The <a href="https://gsd.readthedocs.io/en/stable/python-module-gsd.fl.html">schema</a> is well-documented.</p>
 <p >I will be making a few modifications and make extensive use of the <code>log</code> section of the schema to save data I desire. Many variables are stored as floats, but I output a number of variables as doubles in the logs section for accuracy in further computations.</p>
 <p >Frame 0 is created using a Python script and passed into the C++ simulation. The simulation then updates parameters (such as kinematics), and outputs the "true" initial frame as Frame 1. For this reason, there could be issues when loading data from frame 0 and any data that is not an input parameter should not be used for further work.</p>
-<h1><a class="anchor" id="autotoc_md4"></a>
+<h1><a class="anchor" id="autotoc_md10"></a>
 Modifications for other systems</h1>
-<p >The simulation system can be easily adapted for other configurations and constraints. The code that must be changed inside the C++ framework is tagged with comments of the form <code>// REVIEW[epic=Change,order=5]: Change constraint linear system for each system</code>. The relevant class is the <code><a class="el" href="dd/d22/classrungeKutta4.html">rungeKutta4</a></code> integration class. Of course, separate Python scripts for GSD initialization and numerical analysis must also be generated.</p>
-<h1><a class="anchor" id="autotoc_md5"></a>
+<p >The simulation system can be easily adapted for other configurations and constraints. The code that must be changed inside the C++ framework is tagged with comments of the form <code>// REVIEW[epic=Change,order=5]: Change constraint linear system for each system</code>. The relevant class is the <code><a class="el" href="classrungeKutta4.html">rungeKutta4</a></code> integration class. Of course, separate Python scripts for GSD initialization and numerical analysis must also be generated.</p>
+<h1><a class="anchor" id="autotoc_md11"></a>
 External dependencies</h1>
 <p >Further information found in <code>requirements</code> directory readme.</p>
-<h2><a class="anchor" id="autotoc_md6"></a>
+<h2><a class="anchor" id="autotoc_md12"></a>
 Must install separately</h2>
 <ul>
 <li><a href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html#gs.7owc4e">Intel MKL</a> (oneAPI v2021.1.1): Optimized mathematical instructions</li>
@@ -145,7 +152,7 @@ Must install separately</h2>
 <li><a href="https://github.com/gabime/spdlog">spdlog</a> (v1.9.1): Logging</li>
 <li><a href="https://github.com/catchorg/Catch2">Catch2</a> (v2.13.6): Unit testing</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md7"></a>
+<h2><a class="anchor" id="autotoc_md13"></a>
 Integrated into project</h2>
 <ul>
 <li><a href="https://github.com/glotzerlab/gsd">gsd</a> (v2.4.2): Simulation data output </li>
@@ -156,7 +163,7 @@ Integrated into project</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Oct 13 2021 10:16:23 for Bodied in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Wed Oct 13 2021 11:31:26 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Bodied in Potential Flow: Class Members</title>
+<title>Bodies in Potential Flow: Class Members</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -16,13 +16,20 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX","output/HTML-CSS"],
-});
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  },
+  tex: {
+    macros: {},
+    packages: ['base','configmacros','TeX/ams','TeX/AMSmath','TeX/AMSsymbols','TeX/bm','TeX/bbm','TeX/dsfont','TeX/mathrsfs','TeX/upgreek']
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -33,9 +40,9 @@ MathJax.Hub.Config({
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Bodied in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
+   <div id="projectname">Bodies in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
    </div>
-   <div id="projectbrief">Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible).</div>
+   <div id="projectbrief">Study dynamics of inertial active matter in potential flow (irrotational, incompressible).</div>
   </td>
  </tr>
  </tbody>
@@ -94,21 +101,21 @@ $(document).ready(function(){initNavTree('functions_~.html',''); initResizable()
 <div class="textblock">Here is a list of all class members with links to the classes they belong to:</div>
 
 <h3><a id="index__7E" name="index__7E"></a>- ~ -</h3><ul>
-<li>~engine()&#160;:&#160;<a class="el" href="d9/d23/classengine.html#aa3557f06618b07672ae2350091d42577">engine</a></li>
-<li>~Exception()&#160;:&#160;<a class="el" href="d4/d67/classException.html#ac4bfac227d7e53fa707b91a88159d3a8">Exception&lt; Std_Exception &gt;</a></li>
-<li>~GSDUtil()&#160;:&#160;<a class="el" href="de/d83/classGSDUtil.html#a1e1b6c10f3f1a3b3ecfc8c17ed8f5a1f">GSDUtil</a></li>
-<li>~potentialHydrodynamics()&#160;:&#160;<a class="el" href="d8/d21/classpotentialHydrodynamics.html#aaed582331e09c55276bacfc9e8e03bba">potentialHydrodynamics</a></li>
-<li>~rungeKutta4()&#160;:&#160;<a class="el" href="dd/d22/classrungeKutta4.html#a0dd2d5886f2a98d4dbc4427ebaa82c9c">rungeKutta4</a></li>
-<li>~StopWatchInterface()&#160;:&#160;<a class="el" href="de/dec/classStopWatchInterface.html#ae6fe6ad45faa59f367624de26b808fc4">StopWatchInterface</a></li>
-<li>~StopWatchLinux()&#160;:&#160;<a class="el" href="d2/dc3/classStopWatchLinux.html#a2063456840d915094595e8e3273d38c5">StopWatchLinux</a></li>
-<li>~systemData()&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#a423b9bf369d6c53a27b64c9b56004810">systemData</a></li>
+<li>~engine()&#160;:&#160;<a class="el" href="classengine.html#aa3557f06618b07672ae2350091d42577">engine</a></li>
+<li>~Exception()&#160;:&#160;<a class="el" href="classException.html#ac4bfac227d7e53fa707b91a88159d3a8">Exception&lt; Std_Exception &gt;</a></li>
+<li>~GSDUtil()&#160;:&#160;<a class="el" href="classGSDUtil.html#a1e1b6c10f3f1a3b3ecfc8c17ed8f5a1f">GSDUtil</a></li>
+<li>~potentialHydrodynamics()&#160;:&#160;<a class="el" href="classpotentialHydrodynamics.html#aaed582331e09c55276bacfc9e8e03bba">potentialHydrodynamics</a></li>
+<li>~rungeKutta4()&#160;:&#160;<a class="el" href="classrungeKutta4.html#a0dd2d5886f2a98d4dbc4427ebaa82c9c">rungeKutta4</a></li>
+<li>~StopWatchInterface()&#160;:&#160;<a class="el" href="classStopWatchInterface.html#ae6fe6ad45faa59f367624de26b808fc4">StopWatchInterface</a></li>
+<li>~StopWatchLinux()&#160;:&#160;<a class="el" href="classStopWatchLinux.html#a2063456840d915094595e8e3273d38c5">StopWatchLinux</a></li>
+<li>~systemData()&#160;:&#160;<a class="el" href="classsystemData.html#a423b9bf369d6c53a27b64c9b56004810">systemData</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Oct 13 2021 10:16:23 for Bodied in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Wed Oct 13 2021 11:23:17 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

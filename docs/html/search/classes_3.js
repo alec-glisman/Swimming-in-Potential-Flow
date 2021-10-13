@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['rungekutta4_0',['rungeKutta4',['../dd/d22/classrungeKutta4.html',1,'']]]
+  ['plotstyling_0',['PlotStyling',['../classplotStyling_1_1PlotStyling.html',1,'plotStyling']]],
+  ['potentialhydrodynamics_1',['potentialHydrodynamics',['../classpotentialHydrodynamics.html',1,'']]],
+  ['progressbar_2',['ProgressBar',['../classProgressBar.html',1,'']]]
 ];

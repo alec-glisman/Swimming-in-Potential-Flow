@@ -11,7 +11,7 @@
 <!-- Node0 -->
 <g id="node1" class="node">
 <title>Node0</title>
-<g id="a_node1"><a xlink:href="db/d13/structgsd__name__id__map.html" target="_top" xlink:title=" ">
+<g id="a_node1"><a xlink:href="structgsd__name__id__map.html" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="0,-0.5 0,-19.5 102,-19.5 102,-0.5 0,-0.5"/>
 <text text-anchor="middle" x="51" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">gsd_name_id_map</text>
 </a>

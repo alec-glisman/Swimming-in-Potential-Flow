@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Bodied in Potential Flow: Class Members</title>
+<title>Bodies in Potential Flow: Class Members</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -16,13 +16,20 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX","output/HTML-CSS"],
-});
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  },
+  tex: {
+    macros: {},
+    packages: ['base','configmacros','TeX/ams','TeX/AMSmath','TeX/AMSsymbols','TeX/bm','TeX/bbm','TeX/dsfont','TeX/mathrsfs','TeX/upgreek']
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -33,9 +40,9 @@ MathJax.Hub.Config({
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Bodied in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
+   <div id="projectname">Bodies in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
    </div>
-   <div id="projectbrief">Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible).</div>
+   <div id="projectbrief">Study dynamics of inertial active matter in potential flow (irrotational, incompressible).</div>
   </td>
  </tr>
  </tbody>
@@ -94,17 +101,27 @@ $(document).ready(function(){initNavTree('functions_l.html',''); initResizable()
 <div class="textblock">Here is a list of all class members with links to the classes they belong to:</div>
 
 <h3><a id="index_l" name="index_l"></a>- l -</h3><ul>
-<li>lda&#160;:&#160;<a class="el" href="d0/d6d/structtestOpts.html#a729ebeb38f9a110b747c59695cefe787">testOpts</a></li>
-<li>levi_cevita&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#a006c0868ff3164abf982c1e6fdcabc3a">systemData</a></li>
-<li>locaterPointLocations()&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#ab3fc7f3cc4c79bbad6e9bb73e127e8c3">systemData</a></li>
-<li>location&#160;:&#160;<a class="el" href="de/d4e/structgsd__index__entry.html#a70e15b9094a3a22954bba035496d83bf">gsd_index_entry</a></li>
+<li>label_pad&#160;:&#160;<a class="el" href="classplotStyling_1_1PlotStyling.html#ae5c50f2c540b38f0f9e687a8b6d99cec">plotStyling.PlotStyling</a></li>
+<li>latex&#160;:&#160;<a class="el" href="classplotStyling_1_1Multiple.html#a35ca91d474debd2c5853b6ce63cd323c">plotStyling.Multiple</a></li>
+<li>lda&#160;:&#160;<a class="el" href="structtestOpts.html#a729ebeb38f9a110b747c59695cefe787">testOpts</a></li>
+<li>legend()&#160;:&#160;<a class="el" href="classplotStyling_1_1PlotStyling.html#ae52097307522381e7583554bbaf4ec41">plotStyling.PlotStyling</a></li>
+<li>legend_size&#160;:&#160;<a class="el" href="classplotStyling_1_1PlotStyling.html#a657cd0ff5515994c79ab7b255b0d31eb">plotStyling.PlotStyling</a></li>
+<li>legend_title_size&#160;:&#160;<a class="el" href="classplotStyling_1_1PlotStyling.html#afdd3f98155fd2b5c928536014173dc7b">plotStyling.PlotStyling</a></li>
+<li>levi_cevita&#160;:&#160;<a class="el" href="classsystemData.html#a006c0868ff3164abf982c1e6fdcabc3a">systemData</a></li>
+<li>lightBlue&#160;:&#160;<a class="el" href="classplotStyling_1_1PlotStyling.html#a4dbb430452fe5a9a3ee3dc08885c9978">plotStyling.PlotStyling</a></li>
+<li>lightGreen&#160;:&#160;<a class="el" href="classplotStyling_1_1PlotStyling.html#a22b52f77ea841102baa670086e36f32c">plotStyling.PlotStyling</a></li>
+<li>line_width&#160;:&#160;<a class="el" href="classplotStyling_1_1PlotStyling.html#aff94b3861f80c788ae9e14045b7c6106">plotStyling.PlotStyling</a></li>
+<li>locaterPointLocations()&#160;:&#160;<a class="el" href="classsystemData.html#ab3fc7f3cc4c79bbad6e9bb73e127e8c3">systemData</a></li>
+<li>location&#160;:&#160;<a class="el" href="structgsd__index__entry.html#a70e15b9094a3a22954bba035496d83bf">gsd_index_entry</a></li>
+<li>locator()&#160;:&#160;<a class="el" href="classplotStyling_1_1Multiple.html#a8ff6f806a58d1141b6b27e47b77f6fe5">plotStyling.Multiple</a></li>
+<li>loglog&#160;:&#160;<a class="el" href="classplotStyling_1_1PlotStyling.html#a3e27536663550e5d04562bf6115810af">plotStyling.PlotStyling</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Oct 13 2021 10:16:23 for Bodied in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Wed Oct 13 2021 11:23:17 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

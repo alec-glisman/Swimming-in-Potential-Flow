@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Bodied in Potential Flow: Class Members</title>
+<title>Bodies in Potential Flow: Class Members</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -16,13 +16,20 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX","output/HTML-CSS"],
-});
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  },
+  tex: {
+    macros: {},
+    packages: ['base','configmacros','TeX/ams','TeX/AMSmath','TeX/AMSsymbols','TeX/bm','TeX/bbm','TeX/dsfont','TeX/mathrsfs','TeX/upgreek']
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -33,9 +40,9 @@ MathJax.Hub.Config({
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Bodied in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
+   <div id="projectname">Bodies in Potential Flow<span id="projectnumber">&#160;2.0-alpha</span>
    </div>
-   <div id="projectbrief">Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible).</div>
+   <div id="projectbrief">Study dynamics of inertial active matter in potential flow (irrotational, incompressible).</div>
   </td>
  </tr>
  </tbody>
@@ -94,20 +101,20 @@ $(document).ready(function(){initNavTree('functions_u.html',''); initResizable()
 <div class="textblock">Here is a list of all class members with links to the classes they belong to:</div>
 
 <h3><a id="index_u" name="index_u"></a>- u -</h3><ul>
-<li>udwadiaA()&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#af2642e7b5fea45789b7907d687c40d42">systemData</a></li>
-<li>udwadiaB()&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#a4d9dce823775190745462ebb558f0ec1">systemData</a></li>
-<li>udwadiaKalaba()&#160;:&#160;<a class="el" href="dd/d22/classrungeKutta4.html#af8d44cd795c66d601274a8db5bf37b97">rungeKutta4</a></li>
-<li>udwadiaLinearSystem()&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#aa797226f69baaa83c559c481dee8381b">systemData</a></li>
-<li>update()&#160;:&#160;<a class="el" href="d8/d21/classpotentialHydrodynamics.html#acce7436c3cc8b62fe54fa61da98554f6">potentialHydrodynamics</a></li>
-<li>updateConstraints()&#160;:&#160;<a class="el" href="d5/d67/classsystemData.html#a3c7862901ce425c4d5e6001efa3ef61d">systemData</a></li>
-<li>updateForcesOnly()&#160;:&#160;<a class="el" href="d8/d21/classpotentialHydrodynamics.html#a44c1520f6b87f2260c8dcc3a903729df">potentialHydrodynamics</a></li>
+<li>udwadiaA()&#160;:&#160;<a class="el" href="classsystemData.html#af2642e7b5fea45789b7907d687c40d42">systemData</a></li>
+<li>udwadiaB()&#160;:&#160;<a class="el" href="classsystemData.html#a4d9dce823775190745462ebb558f0ec1">systemData</a></li>
+<li>udwadiaKalaba()&#160;:&#160;<a class="el" href="classrungeKutta4.html#af8d44cd795c66d601274a8db5bf37b97">rungeKutta4</a></li>
+<li>udwadiaLinearSystem()&#160;:&#160;<a class="el" href="classsystemData.html#aa797226f69baaa83c559c481dee8381b">systemData</a></li>
+<li>update()&#160;:&#160;<a class="el" href="classpotentialHydrodynamics.html#acce7436c3cc8b62fe54fa61da98554f6">potentialHydrodynamics</a></li>
+<li>updateConstraints()&#160;:&#160;<a class="el" href="classsystemData.html#a3c7862901ce425c4d5e6001efa3ef61d">systemData</a></li>
+<li>updateForcesOnly()&#160;:&#160;<a class="el" href="classpotentialHydrodynamics.html#a44c1520f6b87f2260c8dcc3a903729df">potentialHydrodynamics</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Oct 13 2021 10:16:23 for Bodied in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Wed Oct 13 2021 11:23:17 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>
