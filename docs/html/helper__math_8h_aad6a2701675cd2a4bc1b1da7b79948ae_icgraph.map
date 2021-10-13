@@ -1,7 +1,6 @@
 <map id="fabs" name="fabs">
-<area shape="rect" id="node1" title=" " alt="" coords="172,81,219,108"/>
-<area shape="rect" id="node2" href="$helper__cusolver_8h.html#acc115ad8f91197d469e02b12a5219c24" title=" " alt="" coords="5,5,124,32"/>
-<area shape="rect" id="node3" href="$helper__math_8h.html#a62721d5f250db151ae718f799c9a3dd7" title=" " alt="" coords="41,56,88,83"/>
-<area shape="rect" id="node4" href="$helper__cusolver_8h.html#a66066542513544b6881c45e677b8f92e" title=" " alt="" coords="17,107,112,133"/>
-<area shape="rect" id="node5" href="$helper__cusolver_8h.html#a259616a7c0fc746e639c531cd68f32e4" title=" " alt="" coords="18,157,111,184"/>
+<area shape="rect" id="node1" title=" " alt="" coords="175,56,221,83"/>
+<area shape="rect" id="node2" href="$helper__cusolver_8h.html#acc115ad8f91197d469e02b12a5219c24" title=" " alt="" coords="5,5,127,32"/>
+<area shape="rect" id="node3" href="$helper__cusolver_8h.html#a66066542513544b6881c45e677b8f92e" title=" " alt="" coords="18,56,114,83"/>
+<area shape="rect" id="node4" href="$helper__cusolver_8h.html#a259616a7c0fc746e639c531cd68f32e4" title=" " alt="" coords="19,107,113,133"/>
 </map>

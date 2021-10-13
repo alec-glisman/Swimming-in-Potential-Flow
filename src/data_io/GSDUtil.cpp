@@ -21,8 +21,7 @@ GSDUtil::GSDUtil(std::shared_ptr<systemData> sys)
     // Load GSD frame
     spdlog::get(m_logName)->info("Loading input GSD file");
     spdlog::get(m_logName)->info("GSD file path: {0}", m_system->inputGSDFile());
-    auto return_val =
-        gsd_open(m_system->handle().get(), m_system->inputGSDFile().c_str(), GSD_OPEN_READWRITE);
+    auto return_val = gsd_open(m_system->handle().get(), m_system->inputGSDFile().c_str(), GSD_OPEN_READWRITE);
 
     m_system->setReturnVal(return_val);
     checkGSDReturn();
@@ -34,9 +33,8 @@ GSDUtil::GSDUtil(std::shared_ptr<systemData> sys)
 
     if (m_frame >= nframes)
     {
-        spdlog::get(m_logName)->error(
-            "data.gsd_snapshot: Cannot read frame {0} {1} only has {2} frames", m_frame,
-            m_system->inputGSDFile(), gsd_get_nframes(m_system->handle().get()));
+        spdlog::get(m_logName)->error("data.gsd_snapshot: Cannot read frame {0} {1} only has {2} frames", m_frame,
+                                      m_system->inputGSDFile(), gsd_get_nframes(m_system->handle().get()));
         throw std::runtime_error("Error opening GSD file");
     }
 
@@ -61,9 +59,8 @@ GSDUtil::GSDUtil(std::shared_ptr<systemData> sys, uint64_t frame) : GSDUtil(sys)
 
     if (m_frame >= nframes)
     {
-        spdlog::get(m_logName)->error(
-            "data.gsd_snapshot: Cannot read frame {0} {1} only has {2} frames", m_frame,
-            m_system->inputGSDFile(), gsd_get_nframes(m_system->handle().get()));
+        spdlog::get(m_logName)->error("data.gsd_snapshot: Cannot read frame {0} {1} only has {2} frames", m_frame,
+                                      m_system->inputGSDFile(), gsd_get_nframes(m_system->handle().get()));
         throw std::runtime_error("Error opening GSD file");
     }
 }
@@ -107,8 +104,7 @@ GSDUtil::checkGSDReturn()
  *     double (np.double, np.float64): 8
  */
 bool
-GSDUtil::readChunk(void* data, uint64_t frame, const char* name, size_t expected_size,
-                   unsigned int cur_n)
+GSDUtil::readChunk(void* data, uint64_t frame, const char* name, size_t expected_size, unsigned int cur_n)
 {
     const struct gsd_index_entry* entry = gsd_find_chunk(m_system->handle().get(), frame, name);
 
@@ -129,9 +125,8 @@ GSDUtil::readChunk(void* data, uint64_t frame, const char* name, size_t expected
 
         if (actual_size != expected_size)
         {
-            spdlog::get(m_logName)->error(
-                "data.gsd_snapshot: Expecting {0} bytes in {1} but found {2}", expected_size, name,
-                actual_size);
+            spdlog::get(m_logName)->error("data.gsd_snapshot: Expecting {0} bytes in {1} but found {2}", expected_size,
+                                          name, actual_size);
         }
 
         auto return_val = gsd_read_chunk(m_system->handle().get(), data, entry);
@@ -162,8 +157,7 @@ GSDUtil::readHeader()
     m_system->setNumSpatialDim(int(dim));
     spdlog::get(m_logName)->info("dim : {0}", dim);
     assert(int(dim) == m_system->numSpatialDim() && "number of dimensions not properly set");
-    assert(int(dim) == 3 &&
-           "number of spatial dimensions must be 3 for the potential hydrodynamics");
+    assert(int(dim) == 3 && "number of spatial dimensions must be 3 for the potential hydrodynamics");
 
     spdlog::get(m_logName)->info("GSD parsing number of particles");
     uint32_t N  = 0;
@@ -226,8 +220,7 @@ GSDUtil::readParameters()
     checkGSDReturn();
     m_system->setNumStepsOutput(int(num_steps_output));
     spdlog::get(m_logName)->info("num_steps_output : {0}", num_steps_output);
-    assert(int(num_steps_output) == m_system->numStepsOutput() &&
-           "num_steps_output not properly set");
+    assert(int(num_steps_output) == m_system->numStepsOutput() && "num_steps_output not properly set");
 
     spdlog::get(m_logName)->info("GSD parsing fluid_density");
     double fluid_density{-1.0};
@@ -240,8 +233,7 @@ GSDUtil::readParameters()
 
     spdlog::get(m_logName)->info("GSD parsing particle_density");
     double particle_density{-1.0};
-    return_bool =
-        readChunk(&particle_density, m_frame, "log/material_parameters/particle_density", 8);
+    return_bool = readChunk(&particle_density, m_frame, "log/material_parameters/particle_density", 8);
     m_system->setReturnBool(return_bool);
     checkGSDReturn();
     m_system->setParticleDensity(particle_density);
@@ -268,8 +260,8 @@ GSDUtil::readParameters()
 
     spdlog::get(m_logName)->info("GSD parsing typeid");
     uint32_t types[m_system->numParticles()];
-    return_bool = readChunk(&types, m_frame, "particles/typeid", m_system->numParticles() * 4,
-                            m_system->numParticles());
+    return_bool =
+        readChunk(&types, m_frame, "particles/typeid", m_system->numParticles() * 4, m_system->numParticles());
     m_system->setReturnBool(return_bool);
     checkGSDReturn();
     Eigen::VectorXi type_id = Eigen::VectorXi::Zero(m_system->numParticles());
@@ -311,8 +303,8 @@ GSDUtil::readParticles()
     // quaternions
     spdlog::get(m_logName)->info("GSD parsing orientationsParticles");
     double d_quat[4 * m_system->numParticles()];
-    auto   return_bool = readChunk(&d_quat, m_frame, "log/particles/double_orientation",
-                                 m_system->numParticles() * 4 * 8, m_system->numParticles());
+    auto return_bool = readChunk(&d_quat, m_frame, "log/particles/double_orientation", m_system->numParticles() * 4 * 8,
+                                 m_system->numParticles());
     m_system->setReturnBool(return_bool);
     checkGSDReturn();
     Eigen::VectorXd quaternions = Eigen::VectorXd::Zero(4 * m_system->numParticles());
@@ -322,17 +314,16 @@ GSDUtil::readParticles()
         quaternions(4 * i + 1) = d_quat[4 * i + 1];
         quaternions(4 * i + 2) = d_quat[4 * i + 2];
         quaternions(4 * i + 3) = d_quat[4 * i + 3];
-        spdlog::get(m_logName)->info(
-            "Particle {0} quaternion : [{1:03.3f}, {2:03.3f}, {3:03.3f}, {4:03.3f}]", i + 1,
-            d_quat[4 * i], d_quat[4 * i + 1], d_quat[4 * i + 2], d_quat[4 * i + 3]);
+        spdlog::get(m_logName)->info("Particle {0} quaternion : [{1:03.3f}, {2:03.3f}, {3:03.3f}, {4:03.3f}]", i + 1,
+                                     d_quat[4 * i], d_quat[4 * i + 1], d_quat[4 * i + 2], d_quat[4 * i + 3]);
     }
     m_system->setOrientationsParticles(quaternions);
 
     // positions
     spdlog::get(m_logName)->info("GSD parsing position");
     double d_pos[3 * m_system->numParticles()];
-    return_bool = readChunk(&d_pos, m_frame, "log/particles/double_position",
-                            m_system->numParticles() * 3 * 8, m_system->numParticles());
+    return_bool = readChunk(&d_pos, m_frame, "log/particles/double_position", m_system->numParticles() * 3 * 8,
+                            m_system->numParticles());
     m_system->setReturnBool(return_bool);
     checkGSDReturn();
     Eigen::VectorXd positions = Eigen::VectorXd::Zero(3 * m_system->numParticles());
@@ -341,16 +332,16 @@ GSDUtil::readParticles()
         positions(3 * i)     = d_pos[3 * i];
         positions(3 * i + 1) = d_pos[3 * i + 1];
         positions(3 * i + 2) = d_pos[3 * i + 2];
-        spdlog::get(m_logName)->info("Particle {0} position : [{1:03.3f}, {2:03.3f}, {3:03.3f}]",
-                                     i + 1, d_pos[3 * i], d_pos[3 * i + 1], d_pos[3 * i + 2]);
+        spdlog::get(m_logName)->info("Particle {0} position : [{1:03.3f}, {2:03.3f}, {3:03.3f}]", i + 1, d_pos[3 * i],
+                                     d_pos[3 * i + 1], d_pos[3 * i + 2]);
     }
     m_system->setPositionsParticles(positions);
 
     // velocities
     spdlog::get(m_logName)->info("GSD parsing velocity");
     double d_vel[3 * m_system->numParticles()];
-    return_bool = readChunk(&d_vel, m_frame, "log/particles/double_velocity",
-                            m_system->numParticles() * 3 * 8, m_system->numParticles());
+    return_bool = readChunk(&d_vel, m_frame, "log/particles/double_velocity", m_system->numParticles() * 3 * 8,
+                            m_system->numParticles());
     m_system->setReturnBool(return_bool);
     checkGSDReturn();
     Eigen::VectorXd velocities = Eigen::VectorXd::Zero(3 * m_system->numParticles());
@@ -359,16 +350,16 @@ GSDUtil::readParticles()
         velocities(3 * i)     = d_vel[3 * i];
         velocities(3 * i + 1) = d_vel[3 * i + 1];
         velocities(3 * i + 2) = d_vel[3 * i + 2];
-        spdlog::get(m_logName)->info("Particle {0} velocity : [{1:03.3f}, {2:03.3f}, {3:03.3f}]",
-                                     i + 1, d_vel[3 * i], d_vel[3 * i + 1], d_vel[3 * i + 2]);
+        spdlog::get(m_logName)->info("Particle {0} velocity : [{1:03.3f}, {2:03.3f}, {3:03.3f}]", i + 1, d_vel[3 * i],
+                                     d_vel[3 * i + 1], d_vel[3 * i + 2]);
     }
     m_system->setVelocitiesParticles(velocities);
 
     // accelerations
     spdlog::get(m_logName)->info("GSD parsing acceleration");
     double d_acc[3 * m_system->numParticles()];
-    return_bool = readChunk(&d_acc, m_frame, "log/particles/double_moment_inertia",
-                            m_system->numParticles() * 3 * 8, m_system->numParticles());
+    return_bool = readChunk(&d_acc, m_frame, "log/particles/double_moment_inertia", m_system->numParticles() * 3 * 8,
+                            m_system->numParticles());
     m_system->setReturnBool(return_bool);
     checkGSDReturn();
     Eigen::VectorXd accelerations = Eigen::VectorXd::Zero(3 * m_system->numParticles());
@@ -377,15 +368,13 @@ GSDUtil::readParticles()
         accelerations(3 * i)     = d_acc[3 * i];
         accelerations(3 * i + 1) = d_acc[3 * i + 1];
         accelerations(3 * i + 2) = d_acc[3 * i + 2];
-        spdlog::get(m_logName)->info(
-            "Particle {0} acceleration : [{1:03.3f}, {2:03.3f}, {3:03.3f}]", i + 1, d_acc[3 * i],
-            d_acc[3 * i + 1], d_acc[3 * i + 2]);
+        spdlog::get(m_logName)->info("Particle {0} acceleration : [{1:03.3f}, {2:03.3f}, {3:03.3f}]", i + 1,
+                                     d_acc[3 * i], d_acc[3 * i + 1], d_acc[3 * i + 2]);
     }
     m_system->setAccelerationsParticles(accelerations);
 
     spdlog::get(m_logName)->info("Calculating body kinematics");
-    spdlog::get(m_logName)->critical(
-        "Time derivatives of orientational components are assumed zero.");
+    spdlog::get(m_logName)->critical("Time derivatives of orientational components are assumed zero.");
     Eigen::VectorXd positions_bodies     = n7_vec;
     Eigen::VectorXd velocities_bodies    = n7_vec;
     Eigen::VectorXd accelerations_bodies = n7_vec;
@@ -396,13 +385,11 @@ GSDUtil::readParticles()
         // only fill for locater particles
         if (m_system->particleTypeId()(i) == 1)
         {
-            positions_bodies.segment<3>(7 * body_count).noalias() =
-                m_system->positionsParticles().segment<3>(3 * i);
+            positions_bodies.segment<3>(7 * body_count).noalias() = m_system->positionsParticles().segment<3>(3 * i);
             positions_bodies.segment<4>(7 * body_count + 3).noalias() =
                 m_system->orientationsParticles().segment<4>(3 * i);
 
-            velocities_bodies.segment<3>(7 * body_count).noalias() =
-                m_system->velocitiesParticles().segment<3>(3 * i);
+            velocities_bodies.segment<3>(7 * body_count).noalias() = m_system->velocitiesParticles().segment<3>(3 * i);
 
             accelerations_bodies.segment<3>(7 * body_count).noalias() =
                 m_system->accelerationsParticles().segment<3>(3 * i);
@@ -486,9 +473,9 @@ void
 GSDUtil::writeHeader()
 {
     spdlog::get(m_logName)->info("GSD writing log/configuration/timestep");
-    uint64_t step       = m_system->timestep();
-    auto     return_val = gsd_write_chunk(m_system->handle().get(), "log/configuration/step",
-                                      GSD_TYPE_UINT64, 1, 1, 0, (void*)&step);
+    uint64_t step = m_system->timestep();
+    auto     return_val =
+        gsd_write_chunk(m_system->handle().get(), "log/configuration/step", GSD_TYPE_UINT64, 1, 1, 0, (void*)&step);
     m_system->setReturnVal(return_val);
     checkGSDReturn();
 
@@ -496,16 +483,15 @@ GSDUtil::writeHeader()
     {
         spdlog::get(m_logName)->info("GSD writing configuration/dimensions");
         uint8_t dimensions = 3;
-        return_val         = gsd_write_chunk(m_system->handle().get(), "configuration/dimensions",
-                                     GSD_TYPE_UINT8, 1, 1, 0, (void*)&dimensions);
+        return_val = gsd_write_chunk(m_system->handle().get(), "configuration/dimensions", GSD_TYPE_UINT8, 1, 1, 0,
+                                     (void*)&dimensions);
         m_system->setReturnVal(return_val);
         checkGSDReturn();
     }
 
     spdlog::get(m_logName)->info("GSD writing particles/N");
     uint32_t N = m_system->numParticles();
-    return_val = gsd_write_chunk(m_system->handle().get(), "particles/N", GSD_TYPE_UINT32, 1, 1, 0,
-                                 (void*)&N);
+    return_val = gsd_write_chunk(m_system->handle().get(), "particles/N", GSD_TYPE_UINT32, 1, 1, 0, (void*)&N);
     m_system->setReturnVal(return_val);
     checkGSDReturn();
 }
@@ -514,16 +500,15 @@ void
 GSDUtil::writeParameters()
 {
     spdlog::get(m_logName)->info("GSD writing log/integrator/dt");
-    double dt         = m_system->dt();
-    auto   return_val = gsd_write_chunk(m_system->handle().get(), "log/integrator/dt",
-                                      GSD_TYPE_DOUBLE, 1, 1, 0, (void*)&dt);
+    double dt = m_system->dt();
+    auto   return_val =
+        gsd_write_chunk(m_system->handle().get(), "log/integrator/dt", GSD_TYPE_DOUBLE, 1, 1, 0, (void*)&dt);
     m_system->setReturnVal(return_val);
     checkGSDReturn();
 
     spdlog::get(m_logName)->info("GSD writing log/integrator/t");
     double time = m_system->t();
-    return_val  = gsd_write_chunk(m_system->handle().get(), "log/integrator/t", GSD_TYPE_DOUBLE, 1,
-                                 1, 0, (void*)&time);
+    return_val  = gsd_write_chunk(m_system->handle().get(), "log/integrator/t", GSD_TYPE_DOUBLE, 1, 1, 0, (void*)&time);
     m_system->setReturnVal(return_val);
     checkGSDReturn();
 }
@@ -539,7 +524,7 @@ GSDUtil::writeParticles()
 
     /* ANCHOR: Write kinematics using standard data structures, which are floats */
     std::vector<float> quat(uint64_t(N) * uint64_t(num_dim + N));
-    quat.reserve(1); //! make sure we allocate
+    quat.reserve(1); // make sure we allocate
     for (uint32_t i = 0; i < N; i++)
     {
         quat[4 * i]     = m_system->orientationsParticles()(4 * i);
@@ -548,13 +533,13 @@ GSDUtil::writeParticles()
         quat[4 * i + 3] = m_system->orientationsParticles()(4 * i + 3);
     }
     spdlog::get(m_logName)->info("GSD writing particles/orientation");
-    return_val = gsd_write_chunk(m_system->handle().get(), "particles/orientation", GSD_TYPE_FLOAT,
-                                 N, 4, 0, (void*)&quat[0]);
+    return_val =
+        gsd_write_chunk(m_system->handle().get(), "particles/orientation", GSD_TYPE_FLOAT, N, 4, 0, (void*)&quat[0]);
     m_system->setReturnVal(return_val);
     checkGSDReturn();
 
     std::vector<float> pos(uint64_t(N) * uint64_t(num_dim));
-    pos.reserve(1); //! make sure we allocate
+    pos.reserve(1); // make sure we allocate
     for (uint32_t i = 0; i < N; i++)
     {
         pos[3 * i]     = m_system->positionsParticles()(3 * i);
@@ -562,13 +547,13 @@ GSDUtil::writeParticles()
         pos[3 * i + 2] = m_system->positionsParticles()(3 * i + 2);
     }
     spdlog::get(m_logName)->info("GSD writing particles/position");
-    return_val = gsd_write_chunk(m_system->handle().get(), "particles/position", GSD_TYPE_FLOAT, N,
-                                 3, 0, (void*)&pos[0]);
+    return_val =
+        gsd_write_chunk(m_system->handle().get(), "particles/position", GSD_TYPE_FLOAT, N, 3, 0, (void*)&pos[0]);
     m_system->setReturnVal(return_val);
     checkGSDReturn();
 
     std::vector<float> vel(uint64_t(N) * uint64_t(num_dim));
-    vel.reserve(1); //! make sure we allocate
+    vel.reserve(1); // make sure we allocate
     for (uint32_t i = 0; i < N; i++)
     {
         vel[3 * i]     = m_system->velocitiesParticles()(3 * i);
@@ -576,13 +561,13 @@ GSDUtil::writeParticles()
         vel[3 * i + 2] = m_system->velocitiesParticles()(3 * i + 2);
     }
     spdlog::get(m_logName)->info("GSD writing particles/velocity");
-    return_val = gsd_write_chunk(m_system->handle().get(), "particles/velocity", GSD_TYPE_FLOAT, N,
-                                 3, 0, (void*)&vel[0]);
+    return_val =
+        gsd_write_chunk(m_system->handle().get(), "particles/velocity", GSD_TYPE_FLOAT, N, 3, 0, (void*)&vel[0]);
     m_system->setReturnVal(return_val);
     checkGSDReturn();
 
     std::vector<float> acc(uint64_t(N) * uint64_t(num_dim));
-    acc.reserve(1); //! make sure we allocate
+    acc.reserve(1); // make sure we allocate
     for (uint32_t i = 0; i < N; i++)
     {
         acc[3 * i]     = m_system->accelerationsParticles()(3 * i);
@@ -590,14 +575,14 @@ GSDUtil::writeParticles()
         acc[3 * i + 2] = m_system->accelerationsParticles()(3 * i + 2);
     }
     spdlog::get(m_logName)->info("GSD writing particles/moment_inertia");
-    return_val = gsd_write_chunk(m_system->handle().get(), "particles/moment_inertia",
-                                 GSD_TYPE_FLOAT, N, 3, 0, (void*)&acc[0]);
+    return_val =
+        gsd_write_chunk(m_system->handle().get(), "particles/moment_inertia", GSD_TYPE_FLOAT, N, 3, 0, (void*)&acc[0]);
     m_system->setReturnVal(return_val);
     checkGSDReturn();
 
     /* ANCHOR: Write kinematics as doubles for higher precision */
     std::vector<double> d_quat(uint64_t(N) * uint64_t(num_dim + N));
-    d_quat.reserve(1); //! make sure we allocate
+    d_quat.reserve(1); // make sure we allocate
     for (uint32_t i = 0; i < N; i++)
     {
         d_quat[4 * i]     = m_system->orientationsParticles()(4 * i);
@@ -606,13 +591,13 @@ GSDUtil::writeParticles()
         d_quat[4 * i + 3] = m_system->orientationsParticles()(4 * i + 3);
     }
     spdlog::get(m_logName)->info("GSD writing log/particles/double_orientation");
-    return_val = gsd_write_chunk(m_system->handle().get(), "log/particles/double_orientation",
-                                 GSD_TYPE_DOUBLE, N, 4, 0, (void*)&d_quat[0]);
+    return_val = gsd_write_chunk(m_system->handle().get(), "log/particles/double_orientation", GSD_TYPE_DOUBLE, N, 4, 0,
+                                 (void*)&d_quat[0]);
     m_system->setReturnVal(return_val);
     checkGSDReturn();
 
     std::vector<double> d_pos(uint64_t(N) * uint64_t(num_dim));
-    d_pos.reserve(1); //! make sure we allocate
+    d_pos.reserve(1); // make sure we allocate
     for (uint32_t i = 0; i < N; i++)
     {
         d_pos[3 * i]     = m_system->positionsParticles()(3 * i);
@@ -620,13 +605,13 @@ GSDUtil::writeParticles()
         d_pos[3 * i + 2] = m_system->positionsParticles()(3 * i + 2);
     }
     spdlog::get(m_logName)->info("GSD writing log/particles/double_position");
-    return_val = gsd_write_chunk(m_system->handle().get(), "log/particles/double_position",
-                                 GSD_TYPE_DOUBLE, N, 3, 0, (void*)&d_pos[0]);
+    return_val = gsd_write_chunk(m_system->handle().get(), "log/particles/double_position", GSD_TYPE_DOUBLE, N, 3, 0,
+                                 (void*)&d_pos[0]);
     m_system->setReturnVal(return_val);
     checkGSDReturn();
 
     std::vector<double> d_vel(uint64_t(N) * uint64_t(num_dim));
-    d_vel.reserve(1); //! make sure we allocate
+    d_vel.reserve(1); // make sure we allocate
     for (uint32_t i = 0; i < N; i++)
     {
         d_vel[3 * i]     = m_system->velocitiesParticles()(3 * i);
@@ -634,13 +619,13 @@ GSDUtil::writeParticles()
         d_vel[3 * i + 2] = m_system->velocitiesParticles()(3 * i + 2);
     }
     spdlog::get(m_logName)->info("GSD wri ting log/particles/double_velocity");
-    return_val = gsd_write_chunk(m_system->handle().get(), "log/particles/double_velocity",
-                                 GSD_TYPE_DOUBLE, N, 3, 0, (void*)&d_vel[0]);
+    return_val = gsd_write_chunk(m_system->handle().get(), "log/particles/double_velocity", GSD_TYPE_DOUBLE, N, 3, 0,
+                                 (void*)&d_vel[0]);
     m_system->setReturnVal(return_val);
     checkGSDReturn();
 
     std::vector<double> d_acc(uint64_t(N) * uint64_t(num_dim));
-    d_acc.reserve(1); //! make sure we allocate
+    d_acc.reserve(1); // make sure we allocate
     for (uint32_t i = 0; i < N; i++)
     {
         d_acc[3 * i]     = m_system->accelerationsParticles()(3 * i);
@@ -648,8 +633,8 @@ GSDUtil::writeParticles()
         d_acc[3 * i + 2] = m_system->accelerationsParticles()(3 * i + 2);
     }
     spdlog::get(m_logName)->info("GSD writing log/particles/double_moment_inertia");
-    return_val = gsd_write_chunk(m_system->handle().get(), "log/particles/double_moment_inertia",
-                                 GSD_TYPE_DOUBLE, N, 3, 0, (void*)&d_acc[0]);
+    return_val = gsd_write_chunk(m_system->handle().get(), "log/particles/double_moment_inertia", GSD_TYPE_DOUBLE, N, 3,
+                                 0, (void*)&d_acc[0]);
     m_system->setReturnVal(return_val);
     checkGSDReturn();
 }

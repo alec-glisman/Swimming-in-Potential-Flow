@@ -1,6 +1,5 @@
 <map id="floorf" name="floorf">
-<area shape="rect" id="node1" title=" " alt="" coords="200,31,251,57"/>
-<area shape="rect" id="node2" href="$helper__math_8h.html#a549835c169f172cf838f65d81f958421" title=" " alt="" coords="101,5,152,32"/>
-<area shape="rect" id="node3" href="$helper__math_8h.html#aa8a9d57950bb3ca3835bece91188dbf4" title=" " alt="" coords="103,56,151,83"/>
-<area shape="rect" id="node4" href="$helper__math_8h.html#ac26eb0c8f1fa7b38ea491354d953453b" title=" " alt="" coords="5,56,53,83"/>
+<area shape="rect" id="node1" title=" " alt="" coords="197,29,249,56"/>
+<area shape="rect" id="node2" href="$helper__math_8h.html#aa8a9d57950bb3ca3835bece91188dbf4" title=" " alt="" coords="101,29,149,56"/>
+<area shape="rect" id="node3" href="$helper__math_8h.html#ac26eb0c8f1fa7b38ea491354d953453b" title=" " alt="" coords="5,29,53,56"/>
 </map>

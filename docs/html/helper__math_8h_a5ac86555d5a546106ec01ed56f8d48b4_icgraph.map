@@ -1,16 +1,15 @@
 <map id="make_float4" name="make_float4">
-<area shape="rect" id="node1" title=" " alt="" coords="147,309,240,336"/>
-<area shape="rect" id="node2" href="$helper__math_8h.html#a3f5286af2ed3b64cc71c61985098fad8" title=" " alt="" coords="23,5,81,32"/>
-<area shape="rect" id="node3" href="$helper__math_8h.html#aa9ee264473011054a33354d0045161ce" title=" " alt="" coords="29,56,75,83"/>
-<area shape="rect" id="node4" href="$helper__math_8h.html#a1bd42b705a0de4def6b605ef2699b9ee" title=" " alt="" coords="27,107,77,133"/>
-<area shape="rect" id="node5" href="$helper__math_8h.html#a0c102756578f129d7b0fde92ae6ca987" title=" " alt="" coords="25,157,79,184"/>
-<area shape="rect" id="node6" href="$helper__math_8h.html#accc123056028156af4471d825045701c" title=" " alt="" coords="27,208,77,235"/>
-<area shape="rect" id="node7" href="$helper__math_8h.html#a56aadc267ba639864d79188aa781423f" title=" " alt="" coords="25,259,79,285"/>
-<area shape="rect" id="node8" href="$helper__math_8h.html#aad5e4d519cb28ab64e0c38bdb786f729" title=" " alt="" coords="28,309,76,336"/>
-<area shape="rect" id="node9" href="$helper__math_8h.html#a4bd54a2c024a4690628ca6765b58c27f" title=" " alt="" coords="5,360,99,387"/>
-<area shape="rect" id="node10" href="$helper__math_8h.html#aa79ec1961ab5b063ffaa382d57039cea" title=" " alt="" coords="15,411,89,437"/>
-<area shape="rect" id="node11" href="$helper__math_8h.html#a55e9b703f5296a9d8b12e87d64975d43" title=" " alt="" coords="13,461,91,488"/>
-<area shape="rect" id="node12" href="$helper__math_8h.html#aae7e93cd36d263560cf8535af5212d4e" title=" " alt="" coords="15,512,89,539"/>
-<area shape="rect" id="node13" href="$helper__math_8h.html#a70bc23a55f3cc4d26b45044fa99d6d61" title=" " alt="" coords="15,563,89,589"/>
-<area shape="rect" id="node14" href="$helper__math_8h.html#a20180981da5c0ca777b200d5a68b5952" title=" " alt="" coords="7,613,97,640"/>
+<area shape="rect" id="node1" title=" " alt="" coords="144,284,239,311"/>
+<area shape="rect" id="node2" href="$helper__math_8h.html#a3f5286af2ed3b64cc71c61985098fad8" title=" " alt="" coords="22,5,79,32"/>
+<area shape="rect" id="node3" href="$helper__math_8h.html#aa9ee264473011054a33354d0045161ce" title=" " alt="" coords="27,56,74,83"/>
+<area shape="rect" id="node4" href="$helper__math_8h.html#a1bd42b705a0de4def6b605ef2699b9ee" title=" " alt="" coords="25,107,77,133"/>
+<area shape="rect" id="node5" href="$helper__math_8h.html#a0c102756578f129d7b0fde92ae6ca987" title=" " alt="" coords="23,157,78,184"/>
+<area shape="rect" id="node6" href="$helper__math_8h.html#accc123056028156af4471d825045701c" title=" " alt="" coords="25,208,76,235"/>
+<area shape="rect" id="node7" href="$helper__math_8h.html#a56aadc267ba639864d79188aa781423f" title=" " alt="" coords="23,259,79,285"/>
+<area shape="rect" id="node8" href="$helper__math_8h.html#aad5e4d519cb28ab64e0c38bdb786f729" title=" " alt="" coords="27,309,75,336"/>
+<area shape="rect" id="node9" href="$helper__math_8h.html#aa79ec1961ab5b063ffaa382d57039cea" title=" " alt="" coords="12,360,89,387"/>
+<area shape="rect" id="node10" href="$helper__math_8h.html#a55e9b703f5296a9d8b12e87d64975d43" title=" " alt="" coords="11,411,91,437"/>
+<area shape="rect" id="node11" href="$helper__math_8h.html#aae7e93cd36d263560cf8535af5212d4e" title=" " alt="" coords="13,461,89,488"/>
+<area shape="rect" id="node12" href="$helper__math_8h.html#a70bc23a55f3cc4d26b45044fa99d6d61" title=" " alt="" coords="13,512,89,539"/>
+<area shape="rect" id="node13" href="$helper__math_8h.html#a20180981da5c0ca777b200d5a68b5952" title=" " alt="" coords="5,563,96,589"/>
 </map>
