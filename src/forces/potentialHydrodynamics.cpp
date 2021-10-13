@@ -179,8 +179,18 @@ potentialHydrodynamics::calcAddedMassGrad()
     // set matrices to zero
     m_grad_M_added.setZero();
 
+    // [3 x 3] identity tensors
+    Eigen::Matrix3d                                    I      = Eigen::Matrix3d::Identity(3, 3);
+    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_I = TensorCast(I);
+
+    // eigen tensor contraction variables
+    Eigen::array<Eigen::IndexPair<long>, 0> empty_index_list = {};
+    Eigen::array<int, 3>                    shuffle_one_right({2, 0, 1});
+    Eigen::array<int, 3>                    shuffle_one_left({1, 2, 1});
+
     /* NOTE: Fill Mass matrix elements one (3 x 3) block at a time (matrix elements between
      * particles \alpha and \beta) */
+
     for (int k = 0; k < m_num_inter; k++)
     {
         // Convert (\alpha, \beta) --> (i, j) by factor of 3
@@ -188,110 +198,51 @@ potentialHydrodynamics::calcAddedMassGrad()
         int j_part = 3 * m_betaVec[k];
 
         // Full distance between particles \alpha and \beta
-        Eigen::Vector3d r_ij     = m_r_ab.col(k); // [1]
-        double          r_mag_ij = m_r_mag_ab[k]; //[1]; |r| between 2 particles
-
-        // Matrices to use in Calculation
-        Eigen::Matrix3d delta_Ri_x = Eigen::Matrix3d::Zero(); //(\delta_{j x} r_i) + (\delta_{i x} r_j)
-        Eigen::Matrix3d delta_Ri_y = Eigen::Matrix3d::Zero(); //(\delta_{j y} r_i) + (\delta_{i y} r_j)
-        Eigen::Matrix3d delta_Ri_z = Eigen::Matrix3d::Zero(); //(\delta_{j z} r_i) + (\delta_{i z} r_j)
-
-        /* (\delta_{j x} r_i) Adds all components of \bm{r} as a column vector to the first column
-         * (j=x) The indexing comes from a M_{i j, k} index scheme, where k=x in this case */
-        delta_Ri_x.col(0).noalias() += r_ij;
-        delta_Ri_x.row(0).noalias() += r_ij.transpose();
-        delta_Ri_y.col(1).noalias() += r_ij;
-        delta_Ri_y.row(1).noalias() += r_ij.transpose();
-        delta_Ri_z.col(2).noalias() += r_ij;
-        delta_Ri_z.row(2).noalias() += r_ij.transpose();
+        Eigen::Vector3d r_ij     = m_r_ab.col(k);           // [1]
+        double          r_mag_ij = m_r_mag_ab[k];           //[1]; |r| between 2 particles
+        Eigen::Matrix3d r_dyad_r = r_ij * r_ij.transpose(); // [1]; Outer product of \bm{r} \bm{r}
+        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_rr = TensorCast(r_dyad_r);
 
         // Constants to use in Calculation
-        double gradM1_c1 = -m_c3_2 / std::pow(r_mag_ij, 5); // [1]
-        double gradM1_c2 = m_c15_2 / std::pow(r_mag_ij, 7); // [1]
+        double gradM1_c1 =
+            -(m_system->fluidDensity() * m_unitSphereVol) * m_c3_2 * std::pow(r_mag_ij, -5); // mass units
+        double gradM1_c2 =
+            (m_system->fluidDensity() * m_unitSphereVol) * m_c15_2 * std::pow(r_mag_ij, -7); // mass units
 
-        // Full matrix elements for M_{ij, i}
-        Eigen::Matrix3d r_dyad_r = r_ij * r_ij.transpose(); // [1]; Outer product of \bm{r} \bm{r}
+        // outer products (I_{i j} r_{k}) and permutations
+        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_ij_r_k =
+            gradM1_c1 * tens_I.contract(TensorCast(r_ij), empty_index_list);
+        // shuffle all dimensions to the right by 1: (i, j, k) --> (k, i, j), (2, 0, 1)
+        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_jk_r_i = delta_ij_r_k.shuffle(shuffle_one_right);
+        // shuffle all dimensions to the left by 1: (i, j, k) --> (k, i, j), (1, 2, 0)
+        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_ki_r_j = delta_ij_r_k.shuffle(shuffle_one_left);
 
-        // Mij_ix
-        Eigen::Matrix3d Mij_ix = delta_Ri_x;
-        Mij_ix.noalias() += r_ij[0] * m_I3;
-        Mij_ix *= gradM1_c1;                                  // sub-term 1 complete
-        Mij_ix.noalias() += (gradM1_c2 * r_ij[0]) * r_dyad_r; // sub-term 2 complete
+        // full matrix element for M_{i j, i}
+        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> Mij_i = delta_ij_r_k + delta_jk_r_i;
+        Mij_i += delta_ki_r_j;
+        Mij_i += gradM1_c2 * tens_rr.contract(TensorCast(r_ij), empty_index_list);
 
-        // Mij_iy
-        Eigen::Matrix3d Mij_iy = delta_Ri_y;
-        Mij_iy.noalias() += r_ij[1] * m_I3;
-        Mij_iy *= gradM1_c1;                                  // sub-term 1 complete
-        Mij_iy.noalias() += (gradM1_c2 * r_ij[1]) * r_dyad_r; // sub-term 2 complete
-
-        // Mij_iz
-        Eigen::Matrix3d Mij_iz = delta_Ri_z;
-        Mij_iz.noalias() += r_ij[2] * m_I3;
-        Mij_iz *= gradM1_c1;                                  // sub-term 1 complete
-        Mij_iz.noalias() += (gradM1_c2 * r_ij[2]) * r_dyad_r; // sub-term 2 complete
-
-        // TODO: Add units to mass matrix gradient elements
-
-        // Rows to start data access at
-        int row_Ri = i_part;
-        int row_Rj = j_part;
-
-        // TODO: Columns to start data access at
-
-        // TODO: Layers to start data access at
-
-        // TODO: Length of data to access
-
-        // TODO: Convert Eigen::Matrix --> Eigen::Tensor
-
-        // TODO: Output data
-
-        // Columns for each block to start at: M_{ij, i}
-        int col_j_dRi_x = m_system->convert3dIdxTo2d(j_part, i_part, 0, m_3N);
-        int col_j_dRi_y = m_system->convert3dIdxTo2d(j_part, i_part, 1, m_3N);
-        int col_j_dRi_z = m_system->convert3dIdxTo2d(j_part, i_part, 2, m_3N);
-
-        // M_{ij, j} elements
-        int col_j_dRj_x = m_system->convert3dIdxTo2d(j_part, j_part, 0, m_3N);
-        int col_j_dRj_y = m_system->convert3dIdxTo2d(j_part, j_part, 1, m_3N);
-        int col_j_dRj_z = m_system->convert3dIdxTo2d(j_part, j_part, 2, m_3N);
-
-        // M_{ji, j} elements
-        int col_i_dRj_x = m_system->convert3dIdxTo2d(i_part, j_part, 0, m_3N);
-        int col_i_dRj_y = m_system->convert3dIdxTo2d(i_part, j_part, 1, m_3N);
-        int col_i_dRj_z = m_system->convert3dIdxTo2d(i_part, j_part, 2, m_3N);
-
-        // M_{ji, i} elements
-        int col_i_dRi_x = m_system->convert3dIdxTo2d(i_part, i_part, 0, m_3N);
-        int col_i_dRi_y = m_system->convert3dIdxTo2d(i_part, i_part, 1, m_3N);
-        int col_i_dRi_z = m_system->convert3dIdxTo2d(i_part, i_part, 2, m_3N);
+        // indices to start at
+        Eigen::array<Eigen::Index, 3> offsets_ij_i = {i_part, j_part, i_part};
+        Eigen::array<Eigen::Index, 3> offsets_ij_j = {i_part, j_part, j_part};
+        Eigen::array<Eigen::Index, 3> offsets_ji_i = {j_part, i_part, i_part};
+        Eigen::array<Eigen::Index, 3> offsets_ji_j = {j_part, i_part, j_part};
+        // length of data to access
+        Eigen::array<Eigen::Index, 3> extents = {3, 3, 3};
 
         // M_{ij, i}: Matrix Element (Anti-Symmetric upon exchange of derivative, Symmetric upon
         // exchange of first two indices)
-        m_grad_M_added.block<3, 3>(row_Ri, col_j_dRi_x).noalias() = Mij_ix; // M_{ij, i_x}
-        m_grad_M_added.block<3, 3>(row_Ri, col_j_dRi_y).noalias() = Mij_iy; // M_{ij, i_y}
-        m_grad_M_added.block<3, 3>(row_Ri, col_j_dRi_z).noalias() = Mij_iz; // M_{ij, i_z}
+        m_grad_M_added.slice(offsets_ij_i, extents) = Mij_i;
 
         // M_{ij, j} = - M_{ij, i}
-        m_grad_M_added.block<3, 3>(row_Ri, col_j_dRj_x).noalias() = -Mij_ix;
-        m_grad_M_added.block<3, 3>(row_Ri, col_j_dRj_y).noalias() = -Mij_iy;
-        m_grad_M_added.block<3, 3>(row_Ri, col_j_dRj_z).noalias() = -Mij_iz;
+        m_grad_M_added.slice(offsets_ij_j, extents) = -Mij_i;
 
         // M_{ji, j} = - M_{ij, i}
-        m_grad_M_added.block<3, 3>(row_Rj, col_i_dRj_x).noalias() = -Mij_ix;
-        m_grad_M_added.block<3, 3>(row_Rj, col_i_dRj_y).noalias() = -Mij_iy;
-        m_grad_M_added.block<3, 3>(row_Rj, col_i_dRj_z).noalias() = -Mij_iz;
+        m_grad_M_added.slice(offsets_ji_j, extents) = -Mij_i;
 
         // M_{ji, i} = M_{ij, i}
-        m_grad_M_added.block<3, 3>(row_Rj, col_i_dRi_x).noalias() = Mij_ix;
-        m_grad_M_added.block<3, 3>(row_Rj, col_i_dRi_y).noalias() = Mij_iy;
-        m_grad_M_added.block<3, 3>(row_Rj, col_i_dRi_z).noalias() = Mij_iz;
+        m_grad_M_added.slice(offsets_ji_i, extents) = Mij_i;
     }
-
-    /* Construct full added mass matrix
-     * \nabla M = \nabla M^{(1)}
-     */
-    m_grad_M_added *= (m_system->fluidDensity() * m_unitSphereVol); // mass units
 }
 
 void
