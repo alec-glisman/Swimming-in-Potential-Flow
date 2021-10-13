@@ -3,7 +3,7 @@ IF(DEFINED CMAKE_CUDA_COMPILER)
 
     ADD_LIBRARY(
         helper_eigen
-        helper_eigenTensorConversion.h
+        helper_eigenTensorConversion.hpp
         )
 
     TARGET_LINK_LIBRARIES(
@@ -22,7 +22,7 @@ ELSE()
 
     ADD_LIBRARY(
         helper_eigen
-        helper_eigenTensorConversion.h
+        helper_eigenTensorConversion.hpp
         )
 
     TARGET_LINK_LIBRARIES(

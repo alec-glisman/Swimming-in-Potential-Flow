@@ -21,7 +21,7 @@
 #include <eigen3/Eigen/Eigen>
 #include <eigen3/unsupported/Eigen/CXX11/Tensor>
 #include <eigen3/unsupported/Eigen/CXX11/ThreadPool>
-#include <helper_eigenTensorConversion.h>
+#include <helper_eigenTensorConversion.hpp>
 // Logging
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
