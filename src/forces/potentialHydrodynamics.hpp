@@ -76,9 +76,9 @@ class potentialHydrodynamics
     Eigen::VectorXd m_F_hydro;
     Eigen::VectorXd m_F_hydroNoInertia;
 
-    Eigen::VectorXd m_t1_Inertia;
-    Eigen::VectorXd m_t2_VelGrad;
-    Eigen::VectorXd m_t3_PosGrad;
+    Eigen::VectorXd          m_t1_Inertia;
+    Eigen::Tensor<double, 1> m_t2_VelGrad;
+    Eigen::Tensor<double, 1> m_t3_PosGrad;
 
     // constants
     const double m_unitSphereVol{4.0 / 3.0 * M_PI};
@@ -119,30 +119,6 @@ class potentialHydrodynamics
     mTotal() const
     {
         return m_M_total;
-    }
-
-    const Eigen::MatrixXd&
-    mIntrinsic() const
-    {
-        return m_M_intrinsic;
-    }
-
-    const Eigen::MatrixXd&
-    mAdded() const
-    {
-        return m_M_added;
-    }
-
-    const Eigen::VectorXd&
-    t2VelGrad() const
-    {
-        return m_t2_VelGrad;
-    }
-
-    const Eigen::Tensor<double, 3>&
-    gradMAdded() const
-    {
-        return m_grad_M_added;
     }
 };
 

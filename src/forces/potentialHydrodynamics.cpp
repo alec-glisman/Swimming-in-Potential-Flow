@@ -5,7 +5,7 @@
 #include <potentialHydrodynamics.hpp>
 
 // REVIEW[epic=Debug]: Uncomment line below to prevent all runtime checks from executing in debug
-// #define NO_HYDRO_CHECK
+#define NO_HYDRO_CHECK
 
 potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
 {
@@ -41,15 +41,19 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
     m_grad_M_added = Eigen::Tensor<double, 3>(m_3N, m_3N, m_3N);
 
     // Initialize force vectors
-    spdlog::get(m_logName)->info("Initializing hydrodynamic force tensors");
+    spdlog::get(m_logName)->info("Initializing hydrodynamic force vectors");
     m_F_hydro          = Eigen::VectorXd::Zero(m_3N);
     m_F_hydroNoInertia = Eigen::VectorXd::Zero(m_3N);
     m_t1_Inertia       = Eigen::VectorXd::Zero(m_3N);
-    m_t2_VelGrad       = Eigen::VectorXd::Zero(m_3N);
-    m_t3_PosGrad       = Eigen::VectorXd::Zero(m_3N);
+
+    spdlog::get(m_logName)->info("Initializing hydrodynamic force tensors");
+    m_t2_VelGrad = Eigen::Tensor<double, 1>(m_3N);
+    m_t2_VelGrad.setZero();
+    m_t3_PosGrad = Eigen::Tensor<double, 1>(m_3N);
+    m_t3_PosGrad.setZero();
 
     // Assign particle pair information
-    spdlog::get(m_logName)->info("Initializing particle pair information tensors");
+    spdlog::get(m_logName)->info("Initializing particle pair information vectors");
     m_alphaVec = Eigen::VectorXd::Zero(m_num_inter);
     m_betaVec  = Eigen::VectorXd::Zero(m_num_inter);
     m_r_mag_ab = Eigen::VectorXd::Zero(m_num_inter);
@@ -257,40 +261,25 @@ void
 potentialHydrodynamics::calcHydroForces()
 {
     // calculate requisite configurational tensors
-    Eigen::MatrixXd U_dyad_U = m_system->velocitiesParticles() * m_system->velocitiesParticles().transpose();
+    Eigen::MatrixXd          U_dyad_U = m_system->velocitiesParticles() * m_system->velocitiesParticles().transpose();
+    Eigen::Tensor<double, 2> tens_UU  = TensorCast(U_dyad_U);
 
     // Term 1: - M_kj * U_dot_j
     m_t1_Inertia.noalias() = -m_M_total * m_system->accelerationsParticles(); // dim = (3N) x 1
 
     // Term 2: - d(M_kj)/d(R_l) * U_l * U_j;
-    Eigen::MatrixXd hat_dMkj = Eigen::MatrixXd::Zero(m_3N, m_3N);
-    // Reduce along derivative vars (index: l) via matrix-vector product for each derivative
-    // variable
-    for (int l = 0; l < m_3N; l += 1)
-    {
-        hat_dMkj.noalias() += m_system->velocitiesParticles()(l) * m_grad_M_added.block(0, l * m_3N, m_3N, m_3N);
-    }
-    // Reduce along gradient (index: l) via matrix-vector product
-    m_t2_VelGrad.noalias() = -hat_dMkj * m_system->velocitiesParticles();
+    Eigen::array<Eigen::IndexPair<int>, 2> contract_kjl_jl = {Eigen::IndexPair<int>(1, 0), Eigen::IndexPair<int>(2, 1)};
+    m_t2_VelGrad                                           = -m_grad_M_added.contract(tens_UU, contract_kjl_jl);
 
     // Term 3: (1/2) U_i * d(M_ij)/d(R_k) * U_j
-    m_t3_PosGrad.noalias() = Eigen::VectorXd::Zero(m_3N);
+    Eigen::array<Eigen::IndexPair<int>, 2> contract_ijk_ij = {Eigen::IndexPair<int>(0, 0), Eigen::IndexPair<int>(1, 1)};
+    m_t3_PosGrad                                           = 0.50 * m_grad_M_added.contract(tens_UU, contract_ijk_ij);
 
-    for (int k = 0; k < m_3N; k += 3)
-    { // k: derivative variable, 3N loops
-        // Unroll loop slightly (do 3 entries at a time)
-        m_t3_PosGrad(k)     = m_grad_M_added.block(0, k * m_3N, m_3N, m_3N).cwiseProduct(U_dyad_U).sum();
-        m_t3_PosGrad(k + 1) = m_grad_M_added.block(0, (k + 1) * m_3N, m_3N, m_3N).cwiseProduct(U_dyad_U).sum();
-        m_t3_PosGrad(k + 2) = m_grad_M_added.block(0, (k + 2) * m_3N, m_3N, m_3N).cwiseProduct(U_dyad_U).sum();
-    }
-    /* Coefficient-wise operations for the sub-terms */
-    m_t3_PosGrad *= m_c1_2;
+    // Compute non-inertial part of force
+    m_F_hydroNoInertia.noalias() = MatrixCast(m_t2_VelGrad, m_3N, 1);
+    m_F_hydroNoInertia.noalias() += MatrixCast(m_t3_PosGrad, m_3N, 1);
 
-    /* Compute non-inertial part of force */
-    m_F_hydroNoInertia.noalias() = m_t2_VelGrad;
-    m_F_hydroNoInertia.noalias() += m_t3_PosGrad;
-
-    /* Compute complete potential pressure force */
+    // Compute complete potential pressure force
     m_F_hydro.noalias() = m_t1_Inertia; // Full hydrodynamic force, dim = (3N) x 1
     m_F_hydro.noalias() += m_F_hydroNoInertia;
 }

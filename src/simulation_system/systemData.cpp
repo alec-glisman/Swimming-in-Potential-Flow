@@ -401,19 +401,27 @@ systemData::gradientChangeOfVariableTensors()
         const Eigen::TensorFixedSize<double, Eigen::Sizes<7, 3>> tens_n_D_alpha       = TensorCast(n_D_alpha);
 
         // 1) Compute result_{i m k} = levi_cevita{l i m} n_D_alpha_{k l}
-        Eigen::array<Eigen::IndexPair<int>, 1>                prod_dim_1 = {Eigen::IndexPair<int>(0, 1)};
+        Eigen::array<Eigen::IndexPair<int>, 1> contract_lim_kl = {Eigen::IndexPair<int>(0, 1)}; // {i m k}
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 7>> d_rCrossMat_d_xi;
-        d_rCrossMat_d_xi.device(all_cores_device) = levi_cevita.contract(tens_n_D_alpha, prod_dim_1);
+        d_rCrossMat_d_xi.device(all_cores_device) = levi_cevita.contract(tens_n_D_alpha, contract_lim_kl);
 
         // 2) Compute result_{i j k} = d_rCrossMat_d_xi_{i m k} two_E_body{m j}
-        Eigen::array<Eigen::IndexPair<int>, 1>                prod_dim_2 = {Eigen::IndexPair<int>(1, 0)};
+        Eigen::array<Eigen::IndexPair<int>, 1> contract_imk_mj = {Eigen::IndexPair<int>(1, 0)}; // {i k j}, must shuffle
+        Eigen::array<int, 3>                   swap_last_two_indices({0, 2, 1});
+
+        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 7, 4>> d_rCrossMat_d_xi_times_two_E_body_preshuffle;
+        d_rCrossMat_d_xi_times_two_E_body_preshuffle.device(all_cores_device) =
+            d_rCrossMat_d_xi.contract(tens_two_E_body, contract_imk_mj);
+
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> d_rCrossMat_d_xi_times_two_E_body;
         d_rCrossMat_d_xi_times_two_E_body.device(all_cores_device) =
-            d_rCrossMat_d_xi.contract(tens_two_E_body, prod_dim_2);
+            d_rCrossMat_d_xi_times_two_E_body_preshuffle.shuffle(swap_last_two_indices);
 
         // 3) Compute result_{i j k} = two_r_cross_mat_{i m} Kappa_tilde_{m j k} (same indices as (2))
+        Eigen::array<Eigen::IndexPair<int>, 1> contract_im_mjk = {Eigen::IndexPair<int>(1, 0)}; // {i j k}
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> rCrossMat_times_d_E_body_d_xi;
-        rCrossMat_times_d_E_body_d_xi.device(all_cores_device) = tens_two_r_cross_mat.contract(kappa_tilde, prod_dim_2);
+        rCrossMat_times_d_E_body_d_xi.device(all_cores_device) =
+            tens_two_r_cross_mat.contract(kappa_tilde, contract_im_mjk);
 
         // Compute and output matrix element
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> angular_gradient;
