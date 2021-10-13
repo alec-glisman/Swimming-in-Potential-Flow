@@ -230,9 +230,21 @@ potentialHydrodynamics::calcAddedMassGrad()
         Mij_iz *= gradM1_c1;                                  // sub-term 1 complete
         Mij_iz.noalias() += (gradM1_c2 * r_ij[2]) * r_dyad_r; // sub-term 2 complete
 
+        // TODO: Add units to mass matrix gradient elements
+
         //! Rows to start data access at
         int row_Ri = i_part;
         int row_Rj = j_part;
+
+        // TODO: Columns to start data access at
+
+        // TODO: Layers to start data access at
+
+        // TODO: Length of data to access
+
+        // TODO: Convert Eigen::Matrix --> Eigen::Tensor
+
+        // TODO: Output data
 
         //! Columns for each block to start at: M_{ij, i}
         int col_j_dRi_x = m_system->convert3dIdxTo2d(j_part, i_part, 0, m_3N);
