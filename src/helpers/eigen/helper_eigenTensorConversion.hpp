@@ -26,11 +26,12 @@ template <typename T> using VectorType = Eigen::Matrix<T, Eigen::Dynamic, 1>;
  * @brief Convert between Eigen::Tensor and Eigen::Matrix classes
  *
  * @note example useage:
-            Eigen::Tensor<double, 4> my_rank4(2, 2, 2, 2);
-            my_rank4.setRandom();
-
-            Eigen::MatrixXd          mymatrix = MatrixCast(my_rank4, 4, 4);    // Cast Eigen::Tensor --> Eigen::Matrix
-            Eigen::Tensor<double, 3> my_rank3 = TensorCast(mymatrix, 2, 2, 4); // Cast Eigen::Matrix --> Eigen::Tensor
+ *
+ *     Eigen::Tensor<double, 4> my_rank4(2, 2, 2, 2);
+ *     my_rank4.setRandom();
+ *
+ *     Eigen::MatrixXd          mymatrix = MatrixCast(my_rank4, 4, 4);    // Cast Eigen::Tensor --> Eigen::Matrix
+ *     Eigen::Tensor<double, 3> my_rank3 = TensorCast(mymatrix, 2, 2, 4); // Cast Eigen::Matrix --> Eigen::Tensor
  *
  */
 
