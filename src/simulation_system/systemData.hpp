@@ -115,10 +115,10 @@ class systemData : public std::enable_shared_from_this<systemData>
     };
 
     /**
-     * @brief Function takes in vector in vector cross-product expression: $c = a \times b$
+     * @brief Function takes in vector in vector cross-product expression: @f$ c = a \times b @f$
      *
-     * @param vec Input 3-vector must be $a$ in above equation.
-     * @param mat Matrix representation of $a \times$ operator.
+     * @param vec Input 3-vector must be @f$ a @f$ in above equation.
+     * @param mat Matrix representation of @f$ a \times @f$ operator.
      */
     static void
     crossProdMat(const Eigen::Vector3d& vec, Eigen::Matrix3d& mat)

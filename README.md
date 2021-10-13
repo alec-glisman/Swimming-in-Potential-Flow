@@ -1,18 +1,18 @@
-# Bodies in Potential Flow
+# Bodies in Potential Flow # {#mainpage}
 
-Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible).  
+Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible).
 
 Author: Alec Glisman
 
 ## Software tested
 
-* ZSH: $\geq$ v5.8
-* Intel oneAPI: $\geq$ v2021.1.1
-* CUDA (not currently used): $\geq$ v11.3
-* CMake: $\geq$ v3.16.3
-* GCC: $\geq$ v11.1.0
-* Python (Anaconda): $\geq$ v3.9.5
-* Perl: $\geq$ v5.30.0
+- ZSH: <= v5.8
+- Intel oneAPI: $\geq$ v2021.1.1
+- CUDA (not currently used): $\geq$ v11.3
+- CMake: $\geq$ v3.16.3
+- GCC: $\geq$ v11.1.0
+- Python (Anaconda): $\geq$ v3.9.5
+- Perl: $\geq$ v5.30.0
 
 ## Docker integration
 
@@ -66,12 +66,12 @@ Further information found in `requirements` directory readme.
 
 ### Must install separately
 
-* [Intel MKL](https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html#gs.7owc4e) (oneAPI v2021.1.1): Optimized mathematical instructions
-* [Boost](https://www.boost.org/) (v1.71.0): All-purpose STL extension
-* [Eigen3](https://gitlab.com/libeigen/eigen) (3.4.0): Linear algebra
-* [spdlog](https://github.com/gabime/spdlog) (v1.9.1): Logging
-* [Catch2](https://github.com/catchorg/Catch2) (v2.13.6): Unit testing
+- [Intel MKL](https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html#gs.7owc4e) (oneAPI v2021.1.1): Optimized mathematical instructions
+- [Boost](https://www.boost.org/) (v1.71.0): All-purpose STL extension
+- [Eigen3](https://gitlab.com/libeigen/eigen) (3.4.0): Linear algebra
+- [spdlog](https://github.com/gabime/spdlog) (v1.9.1): Logging
+- [Catch2](https://github.com/catchorg/Catch2) (v2.13.6): Unit testing
 
 ### Integrated into project
 
-* [gsd](https://github.com/glotzerlab/gsd) (v2.4.2): Simulation data output
+- [gsd](https://github.com/glotzerlab/gsd) (v2.4.2): Simulation data output

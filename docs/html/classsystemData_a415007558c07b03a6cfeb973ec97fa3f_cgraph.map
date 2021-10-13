@@ -1,5 +1,0 @@
-<map id="systemData::rigidBodyMotionTensors" name="systemData::rigidBodyMotionTensors">
-<area shape="rect" id="node1" title=" " alt="" coords="5,23,200,65"/>
-<area shape="rect" id="node2" href="$classsystemData.html#a0a77c933b764fb36c64ec5e66011482c" title="Function takes in vector in vector cross&#45;product expression: $c = a \times b$." alt="" coords="248,5,431,32"/>
-<area shape="rect" id="node3" href="$classsystemData.html#a19a83a255eb6f1de4bcfe2ea8e31ffa9" title="Computes the E matrix of quaternion (4&#45;vector) input." alt="" coords="267,56,411,83"/>
-</map>
