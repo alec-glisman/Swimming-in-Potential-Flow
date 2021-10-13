@@ -5,7 +5,7 @@
 #include <potentialHydrodynamics.hpp>
 
 // REVIEW[epic=Debug]: Uncomment line below to prevent all runtime checks from executing in debug
-#define NO_HYDRO_CHECK
+// #define NO_HYDRO_CHECK
 
 potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
 {
@@ -18,35 +18,35 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
     spdlog::get(m_logName)->info("Initializing potential hydrodynamics");
 
     // Variables for for-loop
-    m_num_inter = m_system->numParticles() * (m_system->numParticles() - 1) /
-                  2; // Number of interactions to count
+    m_num_inter = m_system->numParticles() * (m_system->numParticles() - 1) / 2; // Number of interactions to count
     spdlog::get(m_logName)->info("Setting number of interactions to count: {0}", m_num_inter);
 
     // tensor variables
-    m_len_tensor = 3 * m_system->numParticles(); // length of tensor quantities
-    spdlog::get(m_logName)->info("Length of tensor quantities: {0}", m_len_tensor);
+    m_3N = 3 * m_system->numParticles(); // length of tensor quantities
+    spdlog::get(m_logName)->info("Length of tensor quantities: {0}", m_3N);
 
     // set identity matrices
-    m_I3N      = Eigen::MatrixXd::Identity(m_len_tensor, m_len_tensor);
+    m_I3N      = Eigen::MatrixXd::Identity(m_3N, m_3N);
     m_c1_2_I3N = m_c1_2 * m_I3N;
 
     // Initialize mass matrices
-    spdlog::get(m_logName)->info("Initializing mass tensors");
+    spdlog::get(m_logName)->info("Initializing mass matrices");
     m_M_intrinsic = (m_system->particleDensity() * m_unitSphereVol) * m_I3N;
-    m_M_added     = Eigen::MatrixXd::Zero(m_len_tensor, m_len_tensor);
+    m_M_added     = Eigen::MatrixXd::Zero(m_3N, m_3N);
 
     m_M_total.noalias() = m_M_added;
     m_M_total.noalias() += m_M_intrinsic;
 
-    m_grad_M_added = Eigen::MatrixXd::Zero(m_len_tensor, m_len_tensor * m_len_tensor);
+    spdlog::get(m_logName)->info("Initializing mass tensors");
+    m_grad_M_added = Eigen::Tensor<double, 3>(m_3N, m_3N, m_3N);
 
     // Initialize force vectors
     spdlog::get(m_logName)->info("Initializing hydrodynamic force tensors");
-    m_F_hydro          = Eigen::VectorXd::Zero(m_len_tensor);
-    m_F_hydroNoInertia = Eigen::VectorXd::Zero(m_len_tensor);
-    m_t1_Inertia       = Eigen::VectorXd::Zero(m_len_tensor);
-    m_t2_VelGrad       = Eigen::VectorXd::Zero(m_len_tensor);
-    m_t3_PosGrad       = Eigen::VectorXd::Zero(m_len_tensor);
+    m_F_hydro          = Eigen::VectorXd::Zero(m_3N);
+    m_F_hydroNoInertia = Eigen::VectorXd::Zero(m_3N);
+    m_t1_Inertia       = Eigen::VectorXd::Zero(m_3N);
+    m_t2_VelGrad       = Eigen::VectorXd::Zero(m_3N);
+    m_t3_PosGrad       = Eigen::VectorXd::Zero(m_3N);
 
     // Assign particle pair information
     spdlog::get(m_logName)->info("Initializing particle pair information tensors");
@@ -126,8 +126,7 @@ potentialHydrodynamics::calcParticleDistances()
         m_r_mag_ab[i] = m_r_ab.col(i).norm(); //! [1]; |r| between 2 particles
 
 #if !defined(NDEBUG) && !defined(NO_HYDRO_CHECKS)
-        spdlog::get(m_logName)->critical("Checking distance between pairs {0} & {1}", m_alphaVec[i],
-                                         m_betaVec[i]);
+        spdlog::get(m_logName)->critical("Checking distance between pairs {0} & {1}", m_alphaVec[i], m_betaVec[i]);
         spdlog::get(m_logName)->critical("Interparticle distance is", m_r_mag_ab[i]);
         spdlog::get(m_logName)->flush();
 #endif
@@ -138,7 +137,7 @@ void
 potentialHydrodynamics::calcAddedMass()
 {
     // set matrices to zero
-    m_M_added.setZero(m_len_tensor, m_len_tensor);
+    m_M_added.setZero(m_3N, m_3N);
 
     /* Fill off-diagonal elements (without units ) */
     /* NOTE: Fill Mass matrix elements one (3 x 3) block at a time (matrix elements between
@@ -178,7 +177,7 @@ void
 potentialHydrodynamics::calcAddedMassGrad()
 {
     // set matrices to zero
-    m_grad_M_added.setZero(m_len_tensor, m_len_tensor * m_len_tensor);
+    m_grad_M_added.setZero();
 
     /* NOTE: Fill Mass matrix elements one (3 x 3) block at a time (matrix elements between
      * particles \alpha and \beta) */
@@ -193,12 +192,9 @@ potentialHydrodynamics::calcAddedMassGrad()
         double          r_mag_ij = m_r_mag_ab[k]; //! [1]; |r| between 2 particles
 
         //! Matrices to use in Calculation
-        Eigen::Matrix3d delta_Ri_x =
-            Eigen::Matrix3d::Zero(); //! (\delta_{j x} r_i) + (\delta_{i x} r_j)
-        Eigen::Matrix3d delta_Ri_y =
-            Eigen::Matrix3d::Zero(); //! (\delta_{j y} r_i) + (\delta_{i y} r_j)
-        Eigen::Matrix3d delta_Ri_z =
-            Eigen::Matrix3d::Zero(); //! (\delta_{j z} r_i) + (\delta_{i z} r_j)
+        Eigen::Matrix3d delta_Ri_x = Eigen::Matrix3d::Zero(); //! (\delta_{j x} r_i) + (\delta_{i x} r_j)
+        Eigen::Matrix3d delta_Ri_y = Eigen::Matrix3d::Zero(); //! (\delta_{j y} r_i) + (\delta_{i y} r_j)
+        Eigen::Matrix3d delta_Ri_z = Eigen::Matrix3d::Zero(); //! (\delta_{j z} r_i) + (\delta_{i z} r_j)
 
         /* (\delta_{j x} r_i) Adds all components of \bm{r} as a column vector to the first column
          * (j=x) The indexing comes from a M_{i j, k} index scheme, where k=x in this case */
@@ -239,24 +235,24 @@ potentialHydrodynamics::calcAddedMassGrad()
         int row_Rj = j_part;
 
         //! Columns for each block to start at: M_{ij, i}
-        int col_j_dRi_x = m_system->convert3dIdxTo2d(j_part, i_part, 0, m_len_tensor);
-        int col_j_dRi_y = m_system->convert3dIdxTo2d(j_part, i_part, 1, m_len_tensor);
-        int col_j_dRi_z = m_system->convert3dIdxTo2d(j_part, i_part, 2, m_len_tensor);
+        int col_j_dRi_x = m_system->convert3dIdxTo2d(j_part, i_part, 0, m_3N);
+        int col_j_dRi_y = m_system->convert3dIdxTo2d(j_part, i_part, 1, m_3N);
+        int col_j_dRi_z = m_system->convert3dIdxTo2d(j_part, i_part, 2, m_3N);
 
         //! M_{ij, j} elements
-        int col_j_dRj_x = m_system->convert3dIdxTo2d(j_part, j_part, 0, m_len_tensor);
-        int col_j_dRj_y = m_system->convert3dIdxTo2d(j_part, j_part, 1, m_len_tensor);
-        int col_j_dRj_z = m_system->convert3dIdxTo2d(j_part, j_part, 2, m_len_tensor);
+        int col_j_dRj_x = m_system->convert3dIdxTo2d(j_part, j_part, 0, m_3N);
+        int col_j_dRj_y = m_system->convert3dIdxTo2d(j_part, j_part, 1, m_3N);
+        int col_j_dRj_z = m_system->convert3dIdxTo2d(j_part, j_part, 2, m_3N);
 
         //! M_{ji, j} elements
-        int col_i_dRj_x = m_system->convert3dIdxTo2d(i_part, j_part, 0, m_len_tensor);
-        int col_i_dRj_y = m_system->convert3dIdxTo2d(i_part, j_part, 1, m_len_tensor);
-        int col_i_dRj_z = m_system->convert3dIdxTo2d(i_part, j_part, 2, m_len_tensor);
+        int col_i_dRj_x = m_system->convert3dIdxTo2d(i_part, j_part, 0, m_3N);
+        int col_i_dRj_y = m_system->convert3dIdxTo2d(i_part, j_part, 1, m_3N);
+        int col_i_dRj_z = m_system->convert3dIdxTo2d(i_part, j_part, 2, m_3N);
 
         //! M_{ji, i} elements
-        int col_i_dRi_x = m_system->convert3dIdxTo2d(i_part, i_part, 0, m_len_tensor);
-        int col_i_dRi_y = m_system->convert3dIdxTo2d(i_part, i_part, 1, m_len_tensor);
-        int col_i_dRi_z = m_system->convert3dIdxTo2d(i_part, i_part, 2, m_len_tensor);
+        int col_i_dRi_x = m_system->convert3dIdxTo2d(i_part, i_part, 0, m_3N);
+        int col_i_dRi_y = m_system->convert3dIdxTo2d(i_part, i_part, 1, m_3N);
+        int col_i_dRi_z = m_system->convert3dIdxTo2d(i_part, i_part, 2, m_3N);
 
         //! M_{ij, i}: Matrix Element (Anti-Symmetric upon exchange of derivative, Symmetric upon
         //! exchange of first two indices)
@@ -298,41 +294,31 @@ void
 potentialHydrodynamics::calcHydroForces()
 {
     // calculate requisite configurational tensors
-    Eigen::MatrixXd U_dyad_U =
-        m_system->velocitiesParticles() * m_system->velocitiesParticles().transpose();
+    Eigen::MatrixXd U_dyad_U = m_system->velocitiesParticles() * m_system->velocitiesParticles().transpose();
 
     //! Term 1: - M_kj * U_dot_j
     m_t1_Inertia.noalias() = -m_M_total * m_system->accelerationsParticles(); //! dim = (3N) x 1
 
     //! Term 2: - d(M_kj)/d(R_l) * U_l * U_j;
-    Eigen::MatrixXd hat_dMkj = Eigen::MatrixXd::Zero(m_len_tensor, m_len_tensor);
+    Eigen::MatrixXd hat_dMkj = Eigen::MatrixXd::Zero(m_3N, m_3N);
     // Reduce along derivative vars (index: l) via matrix-vector product for each derivative
     // variable
-    for (int l = 0; l < m_len_tensor; l += 1)
+    for (int l = 0; l < m_3N; l += 1)
     {
-        hat_dMkj.noalias() += m_system->velocitiesParticles()(l) *
-                              m_grad_M_added.block(0, l * m_len_tensor, m_len_tensor, m_len_tensor);
+        hat_dMkj.noalias() += m_system->velocitiesParticles()(l) * m_grad_M_added.block(0, l * m_3N, m_3N, m_3N);
     }
     // Reduce along gradient (index: l) via matrix-vector product
     m_t2_VelGrad.noalias() = -hat_dMkj * m_system->velocitiesParticles();
 
     //! Term 3: (1/2) U_i * d(M_ij)/d(R_k) * U_j
-    m_t3_PosGrad.noalias() = Eigen::VectorXd::Zero(m_len_tensor);
+    m_t3_PosGrad.noalias() = Eigen::VectorXd::Zero(m_3N);
 
-    for (int k = 0; k < m_len_tensor; k += 3)
+    for (int k = 0; k < m_3N; k += 3)
     { //! k: derivative variable, 3N loops
         // Unroll loop slightly (do 3 entries at a time)
-        m_t3_PosGrad(k) = m_grad_M_added.block(0, k * m_len_tensor, m_len_tensor, m_len_tensor)
-                              .cwiseProduct(U_dyad_U)
-                              .sum();
-        m_t3_PosGrad(k + 1) =
-            m_grad_M_added.block(0, (k + 1) * m_len_tensor, m_len_tensor, m_len_tensor)
-                .cwiseProduct(U_dyad_U)
-                .sum();
-        m_t3_PosGrad(k + 2) =
-            m_grad_M_added.block(0, (k + 2) * m_len_tensor, m_len_tensor, m_len_tensor)
-                .cwiseProduct(U_dyad_U)
-                .sum();
+        m_t3_PosGrad(k)     = m_grad_M_added.block(0, k * m_3N, m_3N, m_3N).cwiseProduct(U_dyad_U).sum();
+        m_t3_PosGrad(k + 1) = m_grad_M_added.block(0, (k + 1) * m_3N, m_3N, m_3N).cwiseProduct(U_dyad_U).sum();
+        m_t3_PosGrad(k + 2) = m_grad_M_added.block(0, (k + 2) * m_3N, m_3N, m_3N).cwiseProduct(U_dyad_U).sum();
     }
     /* Coefficient-wise operations for the sub-terms */
     m_t3_PosGrad *= m_c1_2;
