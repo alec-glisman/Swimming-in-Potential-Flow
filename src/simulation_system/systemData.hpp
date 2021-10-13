@@ -37,6 +37,7 @@ class GSDUtil;
 
 /**
  * @class systemData
+ *
  * @brief Class contains all data structures relevant to the simulation framework.
  * Note that after construction, `initializeData()` must be called to properly load
  * data from a GSD file.
@@ -64,8 +65,8 @@ class systemData : public std::enable_shared_from_this<systemData>
      *
      * @details Many functions are called and there is a dependency chain between them. All function calls can be run in
      * any order besides gradientChangeOfVariableTensors(), which depends on rigidBodyMotionTensors() being run first.
-     * This is assuming the Udwadia linear constraint system (\f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} = \mathbf{b}
-     * \f$ ) is independent of configuration.
+     * This is assuming the Udwadia linear constraint system (@f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} = \mathbf{b}
+     * @f$ ) is independent of configuration.
      *
      * @param time (dimensionless) simulation time to update parameters.
      */
@@ -156,9 +157,9 @@ class systemData : public std::enable_shared_from_this<systemData>
     double m_sys_spec_R_avg{-1.0};       ///< Time-average spatial separation between a particle pair during oscillation
 
     /* ANCHOR: Udwadia constraint linear system */
-    ///\[M x N\] linear operator defining relationship between constraints on \f$ \ddot{\boldsymbol{\xi}} \f$.
+    /// \[M x N\] linear operator defining relationship between constraints on @f$ \ddot{\boldsymbol{\xi}} @f$.
     Eigen::MatrixXd m_Udwadia_A;
-    ///\[M x 1\] Result of \f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} \f$
+    /// \[M x 1\] Result of @f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} @f$
     Eigen::VectorXd m_Udwadia_b;
 
     /* ANCHOR: Tensors set in constructor */
@@ -167,28 +168,28 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::Matrix3d       m_I_tilde;                             ///< \[3 x 3\] reflection about z-axis tensor
 
     // general-use tensors
-    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>>
-        levi_cevita; ///< \[3 x 3 x 3\] (skew-symmetric) 3rd order identity tensor
-    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> kappa_tilde; ///< \[3 x 4 x 7\] \f$ \nabla_{\xi_{\alpha}}
-                                                                       ///< \boldsymbol{E}{(\boldsymbol{\theta})} \f$
+    /// \[3 x 3 x 3\] (skew-symmetric) 3rd order identity tensor
+    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> levi_cevita;
+    /// \[3 x 4 x 7\] @f$ \nabla_{\xi_{\alpha}} \boldsymbol{E}{(\boldsymbol{\theta})} @f$
+    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> kappa_tilde;
 
     /* ANCHOR: rigid body motion tensors */
-    ///\[6M x 3N\] \f$ \boldsymbol{\Sigma} \f$ rigid body motion connectivity tensor
+    /// \[6M x 3N\] @f$ \boldsymbol{\Sigma} @f$ rigid body motion connectivity tensor
     Eigen::MatrixXd m_rbm_conn;
-    ///\[6M x 7M\] \f$ \boldsymbol{\Psi} \f$ converts linear/quaternion body velocity D.o.F. to linear/angular
+    /// \[6M x 7M\] @f$ \boldsymbol{\Psi} @f$ converts linear/quaternion body velocity D.o.F. to linear/angular
     /// velocity D.o.F.
     Eigen::MatrixXd m_psi_conv_quat_ang;
-    ///\[3N x 7M\] \f$ \boldsymbol{C} \f$ converts linear/quaternion body velocity D.o.F. to linear particle
-    /// velocities (NOTE: this was A in written work)
+    /// \[3N x 7M\] @f$ \boldsymbol{C} @f$ converts linear/quaternion body velocity D.o.F. to linear particle
+    /// velocities (NOTE: this was \f$ \boldsymbol{A} \f$ in written work)
     Eigen::MatrixXd m_C_conv_quat_part;
-    ///\[3N x 7M x 7M\] \f$ \nabla_{\xi} \boldsymbol{C} \f$
+    /// \[3N x 7M x 7M\] @f$ \nabla_{\xi} \boldsymbol{C} @f$
     Eigen::Tensor<double, 3> m_C_conv_quat_part_grad;
 
     /* ANCHOR: gradient tensors in E.o.M. */
 
     // change of gradient variable tensors
-    ///\[7M x 3N\] converts particle position D.o.F. to body position/quaternion D.o.F. (NOTE: this was \beta in
-    /// written work)
+    /// \[7M x 3N\] converts particle position D.o.F. to body position/quaternion D.o.F. (NOTE: this was
+    /// @f$ \boldsymbol{\beta} @f$ in written work)
     Eigen::MatrixXd m_D_conv_quat_part;
 
     // linear combinations of gradient of rbm and C
@@ -224,7 +225,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     int m_num_constraints{-1}; ///< = M
 
     /* ANCHOR: integrator parameters */
-    double m_dt{-1.0};             ///< (dimensionless) integration \f$ \Delta t \f$
+    double m_dt{-1.0};             ///< (dimensionless) integration @f$ \Delta t @f$
     double m_tf{-1.0};             ///< (dimensionless) final simulation time
     double m_t{0.0};               ///< (dimensionless) current simulation time
     double m_tau{-1.0};            ///< simulation system characteristic timescale
@@ -236,8 +237,8 @@ class systemData : public std::enable_shared_from_this<systemData>
     double m_particle_density{-1}; ///< mass density of solid spheres
 
     /* ANCHOR: potential parameters */
-    double m_wca_epsilon{-1}; ///< \f$ \epsilon_{\mathrm{WCA}} \f$
-    double m_wca_sigma{-1};   ///< \f$ \sigma_{\mathrm{WCA}} \f$
+    double m_wca_epsilon{-1}; ///< @f$ \epsilon_{\mathrm{WCA}} @f$
+    double m_wca_sigma{-1};   ///< @f$ \sigma_{\mathrm{WCA}} @f$
 
     /* SECTION: Setters and getters */
   public:

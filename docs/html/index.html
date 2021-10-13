@@ -96,7 +96,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="textblock"><p ><a class="anchor" id="md_README"></a> Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible). <br  />
 </p>
 <p >Author: Alec Glisman</p>
-<h1><a class="anchor" id="autotoc_md2"></a>
+<h1><a class="anchor" id="autotoc_md3"></a>
 Software tested</h1>
 <ul>
 <li>ZSH: $\geq$ v5.8</li>
@@ -107,14 +107,14 @@ Software tested</h1>
 <li>Python (Anaconda): $\geq$ v3.9.5</li>
 <li>Perl: $\geq$ v5.30.0</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md3"></a>
+<h1><a class="anchor" id="autotoc_md4"></a>
 Docker integration</h1>
 <p >The project can be built and run inside a Docker container. The <code>docker-compose.yml</code> file will specify all build options and <code>Dockerfile</code> builds the image using a Ubuntu 20.04 base image. Data I/O is handled automatically with an attached volume.</p>
 <p >Commands:</p>
 <div class="fragment"><div class="line"> {[shell]}</div>
 <div class="line">docker-compose --env-file [docker_environment_file] up --detach  # build</div>
 <div class="line">docker-compose down         # tear down</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md4"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
 Project structure: links to relevant readme files</h1>
 <p ><code>.vscode</code>: <a href=".vscode/">Files relevant for developing the project in VSCode.</a> <code>data_tag</code>: Data relevant for validating results for a selection of git tags. <br  />
  <code>include</code>: External dependencies required for the project. Further information can be found at the end of this readme. <br  />
@@ -125,18 +125,18 @@ Project structure: links to relevant readme files</h1>
  <code>scripts</code>: Perl scripts to run many simulations simultaneously and analyze the results. <br  />
  <code>src</code>: C++ code for the simulation. <br  />
  <code>tests</code>: <a class="el" href="/Users/alecglisman/VSCodeProjects/bodies-in-potential-flow/tests/README.md#md_tests_README">C++ code containing unit tests for simulation.</a></p>
-<h1><a class="anchor" id="autotoc_md5"></a>
+<h1><a class="anchor" id="autotoc_md6"></a>
 Data I/O</h1>
 <p >All data is input and output from simulation using the <a href="https://gsd.readthedocs.io/en/stable/index.html">HOOMD GSD format</a>. The <a href="https://gsd.readthedocs.io/en/stable/python-module-gsd.fl.html">schema</a> is well-documented.</p>
 <p >I will be making a few modifications and make extensive use of the <code>log</code> section of the schema to save data I desire. Many variables are stored as floats, but I output a number of variables as doubles in the logs section for accuracy in further computations.</p>
 <p >Frame 0 is created using a Python script and passed into the C++ simulation. The simulation then updates parameters (such as kinematics), and outputs the "true" initial frame as Frame 1. For this reason, there could be issues when loading data from frame 0 and any data that is not an input parameter should not be used for further work.</p>
-<h1><a class="anchor" id="autotoc_md6"></a>
+<h1><a class="anchor" id="autotoc_md7"></a>
 Modifications for other systems</h1>
 <p >The simulation system can be easily adapted for other configurations and constraints. The code that must be changed inside the C++ framework is tagged with comments of the form <code>// REVIEW[epic=Change,order=5]: Change constraint linear system for each system</code>. The relevant class is the <code><a class="el" href="classrungeKutta4.html">rungeKutta4</a></code> integration class. Of course, separate Python scripts for GSD initialization and numerical analysis must also be generated.</p>
-<h1><a class="anchor" id="autotoc_md7"></a>
+<h1><a class="anchor" id="autotoc_md8"></a>
 External dependencies</h1>
 <p >Further information found in <code>requirements</code> directory readme.</p>
-<h2><a class="anchor" id="autotoc_md8"></a>
+<h2><a class="anchor" id="autotoc_md9"></a>
 Must install separately</h2>
 <ul>
 <li><a href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html#gs.7owc4e">Intel MKL</a> (oneAPI v2021.1.1): Optimized mathematical instructions</li>
@@ -145,7 +145,7 @@ Must install separately</h2>
 <li><a href="https://github.com/gabime/spdlog">spdlog</a> (v1.9.1): Logging</li>
 <li><a href="https://github.com/catchorg/Catch2">Catch2</a> (v2.13.6): Unit testing</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md9"></a>
+<h2><a class="anchor" id="autotoc_md10"></a>
 Integrated into project</h2>
 <ul>
 <li><a href="https://github.com/glotzerlab/gsd">gsd</a> (v2.4.2): Simulation data output </li>
@@ -156,7 +156,7 @@ Integrated into project</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Oct 13 2021 09:14:00 for bodies-in-potential-flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Wed Oct 13 2021 09:23:37 for bodies-in-potential-flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>
