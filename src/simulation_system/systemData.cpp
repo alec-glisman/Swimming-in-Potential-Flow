@@ -45,34 +45,34 @@ systemData::initializeData()
     m_num_constraints = m_num_bodies;     // 1 unit quaternion constraint per body
 
     // initialize general-use tensors
-    levi_cevita.setZero();
+    m_levi_cevita.setZero();
 
-    levi_cevita(1, 2, 0) = 1;
-    levi_cevita(2, 1, 0) = -1;
+    m_levi_cevita(1, 2, 0) = 1;
+    m_levi_cevita(2, 1, 0) = -1;
 
-    levi_cevita(0, 2, 1) = -1;
-    levi_cevita(2, 0, 1) = 1;
+    m_levi_cevita(0, 2, 1) = -1;
+    m_levi_cevita(2, 0, 1) = 1;
 
-    levi_cevita(0, 1, 2) = 1;
-    levi_cevita(1, 0, 2) = -1;
+    m_levi_cevita(0, 1, 2) = 1;
+    m_levi_cevita(1, 0, 2) = -1;
 
-    kappa_tilde.setZero();
+    m_kappa_tilde.setZero();
 
-    kappa_tilde(0, 1, 3) = 1;
-    kappa_tilde(1, 2, 3) = 1;
-    kappa_tilde(2, 3, 3) = 1;
+    m_kappa_tilde(0, 1, 3) = 1;
+    m_kappa_tilde(1, 2, 3) = 1;
+    m_kappa_tilde(2, 3, 3) = 1;
 
-    kappa_tilde(0, 0, 4) = -1;
-    kappa_tilde(1, 3, 4) = -1;
-    kappa_tilde(2, 2, 4) = 1;
+    m_kappa_tilde(0, 0, 4) = -1;
+    m_kappa_tilde(1, 3, 4) = -1;
+    m_kappa_tilde(2, 2, 4) = 1;
 
-    kappa_tilde(0, 3, 5) = 1;
-    kappa_tilde(1, 0, 5) = -1;
-    kappa_tilde(2, 1, 5) = -1;
+    m_kappa_tilde(0, 3, 5) = 1;
+    m_kappa_tilde(1, 0, 5) = -1;
+    m_kappa_tilde(2, 1, 5) = -1;
 
-    kappa_tilde(0, 2, 6) = -1;
-    kappa_tilde(1, 1, 6) = 1;
-    kappa_tilde(2, 0, 6) = -1;
+    m_kappa_tilde(0, 2, 6) = -1;
+    m_kappa_tilde(1, 1, 6) = 1;
+    m_kappa_tilde(2, 0, 6) = -1;
 
     // initialize kinematic vectors
     m_positions_locater_particles          = Eigen::VectorXd::Zero(3 * m_num_bodies);
@@ -403,7 +403,7 @@ systemData::gradientChangeOfVariableTensors()
         // 1) Compute result_{i m k} = levi_cevita{l i m} n_D_alpha_{k l}
         Eigen::array<Eigen::IndexPair<int>, 1> contract_lim_kl = {Eigen::IndexPair<int>(0, 1)}; // {i m k}
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 7>> d_rCrossMat_d_xi;
-        d_rCrossMat_d_xi.device(all_cores_device) = levi_cevita.contract(tens_n_D_alpha, contract_lim_kl);
+        d_rCrossMat_d_xi.device(all_cores_device) = m_levi_cevita.contract(tens_n_D_alpha, contract_lim_kl);
 
         // 2) Compute result_{i j k} = d_rCrossMat_d_xi_{i m k} two_E_body{m j}
         Eigen::array<Eigen::IndexPair<int>, 1> contract_imk_mj = {Eigen::IndexPair<int>(1, 0)}; // {i k j}, must shuffle
@@ -421,7 +421,7 @@ systemData::gradientChangeOfVariableTensors()
         Eigen::array<Eigen::IndexPair<int>, 1> contract_im_mjk = {Eigen::IndexPair<int>(1, 0)}; // {i j k}
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> rCrossMat_times_d_E_body_d_xi;
         rCrossMat_times_d_E_body_d_xi.device(all_cores_device) =
-            tens_two_r_cross_mat.contract(kappa_tilde, contract_im_mjk);
+            tens_two_r_cross_mat.contract(m_kappa_tilde, contract_im_mjk);
 
         // Compute and output matrix element
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> angular_gradient;

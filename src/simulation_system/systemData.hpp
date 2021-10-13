@@ -169,9 +169,9 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     // general-use tensors
     /// \[3 x 3 x 3\] (skew-symmetric) 3rd order identity tensor
-    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> levi_cevita;
+    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> m_levi_cevita;
     /// \[3 x 4 x 7\] @f$ \nabla_{\xi_{\alpha}} \boldsymbol{E}{(\boldsymbol{\theta})} @f$
-    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> kappa_tilde;
+    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> m_kappa_tilde;
 
     /* ANCHOR: rigid body motion tensors */
     /// \[6M x 3N\] @f$ \boldsymbol{\Sigma} @f$ rigid body motion connectivity tensor
