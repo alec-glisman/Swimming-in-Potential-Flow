@@ -54,20 +54,20 @@
   - [ ] Compute general tensors
     - [x] $\bm \epsilon$
     - [x] $\tilde{\bm{\kappa}}$
-    - [ ] $\bm{C}^{(i)}$
-    - [ ] $\bm{\beta}$
-    - [ ] $\tilde{\bm{\epsilon}}$
-  - [ ] Calculate rigid body motion tensors
+    - [x] $\bm{C}^{(i)}$
+    - [x] $\bm{\beta}$
+    - [x] $\tilde{\bm{\epsilon}}$
+  - [x] Calculate rigid body motion tensors
     - [x] $\bm{\Sigma}$
     - [x] $\bm{A}$
-    - [ ] $\nabla_{\xi} \bm{A}$
+    - [x] $\nabla_{\xi} \bm{A}$
   - [x] Move 3rd axis indexing function to data from hydrodynamics
   - [x] Move crossProduct matrix function from hydrodynamics
 
 - General-use functions for hydrodynamics
 
   - [ ] Update $\nabla_{R} \bm{M}$ calculation with $\bm{\beta}$
-  - [ ] Make $\nabla_{R} \bm{M}$ 3rd order tensor
+  - [x] Make $\nabla_{R} \bm{M}$ 3rd order tensor
   - [ ] Compute the $\bm{N}^{(i)}$ 3rd order tensors and $\tilde{\mathbf{M}}$ 2nd order tensors
   - [ ] Update how hydrodynamic forces are calculated
 
