@@ -144,16 +144,16 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     /* ANCHOR: eigen parallelization parameters */
     int m_num_physical_cores = std::thread::hardware_concurrency();
-    //!< number of threads in pool for eigen calculations (set to number of physical cores on machine)
+    ///< number of threads in pool for eigen calculations (set to number of physical cores on machine)
     Eigen::ThreadPool m_thread_pool = Eigen::ThreadPool(m_num_physical_cores);
 
     /* REVIEW[epic=Change,order=0]: System specific data, change parameters stored for different
      * systems */
     // Swimming kinematic constraints
-    double m_sys_spec_U0{-1.0};          //!< velocity amplitude of kinematic constraint between particle pairs
-    double m_sys_spec_omega{-1.0};       //!< oscillation frequency
-    double m_sys_spec_phase_shift{-1.0}; //!< phase shift (in radians) between oscillators
-    double m_sys_spec_R_avg{-1.0};       //!< Time-average spatial separation between a particle pair during oscillation
+    double m_sys_spec_U0{-1.0};          ///< velocity amplitude of kinematic constraint between particle pairs
+    double m_sys_spec_omega{-1.0};       ///< oscillation frequency
+    double m_sys_spec_phase_shift{-1.0}; ///< phase shift (in radians) between oscillators
+    double m_sys_spec_R_avg{-1.0};       ///< Time-average spatial separation between a particle pair during oscillation
 
     /* ANCHOR: Udwadia constraint linear system */
     ///\[M x N\] linear operator defining relationship between constraints on \f$ \ddot{\boldsymbol{\xi}} \f$.
@@ -163,14 +163,14 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     /* ANCHOR: Tensors set in constructor */
     // "identity" tensors
-    const Eigen::Matrix3d m_I = Eigen::Matrix3d::Identity(3, 3); //!< \[3 x 3\] 2nd order identity tensor
-    Eigen::Matrix3d       m_I_tilde;                             //!< \[3 x 3\] reflection about z-axis tensor
+    const Eigen::Matrix3d m_I = Eigen::Matrix3d::Identity(3, 3); ///< \[3 x 3\] 2nd order identity tensor
+    Eigen::Matrix3d       m_I_tilde;                             ///< \[3 x 3\] reflection about z-axis tensor
 
     // general-use tensors
     Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>>
-        levi_cevita; //!< \[3 x 3 x 3\] (skew-symmetric) 3rd order identity tensor
-    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> kappa_tilde; //!< \[3 x 4 x 7\] \f$ \nabla_{\xi_{\alpha}}
-                                                                       //!< \boldsymbol{E}{(\boldsymbol{\theta})} \f$
+        levi_cevita; ///< \[3 x 3 x 3\] (skew-symmetric) 3rd order identity tensor
+    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> kappa_tilde; ///< \[3 x 4 x 7\] \f$ \nabla_{\xi_{\alpha}}
+                                                                       ///< \boldsymbol{E}{(\boldsymbol{\theta})} \f$
 
     /* ANCHOR: rigid body motion tensors */
     ///\[6M x 3N\] \f$ \boldsymbol{\Sigma} \f$ rigid body motion connectivity tensor
@@ -192,23 +192,23 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::MatrixXd m_D_conv_quat_part;
 
     // linear combinations of gradient of rbm and C
-    Eigen::Tensor<double, 3> m_N1; //!< \[3N x 3N x 7M\] TODO
-    Eigen::Tensor<double, 3> m_N2; //!< \[7M x 3N x 7M\] TODO
-    Eigen::Tensor<double, 3> m_N3; //!< \[7M x 7M x 7M\] TODO
+    Eigen::Tensor<double, 3> m_N1; ///< \[3N x 3N x 7M\] TODO
+    Eigen::Tensor<double, 3> m_N2; ///< \[7M x 3N x 7M\] TODO
+    Eigen::Tensor<double, 3> m_N3; ///< \[7M x 7M x 7M\] TODO
 
     /* ANCHOR: kinematic vectors */
-    Eigen::VectorXd m_positions_bodies;     //!< \[7M x 1\] both linear and angular D.o.F.
-    Eigen::VectorXd m_velocities_bodies;    //!< \[7M x 1\] both linear and angular D.o.F.
-    Eigen::VectorXd m_accelerations_bodies; //!< \[7M x 1\] both linear and angular D.o.F.
+    Eigen::VectorXd m_positions_bodies;     ///< \[7M x 1\] both linear and angular D.o.F.
+    Eigen::VectorXd m_velocities_bodies;    ///< \[7M x 1\] both linear and angular D.o.F.
+    Eigen::VectorXd m_accelerations_bodies; ///< \[7M x 1\] both linear and angular D.o.F.
 
-    Eigen::VectorXd m_orientations_particles;  //!< \[4N x 1\]
-    Eigen::VectorXd m_positions_particles;     //!< \[3N x 1\]
-    Eigen::VectorXd m_velocities_particles;    //!< \[3N x 1\]
-    Eigen::VectorXd m_accelerations_particles; //!< \[3N x 1\]
+    Eigen::VectorXd m_orientations_particles;  ///< \[4N x 1\]
+    Eigen::VectorXd m_positions_particles;     ///< \[3N x 1\]
+    Eigen::VectorXd m_velocities_particles;    ///< \[3N x 1\]
+    Eigen::VectorXd m_accelerations_particles; ///< \[3N x 1\]
 
-    Eigen::VectorXd m_positions_locater_particles;          //!< \[3M x 1\]
-    Eigen::VectorXd m_velocities_particles_articulation;    //!< \[3N x 1\]
-    Eigen::VectorXd m_accelerations_particles_articulation; //!< \[3N x 1\]
+    Eigen::VectorXd m_positions_locater_particles;          ///< \[3M x 1\]
+    Eigen::VectorXd m_velocities_particles_articulation;    ///< \[3N x 1\]
+    Eigen::VectorXd m_accelerations_particles_articulation; ///< \[3N x 1\]
 
     /* ANCHOR: particle parameters */
     ///\[N x 1\] REVIEW[epic=assumptions] 1) {0: constrained particle, 1: locater particle}.
@@ -217,27 +217,27 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::VectorXi m_particle_type_id;
 
     /* ANCHOR: degrees of freedom */
-    int m_num_spatial_dim{-1}; //!< = 3
-    int m_num_particles{-1};   //!< = N
-    int m_num_bodies{-1};      //!< = M
-    int m_num_DoF{-1};         //!< = 6M
-    int m_num_constraints{-1}; //!< = M
+    int m_num_spatial_dim{-1}; ///< = 3
+    int m_num_particles{-1};   ///< = N
+    int m_num_bodies{-1};      ///< = M
+    int m_num_DoF{-1};         ///< = 6M
+    int m_num_constraints{-1}; ///< = M
 
     /* ANCHOR: integrator parameters */
-    double m_dt{-1.0};             //!< (dimensionless) integration \f$ \Delta t \f$
-    double m_tf{-1.0};             //!< (dimensionless) final simulation time
-    double m_t{0.0};               //!< (dimensionless) current simulation time
-    double m_tau{-1.0};            //!< simulation system characteristic timescale
-    int    m_timestep{-1};         //!< current simulation timestep (iteration)
-    int    m_num_steps_output{-1}; //!< how many simulation steps to output to GSD
+    double m_dt{-1.0};             ///< (dimensionless) integration \f$ \Delta t \f$
+    double m_tf{-1.0};             ///< (dimensionless) final simulation time
+    double m_t{0.0};               ///< (dimensionless) current simulation time
+    double m_tau{-1.0};            ///< simulation system characteristic timescale
+    int    m_timestep{-1};         ///< current simulation timestep (iteration)
+    int    m_num_steps_output{-1}; ///< how many simulation steps to output to GSD
 
     /* ANCHOR: material parameters */
-    double m_fluid_density{-1};    //!< mass density of fluid
-    double m_particle_density{-1}; //!< mass density of solid spheres
+    double m_fluid_density{-1};    ///< mass density of fluid
+    double m_particle_density{-1}; ///< mass density of solid spheres
 
     /* ANCHOR: potential parameters */
-    double m_wca_epsilon{-1}; //!< \f$ \epsilon_{\mathrm{WCA}} \f$
-    double m_wca_sigma{-1};   //!< \f$ \sigma_{\mathrm{WCA}} \f$
+    double m_wca_epsilon{-1}; ///< \f$ \epsilon_{\mathrm{WCA}} \f$
+    double m_wca_sigma{-1};   ///< \f$ \sigma_{\mathrm{WCA}} \f$
 
     /* SECTION: Setters and getters */
   public:

@@ -26,20 +26,20 @@ var NAVTREE =
 [
   [ "bodies-in-potential-flow", "index.html", [
     [ "Bodies in Potential Flow", "index.html", [
-      [ "Software tested", "index.html#autotoc_md3", null ],
-      [ "Docker integration", "index.html#autotoc_md4", null ],
-      [ "Project structure: links to relevant readme files", "index.html#autotoc_md5", null ],
-      [ "Data I/O", "index.html#autotoc_md6", null ],
-      [ "Modifications for other systems", "index.html#autotoc_md7", null ],
-      [ "External dependencies", "index.html#autotoc_md8", [
-        [ "Must install separately", "index.html#autotoc_md9", null ],
-        [ "Integrated into project", "index.html#autotoc_md10", null ]
+      [ "Software tested", "index.html#autotoc_md2", null ],
+      [ "Docker integration", "index.html#autotoc_md3", null ],
+      [ "Project structure: links to relevant readme files", "index.html#autotoc_md4", null ],
+      [ "Data I/O", "index.html#autotoc_md5", null ],
+      [ "Modifications for other systems", "index.html#autotoc_md6", null ],
+      [ "External dependencies", "index.html#autotoc_md7", [
+        [ "Must install separately", "index.html#autotoc_md8", null ],
+        [ "Integrated into project", "index.html#autotoc_md9", null ]
       ] ]
     ] ],
     [ "Directory: python", "md_python_readme.html", [
-      [ "Subdirectory: analysis", "md_python_readme.html#autotoc_md11", null ],
-      [ "Subdirectory: initial_configurations", "md_python_readme.html#autotoc_md12", null ],
-      [ "Files", "md_python_readme.html#autotoc_md13", null ]
+      [ "Subdirectory: analysis", "md_python_readme.html#autotoc_md10", null ],
+      [ "Subdirectory: initial_configurations", "md_python_readme.html#autotoc_md11", null ],
+      [ "Files", "md_python_readme.html#autotoc_md12", null ]
     ] ],
     [ "Directory: requirements", "md_requirements_readme.html", [
       [ "Directory: C++", "md_requirements_readme.html#autotoc_md14", null ],

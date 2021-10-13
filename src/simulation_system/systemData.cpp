@@ -316,15 +316,15 @@ systemData::rigidBodyMotionTensors()
 void
 systemData::gradientChangeOfVariableTensors()
 {
-    //!< thread pool device with access to all threads
+    ///< thread pool device with access to all threads
     Eigen::ThreadPoolDevice all_cores_device(&m_thread_pool, m_num_physical_cores);
 
     /* ANCHOR: Compute m_D_conv_quat_part */
     m_D_conv_quat_part.setZero();
 
     int                         body_num{-1}; // -1 as first particle should be locater particle and increment this
-    Eigen::Matrix<double, 3, 4> twoE_body;    //!< 2 * E_body
-    Eigen::Vector4d             R_c_body;     //!< R_c^{(i)}, locater position
+    Eigen::Matrix<double, 3, 4> twoE_body;    ///< 2 * E_body
+    Eigen::Vector4d             R_c_body;     ///< R_c^{(i)}, locater position
 
     assert(m_particle_type_id(0) == 1 && "First particle index must be locater by convention");
     for (int j = 0; j < m_num_particles; j++)
