@@ -6,13 +6,13 @@ Author: Alec Glisman
 
 ## Software tested
 
-- ZSH: <= v5.8
-- Intel oneAPI: $\geq$ v2021.1.1
-- CUDA (not currently used): $\geq$ v11.3
-- CMake: $\geq$ v3.16.3
-- GCC: $\geq$ v11.1.0
-- Python (Anaconda): $\geq$ v3.9.5
-- Perl: $\geq$ v5.30.0
+- ZSH >= v5.8
+- Intel oneAPI >= v2021.1.1
+- CUDA >= v11.3
+- CMake >= v3.16.3
+- GCC >= v11.1.0
+- Python (Miniconda3) >= v3.9.5
+- Perl >= v5.30.0
 
 ## Docker integration
 
