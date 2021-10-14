@@ -1,5 +1,5 @@
 <map id="engine" name="engine">
-<area shape="rect" id="node1" title=" " alt="" coords="5,301,151,481"/>
-<area shape="rect" id="node2" title=" " alt="" coords="38,147,118,224"/>
-<area shape="rect" id="node3" title=" " alt="" coords="15,5,141,97"/>
+<area shape="rect" id="node1" title="Manages the time integration of the simulation system as well as when to output data to GSD." alt="" coords="5,301,176,496"/>
+<area shape="rect" id="node2" title=" " alt="" coords="51,147,131,224"/>
+<area shape="rect" id="node3" title=" " alt="" coords="27,5,154,97"/>
 </map>

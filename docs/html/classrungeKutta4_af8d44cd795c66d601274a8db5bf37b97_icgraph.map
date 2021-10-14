@@ -1,7 +1,6 @@
 <map id="rungeKutta4::udwadiaKalaba" name="rungeKutta4::udwadiaKalaba">
-<area shape="rect" id="node1" title=" " alt="" coords="675,46,868,73"/>
-<area shape="rect" id="node2" href="$classrungeKutta4.html#ada94dc0b697b09e102b5a02682a34796" title=" " alt="" coords="453,39,627,80"/>
-<area shape="rect" id="node3" href="$classrungeKutta4.html#a15666604f054a635663a6123004daec4" title=" " alt="" coords="216,5,396,47"/>
-<area shape="rect" id="node4" href="$classrungeKutta4.html#a2be20a0f0da6d2f251af5b1367ea08a4" title=" " alt="" coords="207,71,405,112"/>
-<area shape="rect" id="node5" href="$classrungeKutta4.html#afd0645de032002a967f1109eb67f35e5" title=" " alt="" coords="5,78,159,105"/>
+<area shape="rect" id="node1" title=" " alt="" coords="675,13,868,39"/>
+<area shape="rect" id="node2" href="$classrungeKutta4.html#ae10430251a847d2f415848b882702c50" title=" " alt="" coords="453,5,627,47"/>
+<area shape="rect" id="node3" href="$classrungeKutta4.html#a1c2b8361774957efcf5c6fa5a34f86af" title=" " alt="" coords="207,5,405,47"/>
+<area shape="rect" id="node4" href="$classrungeKutta4.html#a1a82b9babd1713ed331e4750bb0de5bf" title=" " alt="" coords="5,13,159,39"/>
 </map>

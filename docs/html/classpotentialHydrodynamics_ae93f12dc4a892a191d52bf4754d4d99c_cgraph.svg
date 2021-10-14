@@ -21,7 +21,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classpotentialHydrodynamics.html#acce7436c3cc8b62fe54fa61da98554f6" target="_top" xlink:title="Updates all hydrodynamic quantities at current configuration (data from systemData)">
+<g id="a_node2"><a xlink:href="classpotentialHydrodynamics.html#aa9cd1bea38a16754f58110f1e190fb71" target="_top" xlink:title="Updates all hydrodynamic quantities at current configuration (data from systemData)">
 <polygon fill="none" stroke="black" points="165,-122.5 165,-152.5 288,-152.5 288,-122.5 165,-122.5"/>
 <text text-anchor="start" x="173" y="-140.5" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
 <text text-anchor="middle" x="226.5" y="-129.5" font-family="Helvetica,sans-Serif" font-size="10.00">::update</text>
@@ -53,7 +53,7 @@
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="classpotentialHydrodynamics.html#a19d927bd0b419517d15b566c9132d632" target="_top" xlink:title="Calculates m_M_added">
+<g id="a_node4"><a xlink:href="classpotentialHydrodynamics.html#ae78694d22e337a95daabdd0820a8be28" target="_top" xlink:title="Calculates m_M_added">
 <polygon fill="none" stroke="black" points="324,-196.5 324,-226.5 447,-226.5 447,-196.5 324,-196.5"/>
 <text text-anchor="start" x="332" y="-214.5" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
 <text text-anchor="middle" x="385.5" y="-203.5" font-family="Helvetica,sans-Serif" font-size="10.00">::calcAddedMassGrad</text>
@@ -69,7 +69,7 @@
 <!-- Node6 -->
 <g id="node6" class="node">
 <title>Node6</title>
-<g id="a_node6"><a xlink:href="classpotentialHydrodynamics.html#a5cb1d8a311e09f07c008329de161eccf" target="_top" xlink:title=" ">
+<g id="a_node6"><a xlink:href="classpotentialHydrodynamics.html#ace1a595ce5a1c818ae9889e520f43fe7" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="324,-147.5 324,-177.5 447,-177.5 447,-147.5 324,-147.5"/>
 <text text-anchor="start" x="332" y="-165.5" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
 <text text-anchor="middle" x="385.5" y="-154.5" font-family="Helvetica,sans-Serif" font-size="10.00">::calcBodyTensors</text>
@@ -85,18 +85,18 @@
 <!-- Node7 -->
 <g id="node7" class="node">
 <title>Node7</title>
-<g id="a_node7"><a xlink:href="classpotentialHydrodynamics.html#a2b71af05a80cbe982c996d61b084695c" target="_top" xlink:title="Calculates m_F_hydro and m_F_hydroNoInertia">
-<polygon fill="none" stroke="black" points="324,-98.5 324,-128.5 447,-128.5 447,-98.5 324,-98.5"/>
-<text text-anchor="start" x="332" y="-116.5" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
-<text text-anchor="middle" x="385.5" y="-105.5" font-family="Helvetica,sans-Serif" font-size="10.00">::calcHydroForces</text>
+<g id="a_node7"><a xlink:href="classpotentialHydrodynamics.html#a89622611b037fc10f3aacdf990c4a9f5" target="_top" xlink:title="Calculates m_F_hydro and m_F_hydroNoInertia">
+<polygon fill="none" stroke="black" points="324,-0.5 324,-30.5 447,-30.5 447,-0.5 324,-0.5"/>
+<text text-anchor="start" x="332" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
+<text text-anchor="middle" x="385.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">::calcHydroForces</text>
 </a>
 </g>
 </g>
 <!-- Node2&#45;&gt;Node7 -->
 <g id="edge6" class="edge">
 <title>Node2&#45;&gt;Node7</title>
-<path fill="none" stroke="midnightblue" d="M288.2,-128.22C296.64,-126.93 305.36,-125.6 313.95,-124.28"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="314.6,-127.73 323.96,-122.75 313.55,-120.81 314.6,-127.73"/>
+<path fill="none" stroke="midnightblue" d="M239.05,-122.29C255.76,-101.19 288.57,-62.98 324,-39.5 326.26,-38 328.63,-36.57 331.07,-35.21"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="332.8,-38.26 340.12,-30.6 329.62,-32.02 332.8,-38.26"/>
 </g>
 <!-- Node10 -->
 <g id="node10" class="node">
@@ -118,68 +118,74 @@
 <g id="node11" class="node">
 <title>Node11</title>
 <g id="a_node11"><a xlink:href="classpotentialHydrodynamics.html#a4ebdc0aa027f2a9e4f1f34bf781dffe9" target="_top" xlink:title="Calculates m_M_added">
-<polygon fill="none" stroke="black" points="324,-0.5 324,-30.5 447,-30.5 447,-0.5 324,-0.5"/>
-<text text-anchor="start" x="332" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
-<text text-anchor="middle" x="385.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">::calcTotalMass</text>
+<polygon fill="none" stroke="black" points="324,-98.5 324,-128.5 447,-128.5 447,-98.5 324,-98.5"/>
+<text text-anchor="start" x="332" y="-116.5" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
+<text text-anchor="middle" x="385.5" y="-105.5" font-family="Helvetica,sans-Serif" font-size="10.00">::calcTotalMass</text>
 </a>
 </g>
 </g>
 <!-- Node2&#45;&gt;Node11 -->
 <g id="edge11" class="edge">
 <title>Node2&#45;&gt;Node11</title>
-<path fill="none" stroke="midnightblue" d="M239.05,-122.29C255.76,-101.19 288.57,-62.98 324,-39.5 326.26,-38 328.63,-36.57 331.07,-35.21"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="332.8,-38.26 340.12,-30.6 329.62,-32.02 332.8,-38.26"/>
+<path fill="none" stroke="midnightblue" d="M288.2,-128.22C296.64,-126.93 305.36,-125.6 313.95,-124.28"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="314.6,-127.73 323.96,-122.75 313.55,-120.81 314.6,-127.73"/>
 </g>
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
 <g id="a_node5"><a xlink:href="helper__eigenTensorConversion_8hpp.html#a556fb613b733267c9404648bc66bd0bd" target="_top" xlink:title="Convert Eigen::Matrix &#45;&#45;&gt; Eigen::Tensor.">
-<polygon fill="none" stroke="black" points="483,-172 483,-191 550,-191 550,-172 483,-172"/>
-<text text-anchor="middle" x="516.5" y="-179" font-family="Helvetica,sans-Serif" font-size="10.00">TensorCast</text>
+<polygon fill="none" stroke="black" points="483,-104 483,-123 550,-123 550,-104 483,-104"/>
+<text text-anchor="middle" x="516.5" y="-111" font-family="Helvetica,sans-Serif" font-size="10.00">TensorCast</text>
 </a>
 </g>
 </g>
 <!-- Node4&#45;&gt;Node5 -->
 <g id="edge4" class="edge">
 <title>Node4&#45;&gt;Node5</title>
-<path fill="none" stroke="midnightblue" d="M447.22,-197.38C455.96,-195.35 464.78,-193.29 473.06,-191.37"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="473.89,-194.77 482.84,-189.1 472.31,-187.95 473.89,-194.77"/>
+<path fill="none" stroke="midnightblue" d="M431.29,-196.4C436.78,-193.78 442.15,-190.82 447,-187.5 469.42,-172.14 489.84,-148.19 502.44,-131.72"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="505.44,-133.56 508.6,-123.45 499.82,-129.38 505.44,-133.56"/>
 </g>
 <!-- Node7&#45;&gt;Node5 -->
 <g id="edge9" class="edge">
 <title>Node7&#45;&gt;Node5</title>
-<path fill="none" stroke="midnightblue" d="M425.67,-128.55C432.86,-131.63 440.23,-135.01 447,-138.5 463.02,-146.76 480.2,-157.55 493.35,-166.26"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="491.49,-169.22 501.74,-171.89 495.39,-163.41 491.49,-169.22"/>
+<path fill="none" stroke="midnightblue" d="M431.29,-30.6C436.78,-33.22 442.15,-36.18 447,-39.5 469.42,-54.86 489.84,-78.81 502.44,-95.28"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="499.82,-97.62 508.6,-103.55 505.44,-93.44 499.82,-97.62"/>
 </g>
 <!-- Node8 -->
 <g id="node8" class="node">
 <title>Node8</title>
 <g id="a_node8"><a xlink:href="helper__eigenTensorConversion_8hpp.html#a556d08b55a6ad7cd703b6db06194e5cf" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="black" points="484.5,-104 484.5,-123 548.5,-123 548.5,-104 484.5,-104"/>
-<text text-anchor="middle" x="516.5" y="-111" font-family="Helvetica,sans-Serif" font-size="10.00">MatrixCast</text>
+<polygon fill="none" stroke="black" points="484.5,-6 484.5,-25 548.5,-25 548.5,-6 484.5,-6"/>
+<text text-anchor="middle" x="516.5" y="-13" font-family="Helvetica,sans-Serif" font-size="10.00">MatrixCast</text>
 </a>
 </g>
 </g>
 <!-- Node7&#45;&gt;Node8 -->
 <g id="edge7" class="edge">
 <title>Node7&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M447.22,-113.5C456.33,-113.5 465.54,-113.5 474.11,-113.5"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="474.22,-117 484.22,-113.5 474.22,-110 474.22,-117"/>
+<path fill="none" stroke="midnightblue" d="M447.22,-15.5C456.33,-15.5 465.54,-15.5 474.11,-15.5"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="474.22,-19 484.22,-15.5 474.22,-12 474.22,-19"/>
 </g>
 <!-- Node9 -->
 <g id="node9" class="node">
 <title>Node9</title>
 <g id="a_node9"><a xlink:href="helper__eigenTensorConversion_8hpp.html#a2a7eca6b17fb874869047bd0b5f11b46" target="_top" xlink:title="Convert between Eigen::Tensor and Eigen::Matrix classes.">
-<polygon fill="none" stroke="black" points="586,-104 586,-123 633,-123 633,-104 586,-104"/>
-<text text-anchor="middle" x="609.5" y="-111" font-family="Helvetica,sans-Serif" font-size="10.00">asEval</text>
+<polygon fill="none" stroke="black" points="586,-6 586,-25 633,-25 633,-6 586,-6"/>
+<text text-anchor="middle" x="609.5" y="-13" font-family="Helvetica,sans-Serif" font-size="10.00">asEval</text>
 </a>
 </g>
 </g>
 <!-- Node8&#45;&gt;Node9 -->
 <g id="edge8" class="edge">
 <title>Node8&#45;&gt;Node9</title>
-<path fill="none" stroke="midnightblue" d="M548.56,-113.5C557.37,-113.5 566.98,-113.5 575.88,-113.5"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="575.9,-117 585.9,-113.5 575.9,-110 575.9,-117"/>
+<path fill="none" stroke="midnightblue" d="M548.56,-15.5C557.37,-15.5 566.98,-15.5 575.88,-15.5"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="575.9,-19 585.9,-15.5 575.9,-12 575.9,-19"/>
+</g>
+<!-- Node11&#45;&gt;Node5 -->
+<g id="edge12" class="edge">
+<title>Node11&#45;&gt;Node5</title>
+<path fill="none" stroke="midnightblue" d="M447.22,-113.5C455.86,-113.5 464.59,-113.5 472.79,-113.5"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="472.84,-117 482.84,-113.5 472.84,-110 472.84,-117"/>
 </g>
 </g>
 </svg>

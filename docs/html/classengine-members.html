@@ -97,23 +97,24 @@ $(document).ready(function(){initNavTree('classengine.html',''); initResizable()
 
 <p>This is the complete list of members for <a class="el" href="classengine.html">engine</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classengine.html#a59296d55ff11e5f3ab8b5f3dcc6065d5">engine</a>(std::shared_ptr&lt; systemData &gt; sys)</td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classengine.html#aa409434402cab915d09b4f6736b9138a">integrate</a>()</td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classengine.html#a59296d55ff11e5f3ab8b5f3dcc6065d5">engine</a>(std::shared_ptr&lt; systemData &gt; sys)</td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"><span class="mlabel">explicit</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classengine.html#a5c9fba1e8b0611c00438c9ba8736e348">integrate</a>(Eigen::ThreadPoolDevice &amp;device)</td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classengine.html#adaf942d3d92c4d6a88358755fba6e7af">m_logFile</a></td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a></td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classengine.html#a88541de1c141d7d2c77f08b062f56a91">m_outputPercentile</a></td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classengine.html#a6f7f54be0e646830f19eb105346eb7e5">m_potHydro</a></td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classengine.html#a2bb2d3c900042df38e1a093ee21169d0">m_progressBar</a></td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classengine.html#ab42bae227e8d6bde5d5ebe226b1a99ac">m_rk4Integrator</a></td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a></td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classengine.html#a54e1fe05c9e06f98f91860a89ee5e532">run</a>()</td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classengine.html#aa3557f06618b07672ae2350091d42577">~engine</a>()</td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classengine.html#a1267fb55e2a415dc7bc49335b538e8a3">m_num_physical_cores</a></td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classengine.html#a88541de1c141d7d2c77f08b062f56a91">m_outputPercentile</a></td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classengine.html#a6f7f54be0e646830f19eb105346eb7e5">m_potHydro</a></td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classengine.html#a2bb2d3c900042df38e1a093ee21169d0">m_progressBar</a></td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classengine.html#ab42bae227e8d6bde5d5ebe226b1a99ac">m_rk4Integrator</a></td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a></td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classengine.html#a54e1fe05c9e06f98f91860a89ee5e532">run</a>()</td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classengine.html#aa3557f06618b07672ae2350091d42577">~engine</a>()</td><td class="entry"><a class="el" href="classengine.html">engine</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Oct 13 2021 22:16:38 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Thu Oct 14 2021 09:37:31 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

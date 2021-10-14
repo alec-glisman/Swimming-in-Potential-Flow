@@ -1,9 +1,9 @@
 var searchData=
 [
   ['calcaddedmass_0',['calcAddedMass',['../classpotentialHydrodynamics.html#aca22661dfeb0029156532957df234042',1,'potentialHydrodynamics']]],
-  ['calcaddedmassgrad_1',['calcAddedMassGrad',['../classpotentialHydrodynamics.html#a19d927bd0b419517d15b566c9132d632',1,'potentialHydrodynamics']]],
-  ['calcbodytensors_2',['calcBodyTensors',['../classpotentialHydrodynamics.html#a5cb1d8a311e09f07c008329de161eccf',1,'potentialHydrodynamics']]],
-  ['calchydroforces_3',['calcHydroForces',['../classpotentialHydrodynamics.html#a2b71af05a80cbe982c996d61b084695c',1,'potentialHydrodynamics']]],
+  ['calcaddedmassgrad_1',['calcAddedMassGrad',['../classpotentialHydrodynamics.html#ae78694d22e337a95daabdd0820a8be28',1,'potentialHydrodynamics']]],
+  ['calcbodytensors_2',['calcBodyTensors',['../classpotentialHydrodynamics.html#ace1a595ce5a1c818ae9889e520f43fe7',1,'potentialHydrodynamics']]],
+  ['calchydroforces_3',['calcHydroForces',['../classpotentialHydrodynamics.html#a89622611b037fc10f3aacdf990c4a9f5',1,'potentialHydrodynamics']]],
   ['calcparticledistances_4',['calcParticleDistances',['../classpotentialHydrodynamics.html#a5d70cd3d03dfe2f7f1a4c970994fffe0',1,'potentialHydrodynamics']]],
   ['calctotalmass_5',['calcTotalMass',['../classpotentialHydrodynamics.html#a4ebdc0aa027f2a9e4f1f34bf781dffe9',1,'potentialHydrodynamics']]],
   ['check_6',['check',['../helper__cuda_8h.html#a8170bd02e7804fbab5e561bf676decd0',1,'helper_cuda.h']]],
