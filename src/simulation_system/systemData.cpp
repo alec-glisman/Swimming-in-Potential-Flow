@@ -16,6 +16,7 @@ systemData::systemData(std::string inputGSDFile, std::string outputDir)
     spdlog::get(m_logName)->info("Setting general-use tensors");
 
     // Eigen3 parallelization
+    int m_num_physical_cores = std::thread::hardware_concurrency();
     Eigen::setNbThreads(m_num_physical_cores); // for Eigen OpenMP parallelization
 
     spdlog::get(m_logName)->info("Constructor complete");
@@ -93,24 +94,28 @@ systemData::initializeData()
     m_rbm_conn_T_quat_grad.setZero();
 
     // initialize constraints
+    spdlog::get(m_logName)->critical("Setting up temporary single-thread eigen device");
+    Eigen::ThreadPool       thread_pool = Eigen::ThreadPool(1);
+    Eigen::ThreadPoolDevice single_core_device(&thread_pool, 1);
+
     spdlog::get(m_logName)->info("Initializing constraints");
-    update();
+    update(single_core_device);
 }
 
 void
-systemData::update()
+systemData::update(Eigen::ThreadPoolDevice& device)
 {
     // NOTE: Ordering of following functions does not matter
     velocitiesArticulation();
     accelerationsArticulation();
 
     locaterPointLocations();
-    rigidBodyMotionTensors();
+    rigidBodyMotionTensors(device);
 
     udwadiaLinearSystem();
 
     // NOTE: Call gradientChangeOfVariableTensors() after rigidBodyMotionTensors()
-    gradientChangeOfVariableTensors();
+    gradientChangeOfVariableTensors(device);
 }
 
 void
@@ -249,7 +254,7 @@ systemData::udwadiaLinearSystem()
 }
 
 void
-systemData::rigidBodyMotionTensors()
+systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
 {
     /* ANCHOR: Compute m_rbm_conn */
     m_rbm_conn.setZero();
@@ -308,11 +313,8 @@ systemData::rigidBodyMotionTensors()
 }
 
 void
-systemData::gradientChangeOfVariableTensors()
+systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
 {
-    ///< thread pool device with access to all threads
-    Eigen::ThreadPoolDevice all_cores_device(&m_thread_pool, m_num_physical_cores);
-
     /* ANCHOR: Compute m_conv_body_2_part_dof */
     m_conv_body_2_part_dof.setZero();
 
@@ -397,29 +399,28 @@ systemData::gradientChangeOfVariableTensors()
         // 1) Compute result_{i m k} = levi_cevita{l i m} n_D_alpha_{k l}
         Eigen::array<Eigen::IndexPair<int>, 1> contract_lim_kl = {Eigen::IndexPair<int>(0, 1)}; // {i m k}
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 7>> d_rCrossMat_d_xi;
-        d_rCrossMat_d_xi.device(all_cores_device) = m_levi_cevita.contract(tens_n_D_alpha, contract_lim_kl);
+        d_rCrossMat_d_xi.device(device) = m_levi_cevita.contract(tens_n_D_alpha, contract_lim_kl);
 
         // 2) Compute result_{i j k} = d_rCrossMat_d_xi_{i m k} two_E_body{m j}
         Eigen::array<Eigen::IndexPair<int>, 1> contract_imk_mj = {Eigen::IndexPair<int>(1, 0)}; // {i k j}, must shuffle
         Eigen::array<int, 3>                   swap_last_two_indices({0, 2, 1});
 
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 7, 4>> d_rCrossMat_d_xi_times_two_E_body_preshuffle;
-        d_rCrossMat_d_xi_times_two_E_body_preshuffle.device(all_cores_device) =
+        d_rCrossMat_d_xi_times_two_E_body_preshuffle.device(device) =
             d_rCrossMat_d_xi.contract(tens_two_E_body, contract_imk_mj);
 
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> d_rCrossMat_d_xi_times_two_E_body;
-        d_rCrossMat_d_xi_times_two_E_body.device(all_cores_device) =
+        d_rCrossMat_d_xi_times_two_E_body.device(device) =
             d_rCrossMat_d_xi_times_two_E_body_preshuffle.shuffle(swap_last_two_indices);
 
         // 3) Compute result_{i j k} = two_r_cross_mat_{i m} Kappa_tilde_{m j k} (same indices as (2))
         Eigen::array<Eigen::IndexPair<int>, 1> contract_im_mjk = {Eigen::IndexPair<int>(1, 0)}; // {i j k}
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> rCrossMat_times_d_E_body_d_xi;
-        rCrossMat_times_d_E_body_d_xi.device(all_cores_device) =
-            tens_two_r_cross_mat.contract(m_kappa_tilde, contract_im_mjk);
+        rCrossMat_times_d_E_body_d_xi.device(device) = tens_two_r_cross_mat.contract(m_kappa_tilde, contract_im_mjk);
 
         // Compute and output matrix element
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> angular_gradient;
-        angular_gradient.device(all_cores_device) = -d_rCrossMat_d_xi_times_two_E_body - rCrossMat_times_d_E_body_d_xi;
+        angular_gradient.device(device) = -d_rCrossMat_d_xi_times_two_E_body - rCrossMat_times_d_E_body_d_xi;
 
         // output matrix indices
         Eigen::array<Eigen::Index, 3> offsets          = {3 * i, 7 * body_num + 3, 7 * body_num};

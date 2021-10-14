@@ -79,8 +79,9 @@
 
 ## Tensor module optimization
 
-- [ ] Set a general device to call from systemData class
-- [ ] Make sure all calls to TensorCast have a device to compute on
+- [x] move thread-pool and device to engine class
+- [ ] Make sure all calls to TensorCast and MatrixCast have a device to compute on
+- [ ] Optimize all contraction operations with a device
 - [ ] Add GPU offloading (#define EIGEN_USE_GPU)
   - <https://www.tensorflow.org/guide/create_op#compile_the_op_using_your_system_compiler_tensorflow_binary_installation>
 

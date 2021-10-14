@@ -40,14 +40,14 @@ class rungeKutta4
     ~rungeKutta4();
 
     void
-    integrate();
+    integrate(Eigen::ThreadPoolDevice& device);
 
   private:
     void
-    integrateSecondOrder();
+    integrateSecondOrder(Eigen::ThreadPoolDevice& device);
 
     void
-    accelerationUpdate(Eigen::VectorXd& acc);
+    accelerationUpdate(Eigen::VectorXd& acc, Eigen::ThreadPoolDevice& device);
 
     void
     udwadiaKalaba(Eigen::VectorXd& acc);

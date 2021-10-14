@@ -37,19 +37,48 @@
 /* Forward declarations */
 class systemData;
 
+/**
+ * @class engine
+ *
+ * @brief Manages the time integration of the simulation system as well as when to output data to GSD.
+ *
+ */
 class engine
 {
   public:
-    engine(std::shared_ptr<systemData> sys);
+    /**
+     * @brief Construct a new engine object
+     *
+     * @param sys systemData class to collect data from. Must be fully initialized and have GSD data loaded.
+     */
+    explicit engine(std::shared_ptr<systemData> sys);
 
+    /**
+     * @brief Destroy the engine object
+     *
+     */
     ~engine();
 
+    /**
+     * @brief Runs the simulation from @f$ t_0 @f$ to @f$ t_0f @f$.
+     *
+     * @details Method creates an `Eigen::ThreadPool` and `Eigen::ThreadPoolDevice` that is passed
+     * to the `integrate()` method to speed up `Eigen::Tensor` computations.
+     * Method also calculates the total number of integration steps required and manages the output
+     * of the `progressBar` class.
+     *
+     */
     void
     run();
 
   private:
+    /**
+     * @brief Updates the simulation framework 1 time step.
+     *
+     * @param device device (CPU thread-pool or GPU) used to speed up tensor calculations
+     */
     void
-    integrate();
+    integrate(Eigen::ThreadPoolDevice& device);
 
     // classes
     std::shared_ptr<systemData>             m_system;
@@ -61,8 +90,12 @@ class engine
     std::string       m_logFile;
     const std::string m_logName{"engine"};
 
+    // eigen parallelization parameters
+    int m_num_physical_cores =
+        std::thread::hardware_concurrency(); ///< number of physical CPU cores to use in tensor calculations
+
     // ProgressBar output
-    const double m_outputPercentile{0.01};
+    const double m_outputPercentile{0.01}; ///< Percentage of simulation progress at which to output a GSD frame
 };
 
 #endif // BODIES_IN_POTENTIAL_FLOW_ENGINE_H

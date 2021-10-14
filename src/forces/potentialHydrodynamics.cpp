@@ -5,7 +5,7 @@
 #include <potentialHydrodynamics.hpp>
 
 // REVIEW[epic=Debug]: Uncomment line below to prevent all runtime checks from executing in debug
-#define NO_HYDRO_CHECK
+// #define NO_HYDRO_CHECK
 
 potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
 {
@@ -99,8 +99,12 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
     }
 
     // Compute all relevant quantities
+    spdlog::get(m_logName)->critical("Setting up temporary single-thread eigen device");
+    Eigen::ThreadPool       thread_pool = Eigen::ThreadPool(1);
+    Eigen::ThreadPoolDevice single_core_device(&thread_pool, 1);
+
     spdlog::get(m_logName)->info("Calling update()");
-    update();
+    update(single_core_device);
 
     spdlog::get(m_logName)->info("Constructor complete");
     spdlog::get(m_logName)->flush();
@@ -113,18 +117,18 @@ potentialHydrodynamics::~potentialHydrodynamics()
 }
 
 void
-potentialHydrodynamics::update()
+potentialHydrodynamics::update(Eigen::ThreadPoolDevice& device)
 {
     calcParticleDistances();
 
     calcAddedMass();
-    calcAddedMassGrad();
+    calcAddedMassGrad(device);
 
     calcTotalMass();
 
-    calcBodyTensors();
+    calcBodyTensors(device);
 
-    calcHydroForces();
+    calcHydroForces(device);
 }
 
 void
@@ -188,7 +192,7 @@ potentialHydrodynamics::calcAddedMass()
 }
 
 void
-potentialHydrodynamics::calcAddedMassGrad()
+potentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
 {
     // eigen tensor contraction variables
     Eigen::array<Eigen::IndexPair<long>, 0> empty_index_list = {};
@@ -265,13 +269,12 @@ potentialHydrodynamics::calcTotalMass()
 }
 
 void
-potentialHydrodynamics::calcBodyTensors()
+potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
 {
-    m_N1 =
 }
 
 void
-potentialHydrodynamics::calcHydroForces()
+potentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
 {
     // calculate requisite configurational tensors
     Eigen::MatrixXd          U_dyad_U = m_system->velocitiesParticles() * m_system->velocitiesParticles().transpose();

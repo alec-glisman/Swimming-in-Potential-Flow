@@ -37,13 +37,13 @@ rungeKutta4::~rungeKutta4()
 }
 
 void
-rungeKutta4::integrate()
+rungeKutta4::integrate(Eigen::ThreadPoolDevice& device)
 {
-    integrateSecondOrder(); // Udwadia-Kalaba method only gives acceleration components
+    integrateSecondOrder(device); // Udwadia-Kalaba method only gives acceleration components
 }
 
 void
-rungeKutta4::integrateSecondOrder()
+rungeKutta4::integrateSecondOrder(Eigen::ThreadPoolDevice& device)
 {
     /* ANCHOR: Solve system of form: y'(t) = f( y(t),  t )
      * @REFERENCE:
@@ -56,7 +56,7 @@ rungeKutta4::integrateSecondOrder()
     const Eigen::VectorXd v1 = m_system->velocitiesParticles();
     const Eigen::VectorXd x1 = m_system->positionsParticles();
     Eigen::VectorXd       a1 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a1);
+    accelerationUpdate(a1, device);
 
     /* Step 2: k2 = f( y(t_0) + k1 * dt/2,  t_0 + dt/2 )
      * time rate-of-change k1 evaluated halfway through time step (midpoint) */
@@ -71,7 +71,7 @@ rungeKutta4::integrateSecondOrder()
     m_system->setT(t1 + 0.50 * m_system->dt());
 
     Eigen::VectorXd a2 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a2);
+    accelerationUpdate(a2, device);
 
     /* Step 3: k3 = f( y(t_0) + k2 * dt/2,  t_0 + dt/2 )
      * time rate-of-change k2 evaluated halfway through time step (midpoint) */
@@ -84,7 +84,7 @@ rungeKutta4::integrateSecondOrder()
     m_system->setPositionsParticles(x3);
 
     Eigen::VectorXd a3 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a3);
+    accelerationUpdate(a3, device);
 
     /* Step 4: k4 = f( y(t_0) + k3 * dt,  t_0 + dt )
      * time rate-of-change k3 evaluated at end of step (endpoint) */
@@ -99,7 +99,7 @@ rungeKutta4::integrateSecondOrder()
     m_system->setT(t1 + m_system->dt());
 
     Eigen::VectorXd a4 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a4);
+    accelerationUpdate(a4, device);
 
     /* ANCHOR: Calculate kinematics at end of time step */
     Eigen::VectorXd v_out = a1;
@@ -120,18 +120,18 @@ rungeKutta4::integrateSecondOrder()
     m_system->setPositionsParticles(x_out);
 
     Eigen::VectorXd a_out = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a_out);
+    accelerationUpdate(a_out, device);
     m_system->setAccelerationsParticles(a_out);
 
     m_system->setT(t1);
 }
 
 void
-rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc)
+rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, Eigen::ThreadPoolDevice& device)
 {
     // NOTE: Order matters, m_system update must be called before m_potHydro
-    m_system->update();   // update Udwadia linear system
-    m_potHydro->update(); // update hydrodynamic tensors and forces
+    m_system->update(device);   // update Udwadia linear system
+    m_potHydro->update(device); // update hydrodynamic tensors and forces
 
     udwadiaKalaba(acc); // solve for acceleration components
 }

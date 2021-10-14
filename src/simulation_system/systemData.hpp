@@ -69,9 +69,10 @@ class systemData : public std::enable_shared_from_this<systemData>
      * This is assuming the Udwadia linear constraint system (@f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} = \mathbf{b}
      * @f$ ) is independent of configuration.
      *
+     * @param device device (CPU thread-pool or GPU) used to speed up tensor calculations
      */
     void
-    update();
+    update(Eigen::ThreadPoolDevice& device);
 
   private:
     void
@@ -90,10 +91,10 @@ class systemData : public std::enable_shared_from_this<systemData>
     locaterPointLocations();
 
     void
-    rigidBodyMotionTensors();
+    rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device);
 
     void
-    gradientChangeOfVariableTensors();
+    gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device);
 
     void
     udwadiaLinearSystem();
@@ -139,11 +140,6 @@ class systemData : public std::enable_shared_from_this<systemData>
     int                         m_return_val{0};
     bool                        m_return_bool{true};
     bool                        m_GSD_parsed{false};
-
-    /* ANCHOR: eigen parallelization parameters */
-    int m_num_physical_cores = std::thread::hardware_concurrency();
-    ///< number of threads in pool for eigen calculations (set to number of physical cores on machine)
-    Eigen::ThreadPool m_thread_pool = Eigen::ThreadPool(m_num_physical_cores);
 
     /* REVIEW[epic=Change,order=0]: System specific data, change parameters stored for different
      * systems */
@@ -609,12 +605,6 @@ class systemData : public std::enable_shared_from_this<systemData>
         return m_I3;
     }
     /* !SECTION */
-
-    Eigen::ThreadPool
-    threadPool() const
-    {
-        return m_thread_pool;
-    }
 };
 
 #endif

@@ -63,9 +63,11 @@ class potentialHydrodynamics
      * (4) `calcBodyTensors()`.
      * (5) `calcHydroForces()`.
      *
+     * @param device device (CPU thread-pool or GPU) used to speed up tensor calculations
+     *
      */
     void
-    update();
+    update(Eigen::ThreadPoolDevice& device);
 
   private:
     /**
@@ -102,18 +104,22 @@ class potentialHydrodynamics
      * @details Must call `calcParticleDistances()` before.
      * Configuration specified in `systemData` class
      *
+     * @param device device (CPU thread-pool or GPU) used to speed up tensor calculations
+     *
      */
     void
-    calcAddedMassGrad();
+    calcAddedMassGrad(Eigen::ThreadPoolDevice& device);
 
     /**
      * @brief Calculates \{`m_N1`, `m_N2`, `m_N3`, `m_M_tilde`, and `m_M_tilde_tilde`\}
      *
      * @details Must call `calcTotalMass()` and assumes `systemData` rigid body motion tensors are up to date.
      *
+     * @param device device (CPU thread-pool or GPU) used to speed up tensor calculations
+     *
      */
     void
-    calcBodyTensors(); // TODO
+    calcBodyTensors(Eigen::ThreadPoolDevice& device); // TODO
 
     /**
      * @brief Calculates `m_F_hydro` and `m_F_hydroNoInertia`
@@ -121,9 +127,11 @@ class potentialHydrodynamics
      * @details Must call `calcBodyTensors()` before.
      * Kinematics specified in `systemData` class.
      *
+     * @param device device (CPU thread-pool or GPU) used to speed up tensor calculations
+     *
      */
     void
-    calcHydroForces();
+    calcHydroForces(Eigen::ThreadPoolDevice& device);
 
     // classes
     std::shared_ptr<systemData> m_system; ///< shared pointer reference to systemData class
