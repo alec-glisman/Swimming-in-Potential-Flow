@@ -91,11 +91,12 @@ class engine
     const std::string m_logName{"engine"};
 
     // eigen parallelization parameters
-    const int m_num_physical_cores =
-        std::thread::hardware_concurrency(); ///< number of physical CPU cores to use in tensor calculations
+    /// number of physical CPU cores to use in tensor calculations
+    const int m_num_physical_cores = std::thread::hardware_concurrency();
 
     // ProgressBar output
-    const double m_outputPercentile{0.01}; ///< Percentage of simulation progress at which to output a GSD frame
+    /// Percentage of simulation progress at which to output a GSD frame
+    const double m_outputPercentile{0.01};
 };
 
 #endif // BODIES_IN_POTENTIAL_FLOW_ENGINE_H

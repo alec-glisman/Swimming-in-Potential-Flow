@@ -145,97 +145,123 @@ class systemData : public std::enable_shared_from_this<systemData>
     /* REVIEW[epic=Change,order=0]: System specific data, change parameters stored for different
      * systems */
     // Swimming kinematic constraints
-    double m_sys_spec_U0{-1.0};          ///< velocity amplitude of kinematic constraint between particle pairs
-    double m_sys_spec_omega{-1.0};       ///< oscillation frequency
-    double m_sys_spec_phase_shift{-1.0}; ///< phase shift (in radians) between oscillators
-    double m_sys_spec_R_avg{-1.0};       ///< Time-average spatial separation between a particle pair during oscillation
+    /// velocity amplitude of kinematic constraint between particle pairs
+    double m_sys_spec_U0{-1.0};
+    /// oscillation frequency
+    double m_sys_spec_omega{-1.0};
+    /// phase shift (in radians) between oscillators
+    double m_sys_spec_phase_shift{-1.0};
+    /// Time-average spatial separation between a particle pair during oscillation
+    double m_sys_spec_R_avg{-1.0};
 
     /* ANCHOR: particle parameters */
-    ///\[N x 1\] REVIEW[epic=assumptions] 1) {0: constrained particle, 1: locater particle}.
+    /// (N x 1) REVIEW[epic=assumptions] 1) {0: constrained particle, 1: locater particle}.
     /// 2) locater particle listed first in order and denotes when to switch body index to next body.
     /// ex: (1, 0, 0, 1, 0, 0)
     Eigen::VectorXi m_particle_type_id;
 
     /* ANCHOR: degrees of freedom */
-    int m_num_spatial_dim{-1}; ///< = 3
-    int m_num_particles{-1};   ///< = N
-    int m_num_bodies{-1};      ///< = M
-    int m_num_DoF{-1};         ///< = 6M
-    int m_num_constraints{-1}; ///< = M
+    /// = 3
+    int m_num_spatial_dim{-1};
+    /// = N
+    int m_num_particles{-1};
+    /// = M
+    int m_num_bodies{-1};
+    /// = 6M
+    int m_num_DoF{-1};
+    /// = M
+    int m_num_constraints{-1};
 
     /* ANCHOR: integrator parameters */
-    double m_dt{-1.0};             ///< (dimensionless) integration @f$ \Delta t @f$
-    double m_tf{-1.0};             ///< (dimensionless) final simulation time
-    double m_t{0.0};               ///< (dimensionless) current simulation time
-    double m_tau{-1.0};            ///< simulation system characteristic timescale
-    int    m_timestep{-1};         ///< current simulation timestep (iteration)
-    int    m_num_steps_output{-1}; ///< how many simulation steps to output to GSD
+    /// (dimensionless) integration @f$ \Delta t @f$
+    double m_dt{-1.0};
+    /// (dimensionless) final simulation time
+    double m_tf{-1.0};
+    /// (dimensionless) current simulation time
+    double m_t{0.0};
+    /// simulation system characteristic timescale
+    double m_tau{-1.0};
+    /// current simulation timestep (iteration)
+    int m_timestep{-1};
+    /// how many simulation steps to output to GSD
+    int m_num_steps_output{-1};
 
     /* ANCHOR: material parameters */
-    double m_fluid_density{-1};    ///< mass density of fluid
-    double m_particle_density{-1}; ///< mass density of solid spheres
+    /// mass density of fluid
+    double m_fluid_density{-1};
+    /// mass density of solid spheres
+    double m_particle_density{-1};
 
     /* ANCHOR: potential parameters */
-    double m_wca_epsilon{-1}; ///< @f$ \epsilon_{\mathrm{WCA}} @f$
-    double m_wca_sigma{-1};   ///< @f$ \sigma_{\mathrm{WCA}} @f$
+    /// WCA energy scale @f$ \epsilon_{\mathrm{WCA}} @f$
+    double m_wca_epsilon{-1};
+    /// WCA length scale @f$ \sigma_{\mathrm{WCA}} @f$
+    double m_wca_sigma{-1};
 
     /* ANCHOR: Tensors set in constructor */
     // "identity" tensors
-    const Eigen::Matrix3d m_I3 = Eigen::Matrix3d::Identity(3, 3); ///< \[3 x 3\] 2nd order identity tensor
-    const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> m_tens_I3 =
-        TensorCast(m_I3); ///< \[3 x 3\] tensor version of `m_I3`
+    /// (3 x 3) 2nd order identity tensor
+    const Eigen::Matrix3d m_I3 = Eigen::Matrix3d::Identity(3, 3);
+    /// (3 x 3) tensor version of `m_I3`
+    const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> m_tens_I3 = TensorCast(m_I3);
 
     // general-use tensors
-    /// \[3 x 3 x 3\] (skew-symmetric) 3rd order identity tensor
-
+    /// (3 x 3 x 3) (skew-symmetric) 3rd order identity tensor
     Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> m_levi_cevita;
-    /// \[3 x 4 x 7\] @f$ \nabla_{\xi_{\alpha}} \boldsymbol{E}{(\boldsymbol{\theta})} @f$
+    /// (3 x 4 x 7) @f$ \nabla_{\xi_{\alpha}} \boldsymbol{E}{(\boldsymbol{\theta})} @f$
     Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> m_kappa_tilde;
 
     /* ANCHOR: kinematic vectors */
-    Eigen::VectorXd m_positions_bodies;     ///< \[7M x 1\] both linear and quaternion D.o.F. of body locaters
-    Eigen::VectorXd m_velocities_bodies;    ///< \[7M x 1\] both linear and quaternion D.o.F. of body locaters
-    Eigen::VectorXd m_accelerations_bodies; ///< \[7M x 1\] both linear and quaternion D.o.F. of body locaters
+    /// (7M x 1) both linear and quaternion D.o.F. of body locaters
+    Eigen::VectorXd m_positions_bodies;
+    /// (7M x 1) both linear and quaternion D.o.F. of body locaters
+    Eigen::VectorXd m_velocities_bodies;
+    /// (7M x 1) both linear and quaternion D.o.F. of body locaters
+    Eigen::VectorXd m_accelerations_bodies;
 
-    Eigen::VectorXd m_orientations_particles;  ///< \[4N x 1\] quaternions of all particles
-    Eigen::VectorXd m_positions_particles;     ///< \[3N x 1\] (linear) positions of all particles
-    Eigen::VectorXd m_velocities_particles;    ///< \[3N x 1\] (linear) velocities of all particles
-    Eigen::VectorXd m_accelerations_particles; ///< \[3N x 1\] (linear) accelerations of all particles
+    /// (4N x 1) quaternions of all particles
+    Eigen::VectorXd m_orientations_particles;
+    /// (3N x 1) (linear) positions of all particles
+    Eigen::VectorXd m_positions_particles;
+    /// (3N x 1) (linear) velocities of all particles
+    Eigen::VectorXd m_velocities_particles;
+    /// (3N x 1) (linear) accelerations of all particles
+    Eigen::VectorXd m_accelerations_particles;
 
-    Eigen::VectorXd m_positions_locater_particles;          ///< \[3M x 1\] (linear) positions of all bodies
-    Eigen::VectorXd m_velocities_particles_articulation;    ///< \[3N x 1\] (linear) velocities of all bodies
-    Eigen::VectorXd m_accelerations_particles_articulation; ///< \[3N x 1\] (linear) accelerations of all bodies
+    /// (3M x 1) (linear) positions of all bodies
+    Eigen::VectorXd m_positions_locater_particles;
+    /// (3N x 1) (linear) velocities of all bodies
+    Eigen::VectorXd m_velocities_particles_articulation;
+    /// (3N x 1) (linear) accelerations of all bodies
+    Eigen::VectorXd m_accelerations_particles_articulation;
 
     /* ANCHOR: rigid body motion tensors */
-    /// \[6M x 3N\] @f$ \boldsymbol{\Sigma} @f$ rigid body motion connectivity tensor
+    /// (6M x 3N) @f$ \boldsymbol{\Sigma} @f$ rigid body motion connectivity tensor
     Eigen::MatrixXd m_rbm_conn;
-
-    /// \[6M x 7M\] @f$ \boldsymbol{\Psi} @f$ converts linear/quaternion body velocity D.o.F. to linear/angular
+    /// (6M x 7M) @f$ \boldsymbol{\Psi} @f$ converts linear/quaternion body velocity D.o.F. to linear/angular
     /// velocity D.o.F.
     Eigen::MatrixXd m_psi_conv_quat_ang;
-
-    /// \[3N x 7M\] @f$ \boldsymbol{C} @f$ converts linear/quaternion body velocity D.o.F. to linear particle
+    /// (3N x 7M) @f$ \boldsymbol{C} @f$ converts linear/quaternion body velocity D.o.F. to linear particle
     /// velocities (NOTE: this was \f$ \boldsymbol{A} \f$ in written work)
     Eigen::MatrixXd m_rbm_conn_T_quat;
 
-    /// \[3N x 7M\] tensor version of `m_rbm_conn_T_quat`
+    /// (3N x 7M) tensor version of `m_rbm_conn_T_quat`
     Eigen::Tensor<double, 2> m_tens_rbm_conn_T_quat;
-
-    /// \[3N x 7M x 7M\] @f$ \nabla_{\xi} \boldsymbol{C} @f$
+    /// (3N x 7M x 7M) @f$ \nabla_{\xi} \boldsymbol{C} @f$
     Eigen::Tensor<double, 3> m_rbm_conn_T_quat_grad;
 
-    /// \[7M x 3N\] converts particle position D.o.F. to body position/quaternion D.o.F. (NOTE: this was
+    /// (7M x 3N) converts particle position D.o.F. to body position/quaternion D.o.F. (NOTE: this was
     /// @f$ \boldsymbol{\beta} @f$ in written work)
     Eigen::MatrixXd m_conv_body_2_part_dof; // TODO
 
-    /// \[7M x 3N\] tensor version of `m_conv_body_2_part_dof`
+    /// (7M x 3N) tensor version of `m_conv_body_2_part_dof`
     Eigen::Tensor<double, 2> m_tens_conv_body_2_part_dof;
 
     /* ANCHOR: Udwadia constraint linear system */
-    /// \[M x N\] linear operator defining relationship between constraints on @f$ \ddot{\boldsymbol{\xi}} @f$.
+    /// (M x N) linear operator defining relationship between constraints on @f$ \ddot{\boldsymbol{\xi}} @f$.
     Eigen::MatrixXd m_Udwadia_A;
 
-    /// \[M x 1\] Result of @f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} @f$
+    /// (M x 1) Result of @f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} @f$
     Eigen::VectorXd m_Udwadia_b;
     /* !SECTION */
 

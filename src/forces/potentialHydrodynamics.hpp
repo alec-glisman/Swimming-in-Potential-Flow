@@ -137,59 +137,85 @@ class potentialHydrodynamics
     std::shared_ptr<systemData> m_system; ///< shared pointer reference to systemData class
 
     // logging
-    std::string       m_logFile;                           ///< path of logfile for spdlog to write to
-    const std::string m_logName{"potentialHydrodynamics"}; ///< filename of logfile for spdlog to write to
+    /// path of logfile for spdlog to write to
+    std::string m_logFile;
+    /// filename of logfile for spdlog to write to
+    const std::string m_logName{"potentialHydrodynamics"};
 
     // For-loop variables
-    int m_num_pair_inter{-1}; ///< = s. Number of pairwise interactions to count: @f$s = 1/2 \, N \, (N - 1) @f$
+    /// = s. Number of pairwise interactions to count: @f$s = 1/2 \, N \, (N - 1) @f$
+    int m_num_pair_inter{-1};
 
     // tensor variables
-    int m_3N{-1}; ///< length of tensor quantities @f$ 3 \, N @f$
-    int m_7M{-1}; ///< length of tensor quantities @f$ 7 \, M @f$
+    /// 3N length of tensor quantities
+    int m_3N{-1};
+    /// 7M length of tensor quantities
+    int m_7M{-1};
 
-    // Distance between particle pairs
-    Eigen::VectorXd m_alphaVec; ///< \[s x 1\] first particle number in pairwise interactions
-    Eigen::VectorXd m_betaVec;  ///< \[s x 1\] second particle number in pairwise interactions
-    Eigen::VectorXd m_r_mag_ab; ///< \[s x 1\] relative displacement between particle pairs
-    Eigen::MatrixXd m_r_ab;     ///< \[3 x s\] relative displacement between particle pairs
+    // ANCHOR: distance between particle pairs
+    /// (s x 1) first particle number in pairwise interactions
+    Eigen::VectorXd m_alphaVec;
+    /// (s x 1) second particle number in pairwise interactions
+    Eigen::VectorXd m_betaVec;
+    /// (s x 1) relative displacement between particle pairs
+    Eigen::VectorXd m_r_mag_ab;
+    /// (3 x s) relative displacement between particle pairs
+    Eigen::MatrixXd m_r_ab;
 
-    // Identity Matrices
-    Eigen::MatrixXd m_I3N;      ///< \[3N x 3N\] identity matrix
-    Eigen::MatrixXd m_c1_2_I3N; ///< \[3N x 3N\] 1/2 identity matrix
+    // ANCHOR: ientity Matrices
+    /// (3N x 3N) identity matrix
+    Eigen::MatrixXd m_I3N;
+    /// (3N x 3N) 1/2 identity matrix
+    Eigen::MatrixXd m_c1_2_I3N;
 
-    // Mass matrices
-    Eigen::MatrixXd          m_M_added;      ///< \[3N x 3N\] added mass matrix
-    Eigen::MatrixXd          m_M_intrinsic;  ///< \[3N x 3N\] intrinsic mass matrix
-    Eigen::MatrixXd          m_M_total;      ///< \[3N x 3N\] total mass matrix
-    Eigen::Tensor<double, 2> m_tens_M_total; ///< \[3N x 3N\] tensor version of total mass matrix
-    Eigen::Tensor<double, 3> m_grad_M_added; ///< \[3N x 3N x 3N\] gradient of total mass matrix (only added mass
-                                             ///< components) in particle coordinates
+    // ANCHOR: mass matrices
+    /// (3N x 3N) added mass matrix
+    Eigen::MatrixXd m_M_added;
+    /// (3N x 3N) intrinsic mass matrix
+    Eigen::MatrixXd m_M_intrinsic;
+    /// (3N x 3N) total mass matrix
+    Eigen::MatrixXd m_M_total;
 
-    ///< \[3N x 3N x 7M\] gradient of total mass matrix (only added mass components) in body coordinates
+    /// (3N x 3N) tensor version of total mass matrix
+    Eigen::Tensor<double, 2> m_tens_M_total;
+    /// (3N x 3N x 3N) gradient of total mass matrix (only added mass components) in particle coordinates
+    Eigen::Tensor<double, 3> m_grad_M_added;
+
+    /// (3N x 3N x 7M) gradient of total mass matrix (only added mass components) in body coordinates
     Eigen::Tensor<double, 3> m_grad_M_added_body_coords;
 
-    // Hydrodynamic forces
-    Eigen::VectorXd m_F_hydro;          ///< \[3M x 1\] total hydrodynamic force
-    Eigen::VectorXd m_F_hydroNoInertia; ///< \[3M x 1\] hydrodynamic force in absence of inertial term
+    // ANCHOR: Hydrodynamic forces
+    /// (3M x 1) total hydrodynamic force
+    Eigen::VectorXd m_F_hydro;
+    /// (3M x 1) hydrodynamic force in absence of inertial term
+    Eigen::VectorXd m_F_hydroNoInertia;
 
-    // linear combinations of gradient of rbm and total mass matrix
-    Eigen::Tensor<double, 3> m_N1; ///< \[3N x 3N x 7M\] @f$ \nabla_{\xi} \, \boldsymbol{M} @f$
-    Eigen::Tensor<double, 3>
-        m_N2; ///< \[7M x 3N x 7M\] @f$ \nabla_{\xi} \, \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} @f$
-    Eigen::Tensor<double, 3> m_N3; ///< \[7M x 7M x 7M\] @f$ \nabla_{\xi} \, \boldsymbol{A}^{\mathrm{T}} \,
-                                   /// \boldsymbol{M} \, \boldsymbol{A} @f$
+    // ANCHOR: linear combinations of gradient of rbm and total mass matrix
+    /// (3N x 3N x 7M) @f$ \nabla_{\xi} \, \boldsymbol{M} @f$
+    Eigen::Tensor<double, 3> m_N1;
+    /// (7M x 3N x 7M) @f$ \nabla_{\xi} \, \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} @f$
+    Eigen::Tensor<double, 3> m_N2;
+    /// (7M x 7M x 7M) @f$ \nabla_{\xi} \, \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} \, \boldsymbol{A} @f$
+    Eigen::Tensor<double, 3> m_N3;
 
-    Eigen::Tensor<double, 2>
-        m_M_tilde_tilde; ///< \[7M x 3N\] @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} \, \boldsymbol{A} @f$
-    Eigen::Tensor<double, 2> m_M_tilde;     ///< \[7M x 7M\] @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} @f$
-    Eigen::MatrixXd          m_mat_M_tilde; ///< \[7M x 7M\] `Eigen::Matrix` form of `m_M_tilde_tilde`
+    /// (7M x 3N) @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} \, \boldsymbol{A} @f$
+    Eigen::Tensor<double, 2> m_M_tilde_tilde;
+    /// (7M x 7M) @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} @f$
+    Eigen::Tensor<double, 2> m_M_tilde;
+    /// (7M x 7M) `Eigen::Matrix` form of `m_M_tilde_tilde`
+    Eigen::MatrixXd m_mat_M_tilde;
 
-    // constants
-    const double m_unitSphereVol{4.0 / 3.0 * M_PI}; ///< volume of a unit sphere
-    const double m_c1_2{0.50};                      ///< = 1/2
-    const double m_c2_3{2.0 / 3.0};                 ///< = 2/3
-    const double m_c3_2{1.50};                      ///< = 3/2
-    const double m_c15_2{7.50};                     ///< = 15/2
+    // ANCHOR: constants
+    /// volume of a unit sphere
+    const double m_unitSphereVol{4.0 / 3.0 * M_PI};
+    /// = 1/2
+    const double m_c1_2{0.50};
+    /// = 2/3
+    const double m_c2_3{2.0 / 3.0};
+    /// = 3/2
+    const double m_c3_2{1.50};
+    /// = 15/2
+    const double m_c15_2{7.50};
 
   public:
     const Eigen::VectorXd&
