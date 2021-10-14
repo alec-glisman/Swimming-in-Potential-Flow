@@ -106,7 +106,7 @@ class systemData : public std::enable_shared_from_this<systemData>
      * @param vec Input 4-vector
      * @param mat Output matrix representation
      */
-    static void
+    static inline void
     eMatrix(const Eigen::Vector4d& vec, Eigen::Matrix<double, 3, 4>& mat)
     {
         mat << -vec(1), vec(0), -vec(3), vec(2), -vec(2), vec(3), vec(0), -vec(1), -vec(3), -vec(2), vec(1), vec(0);
@@ -118,7 +118,7 @@ class systemData : public std::enable_shared_from_this<systemData>
      * @param vec Input 3-vector must be @f$ a @f$ in above equation.
      * @param mat Matrix representation of @f$ a \times @f$ operator.
      */
-    static void
+    static inline void
     crossProdMat(const Eigen::Vector3d& vec, Eigen::Matrix3d& mat)
     {
         mat << 0, -vec(2), vec(1), vec(2), 0, -vec(0), -vec(1), vec(0), 0;
