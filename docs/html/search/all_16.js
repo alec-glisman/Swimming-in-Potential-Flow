@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['y_5flabel_615',['y_label',['../classplotStyling_1_1PlotStyling.html#ab56b2f3a6ee55cef26b697059dba4ebf',1,'plotStyling::PlotStyling']]]
+  ['y_5flabel_616',['y_label',['../classplotStyling_1_1PlotStyling.html#ab56b2f3a6ee55cef26b697059dba4ebf',1,'plotStyling::PlotStyling']]]
 ];
