@@ -84,6 +84,7 @@
 - [ ] Optimize all contraction operations with a device
 - [ ] Add GPU offloading (#define EIGEN_USE_GPU)
   - <https://www.tensorflow.org/guide/create_op#compile_the_op_using_your_system_compiler_tensorflow_binary_installation>
+- [ ] Remove all setters/getters in systemData that are unused
 
 ## Bugs to Fix
 
