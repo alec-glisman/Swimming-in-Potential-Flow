@@ -125,6 +125,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     };
     /* !SECTION */
 
+    /* SECTION: Attributes */
     /* ANCHOR: general attributes */
     // data i/o
     std::string m_inputGSDFile;
@@ -227,6 +228,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::MatrixXd m_Udwadia_A;
     /// \[M x 1\] Result of @f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} @f$
     Eigen::VectorXd m_Udwadia_b;
+    /* !SECTION */
 
     /* SECTION: Setters and getters */
   public:
