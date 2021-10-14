@@ -333,7 +333,7 @@ potentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     Eigen::array<Eigen::IndexPair<int>, 2> contract_ijk_jk = {Eigen::IndexPair<int>(1, 0), Eigen::IndexPair<int>(2, 1)};
     Eigen::array<Eigen::IndexPair<int>, 2> contract_ijk_ij = {Eigen::IndexPair<int>(0, 0), Eigen::IndexPair<int>(1, 1)};
 
-    // calculate requisite configurational tensors
+    // calculate kinematic tensors
     Eigen::MatrixXd          U_dyad_U = m_system->velocitiesParticles() * m_system->velocitiesParticles().transpose();
     Eigen::Tensor<double, 2> tens_UU  = TensorCast(U_dyad_U);
 

@@ -176,11 +176,11 @@ class potentialHydrodynamics
     Eigen::Tensor<double, 1> m_t3_PosGrad; ///< \[3N x 1\] position gradient term in hydrodynamic force
 
     // linear combinations of gradient of rbm and total mass matrix
-    Eigen::Tensor<double, 3> m_N1; ///< \[3N x 3N x 7M\] @f$ \nabla_{\xi} \, \boldsymbol{M} @f$ TODO
+    Eigen::Tensor<double, 3> m_N1; ///< \[3N x 3N x 7M\] @f$ \nabla_{\xi} \, \boldsymbol{M} @f$
     Eigen::Tensor<double, 3>
-        m_N2; ///< \[7M x 3N x 7M\] @f$ \nabla_{\xi} \, \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} @f$ TODO
+        m_N2; ///< \[7M x 3N x 7M\] @f$ \nabla_{\xi} \, \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} @f$
     Eigen::Tensor<double, 3> m_N3; ///< \[7M x 7M x 7M\] @f$ \nabla_{\xi} \, \boldsymbol{A}^{\mathrm{T}} \,
-                                   /// \boldsymbol{M} \, \boldsymbol{A} @f$ TODO
+                                   /// \boldsymbol{M} \, \boldsymbol{A} @f$
 
     Eigen::Tensor<double, 2>
         m_M_tilde_tilde; ///< \[7M x 3N\] @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} \, \boldsymbol{A} @f$
