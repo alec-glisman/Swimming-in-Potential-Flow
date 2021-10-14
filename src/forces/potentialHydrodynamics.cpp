@@ -39,6 +39,7 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
 
     spdlog::get(m_logName)->info("Initializing mass tensors");
     m_grad_M_added = Eigen::Tensor<double, 3>(m_3N, m_3N, m_3N);
+    m_tens_M_total = Eigen::Tensor<double, 2>(m_3N, m_3N);
 
     // Initialize force vectors
     spdlog::get(m_logName)->info("Initializing hydrodynamic force vectors");
@@ -259,11 +260,14 @@ potentialHydrodynamics::calcTotalMass()
 {
     m_M_total.noalias() = m_M_intrinsic;
     m_M_total.noalias() += m_M_added;
+
+    m_tens_M_total = TensorCast(m_M_total);
 }
 
 void
 potentialHydrodynamics::calcBodyTensors()
 {
+    m_N1 =
 }
 
 void

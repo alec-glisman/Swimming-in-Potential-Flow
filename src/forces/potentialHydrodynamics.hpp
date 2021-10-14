@@ -152,6 +152,7 @@ class potentialHydrodynamics
     Eigen::MatrixXd          m_M_added;      ///< \[3N x 3N\] added mass matrix
     Eigen::MatrixXd          m_M_intrinsic;  ///< \[3N x 3N\] intrinsic mass matrix
     Eigen::MatrixXd          m_M_total;      ///< \[3N x 3N\] total mass matrix
+    Eigen::Tensor<double, 2> m_tens_M_total; ///< \[3N x 3N\] tensor version of total mass matrix
     Eigen::Tensor<double, 3> m_grad_M_added; ///< \[3N x 3N\] gradient of total mass matrix (only added mass components)
 
     // Hydrodynamic forces
@@ -201,7 +202,7 @@ class potentialHydrodynamics
     }
 
     const Eigen::MatrixXd&
-    mTildeTilde() const
+    mTildeTilde()
     {
         m_M_tilde_tilde_matrix = MatrixCast(m_M_tilde_tilde, 7 * m_system->numBodies(), 7 * m_system->numBodies());
 

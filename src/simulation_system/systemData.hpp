@@ -178,16 +178,14 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::MatrixXd m_psi_conv_quat_ang;
     /// \[3N x 7M\] @f$ \boldsymbol{C} @f$ converts linear/quaternion body velocity D.o.F. to linear particle
     /// velocities (NOTE: this was \f$ \boldsymbol{A} \f$ in written work)
-    Eigen::MatrixXd m_C_conv_quat_part;
+    Eigen::MatrixXd m_rbm_conn_T_quat;
     /// \[3N x 7M x 7M\] @f$ \nabla_{\xi} \boldsymbol{C} @f$
-    Eigen::Tensor<double, 3> m_C_conv_quat_part_grad;
-
-    /* ANCHOR: gradient tensors in E.o.M. */
-
-    // change of gradient variable tensors
+    Eigen::Tensor<double, 3> m_rbm_conn_T_quat_grad;
     /// \[7M x 3N\] converts particle position D.o.F. to body position/quaternion D.o.F. (NOTE: this was
     /// @f$ \boldsymbol{\beta} @f$ in written work)
-    Eigen::MatrixXd m_D_conv_quat_part;
+    Eigen::MatrixXd m_conv_body_2_part_dof; // TODO
+    /// \[7M x 3N\] tensor version of `m_conv_body_2_part_dof`
+    Eigen::Tensor<double, 2> m_tens_conv_body_2_part_dof;
 
     /* ANCHOR: kinematic vectors */
     Eigen::VectorXd m_positions_bodies;     ///< \[7M x 1\] both linear and angular D.o.F.
@@ -611,6 +609,12 @@ class systemData : public std::enable_shared_from_this<systemData>
         return m_I3;
     }
     /* !SECTION */
+
+    Eigen::ThreadPool
+    threadPool() const
+    {
+        return m_thread_pool;
+    }
 };
 
 #endif

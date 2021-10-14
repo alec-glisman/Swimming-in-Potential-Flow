@@ -83,12 +83,14 @@ systemData::initializeData()
     // initialize rigid body motion matrices
     m_rbm_conn          = Eigen::MatrixXd::Zero(6 * m_num_bodies, 3 * m_num_particles);
     m_psi_conv_quat_ang = Eigen::MatrixXd::Zero(6 * m_num_bodies, 7 * m_num_bodies);
-    m_C_conv_quat_part  = Eigen::MatrixXd::Zero(3 * m_num_particles, 7 * m_num_bodies);
+    m_rbm_conn_T_quat   = Eigen::MatrixXd::Zero(3 * m_num_particles, 7 * m_num_bodies);
 
     // initialize gradient matrices
-    m_D_conv_quat_part      = Eigen::MatrixXd::Zero(7 * m_num_bodies, 3 * m_num_particles);
-    m_C_conv_quat_part_grad = Eigen::Tensor<double, 3>(3 * m_num_particles, 7 * m_num_bodies, 7 * m_num_bodies);
-    m_C_conv_quat_part_grad.setZero();
+    m_conv_body_2_part_dof      = Eigen::MatrixXd::Zero(7 * m_num_bodies, 3 * m_num_particles);
+    m_tens_conv_body_2_part_dof = Eigen::Tensor<double, 2>(7 * m_num_bodies, 3 * m_num_particles);
+    m_tens_conv_body_2_part_dof.setZero();
+    m_rbm_conn_T_quat_grad = Eigen::Tensor<double, 3>(3 * m_num_particles, 7 * m_num_bodies, 7 * m_num_bodies);
+    m_rbm_conn_T_quat_grad.setZero();
 
     // initialize constraints
     spdlog::get(m_logName)->info("Initializing constraints");
@@ -301,8 +303,8 @@ systemData::rigidBodyMotionTensors()
         m_psi_conv_quat_ang.block<3, 4>(k6 + 3, k7 + 3).noalias() = 2 * E_theta_k; // angular-quaternion velocity couple
     }
 
-    /* ANCHOR: Compute m_C_conv_quat_part */
-    m_C_conv_quat_part.noalias() = m_rbm_conn.transpose() * m_psi_conv_quat_ang;
+    /* ANCHOR: Compute m_rbm_conn_T_quat */
+    m_rbm_conn_T_quat.noalias() = m_rbm_conn.transpose() * m_psi_conv_quat_ang;
 }
 
 void
@@ -311,8 +313,8 @@ systemData::gradientChangeOfVariableTensors()
     ///< thread pool device with access to all threads
     Eigen::ThreadPoolDevice all_cores_device(&m_thread_pool, m_num_physical_cores);
 
-    /* ANCHOR: Compute m_D_conv_quat_part */
-    m_D_conv_quat_part.setZero();
+    /* ANCHOR: Compute m_conv_body_2_part_dof */
+    m_conv_body_2_part_dof.setZero();
 
     int                         body_num{-1}; // -1 as first particle should be locater particle and increment this
     Eigen::Matrix<double, 3, 4> twoE_body;    ///< 2 * E_body
@@ -353,14 +355,14 @@ systemData::gradientChangeOfVariableTensors()
         Eigen::Matrix<double, 4, 3> P_j_tilde = P_j_tilde_hold.transpose();
 
         // change of variables gradient tensor elements
-        m_D_conv_quat_part.block<3, 3>(7 * body_num, j3).noalias() = -m_I3; // translation-translation couple
-        m_D_conv_quat_part.block<3, 3>(7 * body_num + 4, j3).noalias() =
+        m_conv_body_2_part_dof.block<3, 3>(7 * body_num, j3).noalias() = -m_I3; // translation-translation couple
+        m_conv_body_2_part_dof.block<3, 3>(7 * body_num + 4, j3).noalias() =
             twoE_body * P_j_tilde; // quaternion-rotation couple (first row is zero)
     }
     assert(body_num + 1 == m_num_bodies && "Not all bodies were indexed correctly");
 
-    /* ANCHOR : Compute m_C_conv_quat_part_grad */
-    m_C_conv_quat_part_grad.setZero();
+    /* ANCHOR : Compute m_rbm_conn_T_quat_grad */
+    m_rbm_conn_T_quat_grad.setZero();
     body_num = -1;
 
     assert(m_particle_type_id(0) == 1 && "First particle index must be locater by convention");
@@ -383,7 +385,7 @@ systemData::gradientChangeOfVariableTensors()
             m_psi_conv_quat_ang.block<3, 4>(6 * body_num + 3, 7 * body_num + 3);
 
         // get change of variable matrix element D_{\alpha}
-        const Eigen::Matrix<double, 7, 3> n_D_alpha = -m_D_conv_quat_part.block<7, 3>(7 * body_num, 3 * i);
+        const Eigen::Matrix<double, 7, 3> n_D_alpha = -m_conv_body_2_part_dof.block<7, 3>(7 * body_num, 3 * i);
 
         /* ANCHOR: tensor contractions to produce result */
 
@@ -420,9 +422,9 @@ systemData::gradientChangeOfVariableTensors()
         angular_gradient.device(all_cores_device) = -d_rCrossMat_d_xi_times_two_E_body - rCrossMat_times_d_E_body_d_xi;
 
         // output matrix indices
-        Eigen::array<Eigen::Index, 3> offsets           = {3 * i, 7 * body_num + 3, 7 * body_num};
-        Eigen::array<Eigen::Index, 3> extents           = {3, 4, 7};
-        m_C_conv_quat_part_grad.slice(offsets, extents) = angular_gradient;
+        Eigen::array<Eigen::Index, 3> offsets          = {3 * i, 7 * body_num + 3, 7 * body_num};
+        Eigen::array<Eigen::Index, 3> extents          = {3, 4, 7};
+        m_rbm_conn_T_quat_grad.slice(offsets, extents) = angular_gradient;
     }
     assert(body_num + 1 == m_num_bodies && "Not all bodies were indexed correctly");
 }
