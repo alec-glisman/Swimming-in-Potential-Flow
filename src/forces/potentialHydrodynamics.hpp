@@ -182,7 +182,8 @@ class potentialHydrodynamics
         m_M_tilde; ///< \[7M x 3N\] @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} \, \boldsymbol{A} @f$ TODO
     Eigen::Tensor<double, 2>
                     m_M_tilde_tilde;        ///< \[7M x 7M\] @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} @f$ TODO
-    Eigen::MatrixXd m_M_tilde_tilde_matrix; ///< \[7M x 7M\] @f$ `Eigen::Matrix` form of `m_M_tilde_tilde`
+    Eigen::MatrixXd m_M_tilde_tilde_matrix; ///< \[7M x 7M\] `Eigen::Matrix` form of `m_M_tilde_tilde`
+
     // constants
     const double m_unitSphereVol{4.0 / 3.0 * M_PI}; ///< volume of a unit sphere
     const double m_c1_2{0.50};                      ///< = 1/2
