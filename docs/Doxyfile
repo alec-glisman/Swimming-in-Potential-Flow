@@ -873,8 +873,8 @@ WARN_LOGFILE =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT = main.md \
-        README.md \
         LICENSE \
+        TODO.md \
         src \
         tests \
         scripts \ 
