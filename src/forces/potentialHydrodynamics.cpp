@@ -62,8 +62,11 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
     m_N3 = Eigen::Tensor<double, 3>(7 * m_system->numBodies(), 7 * m_system->numBodies(), 7 * m_system->numBodies());
     m_N3.setZero();
 
-    m_M_tilde       = Eigen::Tensor<double, 2>(7 * m_system->numBodies(), 3 * m_system->numParticles());
-    m_M_tilde_tilde = Eigen::Tensor<double, 2>(7 * m_system->numBodies(), 7 * m_system->numBodies());
+    m_M_tilde_tilde = Eigen::Tensor<double, 2>(7 * m_system->numBodies(), 3 * m_system->numParticles());
+    m_M_tilde_tilde.setZero();
+    m_M_tilde = Eigen::Tensor<double, 2>(7 * m_system->numBodies(), 7 * m_system->numBodies());
+    m_M_tilde.setZero();
+    m_mat_M_tilde = Eigen::MatrixXd::Zero(7 * m_system->numBodies(), 7 * m_system->numBodies());
 
     // Assign particle pair information
     spdlog::get(m_logName)->info("Initializing particle pair information vectors");
@@ -271,11 +274,25 @@ potentialHydrodynamics::calcTotalMass()
 void
 potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
 {
+    // tensor contraction indices
+    Eigen::array<Eigen::IndexPair<int>, 1> contract_ki_kj = {Eigen::IndexPair<int>(0, 0)}; // = A^T B
+    Eigen::array<Eigen::IndexPair<int>, 1> contract_ik_kj = {Eigen::IndexPair<int>(1, 0)}; // = A B
+
+    /* ANCHOR: Compute linear combinations of total mass matrix and rbm_conn_t_quat */
+    m_M_tilde_tilde.device(device) = m_system->tensRbmConnTQuat().contract(m_tens_M_total, contract_ki_kj);
+    m_M_tilde.device(device)       = m_M_tilde_tilde.contract(m_system->tensRbmConnTQuat(), contract_ik_kj);
+    m_mat_M_tilde = MatrixCast(m_M_tilde_tilde, 7 * m_system->numBodies(), 7 * m_system->numBodies());
+
+    /* ANCHOR: Compute linear combinations of GRADIENTS of total mass matrix and rbm_conn_t_quat */
 }
 
 void
 potentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
 {
+    // tensor contraction indices
+    Eigen::array<Eigen::IndexPair<int>, 2> contract_ijk_jk = {Eigen::IndexPair<int>(1, 0), Eigen::IndexPair<int>(2, 1)};
+    Eigen::array<Eigen::IndexPair<int>, 2> contract_ijk_ij = {Eigen::IndexPair<int>(0, 0), Eigen::IndexPair<int>(1, 1)};
+
     // calculate requisite configurational tensors
     Eigen::MatrixXd          U_dyad_U = m_system->velocitiesParticles() * m_system->velocitiesParticles().transpose();
     Eigen::Tensor<double, 2> tens_UU  = TensorCast(U_dyad_U);
@@ -284,12 +301,10 @@ potentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     m_t1_Inertia.noalias() = -m_M_total * m_system->accelerationsParticles(); // dim = (3N) x 1
 
     // Term 2: - d(M_kj)/d(R_l) * U_l * U_j;
-    Eigen::array<Eigen::IndexPair<int>, 2> contract_kjl_jl = {Eigen::IndexPair<int>(1, 0), Eigen::IndexPair<int>(2, 1)};
-    m_t2_VelGrad                                           = -m_grad_M_added.contract(tens_UU, contract_kjl_jl);
+    m_t2_VelGrad.device(device) = -m_grad_M_added.contract(tens_UU, contract_ijk_jk);
 
     // Term 3: (1/2) U_i * d(M_ij)/d(R_k) * U_j
-    Eigen::array<Eigen::IndexPair<int>, 2> contract_ijk_ij = {Eigen::IndexPair<int>(0, 0), Eigen::IndexPair<int>(1, 1)};
-    m_t3_PosGrad                                           = 0.50 * m_grad_M_added.contract(tens_UU, contract_ijk_ij);
+    m_t3_PosGrad.device(device) = 0.50 * m_grad_M_added.contract(tens_UU, contract_ijk_ij);
 
     // Compute non-inertial part of force
     m_F_hydroNoInertia.noalias() = MatrixCast(m_t2_VelGrad, m_3N, 1);

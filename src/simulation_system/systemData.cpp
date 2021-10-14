@@ -82,9 +82,11 @@ systemData::initializeData()
     m_Udwadia_b = Eigen::VectorXd::Zero(m_num_constraints);
 
     // initialize rigid body motion matrices
-    m_rbm_conn          = Eigen::MatrixXd::Zero(6 * m_num_bodies, 3 * m_num_particles);
-    m_psi_conv_quat_ang = Eigen::MatrixXd::Zero(6 * m_num_bodies, 7 * m_num_bodies);
-    m_rbm_conn_T_quat   = Eigen::MatrixXd::Zero(3 * m_num_particles, 7 * m_num_bodies);
+    m_rbm_conn             = Eigen::MatrixXd::Zero(6 * m_num_bodies, 3 * m_num_particles);
+    m_psi_conv_quat_ang    = Eigen::MatrixXd::Zero(6 * m_num_bodies, 7 * m_num_bodies);
+    m_rbm_conn_T_quat      = Eigen::MatrixXd::Zero(3 * m_num_particles, 7 * m_num_bodies);
+    m_tens_rbm_conn_T_quat = Eigen::Tensor<double, 2>(3 * m_num_particles, 7 * m_num_bodies);
+    m_tens_rbm_conn_T_quat.setZero();
 
     // initialize gradient matrices
     m_conv_body_2_part_dof      = Eigen::MatrixXd::Zero(7 * m_num_bodies, 3 * m_num_particles);
@@ -310,6 +312,7 @@ systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
 
     /* ANCHOR: Compute m_rbm_conn_T_quat */
     m_rbm_conn_T_quat.noalias() = m_rbm_conn.transpose() * m_psi_conv_quat_ang;
+    m_tens_rbm_conn_T_quat      = TensorCast(m_rbm_conn_T_quat);
 }
 
 void

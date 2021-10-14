@@ -175,6 +175,8 @@ class systemData : public std::enable_shared_from_this<systemData>
     /// \[3N x 7M\] @f$ \boldsymbol{C} @f$ converts linear/quaternion body velocity D.o.F. to linear particle
     /// velocities (NOTE: this was \f$ \boldsymbol{A} \f$ in written work)
     Eigen::MatrixXd m_rbm_conn_T_quat;
+    /// \[3N x 7M\] tensor version of `m_rbm_conn_T_quat`
+    Eigen::Tensor<double, 2> m_tens_rbm_conn_T_quat;
     /// \[3N x 7M x 7M\] @f$ \nabla_{\xi} \boldsymbol{C} @f$
     Eigen::Tensor<double, 3> m_rbm_conn_T_quat_grad;
     /// \[7M x 3N\] converts particle position D.o.F. to body position/quaternion D.o.F. (NOTE: this was
@@ -605,6 +607,12 @@ class systemData : public std::enable_shared_from_this<systemData>
         return m_I3;
     }
     /* !SECTION */
+
+    const Eigen::Tensor<double, 2>&
+    tensRbmConnTQuat() const
+    {
+        return m_tens_rbm_conn_T_quat;
+    }
 };
 
 #endif

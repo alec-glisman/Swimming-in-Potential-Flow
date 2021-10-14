@@ -179,10 +179,9 @@ class potentialHydrodynamics
                                    /// \boldsymbol{M} \, \boldsymbol{A} @f$ TODO
 
     Eigen::Tensor<double, 2>
-        m_M_tilde; ///< \[7M x 3N\] @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} \, \boldsymbol{A} @f$ TODO
-    Eigen::Tensor<double, 2>
-                    m_M_tilde_tilde;        ///< \[7M x 7M\] @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} @f$ TODO
-    Eigen::MatrixXd m_M_tilde_tilde_matrix; ///< \[7M x 7M\] `Eigen::Matrix` form of `m_M_tilde_tilde`
+        m_M_tilde_tilde; ///< \[7M x 3N\] @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} \, \boldsymbol{A} @f$ 
+    Eigen::Tensor<double, 2> m_M_tilde;     ///< \[7M x 7M\] @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} @f$
+    Eigen::MatrixXd          m_mat_M_tilde; ///< \[7M x 7M\] `Eigen::Matrix` form of `m_M_tilde_tilde`
 
     // constants
     const double m_unitSphereVol{4.0 / 3.0 * M_PI}; ///< volume of a unit sphere
@@ -211,11 +210,9 @@ class potentialHydrodynamics
     }
 
     const Eigen::MatrixXd&
-    mTildeTilde()
+    mTilde() const
     {
-        m_M_tilde_tilde_matrix = MatrixCast(m_M_tilde_tilde, 7 * m_system->numBodies(), 7 * m_system->numBodies());
-
-        return m_M_tilde_tilde_matrix;
+        return m_mat_M_tilde;
     }
 };
 
