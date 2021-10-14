@@ -43,9 +43,9 @@ var NAVTREE =
       [ "Additional features", "md_TODO.html#autotoc_md15", null ]
     ] ],
     [ "Directory: requirements", "md_requirements_README.html", [
-      [ "Directory: C++", "md_requirements_README.html#autotoc_md17", null ],
-      [ "Directory: Perl", "md_requirements_README.html#autotoc_md18", null ],
-      [ "Directory: Python", "md_requirements_README.html#autotoc_md19", null ]
+      [ "Subdirectory: C++", "md_requirements_README.html#autotoc_md17", null ],
+      [ "Subdirectory: Perl", "md_requirements_README.html#autotoc_md18", null ],
+      [ "Subdirectory: Python", "md_requirements_README.html#autotoc_md19", null ]
     ] ],
     [ "Directory: src", "md_src_README.html", [
       [ "Subdirectory: cuda_helpers", "md_src_README.html#autotoc_md22", null ],
