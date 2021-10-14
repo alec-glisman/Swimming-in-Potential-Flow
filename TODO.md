@@ -51,7 +51,7 @@
 - General-use functions for data class
 
   - [x] Calculate $\bm{E}$ from an input 4-vector.
-  - [ ] Compute general tensors
+  - [x] Compute general tensors
     - [x] $\bm \epsilon$
     - [x] $\tilde{\bm{\kappa}}$
     - [x] $\bm{C}^{(i)}$
@@ -66,7 +66,7 @@
 
 - General-use functions for hydrodynamics
 
-  - [ ] Update $\nabla_{R} \bm{M}$ calculation with $\bm{\beta}$
+  - [x] Update $\nabla_{R} \bm{M}$ calculation with $\bm{\beta}$
   - [x] Make $\nabla_{R} \bm{M}$ 3rd order tensor
   - [ ] Compute the $\bm{N}^{(i)}$ 3rd order tensors and $\tilde{\mathbf{M}}$ 2nd order tensors
   - [ ] Update how hydrodynamic forces are calculated
@@ -74,7 +74,6 @@
 - Integration
   - [x] Check that udwadia method is being used
   - [ ] Update linear constraint system such that the only constraint is the quaternion unit norm for each body.
-  - [ ] move hyper-parameter booleans into `systemData` with clear comment anchors saying how to change (and when)
   - [ ] Update acceleration calculations (only use body DoF and also output particle DoF)
 
 ## Tensor module optimization
