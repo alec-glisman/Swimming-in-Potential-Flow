@@ -10,6 +10,6 @@ var classengine =
     [ "m_progressBar", "classengine.html#a2bb2d3c900042df38e1a093ee21169d0", null ],
     [ "m_logFile", "classengine.html#adaf942d3d92c4d6a88358755fba6e7af", null ],
     [ "m_logName", "classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d", null ],
-    [ "m_num_physical_cores", "classengine.html#a1267fb55e2a415dc7bc49335b538e8a3", null ],
+    [ "m_num_physical_cores", "classengine.html#a0e0b1453f9b5bc57e39695e31aa06d45", null ],
     [ "m_outputPercentile", "classengine.html#a88541de1c141d7d2c77f08b062f56a91", null ]
 ];

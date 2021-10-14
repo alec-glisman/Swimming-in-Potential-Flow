@@ -138,7 +138,7 @@
 <text text-anchor="start" x="120" y="-641.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ i3()</text>
 <text text-anchor="start" x="120" y="-630.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ tensRbmConnTQuat()</text>
 <text text-anchor="start" x="120" y="-619.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ tensConvBody2PartDof()</text>
-<text text-anchor="start" x="120" y="-608.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ rbmConnTQuatGrad()</text>
+<text text-anchor="start" x="120" y="-608.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ tensRbmConnTQuatGrad()</text>
 <text text-anchor="start" x="120" y="-597.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; parseGSD()</text>
 <text text-anchor="start" x="120" y="-586.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; checkInput()</text>
 <text text-anchor="start" x="120" y="-575.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; velocitiesArticulation()</text>

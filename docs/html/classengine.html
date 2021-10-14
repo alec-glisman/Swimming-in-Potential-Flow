@@ -109,7 +109,8 @@ $(document).ready(function(){initNavTree('classengine.html',''); initResizable()
 <div class="dynheader">
 Collaboration diagram for engine:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classengine__coll__graph.svg" width="2188" height="4060"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classengine__coll__graph.svg" width="2188" height="4031"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -144,9 +145,9 @@ Private Attributes</h2></td></tr>
 <tr class="separator:adaf942d3d92c4d6a88358755fba6e7af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2ac00dd1a57e6016b84f6a2eb6d3b0d"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a> {&quot;engine&quot;}</td></tr>
 <tr class="separator:aa2ac00dd1a57e6016b84f6a2eb6d3b0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1267fb55e2a415dc7bc49335b538e8a3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classengine.html#a1267fb55e2a415dc7bc49335b538e8a3">m_num_physical_cores</a></td></tr>
-<tr class="memdesc:a1267fb55e2a415dc7bc49335b538e8a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of physical CPU cores to use in tensor calculations  <a href="classengine.html#a1267fb55e2a415dc7bc49335b538e8a3">More...</a><br /></td></tr>
-<tr class="separator:a1267fb55e2a415dc7bc49335b538e8a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e0b1453f9b5bc57e39695e31aa06d45"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classengine.html#a0e0b1453f9b5bc57e39695e31aa06d45">m_num_physical_cores</a> = std::thread::hardware_concurrency()</td></tr>
+<tr class="memdesc:a0e0b1453f9b5bc57e39695e31aa06d45"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of physical CPU cores to use in tensor calculations  <a href="classengine.html#a0e0b1453f9b5bc57e39695e31aa06d45">More...</a><br /></td></tr>
+<tr class="separator:a0e0b1453f9b5bc57e39695e31aa06d45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a88541de1c141d7d2c77f08b062f56a91"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classengine.html#a88541de1c141d7d2c77f08b062f56a91">m_outputPercentile</a> {0.01}</td></tr>
 <tr class="memdesc:a88541de1c141d7d2c77f08b062f56a91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Percentage of simulation progress at which to output a GSD frame.  <a href="classengine.html#a88541de1c141d7d2c77f08b062f56a91">More...</a><br /></td></tr>
 <tr class="separator:a88541de1c141d7d2c77f08b062f56a91"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -285,8 +286,8 @@ Private Attributes</h2></td></tr>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Display step: {0}&quot;</span>, display_step);</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="comment">// create eigen3 thread-pool and device</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment"></span>    Eigen::ThreadPool thread_pool = Eigen::ThreadPool(<a class="code" href="classengine.html#a1267fb55e2a415dc7bc49335b538e8a3">m_num_physical_cores</a>);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    Eigen::ThreadPoolDevice all_cores_device(&amp;thread_pool, <a class="code" href="classengine.html#a1267fb55e2a415dc7bc49335b538e8a3">m_num_physical_cores</a>);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment"></span>    Eigen::ThreadPool thread_pool = Eigen::ThreadPool(<a class="code" href="classengine.html#a0e0b1453f9b5bc57e39695e31aa06d45">m_num_physical_cores</a>);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    Eigen::ThreadPoolDevice all_cores_device(&amp;thread_pool, <a class="code" href="classengine.html#a0e0b1453f9b5bc57e39695e31aa06d45">m_num_physical_cores</a>);</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordflow">while</span> (<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;timestep() &lt; tot_step)</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    {</div>
@@ -319,7 +320,7 @@ Private Attributes</h2></td></tr>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;flush();</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="engine_8cpp_source.html#l00100">integrate()</a>, <a class="el" href="engine_8hpp_source.html#l00091">m_logName</a>, <a class="el" href="engine_8hpp_source.html#l00094">m_num_physical_cores</a>, <a class="el" href="engine_8hpp_source.html#l00098">m_outputPercentile</a>, <a class="el" href="engine_8hpp_source.html#l00087">m_progressBar</a>, and <a class="el" href="engine_8hpp_source.html#l00084">m_system</a>.</p>
+<p class="reference">References <a class="el" href="engine_8cpp_source.html#l00100">integrate()</a>, <a class="el" href="engine_8hpp_source.html#l00091">m_logName</a>, <a class="el" href="engine_8hpp_source.html#l00095">m_num_physical_cores</a>, <a class="el" href="engine_8hpp_source.html#l00099">m_outputPercentile</a>, <a class="el" href="engine_8hpp_source.html#l00087">m_progressBar</a>, and <a class="el" href="engine_8hpp_source.html#l00084">m_system</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -533,8 +534,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a1267fb55e2a415dc7bc49335b538e8a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1267fb55e2a415dc7bc49335b538e8a3">&#9670;&nbsp;</a></span>m_num_physical_cores</h2>
+<a id="a0e0b1453f9b5bc57e39695e31aa06d45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e0b1453f9b5bc57e39695e31aa06d45">&#9670;&nbsp;</a></span>m_num_physical_cores</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -543,7 +544,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int engine::m_num_physical_cores</td>
+          <td class="memname">const int engine::m_num_physical_cores = std::thread::hardware_concurrency()</td>
         </tr>
       </table>
   </td>
@@ -552,12 +553,10 @@ Here is the caller graph for this function:</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div>
-<div class="line">        std::thread::hardware_concurrency()</div>
-</div><!-- fragment -->
+
 <p>number of physical CPU cores to use in tensor calculations </p>
 
-<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00094">94</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00095">95</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00047">run()</a>.</p>
 
@@ -585,7 +584,7 @@ Here is the caller graph for this function:</div>
 
 <p>Percentage of simulation progress at which to output a GSD frame. </p>
 
-<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00098">98</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00099">99</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00047">run()</a>.</p>
 
@@ -598,19 +597,19 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="aclassengine_html_ab42bae227e8d6bde5d5ebe226b1a99ac"><div class="ttname"><a href="classengine.html#ab42bae227e8d6bde5d5ebe226b1a99ac">engine::m_rk4Integrator</a></div><div class="ttdeci">std::shared_ptr&lt; rungeKutta4 &gt; m_rk4Integrator</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00086">engine.hpp:86</a></div></div>
-<div class="ttc" id="aclassengine_html_a1267fb55e2a415dc7bc49335b538e8a3"><div class="ttname"><a href="classengine.html#a1267fb55e2a415dc7bc49335b538e8a3">engine::m_num_physical_cores</a></div><div class="ttdeci">int m_num_physical_cores</div><div class="ttdoc">number of physical CPU cores to use in tensor calculations</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00094">engine.hpp:94</a></div></div>
 <div class="ttc" id="aclassengine_html_a5c9fba1e8b0611c00438c9ba8736e348"><div class="ttname"><a href="classengine.html#a5c9fba1e8b0611c00438c9ba8736e348">engine::integrate</a></div><div class="ttdeci">void integrate(Eigen::ThreadPoolDevice &amp;device)</div><div class="ttdoc">Updates the simulation framework 1 time step.</div><div class="ttdef"><b>Definition:</b> <a href="engine_8cpp_source.html#l00100">engine.cpp:100</a></div></div>
 <div class="ttc" id="aclassengine_html_a79e5e036684d522159ef64ac42576476"><div class="ttname"><a href="classengine.html#a79e5e036684d522159ef64ac42576476">engine::m_system</a></div><div class="ttdeci">std::shared_ptr&lt; systemData &gt; m_system</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00084">engine.hpp:84</a></div></div>
 <div class="ttc" id="aclassengine_html_adaf942d3d92c4d6a88358755fba6e7af"><div class="ttname"><a href="classengine.html#adaf942d3d92c4d6a88358755fba6e7af">engine::m_logFile</a></div><div class="ttdeci">std::string m_logFile</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00090">engine.hpp:90</a></div></div>
-<div class="ttc" id="aclassengine_html_a88541de1c141d7d2c77f08b062f56a91"><div class="ttname"><a href="classengine.html#a88541de1c141d7d2c77f08b062f56a91">engine::m_outputPercentile</a></div><div class="ttdeci">const double m_outputPercentile</div><div class="ttdoc">Percentage of simulation progress at which to output a GSD frame.</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00098">engine.hpp:98</a></div></div>
+<div class="ttc" id="aclassengine_html_a88541de1c141d7d2c77f08b062f56a91"><div class="ttname"><a href="classengine.html#a88541de1c141d7d2c77f08b062f56a91">engine::m_outputPercentile</a></div><div class="ttdeci">const double m_outputPercentile</div><div class="ttdoc">Percentage of simulation progress at which to output a GSD frame.</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00099">engine.hpp:99</a></div></div>
 <div class="ttc" id="aclassengine_html_a2bb2d3c900042df38e1a093ee21169d0"><div class="ttname"><a href="classengine.html#a2bb2d3c900042df38e1a093ee21169d0">engine::m_progressBar</a></div><div class="ttdeci">std::shared_ptr&lt; ProgressBar &gt; m_progressBar</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00087">engine.hpp:87</a></div></div>
 <div class="ttc" id="aclassengine_html_a6f7f54be0e646830f19eb105346eb7e5"><div class="ttname"><a href="classengine.html#a6f7f54be0e646830f19eb105346eb7e5">engine::m_potHydro</a></div><div class="ttdeci">std::shared_ptr&lt; potentialHydrodynamics &gt; m_potHydro</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00085">engine.hpp:85</a></div></div>
+<div class="ttc" id="aclassengine_html_a0e0b1453f9b5bc57e39695e31aa06d45"><div class="ttname"><a href="classengine.html#a0e0b1453f9b5bc57e39695e31aa06d45">engine::m_num_physical_cores</a></div><div class="ttdeci">const int m_num_physical_cores</div><div class="ttdoc">number of physical CPU cores to use in tensor calculations</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00095">engine.hpp:95</a></div></div>
 <div class="ttc" id="aclassengine_html_aa2ac00dd1a57e6016b84f6a2eb6d3b0d"><div class="ttname"><a href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">engine::m_logName</a></div><div class="ttdeci">const std::string m_logName</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00091">engine.hpp:91</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="classengine.html">engine</a></li>
-    <li class="footer">Generated on Thu Oct 14 2021 11:36:47 for Bodies in Potential Flow by
+    <li class="footer">Generated on Thu Oct 14 2021 16:30:02 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

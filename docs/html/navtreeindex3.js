@@ -1,7 +1,5 @@
 var NAVTREEINDEX3 =
 {
-"helper__math_8h.html#aa85502e2b039b0145f512a848e70fa04":[6,2,2,0,4,211],
-"helper__math_8h.html#aa8a9d57950bb3ca3835bece91188dbf4":[6,2,2,0,4,265],
 "helper__math_8h.html#aa9cdc9f9c05b4fbdc7bb18b325de7e9a":[6,2,2,0,4,248],
 "helper__math_8h.html#aa9ee264473011054a33354d0045161ce":[6,2,2,0,4,274],
 "helper__math_8h.html#aabd11d734658e0ebf5de5740970bf82d":[6,2,2,0,4,102],
@@ -209,8 +207,8 @@ var NAVTREEINDEX3 =
 "namespacecollinear-swimmer-wall-aggregate-analysis.html":[7,0],
 "namespacecollinear-swimmer-wall-configuration.html":[7,1],
 "namespacecollinear-swimmer-wall-individual-analysis.html":[7,2],
-"namespaceplotStyling.html":[8,0],
 "namespaceplotStyling.html":[7,4],
+"namespaceplotStyling.html":[8,0],
 "namespaces.html":[7],
 "namespacesimulationDataLoad.html":[7,5],
 "pages.html":[],
@@ -249,5 +247,7 @@ var NAVTREEINDEX3 =
 "structgsd__handle.html":[8,4],
 "structgsd__handle.html#a0b9b163d35869b802a8937e958ea410c":[8,4,1],
 "structgsd__handle.html#a144dc0976a1fe2f895423495689daea5":[8,4,8],
-"structgsd__handle.html#a17f63ed60cc1f9e456bf2d5ce301ecf8":[8,4,11]
+"structgsd__handle.html#a17f63ed60cc1f9e456bf2d5ce301ecf8":[8,4,11],
+"structgsd__handle.html#a37ddf6d53fc8c4f3eff247508fcc814b":[8,4,10],
+"structgsd__handle.html#a38e4bf4d587e525904d615ce49352592":[8,4,0]
 };

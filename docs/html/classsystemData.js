@@ -82,7 +82,7 @@ var classsystemData =
     [ "i3", "classsystemData.html#a9a8e856d1285735bfb9cbd41ef764345", null ],
     [ "tensRbmConnTQuat", "classsystemData.html#af76f1e69144f1239db76179e424566dd", null ],
     [ "tensConvBody2PartDof", "classsystemData.html#a3f55930a270666e894ab8826fec3289f", null ],
-    [ "rbmConnTQuatGrad", "classsystemData.html#a261cca5d15f99bbd71b5c359fc66cc6f", null ],
+    [ "tensRbmConnTQuatGrad", "classsystemData.html#afcff91b7b89da89fc0250c0ad05cd987", null ],
     [ "m_inputGSDFile", "classsystemData.html#a35366fe2448bac4eeba7769da3b8acd7", null ],
     [ "m_outputDir", "classsystemData.html#a7065db09f0a19271205029fbfe147e40", null ],
     [ "m_logFile", "classsystemData.html#aea9f18052c8b6c2f7baf5a7d6ce4be2d", null ],
