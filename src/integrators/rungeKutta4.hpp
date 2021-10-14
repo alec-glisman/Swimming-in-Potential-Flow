@@ -32,11 +32,33 @@
 /* Forward declarations */
 class systemData;
 
+/**
+ * @class rungeKutta4
+ *
+ * @brief Standard Runge-Kutta 4th order integration.
+ *
+ * @details Integrates both velocity and positional degrees of freedom simultaneously from known acceleration
+ * components.
+ * Orientational components are handled with quaterions and the Udwadia-Kalaba constrained Lagrangian Dynamics formalism
+ * is used to ensure unitary norms of each quaternion. The true D.o.F. integrated are those of the body components and
+ * individual particle components are calculated via the rigid body motion connectivity tensors.
+ *
+ */
 class rungeKutta4
 {
   public:
-    rungeKutta4(std::shared_ptr<systemData> sys, std::shared_ptr<potentialHydrodynamics> hydro);
+    /**
+     * @brief Construct a new runge Kutta4 object
+     *
+     * @param sys systemData class to gather data from
+     * @param hydro potentialHydrodynamics class to get hydrodynamic force data from
+     */
+    explicit rungeKutta4(std::shared_ptr<systemData> sys, std::shared_ptr<potentialHydrodynamics> hydro);
 
+    /**
+     * @brief Destroy the runge Kutta4 object
+     *
+     */
     ~rungeKutta4();
 
     void
@@ -53,21 +75,31 @@ class rungeKutta4
     udwadiaKalaba(Eigen::VectorXd& acc);
 
     // classes
-    std::shared_ptr<systemData>             m_system;
+    /// shared pointer reference to systemData class
+    std::shared_ptr<systemData> m_system;
+    /// shared pointer reference to potentialHydrodynamics class
     std::shared_ptr<potentialHydrodynamics> m_potHydro;
 
     // logging
-    std::string       m_logFile;
+    /// path of logfile for spdlog to write to
+    std::string m_logFile;
+    /// filename of logfile for spdlog to write to
     const std::string m_logName{"rungeKutta4"};
 
     // time step variables
+    /// (dimensional) integrator finite time step
     double m_dt{-1.0};
+    /// (dimensional) 1/2 integrator finite time step
     double m_c1_2_dt{-1.0};
+    /// (dimensional) 1/6 integrator finite time step
     double m_c1_6_dt{-1.0};
 
     // constants
+    /// = 1/2
     const double m_c1_2{0.50};
+    /// = 1/6
     const double m_c1_6{1.0 / 6.0};
+    /// = 2
     const double m_c2{2.0};
 };
 

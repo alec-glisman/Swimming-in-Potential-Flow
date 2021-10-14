@@ -134,7 +134,8 @@ class potentialHydrodynamics
     calcHydroForces(Eigen::ThreadPoolDevice& device);
 
     // classes
-    std::shared_ptr<systemData> m_system; ///< shared pointer reference to systemData class
+    /// shared pointer reference to systemData class
+    std::shared_ptr<systemData> m_system; 
 
     // logging
     /// path of logfile for spdlog to write to
