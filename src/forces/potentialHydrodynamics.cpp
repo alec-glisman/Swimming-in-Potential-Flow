@@ -276,7 +276,7 @@ potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     Eigen::array<Eigen::IndexPair<int>, 1> contract_il_lj = {Eigen::IndexPair<int>(1, 0)}; // = A B
 
     // tensor index shuffling
-    Eigen::array<int, 3> flip_first_two_indices({1, 0, 2}); // (i, j, k) --> (j, i, k)
+    Eigen::array<int, 3> flip_last_two_indices({0, 2, 1}); // (i, j, k) --> (i, k, j)
 
     /* ANCHOR: Compute linear combinations of total mass matrix and rbm_conn_t_quat */
     m_M_tilde_tilde.device(device) = m_system->tensRbmConnTQuat().contract(m_tens_M_total, contract_li_lj);
@@ -286,22 +286,17 @@ potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
 
     /* ANCHOR: Compute linear combinations of GRADIENTS of total mass matrix and rbm_conn_t_quat */
     // N^{(1)}
-    m_N1 = m_grad_M_added_body_coords;
-
-    // Get transpose (of first two indices) of \nabla C
-    Eigen::Tensor<double, 3> grad_rbm_conn_quat_T = Eigen::Tensor<double, 3>(m_3N, m_7M, m_7M);
-    grad_rbm_conn_quat_T.device(device)           = m_system->tensRbmConnTQuatGrad();
-
-    Eigen::Tensor<double, 3> grad_rbm_conn_quat = Eigen::Tensor<double, 3>(m_7M, m_3N, m_7M);
-    grad_rbm_conn_quat.device(device)           = grad_rbm_conn_quat_T.shuffle(flip_first_two_indices);
+    m_N1.device(device) = m_grad_M_added_body_coords;
 
     // N^{(2)}
-    Eigen::Tensor<double, 3> N2_term1 = Eigen::Tensor<double, 3>(m_7M, m_3N, m_7M);
-    Eigen::Tensor<double, 3> N2_term2 = Eigen::Tensor<double, 3>(m_7M, m_3N, m_7M);
+    Eigen::Tensor<double, 3> N2_term1_unshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_3N);
+    Eigen::Tensor<double, 3> N2_term1           = Eigen::Tensor<double, 3>(m_7M, m_3N, m_7M);
+    Eigen::Tensor<double, 3> N2_term2           = Eigen::Tensor<double, 3>(m_7M, m_3N, m_7M);
 
-    N2_term1.device(device) = grad_rbm_conn_quat.contract(m_tens_M_total, contract_il_lj);
-    N2_term2.device(device) = m_system->tensRbmConnTQuat().contract(m_N1, contract_li_lj);
-    m_N2.device(device)     = N2_term1 + N2_term2;
+    N2_term1_unshuffle.device(device) = m_system->tensRbmConnTQuatGrad().contract(m_tens_M_total, contract_li_lj);
+    N2_term1.device(device)           = N2_term1_unshuffle.shuffle(flip_last_two_indices);
+    N2_term2.device(device)           = m_system->tensRbmConnTQuat().contract(m_N1, contract_li_lj);
+    m_N2.device(device)               = N2_term1 + N2_term2;
 
     // N^{(3)}
     Eigen::Tensor<double, 3> N3_term1 = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
@@ -365,7 +360,7 @@ potentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     // hydrodynamic forces arising from internal D.o.F. motion (2 terms; contains internal inertia term)
     Eigen::Tensor<double, 1> F_int = Eigen::Tensor<double, 1>(m_7M); // TODO
     F_int.device(device)           = 0.50 * m_N1.contract(V_V, contract_jki_jk);
-    F_int.device(device) -= m_M_tilde.contract(V_dot, contract_ij_j);
+    F_int.device(device) -= m_M_tilde_tilde.contract(V_dot, contract_ij_j);
 
     // compute complete potential flow hydrodynamic force
     Eigen::Tensor<double, 1> F_hydro = Eigen::Tensor<double, 1>(m_7M);
