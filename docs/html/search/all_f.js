@@ -6,7 +6,7 @@ var searchData=
   ['rbmconntquatgrad_446',['rbmConnTQuatGrad',['../classsystemData.html#a261cca5d15f99bbd71b5c359fc66cc6f',1,'systemData']]],
   ['readchunk_447',['readChunk',['../classGSDUtil.html#a86d2352b694afc6a0c938a13b3acec9d',1,'GSDUtil']]],
   ['readheader_448',['readHeader',['../classGSDUtil.html#a2015dcdcdb33be9106f5c8f45f8564cc',1,'GSDUtil']]],
-  ['readme_2emd_449',['README.md',['../src_2README_8md.html',1,'(Global Namespace)'],['../tests_2README_8md.html',1,'(Global Namespace)'],['../requirements_2README_8md.html',1,'(Global Namespace)'],['../python_2README_8md.html',1,'(Global Namespace)']]],
+  ['readme_2emd_449',['README.md',['../requirements_2README_8md.html',1,'(Global Namespace)'],['../src_2README_8md.html',1,'(Global Namespace)'],['../tests_2README_8md.html',1,'(Global Namespace)'],['../python_2README_8md.html',1,'(Global Namespace)']]],
   ['readparameters_450',['readParameters',['../classGSDUtil.html#a31f9c7368ebd89c6293d9d9d83598e62',1,'GSDUtil']]],
   ['readparticles_451',['readParticles',['../classGSDUtil.html#ad404c3879fb81c0b73b2335ea6e4676a',1,'GSDUtil']]],
   ['readsystemspecifics_452',['readSystemSpecifics',['../classGSDUtil.html#a278d1db9ece12bdc1268780313d83daf',1,'GSDUtil']]],
