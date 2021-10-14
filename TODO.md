@@ -68,7 +68,7 @@
 
   - [x] Update $\nabla_{R} \bm{M}$ calculation with $\bm{\beta}$
   - [x] Make $\nabla_{R} \bm{M}$ 3rd order tensor
-  - [ ] Compute the $\bm{N}^{(i)}$ 3rd order tensors and $\tilde{\mathbf{M}}$ 2nd order tensors
+  - [x] Compute the $\bm{N}^{(i)}$ 3rd order tensors and $\tilde{\mathbf{M}}$ 2nd order tensors
   - [ ] Update how hydrodynamic forces are calculated
 
 - Integration

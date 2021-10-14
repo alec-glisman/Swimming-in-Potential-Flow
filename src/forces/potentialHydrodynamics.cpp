@@ -22,8 +22,10 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
     spdlog::get(m_logName)->info("Setting number of interactions to count: {0}", m_num_pair_inter);
 
     // tensor variables
-    m_3N = 3 * m_system->numParticles(); // length of tensor quantities
-    spdlog::get(m_logName)->info("Length of tensor quantities: {0}", m_3N);
+    m_3N = 3 * m_system->numParticles();
+    spdlog::get(m_logName)->info("Length of 3N tensor quantities: {0}", m_3N);
+    m_7M = 7 * m_system->numBodies();
+    spdlog::get(m_logName)->info("Length of 7M tensor quantities: {0}", m_7M);
 
     // set identity matrices
     m_I3N      = Eigen::MatrixXd::Identity(m_3N, m_3N);
@@ -40,7 +42,7 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
     spdlog::get(m_logName)->info("Initializing mass tensors");
     m_grad_M_added = Eigen::Tensor<double, 3>(m_3N, m_3N, m_3N);
     m_grad_M_added.setZero();
-    m_grad_M_added_body_coords = Eigen::Tensor<double, 3>(m_3N, m_3N, 7 * m_system->numBodies());
+    m_grad_M_added_body_coords = Eigen::Tensor<double, 3>(m_3N, m_3N, m_7M);
     m_grad_M_added_body_coords.setZero();
     m_tens_M_total = Eigen::Tensor<double, 2>(m_3N, m_3N);
     m_tens_M_total.setZero();
@@ -58,19 +60,18 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
     m_t3_PosGrad.setZero();
 
     spdlog::get(m_logName)->info("Initializing tensors used in hydrodynamic force calculations.");
-    m_N1 =
-        Eigen::Tensor<double, 3>(3 * m_system->numParticles(), 3 * m_system->numParticles(), 7 * m_system->numBodies());
+    m_N1 = Eigen::Tensor<double, 3>(m_3N, m_3N, m_7M);
     m_N1.setZero();
-    m_N2 = Eigen::Tensor<double, 3>(7 * m_system->numBodies(), 3 * m_system->numParticles(), 7 * m_system->numBodies());
+    m_N2 = Eigen::Tensor<double, 3>(m_7M, m_3N, m_7M);
     m_N2.setZero();
     m_N3 = Eigen::Tensor<double, 3>(7 * m_system->numBodies(), 7 * m_system->numBodies(), 7 * m_system->numBodies());
     m_N3.setZero();
 
-    m_M_tilde_tilde = Eigen::Tensor<double, 2>(7 * m_system->numBodies(), 3 * m_system->numParticles());
+    m_M_tilde_tilde = Eigen::Tensor<double, 2>(7 * m_system->numBodies(), m_3N);
     m_M_tilde_tilde.setZero();
-    m_M_tilde = Eigen::Tensor<double, 2>(7 * m_system->numBodies(), 7 * m_system->numBodies());
+    m_M_tilde = Eigen::Tensor<double, 2>(m_7M, m_7M);
     m_M_tilde.setZero();
-    m_mat_M_tilde = Eigen::MatrixXd::Zero(7 * m_system->numBodies(), 7 * m_system->numBodies());
+    m_mat_M_tilde = Eigen::MatrixXd::Zero(m_7M, m_7M);
 
     // Assign particle pair information
     spdlog::get(m_logName)->info("Initializing particle pair information vectors");
@@ -202,7 +203,7 @@ void
 potentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
 {
     // eigen tensor contraction variables
-    Eigen::array<Eigen::IndexPair<int>, 1>  contract_ik_kj   = {Eigen::IndexPair<int>(1, 0)}; // = A B
+    Eigen::array<Eigen::IndexPair<int>, 1>  contract_ijl_lk  = {Eigen::IndexPair<int>(2, 0)};
     Eigen::array<Eigen::IndexPair<long>, 0> empty_index_list = {};
     Eigen::array<int, 3>                    shuffle_one_right({2, 0, 1});
     Eigen::array<int, 3>                    shuffle_one_left({1, 2, 1});
@@ -267,7 +268,7 @@ potentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
     }
 
     m_grad_M_added_body_coords.device(device) =
-        m_system->tensConvBody2PartDof().contract(m_grad_M_added, contract_ik_kj);
+        m_grad_M_added.contract(m_system->tensConvBody2PartDof(), contract_ijl_lk);
 }
 
 void
@@ -282,18 +283,47 @@ potentialHydrodynamics::calcTotalMass()
 void
 potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
 {
-    // tensor contraction indices
-    Eigen::array<Eigen::IndexPair<int>, 1> contract_ki_kj = {Eigen::IndexPair<int>(0, 0)}; // = A^T B
-    Eigen::array<Eigen::IndexPair<int>, 1> contract_ik_kj = {Eigen::IndexPair<int>(1, 0)}; // = A B
+    // contraction indices
+    Eigen::array<Eigen::IndexPair<int>, 1> contract_li_lj = {Eigen::IndexPair<int>(0, 0)}; // = A^T B
+    Eigen::array<Eigen::IndexPair<int>, 1> contract_il_lj = {Eigen::IndexPair<int>(1, 0)}; // = A B
+
+    // tensor index shuffling
+    Eigen::array<int, 3> flip_first_two_indices({1, 0, 2}); // (i, j, k) --> (j, i, k)
 
     /* ANCHOR: Compute linear combinations of total mass matrix and rbm_conn_t_quat */
-    m_M_tilde_tilde.device(device) = m_system->tensRbmConnTQuat().contract(m_tens_M_total, contract_ki_kj);
-    m_M_tilde.device(device)       = m_M_tilde_tilde.contract(m_system->tensRbmConnTQuat(), contract_ik_kj);
-    m_mat_M_tilde                  = MatrixCast(m_M_tilde_tilde, 7 * m_system->numBodies(), 7 * m_system->numBodies());
+    m_M_tilde_tilde.device(device) = m_system->tensRbmConnTQuat().contract(m_tens_M_total, contract_li_lj);
+
+    m_M_tilde.device(device) = m_M_tilde_tilde.contract(m_system->tensRbmConnTQuat(), contract_il_lj);
+    m_mat_M_tilde            = MatrixCast(m_M_tilde_tilde, m_7M, m_7M);
 
     /* ANCHOR: Compute linear combinations of GRADIENTS of total mass matrix and rbm_conn_t_quat */
+    // N^{(1)}
     m_N1 = m_grad_M_added_body_coords;
-    // m_N2.device(device) = TODO
+
+    // Get transpose (of first two indices) of \nabla C
+    Eigen::Tensor<double, 3> rbm_conn_quat   = Eigen::Tensor<double, 3>(m_3N, m_3N, m_7M);
+    Eigen::Tensor<double, 3> rbm_conn_quat_T = m_system->tensRbmConnTQuat();
+    rbm_conn_quat.device(device)             = rbm_conn_quat_T.shuffle(flip_first_two_indices);
+
+    // N^{(2)}
+    Eigen::Tensor<double, 3> N2_term1 = Eigen::Tensor<double, 3>(m_7M, m_3N, m_7M);
+    Eigen::Tensor<double, 3> N2_term2 = Eigen::Tensor<double, 3>(m_7M, m_3N, m_7M);
+
+    N2_term1.device(device) = rbm_conn_quat.contract(m_tens_M_total, contract_il_lj);
+    N2_term2.device(device) = m_system->tensRbmConnTQuat().contract(m_N1, contract_li_lj);
+    m_N2.device(device)     = N2_term1 + N2_term2;
+
+    // N^{(3)}
+    Eigen::Tensor<double, 3> N3_term1 = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
+    Eigen::Tensor<double, 3> N3_term2 = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
+    Eigen::Tensor<double, 3> N3_term3 = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
+
+    N3_term1.device(device) = N2_term1.contract(m_system->tensRbmConnTQuat(), contract_il_lj);
+    N3_term2.device(device) = N2_term2.contract(m_system->tensRbmConnTQuat(), contract_il_lj);
+    N3_term3.device(device) = m_M_tilde_tilde.contract(m_system->tensRbmConnTQuatGrad(), contract_il_lj);
+
+    m_N3.device(device) = N3_term1 + N3_term2;
+    m_N3.device(device) += N3_term3;
 }
 
 void

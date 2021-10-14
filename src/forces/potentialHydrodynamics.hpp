@@ -145,6 +145,7 @@ class potentialHydrodynamics
 
     // tensor variables
     int m_3N{-1}; ///< length of tensor quantities @f$ 3 \, N @f$
+    int m_7M{-1}; ///< length of tensor quantities @f$ 7 \, M @f$
 
     // Distance between particle pairs
     Eigen::VectorXd m_alphaVec; ///< \[s x 1\] first particle number in pairwise interactions

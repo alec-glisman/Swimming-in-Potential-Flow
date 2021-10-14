@@ -632,7 +632,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     }
 
     const Eigen::Tensor<double, 3>&
-    rbmConnTQuatGrad() const
+    tensRbmConnTQuatGrad() const
     {
         return m_rbm_conn_T_quat_grad;
     }
