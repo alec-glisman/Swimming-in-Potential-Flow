@@ -47,18 +47,6 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
     m_tens_M_total = Eigen::Tensor<double, 2>(m_3N, m_3N);
     m_tens_M_total.setZero();
 
-    // Initialize force vectors
-    spdlog::get(m_logName)->info("Initializing hydrodynamic force vectors");
-    m_F_hydro          = Eigen::VectorXd::Zero(m_3N);
-    m_F_hydroNoInertia = Eigen::VectorXd::Zero(m_3N);
-    m_t1_Inertia       = Eigen::VectorXd::Zero(m_3N);
-
-    spdlog::get(m_logName)->info("Initializing hydrodynamic force tensors");
-    m_t2_VelGrad = Eigen::Tensor<double, 1>(m_3N);
-    m_t2_VelGrad.setZero();
-    m_t3_PosGrad = Eigen::Tensor<double, 1>(m_3N);
-    m_t3_PosGrad.setZero();
-
     spdlog::get(m_logName)->info("Initializing tensors used in hydrodynamic force calculations.");
     m_N1 = Eigen::Tensor<double, 3>(m_3N, m_3N, m_7M);
     m_N1.setZero();
@@ -330,27 +318,42 @@ void
 potentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
 {
     // tensor contraction indices
+    Eigen::array<Eigen::IndexPair<long>, 0> empty_index_list = {}; // outer product
     Eigen::array<Eigen::IndexPair<int>, 2> contract_ijk_jk = {Eigen::IndexPair<int>(1, 0), Eigen::IndexPair<int>(2, 1)};
     Eigen::array<Eigen::IndexPair<int>, 2> contract_ijk_ij = {Eigen::IndexPair<int>(0, 0), Eigen::IndexPair<int>(1, 1)};
 
-    // calculate kinematic tensors
-    Eigen::MatrixXd          U_dyad_U = m_system->velocitiesParticles() * m_system->velocitiesParticles().transpose();
-    Eigen::Tensor<double, 2> tens_UU  = TensorCast(U_dyad_U);
+    // get kinematic tensors from systemData class
+    Eigen::Tensor<double, 1> xi_dot  = TensorCast(m_system->velocitiesBodies());
+    Eigen::Tensor<double, 1> xi_ddot = TensorCast(m_system->accelerationsBodies());
 
-    // Term 1: - M_kj * U_dot_j
-    m_t1_Inertia.noalias() = -m_M_total * m_system->accelerationsParticles(); // dim = (3N) x 1
+    Eigen::Tensor<double, 1> V     = TensorCast(m_system->velocitiesParticlesArticulation());
+    Eigen::Tensor<double, 1> V_dot = TensorCast(m_system->accelerationsParticlesArticulation());
 
-    // Term 2: - d(M_kj)/d(R_l) * U_l * U_j;
-    m_t2_VelGrad.device(device) = -m_grad_M_added.contract(tens_UU, contract_ijk_jk);
+    // calculate 2nd order kinematic tensors
+    Eigen::Tensor<double, 2> V_V = Eigen::Tensor<double, 2>(m_3N, m_3N);
+    V_V.device(device)           = V.contract(V, empty_index_list);
 
-    // Term 3: (1/2) U_i * d(M_ij)/d(R_k) * U_j
-    m_t3_PosGrad.device(device) = 0.50 * m_grad_M_added.contract(tens_UU, contract_ijk_ij);
+    Eigen::Tensor<double, 2> xi_dot_xi_dot = Eigen::Tensor<double, 2>(m_7M, m_7M);
+    xi_dot_xi_dot.device(device)           = xi_dot.contract(xi_dot, empty_index_list);
 
-    // Compute non-inertial part of force
-    m_F_hydroNoInertia.noalias() = MatrixCast(m_t2_VelGrad, m_3N, 1);
-    m_F_hydroNoInertia.noalias() += MatrixCast(m_t3_PosGrad, m_3N, 1);
+    Eigen::Tensor<double, 2> xi_dot_V = Eigen::Tensor<double, 2>(m_7M, m_3N);
+    xi_dot_V.device(device)           = xi_dot.contract(V, empty_index_list);
+
+    // hydrodynamic forces arising from locater point motion (3 terms; contains locater inertia term)
+
+    // hydrodynamic forces arising from coupling of locater and internal D.o.F. motion (2 terms)
+
+    // hydrodynamic forces arising from internal D.o.F. motion (2 terms; contains internal inertia term)
+
+    // compute non-inertial part of potential flow hydrodynamic force
+
+    // compute complete potential flow hydrodynamic force
+
+    // Compute non-inertial part of force (include internal D.o.F. inertia)
+    // m_F_hydroNoInertia.noalias() = MatrixCast(m_t2_VelGrad, m_3N, 1, device);
+    // m_F_hydroNoInertia.noalias() += MatrixCast(m_t3_PosGrad, m_3N, 1, device);
 
     // Compute complete potential pressure force
-    m_F_hydro.noalias() = m_t1_Inertia; // Full hydrodynamic force, dim = (3N) x 1
-    m_F_hydro.noalias() += m_F_hydroNoInertia;
+    // m_F_hydro.noalias() = m_t1_Inertia; // Full hydrodynamic force, dim = (3N) x 1
+    // m_F_hydro.noalias() += m_F_hydroNoInertia;
 }
