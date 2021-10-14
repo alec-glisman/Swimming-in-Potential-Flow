@@ -91,7 +91,7 @@ class engine
     const std::string m_logName{"engine"};
 
     // eigen parallelization parameters
-    int m_num_physical_cores =
+    const int m_num_physical_cores =
         std::thread::hardware_concurrency(); ///< number of physical CPU cores to use in tensor calculations
 
     // ProgressBar output
