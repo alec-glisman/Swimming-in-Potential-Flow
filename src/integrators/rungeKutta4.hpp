@@ -99,8 +99,6 @@ class rungeKutta4
     const double m_c1_2{0.50};
     /// = 1/6
     const double m_c1_6{1.0 / 6.0};
-    /// = 2
-    const double m_c2{2.0};
 };
 
 #endif // BODIES_IN_POTENTIAL_FLOW_RUNGE_KUTTA_4_H

@@ -211,8 +211,6 @@ class potentialHydrodynamics
     const double m_unitSphereVol{4.0 / 3.0 * M_PI};
     /// = 1/2
     const double m_c1_2{0.50};
-    /// = 2/3
-    const double m_c2_3{2.0 / 3.0};
     /// = 3/2
     const double m_c3_2{1.50};
     /// = 15/2
