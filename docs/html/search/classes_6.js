@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['testopts_0',['testOpts',['../structtestOpts.html',1,'']]]
+  ['testopts_645',['testOpts',['../structtestOpts.html',1,'']]]
 ];

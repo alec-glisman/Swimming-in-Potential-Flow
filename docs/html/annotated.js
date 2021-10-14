@@ -1,12 +1,6 @@
 var annotated =
 [
-    [ "GSDUtil", "namespaceGSDUtil.html", [
-      [ "GSDUtil", "classGSDUtil_1_1GSDUtil.html", "classGSDUtil_1_1GSDUtil" ]
-    ] ],
-    [ "plotStyling", "namespaceplotStyling.html", [
-      [ "Multiple", "classplotStyling_1_1Multiple.html", "classplotStyling_1_1Multiple" ],
-      [ "PlotStyling", "classplotStyling_1_1PlotStyling.html", "classplotStyling_1_1PlotStyling" ]
-    ] ],
+    [ "plotStyling", "namespaceplotStyling.html", "namespaceplotStyling" ],
     [ "engine", "classengine.html", "classengine" ],
     [ "Exception", "classException.html", "classException" ],
     [ "gsd_byte_buffer", "structgsd__byte__buffer.html", "structgsd__byte__buffer" ],

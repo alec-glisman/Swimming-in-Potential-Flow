@@ -1,6 +1,6 @@
 var exception_8h =
 [
-    [ "Exception< Std_Exception >", "classException.html", "classException" ],
+    [ "Exception", "classException.html", "classException" ],
     [ "RUNTIME_EXCEPTION", "exception_8h.html#a14d84c56a2433cf0b894bf62cf8a5c31", null ],
     [ "LOGIC_EXCEPTION", "exception_8h.html#a994cf587529580a7865cdf9a7016514a", null ],
     [ "RANGE_EXCEPTION", "exception_8h.html#ad7375e2978467b3ca52550fc2d2356d6", null ],

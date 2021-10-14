@@ -2,6 +2,13 @@ var gsd_8c =
 [
     [ "_XOPEN_SOURCE", "gsd_8c.html#a78c99ffd76a7bb3c8c74db76207e9ab4", null ],
     [ "GSD_USE_MMAP", "gsd_8c.html#a9f43681316968fd912811ffd0e1401d5", null ],
+    [ "GSD_INITIAL_INDEX_SIZE", "gsd_8c.html#a06fc87d81c62e9abb8790b6e5713c55bab2d4762a429d1bedec72663852e3c4ba", null ],
+    [ "GSD_INITIAL_NAME_BUFFER_SIZE", "gsd_8c.html#adf764cbdea00d65edcd07bb9953ad2b7af18592611faceacda42f0c336394bae2", null ],
+    [ "GSD_INITIAL_FRAME_INDEX_SIZE", "gsd_8c.html#a99fb83031ce9923c84392b4e92f956b5abe3e9ee339884a28a33d20ea27d0c8a7", null ],
+    [ "GSD_WRITE_BUFFER_SIZE", "gsd_8c.html#abc6126af1d45847bc59afa0aa3216b04add62126eb596d9d505d4f4c33062528e", null ],
+    [ "GSD_COPY_BUFFER_SIZE", "gsd_8c.html#adc29c2ff13d900c2f185ee95427fb06ca4cede151f20532731cb30ac33609508f", null ],
+    [ "GSD_NAME_MAP_SIZE", "gsd_8c.html#a61dadd085c1777f559549e05962b2c9ea09f6f8b0215767f2ed4321a8e26cc287", null ],
+    [ "GSD_CURRENT_FILE_VERSION", "gsd_8c.html#a726ca809ffd3d67ab4b8476646f26635a9e41ab940950d400d353438f87a6f559", null ],
     [ "gsd_util_zero_memory", "gsd_8c.html#a9b05d58560daee2512f03bedf7b2926d", null ],
     [ "gsd_io_pwrite_retry", "gsd_8c.html#a3fb7746d93a1c856ca7ef64fa3548cbe", null ],
     [ "gsd_io_pread_retry", "gsd_8c.html#ac1f41abbefbfe35337e7053d766c089b", null ],
@@ -40,10 +47,10 @@ var gsd_8c =
     [ "gsd_end_frame", "gsd_8c.html#aa03810337c5eebcbe716d8633eaefc5e", null ],
     [ "gsd_write_chunk", "gsd_8c.html#ae22447904b925f284bf987fae448488a", null ],
     [ "gsd_get_nframes", "gsd_8c.html#a7479046d4d6e15c33cb24034ddd87562", null ],
-    [ "gsd_find_chunk", "gsd_8c.html#ac00249e8c3030557711beb337c8424dd", null ],
+    [ "gsd_find_chunk", "gsd_8c.html#a3c76bbf6c28b953cff198a44852c732f", null ],
     [ "gsd_read_chunk", "gsd_8c.html#a2db2e3e8a72948bf413e7f09469ec8a6", null ],
     [ "gsd_sizeof_type", "gsd_8c.html#ab1d1a8a5f73b37df0c706f41df3bdd69", null ],
-    [ "gsd_find_matching_chunk_name", "gsd_8c.html#ad6f823bc40d0a28be983368adb42783e", null ],
+    [ "gsd_find_matching_chunk_name", "gsd_8c.html#a081b6fad5e27f4f8cfabd0030af7ebf5", null ],
     [ "gsd_upgrade", "gsd_8c.html#adb92d5142812c19bf4ee33cbde439131", null ],
     [ "GSD_MAGIC_ID", "gsd_8c.html#acf7c38e3e5534e06ba18607f11c1e00e", null ]
 ];
