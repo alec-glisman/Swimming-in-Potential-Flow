@@ -135,7 +135,7 @@ class potentialHydrodynamics
 
     // classes
     /// shared pointer reference to systemData class
-    std::shared_ptr<systemData> m_system; 
+    std::shared_ptr<systemData> m_system;
 
     // logging
     /// path of logfile for spdlog to write to
@@ -163,7 +163,7 @@ class potentialHydrodynamics
     /// (3 x s) relative displacement between particle pairs
     Eigen::MatrixXd m_r_ab;
 
-    // ANCHOR: ientity Matrices
+    // ANCHOR: identity Matrices
     /// (3N x 3N) identity matrix
     Eigen::MatrixXd m_I3N;
     /// (3N x 3N) 1/2 identity matrix
