@@ -29,6 +29,12 @@
 /* Forward declarations */
 class systemData;
 
+/**
+ * @class potentialHydrodynamics
+ *
+ * @brief Computes hydrodynamic tensors (mass, forces) on a finite number of spheres in potential flow.
+ *
+ */
 class potentialHydrodynamics
 {
   public:
@@ -36,6 +42,10 @@ class potentialHydrodynamics
 
     ~potentialHydrodynamics();
 
+    /**
+     * @brief Updates all hydrody
+     *
+     */
     void
     update();
 
@@ -57,10 +67,10 @@ class potentialHydrodynamics
     int m_3N{-1}; // length of tensor quantities
 
     // Distance between particle pairs
-    Eigen::VectorXd m_alphaVec; // particle number; dim = (r) x (1)
-    Eigen::VectorXd m_betaVec;  // particle number; dim = (r) x (1)
-    Eigen::VectorXd m_r_mag_ab; // [1]; dim = (r) x (1)
-    Eigen::MatrixXd m_r_ab;     // [1]; dim = (3)  x (r)
+    Eigen::VectorXd m_alphaVec; /// \[N x 1 \] particle number; dim = (r) x (1)
+    Eigen::VectorXd m_betaVec;  /// \[N x 1 \] particle number
+    Eigen::VectorXd m_r_mag_ab; /// [1]; dim = (r) x (1)
+    Eigen::MatrixXd m_r_ab;     /// [1]; dim = (3)  x (r)
 
     // Identity Matrices
     Eigen::MatrixXd       m_I3N;                                  // dim = (3N) x (3N)
@@ -101,6 +111,9 @@ class potentialHydrodynamics
 
     void
     calcAddedMassGrad();
+
+    void
+    calcBodyTensors();
 
   public:
     const Eigen::VectorXd&

@@ -13,10 +13,7 @@ systemData::systemData(std::string inputGSDFile, std::string outputDir)
     spdlog::get(m_logName)->info("Initializing system data");
     spdlog::get(m_logName)->info("Output path: {0}", m_outputDir);
 
-    // set "identity" tensors
     spdlog::get(m_logName)->info("Setting general-use tensors");
-    m_I_tilde       = m_I;
-    m_I_tilde(2, 2) = -1.0;
 
     // Eigen3 parallelization
     Eigen::setNbThreads(m_num_physical_cores); // for Eigen OpenMP parallelization
@@ -182,7 +179,8 @@ systemData::velocitiesArticulation(double time)
     // ANCHOR: Orientation vectors, q = R_1 - R_3
     Eigen::Vector3d q = m_positions_particles.segment<3>(3 * 0) - m_positions_particles.segment<3>(3 * 2);
     q.normalize();
-    Eigen::Vector3d q_tilde = m_I_tilde * q;
+    Eigen::Vector3d q_tilde = q;
+    q_tilde(2) *= -1;
 
     // articulation velocity magnitudes
     const double v1_mag = m_sys_spec_U0 * cos(m_sys_spec_omega * dimensional_time);
@@ -207,7 +205,8 @@ systemData::accelerationsArticulation(double time)
     // ANCHOR: Orientation vectors, q = R_1 - R_3
     Eigen::Vector3d q = m_positions_particles.segment<3>(3 * 0) - m_positions_particles.segment<3>(3 * 2);
     q.normalize();
-    Eigen::Vector3d q_tilde = m_I_tilde * q;
+    Eigen::Vector3d q_tilde = q;
+    q_tilde(2) *= -1;
 
     // articulation acceleration magnitudes
     const double a1_mag = -m_sys_spec_U0 * m_sys_spec_omega * sin(m_sys_spec_omega * dimensional_time);

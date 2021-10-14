@@ -180,19 +180,15 @@ potentialHydrodynamics::calcAddedMass()
 void
 potentialHydrodynamics::calcAddedMassGrad()
 {
-    // set matrices to zero
-    m_grad_M_added.setZero();
-
-    // [3 x 3] identity tensors
-    Eigen::Matrix3d                                    I      = Eigen::Matrix3d::Identity(3, 3);
-    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_I = TensorCast(I);
-
     // eigen tensor contraction variables
     Eigen::array<Eigen::IndexPair<long>, 0> empty_index_list = {};
     Eigen::array<int, 3>                    shuffle_one_right({2, 0, 1});
     Eigen::array<int, 3>                    shuffle_one_left({1, 2, 1});
 
-    /* NOTE: Fill Mass matrix elements one (3 x 3) block at a time (matrix elements between
+    // set matrices to zero
+    m_grad_M_added.setZero();
+
+    /* NOTE: Fill Mass matrix elements one (3 x 3 x 3) block at a time (matrix elements between
      * particles \alpha and \beta) */
 
     for (int k = 0; k < m_num_inter; k++)
@@ -215,7 +211,7 @@ potentialHydrodynamics::calcAddedMassGrad()
 
         // outer products (I_{i j} r_{k}) and permutations
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_ij_r_k =
-            gradM1_c1 * tens_I.contract(TensorCast(r_ij), empty_index_list);
+            gradM1_c1 * m_system->tensI().contract(TensorCast(r_ij), empty_index_list);
         // shuffle all dimensions to the right by 1: (i, j, k) --> (k, i, j), (2, 0, 1)
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_jk_r_i = delta_ij_r_k.shuffle(shuffle_one_right);
         // shuffle all dimensions to the left by 1: (i, j, k) --> (k, i, j), (1, 2, 0)
