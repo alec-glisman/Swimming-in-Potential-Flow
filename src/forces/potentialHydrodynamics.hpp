@@ -161,7 +161,10 @@ class potentialHydrodynamics
     Eigen::MatrixXd          m_M_intrinsic;  ///< \[3N x 3N\] intrinsic mass matrix
     Eigen::MatrixXd          m_M_total;      ///< \[3N x 3N\] total mass matrix
     Eigen::Tensor<double, 2> m_tens_M_total; ///< \[3N x 3N\] tensor version of total mass matrix
-    Eigen::Tensor<double, 3> m_grad_M_added; ///< \[3N x 3N\] gradient of total mass matrix (only added mass components)
+    Eigen::Tensor<double, 3> m_grad_M_added; ///< \[3N x 3N x 3N\] gradient of total mass matrix (only added mass
+                                             ///< components) in particle coordinates
+    Eigen::Tensor<double, 3> m_grad_M_added_body_coords; ///< \[3N x 3N x 7M\] gradient of total mass matrix (only added
+                                                         ///< mass components) in body coordinates
 
     // Hydrodynamic forces
     Eigen::VectorXd m_F_hydro;          ///< \[3N x 1\] total hydrodynamic force
@@ -179,7 +182,7 @@ class potentialHydrodynamics
                                    /// \boldsymbol{M} \, \boldsymbol{A} @f$ TODO
 
     Eigen::Tensor<double, 2>
-        m_M_tilde_tilde; ///< \[7M x 3N\] @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} \, \boldsymbol{A} @f$ 
+        m_M_tilde_tilde; ///< \[7M x 3N\] @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} \, \boldsymbol{A} @f$
     Eigen::Tensor<double, 2> m_M_tilde;     ///< \[7M x 7M\] @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} @f$
     Eigen::MatrixXd          m_mat_M_tilde; ///< \[7M x 7M\] `Eigen::Matrix` form of `m_M_tilde_tilde`
 

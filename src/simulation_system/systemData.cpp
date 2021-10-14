@@ -318,7 +318,7 @@ systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
 void
 systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
 {
-    /* ANCHOR: Compute m_conv_body_2_part_dof */
+    /* ANCHOR: Compute m_conv_body_2_part_dof and m_tens_conv_body_2_part_dof */
     m_conv_body_2_part_dof.setZero();
 
     int                         body_num{-1}; // -1 as first particle should be locater particle and increment this
@@ -365,6 +365,8 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
             twoE_body * P_j_tilde; // quaternion-rotation couple (first row is zero)
     }
     assert(body_num + 1 == m_num_bodies && "Not all bodies were indexed correctly");
+
+    m_tens_conv_body_2_part_dof = TensorCast(m_conv_body_2_part_dof);
 
     /* ANCHOR : Compute m_rbm_conn_T_quat_grad */
     m_rbm_conn_T_quat_grad.setZero();

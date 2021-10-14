@@ -39,7 +39,11 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
 
     spdlog::get(m_logName)->info("Initializing mass tensors");
     m_grad_M_added = Eigen::Tensor<double, 3>(m_3N, m_3N, m_3N);
+    m_grad_M_added.setZero();
+    m_grad_M_added_body_coords = Eigen::Tensor<double, 3>(m_3N, m_3N, 7 * m_system->numBodies());
+    m_grad_M_added_body_coords.setZero();
     m_tens_M_total = Eigen::Tensor<double, 2>(m_3N, m_3N);
+    m_tens_M_total.setZero();
 
     // Initialize force vectors
     spdlog::get(m_logName)->info("Initializing hydrodynamic force vectors");
@@ -198,6 +202,7 @@ void
 potentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
 {
     // eigen tensor contraction variables
+    Eigen::array<Eigen::IndexPair<int>, 1>  contract_ik_kj   = {Eigen::IndexPair<int>(1, 0)}; // = A B
     Eigen::array<Eigen::IndexPair<long>, 0> empty_index_list = {};
     Eigen::array<int, 3>                    shuffle_one_right({2, 0, 1});
     Eigen::array<int, 3>                    shuffle_one_left({1, 2, 1});
@@ -260,6 +265,9 @@ potentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
         // M_{ji, i} = M_{ij, i}
         m_grad_M_added.slice(offsets_ji_i, extents) = Mij_i;
     }
+
+    m_grad_M_added_body_coords.device(device) =
+        m_system->tensConvBody2PartDof().contract(m_grad_M_added, contract_ik_kj);
 }
 
 void
@@ -281,9 +289,11 @@ potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     /* ANCHOR: Compute linear combinations of total mass matrix and rbm_conn_t_quat */
     m_M_tilde_tilde.device(device) = m_system->tensRbmConnTQuat().contract(m_tens_M_total, contract_ki_kj);
     m_M_tilde.device(device)       = m_M_tilde_tilde.contract(m_system->tensRbmConnTQuat(), contract_ik_kj);
-    m_mat_M_tilde = MatrixCast(m_M_tilde_tilde, 7 * m_system->numBodies(), 7 * m_system->numBodies());
+    m_mat_M_tilde                  = MatrixCast(m_M_tilde_tilde, 7 * m_system->numBodies(), 7 * m_system->numBodies());
 
     /* ANCHOR: Compute linear combinations of GRADIENTS of total mass matrix and rbm_conn_t_quat */
+    m_N1 = m_grad_M_added_body_coords;
+    // m_N2.device(device) = TODO
 }
 
 void
