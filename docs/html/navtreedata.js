@@ -22,7 +22,7 @@ for the JavaScript code in this file
 */
 var NAVTREE =
 [
-  [ "Bodies\\in\\Potential\\Flow", "index.html", [
+  [ "Bodies in Potential Flow", "index.html", [
     [ "README: Bodies in Potential Flow", "index.html", [
       [ "Software tested", "index.html#autotoc_md1", null ],
       [ "Docker integration", "index.html#autotoc_md2", null ],
