@@ -53,33 +53,33 @@
 <g id="node6" class="node">
 <title>Node6</title>
 <g id="a_node6"><a xlink:href="classsystemData.html#ab3fc7f3cc4c79bbad6e9bb73e127e8c3" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="black" points="159.5,-137 159.5,-167 287.5,-167 287.5,-137 159.5,-137"/>
-<text text-anchor="start" x="167.5" y="-155" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::locaterPoint</text>
-<text text-anchor="middle" x="223.5" y="-144" font-family="Helvetica,sans-Serif" font-size="10.00">Locations</text>
+<polygon fill="none" stroke="black" points="159.5,-88 159.5,-118 287.5,-118 287.5,-88 159.5,-88"/>
+<text text-anchor="start" x="167.5" y="-106" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::locaterPoint</text>
+<text text-anchor="middle" x="223.5" y="-95" font-family="Helvetica,sans-Serif" font-size="10.00">Locations</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node6 -->
 <g id="edge5" class="edge">
 <title>Node1&#45;&gt;Node6</title>
-<path fill="none" stroke="midnightblue" d="M105.12,-134.64C119,-136.69 134.29,-138.95 149.11,-141.14"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="148.87,-144.65 159.27,-142.65 149.89,-137.72 148.87,-144.65"/>
+<path fill="none" stroke="midnightblue" d="M105.12,-119.67C119,-117.7 134.29,-115.53 149.11,-113.42"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="149.86,-116.85 159.27,-111.98 148.88,-109.92 149.86,-116.85"/>
 </g>
 <!-- Node7 -->
 <g id="node7" class="node">
 <title>Node7</title>
 <g id="a_node7"><a xlink:href="classsystemData.html#a05afc9e7e7423d88def51ec43ab91a33" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="black" points="150,-88 150,-118 297,-118 297,-88 150,-88"/>
-<text text-anchor="start" x="158" y="-106" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::rigidBodyMotion</text>
-<text text-anchor="middle" x="223.5" y="-95" font-family="Helvetica,sans-Serif" font-size="10.00">Tensors</text>
+<polygon fill="none" stroke="black" points="150,-137 150,-167 297,-167 297,-137 150,-137"/>
+<text text-anchor="start" x="158" y="-155" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::rigidBodyMotion</text>
+<text text-anchor="middle" x="223.5" y="-144" font-family="Helvetica,sans-Serif" font-size="10.00">Tensors</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node7 -->
 <g id="edge6" class="edge">
 <title>Node1&#45;&gt;Node7</title>
-<path fill="none" stroke="midnightblue" d="M105.12,-119.67C116.12,-118.11 128,-116.42 139.82,-114.74"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="140.32,-118.21 149.73,-113.33 139.34,-111.28 140.32,-118.21"/>
+<path fill="none" stroke="midnightblue" d="M105.12,-134.64C116.12,-136.26 128,-138.02 139.82,-139.77"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="139.32,-143.23 149.73,-141.24 140.35,-136.31 139.32,-143.23"/>
 </g>
 <!-- Node10 -->
 <g id="node10" class="node">
@@ -92,7 +92,7 @@
 </g>
 </g>
 <!-- Node1&#45;&gt;Node10 -->
-<g id="edge10" class="edge">
+<g id="edge11" class="edge">
 <title>Node1&#45;&gt;Node10</title>
 <path fill="none" stroke="midnightblue" d="M68.16,-117.44C85.13,-106.7 114.2,-89.28 141,-78 145.72,-76.01 150.66,-74.12 155.68,-72.34"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="157.03,-75.58 165.37,-69.05 154.77,-68.95 157.03,-75.58"/>
@@ -107,7 +107,7 @@
 </g>
 </g>
 <!-- Node1&#45;&gt;Node11 -->
-<g id="edge11" class="edge">
+<g id="edge12" class="edge">
 <title>Node1&#45;&gt;Node11</title>
 <path fill="none" stroke="midnightblue" d="M59.14,-117.44C71.37,-97.6 102.36,-51.93 141,-29 144.65,-26.83 148.54,-24.91 152.55,-23.21"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="153.97,-26.42 162.1,-19.62 151.51,-19.86 153.97,-26.42"/>
@@ -116,67 +116,73 @@
 <g id="node4" class="node">
 <title>Node4</title>
 <g id="a_node4"><a xlink:href="classsystemData.html#a19a83a255eb6f1de4bcfe2ea8e31ffa9" target="_top" xlink:title="Computes the E matrix of quaternion (4&#45;vector) input.">
-<polygon fill="none" stroke="black" points="356.5,-142.5 356.5,-161.5 464.5,-161.5 464.5,-142.5 356.5,-142.5"/>
-<text text-anchor="middle" x="410.5" y="-149.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::eMatrix</text>
+<polygon fill="none" stroke="black" points="356.5,-205.5 356.5,-224.5 464.5,-224.5 464.5,-205.5 356.5,-205.5"/>
+<text text-anchor="middle" x="410.5" y="-212.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::eMatrix</text>
 </a>
 </g>
 </g>
 <!-- Node3&#45;&gt;Node4 -->
 <g id="edge3" class="edge">
 <title>Node3&#45;&gt;Node4</title>
-<path fill="none" stroke="midnightblue" d="M281.26,-185.97C307.68,-178.97 338.7,-170.75 363.61,-164.16"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="364.76,-167.47 373.53,-161.53 362.96,-160.71 364.76,-167.47"/>
+<path fill="none" stroke="midnightblue" d="M296.56,-206.45C312.87,-207.69 330.07,-208.99 346,-210.19"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="346.03,-213.71 356.26,-210.97 346.55,-206.73 346.03,-213.71"/>
 </g>
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
 <g id="a_node5"><a xlink:href="helper__eigenTensorConversion_8hpp.html#a556fb613b733267c9404648bc66bd0bd" target="_top" xlink:title="Convert Eigen::Matrix &#45;&#45;&gt; Eigen::Tensor.">
-<polygon fill="none" stroke="black" points="377,-191.5 377,-210.5 444,-210.5 444,-191.5 377,-191.5"/>
-<text text-anchor="middle" x="410.5" y="-198.5" font-family="Helvetica,sans-Serif" font-size="10.00">TensorCast</text>
+<polygon fill="none" stroke="black" points="377,-167.5 377,-186.5 444,-186.5 444,-167.5 377,-167.5"/>
+<text text-anchor="middle" x="410.5" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">TensorCast</text>
 </a>
 </g>
 </g>
 <!-- Node3&#45;&gt;Node5 -->
 <g id="edge4" class="edge">
 <title>Node3&#45;&gt;Node5</title>
-<path fill="none" stroke="midnightblue" d="M296.56,-201C320.34,-201 346.02,-201 366.87,-201"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="366.99,-204.5 376.99,-201 366.99,-197.5 366.99,-204.5"/>
+<path fill="none" stroke="midnightblue" d="M296.56,-191.65C320.34,-188.57 346.02,-185.24 366.87,-182.53"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="367.53,-185.97 376.99,-181.22 366.63,-179.03 367.53,-185.97"/>
 </g>
 <!-- Node7&#45;&gt;Node4 -->
 <g id="edge8" class="edge">
 <title>Node7&#45;&gt;Node4</title>
-<path fill="none" stroke="midnightblue" d="M281.26,-118.03C307.68,-125.03 338.7,-133.25 363.61,-139.84"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="362.96,-143.29 373.53,-142.47 364.76,-136.53 362.96,-143.29"/>
+<path fill="none" stroke="midnightblue" d="M278.93,-167.13C288.07,-170.12 297.38,-173.44 306,-177 322.72,-183.91 325.2,-189.29 342,-196 347.86,-198.34 354.12,-200.51 360.37,-202.49"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="359.54,-205.9 370.13,-205.43 361.56,-199.19 359.54,-205.9"/>
+</g>
+<!-- Node7&#45;&gt;Node5 -->
+<g id="edge10" class="edge">
+<title>Node7&#45;&gt;Node5</title>
+<path fill="none" stroke="midnightblue" d="M297.09,-161.81C320.64,-164.99 346,-168.42 366.67,-171.21"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="366.33,-174.7 376.71,-172.57 367.26,-167.76 366.33,-174.7"/>
 </g>
 <!-- Node8 -->
 <g id="node8" class="node">
 <title>Node8</title>
 <g id="a_node8"><a xlink:href="classsystemData.html#a0a77c933b764fb36c64ec5e66011482c" target="_top" xlink:title="Function takes in vector in vector cross&#45;product expression: .">
-<polygon fill="none" stroke="black" points="342,-98.5 342,-117.5 479,-117.5 479,-98.5 342,-98.5"/>
-<text text-anchor="middle" x="410.5" y="-105.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::crossProdMat</text>
+<polygon fill="none" stroke="black" points="342,-129.5 342,-148.5 479,-148.5 479,-129.5 342,-129.5"/>
+<text text-anchor="middle" x="410.5" y="-136.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::crossProdMat</text>
 </a>
 </g>
 </g>
 <!-- Node7&#45;&gt;Node8 -->
 <g id="edge7" class="edge">
 <title>Node7&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M297.09,-104.96C308.52,-105.27 320.37,-105.59 331.91,-105.9"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="331.86,-109.4 341.95,-106.17 332.05,-102.41 331.86,-109.4"/>
+<path fill="none" stroke="midnightblue" d="M297.09,-146.9C308.52,-146.1 320.37,-145.26 331.91,-144.45"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="332.22,-147.94 341.95,-143.75 331.73,-140.96 332.22,-147.94"/>
 </g>
 <!-- Node9 -->
 <g id="node9" class="node">
 <title>Node9</title>
 <g id="a_node9"><a xlink:href="classsystemData.html#af8b45529ed83e00cf9c2848b0a03b5e0" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="black" points="369,-60.5 369,-79.5 452,-79.5 452,-60.5 369,-60.5"/>
-<text text-anchor="middle" x="410.5" y="-67.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::i3</text>
+<polygon fill="none" stroke="black" points="369,-91.5 369,-110.5 452,-110.5 452,-91.5 369,-91.5"/>
+<text text-anchor="middle" x="410.5" y="-98.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::i3</text>
 </a>
 </g>
 </g>
 <!-- Node7&#45;&gt;Node9 -->
 <g id="edge9" class="edge">
 <title>Node7&#45;&gt;Node9</title>
-<path fill="none" stroke="midnightblue" d="M297.09,-90.05C317.77,-86.36 339.84,-82.43 358.9,-79.03"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="359.63,-82.45 368.86,-77.25 358.4,-75.56 359.63,-82.45"/>
+<path fill="none" stroke="midnightblue" d="M279.01,-136.97C306.39,-129.43 339.14,-120.4 364.99,-113.27"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="366.18,-116.57 374.89,-110.54 364.32,-109.83 366.18,-116.57"/>
 </g>
 </g>
 </svg>

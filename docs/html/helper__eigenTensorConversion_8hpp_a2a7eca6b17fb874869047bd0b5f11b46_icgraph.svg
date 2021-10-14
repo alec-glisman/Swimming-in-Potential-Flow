@@ -42,7 +42,7 @@
 </g>
 </g>
 <!-- Node1&#45;&gt;Node7 -->
-<g id="edge6" class="edge">
+<g id="edge7" class="edge">
 <title>Node1&#45;&gt;Node7</title>
 <path fill="none" stroke="midnightblue" d="M573.91,-22.12C565.48,-20.34 556.42,-18.43 548.04,-16.66"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="573.28,-25.56 583.79,-24.21 574.73,-18.72 573.28,-25.56"/>
@@ -50,10 +50,10 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="classpotentialHydrodynamics.html#a89622611b037fc10f3aacdf990c4a9f5" target="_top" xlink:title="Calculates m_F_hydro and m_F_hydroNoInertia">
+<g id="a_node3"><a xlink:href="classpotentialHydrodynamics.html#ace1a595ce5a1c818ae9889e520f43fe7" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="324,-57 324,-87 447,-87 447,-57 324,-57"/>
 <text text-anchor="start" x="332" y="-75" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
-<text text-anchor="middle" x="385.5" y="-64" font-family="Helvetica,sans-Serif" font-size="10.00">::calcHydroForces</text>
+<text text-anchor="middle" x="385.5" y="-64" font-family="Helvetica,sans-Serif" font-size="10.00">::calcBodyTensors</text>
 </a>
 </g>
 </g>
@@ -66,10 +66,10 @@
 <!-- Node6 -->
 <g id="node6" class="node">
 <title>Node6</title>
-<g id="a_node6"><a xlink:href="classpotentialHydrodynamics.html#a685126792e572f5f23d1a5061caef8ed" target="_top" xlink:title=" ">
+<g id="a_node6"><a xlink:href="classpotentialHydrodynamics.html#a89622611b037fc10f3aacdf990c4a9f5" target="_top" xlink:title="Calculates m_F_hydro and m_F_hydroNoInertia">
 <polygon fill="none" stroke="black" points="324,-8 324,-38 447,-38 447,-8 324,-8"/>
 <text text-anchor="start" x="332" y="-26" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
-<text text-anchor="middle" x="385.5" y="-15" font-family="Helvetica,sans-Serif" font-size="10.00">::mTildeTilde</text>
+<text text-anchor="middle" x="385.5" y="-15" font-family="Helvetica,sans-Serif" font-size="10.00">::calcHydroForces</text>
 </a>
 </g>
 </g>
@@ -83,33 +83,39 @@
 <g id="node4" class="node">
 <title>Node4</title>
 <g id="a_node4"><a xlink:href="classpotentialHydrodynamics.html#aa9cd1bea38a16754f58110f1e190fb71" target="_top" xlink:title="Updates all hydrodynamic quantities at current configuration (data from systemData)">
-<polygon fill="none" stroke="black" points="165,-57 165,-87 288,-87 288,-57 165,-57"/>
-<text text-anchor="start" x="173" y="-75" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
-<text text-anchor="middle" x="226.5" y="-64" font-family="Helvetica,sans-Serif" font-size="10.00">::update</text>
+<polygon fill="none" stroke="black" points="165,-32 165,-62 288,-62 288,-32 165,-32"/>
+<text text-anchor="start" x="173" y="-50" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
+<text text-anchor="middle" x="226.5" y="-39" font-family="Helvetica,sans-Serif" font-size="10.00">::update</text>
 </a>
 </g>
 </g>
 <!-- Node3&#45;&gt;Node4 -->
 <g id="edge3" class="edge">
 <title>Node3&#45;&gt;Node4</title>
-<path fill="none" stroke="midnightblue" d="M313.79,-72C305.19,-72 296.47,-72 288.04,-72"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="313.8,-75.5 323.8,-72 313.8,-68.5 313.8,-75.5"/>
+<path fill="none" stroke="midnightblue" d="M313.79,-60.74C305.19,-59.37 296.47,-57.98 288.04,-56.64"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="313.37,-64.22 323.8,-62.33 314.47,-57.31 313.37,-64.22"/>
 </g>
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
 <g id="a_node5"><a xlink:href="classpotentialHydrodynamics.html#ae93f12dc4a892a191d52bf4754d4d99c" target="_top" xlink:title="Construct a new potential hydrodynamics object.">
-<polygon fill="none" stroke="black" points="0,-57 0,-87 129,-87 129,-57 0,-57"/>
-<text text-anchor="start" x="8" y="-75" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
-<text text-anchor="middle" x="64.5" y="-64" font-family="Helvetica,sans-Serif" font-size="10.00">::potentialHydrodynamics</text>
+<polygon fill="none" stroke="black" points="0,-32 0,-62 129,-62 129,-32 0,-32"/>
+<text text-anchor="start" x="8" y="-50" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
+<text text-anchor="middle" x="64.5" y="-39" font-family="Helvetica,sans-Serif" font-size="10.00">::potentialHydrodynamics</text>
 </a>
 </g>
 </g>
 <!-- Node4&#45;&gt;Node5 -->
 <g id="edge4" class="edge">
 <title>Node4&#45;&gt;Node5</title>
-<path fill="none" stroke="midnightblue" d="M154.41,-72C146.01,-72 137.48,-72 129.2,-72"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="154.55,-75.5 164.55,-72 154.55,-68.5 154.55,-75.5"/>
+<path fill="none" stroke="midnightblue" d="M154.41,-47C146.01,-47 137.48,-47 129.2,-47"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="154.55,-50.5 164.55,-47 154.55,-43.5 154.55,-50.5"/>
+</g>
+<!-- Node6&#45;&gt;Node4 -->
+<g id="edge6" class="edge">
+<title>Node6&#45;&gt;Node4</title>
+<path fill="none" stroke="midnightblue" d="M313.79,-33.81C305.19,-35.12 296.47,-36.46 288.04,-37.75"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="314.44,-37.25 323.8,-32.28 313.39,-30.33 314.44,-37.25"/>
 </g>
 </g>
 </svg>
