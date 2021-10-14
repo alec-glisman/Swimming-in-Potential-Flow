@@ -169,8 +169,8 @@ class potentialHydrodynamics
     Eigen::Tensor<double, 3> m_grad_M_added_body_coords;
 
     // Hydrodynamic forces
-    Eigen::VectorXd m_F_hydro;          ///< \[3N x 1\] total hydrodynamic force
-    Eigen::VectorXd m_F_hydroNoInertia; ///< \[3N x 1\] hydrodynamic force in absence of inertial term
+    Eigen::VectorXd m_F_hydro;          ///< \[3M x 1\] total hydrodynamic force
+    Eigen::VectorXd m_F_hydroNoInertia; ///< \[3M x 1\] hydrodynamic force in absence of inertial term
 
     // linear combinations of gradient of rbm and total mass matrix
     Eigen::Tensor<double, 3> m_N1; ///< \[3N x 3N x 7M\] @f$ \nabla_{\xi} \, \boldsymbol{M} @f$

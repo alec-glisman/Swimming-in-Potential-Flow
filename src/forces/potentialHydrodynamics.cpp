@@ -318,9 +318,10 @@ void
 potentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
 {
     // tensor contraction indices
-    Eigen::array<Eigen::IndexPair<long>, 0> empty_index_list = {}; // outer product
+    Eigen::array<Eigen::IndexPair<int>, 0> empty_index_list = {}; // outer product
+    Eigen::array<Eigen::IndexPair<int>, 2> contract_jki_jk = {Eigen::IndexPair<int>(0, 0), Eigen::IndexPair<int>(1, 1)};
     Eigen::array<Eigen::IndexPair<int>, 2> contract_ijk_jk = {Eigen::IndexPair<int>(1, 0), Eigen::IndexPair<int>(2, 1)};
-    Eigen::array<Eigen::IndexPair<int>, 2> contract_ijk_ij = {Eigen::IndexPair<int>(0, 0), Eigen::IndexPair<int>(1, 1)};
+    Eigen::array<Eigen::IndexPair<int>, 1> contract_ij_j   = {Eigen::IndexPair<int>(1, 0)};
 
     // get kinematic tensors from systemData class
     Eigen::Tensor<double, 1> xi_dot  = TensorCast(m_system->velocitiesBodies());
@@ -340,20 +341,23 @@ potentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     xi_dot_V.device(device)           = xi_dot.contract(V, empty_index_list);
 
     // hydrodynamic forces arising from locater point motion (3 terms; contains locater inertia term)
+    Eigen::Tensor<double, 1> F_loc       = Eigen::Tensor<double, 1>(m_7M); // TODO
+    Eigen::Tensor<double, 1> inertia_loc = Eigen::Tensor<double, 1>(m_7M); // TODO
 
     // hydrodynamic forces arising from coupling of locater and internal D.o.F. motion (2 terms)
+    Eigen::Tensor<double, 1> F_loc_int = Eigen::Tensor<double, 1>(m_7M); // TODO
 
     // hydrodynamic forces arising from internal D.o.F. motion (2 terms; contains internal inertia term)
-
-    // compute non-inertial part of potential flow hydrodynamic force
+    Eigen::Tensor<double, 1> F_int = Eigen::Tensor<double, 1>(m_7M); // TODO
 
     // compute complete potential flow hydrodynamic force
+    Eigen::Tensor<double, 1> F_hydro = Eigen::Tensor<double, 1>(m_7M);
+    F_hydro.device(device)           = F_loc + F_loc_int;
+    F_hydro.device(device) += F_int;
+    m_F_hydro.noalias() = MatrixCast(F_hydro, m_7M, 1, device);
 
     // Compute non-inertial part of force (include internal D.o.F. inertia)
-    // m_F_hydroNoInertia.noalias() = MatrixCast(m_t2_VelGrad, m_3N, 1, device);
-    // m_F_hydroNoInertia.noalias() += MatrixCast(m_t3_PosGrad, m_3N, 1, device);
-
-    // Compute complete potential pressure force
-    // m_F_hydro.noalias() = m_t1_Inertia; // Full hydrodynamic force, dim = (3N) x 1
-    // m_F_hydro.noalias() += m_F_hydroNoInertia;
+    Eigen::Tensor<double, 1> F_hydro_no_inertia = Eigen::Tensor<double, 1>(m_7M);
+    F_hydro_no_inertia.device(device)           = F_hydro - inertia_loc;
+    m_F_hydroNoInertia.noalias()                = MatrixCast(F_hydro_no_inertia, m_7M, 1, device);
 }
