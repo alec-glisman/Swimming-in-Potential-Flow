@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['wca_5fepsilon_0',['wca_epsilon',['../namespacecollinear-swimmer-wall-configuration.html#a94b6d636bf5186285921fdda6c1e3c1e',1,'collinear-swimmer-wall-configuration']]],
-  ['wca_5fsigma_1',['wca_sigma',['../namespacecollinear-swimmer-wall-configuration.html#a518175f31fe958bd18063a321343432e',1,'collinear-swimmer-wall-configuration']]],
-  ['write_5fbuffer_2',['write_buffer',['../structgsd__handle.html#a7ae49d668bbd61ce9d022acf5e5a9e76',1,'gsd_handle']]]
+  ['x_5flabel_0',['x_label',['../classplotStyling_1_1PlotStyling.html#af40be382900054226f556149e5e58c45',1,'plotStyling::PlotStyling']]]
 ];

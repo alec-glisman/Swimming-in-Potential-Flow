@@ -1,15 +1,9 @@
 var searchData=
 [
-  ['n_0',['N',['../structgsd__index__entry.html#ae913d46842b10fe8b5b74da3a7075726',1,'gsd_index_entry']]],
-  ['n_1',['n',['../namespacecollinear-swimmer-wall-configuration.html#abb68b1183bbd83ecd21a083bc29d7160',1,'collinear-swimmer-wall-configuration']]],
-  ['n_5fnames_2',['n_names',['../structgsd__name__buffer.html#aee7f806d610d9c4b8e0f045024d4e1f6',1,'gsd_name_buffer']]],
-  ['name_3',['name',['../structgsd__name__id__pair.html#a7ad4d0f48666c48af52cf76d54fffa71',1,'gsd_name_id_pair']]],
-  ['name_5fmap_4',['name_map',['../structgsd__handle.html#a17f63ed60cc1f9e456bf2d5ce301ecf8',1,'gsd_handle']]],
-  ['namelist_5fallocated_5fentries_5',['namelist_allocated_entries',['../structgsd__header.html#aabd428d9147218283e07bad362c522da',1,'gsd_header']]],
-  ['namelist_5flocation_6',['namelist_location',['../structgsd__header.html#a0d69a5886105e2e4cf210406c77f35f0',1,'gsd_header']]],
-  ['newgsd_7',['newGSD',['../classGSDUtil_1_1GSDUtil.html#ad2fa421ce150aba5a47c583f8d38b234',1,'GSDUtil::GSDUtil']]],
-  ['next_8',['next',['../structgsd__name__id__pair.html#ab2cafab77fcdd289751cacec8ec77d0f',1,'gsd_name_id_pair']]],
-  ['num_5fsteps_5foutput_9',['num_steps_output',['../namespacecollinear-swimmer-wall-configuration.html#af246bdd09ccf84c90f0166fd813ea6ec',1,'collinear-swimmer-wall-configuration']]],
-  ['number_10',['number',['../classplotStyling_1_1Multiple.html#a27574110be73da12633882c3c94e0157',1,'plotStyling::Multiple']]],
-  ['numlines_11',['numLines',['../classplotStyling_1_1PlotStyling.html#a8373883e571c5750f123850b7346f0d8',1,'plotStyling::PlotStyling']]]
+  ['omega_0',['omega',['../namespacecollinear-swimmer-wall-configuration.html#afdd822921933552c470939bb60f4ae1d',1,'collinear-swimmer-wall-configuration']]],
+  ['open_5fflags_1',['open_flags',['../structgsd__handle.html#a37ddf6d53fc8c4f3eff247508fcc814b',1,'gsd_handle']]],
+  ['options_2',['options',['../namespacecollinear-swimmer-wall-aggregate-analysis.html#a76445e873186fa6f5de9f86777733b64',1,'collinear-swimmer-wall-aggregate-analysis.options()'],['../namespacecollinear-swimmer-wall-individual-analysis.html#a638b4d2437d2fa82bf5543c726b9a713',1,'collinear-swimmer-wall-individual-analysis.options()'],['../namespacecollinear-swimmer-wall-configuration.html#ac24f53972b0220cf227ccb5e4692fec6',1,'collinear-swimmer-wall-configuration.options()']]],
+  ['orange_3',['orange',['../classplotStyling_1_1PlotStyling.html#ad657315c33c3a470bdc33213f111041a',1,'plotStyling::PlotStyling']]],
+  ['output_5fdir_4',['output_dir',['../namespacecollinear-swimmer-wall-aggregate-analysis.html#a4cc8d474a4d77738e9f91d846809a9f3',1,'collinear-swimmer-wall-aggregate-analysis.output_dir()'],['../namespacecollinear-swimmer-wall-individual-analysis.html#a67c37897799d884cb6d2a2902822d3a2',1,'collinear-swimmer-wall-individual-analysis.output_dir()']]],
+  ['outputdir_5',['outputDir',['../classplotStyling_1_1PlotStyling.html#ae6fb6d1fb28b9458907ef164bf071a03',1,'plotStyling::PlotStyling']]]
 ];

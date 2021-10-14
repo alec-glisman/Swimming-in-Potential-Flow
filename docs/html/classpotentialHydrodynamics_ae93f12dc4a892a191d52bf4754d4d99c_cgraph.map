@@ -1,9 +1,12 @@
 <map id="potentialHydrodynamics::potentialHydrodynamics" name="potentialHydrodynamics::potentialHydrodynamics">
 <area shape="rect" id="node1" title=" " alt="" coords="5,136,177,177"/>
-<area shape="rect" id="node2" href="$classpotentialHydrodynamics.html#acce7436c3cc8b62fe54fa61da98554f6" title=" " alt="" coords="225,136,389,177"/>
+<area shape="rect" id="node2" href="$classpotentialHydrodynamics.html#acce7436c3cc8b62fe54fa61da98554f6" title="Updates all hydrody." alt="" coords="225,136,389,177"/>
 <area shape="rect" id="node3" href="$classpotentialHydrodynamics.html#aca22661dfeb0029156532957df234042" title=" " alt="" coords="437,5,601,47"/>
 <area shape="rect" id="node4" href="$classpotentialHydrodynamics.html#a19d927bd0b419517d15b566c9132d632" title=" " alt="" coords="437,71,601,112"/>
-<area shape="rect" id="node5" href="$classpotentialHydrodynamics.html#a2b71af05a80cbe982c996d61b084695c" title=" " alt="" coords="437,136,601,177"/>
-<area shape="rect" id="node6" href="$classpotentialHydrodynamics.html#ad434ee61cf9b3ae7b2159a4163e5a6cd" title=" " alt="" coords="437,201,601,243"/>
-<area shape="rect" id="node7" href="$classpotentialHydrodynamics.html#a5d70cd3d03dfe2f7f1a4c970994fffe0" title=" " alt="" coords="437,267,601,308"/>
+<area shape="rect" id="node6" href="$classpotentialHydrodynamics.html#a2b71af05a80cbe982c996d61b084695c" title=" " alt="" coords="437,136,601,177"/>
+<area shape="rect" id="node9" href="$classpotentialHydrodynamics.html#ad434ee61cf9b3ae7b2159a4163e5a6cd" title=" " alt="" coords="437,201,601,243"/>
+<area shape="rect" id="node10" href="$classpotentialHydrodynamics.html#a5d70cd3d03dfe2f7f1a4c970994fffe0" title=" " alt="" coords="437,267,601,308"/>
+<area shape="rect" id="node5" href="$helper__eigenTensorConversion_8hpp.html#a556fb613b733267c9404648bc66bd0bd" title="Convert Eigen::Matrix &#45;&#45;&gt; Eigen::Tensor." alt="" coords="649,86,739,113"/>
+<area shape="rect" id="node7" href="$helper__eigenTensorConversion_8hpp.html#a556d08b55a6ad7cd703b6db06194e5cf" title=" " alt="" coords="651,143,737,170"/>
+<area shape="rect" id="node8" href="$helper__eigenTensorConversion_8hpp.html#a2a7eca6b17fb874869047bd0b5f11b46" title="Convert between Eigen::Tensor and Eigen::Matrix classes." alt="" coords="787,143,849,170"/>
 </map>

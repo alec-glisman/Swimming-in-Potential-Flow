@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['omega_0',['omega',['../namespacecollinear-swimmer-wall-configuration.html#afdd822921933552c470939bb60f4ae1d',1,'collinear-swimmer-wall-configuration']]],
-  ['open_5fflags_1',['open_flags',['../structgsd__handle.html#a37ddf6d53fc8c4f3eff247508fcc814b',1,'gsd_handle']]],
-  ['options_2',['options',['../namespacecollinear-swimmer-wall-aggregate-analysis.html#a76445e873186fa6f5de9f86777733b64',1,'collinear-swimmer-wall-aggregate-analysis.options()'],['../namespacecollinear-swimmer-wall-individual-analysis.html#a638b4d2437d2fa82bf5543c726b9a713',1,'collinear-swimmer-wall-individual-analysis.options()'],['../namespacecollinear-swimmer-wall-configuration.html#ac24f53972b0220cf227ccb5e4692fec6',1,'collinear-swimmer-wall-configuration.options()']]],
-  ['orange_3',['orange',['../classplotStyling_1_1PlotStyling.html#ad657315c33c3a470bdc33213f111041a',1,'plotStyling::PlotStyling']]],
-  ['output_5fdir_4',['output_dir',['../namespacecollinear-swimmer-wall-aggregate-analysis.html#a4cc8d474a4d77738e9f91d846809a9f3',1,'collinear-swimmer-wall-aggregate-analysis.output_dir()'],['../namespacecollinear-swimmer-wall-individual-analysis.html#a67c37897799d884cb6d2a2902822d3a2',1,'collinear-swimmer-wall-individual-analysis.output_dir()']]],
-  ['outputdir_5',['outputDir',['../classplotStyling_1_1PlotStyling.html#ae6fb6d1fb28b9458907ef164bf071a03',1,'plotStyling::PlotStyling']]]
+  ['parser_0',['parser',['../namespacecollinear-swimmer-wall-aggregate-analysis.html#a4874e8381e438208403d5569a4a5cd8d',1,'collinear-swimmer-wall-aggregate-analysis.parser()'],['../namespacecollinear-swimmer-wall-individual-analysis.html#a5e1905c6e859ab96eef3bc99d31fb84a',1,'collinear-swimmer-wall-individual-analysis.parser()'],['../namespacecollinear-swimmer-wall-configuration.html#a9e93a4eac8c1e0137e3c5335b0f5eac1',1,'collinear-swimmer-wall-configuration.parser()']]],
+  ['particle_5fdensity_1',['particle_density',['../namespacecollinear-swimmer-wall-configuration.html#a1aa52fed727ed5353368316423f5561d',1,'collinear-swimmer-wall-configuration']]],
+  ['phase_5fangle_2',['phase_angle',['../namespacecollinear-swimmer-wall-configuration.html#a09bc5accb5e5ee05fda74cde71589254',1,'collinear-swimmer-wall-configuration']]],
+  ['precision_3',['precision',['../namespacesimulationDataLoad.html#ada549384dddc827af0a8148970d34500',1,'simulationDataLoad']]],
+  ['purple_4',['purple',['../classplotStyling_1_1PlotStyling.html#a580446a0e50ed28d46168279018b0036',1,'plotStyling::PlotStyling']]]
 ];

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['range_5fexception_0',['RANGE_EXCEPTION',['../exception_8h.html#ad7375e2978467b3ca52550fc2d2356d6',1,'exception.h']]],
-  ['runtime_5fexception_1',['RUNTIME_EXCEPTION',['../exception_8h.html#a14d84c56a2433cf0b894bf62cf8a5c31',1,'exception.h']]]
+  ['no_5fhydro_5fcheck_0',['NO_HYDRO_CHECK',['../potentialHydrodynamics_8cpp.html#aeeaacc6083c59f4b1ab93dc9ac8e905b',1,'potentialHydrodynamics.cpp']]]
 ];

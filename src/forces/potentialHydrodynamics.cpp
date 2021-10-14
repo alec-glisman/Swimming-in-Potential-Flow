@@ -18,8 +18,8 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
     spdlog::get(m_logName)->info("Initializing potential hydrodynamics");
 
     // Variables for for-loop
-    m_num_inter = m_system->numParticles() * (m_system->numParticles() - 1) / 2; // Number of interactions to count
-    spdlog::get(m_logName)->info("Setting number of interactions to count: {0}", m_num_inter);
+    m_num_pair_inter = m_system->numParticles() * (m_system->numParticles() - 1) / 2; // Number of interactions to count
+    spdlog::get(m_logName)->info("Setting number of interactions to count: {0}", m_num_pair_inter);
 
     // tensor variables
     m_3N = 3 * m_system->numParticles(); // length of tensor quantities
@@ -54,16 +54,16 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
 
     // Assign particle pair information
     spdlog::get(m_logName)->info("Initializing particle pair information vectors");
-    m_alphaVec = Eigen::VectorXd::Zero(m_num_inter);
-    m_betaVec  = Eigen::VectorXd::Zero(m_num_inter);
-    m_r_mag_ab = Eigen::VectorXd::Zero(m_num_inter);
-    m_r_ab     = Eigen::MatrixXd::Zero(3, m_num_inter);
+    m_alphaVec = Eigen::VectorXd::Zero(m_num_pair_inter);
+    m_betaVec  = Eigen::VectorXd::Zero(m_num_pair_inter);
+    m_r_mag_ab = Eigen::VectorXd::Zero(m_num_pair_inter);
+    m_r_ab     = Eigen::MatrixXd::Zero(3, m_num_pair_inter);
 
     /* Fill the particle index vectors
      * Calculate ahead of time to save time during runtime
      */
     spdlog::get(m_logName)->info("Filling particle pair information tensors");
-    for (int i = 0; i < m_num_inter; i++)
+    for (int i = 0; i < m_num_pair_inter; i++)
     {
         /* alpha and beta convention to convert from linear coordinate to ordered pair
          * @Source:
@@ -122,7 +122,7 @@ potentialHydrodynamics::calcParticleDistances()
 {
     /* NOTE: Fill Mass matrix elements one (3 x 3) block at a time (matrix elements between
      * particles \alpha and \beta) */
-    for (int i = 0; i < m_num_inter; i++)
+    for (int i = 0; i < m_num_pair_inter; i++)
     {
         m_r_ab.col(i).noalias() = m_system->positionsParticles()(Eigen::seqN(3 * m_alphaVec[i], 3));
         m_r_ab.col(i).noalias() -= m_system->positionsParticles()(Eigen::seqN(3 * m_betaVec[i], 3));
@@ -146,7 +146,7 @@ potentialHydrodynamics::calcAddedMass()
     /* Fill off-diagonal elements (without units ) */
     /* NOTE: Fill Mass matrix elements one (3 x 3) block at a time (matrix elements between
      * particles \alpha and \beta) */
-    for (int k = 0; k < m_num_inter; k++)
+    for (int k = 0; k < m_num_pair_inter; k++)
     {
         // Convert (\alpha, \beta) --> (i, j) by factor of 3
         int i_part = 3 * m_alphaVec[k];
@@ -191,7 +191,7 @@ potentialHydrodynamics::calcAddedMassGrad()
     /* NOTE: Fill Mass matrix elements one (3 x 3 x 3) block at a time (matrix elements between
      * particles \alpha and \beta) */
 
-    for (int k = 0; k < m_num_inter; k++)
+    for (int k = 0; k < m_num_pair_inter; k++)
     {
         // Convert (\alpha, \beta) --> (i, j) by factor of 3
         int i_part = 3 * m_alphaVec[k];

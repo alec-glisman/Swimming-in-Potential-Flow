@@ -21,7 +21,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classpotentialHydrodynamics.html#acce7436c3cc8b62fe54fa61da98554f6" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="classpotentialHydrodynamics.html#acce7436c3cc8b62fe54fa61da98554f6" target="_top" xlink:title="Updates all hydrody.">
 <polygon fill="none" stroke="black" points="165,-49.5 165,-79.5 288,-79.5 288,-49.5 165,-49.5"/>
 <text text-anchor="start" x="173" y="-67.5" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
 <text text-anchor="middle" x="226.5" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">::update</text>

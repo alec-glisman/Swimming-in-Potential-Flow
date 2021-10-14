@@ -53,50 +53,6 @@ class potentialHydrodynamics
     updateForcesOnly();
 
   private:
-    // classes
-    std::shared_ptr<systemData> m_system;
-
-    // logging
-    std::string       m_logFile;
-    const std::string m_logName{"potentialHydrodynamics"};
-
-    // For-loop variables
-    int m_num_inter{-1}; // Number of pairwise interactions to count
-
-    // tensor variables
-    int m_3N{-1}; // length of tensor quantities
-
-    // Distance between particle pairs
-    Eigen::VectorXd m_alphaVec; /// \[N x 1 \] particle number; dim = (r) x (1)
-    Eigen::VectorXd m_betaVec;  /// \[N x 1 \] particle number
-    Eigen::VectorXd m_r_mag_ab; /// [1]; dim = (r) x (1)
-    Eigen::MatrixXd m_r_ab;     /// [1]; dim = (3)  x (r)
-
-    // Identity Matrices
-    Eigen::MatrixXd       m_I3N;                                  // dim = (3N) x (3N)
-    Eigen::MatrixXd       m_c1_2_I3N;                             // dim = (3N) x (3N)
-    const Eigen::Matrix3d m_I3 = Eigen::Matrix3d::Identity(3, 3); // dim = 3 x 3
-
-    // hydrodynamic quantities
-    Eigen::MatrixXd          m_M_added;
-    Eigen::MatrixXd          m_M_intrinsic;
-    Eigen::MatrixXd          m_M_total;
-    Eigen::Tensor<double, 3> m_grad_M_added;
-
-    Eigen::VectorXd m_F_hydro;
-    Eigen::VectorXd m_F_hydroNoInertia;
-
-    Eigen::VectorXd          m_t1_Inertia;
-    Eigen::Tensor<double, 1> m_t2_VelGrad;
-    Eigen::Tensor<double, 1> m_t3_PosGrad;
-
-    // constants
-    const double m_unitSphereVol{4.0 / 3.0 * M_PI};
-    const double m_c1_2{0.50};
-    const double m_c2_3{2.0 / 3.0};
-    const double m_c3_2{1.50};
-    const double m_c15_2{7.50};
-
     void
     calcParticleDistances();
 
@@ -114,6 +70,49 @@ class potentialHydrodynamics
 
     void
     calcBodyTensors();
+
+    // classes
+    std::shared_ptr<systemData> m_system; ///< shared pointer reference to systemData class
+
+    // logging
+    std::string       m_logFile;                           ///< path of logfile for spdlog to write to
+    const std::string m_logName{"potentialHydrodynamics"}; ///< filename of logfile for spdlog to write to
+
+    // For-loop variables
+    int m_num_pair_inter{-1}; ///< = s. Number of pairwise interactions to count: @f$s = 1/2 N (N - 1) @f$
+
+    // tensor variables
+    int m_3N{-1}; ///< length of tensor quantities @f$ 3 N @f$
+
+    // Distance between particle pairs
+    Eigen::VectorXd m_alphaVec; ///< \[s x 1\] first particle number in pairwise interactions
+    Eigen::VectorXd m_betaVec;  ///< \[s x 1\] second particle number in pairwise interactions
+    Eigen::VectorXd m_r_mag_ab; ///< \[s x 1\] relative displacement between particle pairs
+    Eigen::MatrixXd m_r_ab;     ///< \[3 x s\] relative displacement between particle pairs
+
+    // Identity Matrices
+    Eigen::MatrixXd m_I3N;      ///< \[3N x 3N\] identity matrix
+    Eigen::MatrixXd m_c1_2_I3N; ///< \[3N x 3N\] 1/2 identity matrix
+
+    // hydrodynamic quantities
+    Eigen::MatrixXd          m_M_added;      ///< \[3N x 3N\] added mass matrix
+    Eigen::MatrixXd          m_M_intrinsic;  ///< \[3N x 3N\] intrinsic mass matrix
+    Eigen::MatrixXd          m_M_total;      ///< \[3N x 3N\] total mass matrix
+    Eigen::Tensor<double, 3> m_grad_M_added; ///< \[3N x 3N\] gradient of total mass matrix (only added mass components)
+
+    Eigen::VectorXd m_F_hydro;          ///< \[3N x 1\] total hydrodynamic force
+    Eigen::VectorXd m_F_hydroNoInertia; ///< \[3N x 1\] hydrodynamic force in absence of inertial term
+
+    Eigen::VectorXd          m_t1_Inertia; ///< \[3N x 1\] inertial term in hydrodynamic force
+    Eigen::Tensor<double, 1> m_t2_VelGrad; ///< \[3N x 1\] velocity gradient term in hydrodynamic force
+    Eigen::Tensor<double, 1> m_t3_PosGrad; ///< \[3N x 1\] position gradient term in hydrodynamic force
+
+    // constants
+    const double m_unitSphereVol{4.0 / 3.0 * M_PI}; ///< volume of a unit sphere
+    const double m_c1_2{0.50};                      ///< = 1/2
+    const double m_c2_3{2.0 / 3.0};                 ///< = 2/3
+    const double m_c3_2{1.50};                      ///< = 3/2
+    const double m_c15_2{7.50};                     ///< = 15/2
 
   public:
     const Eigen::VectorXd&

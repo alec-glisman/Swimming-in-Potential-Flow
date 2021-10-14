@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['r_5favg_0',['R_avg',['../namespacecollinear-swimmer-wall-configuration.html#ad61278b805a689fc9a51fdb4a13b2f50',1,'collinear-swimmer-wall-configuration']]],
-  ['red_1',['red',['../classplotStyling_1_1PlotStyling.html#aa1eb03c963bbdefc5c3d5925ff2ad1e1',1,'plotStyling::PlotStyling']]],
-  ['relative_5fpath_2',['relative_path',['../namespacecollinear-swimmer-wall-aggregate-analysis.html#a0eb6390c27b95c4650c4a4b51b2ebe88',1,'collinear-swimmer-wall-aggregate-analysis.relative_path()'],['../namespacecollinear-swimmer-wall-individual-analysis.html#afb476cd4068651af56efdb2f752c55f9',1,'collinear-swimmer-wall-individual-analysis.relative_path()']]],
-  ['remainder_3',['remainder',['../namespacecollinear-swimmer-wall-aggregate-analysis.html#a4ba0c4337c8813b54188e8cc55e1f705',1,'collinear-swimmer-wall-aggregate-analysis.remainder()'],['../namespacecollinear-swimmer-wall-individual-analysis.html#a690adbee0c6608b6c189370359c03456',1,'collinear-swimmer-wall-individual-analysis.remainder()'],['../namespacecollinear-swimmer-wall-configuration.html#a629d65526d68e90e39a5612b3729f4df',1,'collinear-swimmer-wall-configuration.remainder()']]],
-  ['reorder_4',['reorder',['../structtestOpts.html#a05f3cc1f7044fe1dc041e10a0857a726',1,'testOpts']]],
-  ['reserved_5',['reserved',['../structgsd__header.html#ad5b6d3e98f8d9732c3a010f6dfc065ad',1,'gsd_header::reserved()'],['../structgsd__index__buffer.html#a51a1e266f6d7d1aafdfd54822fc226b1',1,'gsd_index_buffer::reserved()'],['../structgsd__byte__buffer.html#a1be9afcc4aead755f0c37f93088fab1c',1,'gsd_byte_buffer::reserved()']]],
-  ['running_6',['running',['../classStopWatchLinux.html#ada79dea0dc663ac4101a6d01a12b10bb',1,'StopWatchLinux']]]
+  ['schema_0',['schema',['../structgsd__header.html#a31b0992efad0ec0288ce7064f773dbda',1,'gsd_header']]],
+  ['schema_5fversion_1',['schema_version',['../structgsd__header.html#a1740d644c468c25cbade9ee0ee1c1a63',1,'gsd_header']]],
+  ['shmfd_2',['shmFd',['../structsharedMemoryInfo__st.html#a440522aeb6a5ede20fed1f6b797f9040',1,'sharedMemoryInfo_st']]],
+  ['size_3',['size',['../structgsd__name__id__map.html#a3019ca67584d12f957fcf694c3ea6ca0',1,'gsd_name_id_map::size()'],['../structgsd__index__buffer.html#a42b83ab7239cc24da11719b8d0354e37',1,'gsd_index_buffer::size()'],['../structgsd__byte__buffer.html#a3630961b7d45df2885cdd887e4b83b60',1,'gsd_byte_buffer::size()'],['../structsharedMemoryInfo__st.html#a673f556df69750c8cc4e91daba53392e',1,'sharedMemoryInfo_st::size()']]],
+  ['snapshot_4',['snapshot',['../classGSDUtil_1_1GSDUtil.html#a5b15aff2e96aa7feba716251d8f82867',1,'GSDUtil::GSDUtil']]],
+  ['sparse_5fmat_5ffilename_5',['sparse_mat_filename',['../structtestOpts.html#adffdaa675980fd21677db64c993fe0e4',1,'testOpts']]],
+  ['start_5ftime_6',['start_time',['../classStopWatchLinux.html#aeea9d454621ed9246317c5c6793db1ed',1,'StopWatchLinux::start_time()'],['../classProgressBar.html#a3d91d6d29204c759ac597a37132084cc',1,'ProgressBar::start_time()']]]
 ];
