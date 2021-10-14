@@ -61,17 +61,17 @@ class systemData : public std::enable_shared_from_this<systemData>
     initializeData();
 
     /**
-     * @brief Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constraints
+     * @brief Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constraints.
+     * Assumes `m_t` is current simulation time to update variables at.
      *
      * @details Many functions are called and there is a dependency chain between them. All function calls can be run in
      * any order besides gradientChangeOfVariableTensors(), which depends on rigidBodyMotionTensors() being run first.
      * This is assuming the Udwadia linear constraint system (@f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} = \mathbf{b}
      * @f$ ) is independent of configuration.
      *
-     * @param time (dimensionless) simulation time to update parameters.
      */
     void
-    update(double time);
+    update();
 
   private:
     void
@@ -81,10 +81,10 @@ class systemData : public std::enable_shared_from_this<systemData>
     checkInput();
 
     void
-    velocitiesArticulation(double time);
+    velocitiesArticulation();
 
     void
-    accelerationsArticulation(double time);
+    accelerationsArticulation();
 
     void
     locaterPointLocations();
@@ -96,10 +96,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     gradientChangeOfVariableTensors();
 
     void
-    nMatrices();
-
-    void
-    udwadiaLinearSystem(double time);
+    udwadiaLinearSystem();
 
     /* SECTION: Static functions */
     /**

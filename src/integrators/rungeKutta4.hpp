@@ -47,10 +47,7 @@ class rungeKutta4
     integrateSecondOrder();
 
     void
-    integrateFirstOrder();
-
-    void
-    accelerationUpdate(Eigen::VectorXd& acc, double time);
+    accelerationUpdate(Eigen::VectorXd& acc);
 
     void
     udwadiaKalaba(Eigen::VectorXd& acc);

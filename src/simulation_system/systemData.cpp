@@ -92,20 +92,20 @@ systemData::initializeData()
 
     // initialize constraints
     spdlog::get(m_logName)->info("Initializing constraints");
-    update(m_t);
+    update();
 }
 
 void
-systemData::update(double time)
+systemData::update()
 {
     // NOTE: Ordering of following functions does not matter
-    velocitiesArticulation(time);
-    accelerationsArticulation(time);
+    velocitiesArticulation();
+    accelerationsArticulation();
 
     locaterPointLocations();
     rigidBodyMotionTensors();
 
-    udwadiaLinearSystem(time);
+    udwadiaLinearSystem();
 
     // NOTE: Call gradientChangeOfVariableTensors() after rigidBodyMotionTensors()
     gradientChangeOfVariableTensors();
@@ -165,9 +165,9 @@ systemData::checkInput()
 /* REVIEW[epic=Change,order=3]: Change assignment of m_velocities_particles_articulation for
  * different systems */
 void
-systemData::velocitiesArticulation(double time)
+systemData::velocitiesArticulation()
 {
-    double dimensional_time{m_tau * time};
+    double dimensional_time{m_tau * m_t};
 
     // ANCHOR: Orientation vectors, q = R_1 - R_3
     Eigen::Vector3d q = m_positions_particles.segment<3>(3 * 0) - m_positions_particles.segment<3>(3 * 2);
@@ -191,9 +191,9 @@ systemData::velocitiesArticulation(double time)
 /* REVIEW[epic=Change,order=4]: Change assignment of m_accelerations_particles_articulation for
  * different systems */
 void
-systemData::accelerationsArticulation(double time)
+systemData::accelerationsArticulation()
 {
-    double dimensional_time{m_tau * time};
+    double dimensional_time{m_tau * m_t};
 
     // ANCHOR: Orientation vectors, q = R_1 - R_3
     Eigen::Vector3d q = m_positions_particles.segment<3>(3 * 0) - m_positions_particles.segment<3>(3 * 2);
@@ -238,7 +238,7 @@ systemData::locaterPointLocations()
 /* REVIEW[epic=Change,order=1]: Change udwadiaLinearSystem() for different systems
  */
 void
-systemData::udwadiaLinearSystem(double time)
+systemData::udwadiaLinearSystem()
 {
     m_Udwadia_A.setZero();
     m_Udwadia_b.setZero();
@@ -425,10 +425,4 @@ systemData::gradientChangeOfVariableTensors()
         m_C_conv_quat_part_grad.slice(offsets, extents) = angular_gradient;
     }
     assert(body_num + 1 == m_num_bodies && "Not all bodies were indexed correctly");
-}
-
-void
-systemData::nMatrices()
-{
-    // TODO
 }
