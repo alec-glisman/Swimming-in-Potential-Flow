@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title="Updates all hydrody.">
+<g id="a_node1"><a xlink:title="Updates all hydrodynamic quantities at current configuration (data from systemData)">
 <polygon fill="#bfbfbf" stroke="black" points="0,-98.5 0,-128.5 123,-128.5 123,-98.5 0,-98.5"/>
 <text text-anchor="start" x="8" y="-116.5" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
 <text text-anchor="middle" x="61.5" y="-105.5" font-family="Helvetica,sans-Serif" font-size="10.00">::update</text>
@@ -21,7 +21,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classpotentialHydrodynamics.html#aca22661dfeb0029156532957df234042" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="classpotentialHydrodynamics.html#aca22661dfeb0029156532957df234042" target="_top" xlink:title="Calculates m_M_added">
 <polygon fill="none" stroke="black" points="159,-196.5 159,-226.5 282,-226.5 282,-196.5 159,-196.5"/>
 <text text-anchor="start" x="167" y="-214.5" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
 <text text-anchor="middle" x="220.5" y="-203.5" font-family="Helvetica,sans-Serif" font-size="10.00">::calcAddedMass</text>
@@ -37,7 +37,7 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="classpotentialHydrodynamics.html#a19d927bd0b419517d15b566c9132d632" target="_top" xlink:title=" ">
+<g id="a_node3"><a xlink:href="classpotentialHydrodynamics.html#a19d927bd0b419517d15b566c9132d632" target="_top" xlink:title="Calculates m_M_added">
 <polygon fill="none" stroke="black" points="159,-147.5 159,-177.5 282,-177.5 282,-147.5 159,-147.5"/>
 <text text-anchor="start" x="167" y="-165.5" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
 <text text-anchor="middle" x="220.5" y="-154.5" font-family="Helvetica,sans-Serif" font-size="10.00">::calcAddedMassGrad</text>
@@ -53,7 +53,7 @@
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
-<g id="a_node5"><a xlink:href="classpotentialHydrodynamics.html#a2b71af05a80cbe982c996d61b084695c" target="_top" xlink:title=" ">
+<g id="a_node5"><a xlink:href="classpotentialHydrodynamics.html#a2b71af05a80cbe982c996d61b084695c" target="_top" xlink:title="Calculates m_F_hydro and m_F_hydroNoInertia">
 <polygon fill="none" stroke="black" points="159,-98.5 159,-128.5 282,-128.5 282,-98.5 159,-98.5"/>
 <text text-anchor="start" x="167" y="-116.5" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
 <text text-anchor="middle" x="220.5" y="-105.5" font-family="Helvetica,sans-Serif" font-size="10.00">::calcHydroForces</text>
@@ -69,10 +69,10 @@
 <!-- Node8 -->
 <g id="node8" class="node">
 <title>Node8</title>
-<g id="a_node8"><a xlink:href="classpotentialHydrodynamics.html#ad434ee61cf9b3ae7b2159a4163e5a6cd" target="_top" xlink:title=" ">
+<g id="a_node8"><a xlink:href="classpotentialHydrodynamics.html#a5d70cd3d03dfe2f7f1a4c970994fffe0" target="_top" xlink:title="Calculates m_r_mag_ab and m_r_ab at current configuration.">
 <polygon fill="none" stroke="black" points="159,-49.5 159,-79.5 282,-79.5 282,-49.5 159,-49.5"/>
 <text text-anchor="start" x="167" y="-67.5" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
-<text text-anchor="middle" x="220.5" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">::calcHydroTensors</text>
+<text text-anchor="middle" x="220.5" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">::calcParticleDistances</text>
 </a>
 </g>
 </g>
@@ -85,10 +85,10 @@
 <!-- Node9 -->
 <g id="node9" class="node">
 <title>Node9</title>
-<g id="a_node9"><a xlink:href="classpotentialHydrodynamics.html#a5d70cd3d03dfe2f7f1a4c970994fffe0" target="_top" xlink:title=" ">
+<g id="a_node9"><a xlink:href="classpotentialHydrodynamics.html#a4ebdc0aa027f2a9e4f1f34bf781dffe9" target="_top" xlink:title="Calculates m_M_added">
 <polygon fill="none" stroke="black" points="159,-0.5 159,-30.5 282,-30.5 282,-0.5 159,-0.5"/>
 <text text-anchor="start" x="167" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">potentialHydrodynamics</text>
-<text text-anchor="middle" x="220.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">::calcParticleDistances</text>
+<text text-anchor="middle" x="220.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">::calcTotalMass</text>
 </a>
 </g>
 </g>

@@ -16,20 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script type="text/javascript">
-window.MathJax = {
-  options: {
-    ignoreHtmlClass: 'tex2jax_ignore',
-    processHtmlClass: 'tex2jax_process'
-  },
-  tex: {
-    macros: {},
-    packages: ['base','configmacros','TeX/ams','TeX/AMSmath','TeX/AMSsymbols','TeX/bm','TeX/bbm','TeX/dsfont','TeX/mathrsfs','TeX/upgreek']
-  }
-};
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "TeX/ams.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js", "TeX/bm.js", "TeX/bbm.js", "TeX/dsfont.js", "TeX/mathrsfs.js", "TeX/upgreek.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
 </script>
-<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/es5/tex-chtml.js"></script>
+<script type="text/javascript" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -108,8 +101,8 @@ $(document).ready(function(){initNavTree('classpotentialHydrodynamics.html','');
   <tr class="odd"><td class="entry"><a class="el" href="classpotentialHydrodynamics.html#a19d927bd0b419517d15b566c9132d632">calcAddedMassGrad</a>()</td><td class="entry"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classpotentialHydrodynamics.html#a5cb1d8a311e09f07c008329de161eccf">calcBodyTensors</a>()</td><td class="entry"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classpotentialHydrodynamics.html#a2b71af05a80cbe982c996d61b084695c">calcHydroForces</a>()</td><td class="entry"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classpotentialHydrodynamics.html#ad434ee61cf9b3ae7b2159a4163e5a6cd">calcHydroTensors</a>()</td><td class="entry"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classpotentialHydrodynamics.html#a5d70cd3d03dfe2f7f1a4c970994fffe0">calcParticleDistances</a>()</td><td class="entry"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classpotentialHydrodynamics.html#a5d70cd3d03dfe2f7f1a4c970994fffe0">calcParticleDistances</a>()</td><td class="entry"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classpotentialHydrodynamics.html#a4ebdc0aa027f2a9e4f1f34bf781dffe9">calcTotalMass</a>()</td><td class="entry"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classpotentialHydrodynamics.html#a3c58a1997153ea0a5485c11f59f73d28">fHydro</a>() const</td><td class="entry"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classpotentialHydrodynamics.html#a565e2b90099dd333057db25b5aa19903">fHydroNoInertia</a>() const</td><td class="entry"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classpotentialHydrodynamics.html#ad6cd57564cc2fafa2ff106e2a4c2147c">m_3N</a></td><td class="entry"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
@@ -138,16 +131,15 @@ $(document).ready(function(){initNavTree('classpotentialHydrodynamics.html','');
   <tr class="odd"><td class="entry"><a class="el" href="classpotentialHydrodynamics.html#a95ff00c159e80a807391892a99c75b5d">m_t3_PosGrad</a></td><td class="entry"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classpotentialHydrodynamics.html#a19cc46733ff4d0b6cabd09f1d1711254">m_unitSphereVol</a></td><td class="entry"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classpotentialHydrodynamics.html#aba5292c943f4383e6e585fd2492ca17b">mTotal</a>() const</td><td class="entry"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classpotentialHydrodynamics.html#ae93f12dc4a892a191d52bf4754d4d99c">potentialHydrodynamics</a>(std::shared_ptr&lt; systemData &gt; sys)</td><td class="entry"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classpotentialHydrodynamics.html#ae93f12dc4a892a191d52bf4754d4d99c">potentialHydrodynamics</a>(std::shared_ptr&lt; systemData &gt; sys)</td><td class="entry"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></td><td class="entry"><span class="mlabel">explicit</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classpotentialHydrodynamics.html#acce7436c3cc8b62fe54fa61da98554f6">update</a>()</td><td class="entry"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classpotentialHydrodynamics.html#a44c1520f6b87f2260c8dcc3a903729df">updateForcesOnly</a>()</td><td class="entry"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classpotentialHydrodynamics.html#aaed582331e09c55276bacfc9e8e03bba">~potentialHydrodynamics</a>()</td><td class="entry"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classpotentialHydrodynamics.html#aaed582331e09c55276bacfc9e8e03bba">~potentialHydrodynamics</a>()</td><td class="entry"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Oct 13 2021 20:51:42 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Wed Oct 13 2021 21:38:49 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

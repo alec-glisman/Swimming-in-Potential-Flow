@@ -1,5 +1,5 @@
 <map id="potentialHydrodynamics" name="potentialHydrodynamics">
-<area shape="rect" id="node1" title="Computes hydrodynamic tensors (mass, forces) on a finite number of spheres in potential flow." alt="" coords="5,301,197,877"/>
+<area shape="rect" id="node1" title="Computes hydrodynamic tensors (mass, forces) on a finite number of spheres in potential flow." alt="" coords="5,301,197,863"/>
 <area shape="rect" id="node2" title=" " alt="" coords="61,147,141,224"/>
 <area shape="rect" id="node3" title=" " alt="" coords="38,5,165,97"/>
 </map>

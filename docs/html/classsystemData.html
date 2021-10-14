@@ -16,20 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script type="text/javascript">
-window.MathJax = {
-  options: {
-    ignoreHtmlClass: 'tex2jax_ignore',
-    processHtmlClass: 'tex2jax_process'
-  },
-  tex: {
-    macros: {},
-    packages: ['base','configmacros','TeX/ams','TeX/AMSmath','TeX/AMSsymbols','TeX/bm','TeX/bbm','TeX/dsfont','TeX/mathrsfs','TeX/upgreek']
-  }
-};
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "TeX/ams.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js", "TeX/bm.js", "TeX/bbm.js", "TeX/dsfont.js", "TeX/mathrsfs.js", "TeX/upgreek.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
 </script>
-<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/es5/tex-chtml.js"></script>
+<script type="text/javascript" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -116,12 +109,12 @@ $(document).ready(function(){initNavTree('classsystemData.html',''); initResizab
 <div class="dynheader">
 Inheritance diagram for systemData:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData__inherit__graph.svg" width="248" height="2238"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData__inherit__graph.svg" width="248" height="2252"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Collaboration diagram for systemData:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData__coll__graph.svg" width="359" height="2379"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData__coll__graph.svg" width="359" height="2394"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -133,9 +126,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad2ba3455704ef6cec1aac76a417e91e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsystemData.html#ad2ba3455704ef6cec1aac76a417e91e9">initializeData</a> ()</td></tr>
 <tr class="memdesc:ad2ba3455704ef6cec1aac76a417e91e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function loads data from GSD file using <code><a class="el" href="classGSDUtil.html">GSDUtil</a></code> class.  <a href="classsystemData.html#ad2ba3455704ef6cec1aac76a417e91e9">More...</a><br /></td></tr>
 <tr class="separator:ad2ba3455704ef6cec1aac76a417e91e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c7862901ce425c4d5e6001efa3ef61d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsystemData.html#a3c7862901ce425c4d5e6001efa3ef61d">updateConstraints</a> (double time)</td></tr>
-<tr class="memdesc:a3c7862901ce425c4d5e6001efa3ef61d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constraints.  <a href="classsystemData.html#a3c7862901ce425c4d5e6001efa3ef61d">More...</a><br /></td></tr>
-<tr class="separator:a3c7862901ce425c4d5e6001efa3ef61d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3500ff682e88dc3d24c111ca3f97505a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsystemData.html#a3500ff682e88dc3d24c111ca3f97505a">update</a> (double time)</td></tr>
+<tr class="memdesc:a3500ff682e88dc3d24c111ca3f97505a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constraints.  <a href="classsystemData.html#a3500ff682e88dc3d24c111ca3f97505a">More...</a><br /></td></tr>
+<tr class="separator:a3500ff682e88dc3d24c111ca3f97505a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42f305ad4adc29cb15985cc6c7c78d90"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsystemData.html#a42f305ad4adc29cb15985cc6c7c78d90">outputDir</a> () const</td></tr>
 <tr class="separator:a42f305ad4adc29cb15985cc6c7c78d90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3945bb282cb39a6005ad2305237314b1"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsystemData.html#a3945bb282cb39a6005ad2305237314b1">inputGSDFile</a> () const</td></tr>
@@ -264,8 +257,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af2642e7b5fea45789b7907d687c40d42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d9dce823775190745462ebb558f0ec1"><td class="memItemLeft" align="right" valign="top">const Eigen::VectorXd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsystemData.html#a4d9dce823775190745462ebb558f0ec1">udwadiaB</a> () const</td></tr>
 <tr class="separator:a4d9dce823775190745462ebb558f0ec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0d38589025afba7256412472b506ee3"><td class="memItemLeft" align="right" valign="top">const Eigen::TensorFixedSize&lt; double, Eigen::Sizes&lt; 3, 3 &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsystemData.html#ac0d38589025afba7256412472b506ee3">tensI</a> () const</td></tr>
-<tr class="separator:ac0d38589025afba7256412472b506ee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fc76ce6f34790583666fc50ca304ed4"><td class="memItemLeft" align="right" valign="top">const Eigen::TensorFixedSize&lt; double, Eigen::Sizes&lt; 3, 3 &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsystemData.html#a9fc76ce6f34790583666fc50ca304ed4">tensI3</a> () const</td></tr>
+<tr class="separator:a9fc76ce6f34790583666fc50ca304ed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8b45529ed83e00cf9c2848b0a03b5e0"><td class="memItemLeft" align="right" valign="top">const Eigen::Matrix3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsystemData.html#af8b45529ed83e00cf9c2848b0a03b5e0">i3</a> () const</td></tr>
+<tr class="separator:af8b45529ed83e00cf9c2848b0a03b5e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -340,11 +335,11 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a307bdd3fe3c8084cf245a74688f2e1ae"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsystemData.html#a307bdd3fe3c8084cf245a74688f2e1ae">m_Udwadia_b</a></td></tr>
 <tr class="memdesc:a307bdd3fe3c8084cf245a74688f2e1ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">[M x 1] Result of \( \mathbf{A} \, \ddot{\boldsymbol{\xi}} \)  <a href="classsystemData.html#a307bdd3fe3c8084cf245a74688f2e1ae">More...</a><br /></td></tr>
 <tr class="separator:a307bdd3fe3c8084cf245a74688f2e1ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a393327dfc91c092d965f40fd6273f939"><td class="memItemLeft" align="right" valign="top">const Eigen::Matrix3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsystemData.html#a393327dfc91c092d965f40fd6273f939">m_I</a> = Eigen::Matrix3d::Identity(3, 3)</td></tr>
-<tr class="memdesc:a393327dfc91c092d965f40fd6273f939"><td class="mdescLeft">&#160;</td><td class="mdescRight">[3 x 3] 2nd order identity tensor  <a href="classsystemData.html#a393327dfc91c092d965f40fd6273f939">More...</a><br /></td></tr>
-<tr class="separator:a393327dfc91c092d965f40fd6273f939"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a438aa0e51f4cf26bc7a8e859eef7a8"><td class="memItemLeft" align="right" valign="top">const Eigen::TensorFixedSize&lt; double, Eigen::Sizes&lt; 3, 3 &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsystemData.html#a3a438aa0e51f4cf26bc7a8e859eef7a8">m_tens_I</a> = <a class="el" href="helper__eigenTensorConversion_8hpp.html#ab9ff7d7e79406cc19764e9753bcacafd">TensorCast</a>(<a class="el" href="classsystemData.html#a393327dfc91c092d965f40fd6273f939">m_I</a>)</td></tr>
-<tr class="separator:a3a438aa0e51f4cf26bc7a8e859eef7a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af383230f495aac789b75bd0d1218b156"><td class="memItemLeft" align="right" valign="top">const Eigen::Matrix3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsystemData.html#af383230f495aac789b75bd0d1218b156">m_I3</a> = Eigen::Matrix3d::Identity(3, 3)</td></tr>
+<tr class="memdesc:af383230f495aac789b75bd0d1218b156"><td class="mdescLeft">&#160;</td><td class="mdescRight">[3 x 3] 2nd order identity tensor  <a href="classsystemData.html#af383230f495aac789b75bd0d1218b156">More...</a><br /></td></tr>
+<tr class="separator:af383230f495aac789b75bd0d1218b156"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a630d9edf800b4dcfba13bfa7f9b395c7"><td class="memItemLeft" align="right" valign="top">const Eigen::TensorFixedSize&lt; double, Eigen::Sizes&lt; 3, 3 &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsystemData.html#a630d9edf800b4dcfba13bfa7f9b395c7">m_tens_I3</a> = <a class="el" href="helper__eigenTensorConversion_8hpp.html#ab9ff7d7e79406cc19764e9753bcacafd">TensorCast</a>(<a class="el" href="classsystemData.html#af383230f495aac789b75bd0d1218b156">m_I3</a>)</td></tr>
+<tr class="separator:a630d9edf800b4dcfba13bfa7f9b395c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a948f8374da6bd5a801abf23fcb1545a0"><td class="memItemLeft" align="right" valign="top">Eigen::TensorFixedSize&lt; double, Eigen::Sizes&lt; 3, 3, 3 &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsystemData.html#a948f8374da6bd5a801abf23fcb1545a0">m_levi_cevita</a></td></tr>
 <tr class="memdesc:a948f8374da6bd5a801abf23fcb1545a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">[3 x 3 x 3] (skew-symmetric) 3rd order identity tensor  <a href="classsystemData.html#a948f8374da6bd5a801abf23fcb1545a0">More...</a><br /></td></tr>
 <tr class="separator:a948f8374da6bd5a801abf23fcb1545a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -627,14 +622,14 @@ Here is the call graph for this function:</div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="comment">// initialize constraints</span></div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    spdlog::get(<a class="code hl_variable" href="classsystemData.html#a32d90274c8d46ceb1260c8eb00e70b64">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Initializing constraints&quot;</span>);</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <a class="code hl_function" href="classsystemData.html#a3c7862901ce425c4d5e6001efa3ef61d">updateConstraints</a>(<a class="code hl_variable" href="classsystemData.html#a5d0dae91a8d045113b26eaf46016dd4b">m_t</a>);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <a class="code hl_function" href="classsystemData.html#a3500ff682e88dc3d24c111ca3f97505a">update</a>(<a class="code hl_variable" href="classsystemData.html#a5d0dae91a8d045113b26eaf46016dd4b">m_t</a>);</div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>}</div>
 <div class="ttc" id="aclasssystemData_html_a147a43c42975717ce62d972bc62303ac"><div class="ttname"><a href="classsystemData.html#a147a43c42975717ce62d972bc62303ac">systemData::m_num_constraints</a></div><div class="ttdeci">int m_num_constraints</div><div class="ttdoc">= M</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8hpp_source.html#l00225">systemData.hpp:225</a></div></div>
 <div class="ttc" id="aclasssystemData_html_a2484025f38cd07b3fff6e8c939b590c2"><div class="ttname"><a href="classsystemData.html#a2484025f38cd07b3fff6e8c939b590c2">systemData::m_N1</a></div><div class="ttdeci">Eigen::Tensor&lt; double, 3 &gt; m_N1</div><div class="ttdoc">[3N x 3N x 7M] TODO</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8hpp_source.html#l00196">systemData.hpp:196</a></div></div>
 <div class="ttc" id="aclasssystemData_html_a307bdd3fe3c8084cf245a74688f2e1ae"><div class="ttname"><a href="classsystemData.html#a307bdd3fe3c8084cf245a74688f2e1ae">systemData::m_Udwadia_b</a></div><div class="ttdeci">Eigen::VectorXd m_Udwadia_b</div><div class="ttdoc">[M x 1] Result of</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8hpp_source.html#l00163">systemData.hpp:163</a></div></div>
 <div class="ttc" id="aclasssystemData_html_a34713fd55586a236be9fc1ff57216e2e"><div class="ttname"><a href="classsystemData.html#a34713fd55586a236be9fc1ff57216e2e">systemData::m_velocities_particles_articulation</a></div><div class="ttdeci">Eigen::VectorXd m_velocities_particles_articulation</div><div class="ttdoc">[3N x 1]</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8hpp_source.html#l00211">systemData.hpp:211</a></div></div>
+<div class="ttc" id="aclasssystemData_html_a3500ff682e88dc3d24c111ca3f97505a"><div class="ttname"><a href="classsystemData.html#a3500ff682e88dc3d24c111ca3f97505a">systemData::update</a></div><div class="ttdeci">void update(double time)</div><div class="ttdoc">Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constrain...</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8cpp_source.html#l00106">systemData.cpp:106</a></div></div>
 <div class="ttc" id="aclasssystemData_html_a386bcd7c7d5a264d637da3b2d08700db"><div class="ttname"><a href="classsystemData.html#a386bcd7c7d5a264d637da3b2d08700db">systemData::m_C_conv_quat_part_grad</a></div><div class="ttdeci">Eigen::Tensor&lt; double, 3 &gt; m_C_conv_quat_part_grad</div><div class="ttdoc">[3N x 7M x 7M]</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8hpp_source.html#l00186">systemData.hpp:186</a></div></div>
-<div class="ttc" id="aclasssystemData_html_a3c7862901ce425c4d5e6001efa3ef61d"><div class="ttname"><a href="classsystemData.html#a3c7862901ce425c4d5e6001efa3ef61d">systemData::updateConstraints</a></div><div class="ttdeci">void updateConstraints(double time)</div><div class="ttdoc">Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constrain...</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8cpp_source.html#l00106">systemData.cpp:106</a></div></div>
 <div class="ttc" id="aclasssystemData_html_a3e02a46c53445c8043c850d3ebe317a7"><div class="ttname"><a href="classsystemData.html#a3e02a46c53445c8043c850d3ebe317a7">systemData::m_D_conv_quat_part</a></div><div class="ttdeci">Eigen::MatrixXd m_D_conv_quat_part</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8hpp_source.html#l00193">systemData.hpp:193</a></div></div>
 <div class="ttc" id="aclasssystemData_html_a494a64be316f0d203099382546b1bf99"><div class="ttname"><a href="classsystemData.html#a494a64be316f0d203099382546b1bf99">systemData::m_positions_locater_particles</a></div><div class="ttdeci">Eigen::VectorXd m_positions_locater_particles</div><div class="ttdoc">[3M x 1]</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8hpp_source.html#l00210">systemData.hpp:210</a></div></div>
 <div class="ttc" id="aclasssystemData_html_a4fac37317a7bbf060a3bfc19ff2e714c"><div class="ttname"><a href="classsystemData.html#a4fac37317a7bbf060a3bfc19ff2e714c">systemData::m_accelerations_particles_articulation</a></div><div class="ttdeci">Eigen::VectorXd m_accelerations_particles_articulation</div><div class="ttdoc">[3N x 1]</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8hpp_source.html#l00212">systemData.hpp:212</a></div></div>
@@ -652,23 +647,23 @@ Here is the call graph for this function:</div>
 <div class="ttc" id="aclasssystemData_html_abbc10fff004644329eee6de98d80efe5"><div class="ttname"><a href="classsystemData.html#abbc10fff004644329eee6de98d80efe5">systemData::m_rbm_conn</a></div><div class="ttdeci">Eigen::MatrixXd m_rbm_conn</div><div class="ttdoc">[6M x 3N]  rigid body motion connectivity tensor</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8hpp_source.html#l00178">systemData.hpp:178</a></div></div>
 <div class="ttc" id="aclasssystemData_html_afc3f7934c823d083ff57f9eec80a65b9"><div class="ttname"><a href="classsystemData.html#afc3f7934c823d083ff57f9eec80a65b9">systemData::m_kappa_tilde</a></div><div class="ttdeci">Eigen::TensorFixedSize&lt; double, Eigen::Sizes&lt; 3, 4, 7 &gt; &gt; m_kappa_tilde</div><div class="ttdoc">[3 x 4 x 7]</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8hpp_source.html#l00174">systemData.hpp:174</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="systemData_8hpp_source.html#l00212">m_accelerations_particles_articulation</a>, <a class="el" href="systemData_8hpp_source.html#l00184">m_C_conv_quat_part</a>, <a class="el" href="systemData_8hpp_source.html#l00186">m_C_conv_quat_part_grad</a>, <a class="el" href="systemData_8hpp_source.html#l00193">m_D_conv_quat_part</a>, <a class="el" href="systemData_8hpp_source.html#l00174">m_kappa_tilde</a>, <a class="el" href="systemData_8hpp_source.html#l00172">m_levi_cevita</a>, <a class="el" href="systemData_8hpp_source.html#l00137">m_logName</a>, <a class="el" href="systemData_8hpp_source.html#l00196">m_N1</a>, <a class="el" href="systemData_8hpp_source.html#l00197">m_N2</a>, <a class="el" href="systemData_8hpp_source.html#l00198">m_N3</a>, <a class="el" href="systemData_8hpp_source.html#l00223">m_num_bodies</a>, <a class="el" href="systemData_8hpp_source.html#l00225">m_num_constraints</a>, <a class="el" href="systemData_8hpp_source.html#l00224">m_num_DoF</a>, <a class="el" href="systemData_8hpp_source.html#l00222">m_num_particles</a>, <a class="el" href="systemData_8hpp_source.html#l00210">m_positions_locater_particles</a>, <a class="el" href="systemData_8hpp_source.html#l00181">m_psi_conv_quat_ang</a>, <a class="el" href="systemData_8hpp_source.html#l00178">m_rbm_conn</a>, <a class="el" href="systemData_8hpp_source.html#l00230">m_t</a>, <a class="el" href="systemData_8hpp_source.html#l00161">m_Udwadia_A</a>, <a class="el" href="systemData_8hpp_source.html#l00163">m_Udwadia_b</a>, <a class="el" href="systemData_8hpp_source.html#l00211">m_velocities_particles_articulation</a>, <a class="el" href="systemData_8cpp_source.html#l00122">parseGSD()</a>, and <a class="el" href="systemData_8cpp_source.html#l00106">updateConstraints()</a>.</p>
+<p class="reference">References <a class="el" href="systemData_8hpp_source.html#l00212">m_accelerations_particles_articulation</a>, <a class="el" href="systemData_8hpp_source.html#l00184">m_C_conv_quat_part</a>, <a class="el" href="systemData_8hpp_source.html#l00186">m_C_conv_quat_part_grad</a>, <a class="el" href="systemData_8hpp_source.html#l00193">m_D_conv_quat_part</a>, <a class="el" href="systemData_8hpp_source.html#l00174">m_kappa_tilde</a>, <a class="el" href="systemData_8hpp_source.html#l00172">m_levi_cevita</a>, <a class="el" href="systemData_8hpp_source.html#l00137">m_logName</a>, <a class="el" href="systemData_8hpp_source.html#l00196">m_N1</a>, <a class="el" href="systemData_8hpp_source.html#l00197">m_N2</a>, <a class="el" href="systemData_8hpp_source.html#l00198">m_N3</a>, <a class="el" href="systemData_8hpp_source.html#l00223">m_num_bodies</a>, <a class="el" href="systemData_8hpp_source.html#l00225">m_num_constraints</a>, <a class="el" href="systemData_8hpp_source.html#l00224">m_num_DoF</a>, <a class="el" href="systemData_8hpp_source.html#l00222">m_num_particles</a>, <a class="el" href="systemData_8hpp_source.html#l00210">m_positions_locater_particles</a>, <a class="el" href="systemData_8hpp_source.html#l00181">m_psi_conv_quat_ang</a>, <a class="el" href="systemData_8hpp_source.html#l00178">m_rbm_conn</a>, <a class="el" href="systemData_8hpp_source.html#l00230">m_t</a>, <a class="el" href="systemData_8hpp_source.html#l00161">m_Udwadia_A</a>, <a class="el" href="systemData_8hpp_source.html#l00163">m_Udwadia_b</a>, <a class="el" href="systemData_8hpp_source.html#l00211">m_velocities_particles_articulation</a>, <a class="el" href="systemData_8cpp_source.html#l00122">parseGSD()</a>, and <a class="el" href="systemData_8cpp_source.html#l00106">update()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_ad2ba3455704ef6cec1aac76a417e91e9_cgraph.svg" width="942" height="416"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_ad2ba3455704ef6cec1aac76a417e91e9_cgraph.svg" width="896" height="416"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
 </div>
-<a id="a3c7862901ce425c4d5e6001efa3ef61d" name="a3c7862901ce425c4d5e6001efa3ef61d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c7862901ce425c4d5e6001efa3ef61d">&#9670;&nbsp;</a></span>updateConstraints()</h2>
+<a id="a3500ff682e88dc3d24c111ca3f97505a" name="a3500ff682e88dc3d24c111ca3f97505a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3500ff682e88dc3d24c111ca3f97505a">&#9670;&nbsp;</a></span>update()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void systemData::updateConstraints </td>
+          <td class="memname">void systemData::update </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>time</em></td><td>)</td>
@@ -713,12 +708,12 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_a3c7862901ce425c4d5e6001efa3ef61d_cgraph.svg" width="718" height="366"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_a3500ff682e88dc3d24c111ca3f97505a_cgraph.svg" width="650" height="366"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_a3c7862901ce425c4d5e6001efa3ef61d_icgraph.svg" width="443" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_a3500ff682e88dc3d24c111ca3f97505a_icgraph.svg" width="375" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -914,11 +909,11 @@ Here is the caller graph for this function:</div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="systemData_8hpp_source.html#l00206">m_positions_particles</a>, <a class="el" href="systemData_8hpp_source.html#l00155">m_sys_spec_omega</a>, <a class="el" href="systemData_8hpp_source.html#l00156">m_sys_spec_phase_shift</a>, <a class="el" href="systemData_8hpp_source.html#l00154">m_sys_spec_U0</a>, <a class="el" href="systemData_8hpp_source.html#l00231">m_tau</a>, and <a class="el" href="systemData_8hpp_source.html#l00211">m_velocities_particles_articulation</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="systemData_8cpp_source.html#l00106">updateConstraints()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="systemData_8cpp_source.html#l00106">update()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_a4b449c0f7702a7140fca05ca3722092b_icgraph.svg" width="711" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_a4b449c0f7702a7140fca05ca3722092b_icgraph.svg" width="643" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -972,11 +967,11 @@ Here is the caller graph for this function:</div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="systemData_8hpp_source.html#l00212">m_accelerations_particles_articulation</a>, <a class="el" href="systemData_8hpp_source.html#l00206">m_positions_particles</a>, <a class="el" href="systemData_8hpp_source.html#l00155">m_sys_spec_omega</a>, <a class="el" href="systemData_8hpp_source.html#l00156">m_sys_spec_phase_shift</a>, <a class="el" href="systemData_8hpp_source.html#l00154">m_sys_spec_U0</a>, and <a class="el" href="systemData_8hpp_source.html#l00231">m_tau</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="systemData_8cpp_source.html#l00106">updateConstraints()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="systemData_8cpp_source.html#l00106">update()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_abdbaf4be474add633c79ce9f4812b438_icgraph.svg" width="670" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_abdbaf4be474add633c79ce9f4812b438_icgraph.svg" width="602" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1024,11 +1019,11 @@ Here is the caller graph for this function:</div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="systemData_8hpp_source.html#l00223">m_num_bodies</a>, <a class="el" href="systemData_8hpp_source.html#l00222">m_num_particles</a>, <a class="el" href="systemData_8hpp_source.html#l00218">m_particle_type_id</a>, <a class="el" href="systemData_8hpp_source.html#l00201">m_positions_bodies</a>, <a class="el" href="systemData_8hpp_source.html#l00210">m_positions_locater_particles</a>, and <a class="el" href="systemData_8hpp_source.html#l00206">m_positions_particles</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="systemData_8cpp_source.html#l00106">updateConstraints()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="systemData_8cpp_source.html#l00106">update()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_ab3fc7f3cc4c79bbad6e9bb73e127e8c3_icgraph.svg" width="662" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_ab3fc7f3cc4c79bbad6e9bb73e127e8c3_icgraph.svg" width="594" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1063,8 +1058,8 @@ Here is the caller graph for this function:</div>
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span> </div>
 <div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code hl_variable" href="classsystemData.html#a70236823191d97c874c5840685214b82">m_num_particles</a>; i++)</div>
 <div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    {</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>        <span class="keyword">const</span> <span class="keywordtype">int</span>             i3{3 * i};</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        <span class="keyword">const</span> Eigen::Vector3d R_i = <a class="code hl_variable" href="classsystemData.html#aa9a414d5cf97daead530e2eff649d036">m_positions_particles</a>.segment&lt;3&gt;(i3);</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>        <span class="keyword">const</span> <span class="keywordtype">int</span>             <a class="code hl_function" href="classsystemData.html#af8b45529ed83e00cf9c2848b0a03b5e0">i3</a>{3 * i};</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        <span class="keyword">const</span> Eigen::Vector3d R_i = <a class="code hl_variable" href="classsystemData.html#aa9a414d5cf97daead530e2eff649d036">m_positions_particles</a>.segment&lt;3&gt;(<a class="code hl_function" href="classsystemData.html#af8b45529ed83e00cf9c2848b0a03b5e0">i3</a>);</div>
 <div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> </div>
 <div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        <span class="comment">// Calculate which body j particle i belongs to</span></div>
 <div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        <span class="keyword">const</span> <span class="keywordtype">int</span> body_j = (<a class="code hl_variable" href="classsystemData.html#aed15f57f44a6f5b691dcc29d149373dc">m_particle_type_id</a>.segment(0, i + 1).array() == 1).count() - 1;</div>
@@ -1080,8 +1075,8 @@ Here is the caller graph for this function:</div>
 <div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>        <a class="code hl_function" href="classsystemData.html#a0a77c933b764fb36c64ec5e66011482c">crossProdMat</a>(n_dr, n_dr_cross);</div>
 <div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span> </div>
 <div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>        <span class="comment">// rigid body motion connectivity tensor elements</span></div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>        <a class="code hl_variable" href="classsystemData.html#abbc10fff004644329eee6de98d80efe5">m_rbm_conn</a>.block&lt;3, 3&gt;(j6, i3).noalias()     = <a class="code hl_variable" href="classsystemData.html#a393327dfc91c092d965f40fd6273f939">m_I</a>;        <span class="comment">// translation-translation couple</span></div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        <a class="code hl_variable" href="classsystemData.html#abbc10fff004644329eee6de98d80efe5">m_rbm_conn</a>.block&lt;3, 3&gt;(j6 + 3, i3).noalias() = n_dr_cross; <span class="comment">// translation-rotation couple</span></div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>        <a class="code hl_variable" href="classsystemData.html#abbc10fff004644329eee6de98d80efe5">m_rbm_conn</a>.block&lt;3, 3&gt;(j6, <a class="code hl_function" href="classsystemData.html#af8b45529ed83e00cf9c2848b0a03b5e0">i3</a>).noalias()     = <a class="code hl_variable" href="classsystemData.html#af383230f495aac789b75bd0d1218b156">m_I3</a>;       <span class="comment">// translation-translation couple</span></div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        <a class="code hl_variable" href="classsystemData.html#abbc10fff004644329eee6de98d80efe5">m_rbm_conn</a>.block&lt;3, 3&gt;(j6 + 3, <a class="code hl_function" href="classsystemData.html#af8b45529ed83e00cf9c2848b0a03b5e0">i3</a>).noalias() = n_dr_cross; <span class="comment">// translation-rotation couple</span></div>
 <div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span> </div>
 <div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>        <span class="keywordflow">if</span> (i == 0)</div>
 <div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        {</div>
@@ -1106,7 +1101,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>        <a class="code hl_function" href="classsystemData.html#a19a83a255eb6f1de4bcfe2ea8e31ffa9">eMatrix</a>(<a class="code hl_variable" href="classsystemData.html#a242328c57db4376e3bf83b4145a1cb29">m_positions_bodies</a>.segment&lt;4&gt;(k7 + 3), E_theta_k);</div>
 <div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span> </div>
 <div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>        <span class="comment">// matrix elements of Psi</span></div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>        <a class="code hl_variable" href="classsystemData.html#a6610a7951920b8adf1ea11b4eeba3ae4">m_psi_conv_quat_ang</a>.block&lt;3, 3&gt;(k6, k7).noalias()         = <a class="code hl_variable" href="classsystemData.html#a393327dfc91c092d965f40fd6273f939">m_I</a>; <span class="comment">// no conversion from linear components</span></div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>        <a class="code hl_variable" href="classsystemData.html#a6610a7951920b8adf1ea11b4eeba3ae4">m_psi_conv_quat_ang</a>.block&lt;3, 3&gt;(k6, k7).noalias()         = <a class="code hl_variable" href="classsystemData.html#af383230f495aac789b75bd0d1218b156">m_I3</a>; <span class="comment">// no conversion from linear components</span></div>
 <div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>        <a class="code hl_variable" href="classsystemData.html#a6610a7951920b8adf1ea11b4eeba3ae4">m_psi_conv_quat_ang</a>.block&lt;3, 4&gt;(k6 + 3, k7 + 3).noalias() = 2 * E_theta_k; <span class="comment">// angular-quaternion velocity couple</span></div>
 <div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>    }</div>
 <div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> </div>
@@ -1115,20 +1110,21 @@ Here is the caller graph for this function:</div>
 <div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>}</div>
 <div class="ttc" id="aclasssystemData_html_a0a77c933b764fb36c64ec5e66011482c"><div class="ttname"><a href="classsystemData.html#a0a77c933b764fb36c64ec5e66011482c">systemData::crossProdMat</a></div><div class="ttdeci">static void crossProdMat(const Eigen::Vector3d &amp;vec, Eigen::Matrix3d &amp;mat)</div><div class="ttdoc">Function takes in vector in vector cross-product expression: .</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8hpp_source.html#l00124">systemData.hpp:124</a></div></div>
 <div class="ttc" id="aclasssystemData_html_a19a83a255eb6f1de4bcfe2ea8e31ffa9"><div class="ttname"><a href="classsystemData.html#a19a83a255eb6f1de4bcfe2ea8e31ffa9">systemData::eMatrix</a></div><div class="ttdeci">static void eMatrix(const Eigen::Vector4d &amp;vec, Eigen::Matrix&lt; double, 3, 4 &gt; &amp;mat)</div><div class="ttdoc">Computes the E matrix of quaternion (4-vector) input.</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8hpp_source.html#l00112">systemData.hpp:112</a></div></div>
-<div class="ttc" id="aclasssystemData_html_a393327dfc91c092d965f40fd6273f939"><div class="ttname"><a href="classsystemData.html#a393327dfc91c092d965f40fd6273f939">systemData::m_I</a></div><div class="ttdeci">const Eigen::Matrix3d m_I</div><div class="ttdoc">[3 x 3] 2nd order identity tensor</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8hpp_source.html#l00167">systemData.hpp:167</a></div></div>
+<div class="ttc" id="aclasssystemData_html_af383230f495aac789b75bd0d1218b156"><div class="ttname"><a href="classsystemData.html#af383230f495aac789b75bd0d1218b156">systemData::m_I3</a></div><div class="ttdeci">const Eigen::Matrix3d m_I3</div><div class="ttdoc">[3 x 3] 2nd order identity tensor</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8hpp_source.html#l00167">systemData.hpp:167</a></div></div>
+<div class="ttc" id="aclasssystemData_html_af8b45529ed83e00cf9c2848b0a03b5e0"><div class="ttname"><a href="classsystemData.html#af8b45529ed83e00cf9c2848b0a03b5e0">systemData::i3</a></div><div class="ttdeci">const Eigen::Matrix3d &amp; i3() const</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8hpp_source.html#l00617">systemData.hpp:617</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="systemData_8hpp_source.html#l00124">crossProdMat()</a>, <a class="el" href="systemData_8hpp_source.html#l00112">eMatrix()</a>, <a class="el" href="systemData_8hpp_source.html#l00184">m_C_conv_quat_part</a>, <a class="el" href="systemData_8hpp_source.html#l00167">m_I</a>, <a class="el" href="systemData_8hpp_source.html#l00223">m_num_bodies</a>, <a class="el" href="systemData_8hpp_source.html#l00222">m_num_particles</a>, <a class="el" href="systemData_8hpp_source.html#l00218">m_particle_type_id</a>, <a class="el" href="systemData_8hpp_source.html#l00201">m_positions_bodies</a>, <a class="el" href="systemData_8hpp_source.html#l00206">m_positions_particles</a>, <a class="el" href="systemData_8hpp_source.html#l00181">m_psi_conv_quat_ang</a>, and <a class="el" href="systemData_8hpp_source.html#l00178">m_rbm_conn</a>.</p>
+<p class="reference">References <a class="el" href="systemData_8hpp_source.html#l00124">crossProdMat()</a>, <a class="el" href="systemData_8hpp_source.html#l00112">eMatrix()</a>, <a class="el" href="systemData_8hpp_source.html#l00617">i3()</a>, <a class="el" href="systemData_8hpp_source.html#l00184">m_C_conv_quat_part</a>, <a class="el" href="systemData_8hpp_source.html#l00167">m_I3</a>, <a class="el" href="systemData_8hpp_source.html#l00223">m_num_bodies</a>, <a class="el" href="systemData_8hpp_source.html#l00222">m_num_particles</a>, <a class="el" href="systemData_8hpp_source.html#l00218">m_particle_type_id</a>, <a class="el" href="systemData_8hpp_source.html#l00201">m_positions_bodies</a>, <a class="el" href="systemData_8hpp_source.html#l00206">m_positions_particles</a>, <a class="el" href="systemData_8hpp_source.html#l00181">m_psi_conv_quat_ang</a>, and <a class="el" href="systemData_8hpp_source.html#l00178">m_rbm_conn</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="systemData_8cpp_source.html#l00106">updateConstraints()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="systemData_8cpp_source.html#l00106">update()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_a415007558c07b03a6cfeb973ec97fa3f_cgraph.svg" width="438" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_a415007558c07b03a6cfeb973ec97fa3f_cgraph.svg" width="438" height="139"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_a415007558c07b03a6cfeb973ec97fa3f_icgraph.svg" width="687" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_a415007558c07b03a6cfeb973ec97fa3f_icgraph.svg" width="619" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1205,7 +1201,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>        Eigen::Matrix&lt;double, 4, 3&gt; P_j_tilde = P_j_tilde_hold.transpose();</div>
 <div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span> </div>
 <div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>        <span class="comment">// change of variables gradient tensor elements</span></div>
-<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>        <a class="code hl_variable" href="classsystemData.html#a3e02a46c53445c8043c850d3ebe317a7">m_D_conv_quat_part</a>.block&lt;3, 3&gt;(7 * body_num, j3).noalias() = -<a class="code hl_variable" href="classsystemData.html#a393327dfc91c092d965f40fd6273f939">m_I</a>; <span class="comment">// translation-translation couple</span></div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>        <a class="code hl_variable" href="classsystemData.html#a3e02a46c53445c8043c850d3ebe317a7">m_D_conv_quat_part</a>.block&lt;3, 3&gt;(7 * body_num, j3).noalias() = -<a class="code hl_variable" href="classsystemData.html#af383230f495aac789b75bd0d1218b156">m_I3</a>; <span class="comment">// translation-translation couple</span></div>
 <div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>        <a class="code hl_variable" href="classsystemData.html#a3e02a46c53445c8043c850d3ebe317a7">m_D_conv_quat_part</a>.block&lt;3, 3&gt;(7 * body_num + 4, j3).noalias() =</div>
 <div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>            twoE_body * P_j_tilde; <span class="comment">// quaternion-rotation couple (first row is zero)</span></div>
 <div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>    }</div>
@@ -1281,9 +1277,9 @@ Here is the caller graph for this function:</div>
 <div class="ttc" id="aclasssystemData_html_a3917c1d96d68c9203a577ba7d1b2f0ab"><div class="ttname"><a href="classsystemData.html#a3917c1d96d68c9203a577ba7d1b2f0ab">systemData::m_thread_pool</a></div><div class="ttdeci">Eigen::ThreadPool m_thread_pool</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8hpp_source.html#l00149">systemData.hpp:149</a></div></div>
 <div class="ttc" id="ahelper__eigenTensorConversion_8hpp_html_a556fb613b733267c9404648bc66bd0bd"><div class="ttname"><a href="helper__eigenTensorConversion_8hpp.html#a556fb613b733267c9404648bc66bd0bd">TensorCast</a></div><div class="ttdeci">Eigen::Tensor&lt; typename Derived::Scalar, rank &gt; TensorCast(const Eigen::EigenBase&lt; Derived &gt; &amp;matrix, const std::array&lt; T, rank &gt; &amp;dims)</div><div class="ttdoc">Convert Eigen::Matrix --&gt; Eigen::Tensor.</div><div class="ttdef"><b>Definition:</b> <a href="helper__eigenTensorConversion_8hpp_source.html#l00117">helper_eigenTensorConversion.hpp:117</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="systemData_8hpp_source.html#l00112">eMatrix()</a>, <a class="el" href="systemData_8hpp_source.html#l00186">m_C_conv_quat_part_grad</a>, <a class="el" href="systemData_8hpp_source.html#l00193">m_D_conv_quat_part</a>, <a class="el" href="systemData_8hpp_source.html#l00167">m_I</a>, <a class="el" href="systemData_8hpp_source.html#l00174">m_kappa_tilde</a>, <a class="el" href="systemData_8hpp_source.html#l00172">m_levi_cevita</a>, <a class="el" href="systemData_8hpp_source.html#l00223">m_num_bodies</a>, <a class="el" href="systemData_8hpp_source.html#l00222">m_num_particles</a>, <a class="el" href="systemData_8hpp_source.html#l00147">m_num_physical_cores</a>, <a class="el" href="systemData_8hpp_source.html#l00218">m_particle_type_id</a>, <a class="el" href="systemData_8hpp_source.html#l00210">m_positions_locater_particles</a>, <a class="el" href="systemData_8hpp_source.html#l00206">m_positions_particles</a>, <a class="el" href="systemData_8hpp_source.html#l00181">m_psi_conv_quat_ang</a>, <a class="el" href="systemData_8hpp_source.html#l00178">m_rbm_conn</a>, <a class="el" href="systemData_8hpp_source.html#l00149">m_thread_pool</a>, and <a class="el" href="helper__eigenTensorConversion_8hpp_source.html#l00117">TensorCast()</a>.</p>
+<p class="reference">References <a class="el" href="systemData_8hpp_source.html#l00112">eMatrix()</a>, <a class="el" href="systemData_8hpp_source.html#l00186">m_C_conv_quat_part_grad</a>, <a class="el" href="systemData_8hpp_source.html#l00193">m_D_conv_quat_part</a>, <a class="el" href="systemData_8hpp_source.html#l00167">m_I3</a>, <a class="el" href="systemData_8hpp_source.html#l00174">m_kappa_tilde</a>, <a class="el" href="systemData_8hpp_source.html#l00172">m_levi_cevita</a>, <a class="el" href="systemData_8hpp_source.html#l00223">m_num_bodies</a>, <a class="el" href="systemData_8hpp_source.html#l00222">m_num_particles</a>, <a class="el" href="systemData_8hpp_source.html#l00147">m_num_physical_cores</a>, <a class="el" href="systemData_8hpp_source.html#l00218">m_particle_type_id</a>, <a class="el" href="systemData_8hpp_source.html#l00210">m_positions_locater_particles</a>, <a class="el" href="systemData_8hpp_source.html#l00206">m_positions_particles</a>, <a class="el" href="systemData_8hpp_source.html#l00181">m_psi_conv_quat_ang</a>, <a class="el" href="systemData_8hpp_source.html#l00178">m_rbm_conn</a>, <a class="el" href="systemData_8hpp_source.html#l00149">m_thread_pool</a>, and <a class="el" href="helper__eigenTensorConversion_8hpp_source.html#l00117">TensorCast()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="systemData_8cpp_source.html#l00106">updateConstraints()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="systemData_8cpp_source.html#l00106">update()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1292,7 +1288,7 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_aca5c01655d711e9088b3f1e9d7578612_icgraph.svg" width="686" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_aca5c01655d711e9088b3f1e9d7578612_icgraph.svg" width="618" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1361,11 +1357,11 @@ Here is the caller graph for this function:</div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="systemData_8hpp_source.html#l00161">m_Udwadia_A</a>, and <a class="el" href="systemData_8hpp_source.html#l00163">m_Udwadia_b</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="systemData_8cpp_source.html#l00106">updateConstraints()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="systemData_8cpp_source.html#l00106">update()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_aa797226f69baaa83c559c481dee8381b_icgraph.svg" width="678" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_aa797226f69baaa83c559c481dee8381b_icgraph.svg" width="610" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1422,7 +1418,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_a19a83a255eb6f1de4bcfe2ea8e31ffa9_icgraph.svg" width="879" height="118"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_a19a83a255eb6f1de4bcfe2ea8e31ffa9_icgraph.svg" width="811" height="118"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1479,7 +1475,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_a0a77c933b764fb36c64ec5e66011482c_icgraph.svg" width="918" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_a0a77c933b764fb36c64ec5e66011482c_icgraph.svg" width="850" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -3641,8 +3637,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="ac0d38589025afba7256412472b506ee3" name="ac0d38589025afba7256412472b506ee3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac0d38589025afba7256412472b506ee3">&#9670;&nbsp;</a></span>tensI()</h2>
+<a id="a9fc76ce6f34790583666fc50ca304ed4" name="a9fc76ce6f34790583666fc50ca304ed4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fc76ce6f34790583666fc50ca304ed4">&#9670;&nbsp;</a></span>tensI3()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3651,7 +3647,7 @@ Here is the call graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const Eigen::TensorFixedSize&lt; double, Eigen::Sizes&lt; 3, 3 &gt; &gt; &amp; systemData::tensI </td>
+          <td class="memname">const Eigen::TensorFixedSize&lt; double, Eigen::Sizes&lt; 3, 3 &gt; &gt; &amp; systemData::tensI3 </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -3666,11 +3662,50 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="systemData_8hpp_source.html#l00611">611</a> of file <a class="el" href="systemData_8hpp_source.html">systemData.hpp</a>.</p>
 <div class="fragment"><div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>    {</div>
-<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classsystemData.html#a3a438aa0e51f4cf26bc7a8e859eef7a8">m_tens_I</a>;</div>
+<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classsystemData.html#a630d9edf800b4dcfba13bfa7f9b395c7">m_tens_I3</a>;</div>
 <div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>    }</div>
-<div class="ttc" id="aclasssystemData_html_a3a438aa0e51f4cf26bc7a8e859eef7a8"><div class="ttname"><a href="classsystemData.html#a3a438aa0e51f4cf26bc7a8e859eef7a8">systemData::m_tens_I</a></div><div class="ttdeci">const Eigen::TensorFixedSize&lt; double, Eigen::Sizes&lt; 3, 3 &gt; &gt; m_tens_I</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8hpp_source.html#l00168">systemData.hpp:168</a></div></div>
+<div class="ttc" id="aclasssystemData_html_a630d9edf800b4dcfba13bfa7f9b395c7"><div class="ttname"><a href="classsystemData.html#a630d9edf800b4dcfba13bfa7f9b395c7">systemData::m_tens_I3</a></div><div class="ttdeci">const Eigen::TensorFixedSize&lt; double, Eigen::Sizes&lt; 3, 3 &gt; &gt; m_tens_I3</div><div class="ttdef"><b>Definition:</b> <a href="systemData_8hpp_source.html#l00168">systemData.hpp:168</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="systemData_8hpp_source.html#l00168">m_tens_I</a>.</p>
+<p class="reference">References <a class="el" href="systemData_8hpp_source.html#l00168">m_tens_I3</a>.</p>
+
+</div>
+</div>
+<a id="af8b45529ed83e00cf9c2848b0a03b5e0" name="af8b45529ed83e00cf9c2848b0a03b5e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8b45529ed83e00cf9c2848b0a03b5e0">&#9670;&nbsp;</a></span>i3()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const Eigen::Matrix3d &amp; systemData::i3 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="systemData_8hpp_source.html#l00617">617</a> of file <a class="el" href="systemData_8hpp_source.html">systemData.hpp</a>.</p>
+<div class="fragment"><div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>    {</div>
+<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classsystemData.html#af383230f495aac789b75bd0d1218b156">m_I3</a>;</div>
+<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>    }</div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="systemData_8hpp_source.html#l00167">m_I3</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="systemData_8cpp_source.html#l00257">rigidBodyMotionTensors()</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsystemData_af8b45529ed83e00cf9c2848b0a03b5e0_icgraph.svg" width="778" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 
 </div>
 </div>
@@ -4131,8 +4166,8 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a393327dfc91c092d965f40fd6273f939" name="a393327dfc91c092d965f40fd6273f939"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a393327dfc91c092d965f40fd6273f939">&#9670;&nbsp;</a></span>m_I</h2>
+<a id="af383230f495aac789b75bd0d1218b156" name="af383230f495aac789b75bd0d1218b156"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af383230f495aac789b75bd0d1218b156">&#9670;&nbsp;</a></span>m_I3</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -4141,7 +4176,7 @@ Here is the call graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const Eigen::Matrix3d systemData::m_I = Eigen::Matrix3d::Identity(3, 3)</td>
+          <td class="memname">const Eigen::Matrix3d systemData::m_I3 = Eigen::Matrix3d::Identity(3, 3)</td>
         </tr>
       </table>
   </td>
@@ -4155,12 +4190,12 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="systemData_8hpp_source.html#l00167">167</a> of file <a class="el" href="systemData_8hpp_source.html">systemData.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="systemData_8cpp_source.html#l00316">gradientChangeOfVariableTensors()</a>, and <a class="el" href="systemData_8cpp_source.html#l00257">rigidBodyMotionTensors()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="systemData_8cpp_source.html#l00316">gradientChangeOfVariableTensors()</a>, <a class="el" href="systemData_8hpp_source.html#l00617">i3()</a>, and <a class="el" href="systemData_8cpp_source.html#l00257">rigidBodyMotionTensors()</a>.</p>
 
 </div>
 </div>
-<a id="a3a438aa0e51f4cf26bc7a8e859eef7a8" name="a3a438aa0e51f4cf26bc7a8e859eef7a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a438aa0e51f4cf26bc7a8e859eef7a8">&#9670;&nbsp;</a></span>m_tens_I</h2>
+<a id="a630d9edf800b4dcfba13bfa7f9b395c7" name="a630d9edf800b4dcfba13bfa7f9b395c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a630d9edf800b4dcfba13bfa7f9b395c7">&#9670;&nbsp;</a></span>m_tens_I3</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -4169,7 +4204,7 @@ Here is the call graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const Eigen::TensorFixedSize&lt;double, Eigen::Sizes&lt;3, 3&gt; &gt; systemData::m_tens_I = <a class="el" href="helper__eigenTensorConversion_8hpp.html#ab9ff7d7e79406cc19764e9753bcacafd">TensorCast</a>(<a class="el" href="classsystemData.html#a393327dfc91c092d965f40fd6273f939">m_I</a>)</td>
+          <td class="memname">const Eigen::TensorFixedSize&lt;double, Eigen::Sizes&lt;3, 3&gt; &gt; systemData::m_tens_I3 = <a class="el" href="helper__eigenTensorConversion_8hpp.html#ab9ff7d7e79406cc19764e9753bcacafd">TensorCast</a>(<a class="el" href="classsystemData.html#af383230f495aac789b75bd0d1218b156">m_I3</a>)</td>
         </tr>
       </table>
   </td>
@@ -4181,7 +4216,7 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="systemData_8hpp_source.html#l00168">168</a> of file <a class="el" href="systemData_8hpp_source.html">systemData.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="systemData_8hpp_source.html#l00611">tensI()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="systemData_8hpp_source.html#l00611">tensI3()</a>.</p>
 
 </div>
 </div>
@@ -5199,7 +5234,7 @@ Here is the call graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="classsystemData.html">systemData</a></li>
-    <li class="footer">Generated on Wed Oct 13 2021 20:51:42 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Wed Oct 13 2021 21:38:49 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

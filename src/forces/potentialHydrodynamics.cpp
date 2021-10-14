@@ -106,14 +106,8 @@ potentialHydrodynamics::update()
 
     calcAddedMass();
     calcAddedMassGrad();
-    calcHydroTensors();
+    calcTotalMass();
 
-    calcHydroForces();
-}
-
-void
-potentialHydrodynamics::updateForcesOnly()
-{
     calcHydroForces();
 }
 
@@ -163,7 +157,7 @@ potentialHydrodynamics::calcAddedMass()
         // Full matrix elements for M^{(1)}_{ij} (NOTE: missing factor of 1/2)
         Eigen::Matrix3d Mij = r_ij * r_ij.transpose(); //[1]; Outer product of \bm{r} \bm{r}
         Mij *= M1_c1;
-        Mij.noalias() += M1_c2 * m_I3;
+        Mij.noalias() += M1_c2 * m_system->i3();
 
         // Output added mass element (symmetry of mass matrix)
         m_M_added.block<3, 3>(i_part, j_part).noalias() = Mij;
@@ -211,7 +205,7 @@ potentialHydrodynamics::calcAddedMassGrad()
 
         // outer products (I_{i j} r_{k}) and permutations
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_ij_r_k =
-            gradM1_c1 * m_system->tensI().contract(TensorCast(r_ij), empty_index_list);
+            gradM1_c1 * m_system->tensI3().contract(TensorCast(r_ij), empty_index_list);
         // shuffle all dimensions to the right by 1: (i, j, k) --> (k, i, j), (2, 0, 1)
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_jk_r_i = delta_ij_r_k.shuffle(shuffle_one_right);
         // shuffle all dimensions to the left by 1: (i, j, k) --> (k, i, j), (1, 2, 0)
@@ -246,7 +240,7 @@ potentialHydrodynamics::calcAddedMassGrad()
 }
 
 void
-potentialHydrodynamics::calcHydroTensors()
+potentialHydrodynamics::calcTotalMass()
 {
     // total mass
     m_M_total.noalias() = m_M_intrinsic;

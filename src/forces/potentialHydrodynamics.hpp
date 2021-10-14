@@ -38,36 +38,79 @@ class systemData;
 class potentialHydrodynamics
 {
   public:
-    potentialHydrodynamics(std::shared_ptr<systemData> sys);
+    /**
+     * @brief Construct a new potential hydrodynamics object
+     *
+     * @param sys systemData class to gather data from
+     */
+    explicit potentialHydrodynamics(std::shared_ptr<systemData> sys);
 
+    /**
+     * @brief Destroy the potential Hydrodynamics object
+     *
+     */
     ~potentialHydrodynamics();
 
     /**
-     * @brief Updates all hydrody
+     * @brief Updates all hydrodynamic quantities at current configuration (data from `systemData`)
      *
      */
     void
     update();
 
-    void
-    updateForcesOnly();
-
   private:
+    /**
+     * @brief Calculates `m_r_mag_ab` and `m_r_ab` at current configuration
+     *
+     * @details Configuration specified in `systemData` class
+     *
+     */
     void
     calcParticleDistances();
 
-    void
-    calcHydroTensors();
-
-    void
-    calcHydroForces();
-
+    /**
+     * @brief Calculates `m_M_added`
+     *
+     * @details Must call `calcParticleDistances()` before.
+     * Configuration specified in `systemData` class.
+     *
+     */
     void
     calcAddedMass();
 
+    /**
+     * @brief Calculates `m_M_added`
+     *
+     * @details Must call `calcAddedMass()` before to ensure added mass is up-to-date.
+     *
+     */
+    void
+    calcTotalMass();
+
+    /**
+     * @brief Calculates `m_M_added`
+     *
+     * @details Must call `calcParticleDistances()` before.
+     * Configuration specified in `systemData` class
+     *
+     */
     void
     calcAddedMassGrad();
 
+    /**
+     * @brief Calculates `m_F_hydro` and `m_F_hydroNoInertia`
+     *
+     * @details Must call `calcTotalMass()` and `calcAddedMassGrad()` before.
+     * Configuration specified in `systemData` class
+     *
+     */
+    void
+    calcHydroForces();
+
+    /**
+     * @brief
+     *
+     */
     void
     calcBodyTensors();
 
@@ -79,10 +122,10 @@ class potentialHydrodynamics
     const std::string m_logName{"potentialHydrodynamics"}; ///< filename of logfile for spdlog to write to
 
     // For-loop variables
-    int m_num_pair_inter{-1}; ///< = s. Number of pairwise interactions to count: @f$s = 1/2 N (N - 1) @f$
+    int m_num_pair_inter{-1}; ///< = s. Number of pairwise interactions to count: @f$s = 1/2 \, N \, (N - 1) @f$
 
     // tensor variables
-    int m_3N{-1}; ///< length of tensor quantities @f$ 3 N @f$
+    int m_3N{-1}; ///< length of tensor quantities @f$ 3 \, N @f$
 
     // Distance between particle pairs
     Eigen::VectorXd m_alphaVec; ///< \[s x 1\] first particle number in pairwise interactions

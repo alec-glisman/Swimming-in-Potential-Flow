@@ -16,20 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script type="text/javascript">
-window.MathJax = {
-  options: {
-    ignoreHtmlClass: 'tex2jax_ignore',
-    processHtmlClass: 'tex2jax_process'
-  },
-  tex: {
-    macros: {},
-    packages: ['base','configmacros','TeX/ams','TeX/AMSmath','TeX/AMSsymbols','TeX/bm','TeX/bbm','TeX/dsfont','TeX/mathrsfs','TeX/upgreek']
-  }
-};
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "TeX/ams.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js", "TeX/bm.js", "TeX/bbm.js", "TeX/dsfont.js", "TeX/mathrsfs.js", "TeX/upgreek.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
 </script>
-<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/es5/tex-chtml.js"></script>
+<script type="text/javascript" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -103,7 +96,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="contents">
 <div class="textblock"><p ><a class="anchor" id="md_README"></a> Study dynamics of inertial active matter in potential flow (irrotational, incompressible).</p>
 <p >Author: Alec Glisman</p>
-<h1><a class="anchor" id="autotoc_md6"></a>
+<h1><a class="anchor" id="autotoc_md5"></a>
 Software tested</h1>
 <ul>
 <li>ZSH &gt;= v5.8</li>
@@ -137,13 +130,13 @@ Data I/O</h1>
 <p >All data is input and output from simulation using the <a href="https://gsd.readthedocs.io/en/stable/index.html">HOOMD GSD format</a>. The <a href="https://gsd.readthedocs.io/en/stable/python-module-gsd.fl.html">schema</a> is well-documented.</p>
 <p >I will be making a few modifications and make extensive use of the <code>log</code> section of the schema to save data I desire. Many variables are stored as floats, but I output a number of variables as doubles in the logs section for accuracy in further computations.</p>
 <p >Frame 0 is created using a Python script and passed into the C++ simulation. The simulation then updates parameters (such as kinematics), and outputs the "true" initial frame as Frame 1. For this reason, there could be issues when loading data from frame 0 and any data that is not an input parameter should not be used for further work.</p>
-<h1><a class="anchor" id="autotoc_md10"></a>
+<h1><a class="anchor" id="autotoc_md11"></a>
 Modifications for other systems</h1>
 <p >The simulation system can be easily adapted for other configurations and constraints. The code that must be changed inside the C++ framework is tagged with comments of the form <code>// REVIEW[epic=Change,order=5]: Change constraint linear system for each system</code>. The relevant class is the <code><a class="el" href="classrungeKutta4.html">rungeKutta4</a></code> integration class. Of course, separate Python scripts for GSD initialization and numerical analysis must also be generated.</p>
-<h1><a class="anchor" id="autotoc_md12"></a>
+<h1><a class="anchor" id="autotoc_md13"></a>
 External dependencies</h1>
 <p >Further information found in <code>requirements</code> directory readme.</p>
-<h2><a class="anchor" id="autotoc_md13"></a>
+<h2><a class="anchor" id="autotoc_md15"></a>
 Must install separately</h2>
 <ul>
 <li><a href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html#gs.7owc4e">Intel MKL</a> (oneAPI v2021.1.1): Optimized mathematical instructions</li>
@@ -152,7 +145,7 @@ Must install separately</h2>
 <li><a href="https://github.com/gabime/spdlog">spdlog</a> (v1.9.1): Logging</li>
 <li><a href="https://github.com/catchorg/Catch2">Catch2</a> (v2.13.6): Unit testing</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md14"></a>
+<h2><a class="anchor" id="autotoc_md16"></a>
 Integrated into project</h2>
 <ul>
 <li><a href="https://github.com/glotzerlab/gsd">gsd</a> (v2.4.2): Simulation data output </li>
@@ -163,7 +156,7 @@ Integrated into project</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Oct 13 2021 20:51:42 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Wed Oct 13 2021 21:38:49 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

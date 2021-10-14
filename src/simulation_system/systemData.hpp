@@ -71,7 +71,7 @@ class systemData : public std::enable_shared_from_this<systemData>
      * @param time (dimensionless) simulation time to update parameters.
      */
     void
-    updateConstraints(double time);
+    update(double time);
 
   private:
     void
@@ -164,8 +164,8 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     /* ANCHOR: Tensors set in constructor */
     // "identity" tensors
-    const Eigen::Matrix3d m_I = Eigen::Matrix3d::Identity(3, 3); ///< \[3 x 3\] 2nd order identity tensor
-    const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> m_tens_I = TensorCast(m_I);
+    const Eigen::Matrix3d m_I3 = Eigen::Matrix3d::Identity(3, 3); ///< \[3 x 3\] 2nd order identity tensor
+    const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> m_tens_I3 = TensorCast(m_I3);
 
     // general-use tensors
     /// \[3 x 3 x 3\] (skew-symmetric) 3rd order identity tensor
@@ -608,9 +608,15 @@ class systemData : public std::enable_shared_from_this<systemData>
     }
 
     const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>>&
-    tensI() const
+    tensI3() const
     {
-        return m_tens_I;
+        return m_tens_I3;
+    }
+
+    const Eigen::Matrix3d&
+    i3() const
+    {
+        return m_I3;
     }
     /* !SECTION */
 };

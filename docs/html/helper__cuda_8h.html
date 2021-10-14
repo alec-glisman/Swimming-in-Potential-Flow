@@ -16,20 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script type="text/javascript">
-window.MathJax = {
-  options: {
-    ignoreHtmlClass: 'tex2jax_ignore',
-    processHtmlClass: 'tex2jax_process'
-  },
-  tex: {
-    macros: {},
-    packages: ['base','configmacros','TeX/ams','TeX/AMSmath','TeX/AMSsymbols','TeX/bm','TeX/bbm','TeX/dsfont','TeX/mathrsfs','TeX/upgreek']
-  }
-};
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "TeX/ams.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js", "TeX/bm.js", "TeX/bbm.js", "TeX/dsfont.js", "TeX/mathrsfs.js", "TeX/upgreek.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
 </script>
-<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/es5/tex-chtml.js"></script>
+<script type="text/javascript" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -440,7 +433,7 @@ template&lt;typename T &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_0c26bd22f254302c4dfbaa95bf527e9d.html">helpers</a></li><li class="navelem"><a class="el" href="dir_d54f985c9a00fdf32f5208dabda08809.html">cuda</a></li><li class="navelem"><a class="el" href="helper__cuda_8h.html">helper_cuda.h</a></li>
-    <li class="footer">Generated on Wed Oct 13 2021 20:51:41 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Wed Oct 13 2021 21:38:49 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

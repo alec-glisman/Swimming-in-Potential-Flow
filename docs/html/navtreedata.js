@@ -26,25 +26,25 @@ var NAVTREE =
 [
   [ "Bodies in Potential Flow", "index.html", [
     [ "README: Bodies in Potential Flow", "index.html", [
-      [ "Software tested", "index.html#autotoc_md6", null ],
+      [ "Software tested", "index.html#autotoc_md5", null ],
       [ "Docker integration", "index.html#autotoc_md7", null ],
       [ "Project structure: links to relevant readme files", "index.html#autotoc_md8", null ],
       [ "Data I/O", "index.html#autotoc_md9", null ],
-      [ "Modifications for other systems", "index.html#autotoc_md10", null ],
-      [ "External dependencies", "index.html#autotoc_md12", [
-        [ "Must install separately", "index.html#autotoc_md13", null ],
-        [ "Integrated into project", "index.html#autotoc_md14", null ]
+      [ "Modifications for other systems", "index.html#autotoc_md11", null ],
+      [ "External dependencies", "index.html#autotoc_md13", [
+        [ "Must install separately", "index.html#autotoc_md15", null ],
+        [ "Integrated into project", "index.html#autotoc_md16", null ]
       ] ]
     ] ],
     [ "Directory: python", "md_python_README.html", [
-      [ "Subdirectory: analysis", "md_python_README.html#autotoc_md11", null ],
-      [ "Subdirectory: initial_configurations", "md_python_README.html#autotoc_md15", null ],
-      [ "Files", "md_python_README.html#autotoc_md16", null ]
+      [ "Subdirectory: analysis", "md_python_README.html#autotoc_md10", null ],
+      [ "Subdirectory: initial_configurations", "md_python_README.html#autotoc_md12", null ],
+      [ "Files", "md_python_README.html#autotoc_md14", null ]
     ] ],
     [ "Directory: requirements", "md_requirements_README.html", [
       [ "Directory: C++", "md_requirements_README.html#autotoc_md3", null ],
       [ "Directory: Perl", "md_requirements_README.html#autotoc_md4", null ],
-      [ "Directory: Python", "md_requirements_README.html#autotoc_md5", null ]
+      [ "Directory: Python", "md_requirements_README.html#autotoc_md6", null ]
     ] ],
     [ "Subdirectory: CUDA helpers", "md_src_helpers_cuda_README.html", null ],
     [ "Directory: src", "md_src_README.html", [

@@ -99,11 +99,11 @@ systemData::initializeData()
 
     // initialize constraints
     spdlog::get(m_logName)->info("Initializing constraints");
-    updateConstraints(m_t);
+    update(m_t);
 }
 
 void
-systemData::updateConstraints(double time)
+systemData::update(double time)
 {
     // NOTE: Ordering of following functions does not matter
     velocitiesArticulation(time);
@@ -278,7 +278,7 @@ systemData::rigidBodyMotionTensors()
         crossProdMat(n_dr, n_dr_cross);
 
         // rigid body motion connectivity tensor elements
-        m_rbm_conn.block<3, 3>(j6, i3).noalias()     = m_I;        // translation-translation couple
+        m_rbm_conn.block<3, 3>(j6, i3).noalias()     = m_I3;       // translation-translation couple
         m_rbm_conn.block<3, 3>(j6 + 3, i3).noalias() = n_dr_cross; // translation-rotation couple
 
         if (i == 0)
@@ -304,7 +304,7 @@ systemData::rigidBodyMotionTensors()
         eMatrix(m_positions_bodies.segment<4>(k7 + 3), E_theta_k);
 
         // matrix elements of Psi
-        m_psi_conv_quat_ang.block<3, 3>(k6, k7).noalias()         = m_I; // no conversion from linear components
+        m_psi_conv_quat_ang.block<3, 3>(k6, k7).noalias()         = m_I3; // no conversion from linear components
         m_psi_conv_quat_ang.block<3, 4>(k6 + 3, k7 + 3).noalias() = 2 * E_theta_k; // angular-quaternion velocity couple
     }
 
@@ -360,7 +360,7 @@ systemData::gradientChangeOfVariableTensors()
         Eigen::Matrix<double, 4, 3> P_j_tilde = P_j_tilde_hold.transpose();
 
         // change of variables gradient tensor elements
-        m_D_conv_quat_part.block<3, 3>(7 * body_num, j3).noalias() = -m_I; // translation-translation couple
+        m_D_conv_quat_part.block<3, 3>(7 * body_num, j3).noalias() = -m_I3; // translation-translation couple
         m_D_conv_quat_part.block<3, 3>(7 * body_num + 4, j3).noalias() =
             twoE_body * P_j_tilde; // quaternion-rotation couple (first row is zero)
     }

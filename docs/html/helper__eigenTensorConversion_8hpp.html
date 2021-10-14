@@ -16,20 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script type="text/javascript">
-window.MathJax = {
-  options: {
-    ignoreHtmlClass: 'tex2jax_ignore',
-    processHtmlClass: 'tex2jax_process'
-  },
-  tex: {
-    macros: {},
-    packages: ['base','configmacros','TeX/ams','TeX/AMSmath','TeX/AMSsymbols','TeX/bm','TeX/bbm','TeX/dsfont','TeX/mathrsfs','TeX/upgreek']
-  }
-};
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "TeX/ams.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js", "TeX/bm.js", "TeX/bbm.js", "TeX/dsfont.js", "TeX/mathrsfs.js", "TeX/upgreek.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
 </script>
-<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/es5/tex-chtml.js"></script>
+<script type="text/javascript" async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -321,7 +314,7 @@ Eigen::Tensor&lt;double, 3&gt; my_rank3 = TensorCast(mymatrix, 2, 2, 4); // Cast
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="helper__eigenTensorConversion_8hpp_a2a7eca6b17fb874869047bd0b5f11b46_icgraph.svg" width="852" height="130"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="helper__eigenTensorConversion_8hpp_a2a7eca6b17fb874869047bd0b5f11b46_icgraph.svg" width="852" height="96"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -377,7 +370,7 @@ template&lt;typename T , typename sizeType , typename Device  = Eigen::DefaultDe
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="helper__eigenTensorConversion_8hpp_source.html#l00047">asEval()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="potentialHydrodynamics_8cpp_source.html#l00257">potentialHydrodynamics::calcHydroForces()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="potentialHydrodynamics_8cpp_source.html#l00251">potentialHydrodynamics::calcHydroForces()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -386,7 +379,7 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="helper__eigenTensorConversion_8hpp_a556d08b55a6ad7cd703b6db06194e5cf_icgraph.svg" width="740" height="118"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="helper__eigenTensorConversion_8hpp_a556d08b55a6ad7cd703b6db06194e5cf_icgraph.svg" width="740" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -564,11 +557,11 @@ template&lt;typename Derived , typename T , auto rank&gt; </div>
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>                                                                                       dims);</div>
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>}</div>
 </div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="potentialHydrodynamics_8cpp_source.html#l00181">potentialHydrodynamics::calcAddedMassGrad()</a>, <a class="el" href="potentialHydrodynamics_8cpp_source.html#l00257">potentialHydrodynamics::calcHydroForces()</a>, <a class="el" href="systemData_8cpp_source.html#l00316">systemData::gradientChangeOfVariableTensors()</a>, and <a class="el" href="helper__eigenTensorConversion_8hpp_source.html#l00137">TensorCast()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="potentialHydrodynamics_8cpp_source.html#l00175">potentialHydrodynamics::calcAddedMassGrad()</a>, <a class="el" href="potentialHydrodynamics_8cpp_source.html#l00251">potentialHydrodynamics::calcHydroForces()</a>, <a class="el" href="systemData_8cpp_source.html#l00316">systemData::gradientChangeOfVariableTensors()</a>, and <a class="el" href="helper__eigenTensorConversion_8hpp_source.html#l00137">TensorCast()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="helper__eigenTensorConversion_8hpp_a556fb613b733267c9404648bc66bd0bd_icgraph.svg" width="823" height="235"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="helper__eigenTensorConversion_8hpp_a556fb613b733267c9404648bc66bd0bd_icgraph.svg" width="779" height="235"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -822,7 +815,7 @@ Here is the call graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_0c26bd22f254302c4dfbaa95bf527e9d.html">helpers</a></li><li class="navelem"><a class="el" href="dir_c97fa64725d2a6b2113b48890ec20ac1.html">eigen</a></li><li class="navelem"><a class="el" href="helper__eigenTensorConversion_8hpp.html">helper_eigenTensorConversion.hpp</a></li>
-    <li class="footer">Generated on Wed Oct 13 2021 20:51:41 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
+    <li class="footer">Generated on Wed Oct 13 2021 21:38:49 for Bodies in Potential Flow by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

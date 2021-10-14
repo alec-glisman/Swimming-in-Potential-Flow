@@ -179,7 +179,7 @@ void
 rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double time)
 {
     m_potHydro->update();              // update hydrodynamic tensors and forces
-    m_system->updateConstraints(time); // update Udwadia linear system
+    m_system->update(time); // update Udwadia linear system
 
     udwadiaKalaba(acc); // solve for acceleration components
 }

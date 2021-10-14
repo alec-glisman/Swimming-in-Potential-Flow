@@ -1,7 +1,6 @@
 <map id="MatrixCast" name="MatrixCast">
-<area shape="rect" id="node1" title=" " alt="" coords="649,46,735,73"/>
-<area shape="rect" id="node2" href="$classpotentialHydrodynamics.html#a2b71af05a80cbe982c996d61b084695c" title=" " alt="" coords="437,39,601,80"/>
-<area shape="rect" id="node3" href="$classpotentialHydrodynamics.html#acce7436c3cc8b62fe54fa61da98554f6" title="Updates all hydrody." alt="" coords="225,5,389,47"/>
-<area shape="rect" id="node5" href="$classpotentialHydrodynamics.html#a44c1520f6b87f2260c8dcc3a903729df" title=" " alt="" coords="225,71,389,112"/>
-<area shape="rect" id="node4" href="$classpotentialHydrodynamics.html#ae93f12dc4a892a191d52bf4754d4d99c" title=" " alt="" coords="5,5,177,47"/>
+<area shape="rect" id="node1" title=" " alt="" coords="649,13,735,39"/>
+<area shape="rect" id="node2" href="$classpotentialHydrodynamics.html#a2b71af05a80cbe982c996d61b084695c" title="Calculates m_F_hydro and m_F_hydroNoInertia" alt="" coords="437,5,601,47"/>
+<area shape="rect" id="node3" href="$classpotentialHydrodynamics.html#acce7436c3cc8b62fe54fa61da98554f6" title="Updates all hydrodynamic quantities at current configuration (data from systemData)" alt="" coords="225,5,389,47"/>
+<area shape="rect" id="node4" href="$classpotentialHydrodynamics.html#ae93f12dc4a892a191d52bf4754d4d99c" title="Construct a new potential hydrodynamics object." alt="" coords="5,5,177,47"/>
 </map>
