@@ -26,25 +26,25 @@ var NAVTREE =
 [
   [ "Bodies in Potential Flow", "index.html", [
     [ "README: Bodies in Potential Flow", "index.html", [
-      [ "Software tested", "index.html#autotoc_md5", null ],
+      [ "Software tested", "index.html#autotoc_md6", null ],
       [ "Docker integration", "index.html#autotoc_md7", null ],
       [ "Project structure: links to relevant readme files", "index.html#autotoc_md8", null ],
       [ "Data I/O", "index.html#autotoc_md9", null ],
       [ "Modifications for other systems", "index.html#autotoc_md11", null ],
-      [ "External dependencies", "index.html#autotoc_md13", [
+      [ "External dependencies", "index.html#autotoc_md14", [
         [ "Must install separately", "index.html#autotoc_md15", null ],
         [ "Integrated into project", "index.html#autotoc_md16", null ]
       ] ]
     ] ],
     [ "Directory: python", "md_python_README.html", [
-      [ "Subdirectory: analysis", "md_python_README.html#autotoc_md10", null ],
-      [ "Subdirectory: initial_configurations", "md_python_README.html#autotoc_md12", null ],
-      [ "Files", "md_python_README.html#autotoc_md14", null ]
+      [ "Subdirectory: analysis", "md_python_README.html#autotoc_md3", null ],
+      [ "Subdirectory: initial_configurations", "md_python_README.html#autotoc_md4", null ],
+      [ "Files", "md_python_README.html#autotoc_md5", null ]
     ] ],
     [ "Directory: requirements", "md_requirements_README.html", [
-      [ "Directory: C++", "md_requirements_README.html#autotoc_md3", null ],
-      [ "Directory: Perl", "md_requirements_README.html#autotoc_md4", null ],
-      [ "Directory: Python", "md_requirements_README.html#autotoc_md6", null ]
+      [ "Directory: C++", "md_requirements_README.html#autotoc_md10", null ],
+      [ "Directory: Perl", "md_requirements_README.html#autotoc_md12", null ],
+      [ "Directory: Python", "md_requirements_README.html#autotoc_md13", null ]
     ] ],
     [ "Subdirectory: CUDA helpers", "md_src_helpers_cuda_README.html", null ],
     [ "Directory: src", "md_src_README.html", [
@@ -76,10 +76,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "GSDUtil_8cpp.html",
-"classpotentialHydrodynamics.html#a95ff00c159e80a807391892a99c75b5d",
-"exception_8h_source.html",
-"helper__math_8h.html#a62fcbb6894ddade365bc89f9128e6c9a",
-"md_src_README.html#autotoc_md34"
+"classpotentialHydrodynamics.html#a73544176c7a34737a0e6eb8e1d1ab387",
+"exception_8h.html#a994cf587529580a7865cdf9a7016514a",
+"helper__math_8h.html#a622e6d9f0fde597549dae79b03e6c7d2",
+"md_src_README.html#autotoc_md32"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

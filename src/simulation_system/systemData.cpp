@@ -90,13 +90,6 @@ systemData::initializeData()
     m_C_conv_quat_part_grad = Eigen::Tensor<double, 3>(3 * m_num_particles, 7 * m_num_bodies, 7 * m_num_bodies);
     m_C_conv_quat_part_grad.setZero();
 
-    m_N1 = Eigen::Tensor<double, 3>(3 * m_num_particles, 3 * m_num_particles, 7 * m_num_bodies);
-    m_N1.setZero();
-    m_N2 = Eigen::Tensor<double, 3>(7 * m_num_bodies, 3 * m_num_particles, 7 * m_num_bodies);
-    m_N2.setZero();
-    m_N3 = Eigen::Tensor<double, 3>(7 * m_num_bodies, 7 * m_num_bodies, 7 * m_num_bodies);
-    m_N3.setZero();
-
     // initialize constraints
     spdlog::get(m_logName)->info("Initializing constraints");
     update(m_t);

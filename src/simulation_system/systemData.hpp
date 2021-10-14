@@ -192,11 +192,6 @@ class systemData : public std::enable_shared_from_this<systemData>
     /// @f$ \boldsymbol{\beta} @f$ in written work)
     Eigen::MatrixXd m_D_conv_quat_part;
 
-    // linear combinations of gradient of rbm and C
-    Eigen::Tensor<double, 3> m_N1; ///< \[3N x 3N x 7M\] TODO
-    Eigen::Tensor<double, 3> m_N2; ///< \[7M x 3N x 7M\] TODO
-    Eigen::Tensor<double, 3> m_N3; ///< \[7M x 7M x 7M\] TODO
-
     /* ANCHOR: kinematic vectors */
     Eigen::VectorXd m_positions_bodies;     ///< \[7M x 1\] both linear and angular D.o.F.
     Eigen::VectorXd m_velocities_bodies;    ///< \[7M x 1\] both linear and angular D.o.F.

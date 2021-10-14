@@ -54,6 +54,15 @@ class potentialHydrodynamics
     /**
      * @brief Updates all hydrodynamic quantities at current configuration (data from `systemData`)
      *
+     * @details Functions must be called in a certain grouping.
+     * Functions within a group can be called in any order.
+     * Groups must be called in ascending order.
+     * (1) `calcParticleDistances()`.
+     * (2) `calcAddedMass()`, `calcAddedMassGrad()`.
+     * (3) `calcTotalMass()`.
+     * (4) `calcBodyTensors()`.
+     * (5) `calcHydroForces()`.
+     *
      */
     void
     update();
@@ -98,21 +107,23 @@ class potentialHydrodynamics
     calcAddedMassGrad();
 
     /**
+     * @brief Calculates \{`m_N1`, `m_N2`, `m_N3`, `m_M_tilde`, and `m_M_tilde_tilde`\}
+     *
+     * @details Must call `calcTotalMass()` and assumes `systemData` rigid body motion tensors are up to date.
+     *
+     */
+    void
+    calcBodyTensors(); // TODO
+
+    /**
      * @brief Calculates `m_F_hydro` and `m_F_hydroNoInertia`
      *
-     * @details Must call `calcTotalMass()` and `calcAddedMassGrad()` before.
-     * Configuration specified in `systemData` class
+     * @details Must call `calcBodyTensors()` before.
+     * Kinematics specified in `systemData` class.
      *
      */
     void
     calcHydroForces();
-
-    /**
-     * @brief
-     *
-     */
-    void
-    calcBodyTensors();
 
     // classes
     std::shared_ptr<systemData> m_system; ///< shared pointer reference to systemData class
@@ -137,18 +148,31 @@ class potentialHydrodynamics
     Eigen::MatrixXd m_I3N;      ///< \[3N x 3N\] identity matrix
     Eigen::MatrixXd m_c1_2_I3N; ///< \[3N x 3N\] 1/2 identity matrix
 
-    // hydrodynamic quantities
+    // Mass matrices
     Eigen::MatrixXd          m_M_added;      ///< \[3N x 3N\] added mass matrix
     Eigen::MatrixXd          m_M_intrinsic;  ///< \[3N x 3N\] intrinsic mass matrix
     Eigen::MatrixXd          m_M_total;      ///< \[3N x 3N\] total mass matrix
     Eigen::Tensor<double, 3> m_grad_M_added; ///< \[3N x 3N\] gradient of total mass matrix (only added mass components)
 
+    // Hydrodynamic forces
     Eigen::VectorXd m_F_hydro;          ///< \[3N x 1\] total hydrodynamic force
     Eigen::VectorXd m_F_hydroNoInertia; ///< \[3N x 1\] hydrodynamic force in absence of inertial term
 
     Eigen::VectorXd          m_t1_Inertia; ///< \[3N x 1\] inertial term in hydrodynamic force
     Eigen::Tensor<double, 1> m_t2_VelGrad; ///< \[3N x 1\] velocity gradient term in hydrodynamic force
     Eigen::Tensor<double, 1> m_t3_PosGrad; ///< \[3N x 1\] position gradient term in hydrodynamic force
+
+    // linear combinations of gradient of rbm and total mass matrix
+    Eigen::Tensor<double, 3> m_N1; ///< \[3N x 3N x 7M\] @f$ \nabla_{\xi} \, \boldsymbol{M} @f$ TODO
+    Eigen::Tensor<double, 3>
+        m_N2; ///< \[7M x 3N x 7M\] @f$ \nabla_{\xi} \, \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} @f$ TODO
+    Eigen::Tensor<double, 3> m_N3; ///< \[7M x 7M x 7M\] @f$ \nabla_{\xi} \, \boldsymbol{A}^{\mathrm{T}} \,
+                                   /// \boldsymbol{M} \, \boldsymbol{A} @f$ TODO
+
+    Eigen::Tensor<double, 2>
+        m_M_tilde; ///< \[7M x 3N\] @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} \, \boldsymbol{A} @f$ TODO
+    Eigen::Tensor<double, 2>
+        m_M_tilde_tilde; ///< \[7M x 7M\] @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} @f$ TODO
 
     // constants
     const double m_unitSphereVol{4.0 / 3.0 * M_PI}; ///< volume of a unit sphere

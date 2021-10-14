@@ -52,6 +52,18 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
     m_t3_PosGrad = Eigen::Tensor<double, 1>(m_3N);
     m_t3_PosGrad.setZero();
 
+    spdlog::get(m_logName)->info("Initializing tensors used in hydrodynamic force calculations.");
+    m_N1 =
+        Eigen::Tensor<double, 3>(3 * m_system->numParticles(), 3 * m_system->numParticles(), 7 * m_system->numBodies());
+    m_N1.setZero();
+    m_N2 = Eigen::Tensor<double, 3>(7 * m_system->numBodies(), 3 * m_system->numParticles(), 7 * m_system->numBodies());
+    m_N2.setZero();
+    m_N3 = Eigen::Tensor<double, 3>(7 * m_system->numBodies(), 7 * m_system->numBodies(), 7 * m_system->numBodies());
+    m_N3.setZero();
+
+    m_M_tilde       = Eigen::Tensor<double, 2>(7 * m_system->numBodies(), 3 * m_system->numParticles());
+    m_M_tilde_tilde = Eigen::Tensor<double, 2>(7 * m_system->numBodies(), 7 * m_system->numBodies());
+
     // Assign particle pair information
     spdlog::get(m_logName)->info("Initializing particle pair information vectors");
     m_alphaVec = Eigen::VectorXd::Zero(m_num_pair_inter);
@@ -106,7 +118,10 @@ potentialHydrodynamics::update()
 
     calcAddedMass();
     calcAddedMassGrad();
+
     calcTotalMass();
+
+    calcBodyTensors();
 
     calcHydroForces();
 }
@@ -242,9 +257,13 @@ potentialHydrodynamics::calcAddedMassGrad()
 void
 potentialHydrodynamics::calcTotalMass()
 {
-    // total mass
     m_M_total.noalias() = m_M_intrinsic;
     m_M_total.noalias() += m_M_added;
+}
+
+void
+potentialHydrodynamics::calcBodyTensors()
+{
 }
 
 void
