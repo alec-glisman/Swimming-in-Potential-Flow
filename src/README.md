@@ -1,12 +1,15 @@
 # Directory: src
 
-C++ code for the simulation.  
+C++ code for the simulation.
 
 ---
 
 ## Subdirectory: cuda_helpers
 
 Currently unused. Contains files that help to verify CUDA functions run and exit successfully.
+
+- These files come from the [NVIDIA cuda-samples repository](https://github.com/NVIDIA/cuda-samples)
+- Located in `Common` directory
 
 ---
 
