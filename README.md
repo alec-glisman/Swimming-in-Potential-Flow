@@ -4,15 +4,10 @@ Study dynamics of inertial active matter in potential flow (irrotational, incomp
 
 Author: Alec Glisman
 
-## Software tested
+## Code documentation
 
-- ZSH >= v5.8
-- Intel oneAPI >= v2021.1.1
-- CUDA >= v11.3
-- CMake >= v3.16.3
-- GCC >= v11.1.0
-- Python (Miniconda3) >= v3.9.5
-- Perl >= v5.30.0
+Code is documented using [Doxygen](https://www.doxygen.nl/index.html) and can be found in the [`docs`](docs) directory.
+Open the documentation locally via opening the [main index page](docs/html/index.html).
 
 ## Docker integration
 
@@ -53,21 +48,36 @@ Frame 0 is created using a Python script and passed into the C++ simulation.
 The simulation then updates parameters (such as kinematics), and outputs the "true" initial frame as Frame 1.
 For this reason, there could be issues when loading data from frame 0 and any data that is not an input parameter should not be used for further work.
 
-## Modifications for other systems
+## Modify repository for other potential flow systems
 
 The simulation system can be easily adapted for other configurations and constraints.
-The code that must be changed inside the C++ framework is tagged with comments of the form `// REVIEW[epic=Change,order=5]: Change constraint linear system for each system`.
-The relevant class is the `rungeKutta4` integration class.
+
+The code that must be changed inside the C++ framework is tagged with comments of the form `@review_swimmer` and are found in the Doxygen documentation page named "Altering Swimmer Design List".
+The relevant classes to modify are the [`systemData`](src/simulation_system/systemData.hpp) and [`GSDUtil`](src/data_io/GSDUtil.hpp).
+
 Of course, separate Python scripts for GSD initialization and numerical analysis must also be generated.
+These can be found in [`python/initial_configurations`](python/initial_configurations) and [`python/analysis`](python/analysis) directories, respectively.
 
 ## External dependencies
 
-Further information found in `requirements` directory readme.
+Further information found in [`requirements`](requirements/README.md) directory readme.
+
+### Software tested
+
+- ZSH >= v5.8
+- Intel oneAPI >= v2021.1.1
+- CUDA >= v11.3
+- CMake >= v3.16.3
+- GCC >= v11.1.0
+- Python (Miniconda3) >= v3.9.5
+- Perl >= v5.30.0
 
 ### Must install separately
 
-- [Intel MKL](https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html#gs.7owc4e) (oneAPI v2021.1.1): Optimized mathematical instructions
 - [Boost](https://www.boost.org/) (v1.71.0): All-purpose STL extension
+- [Intel MKL](https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html#gs.7owc4e) (oneAPI v2021.1.1): Optimized mathematical instructions
+- [OpenMP](https://www.openmp.org/) (4.5): Multi-platform shared-memory multiprocessing programming
+- [Intel TBB](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onetbb.html#gs.ds0y09) (oneAPI v2021.1.1): Parallel computing on multi-core processors
 - [Eigen3](https://gitlab.com/libeigen/eigen) (3.4.0): Linear algebra
 - [spdlog](https://github.com/gabime/spdlog) (v1.9.1): Logging
 - [Catch2](https://github.com/catchorg/Catch2) (v2.13.6): Unit testing
