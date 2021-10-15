@@ -69,7 +69,7 @@ var NAVTREE =
       [ "Subdirectory: Linux", "md_profile_README.html#autotoc_md40", null ],
       [ "Subdirectory: MacOS", "md_profile_README.html#autotoc_md41", null ]
     ] ],
-    [ "To-Do", "md_TODO.html", [
+    [ "Project Development Progress", "md_TODO.html", [
       [ "Get project running", "md_TODO.html#autotoc_md43", null ],
       [ "Updated hydrodynamics", "md_TODO.html#autotoc_md44", null ],
       [ "Tensor module optimization", "md_TODO.html#autotoc_md45", null ],
@@ -78,7 +78,7 @@ var NAVTREE =
       [ "Additional features", "md_TODO.html#autotoc_md48", null ]
     ] ],
     [ "Todo List", "todo.html", null ],
-    [ "Altering Swimmer Design", "review.html", null ],
+    [ "Altering Swimmer Design List", "review.html", null ],
     [ "File List", "files.html", "files" ],
     [ "Namespace List", "namespaces.html", "namespaces" ],
     [ "Class List", "annotated.html", "annotated" ]

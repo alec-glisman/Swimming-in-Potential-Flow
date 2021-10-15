@@ -10,5 +10,5 @@ var searchData=
   ['aseval_11',['asEval',['../helper__eigenTensorConversion_8hpp.html#a2a7eca6b17fb874869047bd0b5f11b46',1,'helper_eigenTensorConversion.hpp']]],
   ['ax_12',['ax',['../classplotStyling_1_1PlotStyling.html#ac14b6abd25ff6e8d932c52d36062a05e',1,'plotStyling::PlotStyling']]],
   ['axis_5flabel_5fsize_13',['axis_label_size',['../classplotStyling_1_1PlotStyling.html#a83d2b08f38901cbbe91285a3c65e55e8',1,'plotStyling::PlotStyling']]],
-  ['altering_20swimmer_20design_14',['Altering Swimmer Design',['../review.html',1,'']]]
+  ['altering_20swimmer_20design_20list_14',['Altering Swimmer Design List',['../review.html',1,'']]]
 ];
