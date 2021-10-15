@@ -16,7 +16,10 @@ engine::engine(std::shared_ptr<systemData> sys)
 
     // validate system loaded GSD data
     spdlog::get(m_logName)->info("Checking input systemData class loaded GSD data: {0}", m_system->gSDParsed());
-    assert(m_system->gSDParsed() == true && "GSD data not loaded before calling engine constructor");
+    if (m_system->gSDParsed() == false)
+    {
+        throw std::runtime_error("GSD data not loaded into systemData class before calling engine constructor.");
+    }
 
     // Initialize forces
     spdlog::get(m_logName)->info("Initializing potential hydrodynamics");
