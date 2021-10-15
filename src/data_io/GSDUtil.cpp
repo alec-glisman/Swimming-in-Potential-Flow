@@ -98,10 +98,6 @@ GSDUtil::checkGSDReturn()
 }
 
 /* NOTE:
- * Expected size is in units of bytes
- *     u_int8: 1
- *     float (np.single, np.float32): 4
- *     double (np.double, np.float64): 8
  */
 bool
 GSDUtil::readChunk(void* data, uint64_t frame, const char* name, size_t expected_size, unsigned int cur_n)

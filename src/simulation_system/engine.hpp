@@ -49,7 +49,7 @@ class engine
     /**
      * @brief Construct a new engine object
      *
-     * @param sys systemData class to collect data from. Must be fully initialized and have GSD data loaded.
+     * @param sys `systemData` class to collect data from. Must be fully initialized and have GSD data loaded.
      */
     explicit engine(std::shared_ptr<systemData> sys);
 

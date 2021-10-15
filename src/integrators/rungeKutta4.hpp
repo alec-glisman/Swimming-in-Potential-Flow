@@ -75,9 +75,9 @@ class rungeKutta4
     udwadiaKalaba(Eigen::VectorXd& acc);
 
     // classes
-    /// shared pointer reference to systemData class
+    /// shared pointer reference to `systemData` class
     std::shared_ptr<systemData> m_system;
-    /// shared pointer reference to potentialHydrodynamics class
+    /// shared pointer reference to `potentialHydrodynamics` class
     std::shared_ptr<potentialHydrodynamics> m_potHydro;
 
     // logging

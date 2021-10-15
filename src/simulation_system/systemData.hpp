@@ -197,10 +197,13 @@ class systemData : public std::enable_shared_from_this<systemData>
     std::string m_outputDir;
 
     // logging
-    std::string       m_logFile;
+    /// path of logfile for spdlog to write to
+    std::string m_logFile;
+    /// filename of logfile for spdlog to write to
     const std::string m_logName{"systemData"};
 
     // GSD data
+    /// shared pointer reference to `GSDUtil` class
     std::shared_ptr<GSDUtil>    m_gsdUtil;
     std::shared_ptr<gsd_handle> m_handle{new gsd_handle};
     /// defaults to GSD_SUCCESS return value
