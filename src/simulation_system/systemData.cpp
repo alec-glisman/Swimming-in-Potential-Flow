@@ -238,7 +238,7 @@ systemData::locaterPointLocations()
         {
             m_positions_bodies.segment<3>(7 * body_count).noalias() = m_positions_particles.segment<3>(3 * i);
 
-            body_count += 1;
+            body_count++;
         }
     }
     assert(body_count == m_num_bodies && "Incorrect number of bodies filled");
