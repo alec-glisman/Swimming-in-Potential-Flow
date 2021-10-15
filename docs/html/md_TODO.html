@@ -173,13 +173,19 @@ Updated hydrodynamics</h1>
 <li>[x] Update $\nabla_{R} \bm{M}$ calculation with $\bm{\beta}$</li>
 <li>[x] Make $\nabla_{R} \bm{M}$ 3rd order tensor</li>
 <li>[x] Compute the $\bm{N}^{(i)}$ 3rd order tensors and $\tilde{\mathbf{M}}$ 2nd order tensors</li>
-<li>[ ] Update how hydrodynamic forces are calculated</li>
+<li>[x] Update how hydrodynamic forces are calculated</li>
 </ul>
 </li>
 <li>Integration<ul>
 <li>[x] Check that udwadia method is being used</li>
-<li>[ ] Update linear constraint system such that the only constraint is the quaternion unit norm for each body.</li>
-<li>[ ] Update acceleration calculations (only use body DoF and also output particle DoF)</li>
+<li>[ ] Update linear constraint system such that the only constraint is the quaternion unit norm for each body (<a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a>).</li>
+<li>[ ] Put some sort of smart check so that Udwadia system updated only when not time-dependent</li>
+<li>[ ] Update integration kinematic calculations with only body components<ul>
+<li>[ ] Write function to convert body velocities to particle velocities</li>
+<li>[ ] Write function to convert body accelerations to particle velocities</li>
+<li>[ ] Write function to convert body positions to particle positions</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -188,9 +194,14 @@ Tensor module optimization</h1>
 <ul>
 <li>[x] move thread-pool and device to engine class</li>
 <li>[ ] Make sure all calls to TensorCast and MatrixCast have a device to compute on</li>
-<li>[ ] Optimize all contraction operations with a device</li>
+<li>[ ] Make sure all tensor calculations have a device to compute on</li>
+<li>[ ] Optimize all contraction operations with a device<ul>
+<li>[ ] Try using the default device to check performance</li>
+</ul>
+</li>
 <li>[ ] Add GPU offloading (#define EIGEN_USE_GPU)<ul>
 <li><a href="https://www.tensorflow.org/guide/create_op#compile_the_op_using_your_system_compiler_tensorflow_binary_installation">https://www.tensorflow.org/guide/create_op#compile_the_op_using_your_system_compiler_tensorflow_binary_installation</a></li>
+<li>See if this can be done with type doubles. I think I read that this only works with floats?</li>
 </ul>
 </li>
 <li>[ ] Remove all setters/getters in <a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a> that are unused</li>
@@ -229,7 +240,7 @@ Additional features</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Oct 14 2021 16:30:02 for Bodies in Potential Flow by
+    <li class="footer">Generated on Thu Oct 14 2021 22:02:09 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

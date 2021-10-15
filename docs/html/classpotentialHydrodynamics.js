@@ -41,7 +41,6 @@ var classpotentialHydrodynamics =
     [ "m_mat_M_tilde", "classpotentialHydrodynamics.html#af54caf0a07217c99a6c1f9649ad06bb0", null ],
     [ "m_unitSphereVol", "classpotentialHydrodynamics.html#a19cc46733ff4d0b6cabd09f1d1711254", null ],
     [ "m_c1_2", "classpotentialHydrodynamics.html#af1c0f76d1bd3851c442a293bf143414b", null ],
-    [ "m_c2_3", "classpotentialHydrodynamics.html#a3c84d1f8a60133411c89a76366513a2e", null ],
     [ "m_c3_2", "classpotentialHydrodynamics.html#a36800140bdcce5db5fc6d6bd95a8e186", null ],
     [ "m_c15_2", "classpotentialHydrodynamics.html#a4a13004a09f72a78d6e5bb3cae7f4371", null ]
 ];

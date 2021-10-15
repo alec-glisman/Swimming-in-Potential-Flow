@@ -1,7 +1,5 @@
 var NAVTREEINDEX4 =
 {
-"structgsd__handle.html#a501968a30f0b06f4b7cb69c115648627":[8,4,4],
-"structgsd__handle.html#a6b5215cbf0bdf8172f66166ef4fda7a8":[8,4,2],
 "structgsd__handle.html#a7ae49d668bbd61ce9d022acf5e5a9e76":[8,4,5],
 "structgsd__handle.html#a80988eb386cc7af15aa4c6329e9f6217":[8,4,6],
 "structgsd__handle.html#a9086141add0c7be99bcfed3bfd6dadac":[8,4,3],

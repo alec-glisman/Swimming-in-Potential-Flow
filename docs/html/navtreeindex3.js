@@ -1,7 +1,5 @@
 var NAVTREEINDEX3 =
 {
-"helper__math_8h.html#aa9cdc9f9c05b4fbdc7bb18b325de7e9a":[6,2,2,0,4,248],
-"helper__math_8h.html#aa9ee264473011054a33354d0045161ce":[6,2,2,0,4,274],
 "helper__math_8h.html#aabd11d734658e0ebf5de5740970bf82d":[6,2,2,0,4,102],
 "helper__math_8h.html#aabe4a4caf16da937cee9a5e2d2e6d123":[6,2,2,0,4,55],
 "helper__math_8h.html#aac50d350a85a37edc197928c3cccc657":[6,2,2,0,4,132],
@@ -160,8 +158,8 @@ var NAVTREEINDEX3 =
 "helper__timer_8h.html#ad20838a18f49298dae4d0ee29a0bb7a9":[6,2,2,0,8,2],
 "helper__timer_8h.html#afef340cd9aa6f9fc7ddf20e2525bb531":[6,2,2,0,8,6],
 "helper__timer_8h_source.html":[6,2,2,0,8],
-"index.html":[],
 "index.html":[0],
+"index.html":[],
 "index.html#autotoc_md1":[0,0],
 "index.html#autotoc_md2":[0,1],
 "index.html#autotoc_md3":[0,2],
@@ -207,8 +205,8 @@ var NAVTREEINDEX3 =
 "namespacecollinear-swimmer-wall-aggregate-analysis.html":[7,0],
 "namespacecollinear-swimmer-wall-configuration.html":[7,1],
 "namespacecollinear-swimmer-wall-individual-analysis.html":[7,2],
-"namespaceplotStyling.html":[7,4],
 "namespaceplotStyling.html":[8,0],
+"namespaceplotStyling.html":[7,4],
 "namespaces.html":[7],
 "namespacesimulationDataLoad.html":[7,5],
 "pages.html":[],
@@ -249,5 +247,7 @@ var NAVTREEINDEX3 =
 "structgsd__handle.html#a144dc0976a1fe2f895423495689daea5":[8,4,8],
 "structgsd__handle.html#a17f63ed60cc1f9e456bf2d5ce301ecf8":[8,4,11],
 "structgsd__handle.html#a37ddf6d53fc8c4f3eff247508fcc814b":[8,4,10],
-"structgsd__handle.html#a38e4bf4d587e525904d615ce49352592":[8,4,0]
+"structgsd__handle.html#a38e4bf4d587e525904d615ce49352592":[8,4,0],
+"structgsd__handle.html#a501968a30f0b06f4b7cb69c115648627":[8,4,4],
+"structgsd__handle.html#a6b5215cbf0bdf8172f66166ef4fda7a8":[8,4,2]
 };

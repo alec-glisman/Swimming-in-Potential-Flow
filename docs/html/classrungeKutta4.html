@@ -101,22 +101,26 @@ $(document).ready(function(){initNavTree('classrungeKutta4.html',''); initResiza
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00035">35</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
+<div class="textblock"><p>Standard Runge-Kutta 4th order integration. </p>
+<p>Integrates both velocity and positional degrees of freedom simultaneously from known acceleration components. Orientational components are handled with quaterions and the Udwadia-Kalaba constrained Lagrangian Dynamics formalism is used to ensure unitary norms of each quaternion. The true D.o.F. integrated are those of the body components and individual particle components are calculated via the rigid body motion connectivity tensors. </p>
+
+<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00047">47</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for rungeKutta4:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classrungeKutta4__coll__graph.svg" width="1895" height="3634"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classrungeKutta4__coll__graph.svg" width="1895" height="3619"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a7d08ac0517a4f5f9c533e2e06359e5b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrungeKutta4.html#a7d08ac0517a4f5f9c533e2e06359e5b2">rungeKutta4</a> (std::shared_ptr&lt; <a class="el" href="classsystemData.html">systemData</a> &gt; sys, std::shared_ptr&lt; <a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a> &gt; hydro)</td></tr>
+<tr class="memdesc:a7d08ac0517a4f5f9c533e2e06359e5b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new runge Kutta4 object.  <a href="classrungeKutta4.html#a7d08ac0517a4f5f9c533e2e06359e5b2">More...</a><br /></td></tr>
 <tr class="separator:a7d08ac0517a4f5f9c533e2e06359e5b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0dd2d5886f2a98d4dbc4427ebaa82c9c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrungeKutta4.html#a0dd2d5886f2a98d4dbc4427ebaa82c9c">~rungeKutta4</a> ()</td></tr>
+<tr class="memdesc:a0dd2d5886f2a98d4dbc4427ebaa82c9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the runge Kutta4 object.  <a href="classrungeKutta4.html#a0dd2d5886f2a98d4dbc4427ebaa82c9c">More...</a><br /></td></tr>
 <tr class="separator:a0dd2d5886f2a98d4dbc4427ebaa82c9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a82b9babd1713ed331e4750bb0de5bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrungeKutta4.html#a1a82b9babd1713ed331e4750bb0de5bf">integrate</a> (Eigen::ThreadPoolDevice &amp;device)</td></tr>
 <tr class="separator:a1a82b9babd1713ed331e4750bb0de5bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,25 +137,32 @@ Private Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a24ee2a7674db9afb4f3d6e91a972fa5a"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classsystemData.html">systemData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrungeKutta4.html#a24ee2a7674db9afb4f3d6e91a972fa5a">m_system</a></td></tr>
+<tr class="memdesc:a24ee2a7674db9afb4f3d6e91a972fa5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">shared pointer reference to <a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a> class  <a href="classrungeKutta4.html#a24ee2a7674db9afb4f3d6e91a972fa5a">More...</a><br /></td></tr>
 <tr class="separator:a24ee2a7674db9afb4f3d6e91a972fa5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a38cfec1cedaf31ce325ff367af4eea1d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrungeKutta4.html#a38cfec1cedaf31ce325ff367af4eea1d">m_potHydro</a></td></tr>
+<tr class="memdesc:a38cfec1cedaf31ce325ff367af4eea1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">shared pointer reference to <a class="el" href="classpotentialHydrodynamics.html" title="Computes hydrodynamic tensors (mass, forces) on a finite number of spheres in potential flow.">potentialHydrodynamics</a> class  <a href="classrungeKutta4.html#a38cfec1cedaf31ce325ff367af4eea1d">More...</a><br /></td></tr>
 <tr class="separator:a38cfec1cedaf31ce325ff367af4eea1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf75c3e195c4e491189c91d0b24d4931"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrungeKutta4.html#adf75c3e195c4e491189c91d0b24d4931">m_logFile</a></td></tr>
+<tr class="memdesc:adf75c3e195c4e491189c91d0b24d4931"><td class="mdescLeft">&#160;</td><td class="mdescRight">path of logfile for spdlog to write to  <a href="classrungeKutta4.html#adf75c3e195c4e491189c91d0b24d4931">More...</a><br /></td></tr>
 <tr class="separator:adf75c3e195c4e491189c91d0b24d4931"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3a62c9309b40e195bd0ce1997d9444a"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrungeKutta4.html#ae3a62c9309b40e195bd0ce1997d9444a">m_logName</a> {&quot;rungeKutta4&quot;}</td></tr>
+<tr class="memdesc:ae3a62c9309b40e195bd0ce1997d9444a"><td class="mdescLeft">&#160;</td><td class="mdescRight">filename of logfile for spdlog to write to  <a href="classrungeKutta4.html#ae3a62c9309b40e195bd0ce1997d9444a">More...</a><br /></td></tr>
 <tr class="separator:ae3a62c9309b40e195bd0ce1997d9444a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa34bc59a36e672214e03e1b56d204966"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrungeKutta4.html#aa34bc59a36e672214e03e1b56d204966">m_dt</a> {-1.0}</td></tr>
+<tr class="memdesc:aa34bc59a36e672214e03e1b56d204966"><td class="mdescLeft">&#160;</td><td class="mdescRight">(dimensional) integrator finite time step  <a href="classrungeKutta4.html#aa34bc59a36e672214e03e1b56d204966">More...</a><br /></td></tr>
 <tr class="separator:aa34bc59a36e672214e03e1b56d204966"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78e1264f47eeaff22b4897e2dd62606b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrungeKutta4.html#a78e1264f47eeaff22b4897e2dd62606b">m_c1_2_dt</a> {-1.0}</td></tr>
+<tr class="memdesc:a78e1264f47eeaff22b4897e2dd62606b"><td class="mdescLeft">&#160;</td><td class="mdescRight">(dimensional) 1/2 integrator finite time step  <a href="classrungeKutta4.html#a78e1264f47eeaff22b4897e2dd62606b">More...</a><br /></td></tr>
 <tr class="separator:a78e1264f47eeaff22b4897e2dd62606b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd227f36f24c5e80c690d12716d51463"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrungeKutta4.html#abd227f36f24c5e80c690d12716d51463">m_c1_6_dt</a> {-1.0}</td></tr>
+<tr class="memdesc:abd227f36f24c5e80c690d12716d51463"><td class="mdescLeft">&#160;</td><td class="mdescRight">(dimensional) 1/6 integrator finite time step  <a href="classrungeKutta4.html#abd227f36f24c5e80c690d12716d51463">More...</a><br /></td></tr>
 <tr class="separator:abd227f36f24c5e80c690d12716d51463"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8ebefcdf3489dbd1bd5c70246018971"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrungeKutta4.html#af8ebefcdf3489dbd1bd5c70246018971">m_c1_2</a> {0.50}</td></tr>
+<tr class="memdesc:af8ebefcdf3489dbd1bd5c70246018971"><td class="mdescLeft">&#160;</td><td class="mdescRight">= 1/2  <a href="classrungeKutta4.html#af8ebefcdf3489dbd1bd5c70246018971">More...</a><br /></td></tr>
 <tr class="separator:af8ebefcdf3489dbd1bd5c70246018971"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af48938d4718a225f5edcd977707d131d"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrungeKutta4.html#af48938d4718a225f5edcd977707d131d">m_c1_6</a> {1.0 / 6.0}</td></tr>
+<tr class="memdesc:af48938d4718a225f5edcd977707d131d"><td class="mdescLeft">&#160;</td><td class="mdescRight">= 1/6  <a href="classrungeKutta4.html#af48938d4718a225f5edcd977707d131d">More...</a><br /></td></tr>
 <tr class="separator:af48938d4718a225f5edcd977707d131d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab752e39f03532c4e31f11d75adcf00c3"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrungeKutta4.html#ab752e39f03532c4e31f11d75adcf00c3">m_c2</a> {2.0}</td></tr>
-<tr class="separator:ab752e39f03532c4e31f11d75adcf00c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a7d08ac0517a4f5f9c533e2e06359e5b2"></a>
@@ -159,6 +170,9 @@ Private Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">rungeKutta4::rungeKutta4 </td>
@@ -178,7 +192,21 @@ Private Attributes</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
+
+<p>Construct a new runge Kutta4 object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sys</td><td><a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a> class to gather data from </td></tr>
+    <tr><td class="paramname">hydro</td><td><a class="el" href="classpotentialHydrodynamics.html" title="Computes hydrodynamic tensors (mass, forces) on a finite number of spheres in potential flow.">potentialHydrodynamics</a> class to get hydrodynamic force data from </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="rungeKutta4_8cpp_source.html#l00007">7</a> of file <a class="el" href="rungeKutta4_8cpp_source.html">rungeKutta4.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;{</div>
@@ -206,7 +234,7 @@ Private Attributes</h2></td></tr>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    spdlog::get(<a class="code" href="classrungeKutta4.html#ae3a62c9309b40e195bd0ce1997d9444a">m_logName</a>)-&gt;flush();</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="rungeKutta4_8hpp_source.html#l00069">m_c1_2</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00065">m_c1_2_dt</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00070">m_c1_6</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00066">m_c1_6_dt</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00064">m_dt</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00060">m_logFile</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00061">m_logName</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00057">m_potHydro</a>, and <a class="el" href="rungeKutta4_8hpp_source.html#l00056">m_system</a>.</p>
+<p class="reference">References <a class="el" href="rungeKutta4_8hpp_source.html#l00099">m_c1_2</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00093">m_c1_2_dt</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00101">m_c1_6</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00095">m_c1_6_dt</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00091">m_dt</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00085">m_logFile</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00087">m_logName</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00081">m_potHydro</a>, and <a class="el" href="rungeKutta4_8hpp_source.html#l00079">m_system</a>.</p>
 
 </div>
 </div>
@@ -225,13 +253,15 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Destroy the runge Kutta4 object. </p>
+
 <p class="definition">Definition at line <a class="el" href="rungeKutta4_8cpp_source.html#l00033">33</a> of file <a class="el" href="rungeKutta4_8cpp_source.html">rungeKutta4.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;{</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    spdlog::get(<a class="code" href="classrungeKutta4.html#ae3a62c9309b40e195bd0ce1997d9444a">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Destructing Runge-Kutta 4th order&quot;</span>);</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    spdlog::get(<a class="code" href="classrungeKutta4.html#ae3a62c9309b40e195bd0ce1997d9444a">m_logName</a>)-&gt;flush();</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="rungeKutta4_8hpp_source.html#l00061">m_logName</a>.</p>
+<p class="reference">References <a class="el" href="rungeKutta4_8hpp_source.html#l00087">m_logName</a>.</p>
 
 </div>
 </div>
@@ -373,7 +403,7 @@ Here is the call graph for this function:</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <a class="code" href="classrungeKutta4.html#a24ee2a7674db9afb4f3d6e91a972fa5a">m_system</a>-&gt;setT(t1);</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="rungeKutta4_8cpp_source.html#l00130">accelerationUpdate()</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00065">m_c1_2_dt</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00066">m_c1_6_dt</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00064">m_dt</a>, and <a class="el" href="rungeKutta4_8hpp_source.html#l00056">m_system</a>.</p>
+<p class="reference">References <a class="el" href="rungeKutta4_8cpp_source.html#l00130">accelerationUpdate()</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00093">m_c1_2_dt</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00095">m_c1_6_dt</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00091">m_dt</a>, and <a class="el" href="rungeKutta4_8hpp_source.html#l00079">m_system</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="rungeKutta4_8cpp_source.html#l00040">integrate()</a>.</p>
 <div class="dynheader">
@@ -432,7 +462,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <a class="code" href="classrungeKutta4.html#af8d44cd795c66d601274a8db5bf37b97">udwadiaKalaba</a>(acc); <span class="comment">// solve for acceleration components</span></div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="rungeKutta4_8hpp_source.html#l00057">m_potHydro</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00056">m_system</a>, and <a class="el" href="rungeKutta4_8cpp_source.html#l00140">udwadiaKalaba()</a>.</p>
+<p class="reference">References <a class="el" href="rungeKutta4_8hpp_source.html#l00081">m_potHydro</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00079">m_system</a>, and <a class="el" href="rungeKutta4_8cpp_source.html#l00140">udwadiaKalaba()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="rungeKutta4_8cpp_source.html#l00046">integrateSecondOrder()</a>.</p>
 <div class="dynheader">
@@ -520,7 +550,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    acc.noalias() = <a class="code" href="classrungeKutta4.html#a38cfec1cedaf31ce325ff367af4eea1d">m_potHydro</a>-&gt;mTotal().llt().solve(Q_total);</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="rungeKutta4_8hpp_source.html#l00061">m_logName</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00057">m_potHydro</a>, and <a class="el" href="rungeKutta4_8hpp_source.html#l00056">m_system</a>.</p>
+<p class="reference">References <a class="el" href="rungeKutta4_8hpp_source.html#l00087">m_logName</a>, <a class="el" href="rungeKutta4_8hpp_source.html#l00081">m_potHydro</a>, and <a class="el" href="rungeKutta4_8hpp_source.html#l00079">m_system</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="rungeKutta4_8cpp_source.html#l00130">accelerationUpdate()</a>.</p>
 <div class="dynheader">
@@ -552,7 +582,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00056">56</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
+<p>shared pointer reference to <a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a> class </p>
+
+<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00079">79</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="rungeKutta4_8cpp_source.html#l00130">accelerationUpdate()</a>, <a class="el" href="rungeKutta4_8cpp_source.html#l00046">integrateSecondOrder()</a>, <a class="el" href="rungeKutta4_8cpp_source.html#l00007">rungeKutta4()</a>, and <a class="el" href="rungeKutta4_8cpp_source.html#l00140">udwadiaKalaba()</a>.</p>
 
@@ -578,7 +610,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00057">57</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
+<p>shared pointer reference to <a class="el" href="classpotentialHydrodynamics.html" title="Computes hydrodynamic tensors (mass, forces) on a finite number of spheres in potential flow.">potentialHydrodynamics</a> class </p>
+
+<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00081">81</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="rungeKutta4_8cpp_source.html#l00130">accelerationUpdate()</a>, <a class="el" href="rungeKutta4_8cpp_source.html#l00007">rungeKutta4()</a>, and <a class="el" href="rungeKutta4_8cpp_source.html#l00140">udwadiaKalaba()</a>.</p>
 
@@ -604,7 +638,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00060">60</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
+<p>path of logfile for spdlog to write to </p>
+
+<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00085">85</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="rungeKutta4_8cpp_source.html#l00007">rungeKutta4()</a>.</p>
 
@@ -630,7 +666,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00061">61</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
+<p>filename of logfile for spdlog to write to </p>
+
+<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00087">87</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="rungeKutta4_8cpp_source.html#l00007">rungeKutta4()</a>, <a class="el" href="rungeKutta4_8cpp_source.html#l00140">udwadiaKalaba()</a>, and <a class="el" href="rungeKutta4_8cpp_source.html#l00033">~rungeKutta4()</a>.</p>
 
@@ -656,7 +694,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00064">64</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
+<p>(dimensional) integrator finite time step </p>
+
+<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00091">91</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="rungeKutta4_8cpp_source.html#l00046">integrateSecondOrder()</a>, and <a class="el" href="rungeKutta4_8cpp_source.html#l00007">rungeKutta4()</a>.</p>
 
@@ -682,7 +722,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00065">65</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
+<p>(dimensional) 1/2 integrator finite time step </p>
+
+<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00093">93</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="rungeKutta4_8cpp_source.html#l00046">integrateSecondOrder()</a>, and <a class="el" href="rungeKutta4_8cpp_source.html#l00007">rungeKutta4()</a>.</p>
 
@@ -708,7 +750,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00066">66</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
+<p>(dimensional) 1/6 integrator finite time step </p>
+
+<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00095">95</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="rungeKutta4_8cpp_source.html#l00046">integrateSecondOrder()</a>, and <a class="el" href="rungeKutta4_8cpp_source.html#l00007">rungeKutta4()</a>.</p>
 
@@ -734,7 +778,9 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00069">69</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
+<p>= 1/2 </p>
+
+<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00099">99</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="rungeKutta4_8cpp_source.html#l00007">rungeKutta4()</a>.</p>
 
@@ -760,33 +806,11 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00070">70</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
+<p>= 1/6 </p>
+
+<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00101">101</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="rungeKutta4_8cpp_source.html#l00007">rungeKutta4()</a>.</p>
-
-</div>
-</div>
-<a id="ab752e39f03532c4e31f11d75adcf00c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab752e39f03532c4e31f11d75adcf00c3">&#9670;&nbsp;</a></span>m_c2</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const double rungeKutta4::m_c2 {2.0}</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="rungeKutta4_8hpp_source.html#l00071">71</a> of file <a class="el" href="rungeKutta4_8hpp_source.html">rungeKutta4.hpp</a>.</p>
 
 </div>
 </div>
@@ -796,23 +820,23 @@ Here is the caller graph for this function:</div>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aclassrungeKutta4_html_af48938d4718a225f5edcd977707d131d"><div class="ttname"><a href="classrungeKutta4.html#af48938d4718a225f5edcd977707d131d">rungeKutta4::m_c1_6</a></div><div class="ttdeci">const double m_c1_6</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8hpp_source.html#l00070">rungeKutta4.hpp:70</a></div></div>
+<div class="ttc" id="aclassrungeKutta4_html_af48938d4718a225f5edcd977707d131d"><div class="ttname"><a href="classrungeKutta4.html#af48938d4718a225f5edcd977707d131d">rungeKutta4::m_c1_6</a></div><div class="ttdeci">const double m_c1_6</div><div class="ttdoc">= 1/6</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8hpp_source.html#l00101">rungeKutta4.hpp:101</a></div></div>
 <div class="ttc" id="aclassrungeKutta4_html_ae10430251a847d2f415848b882702c50"><div class="ttname"><a href="classrungeKutta4.html#ae10430251a847d2f415848b882702c50">rungeKutta4::accelerationUpdate</a></div><div class="ttdeci">void accelerationUpdate(Eigen::VectorXd &amp;acc, Eigen::ThreadPoolDevice &amp;device)</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8cpp_source.html#l00130">rungeKutta4.cpp:130</a></div></div>
 <div class="ttc" id="aclassrungeKutta4_html_af8d44cd795c66d601274a8db5bf37b97"><div class="ttname"><a href="classrungeKutta4.html#af8d44cd795c66d601274a8db5bf37b97">rungeKutta4::udwadiaKalaba</a></div><div class="ttdeci">void udwadiaKalaba(Eigen::VectorXd &amp;acc)</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8cpp_source.html#l00140">rungeKutta4.cpp:140</a></div></div>
-<div class="ttc" id="aclassrungeKutta4_html_a78e1264f47eeaff22b4897e2dd62606b"><div class="ttname"><a href="classrungeKutta4.html#a78e1264f47eeaff22b4897e2dd62606b">rungeKutta4::m_c1_2_dt</a></div><div class="ttdeci">double m_c1_2_dt</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8hpp_source.html#l00065">rungeKutta4.hpp:65</a></div></div>
-<div class="ttc" id="aclassrungeKutta4_html_adf75c3e195c4e491189c91d0b24d4931"><div class="ttname"><a href="classrungeKutta4.html#adf75c3e195c4e491189c91d0b24d4931">rungeKutta4::m_logFile</a></div><div class="ttdeci">std::string m_logFile</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8hpp_source.html#l00060">rungeKutta4.hpp:60</a></div></div>
-<div class="ttc" id="aclassrungeKutta4_html_ae3a62c9309b40e195bd0ce1997d9444a"><div class="ttname"><a href="classrungeKutta4.html#ae3a62c9309b40e195bd0ce1997d9444a">rungeKutta4::m_logName</a></div><div class="ttdeci">const std::string m_logName</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8hpp_source.html#l00061">rungeKutta4.hpp:61</a></div></div>
-<div class="ttc" id="aclassrungeKutta4_html_af8ebefcdf3489dbd1bd5c70246018971"><div class="ttname"><a href="classrungeKutta4.html#af8ebefcdf3489dbd1bd5c70246018971">rungeKutta4::m_c1_2</a></div><div class="ttdeci">const double m_c1_2</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8hpp_source.html#l00069">rungeKutta4.hpp:69</a></div></div>
-<div class="ttc" id="aclassrungeKutta4_html_a24ee2a7674db9afb4f3d6e91a972fa5a"><div class="ttname"><a href="classrungeKutta4.html#a24ee2a7674db9afb4f3d6e91a972fa5a">rungeKutta4::m_system</a></div><div class="ttdeci">std::shared_ptr&lt; systemData &gt; m_system</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8hpp_source.html#l00056">rungeKutta4.hpp:56</a></div></div>
+<div class="ttc" id="aclassrungeKutta4_html_a78e1264f47eeaff22b4897e2dd62606b"><div class="ttname"><a href="classrungeKutta4.html#a78e1264f47eeaff22b4897e2dd62606b">rungeKutta4::m_c1_2_dt</a></div><div class="ttdeci">double m_c1_2_dt</div><div class="ttdoc">(dimensional) 1/2 integrator finite time step</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8hpp_source.html#l00093">rungeKutta4.hpp:93</a></div></div>
+<div class="ttc" id="aclassrungeKutta4_html_adf75c3e195c4e491189c91d0b24d4931"><div class="ttname"><a href="classrungeKutta4.html#adf75c3e195c4e491189c91d0b24d4931">rungeKutta4::m_logFile</a></div><div class="ttdeci">std::string m_logFile</div><div class="ttdoc">path of logfile for spdlog to write to</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8hpp_source.html#l00085">rungeKutta4.hpp:85</a></div></div>
+<div class="ttc" id="aclassrungeKutta4_html_ae3a62c9309b40e195bd0ce1997d9444a"><div class="ttname"><a href="classrungeKutta4.html#ae3a62c9309b40e195bd0ce1997d9444a">rungeKutta4::m_logName</a></div><div class="ttdeci">const std::string m_logName</div><div class="ttdoc">filename of logfile for spdlog to write to</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8hpp_source.html#l00087">rungeKutta4.hpp:87</a></div></div>
+<div class="ttc" id="aclassrungeKutta4_html_af8ebefcdf3489dbd1bd5c70246018971"><div class="ttname"><a href="classrungeKutta4.html#af8ebefcdf3489dbd1bd5c70246018971">rungeKutta4::m_c1_2</a></div><div class="ttdeci">const double m_c1_2</div><div class="ttdoc">= 1/2</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8hpp_source.html#l00099">rungeKutta4.hpp:99</a></div></div>
+<div class="ttc" id="aclassrungeKutta4_html_a24ee2a7674db9afb4f3d6e91a972fa5a"><div class="ttname"><a href="classrungeKutta4.html#a24ee2a7674db9afb4f3d6e91a972fa5a">rungeKutta4::m_system</a></div><div class="ttdeci">std::shared_ptr&lt; systemData &gt; m_system</div><div class="ttdoc">shared pointer reference to systemData class</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8hpp_source.html#l00079">rungeKutta4.hpp:79</a></div></div>
 <div class="ttc" id="aclassrungeKutta4_html_a1c2b8361774957efcf5c6fa5a34f86af"><div class="ttname"><a href="classrungeKutta4.html#a1c2b8361774957efcf5c6fa5a34f86af">rungeKutta4::integrateSecondOrder</a></div><div class="ttdeci">void integrateSecondOrder(Eigen::ThreadPoolDevice &amp;device)</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8cpp_source.html#l00046">rungeKutta4.cpp:46</a></div></div>
-<div class="ttc" id="aclassrungeKutta4_html_abd227f36f24c5e80c690d12716d51463"><div class="ttname"><a href="classrungeKutta4.html#abd227f36f24c5e80c690d12716d51463">rungeKutta4::m_c1_6_dt</a></div><div class="ttdeci">double m_c1_6_dt</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8hpp_source.html#l00066">rungeKutta4.hpp:66</a></div></div>
-<div class="ttc" id="aclassrungeKutta4_html_aa34bc59a36e672214e03e1b56d204966"><div class="ttname"><a href="classrungeKutta4.html#aa34bc59a36e672214e03e1b56d204966">rungeKutta4::m_dt</a></div><div class="ttdeci">double m_dt</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8hpp_source.html#l00064">rungeKutta4.hpp:64</a></div></div>
-<div class="ttc" id="aclassrungeKutta4_html_a38cfec1cedaf31ce325ff367af4eea1d"><div class="ttname"><a href="classrungeKutta4.html#a38cfec1cedaf31ce325ff367af4eea1d">rungeKutta4::m_potHydro</a></div><div class="ttdeci">std::shared_ptr&lt; potentialHydrodynamics &gt; m_potHydro</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8hpp_source.html#l00057">rungeKutta4.hpp:57</a></div></div>
+<div class="ttc" id="aclassrungeKutta4_html_abd227f36f24c5e80c690d12716d51463"><div class="ttname"><a href="classrungeKutta4.html#abd227f36f24c5e80c690d12716d51463">rungeKutta4::m_c1_6_dt</a></div><div class="ttdeci">double m_c1_6_dt</div><div class="ttdoc">(dimensional) 1/6 integrator finite time step</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8hpp_source.html#l00095">rungeKutta4.hpp:95</a></div></div>
+<div class="ttc" id="aclassrungeKutta4_html_aa34bc59a36e672214e03e1b56d204966"><div class="ttname"><a href="classrungeKutta4.html#aa34bc59a36e672214e03e1b56d204966">rungeKutta4::m_dt</a></div><div class="ttdeci">double m_dt</div><div class="ttdoc">(dimensional) integrator finite time step</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8hpp_source.html#l00091">rungeKutta4.hpp:91</a></div></div>
+<div class="ttc" id="aclassrungeKutta4_html_a38cfec1cedaf31ce325ff367af4eea1d"><div class="ttname"><a href="classrungeKutta4.html#a38cfec1cedaf31ce325ff367af4eea1d">rungeKutta4::m_potHydro</a></div><div class="ttdeci">std::shared_ptr&lt; potentialHydrodynamics &gt; m_potHydro</div><div class="ttdoc">shared pointer reference to potentialHydrodynamics class</div><div class="ttdef"><b>Definition:</b> <a href="rungeKutta4_8hpp_source.html#l00081">rungeKutta4.hpp:81</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="classrungeKutta4.html">rungeKutta4</a></li>
-    <li class="footer">Generated on Thu Oct 14 2021 16:30:02 for Bodies in Potential Flow by
+    <li class="footer">Generated on Thu Oct 14 2021 22:02:09 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>
