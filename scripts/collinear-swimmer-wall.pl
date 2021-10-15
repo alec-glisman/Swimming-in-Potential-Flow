@@ -31,10 +31,11 @@ use warnings;                      # give warnings
 # SECTION: Input variables that user must specify before running script
 
 # Compiler
-my $build         = "Debug";                # OPTIONS: Release, Debug, Profile
-my $enableTesting = "True";                   # OPTIONS: (False) OFF, (True) ON
-my $buildDir      = "build";                  # Title whatever you want build folder to be
-my $generator     = "Unix Makefiles";         # ONLY TESTED WITH UNIX
+my $build          = "Debug";                  # CMake built type, OPTIONS: Release, Debug, Profile
+my $enableTesting  = "True";                   # Unit tests, OPTIONS: (False) OFF, (True) ON
+my $enableCoverage = "True";                   # Testing Coverage, OPTIONS: (False) OFF, (True) ON
+my $buildDir       = "build";                  # Title whatever you want build folder to be
+my $generator      = "Unix Makefiles";         # Only tested with this option
 
 # C++ Simulation
 my $simulationTag    = "collinear-swimmer-wall";
@@ -96,7 +97,7 @@ chdir $buildDir
     or die "Could not move to build directory: $!";
 
 # Configure and build the project
-system( "cmake \"${cwd}\" -G \"${generator}\" -DCMAKE_BUILD_TYPE=${build} -DENABLE_TESTING=${enableTesting}" ) 
+system( "cmake \"${cwd}\" -G \"${generator}\" -DCMAKE_BUILD_TYPE=${build} -DENABLE_TESTING=${enableTesting} -DENABLE_COVERAGE=${$enableCoverage}") 
     and die "Configuring project failed: $!";
 system( "make -j" ) 
     and die "Building project failed: $!";
