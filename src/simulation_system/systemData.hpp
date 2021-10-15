@@ -209,6 +209,7 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     /* REVIEW[epic=Change,order=0]: System specific data, change parameters stored for different
      * systems */
+    /* ANCHOR: System specific data, change parameters stored for different systems */
     // Swimming kinematic constraints
     /// velocity amplitude of kinematic constraint between particle pairs
     double m_sys_spec_U0{-1.0};
@@ -224,6 +225,18 @@ class systemData : public std::enable_shared_from_this<systemData>
     /// 2) locater particle listed first in order and denotes when to switch body index to next body.
     /// ex: (1, 0, 0, 1, 0, 0)
     Eigen::VectorXi m_particle_type_id;
+
+    /* ANCHOR: material parameters */
+    /// mass density of fluid
+    double m_fluid_density{-1};
+    /// mass density of solid spheres
+    double m_particle_density{-1};
+
+    /* ANCHOR: potential parameters */
+    /// WCA energy scale @f$ \epsilon_{\mathrm{WCA}} @f$
+    double m_wca_epsilon{-1};
+    /// WCA length scale @f$ \sigma_{\mathrm{WCA}} @f$
+    double m_wca_sigma{-1};
 
     /* ANCHOR: degrees of freedom */
     /// = 3
@@ -250,18 +263,6 @@ class systemData : public std::enable_shared_from_this<systemData>
     int m_timestep{-1};
     /// how many simulation steps to output to GSD
     int m_num_steps_output{-1};
-
-    /* ANCHOR: material parameters */
-    /// mass density of fluid
-    double m_fluid_density{-1};
-    /// mass density of solid spheres
-    double m_particle_density{-1};
-
-    /* ANCHOR: potential parameters */
-    /// WCA energy scale @f$ \epsilon_{\mathrm{WCA}} @f$
-    double m_wca_epsilon{-1};
-    /// WCA length scale @f$ \sigma_{\mathrm{WCA}} @f$
-    double m_wca_sigma{-1};
 
     /* ANCHOR: Tensors set in constructor */
     // "identity" tensors
@@ -317,7 +318,7 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     /// (7M x 3N) converts particle position D.o.F. to body position/quaternion D.o.F. (NOTE: this was
     /// @f$ \boldsymbol{\beta} @f$ in written work)
-    Eigen::MatrixXd m_conv_body_2_part_dof; // TODO
+    Eigen::MatrixXd m_conv_body_2_part_dof;
 
     /// (7M x 3N) tensor version of `m_conv_body_2_part_dof`
     Eigen::Tensor<double, 2> m_tens_conv_body_2_part_dof;
@@ -332,36 +333,31 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     /* SECTION: Setters and getters */
   public:
+    /* ANCHOR: general attributes */
     // data i/o
-    std::string
-    outputDir() const
-    {
-        return m_outputDir;
-    }
-
     std::string
     inputGSDFile() const
     {
         return m_inputGSDFile;
     }
 
-    // GSD data
-    std::shared_ptr<gsd_handle>
-    handle() const
+    std::string
+    outputDir() const
     {
-        return m_handle;
+        return m_outputDir;
     }
 
+    // GSD data
     std::shared_ptr<GSDUtil>
     gsdUtil() const
     {
         return m_gsdUtil;
     }
 
-    bool
-    gSDParsed() const
+    std::shared_ptr<gsd_handle>
+    handle() const
     {
-        return m_GSD_parsed;
+        return m_handle;
     }
 
     void
@@ -386,7 +382,270 @@ class systemData : public std::enable_shared_from_this<systemData>
         return m_return_bool;
     }
 
-    // kinematics
+    bool
+    gSDParsed() const
+    {
+        return m_GSD_parsed;
+    }
+
+    /* ANCHOR: System specific data, change parameters stored for different systems */
+    double
+    sysSpecU0() const
+    {
+        return m_sys_spec_U0;
+    }
+    void
+    setSysSpecU0(double sys_spec_U0)
+    {
+        m_sys_spec_U0 = sys_spec_U0;
+    }
+
+    double
+    sysSpecOmega() const
+    {
+        return m_sys_spec_omega;
+    }
+    void
+    setSysSpecOmega(double sys_spec_omega)
+    {
+        m_sys_spec_omega = sys_spec_omega;
+    }
+
+    double
+    sysSpecPhaseShift() const
+    {
+        return m_sys_spec_phase_shift;
+    }
+    void
+    setSysSpecPhaseShift(double sys_spec_phaseShift)
+    {
+        m_sys_spec_phase_shift = sys_spec_phaseShift;
+    }
+
+    double
+    sysSpecRAvg() const
+    {
+        return m_sys_spec_R_avg;
+    }
+    void
+    setSysSpecRAvg(double sys_spec_RAvg)
+    {
+        m_sys_spec_R_avg = sys_spec_RAvg;
+    }
+
+    /* ANCHOR: particle parameters */
+    const Eigen::VectorXi&
+    particleTypeId() const
+    {
+        return m_particle_type_id;
+    }
+    void
+    setParticleTypeId(const Eigen::VectorXi& particle_type_id)
+    {
+        m_particle_type_id = particle_type_id;
+    }
+
+    /* ANCHOR: material parameters */
+    double
+    fluidDensity() const
+    {
+        return m_fluid_density;
+    }
+    void
+    setFluidDensity(double fluid_density)
+    {
+        m_fluid_density = fluid_density;
+    }
+
+    double
+    particleDensity() const
+    {
+        return m_particle_density;
+    }
+    void
+    setParticleDensity(double particle_density)
+    {
+        m_particle_density = particle_density;
+    }
+
+    /* ANCHOR: potential parameters */
+    double
+    wcaEpsilon() const
+    {
+        return m_wca_epsilon;
+    }
+    void
+    setWcaEpsilon(double wca_epsilon)
+    {
+        m_wca_epsilon = wca_epsilon;
+    }
+
+    double
+    wcaSigma() const
+    {
+        return m_wca_sigma;
+    }
+    void
+    setWcaSigma(double wca_sigma)
+    {
+        m_wca_sigma = wca_sigma;
+    }
+
+    /* ANCHOR: degrees of freedom */
+    int
+    numSpatialDim() const
+    {
+        return m_num_spatial_dim;
+    }
+    void
+    setNumSpatialDim(int num_spatial_dim)
+    {
+        m_num_spatial_dim = num_spatial_dim;
+    }
+
+    int
+    numParticles() const
+    {
+        return m_num_particles;
+    }
+    void
+    setNumParticles(int num_particles)
+    {
+        m_num_particles = num_particles;
+    }
+
+    int
+    numBodies() const
+    {
+        return m_num_bodies;
+    }
+    void
+    setNumBodies(int num_bodies)
+    {
+        m_num_bodies = num_bodies;
+    }
+
+    int
+    numDoF()
+    {
+        return m_num_DoF;
+    }
+    /* ANCHOR: Tensors set in constructor */
+    const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>>&
+    tensI3() const
+    {
+        return m_tens_I3;
+    }
+
+    const Eigen::Matrix3d&
+    i3() const
+    {
+        return m_I3;
+    }
+
+    /* ANCHOR: integrator parameters */
+    double
+    dt() const
+    {
+        return m_dt;
+    }
+    void
+    setDt(double dt)
+    {
+        m_dt = dt;
+    }
+
+    double
+    tf() const
+    {
+        return m_tf;
+    }
+    void
+    setTf(double tf)
+    {
+        m_tf = tf;
+    }
+
+    double
+    t() const
+    {
+        return m_t;
+    }
+    void
+    setT(double t)
+    {
+        m_t = t;
+    }
+
+    double
+    tau() const
+    {
+        return m_tau;
+    }
+    void
+    setTau(double tau)
+    {
+        m_tau = tau;
+    }
+
+    int
+    timestep() const
+    {
+        return m_timestep;
+    }
+    void
+    setTimestep(int timestep)
+    {
+        m_timestep = timestep;
+    }
+
+    int
+    numStepsOutput() const
+    {
+        return m_num_steps_output;
+    }
+    void
+    setNumStepsOutput(int num_steps_output)
+    {
+        m_num_steps_output = num_steps_output;
+    }
+
+    /* ANCHOR: kinematic vectors */
+    // bodies
+    const Eigen::VectorXd&
+    positionsBodies() const
+    {
+        return m_positions_bodies;
+    }
+    void
+    setPositionsBodies(const Eigen::VectorXd& positions_bodies)
+    {
+        m_positions_bodies = positions_bodies;
+    }
+
+    const Eigen::VectorXd&
+    velocitiesBodies() const
+    {
+        return m_velocities_bodies;
+    }
+    void
+    setVelocitiesBodies(const Eigen::VectorXd& velocities_bodies)
+    {
+        m_velocities_bodies = velocities_bodies;
+    }
+
+    const Eigen::VectorXd&
+    accelerationsBodies() const
+    {
+        return m_accelerations_bodies;
+    }
+    void
+    setAccelerationsBodies(const Eigen::VectorXd& accelerations_bodies)
+    {
+        m_accelerations_bodies = accelerations_bodies;
+    }
+
+    // particles
     const Eigen::VectorXd&
     orientationsParticles() const
     {
@@ -431,204 +690,7 @@ class systemData : public std::enable_shared_from_this<systemData>
         m_accelerations_particles = accelerations_particles;
     }
 
-    Eigen::VectorXd
-    positionsBodies() const
-    {
-        return m_positions_bodies;
-    }
-    void
-    setPositionsBodies(const Eigen::VectorXd& positions_bodies)
-    {
-        m_positions_bodies = positions_bodies;
-    }
-
-    Eigen::VectorXd
-    velocitiesBodies() const
-    {
-        return m_velocities_bodies;
-    }
-    void
-    setVelocitiesBodies(const Eigen::VectorXd& velocities_bodies)
-    {
-        m_velocities_bodies = velocities_bodies;
-    }
-
-    Eigen::VectorXd
-    accelerationsBodies() const
-    {
-        return m_accelerations_bodies;
-    }
-    void
-    setAccelerationsBodies(const Eigen::VectorXd& accelerations_bodies)
-    {
-        m_accelerations_bodies = accelerations_bodies;
-    }
-
-    // particle parameters
-    const Eigen::VectorXi&
-    particleTypeId() const
-    {
-        return m_particle_type_id;
-    }
-    void
-    setParticleTypeId(const Eigen::VectorXi& particle_type_id)
-    {
-        m_particle_type_id = particle_type_id;
-    }
-
-    // degrees of freedom
-    int
-    numDoF()
-    {
-        return m_num_DoF;
-    }
-
-    int
-    numSpatialDim() const
-    {
-        return m_num_spatial_dim;
-    }
-    void
-    setNumSpatialDim(int num_spatial_dim)
-    {
-        m_num_spatial_dim = num_spatial_dim;
-    }
-
-    int
-    numParticles() const
-    {
-        return m_num_particles;
-    }
-    void
-    setNumParticles(int num_particles)
-    {
-        m_num_particles = num_particles;
-    }
-
-    int
-    numBodies() const
-    {
-        return m_num_bodies;
-    }
-    void
-    setNumBodies(int num_bodies)
-    {
-        m_num_bodies = num_bodies;
-    }
-
-    // integrator
-    double
-    dt() const
-    {
-        return m_dt;
-    }
-    void
-    setDt(double dt)
-    {
-        m_dt = dt;
-    }
-
-    double
-    t() const
-    {
-        return m_t;
-    }
-    void
-    setT(double t)
-    {
-        m_t = t;
-    }
-
-    double
-    tf() const
-    {
-        return m_tf;
-    }
-    void
-    setTf(double tf)
-    {
-        m_tf = tf;
-    }
-
-    double
-    tau() const
-    {
-        return m_tau;
-    }
-    void
-    setTau(double tau)
-    {
-        m_tau = tau;
-    }
-
-    int
-    timestep() const
-    {
-        return m_timestep;
-    }
-    void
-    setTimestep(int timestep)
-    {
-        m_timestep = timestep;
-    }
-
-    int
-    numStepsOutput() const
-    {
-        return m_num_steps_output;
-    }
-    void
-    setNumStepsOutput(int num_steps_output)
-    {
-        m_num_steps_output = num_steps_output;
-    }
-
-    // material parameters
-    double
-    fluidDensity() const
-    {
-        return m_fluid_density;
-    }
-    void
-    setFluidDensity(double fluid_density)
-    {
-        m_fluid_density = fluid_density;
-    }
-
-    double
-    particleDensity() const
-    {
-        return m_particle_density;
-    }
-    void
-    setParticleDensity(double particle_density)
-    {
-        m_particle_density = particle_density;
-    }
-
-    // potential parameters
-    double
-    wcaSigma() const
-    {
-        return m_wca_sigma;
-    }
-    void
-    setWcaSigma(double wca_sigma)
-    {
-        m_wca_sigma = wca_sigma;
-    }
-
-    double
-    wcaEpsilon() const
-    {
-        return m_wca_epsilon;
-    }
-    void
-    setWcaEpsilon(double wca_epsilon)
-    {
-        m_wca_epsilon = wca_epsilon;
-    }
-
+    // particle articulations
     const Eigen::VectorXd&
     velocitiesParticlesArticulation() const
     {
@@ -641,50 +703,26 @@ class systemData : public std::enable_shared_from_this<systemData>
         return m_accelerations_particles_articulation;
     }
 
-    double
-    sysSpecRAvg() const
+    /* ANCHOR: rigid body motion tensors */
+    const Eigen::Tensor<double, 2>&
+    tensRbmConnTQuat() const
     {
-        return m_sys_spec_R_avg;
-    }
-    void
-    setSysSpecRAvg(double sys_spec_RAvg)
-    {
-        m_sys_spec_R_avg = sys_spec_RAvg;
+        return m_tens_rbm_conn_T_quat;
     }
 
-    double
-    sysSpecPhaseShift() const
+    const Eigen::Tensor<double, 3>&
+    tensRbmConnTQuatGrad() const
     {
-        return m_sys_spec_phase_shift;
-    }
-    void
-    setSysSpecPhaseShift(double sys_spec_phaseShift)
-    {
-        m_sys_spec_phase_shift = sys_spec_phaseShift;
+        return m_rbm_conn_T_quat_grad;
     }
 
-    double
-    sysSpecOmega() const
+    const Eigen::Tensor<double, 2>&
+    tensConvBody2PartDof() const
     {
-        return m_sys_spec_omega;
-    }
-    void
-    setSysSpecOmega(double sys_spec_omega)
-    {
-        m_sys_spec_omega = sys_spec_omega;
+        return m_tens_conv_body_2_part_dof;
     }
 
-    double
-    sysSpecU0() const
-    {
-        return m_sys_spec_U0;
-    }
-    void
-    setSysSpecU0(double sys_spec_U0)
-    {
-        m_sys_spec_U0 = sys_spec_U0;
-    }
-
+    /* ANCHOR: Udwadia constraint linear system */
     const Eigen::MatrixXd&
     udwadiaA() const
     {
@@ -696,37 +734,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     {
         return m_Udwadia_b;
     }
-
-    const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>>&
-    tensI3() const
-    {
-        return m_tens_I3;
-    }
-
-    const Eigen::Matrix3d&
-    i3() const
-    {
-        return m_I3;
-    }
     /* !SECTION */
-
-    const Eigen::Tensor<double, 2>&
-    tensRbmConnTQuat() const
-    {
-        return m_tens_rbm_conn_T_quat;
-    }
-
-    const Eigen::Tensor<double, 2>&
-    tensConvBody2PartDof() const
-    {
-        return m_tens_conv_body_2_part_dof;
-    }
-
-    const Eigen::Tensor<double, 3>&
-    tensRbmConnTQuatGrad() const
-    {
-        return m_rbm_conn_T_quat_grad;
-    }
 };
 
 #endif
