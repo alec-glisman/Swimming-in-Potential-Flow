@@ -93,7 +93,6 @@ $(document).ready(function(){initNavTree('exception_8h.html',''); initResizable(
 <div class="header">
   <div class="summary">
 <a href="#func-members">Prototypes</a> &#124;
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
 <div class="title">exception.h File Reference</div>  </div>
@@ -125,20 +124,15 @@ This graph shows which files directly or indirectly include this file:</div>
 </div>
 <p><a href="exception_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classException.html">Exception&lt; Std_Exception &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a14d84c56a2433cf0b894bf62cf8a5c31"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="exception_8h.html#a14d84c56a2433cf0b894bf62cf8a5c31">RUNTIME_EXCEPTION</a>(msg)&#160;&#160;&#160;<a class="el" href="classException.html">Exception</a>&lt;std::runtime_error&gt;::throw_it(__FILE__, __LINE__, msg)</td></tr>
+<tr class="memitem:a14d84c56a2433cf0b894bf62cf8a5c31"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="exception_8h.html#a14d84c56a2433cf0b894bf62cf8a5c31">RUNTIME_EXCEPTION</a>(msg)&#160;&#160;&#160;Exception&lt;std::runtime_error&gt;::throw_it(__FILE__, __LINE__, msg)</td></tr>
 <tr class="memdesc:a14d84c56a2433cf0b894bf62cf8a5c31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience macros.  <a href="exception_8h.html#a14d84c56a2433cf0b894bf62cf8a5c31">More...</a><br /></td></tr>
 <tr class="separator:a14d84c56a2433cf0b894bf62cf8a5c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a994cf587529580a7865cdf9a7016514a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="exception_8h.html#a994cf587529580a7865cdf9a7016514a">LOGIC_EXCEPTION</a>(msg)&#160;&#160;&#160;<a class="el" href="classException.html">Exception</a>&lt;std::logic_error&gt;::throw_it(__FILE__, __LINE__, msg)</td></tr>
+<tr class="memitem:a994cf587529580a7865cdf9a7016514a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="exception_8h.html#a994cf587529580a7865cdf9a7016514a">LOGIC_EXCEPTION</a>(msg)&#160;&#160;&#160;Exception&lt;std::logic_error&gt;::throw_it(__FILE__, __LINE__, msg)</td></tr>
 <tr class="memdesc:a994cf587529580a7865cdf9a7016514a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logic exception in program, e.g. an assert failed.  <a href="exception_8h.html#a994cf587529580a7865cdf9a7016514a">More...</a><br /></td></tr>
 <tr class="separator:a994cf587529580a7865cdf9a7016514a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7375e2978467b3ca52550fc2d2356d6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="exception_8h.html#ad7375e2978467b3ca52550fc2d2356d6">RANGE_EXCEPTION</a>(msg)&#160;&#160;&#160;<a class="el" href="classException.html">Exception</a>&lt;std::range_error&gt;::throw_it(__FILE__, __LINE__, msg)</td></tr>
+<tr class="memitem:ad7375e2978467b3ca52550fc2d2356d6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="exception_8h.html#ad7375e2978467b3ca52550fc2d2356d6">RANGE_EXCEPTION</a>(msg)&#160;&#160;&#160;Exception&lt;std::range_error&gt;::throw_it(__FILE__, __LINE__, msg)</td></tr>
 <tr class="memdesc:ad7375e2978467b3ca52550fc2d2356d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Out of range exception.  <a href="exception_8h.html#ad7375e2978467b3ca52550fc2d2356d6">More...</a><br /></td></tr>
 <tr class="separator:ad7375e2978467b3ca52550fc2d2356d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -154,13 +148,13 @@ Macros</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">msg</td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="classException.html">Exception</a>&lt;std::runtime_error&gt;::throw_it(__FILE__, __LINE__, msg)</td>
+          <td>&#160;&#160;&#160;Exception&lt;std::runtime_error&gt;::throw_it(__FILE__, __LINE__, msg)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Convenience macros. </p>
-<p><a class="el" href="classException.html">Exception</a> caused by dynamic program behavior, e.g. file does not exist </p>
+<p>Exception caused by dynamic program behavior, e.g. file does not exist </p>
 
 <p class="definition">Definition at line <a class="el" href="exception_8h_source.html#l00086">86</a> of file <a class="el" href="exception_8h_source.html">exception.h</a>.</p>
 
@@ -177,7 +171,7 @@ Macros</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">msg</td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="classException.html">Exception</a>&lt;std::logic_error&gt;::throw_it(__FILE__, __LINE__, msg)</td>
+          <td>&#160;&#160;&#160;Exception&lt;std::logic_error&gt;::throw_it(__FILE__, __LINE__, msg)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -199,7 +193,7 @@ Macros</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">msg</td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="classException.html">Exception</a>&lt;std::range_error&gt;::throw_it(__FILE__, __LINE__, msg)</td>
+          <td>&#160;&#160;&#160;Exception&lt;std::range_error&gt;::throw_it(__FILE__, __LINE__, msg)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -236,7 +230,7 @@ template&lt;class Exception_Typ &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p><a class="el" href="classException.html">Exception</a> handler function for arbitrary exceptions </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Exception handler function for arbitrary exceptions </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ex</td><td>exception to handle </td></tr>
   </table>
@@ -258,7 +252,7 @@ template&lt;class Exception_Typ &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_0c26bd22f254302c4dfbaa95bf527e9d.html">helpers</a></li><li class="navelem"><a class="el" href="dir_d54f985c9a00fdf32f5208dabda08809.html">cuda</a></li><li class="navelem"><a class="el" href="exception_8h.html">exception.h</a></li>
-    <li class="footer">Generated on Fri Oct 15 2021 12:58:31 for Bodies in Potential Flow by
+    <li class="footer">Generated on Fri Oct 15 2021 13:11:10 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

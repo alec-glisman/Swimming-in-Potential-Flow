@@ -1,20 +1,13 @@
 <map id="GSDUtil" name="GSDUtil">
-<area shape="rect" id="node1" title="Wrapper class for gsd.h to load data from input GSD file into systemData class." alt="" coords="1208,549,1371,832"/>
-<area shape="rect" id="node5" title=" " alt="" coords="734,946,917,1023"/>
-<area shape="rect" id="node2" title=" " alt="" coords="794,3155,998,3232"/>
-<area shape="rect" id="node3" href="$classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction..." alt="" coords="779,1093,1013,3092"/>
-<area shape="rect" id="node4" title=" " alt="" coords="941,939,1120,1031"/>
-<area shape="rect" id="node6" title="STL class." alt="" coords="670,652,810,729"/>
-<area shape="rect" id="node10" title=" " alt="" coords="510,939,653,1031"/>
-<area shape="rect" id="node7" title=" " alt="" coords="774,307,813,384"/>
-<area shape="rect" id="node8" title="STL class." alt="" coords="1183,307,1263,384"/>
-<area shape="rect" id="node9" title="STL class." alt="" coords="1159,42,1286,134"/>
-<area shape="rect" id="node11" href="$structgsd__handle.html" title=" " alt="" coords="410,630,507,751"/>
-<area shape="rect" id="node12" href="$structgsd__index__buffer.html" title=" " alt="" coords="5,285,125,406"/>
-<area shape="rect" id="node13" href="$structgsd__index__entry.html" title=" " alt="" coords="7,5,124,171"/>
-<area shape="rect" id="node14" href="$structgsd__header.html" title=" " alt="" coords="149,233,320,457"/>
-<area shape="rect" id="node15" href="$structgsd__name__buffer.html" title=" " alt="" coords="345,307,466,384"/>
-<area shape="rect" id="node16" href="$structgsd__byte__buffer.html" title=" " alt="" coords="415,35,529,141"/>
-<area shape="rect" id="node17" href="$structgsd__name__id__map.html" title=" " alt="" coords="619,307,749,384"/>
-<area shape="rect" id="node18" href="$structgsd__name__id__pair.html" title=" " alt="" coords="621,42,747,134"/>
+<area shape="rect" id="node1" title="Wrapper class for gsd.h to load data from input GSD file into systemData class." alt="" coords="114,301,277,584"/>
+<area shape="rect" id="node5" title=" " alt="" coords="104,698,287,775"/>
+<area shape="rect" id="node2" title=" " alt="" coords="261,2907,465,2984"/>
+<area shape="rect" id="node3" href="$classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction..." alt="" coords="246,845,481,2844"/>
+<area shape="rect" id="node4" title=" " alt="" coords="530,691,709,783"/>
+<area shape="rect" id="node6" title="STL class." alt="" coords="553,404,693,481"/>
+<area shape="rect" id="node10" title=" " alt="" coords="363,691,505,783"/>
+<area shape="rect" id="node7" title=" " alt="" coords="604,147,643,224"/>
+<area shape="rect" id="node8" title="STL class." alt="" coords="229,147,309,224"/>
+<area shape="rect" id="node9" title="STL class." alt="" coords="205,5,332,97"/>
+<area shape="rect" id="node11" title=" " alt="" coords="413,404,501,481"/>
 </map>

@@ -129,30 +129,28 @@
 <!-- Node6 -->
 <g id="node6" class="node">
 <title>Node6</title>
-<g id="a_node6"><a xlink:href="structgsd__byte__buffer.html" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="black" points="268,-397.5 268,-476.5 354,-476.5 354,-397.5 268,-397.5"/>
-<text text-anchor="middle" x="311" y="-464.5" font-family="Helvetica,sans-Serif" font-size="10.00">gsd_byte_buffer</text>
-<polyline fill="none" stroke="black" points="268,-457.5 354,-457.5 "/>
-<text text-anchor="start" x="276" y="-445.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ data</text>
-<text text-anchor="start" x="276" y="-434.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ size</text>
-<text text-anchor="start" x="276" y="-423.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ reserved</text>
-<polyline fill="none" stroke="black" points="268,-416.5 354,-416.5 "/>
-<text text-anchor="middle" x="311" y="-404.5" font-family="Helvetica,sans-Serif" font-size="10.00"> </text>
+<g id="a_node6"><a xlink:title=" ">
+<polygon fill="none" stroke="#bfbfbf" points="268,-408.5 268,-465.5 354,-465.5 354,-408.5 268,-408.5"/>
+<text text-anchor="middle" x="311" y="-453.5" font-family="Helvetica,sans-Serif" font-size="10.00">gsd_byte_buffer</text>
+<polyline fill="none" stroke="#bfbfbf" points="268,-446.5 354,-446.5 "/>
+<text text-anchor="middle" x="311" y="-434.5" font-family="Helvetica,sans-Serif" font-size="10.00"> </text>
+<polyline fill="none" stroke="#bfbfbf" points="268,-427.5 354,-427.5 "/>
+<text text-anchor="middle" x="311" y="-415.5" font-family="Helvetica,sans-Serif" font-size="10.00"> </text>
 </a>
 </g>
 </g>
 <!-- Node6&#45;&gt;Node1 -->
 <g id="edge6" class="edge">
 <title>Node6&#45;&gt;Node1</title>
-<path fill="none" stroke="#404040" d="M297.89,-397.5C291.56,-377.1 284.58,-351.47 281,-328 269.18,-250.54 268.63,-159.76 269.87,-102.68"/>
+<path fill="none" stroke="#404040" d="M301.37,-408.43C294.32,-386.84 285.26,-355.89 281,-328 269.18,-250.54 268.63,-159.76 269.87,-102.68"/>
 <polygon fill="none" stroke="#404040" points="269.87,-102.68 266.02,-96.58 270.17,-90.68 274.02,-96.78 269.87,-102.68"/>
 <text text-anchor="middle" x="311" y="-241.5" font-family="Helvetica,sans-Serif" font-size="10.00"> +write_buffer</text>
 </g>
 <!-- Node6&#45;&gt;Node5 -->
 <g id="edge5" class="edge">
 <title>Node6&#45;&gt;Node5</title>
-<path fill="none" stroke="#404040" d="M328.2,-397.35C342.91,-364.29 363.98,-316.95 378.71,-283.84"/>
-<polygon fill="none" stroke="#404040" points="378.76,-283.73 377.55,-276.63 383.64,-272.77 384.86,-279.88 378.76,-283.73"/>
+<path fill="none" stroke="#404040" d="M323.36,-408.23C337.9,-375.55 362.14,-321.08 378.58,-284.14"/>
+<polygon fill="none" stroke="#404040" points="378.75,-283.77 377.53,-276.66 383.63,-272.81 384.84,-279.91 378.75,-283.77"/>
 <text text-anchor="middle" x="365" y="-349" font-family="Helvetica,sans-Serif" font-size="10.00"> +data</text>
 </g>
 <!-- Node7 -->

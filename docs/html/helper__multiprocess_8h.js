@@ -1,6 +1,5 @@
 var helper__multiprocess_8h =
 [
-    [ "sharedMemoryInfo_st", "structsharedMemoryInfo__st.html", "structsharedMemoryInfo__st" ],
     [ "checkIpcErrors", "helper__multiprocess_8h.html#a963c63f1d4be099ba2afec1e8d4af4b9", null ],
     [ "sharedMemoryInfo", "helper__multiprocess_8h.html#add8daa71fee7607cb8c939a2928467db", null ],
     [ "Process", "helper__multiprocess_8h.html#a87c9efdf573e374c279d7d3dca3a6c6b", null ],

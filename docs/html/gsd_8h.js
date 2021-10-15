@@ -1,13 +1,5 @@
 var gsd_8h =
 [
-    [ "gsd_header", "structgsd__header.html", "structgsd__header" ],
-    [ "gsd_index_entry", "structgsd__index__entry.html", "structgsd__index__entry" ],
-    [ "gsd_name_id_pair", "structgsd__name__id__pair.html", "structgsd__name__id__pair" ],
-    [ "gsd_name_id_map", "structgsd__name__id__map.html", "structgsd__name__id__map" ],
-    [ "gsd_index_buffer", "structgsd__index__buffer.html", "structgsd__index__buffer" ],
-    [ "gsd_byte_buffer", "structgsd__byte__buffer.html", "structgsd__byte__buffer" ],
-    [ "gsd_name_buffer", "structgsd__name__buffer.html", "structgsd__name__buffer" ],
-    [ "gsd_handle", "structgsd__handle.html", "structgsd__handle" ],
     [ "gsd_type", "gsd_8h.html#a5813a2a637516567a2b42dc745ec1118", [
       [ "GSD_TYPE_UINT8", "gsd_8h.html#a5813a2a637516567a2b42dc745ec1118addc1aa49964e9df18eca95586854564e", null ],
       [ "GSD_TYPE_UINT16", "gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a154cf53ac1f09d58516ee90c5e50ee9b", null ],

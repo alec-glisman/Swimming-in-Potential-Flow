@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('md_src_README.html',''); initResizable
 <div class="contents">
 <div class="textblock"><p>C++ code for the simulation.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md22"></a>
+<h1><a class="anchor" id="autotoc_md15"></a>
 Subdirectory: cuda_helpers</h1>
 <p>Currently unused. Contains files that help to verify CUDA functions run and exit successfully.</p>
 <ul>
@@ -105,43 +105,43 @@ Subdirectory: cuda_helpers</h1>
 <li>Located in <code>Common</code> directory</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md24"></a>
+<h1><a class="anchor" id="autotoc_md17"></a>
 Subdirectory: data_io</h1>
 <p>C and C++ Files for importing and exporting data from simulation.</p>
-<h2><a class="anchor" id="autotoc_md25"></a>
+<h2><a class="anchor" id="autotoc_md18"></a>
 Class: gsd</h2>
 <p><a href="https://gsd.readthedocs.io/en/stable/python-module-gsd.hoomd.html">HOOMD GSD</a> library for direct GSD I/O</p>
-<h2><a class="anchor" id="autotoc_md26"></a>
+<h2><a class="anchor" id="autotoc_md19"></a>
 Class: GSDUtil</h2>
 <p>Wrapper for gsd class that loads data relevant to simulation.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md28"></a>
+<h1><a class="anchor" id="autotoc_md21"></a>
 Subdirectory: forces</h1>
-<h2><a class="anchor" id="autotoc_md29"></a>
+<h2><a class="anchor" id="autotoc_md22"></a>
 Class: potentialHydrodynamics</h2>
 <p>Calculates hydrodynamic tensors (mass matrices and gradients) and forces for spheres in potential flow. We only look at the leading-order dipole-dipole interactions $\mathcal{O}(r^{-3})$. Errors are of $\mathcal{O}(r^{-6})$.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md31"></a>
+<h1><a class="anchor" id="autotoc_md24"></a>
 Subdirectory: integrators</h1>
-<h2><a class="anchor" id="autotoc_md32"></a>
+<h2><a class="anchor" id="autotoc_md25"></a>
 Class: rungeKutta4</h2>
 <p>Numerical integration of kinematic data over one time step using the public <code>integrate()</code> method with a Runge-Kutta 4th order method. Modify this class for alternate system configurations and constraints.</p>
 <p>The private method <code>accelerationUpdate()</code> updates the acceleration using the constrained Lagrangian mechanics framework developed by Udwadia and Kalaba in 1996 (<a href="https://royalsocietypublishing.org/doi/pdf/10.1098/rspa.1992.0158?casa_token=FB12tYItZ5sAAAAA:y6w2zNwEaNEnvyNY1DXZVS5f67E4tZ52a0sja6w9TSHFJFbDpKvt9wdgPIuHbHZWCZOOpjb3l8LyPQ">paper</a>, <a href="https://en.wikipedia.org/wiki/Udwadia%E2%80%93Kalaba_formulation">Wikipedia</a>).</p>
 <p>Systems invariant to rigid spatial translation and rotation can also use the private <code>momentumLinAngFree()</code> method to calculate the rigid body motion portion of the motion. This assumes the articulation velocity and acceleration is known as well as the locater point. Before calling this method, call <code>articulationVel()</code>, <code>articulationAcc()</code> and <code>rLoc()</code> to update the relevant member variables.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md34"></a>
+<h1><a class="anchor" id="autotoc_md27"></a>
 Subdirectory: simulation_system</h1>
-<h2><a class="anchor" id="autotoc_md35"></a>
+<h2><a class="anchor" id="autotoc_md28"></a>
 Class: engine</h2>
 <p>The engine class assembles the simulation system and runs the time integration with the public <code>run()</code> method. The constructor also constructs the integrators and forces needed for the dynamics.</p>
-<h2><a class="anchor" id="autotoc_md36"></a>
+<h2><a class="anchor" id="autotoc_md29"></a>
 Class: progressBar</h2>
 <p><code><a class="el" href="progressBar_8hpp.html">progressBar.hpp</a></code> modified version of <a href="https://github.com/prakhar1989/progress-cpp.git">prakhar1989/progress-cpp</a> that displays simulation progress to terminal during execution.</p>
-<h2><a class="anchor" id="autotoc_md37"></a>
+<h2><a class="anchor" id="autotoc_md30"></a>
 Class: systemData</h2>
 <p>The <a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a> class contains all relevant data for the general simulation and can be accessed through relevant getter and setter functions. The constructor also constructs the GSD parser class and loads data into itself.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md39"></a>
+<h1><a class="anchor" id="autotoc_md32"></a>
 Files</h1>
 <p><code>CMakeLists.txt</code> links all files and external libraries into an executable named <code>bodies_in_potential_flow</code>. <br  />
  <code><a class="el" href="main_8cpp.html">main.cpp</a></code> main file of the project that constructs and runs the simulation. Requires two command line inputs: (1) input GSD filepath and (2) output directory to write data, respectively. The output directory must already exist, as the C++ code will not create it. </p>
@@ -151,7 +151,7 @@ Files</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Oct 15 2021 12:58:31 for Bodies in Potential Flow by
+    <li class="footer">Generated on Fri Oct 15 2021 13:11:10 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

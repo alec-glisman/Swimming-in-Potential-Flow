@@ -1,7 +1,6 @@
 var helper__timer_8h =
 [
     [ "StopWatchInterface", "classStopWatchInterface.html", "classStopWatchInterface" ],
-    [ "StopWatchLinux", "classStopWatchLinux.html", "classStopWatchLinux" ],
     [ "EXIT_WAIVED", "helper__timer_8h.html#ad20838a18f49298dae4d0ee29a0bb7a9", null ],
     [ "sdkCreateTimer", "helper__timer_8h.html#aa0a197b1848bce4d73807f7297d708df", null ],
     [ "sdkDeleteTimer", "helper__timer_8h.html#a629749b153ff9be740765149b3c652b6", null ],

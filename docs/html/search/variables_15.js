@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['y_5flabel_1190',['y_label',['../classplotStyling_1_1PlotStyling.html#ab56b2f3a6ee55cef26b697059dba4ebf',1,'plotStyling::PlotStyling']]]
+  ['z_5fheight_1067',['Z_height',['../namespacecollinear-swimmer-wall-configuration.html#abdcc35bf3f774c58ddcfca18dc8f4ff3',1,'collinear-swimmer-wall-configuration']]]
 ];

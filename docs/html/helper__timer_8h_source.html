@@ -298,114 +298,114 @@ $(document).ready(function(){initNavTree('helper__timer_8h_source.html',''); ini
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="preprocessor">#include &lt;ctime&gt;</span></div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="preprocessor">#include &lt;sys/time.h&gt;</span></div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160; </div>
-<div class="line"><a name="l00255"></a><span class="lineno"><a class="line" href="classStopWatchLinux.html">  255</a></span>&#160;<span class="keyword">class </span><a class="code" href="classStopWatchLinux.html">StopWatchLinux</a> : <span class="keyword">public</span> <a class="code" href="classStopWatchInterface.html">StopWatchInterface</a></div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="keyword">class </span>StopWatchLinux : <span class="keyword">public</span> <a class="code" href="classStopWatchInterface.html">StopWatchInterface</a></div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;{</div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00259"></a><span class="lineno"><a class="line" href="classStopWatchLinux.html#adb421b1d92bec2a59e564c053d94075f">  259</a></span>&#160;    <a class="code" href="classStopWatchLinux.html#adb421b1d92bec2a59e564c053d94075f">StopWatchLinux</a>() : <a class="code" href="classStopWatchLinux.html#aeea9d454621ed9246317c5c6793db1ed">start_time</a>(), <a class="code" href="classStopWatchLinux.html#adedd72587f2caf53a4f0af0fd90090a6">diff_time</a>(0.0), <a class="code" href="classStopWatchLinux.html#a709a9567a4868e7920132959ae8a00bf">total_time</a>(0.0), <a class="code" href="classStopWatchLinux.html#ada79dea0dc663ac4101a6d01a12b10bb">running</a>(false), <a class="code" href="classStopWatchLinux.html#a5d40c14043e5a732c908da418eeada77">clock_sessions</a>(0)</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    StopWatchLinux() : start_time(), diff_time(0.0), total_time(0.0), running(false), clock_sessions(0)</div>
 <div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    {</div>
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    }</div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; </div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    <span class="comment">// Destructor</span></div>
-<div class="line"><a name="l00264"></a><span class="lineno"><a class="line" href="classStopWatchLinux.html#a2063456840d915094595e8e3273d38c5">  264</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classStopWatchLinux.html#a2063456840d915094595e8e3273d38c5">~StopWatchLinux</a>()</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    <span class="keyword">virtual</span> ~StopWatchLinux()</div>
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    {</div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    }</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; </div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span></div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <a class="code" href="classStopWatchLinux.html#a5b48161b757890313c93cdcbf6470258">start</a>();</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <a class="code" href="classStopWatchInterface.html#a753200dac75f85ed691fc496d8343248">start</a>();</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160; </div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span></div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <a class="code" href="classStopWatchLinux.html#aea4fb94c36ad6d01cb371afa0aae0926">stop</a>();</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <a class="code" href="classStopWatchInterface.html#a53280ad65e3800cf608315afa3a20554">stop</a>();</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160; </div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span></div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    <a class="code" href="classStopWatchLinux.html#ae609a527c56e658941f539a8aaf43c71">reset</a>();</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    <a class="code" href="classStopWatchInterface.html#af38c96a046bc667528a8500d69106b09">reset</a>();</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160; </div>
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">float</span></div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    <a class="code" href="classStopWatchLinux.html#a7e211f57179ab20e6814127318e9f0f8">getTime</a>();</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    <a class="code" href="classStopWatchInterface.html#ab2127ae16fd7cafec70246fa07f2025f">getTime</a>();</div>
 <div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160; </div>
 <div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">float</span></div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    <a class="code" href="classStopWatchLinux.html#a702b38009675968d5798796978007376">getAverageTime</a>();</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    <a class="code" href="classStopWatchInterface.html#a049e581ad35895795be1e04763d40cc3">getAverageTime</a>();</div>
 <div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160; </div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;  <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    <span class="comment">// helper functions</span></div>
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160; </div>
 <div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">float</span></div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <a class="code" href="classStopWatchLinux.html#a3f7b53a7d64f4ffaa243eceee6f44b83">getDiffTime</a>();</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    getDiffTime();</div>
 <div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160; </div>
 <div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;  <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    <span class="comment">// member variables</span></div>
 <div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160; </div>
-<div class="line"><a name="l00303"></a><span class="lineno"><a class="line" href="classStopWatchLinux.html#aeea9d454621ed9246317c5c6793db1ed">  303</a></span>&#160;    <span class="keyword">struct </span>timeval <a class="code" href="classStopWatchLinux.html#aeea9d454621ed9246317c5c6793db1ed">start_time</a>;</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <span class="keyword">struct </span>timeval start_time;</div>
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160; </div>
-<div class="line"><a name="l00306"></a><span class="lineno"><a class="line" href="classStopWatchLinux.html#adedd72587f2caf53a4f0af0fd90090a6">  306</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="classStopWatchLinux.html#adedd72587f2caf53a4f0af0fd90090a6">diff_time</a>;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    <span class="keywordtype">float</span> diff_time;</div>
 <div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160; </div>
-<div class="line"><a name="l00309"></a><span class="lineno"><a class="line" href="classStopWatchLinux.html#a709a9567a4868e7920132959ae8a00bf">  309</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="classStopWatchLinux.html#a709a9567a4868e7920132959ae8a00bf">total_time</a>;</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    <span class="keywordtype">float</span> total_time;</div>
 <div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160; </div>
-<div class="line"><a name="l00312"></a><span class="lineno"><a class="line" href="classStopWatchLinux.html#ada79dea0dc663ac4101a6d01a12b10bb">  312</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classStopWatchLinux.html#ada79dea0dc663ac4101a6d01a12b10bb">running</a>;</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    <span class="keywordtype">bool</span> running;</div>
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160; </div>
-<div class="line"><a name="l00316"></a><span class="lineno"><a class="line" href="classStopWatchLinux.html#a5d40c14043e5a732c908da418eeada77">  316</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classStopWatchLinux.html#a5d40c14043e5a732c908da418eeada77">clock_sessions</a>;</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <span class="keywordtype">int</span> clock_sessions;</div>
 <div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;};</div>
 <div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160; </div>
 <div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="comment">// functions, inlined</span></div>
 <div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160; </div>
 <div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span></div>
-<div class="line"><a name="l00325"></a><span class="lineno"><a class="line" href="classStopWatchLinux.html#a5b48161b757890313c93cdcbf6470258">  325</a></span>&#160;<a class="code" href="classStopWatchLinux.html#a5b48161b757890313c93cdcbf6470258">StopWatchLinux::start</a>()</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;<a class="code" href="classStopWatchInterface.html#a753200dac75f85ed691fc496d8343248">StopWatchLinux::start</a>()</div>
 <div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;{</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    gettimeofday(&amp;<a class="code" href="classStopWatchLinux.html#aeea9d454621ed9246317c5c6793db1ed">start_time</a>, 0);</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    <a class="code" href="classStopWatchLinux.html#ada79dea0dc663ac4101a6d01a12b10bb">running</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    gettimeofday(&amp;start_time, 0);</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    running = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;}</div>
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160; </div>
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span></div>
-<div class="line"><a name="l00336"></a><span class="lineno"><a class="line" href="classStopWatchLinux.html#aea4fb94c36ad6d01cb371afa0aae0926">  336</a></span>&#160;<a class="code" href="classStopWatchLinux.html#aea4fb94c36ad6d01cb371afa0aae0926">StopWatchLinux::stop</a>()</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;<a class="code" href="classStopWatchInterface.html#a53280ad65e3800cf608315afa3a20554">StopWatchLinux::stop</a>()</div>
 <div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;{</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    <a class="code" href="classStopWatchLinux.html#adedd72587f2caf53a4f0af0fd90090a6">diff_time</a> = <a class="code" href="classStopWatchLinux.html#a3f7b53a7d64f4ffaa243eceee6f44b83">getDiffTime</a>();</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    <a class="code" href="classStopWatchLinux.html#a709a9567a4868e7920132959ae8a00bf">total_time</a> += <a class="code" href="classStopWatchLinux.html#adedd72587f2caf53a4f0af0fd90090a6">diff_time</a>;</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    <a class="code" href="classStopWatchLinux.html#ada79dea0dc663ac4101a6d01a12b10bb">running</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    <a class="code" href="classStopWatchLinux.html#a5d40c14043e5a732c908da418eeada77">clock_sessions</a>++;</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    diff_time = getDiffTime();</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    total_time += diff_time;</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    running = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    clock_sessions++;</div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;}</div>
 <div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160; </div>
 <div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span></div>
-<div class="line"><a name="l00349"></a><span class="lineno"><a class="line" href="classStopWatchLinux.html#ae609a527c56e658941f539a8aaf43c71">  349</a></span>&#160;<a class="code" href="classStopWatchLinux.html#ae609a527c56e658941f539a8aaf43c71">StopWatchLinux::reset</a>()</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;<a class="code" href="classStopWatchInterface.html#af38c96a046bc667528a8500d69106b09">StopWatchLinux::reset</a>()</div>
 <div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;{</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <a class="code" href="classStopWatchLinux.html#adedd72587f2caf53a4f0af0fd90090a6">diff_time</a>      = 0;</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    <a class="code" href="classStopWatchLinux.html#a709a9567a4868e7920132959ae8a00bf">total_time</a>     = 0;</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    <a class="code" href="classStopWatchLinux.html#a5d40c14043e5a732c908da418eeada77">clock_sessions</a> = 0;</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    diff_time      = 0;</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    total_time     = 0;</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    clock_sessions = 0;</div>
 <div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160; </div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="classStopWatchLinux.html#ada79dea0dc663ac4101a6d01a12b10bb">running</a>)</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    <span class="keywordflow">if</span> (running)</div>
 <div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    {</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;        gettimeofday(&amp;<a class="code" href="classStopWatchLinux.html#aeea9d454621ed9246317c5c6793db1ed">start_time</a>, 0);</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;        gettimeofday(&amp;start_time, 0);</div>
 <div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    }</div>
 <div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;}</div>
 <div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160; </div>
 <div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">float</span></div>
-<div class="line"><a name="l00368"></a><span class="lineno"><a class="line" href="classStopWatchLinux.html#a7e211f57179ab20e6814127318e9f0f8">  368</a></span>&#160;<a class="code" href="classStopWatchLinux.html#a7e211f57179ab20e6814127318e9f0f8">StopWatchLinux::getTime</a>()</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;<a class="code" href="classStopWatchInterface.html#ab2127ae16fd7cafec70246fa07f2025f">StopWatchLinux::getTime</a>()</div>
 <div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;{</div>
 <div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    <span class="comment">// Return the TOTAL time to date</span></div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    <span class="keywordtype">float</span> retval = <a class="code" href="classStopWatchLinux.html#a709a9567a4868e7920132959ae8a00bf">total_time</a>;</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    <span class="keywordtype">float</span> retval = total_time;</div>
 <div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160; </div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="classStopWatchLinux.html#ada79dea0dc663ac4101a6d01a12b10bb">running</a>)</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="keywordflow">if</span> (running)</div>
 <div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    {</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;        retval += <a class="code" href="classStopWatchLinux.html#a3f7b53a7d64f4ffaa243eceee6f44b83">getDiffTime</a>();</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;        retval += getDiffTime();</div>
 <div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    }</div>
 <div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160; </div>
 <div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    <span class="keywordflow">return</span> retval;</div>
 <div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;}</div>
 <div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160; </div>
 <div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">float</span></div>
-<div class="line"><a name="l00386"></a><span class="lineno"><a class="line" href="classStopWatchLinux.html#a702b38009675968d5798796978007376">  386</a></span>&#160;<a class="code" href="classStopWatchLinux.html#a702b38009675968d5798796978007376">StopWatchLinux::getAverageTime</a>()</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;<a class="code" href="classStopWatchInterface.html#a049e581ad35895795be1e04763d40cc3">StopWatchLinux::getAverageTime</a>()</div>
 <div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;{</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    <span class="keywordflow">return</span> (<a class="code" href="classStopWatchLinux.html#a5d40c14043e5a732c908da418eeada77">clock_sessions</a> &gt; 0) ? (<a class="code" href="classStopWatchLinux.html#a709a9567a4868e7920132959ae8a00bf">total_time</a> / <a class="code" href="classStopWatchLinux.html#a5d40c14043e5a732c908da418eeada77">clock_sessions</a>) : 0.0f;</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    <span class="keywordflow">return</span> (clock_sessions &gt; 0) ? (total_time / clock_sessions) : 0.0f;</div>
 <div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;}</div>
 <div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160; </div>
 <div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">float</span></div>
-<div class="line"><a name="l00394"></a><span class="lineno"><a class="line" href="classStopWatchLinux.html#a3f7b53a7d64f4ffaa243eceee6f44b83">  394</a></span>&#160;<a class="code" href="classStopWatchLinux.html#a3f7b53a7d64f4ffaa243eceee6f44b83">StopWatchLinux::getDiffTime</a>()</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;StopWatchLinux::getDiffTime()</div>
 <div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;{</div>
 <div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;    <span class="keyword">struct </span>timeval t_time;</div>
 <div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;    gettimeofday(&amp;t_time, 0);</div>
 <div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160; </div>
 <div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;    <span class="comment">// time difference in milli-seconds</span></div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(1000.0 * (t_time.tv_sec - <a class="code" href="classStopWatchLinux.html#aeea9d454621ed9246317c5c6793db1ed">start_time</a>.tv_sec) +</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;                              (0.001 * (t_time.tv_usec - <a class="code" href="classStopWatchLinux.html#aeea9d454621ed9246317c5c6793db1ed">start_time</a>.tv_usec)));</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(1000.0 * (t_time.tv_sec - start_time.tv_sec) +</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;                              (0.001 * (t_time.tv_usec - start_time.tv_usec)));</div>
 <div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;}</div>
 <div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;<span class="preprocessor">#endif // WIN32</span></div>
 <div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160; </div>
@@ -417,7 +417,7 @@ $(document).ready(function(){initNavTree('helper__timer_8h_source.html',''); ini
 <div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;<span class="preprocessor">#if defined(WIN32) || defined(_WIN32) || defined(WIN64) || defined(_WIN64)</span></div>
 <div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;    *timer_interface = <span class="keyword">reinterpret_cast&lt;</span><a class="code" href="classStopWatchInterface.html">StopWatchInterface</a>*<span class="keyword">&gt;</span>(<span class="keyword">new</span> StopWatchWin());</div>
 <div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    *timer_interface = <span class="keyword">reinterpret_cast&lt;</span><a class="code" href="classStopWatchInterface.html">StopWatchInterface</a>*<span class="keyword">&gt;</span>(<span class="keyword">new</span> <a class="code" href="classStopWatchLinux.html">StopWatchLinux</a>());</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    *timer_interface = <span class="keyword">reinterpret_cast&lt;</span><a class="code" href="classStopWatchInterface.html">StopWatchInterface</a>*<span class="keyword">&gt;</span>(<span class="keyword">new</span> StopWatchLinux());</div>
 <div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;    <span class="keywordflow">return</span> (*timer_interface != NULL) ? true : <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;}</div>
@@ -503,41 +503,27 @@ $(document).ready(function(){initNavTree('helper__timer_8h_source.html',''); ini
 <div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;<span class="preprocessor">#endif // COMMON_HELPER_TIMER_H_</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aclassStopWatchLinux_html_a2063456840d915094595e8e3273d38c5"><div class="ttname"><a href="classStopWatchLinux.html#a2063456840d915094595e8e3273d38c5">StopWatchLinux::~StopWatchLinux</a></div><div class="ttdeci">virtual ~StopWatchLinux()</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00264">helper_timer.h:264</a></div></div>
 <div class="ttc" id="ahelper__timer_8h_html_aa5d0a7252c27daa16091863ff789e38f"><div class="ttname"><a href="helper__timer_8h.html#aa5d0a7252c27daa16091863ff789e38f">sdkStartTimer</a></div><div class="ttdeci">bool sdkStartTimer(StopWatchInterface **timer_interface)</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00448">helper_timer.h:448</a></div></div>
 <div class="ttc" id="aclassStopWatchInterface_html_a53280ad65e3800cf608315afa3a20554"><div class="ttname"><a href="classStopWatchInterface.html#a53280ad65e3800cf608315afa3a20554">StopWatchInterface::stop</a></div><div class="ttdeci">virtual void stop()=0</div><div class="ttdoc">Stop time measurement.</div></div>
-<div class="ttc" id="aclassStopWatchLinux_html_adb421b1d92bec2a59e564c053d94075f"><div class="ttname"><a href="classStopWatchLinux.html#adb421b1d92bec2a59e564c053d94075f">StopWatchLinux::StopWatchLinux</a></div><div class="ttdeci">StopWatchLinux()</div><div class="ttdoc">Constructor, default.</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00259">helper_timer.h:259</a></div></div>
 <div class="ttc" id="aclassStopWatchInterface_html_a3b16caaf562bcb9e5b20053738729850"><div class="ttname"><a href="classStopWatchInterface.html#a3b16caaf562bcb9e5b20053738729850">StopWatchInterface::StopWatchInterface</a></div><div class="ttdeci">StopWatchInterface()</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00047">helper_timer.h:47</a></div></div>
 <div class="ttc" id="ahelper__timer_8h_html_a629749b153ff9be740765149b3c652b6"><div class="ttname"><a href="helper__timer_8h.html#a629749b153ff9be740765149b3c652b6">sdkDeleteTimer</a></div><div class="ttdeci">bool sdkDeleteTimer(StopWatchInterface **timer_interface)</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00431">helper_timer.h:431</a></div></div>
 <div class="ttc" id="aclassStopWatchInterface_html_ae6fe6ad45faa59f367624de26b808fc4"><div class="ttname"><a href="classStopWatchInterface.html#ae6fe6ad45faa59f367624de26b808fc4">StopWatchInterface::~StopWatchInterface</a></div><div class="ttdeci">virtual ~StopWatchInterface()</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00050">helper_timer.h:50</a></div></div>
-<div class="ttc" id="aclassStopWatchLinux_html_a3f7b53a7d64f4ffaa243eceee6f44b83"><div class="ttname"><a href="classStopWatchLinux.html#a3f7b53a7d64f4ffaa243eceee6f44b83">StopWatchLinux::getDiffTime</a></div><div class="ttdeci">float getDiffTime()</div><div class="ttdoc">Get difference between start time and current time.</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00394">helper_timer.h:394</a></div></div>
 <div class="ttc" id="aclassStopWatchInterface_html_a753200dac75f85ed691fc496d8343248"><div class="ttname"><a href="classStopWatchInterface.html#a753200dac75f85ed691fc496d8343248">StopWatchInterface::start</a></div><div class="ttdeci">virtual void start()=0</div><div class="ttdoc">Start time measurement.</div></div>
-<div class="ttc" id="aclassStopWatchLinux_html_ada79dea0dc663ac4101a6d01a12b10bb"><div class="ttname"><a href="classStopWatchLinux.html#ada79dea0dc663ac4101a6d01a12b10bb">StopWatchLinux::running</a></div><div class="ttdeci">bool running</div><div class="ttdoc">flag if the stop watch is running</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00312">helper_timer.h:312</a></div></div>
 <div class="ttc" id="aclassStopWatchInterface_html_a049e581ad35895795be1e04763d40cc3"><div class="ttname"><a href="classStopWatchInterface.html#a049e581ad35895795be1e04763d40cc3">StopWatchInterface::getAverageTime</a></div><div class="ttdeci">virtual float getAverageTime()=0</div></div>
-<div class="ttc" id="aclassStopWatchLinux_html_adedd72587f2caf53a4f0af0fd90090a6"><div class="ttname"><a href="classStopWatchLinux.html#adedd72587f2caf53a4f0af0fd90090a6">StopWatchLinux::diff_time</a></div><div class="ttdeci">float diff_time</div><div class="ttdoc">Time difference between the last start and stop.</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00306">helper_timer.h:306</a></div></div>
 <div class="ttc" id="ahelper__timer_8h_html_a52ab86f6d212465929808592e3a1054f"><div class="ttname"><a href="helper__timer_8h.html#a52ab86f6d212465929808592e3a1054f">sdkGetAverageTimerValue</a></div><div class="ttdeci">float sdkGetAverageTimerValue(StopWatchInterface **timer_interface)</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00499">helper_timer.h:499</a></div></div>
-<div class="ttc" id="aclassStopWatchLinux_html_a5b48161b757890313c93cdcbf6470258"><div class="ttname"><a href="classStopWatchLinux.html#a5b48161b757890313c93cdcbf6470258">StopWatchLinux::start</a></div><div class="ttdeci">void start()</div><div class="ttdoc">Start time measurement.</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00325">helper_timer.h:325</a></div></div>
-<div class="ttc" id="aclassStopWatchLinux_html_aeea9d454621ed9246317c5c6793db1ed"><div class="ttname"><a href="classStopWatchLinux.html#aeea9d454621ed9246317c5c6793db1ed">StopWatchLinux::start_time</a></div><div class="ttdeci">struct timeval start_time</div><div class="ttdoc">Start of measurement.</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00303">helper_timer.h:303</a></div></div>
-<div class="ttc" id="aclassStopWatchLinux_html_aea4fb94c36ad6d01cb371afa0aae0926"><div class="ttname"><a href="classStopWatchLinux.html#aea4fb94c36ad6d01cb371afa0aae0926">StopWatchLinux::stop</a></div><div class="ttdeci">void stop()</div><div class="ttdoc">Stop time measurement.</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00336">helper_timer.h:336</a></div></div>
-<div class="ttc" id="aclassStopWatchLinux_html"><div class="ttname"><a href="classStopWatchLinux.html">StopWatchLinux</a></div><div class="ttdoc">Windows specific implementation of StopWatch.</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00255">helper_timer.h:255</a></div></div>
 <div class="ttc" id="ahelper__timer_8h_html_ac50364748b6574878cea082c9bd1b068"><div class="ttname"><a href="helper__timer_8h.html#ac50364748b6574878cea082c9bd1b068">sdkGetTimerValue</a></div><div class="ttdeci">float sdkGetTimerValue(StopWatchInterface **timer_interface)</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00519">helper_timer.h:519</a></div></div>
 <div class="ttc" id="ahelper__timer_8h_html_a700f4d51fe548d47bf77c4c029d91c75"><div class="ttname"><a href="helper__timer_8h.html#a700f4d51fe548d47bf77c4c029d91c75">sdkResetTimer</a></div><div class="ttdeci">bool sdkResetTimer(StopWatchInterface **timer_interface)</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00480">helper_timer.h:480</a></div></div>
 <div class="ttc" id="ahelper__timer_8h_html_afef340cd9aa6f9fc7ddf20e2525bb531"><div class="ttname"><a href="helper__timer_8h.html#afef340cd9aa6f9fc7ddf20e2525bb531">sdkStopTimer</a></div><div class="ttdeci">bool sdkStopTimer(StopWatchInterface **timer_interface)</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00464">helper_timer.h:464</a></div></div>
 <div class="ttc" id="aclassStopWatchInterface_html_af38c96a046bc667528a8500d69106b09"><div class="ttname"><a href="classStopWatchInterface.html#af38c96a046bc667528a8500d69106b09">StopWatchInterface::reset</a></div><div class="ttdeci">virtual void reset()=0</div><div class="ttdoc">Reset time counters to zero.</div></div>
 <div class="ttc" id="aclassStopWatchInterface_html_ab2127ae16fd7cafec70246fa07f2025f"><div class="ttname"><a href="classStopWatchInterface.html#ab2127ae16fd7cafec70246fa07f2025f">StopWatchInterface::getTime</a></div><div class="ttdeci">virtual float getTime()=0</div></div>
-<div class="ttc" id="aclassStopWatchLinux_html_ae609a527c56e658941f539a8aaf43c71"><div class="ttname"><a href="classStopWatchLinux.html#ae609a527c56e658941f539a8aaf43c71">StopWatchLinux::reset</a></div><div class="ttdeci">void reset()</div><div class="ttdoc">Reset time counters to zero.</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00349">helper_timer.h:349</a></div></div>
 <div class="ttc" id="aclassStopWatchInterface_html"><div class="ttname"><a href="classStopWatchInterface.html">StopWatchInterface</a></div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00044">helper_timer.h:44</a></div></div>
 <div class="ttc" id="aexception_8h_html"><div class="ttname"><a href="exception_8h.html">exception.h</a></div></div>
-<div class="ttc" id="aclassStopWatchLinux_html_a702b38009675968d5798796978007376"><div class="ttname"><a href="classStopWatchLinux.html#a702b38009675968d5798796978007376">StopWatchLinux::getAverageTime</a></div><div class="ttdeci">float getAverageTime()</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00386">helper_timer.h:386</a></div></div>
-<div class="ttc" id="aclassStopWatchLinux_html_a7e211f57179ab20e6814127318e9f0f8"><div class="ttname"><a href="classStopWatchLinux.html#a7e211f57179ab20e6814127318e9f0f8">StopWatchLinux::getTime</a></div><div class="ttdeci">float getTime()</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00368">helper_timer.h:368</a></div></div>
-<div class="ttc" id="aclassStopWatchLinux_html_a5d40c14043e5a732c908da418eeada77"><div class="ttname"><a href="classStopWatchLinux.html#a5d40c14043e5a732c908da418eeada77">StopWatchLinux::clock_sessions</a></div><div class="ttdeci">int clock_sessions</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00316">helper_timer.h:316</a></div></div>
 <div class="ttc" id="ahelper__timer_8h_html_aa0a197b1848bce4d73807f7297d708df"><div class="ttname"><a href="helper__timer_8h.html#aa0a197b1848bce4d73807f7297d708df">sdkCreateTimer</a></div><div class="ttdeci">bool sdkCreateTimer(StopWatchInterface **timer_interface)</div><div class="ttdoc">Timer functionality exported.</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00414">helper_timer.h:414</a></div></div>
-<div class="ttc" id="aclassStopWatchLinux_html_a709a9567a4868e7920132959ae8a00bf"><div class="ttname"><a href="classStopWatchLinux.html#a709a9567a4868e7920132959ae8a00bf">StopWatchLinux::total_time</a></div><div class="ttdeci">float total_time</div><div class="ttdoc">TOTAL time difference between starts and stops.</div><div class="ttdef"><b>Definition:</b> <a href="helper__timer_8h_source.html#l00309">helper_timer.h:309</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_0c26bd22f254302c4dfbaa95bf527e9d.html">helpers</a></li><li class="navelem"><a class="el" href="dir_d54f985c9a00fdf32f5208dabda08809.html">cuda</a></li><li class="navelem"><a class="el" href="helper__timer_8h.html">helper_timer.h</a></li>
-    <li class="footer">Generated on Fri Oct 15 2021 12:58:30 for Bodies in Potential Flow by
+    <li class="footer">Generated on Fri Oct 15 2021 13:11:10 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

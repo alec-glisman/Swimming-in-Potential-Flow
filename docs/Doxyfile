@@ -873,15 +873,26 @@ WARN_LOGFILE =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT = main.md \
-    LICENSE \
-    TODO.md \
     requirements \
+    requirements/C++ \
+    requirements/Perl \
+    requirements/Python \
     src \
+    src/data_io \
+    src/forces \
+    src/helpers/eigen \
+    src/helpers/cuda \
+    src/integrators \
+    src/simulation_system \
     tests \
-    scripts \ 
-input \
+    scripts \
     python \
-    docker
+    python/initial_configurations \
+    python/analysis \
+    docker \
+    profile \
+    LICENSE \
+    TODO.md
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
@@ -958,7 +969,7 @@ FILE_PATTERNS = *.c \
 # be searched for input files as well.
 # The default value is: NO.
 
-RECURSIVE = YES
+RECURSIVE = NO
 
 # The EXCLUDE tag can be used to specify files and/or directories that should be
 # excluded from the INPUT source files. This way you can easily exclude a
@@ -997,7 +1008,18 @@ EXCLUDE_PATTERNS = */data/* \
 # Note that the wildcards are matched against the file with absolute path, so to
 # exclude all test directories use the pattern */test/*
 
-EXCLUDE_SYMBOLS =
+EXCLUDE_SYMBOLS = gsd_byte_buffer \
+    gsd_handle \
+    gsd_header \
+    gsd_index_buffer \
+    gsd_index_entry \
+    gsd_name_buffer \
+    gsd_name_id_map \
+    gsd_name_id_pair \
+    sharedMemoryInfo_st \
+    StopWatchLinux \
+    testOpts \
+    Exception
 
 # The EXAMPLE_PATH tag can be used to specify one or more files or directories
 # that contain example code fragments that are included (see the \include
