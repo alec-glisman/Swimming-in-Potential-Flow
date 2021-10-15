@@ -157,7 +157,7 @@ GSDUtil::readHeader()
     m_system->setNumSpatialDim(int(dim));
     spdlog::get(m_logName)->info("dim : {0}", dim);
     assert(int(dim) == m_system->numSpatialDim() && "number of dimensions not properly set");
-    assert(int(dim) == 3 && "number of spatial dimensions must be 3 for the potential hydrodynamics");
+    assert(int(dim) == 3 && "number of spatial dimensions must be 3 for  potential hydrodynamics");
 
     spdlog::get(m_logName)->info("GSD parsing number of particles");
     uint32_t N  = 0;
@@ -375,10 +375,12 @@ GSDUtil::readParticles()
 
     spdlog::get(m_logName)->info("Calculating body kinematics");
     spdlog::get(m_logName)->critical("Time derivatives of orientational components are assumed zero.");
+
     Eigen::VectorXd positions_bodies     = n7_vec;
     Eigen::VectorXd velocities_bodies    = n7_vec;
     Eigen::VectorXd accelerations_bodies = n7_vec;
-    int             body_count{0};
+
+    int body_count{0};
 
     for (int i = 0; i < m_system->numParticles(); i++)
     {
@@ -386,6 +388,7 @@ GSDUtil::readParticles()
         if (m_system->particleTypeId()(i) == 1)
         {
             positions_bodies.segment<3>(7 * body_count).noalias() = m_system->positionsParticles().segment<3>(3 * i);
+
             positions_bodies.segment<4>(7 * body_count + 3).noalias() =
                 m_system->orientationsParticles().segment<4>(3 * i);
 
@@ -394,7 +397,7 @@ GSDUtil::readParticles()
             accelerations_bodies.segment<3>(7 * body_count).noalias() =
                 m_system->accelerationsParticles().segment<3>(3 * i);
 
-            body_count += 1;
+            body_count++;
         }
     }
     assert(body_count == m_system->numBodies() && "Incorrect number of bodies filled");
