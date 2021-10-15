@@ -111,7 +111,6 @@ systemData::update(Eigen::ThreadPoolDevice& device)
     velocitiesArticulation();
     accelerationsArticulation();
 
-    locaterPointLocations();
     rigidBodyMotionTensors(device);
 
     udwadiaLinearSystem();
@@ -221,27 +220,6 @@ systemData::accelerationsArticulation()
     m_accelerations_particles_articulation.segment<3>(3 * 2).noalias() = a3_mag * q;
     m_accelerations_particles_articulation.segment<3>(3 * 3).noalias() = a1_mag * q_tilde;
     m_accelerations_particles_articulation.segment<3>(3 * 5).noalias() = a3_mag * q_tilde;
-}
-
-/* REVIEW[epic=Change,order=5]: Change assignment of m_positions_locater_particles for different
- * systems */
-void
-systemData::locaterPointLocations()
-{
-    m_positions_locater_particles = Eigen::VectorXd::Zero(3 * m_num_bodies);
-    int body_count{0};
-
-    for (int i = 0; i < m_num_particles; i++)
-    {
-        // only fill for locater particles
-        if (m_particle_type_id(i) == 1)
-        {
-            m_positions_bodies.segment<3>(7 * body_count).noalias() = m_positions_particles.segment<3>(3 * i);
-
-            body_count++;
-        }
-    }
-    assert(body_count == m_num_bodies && "Incorrect number of bodies filled");
 }
 
 /* REVIEW[epic=Change,order=1]: Change udwadiaLinearSystem() for different systems

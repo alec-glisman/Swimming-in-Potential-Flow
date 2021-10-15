@@ -88,9 +88,6 @@ class systemData : public std::enable_shared_from_this<systemData>
     accelerationsArticulation();
 
     void
-    locaterPointLocations();
-
-    void
     rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device);
 
     void
