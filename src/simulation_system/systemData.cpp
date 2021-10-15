@@ -105,21 +105,6 @@ systemData::initializeData()
 }
 
 void
-systemData::update(Eigen::ThreadPoolDevice& device)
-{
-    // NOTE: Ordering of following functions does not matter
-    velocitiesArticulation();
-    accelerationsArticulation();
-
-    rigidBodyMotionTensors(device);
-
-    udwadiaLinearSystem();
-
-    // NOTE: Call gradientChangeOfVariableTensors() after rigidBodyMotionTensors()
-    gradientChangeOfVariableTensors(device);
-}
-
-void
 systemData::parseGSD()
 {
     spdlog::get(m_logName)->info("Running parseGSD()");
@@ -167,6 +152,21 @@ systemData::checkInput()
 
     assert(m_wca_epsilon >= 0.0 && "WCA_epsilon must be non-negative.");
     assert(m_wca_sigma >= 0.0 && "WCA_sigma must be non-negative.");
+}
+
+void
+systemData::update(Eigen::ThreadPoolDevice& device)
+{
+    // NOTE: Ordering of following functions does not matter
+    velocitiesArticulation();
+    accelerationsArticulation();
+
+    rigidBodyMotionTensors(device);
+
+    udwadiaLinearSystem();
+
+    // NOTE: Call gradientChangeOfVariableTensors() after rigidBodyMotionTensors()
+    gradientChangeOfVariableTensors(device);
 }
 
 // FIXME: Redo in light of new particle ordering

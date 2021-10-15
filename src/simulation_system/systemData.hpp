@@ -88,13 +88,13 @@ class systemData : public std::enable_shared_from_this<systemData>
     accelerationsArticulation();
 
     void
+    udwadiaLinearSystem();
+
+    void
     rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device);
 
     void
     gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device);
-
-    void
-    udwadiaLinearSystem();
 
     /* SECTION: Static functions */
     /**
