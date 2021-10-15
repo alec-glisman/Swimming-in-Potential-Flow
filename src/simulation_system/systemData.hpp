@@ -207,17 +207,34 @@ class systemData : public std::enable_shared_from_this<systemData>
     bool                        m_return_bool{true};
     bool                        m_GSD_parsed{false};
 
-    /* REVIEW[epic=Change,order=0]: System specific data, change parameters stored for different
-     * systems */
     /* ANCHOR: System specific data, change parameters stored for different systems */
-    // Swimming kinematic constraints
-    /// velocity amplitude of kinematic constraint between particle pairs
+    /**
+     * @brief Swimming kinematic constraint velocity amplitude of kinematic constraint between particle pairs
+     *
+     * @review_swimmer Change parameters stored for different systems
+     *
+     */
     double m_sys_spec_U0{-1.0};
-    /// oscillation frequency
+    /**
+     * @brief Swimming kinematic constraint oscillation frequency
+     *
+     * @review_swimmer Change parameters stored for different systems
+     *
+     */
     double m_sys_spec_omega{-1.0};
-    /// phase shift (in radians) between oscillators
+    /**
+     * @brief Swimming kinematic constraint phase shift (in radians between oscillators)
+     *
+     * @review_swimmer Change parameters stored for different systems
+     *
+     */
     double m_sys_spec_phase_shift{-1.0};
-    /// Time-average spatial separation between a particle pair during oscillation
+    /**
+     * @brief Swimming kinematic constraint time-average spatial separation between a particle pair during oscillation
+     *
+     * @review_swimmer Change parameters stored for different systems
+     *
+     */
     double m_sys_spec_R_avg{-1.0};
 
     /* ANCHOR: particle parameters */

@@ -73,7 +73,7 @@ var NAVTREE =
       [ "Files", "md_python_README.html#autotoc_md44", null ]
     ] ],
     [ "Todo List", "todo.html", null ],
-    [ "Altering swimmer design", "review.html", null ],
+    [ "Altering Swimmer Design", "review.html", null ],
     [ "File List", "files.html", "files" ],
     [ "Namespace List", "namespaces.html", "namespaces" ],
     [ "Class List", "annotated.html", "annotated" ]
@@ -83,7 +83,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "GSDUtil_8cpp.html",
-"classsystemData.html#a3c41026c4b66d4f6e6e22a6398c6ced8",
+"classsystemData.html#a3df4d101c0a631de9b6330e9950da173",
 "gsd_8h.html#a0411cd49bb5b71852cecd93bcbf0ca2dab1e8211d5344adb743238d82d369331d",
 "helper__math_8h.html#aabe4a4caf16da937cee9a5e2d2e6d123",
 "structgsd__handle.html#a7ae49d668bbd61ce9d022acf5e5a9e76"
