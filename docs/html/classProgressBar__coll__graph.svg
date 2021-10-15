@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title=" ">
+<g id="a_node1"><a xlink:title="Creates and displays a progress bar to terminal screen.">
 <polygon fill="#bfbfbf" stroke="black" points="0,-0.5 0,-156.5 94,-156.5 94,-0.5 0,-0.5"/>
 <text text-anchor="middle" x="47" y="-144.5" font-family="Helvetica,sans-Serif" font-size="10.00">ProgressBar</text>
 <polyline fill="none" stroke="black" points="0,-137.5 94,-137.5 "/>

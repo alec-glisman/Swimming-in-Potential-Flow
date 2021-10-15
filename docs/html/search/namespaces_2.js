@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['plotstyling_577',['plotStyling',['../namespaceplotStyling.html',1,'']]]
+  ['plotstyling_569',['plotStyling',['../namespaceplotStyling.html',1,'']]]
 ];

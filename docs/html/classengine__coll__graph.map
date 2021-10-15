@@ -1,7 +1,7 @@
 <map id="engine" name="engine">
 <area shape="rect" id="node1" title="Manages the time integration of the simulation system as well as when to output data to GSD." alt="" coords="805,3713,972,3849"/>
 <area shape="rect" id="node2" title=" " alt="" coords="1309,417,1482,509"/>
-<area shape="rect" id="node3" href="$classProgressBar.html" title=" " alt="" coords="1385,145,1510,355"/>
+<area shape="rect" id="node3" href="$classProgressBar.html" title="Creates and displays a progress bar to terminal screen." alt="" coords="1385,145,1510,355"/>
 <area shape="rect" id="node4" title="STL class." alt="" coords="952,211,1092,289"/>
 <area shape="rect" id="node6" title=" " alt="" coords="736,425,940,502"/>
 <area shape="rect" id="node9" title=" " alt="" coords="247,1350,429,1427"/>

@@ -1017,6 +1017,7 @@ EXCLUDE_SYMBOLS = gsd_byte_buffer \
     gsd_name_id_map \
     gsd_name_id_pair \
     sharedMemoryInfo_st \
+    StopWatchInterface \
     StopWatchLinux \
     testOpts \
     Exception
