@@ -109,8 +109,7 @@ $(document).ready(function(){initNavTree('classengine.html',''); initResizable()
 <div class="dynheader">
 Collaboration diagram for engine:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classengine__coll__graph.svg" width="2188" height="4016"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classengine__coll__graph.svg" width="2187" height="4002"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -197,26 +196,29 @@ Private Attributes</h2></td></tr>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="comment">// validate system loaded GSD data</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Checking input systemData class loaded GSD data: {0}&quot;</span>, <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;gSDParsed());</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    assert(<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;gSDParsed() == <span class="keyword">true</span> &amp;&amp; <span class="stringliteral">&quot;GSD data not loaded before calling engine constructor&quot;</span>);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="comment">// Initialize forces</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Initializing potential hydrodynamics&quot;</span>);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <a class="code" href="classengine.html#a6f7f54be0e646830f19eb105346eb7e5">m_potHydro</a> = std::make_shared&lt;potentialHydrodynamics&gt;(<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="comment">// Initialize integrator</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Initializing integrator&quot;</span>);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="classengine.html#ab42bae227e8d6bde5d5ebe226b1a99ac">m_rk4Integrator</a> = std::make_shared&lt;rungeKutta4&gt;(<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>, <a class="code" href="classengine.html#a6f7f54be0e646830f19eb105346eb7e5">m_potHydro</a>);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="comment">// Initialize progressBar</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Initializing progressBar&quot;</span>);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">int</span> num_step = (int)ceil(<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;tf() / <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;dt());</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Numer of integration steps: {0}&quot;</span>, num_step);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> barWidth = 70;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="classengine.html#a2bb2d3c900042df38e1a093ee21169d0">m_progressBar</a>         = std::make_shared&lt;ProgressBar&gt;(<span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">int</span><span class="keyword">&gt;</span>(num_step), barWidth);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Constructor complete&quot;</span>);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;flush();</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;gSDParsed() == <span class="keyword">false</span>)</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    {</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;GSD data not loaded into systemData class before calling engine constructor.&quot;</span>);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    }</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="comment">// Initialize forces</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Initializing potential hydrodynamics&quot;</span>);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <a class="code" href="classengine.html#a6f7f54be0e646830f19eb105346eb7e5">m_potHydro</a> = std::make_shared&lt;potentialHydrodynamics&gt;(<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="comment">// Initialize integrator</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Initializing integrator&quot;</span>);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="classengine.html#ab42bae227e8d6bde5d5ebe226b1a99ac">m_rk4Integrator</a> = std::make_shared&lt;rungeKutta4&gt;(<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>, <a class="code" href="classengine.html#a6f7f54be0e646830f19eb105346eb7e5">m_potHydro</a>);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="comment">// Initialize progressBar</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Initializing progressBar&quot;</span>);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">int</span> num_step = (int)ceil(<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;tf() / <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;dt());</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Numer of integration steps: {0}&quot;</span>, num_step);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> barWidth = 70;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="classengine.html#a2bb2d3c900042df38e1a093ee21169d0">m_progressBar</a>         = std::make_shared&lt;ProgressBar&gt;(<span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">int</span><span class="keyword">&gt;</span>(num_step), barWidth);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Constructor complete&quot;</span>);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;flush();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="engine_8hpp_source.html#l00090">m_logFile</a>, <a class="el" href="engine_8hpp_source.html#l00091">m_logName</a>, <a class="el" href="engine_8hpp_source.html#l00085">m_potHydro</a>, <a class="el" href="engine_8hpp_source.html#l00087">m_progressBar</a>, <a class="el" href="engine_8hpp_source.html#l00086">m_rk4Integrator</a>, and <a class="el" href="engine_8hpp_source.html#l00084">m_system</a>.</p>
 
@@ -239,11 +241,11 @@ Private Attributes</h2></td></tr>
 
 <p>Destroy the engine object. </p>
 
-<p class="definition">Definition at line <a class="el" href="engine_8cpp_source.html#l00040">40</a> of file <a class="el" href="engine_8cpp_source.html">engine.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;{</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Destructing engine&quot;</span>);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;flush();</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="engine_8cpp_source.html#l00043">43</a> of file <a class="el" href="engine_8cpp_source.html">engine.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;{</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Destructing engine&quot;</span>);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;flush();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="engine_8hpp_source.html#l00091">m_logName</a>.</p>
 
@@ -270,57 +272,57 @@ Private Attributes</h2></td></tr>
 <p>&lt; number of threads in pool for eigen calculations (set to number of physical cores on machine)</p>
 <p>&lt; thread pool device with access to all threads</p>
 
-<p class="definition">Definition at line <a class="el" href="engine_8cpp_source.html#l00047">47</a> of file <a class="el" href="engine_8cpp_source.html">engine.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;{</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;critical(<span class="stringliteral">&quot;Starting engine run&quot;</span>);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="classengine.html#a2bb2d3c900042df38e1a093ee21169d0">m_progressBar</a>-&gt;display(); <span class="comment">// display the progress bar</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="comment">// calculate number of steps in integration</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">double</span> t_remaining{<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;tf() - <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;t()};</div>
+<p class="definition">Definition at line <a class="el" href="engine_8cpp_source.html#l00050">50</a> of file <a class="el" href="engine_8cpp_source.html">engine.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;{</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;critical(<span class="stringliteral">&quot;Starting engine run&quot;</span>);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="classengine.html#a2bb2d3c900042df38e1a093ee21169d0">m_progressBar</a>-&gt;display(); <span class="comment">// display the progress bar</span></div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">int</span> tot_step     = (int)ceil(t_remaining / <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;dt());</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">int</span> write_step   = (int)ceil(t_remaining / <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;dt() / <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;numStepsOutput());</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">int</span> display_step = (int)ceil(t_remaining / <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;dt() * <a class="code" href="classengine.html#a88541de1c141d7d2c77f08b062f56a91">m_outputPercentile</a>);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Write step: {0}&quot;</span>, write_step);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Display step: {0}&quot;</span>, display_step);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="comment">// calculate number of steps in integration</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">double</span> t_remaining{<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;tf() - <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;t()};</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">int</span> tot_step     = (int)ceil(t_remaining / <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;dt());</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">int</span> write_step   = (int)ceil(t_remaining / <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;dt() / <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;numStepsOutput());</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">int</span> display_step = (int)ceil(t_remaining / <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;dt() * <a class="code" href="classengine.html#a88541de1c141d7d2c77f08b062f56a91">m_outputPercentile</a>);</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="comment">// create eigen3 thread-pool and device</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment"></span>    Eigen::ThreadPool thread_pool = Eigen::ThreadPool(<a class="code" href="classengine.html#a0e0b1453f9b5bc57e39695e31aa06d45">m_num_physical_cores</a>);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    Eigen::ThreadPoolDevice all_cores_device(&amp;thread_pool, <a class="code" href="classengine.html#a0e0b1453f9b5bc57e39695e31aa06d45">m_num_physical_cores</a>);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordflow">while</span> (<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;timestep() &lt; tot_step)</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    {</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="comment">// Integrate system forward in time</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <a class="code" href="classengine.html#a5c9fba1e8b0611c00438c9ba8736e348">integrate</a>(all_cores_device);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="comment">// Update time for next step</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;setT(<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;t() + <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;dt());</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;setTimestep(<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;timestep() + 1);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        ++(*m_progressBar);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="comment">// Output data</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordflow">if</span> ((<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;timestep() % write_step == 0) || (<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;t() &gt;= <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;tf()))</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        {</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Writing frame at t = {0}&quot;</span>, <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;t());</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;gsdUtil()-&gt;writeFrame();</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;flush();</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        }</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;timestep() % display_step == 0)</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <a class="code" href="classengine.html#a2bb2d3c900042df38e1a093ee21169d0">m_progressBar</a>-&gt;display(); <span class="comment">// display the progress bar</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    }</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="comment">// Final data writing and shut down</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Ending engine run&quot;</span>);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Writing frame at t = {0}&quot;</span>, <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;t());</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;gsdUtil()-&gt;writeFrame();</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <a class="code" href="classengine.html#a2bb2d3c900042df38e1a093ee21169d0">m_progressBar</a>-&gt;display();</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;flush();</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;}</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Write step: {0}&quot;</span>, write_step);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Display step: {0}&quot;</span>, display_step);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="comment">// create eigen3 thread-pool and device</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment"></span>    Eigen::ThreadPool thread_pool = Eigen::ThreadPool(<a class="code" href="classengine.html#a0e0b1453f9b5bc57e39695e31aa06d45">m_num_physical_cores</a>);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    Eigen::ThreadPoolDevice all_cores_device(&amp;thread_pool, <a class="code" href="classengine.html#a0e0b1453f9b5bc57e39695e31aa06d45">m_num_physical_cores</a>);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">while</span> (<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;timestep() &lt; tot_step)</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    {</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="comment">// Integrate system forward in time</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <a class="code" href="classengine.html#a5c9fba1e8b0611c00438c9ba8736e348">integrate</a>(all_cores_device);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="comment">// Update time for next step</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;setT(<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;t() + <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;dt());</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;setTimestep(<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;timestep() + 1);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        ++(*m_progressBar);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="comment">// Output data</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keywordflow">if</span> ((<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;timestep() % write_step == 0) || (<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;t() &gt;= <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;tf()))</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        {</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Writing frame at t = {0}&quot;</span>, <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;t());</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;gsdUtil()-&gt;writeFrame();</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;flush();</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        }</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;timestep() % display_step == 0)</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        {</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <a class="code" href="classengine.html#a2bb2d3c900042df38e1a093ee21169d0">m_progressBar</a>-&gt;display(); <span class="comment">// display the progress bar</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        }</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    }</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="comment">// Final data writing and shut down</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Ending engine run&quot;</span>);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Writing frame at t = {0}&quot;</span>, <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;t());</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <a class="code" href="classengine.html#a79e5e036684d522159ef64ac42576476">m_system</a>-&gt;gsdUtil()-&gt;writeFrame();</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <a class="code" href="classengine.html#a2bb2d3c900042df38e1a093ee21169d0">m_progressBar</a>-&gt;display();</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;flush();</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="engine_8cpp_source.html#l00100">integrate()</a>, <a class="el" href="engine_8hpp_source.html#l00091">m_logName</a>, <a class="el" href="engine_8hpp_source.html#l00095">m_num_physical_cores</a>, <a class="el" href="engine_8hpp_source.html#l00099">m_outputPercentile</a>, <a class="el" href="engine_8hpp_source.html#l00087">m_progressBar</a>, and <a class="el" href="engine_8hpp_source.html#l00084">m_system</a>.</p>
+<p class="reference">References <a class="el" href="engine_8cpp_source.html#l00103">integrate()</a>, <a class="el" href="engine_8hpp_source.html#l00091">m_logName</a>, <a class="el" href="engine_8hpp_source.html#l00095">m_num_physical_cores</a>, <a class="el" href="engine_8hpp_source.html#l00099">m_outputPercentile</a>, <a class="el" href="engine_8hpp_source.html#l00087">m_progressBar</a>, and <a class="el" href="engine_8hpp_source.html#l00084">m_system</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -361,14 +363,14 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="engine_8cpp_source.html#l00100">100</a> of file <a class="el" href="engine_8cpp_source.html">engine.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;{</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <a class="code" href="classengine.html#ab42bae227e8d6bde5d5ebe226b1a99ac">m_rk4Integrator</a>-&gt;integrate(device);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="engine_8cpp_source.html#l00103">103</a> of file <a class="el" href="engine_8cpp_source.html">engine.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;{</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <a class="code" href="classengine.html#ab42bae227e8d6bde5d5ebe226b1a99ac">m_rk4Integrator</a>-&gt;integrate(device);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="engine_8hpp_source.html#l00086">m_rk4Integrator</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00047">run()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00050">run()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -400,7 +402,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00084">84</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00007">engine()</a>, and <a class="el" href="engine_8cpp_source.html#l00047">run()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00007">engine()</a>, and <a class="el" href="engine_8cpp_source.html#l00050">run()</a>.</p>
 
 </div>
 </div>
@@ -452,7 +454,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00086">86</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00007">engine()</a>, and <a class="el" href="engine_8cpp_source.html#l00100">integrate()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00007">engine()</a>, and <a class="el" href="engine_8cpp_source.html#l00103">integrate()</a>.</p>
 
 </div>
 </div>
@@ -478,7 +480,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00087">87</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00007">engine()</a>, and <a class="el" href="engine_8cpp_source.html#l00047">run()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00007">engine()</a>, and <a class="el" href="engine_8cpp_source.html#l00050">run()</a>.</p>
 
 </div>
 </div>
@@ -530,7 +532,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00091">91</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00007">engine()</a>, <a class="el" href="engine_8cpp_source.html#l00047">run()</a>, and <a class="el" href="engine_8cpp_source.html#l00040">~engine()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00007">engine()</a>, <a class="el" href="engine_8cpp_source.html#l00050">run()</a>, and <a class="el" href="engine_8cpp_source.html#l00043">~engine()</a>.</p>
 
 </div>
 </div>
@@ -558,7 +560,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00095">95</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00047">run()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00050">run()</a>.</p>
 
 </div>
 </div>
@@ -586,7 +588,7 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00099">99</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00047">run()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00050">run()</a>.</p>
 
 </div>
 </div>
@@ -597,7 +599,7 @@ Here is the caller graph for this function:</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="aclassengine_html_ab42bae227e8d6bde5d5ebe226b1a99ac"><div class="ttname"><a href="classengine.html#ab42bae227e8d6bde5d5ebe226b1a99ac">engine::m_rk4Integrator</a></div><div class="ttdeci">std::shared_ptr&lt; rungeKutta4 &gt; m_rk4Integrator</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00086">engine.hpp:86</a></div></div>
-<div class="ttc" id="aclassengine_html_a5c9fba1e8b0611c00438c9ba8736e348"><div class="ttname"><a href="classengine.html#a5c9fba1e8b0611c00438c9ba8736e348">engine::integrate</a></div><div class="ttdeci">void integrate(Eigen::ThreadPoolDevice &amp;device)</div><div class="ttdoc">Updates the simulation framework 1 time step.</div><div class="ttdef"><b>Definition:</b> <a href="engine_8cpp_source.html#l00100">engine.cpp:100</a></div></div>
+<div class="ttc" id="aclassengine_html_a5c9fba1e8b0611c00438c9ba8736e348"><div class="ttname"><a href="classengine.html#a5c9fba1e8b0611c00438c9ba8736e348">engine::integrate</a></div><div class="ttdeci">void integrate(Eigen::ThreadPoolDevice &amp;device)</div><div class="ttdoc">Updates the simulation framework 1 time step.</div><div class="ttdef"><b>Definition:</b> <a href="engine_8cpp_source.html#l00103">engine.cpp:103</a></div></div>
 <div class="ttc" id="aclassengine_html_a79e5e036684d522159ef64ac42576476"><div class="ttname"><a href="classengine.html#a79e5e036684d522159ef64ac42576476">engine::m_system</a></div><div class="ttdeci">std::shared_ptr&lt; systemData &gt; m_system</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00084">engine.hpp:84</a></div></div>
 <div class="ttc" id="aclassengine_html_adaf942d3d92c4d6a88358755fba6e7af"><div class="ttname"><a href="classengine.html#adaf942d3d92c4d6a88358755fba6e7af">engine::m_logFile</a></div><div class="ttdeci">std::string m_logFile</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00090">engine.hpp:90</a></div></div>
 <div class="ttc" id="aclassengine_html_a88541de1c141d7d2c77f08b062f56a91"><div class="ttname"><a href="classengine.html#a88541de1c141d7d2c77f08b062f56a91">engine::m_outputPercentile</a></div><div class="ttdeci">const double m_outputPercentile</div><div class="ttdoc">Percentage of simulation progress at which to output a GSD frame.</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00099">engine.hpp:99</a></div></div>
@@ -609,7 +611,7 @@ Here is the caller graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="classengine.html">engine</a></li>
-    <li class="footer">Generated on Thu Oct 14 2021 22:02:09 for Bodies in Potential Flow by
+    <li class="footer">Generated on Fri Oct 15 2021 11:55:53 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

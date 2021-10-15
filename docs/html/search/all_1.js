@@ -11,5 +11,6 @@ var searchData=
   ['application_12',['application',['../structgsd__header.html#ad23681ad38d32167197a22e75a2605b1',1,'gsd_header']]],
   ['aseval_13',['asEval',['../helper__eigenTensorConversion_8hpp.html#a2a7eca6b17fb874869047bd0b5f11b46',1,'helper_eigenTensorConversion.hpp']]],
   ['ax_14',['ax',['../classplotStyling_1_1PlotStyling.html#ac14b6abd25ff6e8d932c52d36062a05e',1,'plotStyling::PlotStyling']]],
-  ['axis_5flabel_5fsize_15',['axis_label_size',['../classplotStyling_1_1PlotStyling.html#a83d2b08f38901cbbe91285a3c65e55e8',1,'plotStyling::PlotStyling']]]
+  ['axis_5flabel_5fsize_15',['axis_label_size',['../classplotStyling_1_1PlotStyling.html#a83d2b08f38901cbbe91285a3c65e55e8',1,'plotStyling::PlotStyling']]],
+  ['altering_20swimmer_20design_16',['Altering swimmer design',['../review.html',1,'']]]
 ];

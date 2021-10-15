@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classsystemData.html#a05afc9e7e7423d88def51ec43ab91a33" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="classsystemData.html#a05afc9e7e7423d88def51ec43ab91a33" target="_top" xlink:title="Computes the rigid body motion connectivity tensors.">
 <polygon fill="none" stroke="black" points="420,-0.5 420,-30.5 566,-30.5 566,-0.5 420,-0.5"/>
 <text text-anchor="start" x="428" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::rigidBodyMotion</text>
 <text text-anchor="middle" x="493" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">Tensors</text>

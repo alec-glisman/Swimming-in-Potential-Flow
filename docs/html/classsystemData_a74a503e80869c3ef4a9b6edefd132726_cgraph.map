@@ -1,4 +1,4 @@
 <map id="systemData::parseGSD" name="systemData::parseGSD">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,168,32"/>
-<area shape="rect" id="node2" href="$classsystemData.html#a3f978844a3292e9ca096be6741c48dc2" title=" " alt="" coords="216,5,381,32"/>
+<area shape="rect" id="node1" title="Passes this (systemData shared pointer instance) into GSDUtil constructor to load data from input GSD..." alt="" coords="5,5,168,32"/>
+<area shape="rect" id="node2" href="$classsystemData.html#a3f978844a3292e9ca096be6741c48dc2" title="Various assertions to check data loaded from GSD is at least physical." alt="" coords="216,5,381,32"/>
 </map>

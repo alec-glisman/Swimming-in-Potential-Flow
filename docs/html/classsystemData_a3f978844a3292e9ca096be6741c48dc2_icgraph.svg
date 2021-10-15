@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title=" ">
+<g id="a_node1"><a xlink:title="Various assertions to check data loaded from GSD is at least physical.">
 <polygon fill="#bfbfbf" stroke="black" points="437,-0.5 437,-19.5 561,-19.5 561,-0.5 437,-0.5"/>
 <text text-anchor="middle" x="499" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::checkInput</text>
 </a>
@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classsystemData.html#a74a503e80869c3ef4a9b6edefd132726" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="classsystemData.html#a74a503e80869c3ef4a9b6edefd132726" target="_top" xlink:title="Passes this (systemData shared pointer instance) into GSDUtil constructor to load data from input GSD...">
 <polygon fill="none" stroke="black" points="279,-0.5 279,-19.5 401,-19.5 401,-0.5 279,-0.5"/>
 <text text-anchor="middle" x="340" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::parseGSD</text>
 </a>

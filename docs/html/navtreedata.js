@@ -72,6 +72,8 @@ var NAVTREE =
       [ "Subdirectory: initial_configurations", "md_python_README.html#autotoc_md43", null ],
       [ "Files", "md_python_README.html#autotoc_md44", null ]
     ] ],
+    [ "Todo List", "todo.html", null ],
+    [ "Altering swimmer design", "review.html", null ],
     [ "File List", "files.html", "files" ],
     [ "Namespace List", "namespaces.html", "namespaces" ],
     [ "Class List", "annotated.html", "annotated" ]
@@ -82,8 +84,8 @@ var NAVTREEINDEX =
 [
 "GSDUtil_8cpp.html",
 "classsystemData.html#a3c41026c4b66d4f6e6e22a6398c6ced8",
-"gsd_8h.html#a03a578779769ed7e288df22c6a75f07bac5de89b0da97d4df5b52f18ee0977b7c",
-"helper__math_8h.html#aabd11d734658e0ebf5de5740970bf82d",
+"gsd_8h.html#a0411cd49bb5b71852cecd93bcbf0ca2dab1e8211d5344adb743238d82d369331d",
+"helper__math_8h.html#aabe4a4caf16da937cee9a5e2d2e6d123",
 "structgsd__handle.html#a7ae49d668bbd61ce9d022acf5e5a9e76"
 ];
 

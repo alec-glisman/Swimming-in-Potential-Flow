@@ -3,8 +3,8 @@
 <area shape="rect" id="node2" href="$classpotentialHydrodynamics.html#ae78694d22e337a95daabdd0820a8be28" title="Calculates m_M_added" alt="" coords="604,5,767,47"/>
 <area shape="rect" id="node5" href="$classpotentialHydrodynamics.html#a89622611b037fc10f3aacdf990c4a9f5" title="Calculates m_F_hydro and m_F_hydroNoInertia" alt="" coords="604,71,767,112"/>
 <area shape="rect" id="node6" href="$classpotentialHydrodynamics.html#a4ebdc0aa027f2a9e4f1f34bf781dffe9" title="Calculates m_M_added" alt="" coords="604,136,767,177"/>
-<area shape="rect" id="node7" href="$classsystemData.html#a3c41026c4b66d4f6e6e22a6398c6ced8" title=" " alt="" coords="589,201,781,243"/>
-<area shape="rect" id="node11" href="$classsystemData.html#a05afc9e7e7423d88def51ec43ab91a33" title=" " alt="" coords="588,267,783,308"/>
+<area shape="rect" id="node7" href="$classsystemData.html#a3c41026c4b66d4f6e6e22a6398c6ced8" title="Computes the gradients rigid body motion connectivity tensors and tensors associated with change of v..." alt="" coords="589,201,781,243"/>
+<area shape="rect" id="node11" href="$classsystemData.html#a05afc9e7e7423d88def51ec43ab91a33" title="Computes the rigid body motion connectivity tensors." alt="" coords="588,267,783,308"/>
 <area shape="rect" id="node12" href="$helper__eigenTensorConversion_8hpp.html#a1c806578084d178c05d1660894693538" title=" " alt="" coords="641,333,730,359"/>
 <area shape="rect" id="node3" href="$classpotentialHydrodynamics.html#aa9cd1bea38a16754f58110f1e190fb71" title="Updates all hydrodynamic quantities at current configuration (data from systemData)" alt="" coords="377,71,540,112"/>
 <area shape="rect" id="node4" href="$classpotentialHydrodynamics.html#ae93f12dc4a892a191d52bf4754d4d99c" title="Construct a new potential hydrodynamics object." alt="" coords="156,71,327,112"/>

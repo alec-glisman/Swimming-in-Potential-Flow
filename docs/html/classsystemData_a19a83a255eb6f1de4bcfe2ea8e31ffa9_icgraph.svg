@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classsystemData.html#a3c41026c4b66d4f6e6e22a6398c6ced8" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="classsystemData.html#a3c41026c4b66d4f6e6e22a6398c6ced8" target="_top" xlink:title="Computes the gradients rigid body motion connectivity tensors and tensors associated with change of v...">
 <polygon fill="none" stroke="black" points="421,-49.5 421,-79.5 565,-79.5 565,-49.5 421,-49.5"/>
 <text text-anchor="start" x="429" y="-67.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::gradientChange</text>
 <text text-anchor="middle" x="493" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">OfVariableTensors</text>
@@ -36,7 +36,7 @@
 <!-- Node6 -->
 <g id="node6" class="node">
 <title>Node6</title>
-<g id="a_node6"><a xlink:href="classsystemData.html#a05afc9e7e7423d88def51ec43ab91a33" target="_top" xlink:title=" ">
+<g id="a_node6"><a xlink:href="classsystemData.html#a05afc9e7e7423d88def51ec43ab91a33" target="_top" xlink:title="Computes the rigid body motion connectivity tensors.">
 <polygon fill="none" stroke="black" points="420,-0.5 420,-30.5 566,-30.5 566,-0.5 420,-0.5"/>
 <text text-anchor="start" x="428" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::rigidBodyMotion</text>
 <text text-anchor="middle" x="493" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">Tensors</text>

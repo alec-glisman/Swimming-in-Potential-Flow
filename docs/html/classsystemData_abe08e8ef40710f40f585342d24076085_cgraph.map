@@ -1,13 +1,12 @@
 <map id="systemData::update" name="systemData::update">
-<area shape="rect" id="node1" title="Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constrain..." alt="" coords="5,177,145,203"/>
-<area shape="rect" id="node2" href="$classsystemData.html#ac981cce9f038194aea9f48f57252ca7b" title=" " alt="" coords="215,5,393,47"/>
-<area shape="rect" id="node3" href="$classsystemData.html#a3c41026c4b66d4f6e6e22a6398c6ced8" title=" " alt="" coords="208,71,400,112"/>
-<area shape="rect" id="node6" href="$classsystemData.html#ab3fc7f3cc4c79bbad6e9bb73e127e8c3" title=" " alt="" coords="219,201,389,243"/>
-<area shape="rect" id="node7" href="$classsystemData.html#a05afc9e7e7423d88def51ec43ab91a33" title=" " alt="" coords="207,136,401,177"/>
-<area shape="rect" id="node10" href="$classsystemData.html#aaf3a4980d7dc49d7339a828ed95ee4d6" title=" " alt="" coords="212,267,396,308"/>
-<area shape="rect" id="node11" href="$classsystemData.html#a6bd16f2dd99236594ce5b12cd2cab57a" title=" " alt="" coords="193,333,415,359"/>
+<area shape="rect" id="node1" title="Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constrain..." alt="" coords="5,143,145,170"/>
+<area shape="rect" id="node2" href="$classsystemData.html#ac981cce9f038194aea9f48f57252ca7b" title="Computes the articulation (linear) accelerations of the particles relative to their respective locate..." alt="" coords="215,5,393,47"/>
+<area shape="rect" id="node3" href="$classsystemData.html#a3c41026c4b66d4f6e6e22a6398c6ced8" title="Computes the gradients rigid body motion connectivity tensors and tensors associated with change of v..." alt="" coords="208,71,400,112"/>
+<area shape="rect" id="node6" href="$classsystemData.html#a05afc9e7e7423d88def51ec43ab91a33" title="Computes the rigid body motion connectivity tensors." alt="" coords="207,136,401,177"/>
+<area shape="rect" id="node9" href="$classsystemData.html#aaf3a4980d7dc49d7339a828ed95ee4d6" title="Computes the Udwadia constraint matrix and vector to uphold the quaternion unitary norm for each body..." alt="" coords="212,201,396,243"/>
+<area shape="rect" id="node10" href="$classsystemData.html#a6bd16f2dd99236594ce5b12cd2cab57a" title="Computes the articulation (linear) velocities of the particles relative to their respective locater p..." alt="" coords="193,267,415,294"/>
 <area shape="rect" id="node4" href="$classsystemData.html#a19a83a255eb6f1de4bcfe2ea8e31ffa9" title="Computes the E matrix of quaternion (4&#45;vector) input." alt="" coords="482,59,626,86"/>
 <area shape="rect" id="node5" href="$helper__eigenTensorConversion_8hpp.html#a3a32f7de3f099464192073a93b34d580" title="Convert Eigen::Matrix &#45;&#45;&gt; Eigen::Tensor." alt="" coords="509,110,599,137"/>
-<area shape="rect" id="node8" href="$classsystemData.html#a0a77c933b764fb36c64ec5e66011482c" title="Function takes in vector in vector cross&#45;product expression: ." alt="" coords="463,161,645,187"/>
-<area shape="rect" id="node9" href="$classsystemData.html#a9a8e856d1285735bfb9cbd41ef764345" title=" " alt="" coords="499,211,609,238"/>
+<area shape="rect" id="node7" href="$classsystemData.html#a0a77c933b764fb36c64ec5e66011482c" title="Function takes in vector in vector cross&#45;product expression: ." alt="" coords="463,161,645,187"/>
+<area shape="rect" id="node8" href="$classsystemData.html#a9a8e856d1285735bfb9cbd41ef764345" title=" " alt="" coords="499,211,609,238"/>
 </map>
