@@ -169,9 +169,6 @@ systemData::update(Eigen::ThreadPoolDevice& device)
     gradientChangeOfVariableTensors(device);
 }
 
-// FIXME: Redo in light of new particle ordering
-/* REVIEW[epic=Change,order=3]: Change assignment of m_velocities_particles_articulation for
- * different systems */
 void
 systemData::velocitiesArticulation()
 {
@@ -195,9 +192,6 @@ systemData::velocitiesArticulation()
     m_velocities_particles_articulation.segment<3>(3 * 5).noalias() = v3_mag * q_tilde;
 }
 
-// FIXME: Redo in light of new particle ordering
-/* REVIEW[epic=Change,order=4]: Change assignment of m_accelerations_particles_articulation for
- * different systems */
 void
 systemData::accelerationsArticulation()
 {

@@ -55,7 +55,6 @@ class systemData : public std::enable_shared_from_this<systemData>
      *
      * @details Must be called after class construction before data can properly
      * be integrated using the `engine` class.
-     *
      */
     void
     initializeData();
@@ -75,24 +74,93 @@ class systemData : public std::enable_shared_from_this<systemData>
     update(Eigen::ThreadPoolDevice& device);
 
   private:
+    /**
+     * @brief Passes `this` (`systemData` shared pointer instance) into `GSDUtil` constructor to load data from input
+     * GSD file into `this`.
+     *
+     * @details Function called by `initializeData()` and is the reason that data can only be initialized after
+     * constructor has completed. This stems from an issue in the following line of code: `m_gsdUtil    =
+     * std::make_shared<GSDUtil>(shared_from_this());`. From the C++ standard, the `shared_from_this()` function can
+     * only execute once the object referenced by `this` has been fully constructed. If I could get around this issue,
+     * then only the class constructor would need to be called. This is safer and nicer. The code currently modifies the
+     * attribute `m_GSD_parsed` to true to give some check that the system has been properly initialized. The `engine`
+     * class also checks that this boolean has been set.
+     *
+     * @todo Find a better way to handle passing of `this` to `GSDUtil` so that this can be done in `systemData`
+     * constructor.
+     */
     void
     parseGSD();
 
+    /**
+     * @brief Various assertions to check data loaded from GSD is at least physical.
+     *
+     * @details This is by no means exhaustive and should not be taken to mean data has been loaded correctly or as
+     * expected.
+     */
     void
     checkInput();
 
+    /**
+     * @brief Computes the articulation (linear) velocities of the particles relative to their respective locater
+     * points.
+     *
+     * @review_swimmer Change assignment of `m_velocities_particles_articulation` for
+     */
     void
-    velocitiesArticulation();
+    velocitiesArticulation(); // FIXME: redo in light of new particle ordering
 
+    /**
+     * @brief Computes the articulation (linear) accelerations of the particles relative to their respective locater
+     * points.
+     *
+     * @review_swimmer Change assignment of `m_accelerations_particles_articulation` for
+     * different systems
+     */
     void
-    accelerationsArticulation();
+    accelerationsArticulation(); // FIXME: redo in light of new particle ordering
 
+    /**
+     * @brief Computes the Udwadia constraint matrix and vector to uphold the quaternion unitary norm for each body.
+     *
+     * @review_swimmer Change assignment of `m_Udwadia_A` and `m_Udwadia_B` for different systems.
+     *
+     * @see **Original paper on constrained Lagrangian dynamics:** Udwadia, Firdaus E., and Robert E. Kalaba. "A new
+     * perspective on constrained motion." Proceedings of the Royal Society of London. Series A: Mathematical and
+     * Physical Sciences 439.1906 (1992): 407-410.
+     *
+     * @see **Application of algorithm to unit quaternion vectors:** Udwadia, Firdaus E., and Aaron D. Schutte. "An
+     * alternative derivation of the quaternion equations of motion for rigid-body rotational dynamics."
+     * (2010): 044505.
+     */
     void
     udwadiaLinearSystem();
 
+    /**
+     * @brief Computes the rigid body motion connectivity tensors.
+     *
+     * @details This function computes the tensors required to convert body locater kinematics into particle
+     * kinematics. It relies on `m_particle_type_id` being set with the correct convention.
+     *
+     * @see **Analogous paper for swimming rbm tensors** (NOTE: they also included torques associated with spherical
+     * rotation about internal axes. We do not worry about that here due to no-flux boundary conditions on surfaces
+     * rather than no-slip boundary conditions): Swan, James W., et al. "Modeling hydrodynamic self-propulsion with
+     * Stokesian Dynamics. Or teaching Stokesian Dynamics to swim." Physics of Fluids 23.7 (2011): 071901.
+     *
+     * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
+     */
     void
     rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device);
 
+    /**
+     * @brief Computes the gradients rigid body motion connectivity tensors and tensors associated with change
+     * of variable degrees of freedom.
+     *
+     * @details This function computes the tensors required to convert gradient body locater kinematics into
+     * particle kinematics. It relies on `m_particle_type_id` being set with the correct convention.
+     *
+     * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
+     */
     void
     gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device);
 

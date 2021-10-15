@@ -262,6 +262,7 @@ TAB_SIZE = 4
 # @} or use a double escape (\\{ and \\})
 
 ALIASES =
+ALIASES += "review_swimmer=\xrefitem review \"Review\" \"Review when changing swimmer design\""
 
 # Set the OPTIMIZE_OUTPUT_FOR_C tag to YES if your project consists of C sources
 # only. Doxygen will then generate output that is more tailored for C. For
