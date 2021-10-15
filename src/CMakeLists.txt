@@ -27,7 +27,6 @@ TARGET_LINK_LIBRARIES(
     ${Boost_LIBRARIES}
     ${MKL_LIBRARIES}
     Eigen3::Eigen
-    Catch2::Catch2
     data_io
     simulation_system
     forces
