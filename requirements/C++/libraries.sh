@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # NOTE: Assumes that homebrew is already installed on computer
-brew install boost spdlog catch2
+brew install boost spdlog catch2 libomp
 brew install eigen --HEAD  # HEAD needed for Eigen::seqN()
 
 
