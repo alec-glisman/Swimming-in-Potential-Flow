@@ -203,9 +203,12 @@ class systemData : public std::enable_shared_from_this<systemData>
     // GSD data
     std::shared_ptr<GSDUtil>    m_gsdUtil;
     std::shared_ptr<gsd_handle> m_handle{new gsd_handle};
-    int                         m_return_val{0};
-    bool                        m_return_bool{true};
-    bool                        m_GSD_parsed{false};
+    /// defaults to GSD_SUCCESS return value
+    int m_return_val{0};
+    /// defaults to successful parse GSD flag
+    bool m_return_bool{true};
+    // defaults to no GSD being parsed. Must be changed using `parseGSD()`
+    bool m_GSD_parsed{false};
 
     /* ANCHOR: System specific data, change parameters stored for different systems */
     /**
