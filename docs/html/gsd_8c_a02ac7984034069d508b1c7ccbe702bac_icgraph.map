@@ -1,4 +1,4 @@
 <map id="gsd_truncate" name="gsd_truncate">
 <area shape="rect" id="node1" title=" " alt="" coords="208,5,305,32"/>
-<area shape="rect" id="node2" href="$classGSDUtil.html#a78b796cb5093b0aa6f5d2573658fcca1" title=" " alt="" coords="5,5,160,32"/>
+<area shape="rect" id="node2" href="$classGSDUtil.html#a78b796cb5093b0aa6f5d2573658fcca1" title="Removes all frames and data from GSD file. This returns GSD to a &quot;new file&quot; state." alt="" coords="5,5,160,32"/>
 </map>

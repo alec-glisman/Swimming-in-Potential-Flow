@@ -65,7 +65,7 @@
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="classGSDUtil.html#a2567bdb7f5952a76984552e0591fa330" target="_top" xlink:title=" ">
+<g id="a_node4"><a xlink:href="classGSDUtil.html#a2567bdb7f5952a76984552e0591fa330" target="_top" xlink:title="Construct a new GSDUtil object.">
 <polygon fill="none" stroke="black" points="10,-76.5 10,-95.5 106,-95.5 106,-76.5 10,-76.5"/>
 <text text-anchor="middle" x="58" y="-83.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::GSDUtil</text>
 </a>
@@ -95,7 +95,7 @@
 <!-- Node7 -->
 <g id="node7" class="node">
 <title>Node7</title>
-<g id="a_node7"><a xlink:href="classGSDUtil.html#a78b796cb5093b0aa6f5d2573658fcca1" target="_top" xlink:title=" ">
+<g id="a_node7"><a xlink:href="classGSDUtil.html#a78b796cb5093b0aa6f5d2573658fcca1" target="_top" xlink:title="Removes all frames and data from GSD file. This returns GSD to a &quot;new file&quot; state.">
 <polygon fill="none" stroke="black" points="0,-0.5 0,-19.5 116,-19.5 116,-0.5 0,-0.5"/>
 <text text-anchor="middle" x="58" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::truncateGSD</text>
 </a>

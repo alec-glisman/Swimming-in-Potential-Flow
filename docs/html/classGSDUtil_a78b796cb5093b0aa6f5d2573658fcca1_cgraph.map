@@ -1,6 +1,6 @@
 <map id="GSDUtil::truncateGSD" name="GSDUtil::truncateGSD">
-<area shape="rect" id="node1" title=" " alt="" coords="5,81,160,108"/>
-<area shape="rect" id="node2" href="$classGSDUtil.html#a00a919382c11e9dd1fa7ae1a8788d4c0" title=" " alt="" coords="208,56,391,83"/>
+<area shape="rect" id="node1" title="Removes all frames and data from GSD file. This returns GSD to a &quot;new file&quot; state." alt="" coords="5,81,160,108"/>
+<area shape="rect" id="node2" href="$classGSDUtil.html#a00a919382c11e9dd1fa7ae1a8788d4c0" title="Helper function that checks data parsing from GSD is successful." alt="" coords="208,56,391,83"/>
 <area shape="rect" id="node3" href="$gsd_8c.html#a02ac7984034069d508b1c7ccbe702bac" title=" " alt="" coords="251,107,348,133"/>
 <area shape="rect" id="node4" href="$gsd_8c.html#ae50726c30c5bf629b6af1ef88020302f" title=" " alt="" coords="447,5,590,32"/>
 <area shape="rect" id="node6" href="$gsd_8c.html#a9e12a38df69cf73fa771b005748cb3e5" title=" " alt="" coords="444,56,593,83"/>

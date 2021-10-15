@@ -107,7 +107,7 @@
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
-<g id="a_node5"><a xlink:href="classGSDUtil.html#ae76e4a23f0fe0bca3cd44137b56b816b" target="_top" xlink:title=" ">
+<g id="a_node5"><a xlink:href="classGSDUtil.html#ae76e4a23f0fe0bca3cd44137b56b816b" target="_top" xlink:title="Appends frame to GSD file using data from systemData class.">
 <polygon fill="none" stroke="black" points="4,-19.5 4,-38.5 112,-38.5 112,-19.5 4,-19.5"/>
 <text text-anchor="middle" x="58" y="-26.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::writeFrame</text>
 </a>
@@ -167,7 +167,7 @@
 <!-- Node9 -->
 <g id="node9" class="node">
 <title>Node9</title>
-<g id="a_node9"><a xlink:href="classGSDUtil.html#a2567bdb7f5952a76984552e0591fa330" target="_top" xlink:title=" ">
+<g id="a_node9"><a xlink:href="classGSDUtil.html#a2567bdb7f5952a76984552e0591fa330" target="_top" xlink:title="Construct a new GSDUtil object.">
 <polygon fill="none" stroke="black" points="10,-57.5 10,-76.5 106,-76.5 106,-57.5 10,-57.5"/>
 <text text-anchor="middle" x="58" y="-64.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::GSDUtil</text>
 </a>
@@ -197,7 +197,7 @@
 <!-- Node12 -->
 <g id="node12" class="node">
 <title>Node12</title>
-<g id="a_node12"><a xlink:href="classGSDUtil.html#a78b796cb5093b0aa6f5d2573658fcca1" target="_top" xlink:title=" ">
+<g id="a_node12"><a xlink:href="classGSDUtil.html#a78b796cb5093b0aa6f5d2573658fcca1" target="_top" xlink:title="Removes all frames and data from GSD file. This returns GSD to a &quot;new file&quot; state.">
 <polygon fill="none" stroke="black" points="0,-133.5 0,-152.5 116,-152.5 116,-133.5 0,-133.5"/>
 <text text-anchor="middle" x="58" y="-140.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::truncateGSD</text>
 </a>

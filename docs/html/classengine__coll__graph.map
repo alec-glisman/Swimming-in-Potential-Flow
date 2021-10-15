@@ -9,7 +9,7 @@
 <area shape="rect" id="node22" title=" " alt="" coords="1732,3720,1935,3797"/>
 <area shape="rect" id="node24" title=" " alt="" coords="1669,1489,1840,1581"/>
 <area shape="rect" id="node5" title=" " alt="" coords="1209,5,1247,83"/>
-<area shape="rect" id="node10" href="$classGSDUtil.html" title=" " alt="" coords="1091,917,1253,1199"/>
+<area shape="rect" id="node10" href="$classGSDUtil.html" title="Wrapper class for gsd.h to load data from input GSD file into systemData class." alt="" coords="1091,917,1253,1199"/>
 <area shape="rect" id="node23" href="$classrungeKutta4.html" title="Standard Runge&#45;Kutta 4th order integration." alt="" coords="1742,2553,1906,2763"/>
 <area shape="rect" id="node25" href="$classpotentialHydrodynamics.html" title="Computes hydrodynamic tensors (mass, forces) on a finite number of spheres in potential flow." alt="" coords="1670,733,1861,1383"/>
 <area shape="rect" id="node7" href="$classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction..." alt="" coords="1160,1659,1395,3657"/>

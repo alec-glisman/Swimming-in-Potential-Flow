@@ -35,7 +35,7 @@
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
-<g id="a_node5"><a xlink:href="classGSDUtil.html#a2567bdb7f5952a76984552e0591fa330" target="_top" xlink:title=" ">
+<g id="a_node5"><a xlink:href="classGSDUtil.html#a2567bdb7f5952a76984552e0591fa330" target="_top" xlink:title="Construct a new GSDUtil object.">
 <polygon fill="none" stroke="black" points="0,-152.5 0,-171.5 96,-171.5 96,-152.5 0,-152.5"/>
 <text text-anchor="middle" x="48" y="-159.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::GSDUtil</text>
 </a>
@@ -50,7 +50,7 @@
 <!-- Node9 -->
 <g id="node9" class="node">
 <title>Node9</title>
-<g id="a_node9"><a xlink:href="classGSDUtil.html#a77b5ebe2817ac868ad1b171f3d7b0cae" target="_top" xlink:title=" ">
+<g id="a_node9"><a xlink:href="classGSDUtil.html#a77b5ebe2817ac868ad1b171f3d7b0cae" target="_top" xlink:title="Writes header information to GSD.">
 <polygon fill="none" stroke="black" points="467.5,-38.5 467.5,-57.5 579.5,-57.5 579.5,-38.5 467.5,-38.5"/>
 <text text-anchor="middle" x="523.5" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::writeHeader</text>
 </a>
@@ -65,7 +65,7 @@
 <!-- Node11 -->
 <g id="node11" class="node">
 <title>Node11</title>
-<g id="a_node11"><a xlink:href="classGSDUtil.html#a9464315a26a5d5e2c51bb2b4df5ee373" target="_top" xlink:title=" ">
+<g id="a_node11"><a xlink:href="classGSDUtil.html#a9464315a26a5d5e2c51bb2b4df5ee373" target="_top" xlink:title="Writes particle information to GSD.">
 <polygon fill="none" stroke="black" points="464,-0.5 464,-19.5 583,-19.5 583,-0.5 464,-0.5"/>
 <text text-anchor="middle" x="523.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::writeParticles</text>
 </a>
@@ -80,7 +80,7 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="classGSDUtil.html#a86d2352b694afc6a0c938a13b3acec9d" target="_top" xlink:title=" ">
+<g id="a_node3"><a xlink:href="classGSDUtil.html#a86d2352b694afc6a0c938a13b3acec9d" target="_top" xlink:title="Finds and then loads data from GSD.">
 <polygon fill="none" stroke="black" points="320.5,-152.5 320.5,-171.5 427.5,-171.5 427.5,-152.5 320.5,-152.5"/>
 <text text-anchor="middle" x="374" y="-159.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::readChunk</text>
 </a>
@@ -95,7 +95,7 @@
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="classGSDUtil.html#a2015dcdcdb33be9106f5c8f45f8564cc" target="_top" xlink:title=" ">
+<g id="a_node4"><a xlink:href="classGSDUtil.html#a2015dcdcdb33be9106f5c8f45f8564cc" target="_top" xlink:title="Read header information from GSD frame m_frame">
 <polygon fill="none" stroke="black" points="153,-228.5 153,-247.5 263,-247.5 263,-228.5 153,-228.5"/>
 <text text-anchor="middle" x="208" y="-235.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::readHeader</text>
 </a>
@@ -110,7 +110,7 @@
 <!-- Node6 -->
 <g id="node6" class="node">
 <title>Node6</title>
-<g id="a_node6"><a xlink:href="classGSDUtil.html#a31f9c7368ebd89c6293d9d9d83598e62" target="_top" xlink:title=" ">
+<g id="a_node6"><a xlink:href="classGSDUtil.html#a31f9c7368ebd89c6293d9d9d83598e62" target="_top" xlink:title="Read parameter information from GSD frame m_frame">
 <polygon fill="none" stroke="black" points="144,-190.5 144,-209.5 272,-209.5 272,-190.5 144,-190.5"/>
 <text text-anchor="middle" x="208" y="-197.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::readParameters</text>
 </a>
@@ -125,7 +125,7 @@
 <!-- Node7 -->
 <g id="node7" class="node">
 <title>Node7</title>
-<g id="a_node7"><a xlink:href="classGSDUtil.html#ad404c3879fb81c0b73b2335ea6e4676a" target="_top" xlink:title=" ">
+<g id="a_node7"><a xlink:href="classGSDUtil.html#ad404c3879fb81c0b73b2335ea6e4676a" target="_top" xlink:title="Read particle information from GSD frame m_frame">
 <polygon fill="none" stroke="black" points="150,-152.5 150,-171.5 266,-171.5 266,-152.5 150,-152.5"/>
 <text text-anchor="middle" x="208" y="-159.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::readParticles</text>
 </a>
@@ -140,7 +140,7 @@
 <!-- Node8 -->
 <g id="node8" class="node">
 <title>Node8</title>
-<g id="a_node8"><a xlink:href="classGSDUtil.html#a278d1db9ece12bdc1268780313d83daf" target="_top" xlink:title=" ">
+<g id="a_node8"><a xlink:href="classGSDUtil.html#a278d1db9ece12bdc1268780313d83daf" target="_top" xlink:title="Reads system specific variables from GSD frame m_frame">
 <polygon fill="none" stroke="black" points="132,-114.5 132,-133.5 284,-133.5 284,-114.5 132,-114.5"/>
 <text text-anchor="middle" x="208" y="-121.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::readSystemSpecifics</text>
 </a>
@@ -179,7 +179,7 @@
 <!-- Node10 -->
 <g id="node10" class="node">
 <title>Node10</title>
-<g id="a_node10"><a xlink:href="classGSDUtil.html#ae76e4a23f0fe0bca3cd44137b56b816b" target="_top" xlink:title=" ">
+<g id="a_node10"><a xlink:href="classGSDUtil.html#ae76e4a23f0fe0bca3cd44137b56b816b" target="_top" xlink:title="Appends frame to GSD file using data from systemData class.">
 <polygon fill="none" stroke="black" points="320,-19.5 320,-38.5 428,-38.5 428,-19.5 320,-19.5"/>
 <text text-anchor="middle" x="374" y="-26.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::writeFrame</text>
 </a>

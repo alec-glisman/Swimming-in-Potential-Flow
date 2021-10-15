@@ -1,6 +1,6 @@
 <map id="GSDUtil::writeParticles" name="GSDUtil::writeParticles">
-<area shape="rect" id="node1" title=" " alt="" coords="5,135,164,161"/>
-<area shape="rect" id="node2" href="$classGSDUtil.html#a00a919382c11e9dd1fa7ae1a8788d4c0" title=" " alt="" coords="212,84,395,111"/>
+<area shape="rect" id="node1" title="Writes particle information to GSD." alt="" coords="5,135,164,161"/>
+<area shape="rect" id="node2" href="$classGSDUtil.html#a00a919382c11e9dd1fa7ae1a8788d4c0" title="Helper function that checks data parsing from GSD is successful." alt="" coords="212,84,395,111"/>
 <area shape="rect" id="node3" href="$gsd_8c.html#a7479046d4d6e15c33cb24034ddd87562" title=" " alt="" coords="242,135,365,161"/>
 <area shape="rect" id="node4" href="$gsd_8c.html#ae22447904b925f284bf987fae448488a" title=" " alt="" coords="243,185,363,212"/>
 <area shape="rect" id="node5" href="$gsd_8c.html#aa1a0a7dcf4015edcadbb47a6451b4a4b" title=" " alt="" coords="457,109,587,136"/>

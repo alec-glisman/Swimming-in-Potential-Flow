@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title=" ">
+<g id="a_node1"><a xlink:title="Construct a new GSDUtil object.">
 <polygon fill="#bfbfbf" stroke="black" points="0,-102.17 0,-121.17 96,-121.17 96,-102.17 0,-102.17"/>
 <text text-anchor="middle" x="48" y="-109.17" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::GSDUtil</text>
 </a>
@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classGSDUtil.html#a00a919382c11e9dd1fa7ae1a8788d4c0" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="classGSDUtil.html#a00a919382c11e9dd1fa7ae1a8788d4c0" target="_top" xlink:title="Helper function that checks data parsing from GSD is successful.">
 <polygon fill="none" stroke="black" points="471,-102.17 471,-121.17 608,-121.17 608,-102.17 471,-102.17"/>
 <text text-anchor="middle" x="539.5" y="-109.17" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::checkGSDReturn</text>
 </a>
@@ -65,7 +65,7 @@
 <!-- Node17 -->
 <g id="node17" class="node">
 <title>Node17</title>
-<g id="a_node17"><a xlink:href="classGSDUtil.html#a2015dcdcdb33be9106f5c8f45f8564cc" target="_top" xlink:title=" ">
+<g id="a_node17"><a xlink:href="classGSDUtil.html#a2015dcdcdb33be9106f5c8f45f8564cc" target="_top" xlink:title="Read header information from GSD frame m_frame">
 <polygon fill="none" stroke="black" points="153,-64.17 153,-83.17 263,-83.17 263,-64.17 153,-64.17"/>
 <text text-anchor="middle" x="208" y="-71.17" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::readHeader</text>
 </a>
@@ -80,7 +80,7 @@
 <!-- Node24 -->
 <g id="node24" class="node">
 <title>Node24</title>
-<g id="a_node24"><a xlink:href="classGSDUtil.html#a31f9c7368ebd89c6293d9d9d83598e62" target="_top" xlink:title=" ">
+<g id="a_node24"><a xlink:href="classGSDUtil.html#a31f9c7368ebd89c6293d9d9d83598e62" target="_top" xlink:title="Read parameter information from GSD frame m_frame">
 <polygon fill="none" stroke="black" points="144,-178.17 144,-197.17 272,-197.17 272,-178.17 144,-178.17"/>
 <text text-anchor="middle" x="208" y="-185.17" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::readParameters</text>
 </a>
@@ -95,7 +95,7 @@
 <!-- Node25 -->
 <g id="node25" class="node">
 <title>Node25</title>
-<g id="a_node25"><a xlink:href="classGSDUtil.html#ad404c3879fb81c0b73b2335ea6e4676a" target="_top" xlink:title=" ">
+<g id="a_node25"><a xlink:href="classGSDUtil.html#ad404c3879fb81c0b73b2335ea6e4676a" target="_top" xlink:title="Read particle information from GSD frame m_frame">
 <polygon fill="none" stroke="black" points="150,-140.17 150,-159.17 266,-159.17 266,-140.17 150,-140.17"/>
 <text text-anchor="middle" x="208" y="-147.17" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::readParticles</text>
 </a>
@@ -110,7 +110,7 @@
 <!-- Node26 -->
 <g id="node26" class="node">
 <title>Node26</title>
-<g id="a_node26"><a xlink:href="classGSDUtil.html#a278d1db9ece12bdc1268780313d83daf" target="_top" xlink:title=" ">
+<g id="a_node26"><a xlink:href="classGSDUtil.html#a278d1db9ece12bdc1268780313d83daf" target="_top" xlink:title="Reads system specific variables from GSD frame m_frame">
 <polygon fill="none" stroke="black" points="132,-102.17 132,-121.17 284,-121.17 284,-102.17 132,-102.17"/>
 <text text-anchor="middle" x="208" y="-109.17" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::readSystemSpecifics</text>
 </a>
@@ -323,7 +323,7 @@
 <!-- Node18 -->
 <g id="node18" class="node">
 <title>Node18</title>
-<g id="a_node18"><a xlink:href="classGSDUtil.html#a86d2352b694afc6a0c938a13b3acec9d" target="_top" xlink:title=" ">
+<g id="a_node18"><a xlink:href="classGSDUtil.html#a86d2352b694afc6a0c938a13b3acec9d" target="_top" xlink:title="Finds and then loads data from GSD.">
 <polygon fill="none" stroke="black" points="324,-216.17 324,-235.17 431,-235.17 431,-216.17 324,-216.17"/>
 <text text-anchor="middle" x="377.5" y="-223.17" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::readChunk</text>
 </a>

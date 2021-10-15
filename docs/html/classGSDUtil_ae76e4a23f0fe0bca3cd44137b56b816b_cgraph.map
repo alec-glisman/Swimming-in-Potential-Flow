@@ -1,10 +1,10 @@
 <map id="GSDUtil::writeFrame" name="GSDUtil::writeFrame">
-<area shape="rect" id="node1" title=" " alt="" coords="5,190,149,216"/>
-<area shape="rect" id="node2" href="$classGSDUtil.html#a00a919382c11e9dd1fa7ae1a8788d4c0" title=" " alt="" coords="420,139,603,166"/>
+<area shape="rect" id="node1" title="Appends frame to GSD file using data from systemData class." alt="" coords="5,190,149,216"/>
+<area shape="rect" id="node2" href="$classGSDUtil.html#a00a919382c11e9dd1fa7ae1a8788d4c0" title="Helper function that checks data parsing from GSD is successful." alt="" coords="420,139,603,166"/>
 <area shape="rect" id="node3" href="$gsd_8c.html#aa03810337c5eebcbe716d8633eaefc5e" title=" " alt="" coords="456,418,567,444"/>
-<area shape="rect" id="node24" href="$classGSDUtil.html#a77b5ebe2817ac868ad1b171f3d7b0cae" title=" " alt="" coords="210,190,359,216"/>
-<area shape="rect" id="node32" href="$classGSDUtil.html#aa0dc50cd5e5534260375ad4962511cf0" title=" " alt="" coords="197,139,372,166"/>
-<area shape="rect" id="node33" href="$classGSDUtil.html#a9464315a26a5d5e2c51bb2b4df5ee373" title=" " alt="" coords="205,240,364,267"/>
+<area shape="rect" id="node24" href="$classGSDUtil.html#a77b5ebe2817ac868ad1b171f3d7b0cae" title="Writes header information to GSD." alt="" coords="210,190,359,216"/>
+<area shape="rect" id="node32" href="$classGSDUtil.html#aa0dc50cd5e5534260375ad4962511cf0" title="Writes parameter information to GSD." alt="" coords="197,139,372,166"/>
+<area shape="rect" id="node33" href="$classGSDUtil.html#a9464315a26a5d5e2c51bb2b4df5ee373" title="Writes particle information to GSD." alt="" coords="205,240,364,267"/>
 <area shape="rect" id="node4" href="$gsd_8c.html#ae6dddb94661e99e54f6c01b1a443e27f" title=" " alt="" coords="653,494,807,520"/>
 <area shape="rect" id="node12" href="$gsd_8c.html#a3fb7746d93a1c856ca7ef64fa3548cbe" title=" " alt="" coords="875,392,1010,419"/>
 <area shape="rect" id="node13" href="$gsd_8c.html#ab147cf4d77c10fd8085e5023e9afe55f" title=" " alt="" coords="652,291,808,318"/>

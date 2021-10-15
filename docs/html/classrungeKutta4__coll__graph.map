@@ -1,7 +1,7 @@
 <map id="rungeKutta4" name="rungeKutta4">
 <area shape="rect" id="node1" title="Standard Runge&#45;Kutta 4th order integration." alt="" coords="1323,2495,1487,2704"/>
 <area shape="rect" id="node2" title=" " alt="" coords="946,447,1150,524"/>
-<area shape="rect" id="node6" href="$classGSDUtil.html" title=" " alt="" coords="1092,873,1255,1155"/>
+<area shape="rect" id="node6" href="$classGSDUtil.html" title="Wrapper class for gsd.h to load data from input GSD file into systemData class." alt="" coords="1092,873,1255,1155"/>
 <area shape="rect" id="node21" href="$classpotentialHydrodynamics.html" title="Computes hydrodynamic tensors (mass, forces) on a finite number of spheres in potential flow." alt="" coords="1330,689,1521,1339"/>
 <area shape="rect" id="node3" href="$classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction..." alt="" coords="887,1600,1121,3599"/>
 <area shape="rect" id="node4" title=" " alt="" coords="788,1445,967,1537"/>

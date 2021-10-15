@@ -53,7 +53,7 @@
 <!-- Node6 -->
 <g id="node6" class="node">
 <title>Node6</title>
-<g id="a_node6"><a xlink:href="classGSDUtil.html" target="_top" xlink:title=" ">
+<g id="a_node6"><a xlink:href="classGSDUtil.html" target="_top" xlink:title="Wrapper class for gsd.h to load data from input GSD file into systemData class.">
 <polygon fill="none" stroke="black" points="815,-1833 815,-2044 937,-2044 937,-1833 815,-1833"/>
 <text text-anchor="middle" x="876" y="-2032" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil</text>
 <polyline fill="none" stroke="black" points="815,-2025 937,-2025 "/>

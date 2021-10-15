@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title=" ">
+<g id="a_node1"><a xlink:title="Read header information from GSD frame m_frame">
 <polygon fill="#bfbfbf" stroke="black" points="0,-133.5 0,-152.5 110,-152.5 110,-133.5 0,-133.5"/>
 <text text-anchor="middle" x="55" y="-140.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::readHeader</text>
 </a>
@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classGSDUtil.html#a00a919382c11e9dd1fa7ae1a8788d4c0" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="classGSDUtil.html#a00a919382c11e9dd1fa7ae1a8788d4c0" target="_top" xlink:title="Helper function that checks data parsing from GSD is successful.">
 <polygon fill="none" stroke="black" points="289,-171.5 289,-190.5 426,-190.5 426,-171.5 289,-171.5"/>
 <text text-anchor="middle" x="357.5" y="-178.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::checkGSDReturn</text>
 </a>
@@ -35,7 +35,7 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="classGSDUtil.html#a86d2352b694afc6a0c938a13b3acec9d" target="_top" xlink:title=" ">
+<g id="a_node3"><a xlink:href="classGSDUtil.html#a86d2352b694afc6a0c938a13b3acec9d" target="_top" xlink:title="Finds and then loads data from GSD.">
 <polygon fill="none" stroke="black" points="146,-114.5 146,-133.5 253,-133.5 253,-114.5 146,-114.5"/>
 <text text-anchor="middle" x="199.5" y="-121.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::readChunk</text>
 </a>

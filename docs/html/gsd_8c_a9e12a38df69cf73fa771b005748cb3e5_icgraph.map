@@ -6,6 +6,6 @@
 <area shape="rect" id="node9" href="$gsd_8h.html#adb92d5142812c19bf4ee33cbde439131" title=" " alt="" coords="455,157,551,184"/>
 <area shape="rect" id="node3" href="$classsystemData.html#a423b9bf369d6c53a27b64c9b56004810" title=" " alt="" coords="197,5,377,32"/>
 <area shape="rect" id="node5" href="$gsd_8h.html#aa03810337c5eebcbe716d8633eaefc5e" title=" " alt="" coords="232,56,343,83"/>
-<area shape="rect" id="node6" href="$classGSDUtil.html#ae76e4a23f0fe0bca3cd44137b56b816b" title=" " alt="" coords="5,56,149,83"/>
-<area shape="rect" id="node8" href="$classGSDUtil.html#a78b796cb5093b0aa6f5d2573658fcca1" title=" " alt="" coords="210,107,365,133"/>
+<area shape="rect" id="node6" href="$classGSDUtil.html#ae76e4a23f0fe0bca3cd44137b56b816b" title="Appends frame to GSD file using data from systemData class." alt="" coords="5,56,149,83"/>
+<area shape="rect" id="node8" href="$classGSDUtil.html#a78b796cb5093b0aa6f5d2573658fcca1" title="Removes all frames and data from GSD file. This returns GSD to a &quot;new file&quot; state." alt="" coords="210,107,365,133"/>
 </map>

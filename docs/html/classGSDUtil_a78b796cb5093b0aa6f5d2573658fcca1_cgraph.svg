@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title=" ">
+<g id="a_node1"><a xlink:title="Removes all frames and data from GSD file. This returns GSD to a &quot;new file&quot; state.">
 <polygon fill="#bfbfbf" stroke="black" points="0,-247.5 0,-266.5 116,-266.5 116,-247.5 0,-247.5"/>
 <text text-anchor="middle" x="58" y="-254.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::truncateGSD</text>
 </a>
@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classGSDUtil.html#a00a919382c11e9dd1fa7ae1a8788d4c0" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="classGSDUtil.html#a00a919382c11e9dd1fa7ae1a8788d4c0" target="_top" xlink:title="Helper function that checks data parsing from GSD is successful.">
 <polygon fill="none" stroke="black" points="152,-266.5 152,-285.5 289,-285.5 289,-266.5 152,-266.5"/>
 <text text-anchor="middle" x="220.5" y="-273.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::checkGSDReturn</text>
 </a>

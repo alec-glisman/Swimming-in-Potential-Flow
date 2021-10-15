@@ -1,6 +1,6 @@
 <map id="GSDUtil::writeParameters" name="GSDUtil::writeParameters">
-<area shape="rect" id="node1" title=" " alt="" coords="5,160,180,187"/>
-<area shape="rect" id="node2" href="$classGSDUtil.html#a00a919382c11e9dd1fa7ae1a8788d4c0" title=" " alt="" coords="228,135,411,161"/>
+<area shape="rect" id="node1" title="Writes parameter information to GSD." alt="" coords="5,160,180,187"/>
+<area shape="rect" id="node2" href="$classGSDUtil.html#a00a919382c11e9dd1fa7ae1a8788d4c0" title="Helper function that checks data parsing from GSD is successful." alt="" coords="228,135,411,161"/>
 <area shape="rect" id="node3" href="$gsd_8c.html#ae22447904b925f284bf987fae448488a" title=" " alt="" coords="259,185,379,212"/>
 <area shape="rect" id="node4" href="$gsd_8c.html#aa1a0a7dcf4015edcadbb47a6451b4a4b" title=" " alt="" coords="473,109,603,136"/>
 <area shape="rect" id="node5" href="$gsd_8c.html#a7a717f9dafe011e68434e181c76253af" title=" " alt="" coords="669,59,832,85"/>

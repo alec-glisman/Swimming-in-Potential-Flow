@@ -215,7 +215,7 @@
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="classGSDUtil.html" target="_top" xlink:title=" ">
+<g id="a_node4"><a xlink:href="classGSDUtil.html" target="_top" xlink:title="Wrapper class for gsd.h to load data from input GSD file into systemData class.">
 <polygon fill="none" stroke="black" points="249,-105.5 249,-316.5 371,-316.5 371,-105.5 249,-105.5"/>
 <text text-anchor="middle" x="310" y="-304.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil</text>
 <polyline fill="none" stroke="black" points="249,-297.5 371,-297.5 "/>
