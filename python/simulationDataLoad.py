@@ -15,7 +15,7 @@ import pandas as pd                # Data structures
 np.set_printoptions(threshold=sys.maxsize, precision=16)
 
 # Internal Dependencies
-from GSDUtil import GSDUtil  # noqa: E402
+from GSDUtilPy import GSDUtilPy  # noqa: E402
 
 
 def find_compressed_data(relative_path_base_dir, sim_parameters_varied):
@@ -75,7 +75,7 @@ def load_compressed_data(tar_data_path):
             for file in files:  # Loop through all files in given directory
                 if (".gsd" in file):
                     with open(root + "/" + file) as g:
-                        cur_gsd = GSDUtil(g.name, create_gsd=False)
+                        cur_gsd = GSDUtilPy(g.name, create_gsd=False)
                         gsd_files.append(cur_gsd)
 
         assert(len(gsd_files) > 0)

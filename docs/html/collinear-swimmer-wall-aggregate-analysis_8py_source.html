@@ -109,7 +109,7 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-aggregate-analy
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment"># Internal Dependencies</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;sys.path.insert(0, os.getcwd() + <span class="stringliteral">&#39;/python&#39;</span>)</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">from</span> plotStyling <span class="keyword">import</span> PlotStyling  <span class="comment"># noqa: E402</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">from</span> GSDUtil <span class="keyword">import</span> GSDUtil  <span class="comment"># noqa: E402</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">from</span> GSDUtilPy <span class="keyword">import</span> GSDUtilPy  <span class="comment"># noqa: E402</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment"># !SECTION (Dependencies)</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
@@ -179,7 +179,7 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-aggregate-analy
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keywordflow">for</span> file <span class="keywordflow">in</span> files:  <span class="comment"># Loop through all files in given directory</span></div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                <span class="keywordflow">if</span> (<span class="stringliteral">&quot;.gsd&quot;</span> <span class="keywordflow">in</span> file):</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                    <span class="keyword">with</span> open(root + <span class="stringliteral">&quot;/&quot;</span> + file) <span class="keyword">as</span> g:</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                        cur_gsd = <a class="code" href="classGSDUtil_1_1GSDUtil.html">GSDUtil</a>(g.name, create_gsd=<span class="keyword">False</span>)</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                        cur_gsd = <a class="code" href="classGSDUtilPy_1_1GSDUtilPy.html">GSDUtilPy</a>(g.name, create_gsd=<span class="keyword">False</span>)</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                        gsd_files.append(cur_gsd)</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        assert(len(gsd_files) &gt; 0)</div>
@@ -519,7 +519,7 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-aggregate-analy
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="anamespacecollinear-swimmer-wall-aggregate-analysis_html_a160162a09e4b3db334296a2f37af9177"><div class="ttname"><a href="namespacecollinear-swimmer-wall-aggregate-analysis.html#a160162a09e4b3db334296a2f37af9177">collinear-swimmer-wall-aggregate-analysis.f_D</a></div><div class="ttdeci">def f_D(x)</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-aggregate-analysis_8py_source.html#l00034">collinear-swimmer-wall-aggregate-analysis.py:34</a></div></div>
-<div class="ttc" id="aclassGSDUtil_1_1GSDUtil_html"><div class="ttname"><a href="classGSDUtil_1_1GSDUtil.html">GSDUtil.GSDUtil</a></div><div class="ttdef"><b>Definition:</b> <a href="GSDUtil_8py_source.html#l00010">GSDUtil.py:10</a></div></div>
+<div class="ttc" id="aclassGSDUtilPy_1_1GSDUtilPy_html"><div class="ttname"><a href="classGSDUtilPy_1_1GSDUtilPy.html">GSDUtilPy.GSDUtilPy</a></div><div class="ttdef"><b>Definition:</b> <a href="GSDUtilPy_8py_source.html#l00010">GSDUtilPy.py:10</a></div></div>
 <div class="ttc" id="anamespacecollinear-swimmer-wall-aggregate-analysis_html_a3eae151b600976e5d4de6ef899fd5165"><div class="ttname"><a href="namespacecollinear-swimmer-wall-aggregate-analysis.html#a3eae151b600976e5d4de6ef899fd5165">collinear-swimmer-wall-aggregate-analysis.relErr</a></div><div class="ttdeci">def relErr(exact, approximate)</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-aggregate-analysis_8py_source.html#l00048">collinear-swimmer-wall-aggregate-analysis.py:48</a></div></div>
 <div class="ttc" id="anamespacecollinear-swimmer-wall-aggregate-analysis_html_aa2f3893e276bd5a05fd405250dd7475b"><div class="ttname"><a href="namespacecollinear-swimmer-wall-aggregate-analysis.html#aa2f3893e276bd5a05fd405250dd7475b">collinear-swimmer-wall-aggregate-analysis.dZ_leadingOrder</a></div><div class="ttdeci">def dZ_leadingOrder(phi, U0, omega, a, x)</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-aggregate-analysis_8py_source.html#l00042">collinear-swimmer-wall-aggregate-analysis.py:42</a></div></div>
 <div class="ttc" id="aclassplotStyling_1_1PlotStyling_html"><div class="ttname"><a href="classplotStyling_1_1PlotStyling.html">plotStyling.PlotStyling</a></div><div class="ttdef"><b>Definition:</b> <a href="plotStyling_8py_source.html#l00059">plotStyling.py:59</a></div></div>
@@ -528,7 +528,7 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-aggregate-analy
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_7837fde3ab9c1fb2fc5be7b717af8d79.html">python</a></li><li class="navelem"><a class="el" href="dir_a8de9000833399a5c2e24100482f9685.html">analysis</a></li><li class="navelem"><a class="el" href="collinear-swimmer-wall-aggregate-analysis_8py.html">collinear-swimmer-wall-aggregate-analysis.py</a></li>
-    <li class="footer">Generated on Fri Oct 15 2021 13:11:09 for Bodies in Potential Flow by
+    <li class="footer">Generated on Fri Oct 15 2021 13:17:31 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

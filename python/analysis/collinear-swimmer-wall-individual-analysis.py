@@ -13,7 +13,7 @@ from matplotlib.ticker import FuncFormatter
 # Internal Dependencies
 sys.path.insert(0, os.getcwd() + '/python')
 from plotStyling import PlotStyling  # noqa: E402
-from GSDUtil import GSDUtil  # noqa: E402
+from GSDUtilPy import GSDUtilPy  # noqa: E402
 
 # !SECTION (Dependencies)
 
@@ -61,7 +61,7 @@ def aggregate_plots(relative_path, output_dir):
             for file in files:  # Loop through all files in given directory
                 if (".gsd" in file):
                     with open(root + "/" + file) as g:
-                        cur_gsd = GSDUtil(g.name, create_gsd=False)
+                        cur_gsd = GSDUtilPy(g.name, create_gsd=False)
                         gsd_files.append(cur_gsd)
 
         assert(len(gsd_files) == 1)
@@ -181,10 +181,10 @@ def aggregate_plots(relative_path, output_dir):
     # PLOT: Angular velocity
     numLines = 1
     angVel_Plot = PlotStyling(numLines,
-                               r"$t/\tau$", r"$\Delta \dot{\theta} / (2 \pi)$",
-                               title=None, loglog=False,
-                               outputDir=output_dir, figName="angular-velocity", eps=epsOutput,
-                               continuousColors=False)
+                              r"$t/\tau$", r"$\Delta \dot{\theta} / (2 \pi)$",
+                              title=None, loglog=False,
+                              outputDir=output_dir, figName="angular-velocity", eps=epsOutput,
+                              continuousColors=False)
     # Show numerical data points
     angVel_Plot.make_plot()
     angVel_Plot.curve(
@@ -197,10 +197,10 @@ def aggregate_plots(relative_path, output_dir):
     # PLOT: Angular acceleration
     numLines = 1
     angAcc_Plot = PlotStyling(numLines,
-                               r"$t/\tau$", r"$\Delta \ddot{\theta} / (2 \pi)$",
-                               title=None, loglog=False,
-                               outputDir=output_dir, figName="angular-acceleration", eps=epsOutput,
-                               continuousColors=False)
+                              r"$t/\tau$", r"$\Delta \ddot{\theta} / (2 \pi)$",
+                              title=None, loglog=False,
+                              outputDir=output_dir, figName="angular-acceleration", eps=epsOutput,
+                              continuousColors=False)
     # Show numerical data points
     angAcc_Plot.make_plot()
     angAcc_Plot.curve(

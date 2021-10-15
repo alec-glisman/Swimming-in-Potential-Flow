@@ -320,7 +320,7 @@ Here is the call graph for this function:</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keywordflow">for</span> file <span class="keywordflow">in</span> files:  <span class="comment"># Loop through all files in given directory</span></div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                <span class="keywordflow">if</span> (<span class="stringliteral">&quot;.gsd&quot;</span> <span class="keywordflow">in</span> file):</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                    <span class="keyword">with</span> open(root + <span class="stringliteral">&quot;/&quot;</span> + file) <span class="keyword">as</span> g:</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                        cur_gsd = <a class="code" href="classGSDUtil.html">GSDUtil</a>(g.name, create_gsd=<span class="keyword">False</span>)</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                        cur_gsd = <a class="code" href="namespaceGSDUtilPy.html">GSDUtilPy</a>(g.name, create_gsd=<span class="keyword">False</span>)</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                        gsd_files.append(cur_gsd)</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        assert(len(gsd_files) &gt; 0)</div>
@@ -781,15 +781,15 @@ Here is the call graph for this function:</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="anamespacecollinear-swimmer-wall-aggregate-analysis_html_a160162a09e4b3db334296a2f37af9177"><div class="ttname"><a href="namespacecollinear-swimmer-wall-aggregate-analysis.html#a160162a09e4b3db334296a2f37af9177">collinear-swimmer-wall-aggregate-analysis.f_D</a></div><div class="ttdeci">def f_D(x)</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-aggregate-analysis_8py_source.html#l00034">collinear-swimmer-wall-aggregate-analysis.py:34</a></div></div>
-<div class="ttc" id="aclassGSDUtil_html"><div class="ttname"><a href="classGSDUtil.html">GSDUtil</a></div><div class="ttdoc">Wrapper class for gsd.h to load data from input GSD file into systemData class.</div><div class="ttdef"><b>Definition:</b> <a href="GSDUtil_8hpp_source.html#l00035">GSDUtil.hpp:35</a></div></div>
 <div class="ttc" id="anamespacecollinear-swimmer-wall-aggregate-analysis_html_a3eae151b600976e5d4de6ef899fd5165"><div class="ttname"><a href="namespacecollinear-swimmer-wall-aggregate-analysis.html#a3eae151b600976e5d4de6ef899fd5165">collinear-swimmer-wall-aggregate-analysis.relErr</a></div><div class="ttdeci">def relErr(exact, approximate)</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-aggregate-analysis_8py_source.html#l00048">collinear-swimmer-wall-aggregate-analysis.py:48</a></div></div>
 <div class="ttc" id="anamespacecollinear-swimmer-wall-aggregate-analysis_html_aa2f3893e276bd5a05fd405250dd7475b"><div class="ttname"><a href="namespacecollinear-swimmer-wall-aggregate-analysis.html#aa2f3893e276bd5a05fd405250dd7475b">collinear-swimmer-wall-aggregate-analysis.dZ_leadingOrder</a></div><div class="ttdeci">def dZ_leadingOrder(phi, U0, omega, a, x)</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-aggregate-analysis_8py_source.html#l00042">collinear-swimmer-wall-aggregate-analysis.py:42</a></div></div>
+<div class="ttc" id="anamespaceGSDUtilPy_html"><div class="ttname"><a href="namespaceGSDUtilPy.html">GSDUtilPy</a></div><div class="ttdef"><b>Definition:</b> <a href="GSDUtilPy_8py_source.html#l00001">GSDUtilPy.py:1</a></div></div>
 <div class="ttc" id="anamespacecollinear-swimmer-wall-aggregate-analysis_html_af627fd2be7ee908fa6e54a3c65f7e99f"><div class="ttname"><a href="namespacecollinear-swimmer-wall-aggregate-analysis.html#af627fd2be7ee908fa6e54a3c65f7e99f">collinear-swimmer-wall-aggregate-analysis.aggregate_plots</a></div><div class="ttdeci">def aggregate_plots(relative_path, output_dir)</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-aggregate-analysis_8py_source.html#l00054">collinear-swimmer-wall-aggregate-analysis.py:54</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacecollinear-swimmer-wall-aggregate-analysis.html">collinear-swimmer-wall-aggregate-analysis</a></li>
-    <li class="footer">Generated on Fri Oct 15 2021 13:11:10 for Bodies in Potential Flow by
+    <li class="footer">Generated on Fri Oct 15 2021 13:17:31 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

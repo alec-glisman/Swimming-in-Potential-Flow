@@ -12,7 +12,7 @@ from matplotlib.ticker import FuncFormatter
 # Internal Dependencies
 sys.path.insert(0, os.getcwd() + '/python')
 from plotStyling import PlotStyling  # noqa: E402
-from GSDUtil import GSDUtil  # noqa: E402
+from GSDUtilPy import GSDUtilPy  # noqa: E402
 
 # !SECTION (Dependencies)
 
@@ -82,7 +82,7 @@ def aggregate_plots(relative_path, output_dir):
             for file in files:  # Loop through all files in given directory
                 if (".gsd" in file):
                     with open(root + "/" + file) as g:
-                        cur_gsd = GSDUtil(g.name, create_gsd=False)
+                        cur_gsd = GSDUtilPy(g.name, create_gsd=False)
                         gsd_files.append(cur_gsd)
 
         assert(len(gsd_files) > 0)

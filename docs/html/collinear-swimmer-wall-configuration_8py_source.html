@@ -105,7 +105,7 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-configuration_8
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"># Internal Dependencies (NOTE: Assuming file called from project base directory)</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;sys.path.insert(0, os.getcwd() + <span class="stringliteral">&#39;/python&#39;</span>)</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">from</span> GSDUtil <span class="keyword">import</span> GSDUtil  <span class="comment"># noqa: E402</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">from</span> GSDUtilPy <span class="keyword">import</span> GSDUtilPy  <span class="comment"># noqa: E402</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"># !SECTION (Dependencies)</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
@@ -166,7 +166,7 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-configuration_8
 <div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#ae34ebb5ccbfea8e528c3836768a93b39">   69</a></span>&#160;<span class="keyword">def </span><a class="code" href="namespacecollinear-swimmer-wall-configuration.html#ae34ebb5ccbfea8e528c3836768a93b39">initializeGSD</a>():</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keyword">global</span> gsd_class</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    gsd_class = <a class="code" href="classGSDUtil_1_1GSDUtil.html">GSDUtil</a>(gsd_path, create_gsd=<span class="keyword">True</span>)</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    gsd_class = <a class="code" href="classGSDUtilPy_1_1GSDUtilPy.html">GSDUtilPy</a>(gsd_path, create_gsd=<span class="keyword">True</span>)</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    gsd_class.setLogParameters(dt, t, tf, tau, num_steps_output,</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                               fluid_density, particle_density, wca_epsilon, wca_sigma)</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    gsd_class.setParticleParameters(n, types=types, typeid=typeid)</div>
@@ -256,14 +256,14 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-configuration_8
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="anamespacecollinear-swimmer-wall-configuration_html_a913b52e835a57692861622a542856792"><div class="ttname"><a href="namespacecollinear-swimmer-wall-configuration.html#a913b52e835a57692861622a542856792">collinear-swimmer-wall-configuration.setSystemData</a></div><div class="ttdeci">def setSystemData()</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-configuration_8py_source.html#l00109">collinear-swimmer-wall-configuration.py:109</a></div></div>
-<div class="ttc" id="aclassGSDUtil_1_1GSDUtil_html"><div class="ttname"><a href="classGSDUtil_1_1GSDUtil.html">GSDUtil.GSDUtil</a></div><div class="ttdef"><b>Definition:</b> <a href="GSDUtil_8py_source.html#l00010">GSDUtil.py:10</a></div></div>
+<div class="ttc" id="aclassGSDUtilPy_1_1GSDUtilPy_html"><div class="ttname"><a href="classGSDUtilPy_1_1GSDUtilPy.html">GSDUtilPy.GSDUtilPy</a></div><div class="ttdef"><b>Definition:</b> <a href="GSDUtilPy_8py_source.html#l00010">GSDUtilPy.py:10</a></div></div>
 <div class="ttc" id="anamespacecollinear-swimmer-wall-configuration_html_af92c6e38d93a3b8b752d6167ca0e1931"><div class="ttname"><a href="namespacecollinear-swimmer-wall-configuration.html#af92c6e38d93a3b8b752d6167ca0e1931">collinear-swimmer-wall-configuration.setInitialConditions</a></div><div class="ttdeci">def setInitialConditions()</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-configuration_8py_source.html#l00078">collinear-swimmer-wall-configuration.py:78</a></div></div>
 <div class="ttc" id="anamespacecollinear-swimmer-wall-configuration_html_ae34ebb5ccbfea8e528c3836768a93b39"><div class="ttname"><a href="namespacecollinear-swimmer-wall-configuration.html#ae34ebb5ccbfea8e528c3836768a93b39">collinear-swimmer-wall-configuration.initializeGSD</a></div><div class="ttdeci">def initializeGSD()</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-configuration_8py_source.html#l00069">collinear-swimmer-wall-configuration.py:69</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_7837fde3ab9c1fb2fc5be7b717af8d79.html">python</a></li><li class="navelem"><a class="el" href="dir_d586c9a8800ac8257027f396f0cd6d99.html">initial_configurations</a></li><li class="navelem"><a class="el" href="collinear-swimmer-wall-configuration_8py.html">collinear-swimmer-wall-configuration.py</a></li>
-    <li class="footer">Generated on Fri Oct 15 2021 13:11:09 for Bodies in Potential Flow by
+    <li class="footer">Generated on Fri Oct 15 2021 13:17:31 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

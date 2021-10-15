@@ -7,7 +7,7 @@ from pathlib import Path           # Modify path variables
 # !SECTION
 
 
-class GSDUtil:
+class GSDUtilPy:
 
     # SECTION: Static parameters
 

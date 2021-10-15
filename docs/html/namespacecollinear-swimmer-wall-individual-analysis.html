@@ -181,7 +181,7 @@ Variables</h2></td></tr>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">for</span> file <span class="keywordflow">in</span> files:  <span class="comment"># Loop through all files in given directory</span></div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                <span class="keywordflow">if</span> (<span class="stringliteral">&quot;.gsd&quot;</span> <span class="keywordflow">in</span> file):</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                    <span class="keyword">with</span> open(root + <span class="stringliteral">&quot;/&quot;</span> + file) <span class="keyword">as</span> g:</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                        cur_gsd = <a class="code" href="classGSDUtil.html">GSDUtil</a>(g.name, create_gsd=<span class="keyword">False</span>)</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                        cur_gsd = <a class="code" href="namespaceGSDUtilPy.html">GSDUtilPy</a>(g.name, create_gsd=<span class="keyword">False</span>)</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                        gsd_files.append(cur_gsd)</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        assert(len(gsd_files) == 1)</div>
@@ -301,10 +301,10 @@ Variables</h2></td></tr>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="comment"># PLOT: Angular velocity</span></div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    numLines = 1</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    angVel_Plot = PlotStyling(numLines,</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                               <span class="stringliteral">r&quot;$t/\tau$&quot;</span>, <span class="stringliteral">r&quot;$\Delta \dot{\theta} / (2 \pi)$&quot;</span>,</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;                               title=<span class="keywordtype">None</span>, loglog=<span class="keyword">False</span>,</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;                               outputDir=output_dir, figName=<span class="stringliteral">&quot;angular-velocity&quot;</span>, eps=epsOutput,</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;                               continuousColors=<span class="keyword">False</span>)</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                              <span class="stringliteral">r&quot;$t/\tau$&quot;</span>, <span class="stringliteral">r&quot;$\Delta \dot{\theta} / (2 \pi)$&quot;</span>,</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;                              title=<span class="keywordtype">None</span>, loglog=<span class="keyword">False</span>,</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;                              outputDir=output_dir, figName=<span class="stringliteral">&quot;angular-velocity&quot;</span>, eps=epsOutput,</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;                              continuousColors=<span class="keyword">False</span>)</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="comment"># Show numerical data points</span></div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    angVel_Plot.make_plot()</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    angVel_Plot.curve(</div>
@@ -317,10 +317,10 @@ Variables</h2></td></tr>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    <span class="comment"># PLOT: Angular acceleration</span></div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    numLines = 1</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    angAcc_Plot = PlotStyling(numLines,</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;                               <span class="stringliteral">r&quot;$t/\tau$&quot;</span>, <span class="stringliteral">r&quot;$\Delta \ddot{\theta} / (2 \pi)$&quot;</span>,</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;                               title=<span class="keywordtype">None</span>, loglog=<span class="keyword">False</span>,</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;                               outputDir=output_dir, figName=<span class="stringliteral">&quot;angular-acceleration&quot;</span>, eps=epsOutput,</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;                               continuousColors=<span class="keyword">False</span>)</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;                              <span class="stringliteral">r&quot;$t/\tau$&quot;</span>, <span class="stringliteral">r&quot;$\Delta \ddot{\theta} / (2 \pi)$&quot;</span>,</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;                              title=<span class="keywordtype">None</span>, loglog=<span class="keyword">False</span>,</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;                              outputDir=output_dir, figName=<span class="stringliteral">&quot;angular-acceleration&quot;</span>, eps=epsOutput,</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;                              continuousColors=<span class="keyword">False</span>)</div>
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="comment"># Show numerical data points</span></div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    angAcc_Plot.make_plot()</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    angAcc_Plot.curve(</div>
@@ -629,13 +629,13 @@ Variables</h2></td></tr>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aclassGSDUtil_html"><div class="ttname"><a href="classGSDUtil.html">GSDUtil</a></div><div class="ttdoc">Wrapper class for gsd.h to load data from input GSD file into systemData class.</div><div class="ttdef"><b>Definition:</b> <a href="GSDUtil_8hpp_source.html#l00035">GSDUtil.hpp:35</a></div></div>
 <div class="ttc" id="anamespacecollinear-swimmer-wall-individual-analysis_html_adb47cd36e2b196a6ae844c5e69fd5d83"><div class="ttname"><a href="namespacecollinear-swimmer-wall-individual-analysis.html#adb47cd36e2b196a6ae844c5e69fd5d83">collinear-swimmer-wall-individual-analysis.aggregate_plots</a></div><div class="ttdeci">def aggregate_plots(relative_path, output_dir)</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-individual-analysis_8py_source.html#l00034">collinear-swimmer-wall-individual-analysis.py:34</a></div></div>
+<div class="ttc" id="anamespaceGSDUtilPy_html"><div class="ttname"><a href="namespaceGSDUtilPy.html">GSDUtilPy</a></div><div class="ttdef"><b>Definition:</b> <a href="GSDUtilPy_8py_source.html#l00001">GSDUtilPy.py:1</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacecollinear-swimmer-wall-individual-analysis.html">collinear-swimmer-wall-individual-analysis</a></li>
-    <li class="footer">Generated on Fri Oct 15 2021 13:11:10 for Bodies in Potential Flow by
+    <li class="footer">Generated on Fri Oct 15 2021 13:17:31 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

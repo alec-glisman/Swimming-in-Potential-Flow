@@ -8,7 +8,7 @@ from optparse import OptionParser  # Get user input
 
 # Internal Dependencies (NOTE: Assuming file called from project base directory)
 sys.path.insert(0, os.getcwd() + '/python')
-from GSDUtil import GSDUtil  # noqa: E402
+from GSDUtilPy import GSDUtilPy  # noqa: E402
 
 # !SECTION (Dependencies)
 
@@ -69,7 +69,7 @@ typeid = np.array([1, 0, 0, 1, 0, 0], dtype=np.uint32)
 def initializeGSD():
     global gsd_class
 
-    gsd_class = GSDUtil(gsd_path, create_gsd=True)
+    gsd_class = GSDUtilPy(gsd_path, create_gsd=True)
     gsd_class.setLogParameters(dt, t, tf, tau, num_steps_output,
                                fluid_density, particle_density, wca_epsilon, wca_sigma)
     gsd_class.setParticleParameters(n, types=types, typeid=typeid)

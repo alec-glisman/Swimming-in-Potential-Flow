@@ -1,5 +1,6 @@
 var annotated =
 [
+    [ "GSDUtilPy", "namespaceGSDUtilPy.html", "namespaceGSDUtilPy" ],
     [ "plotStyling", "namespaceplotStyling.html", "namespaceplotStyling" ],
     [ "engine", "classengine.html", "classengine" ],
     [ "GSDUtil", "classGSDUtil.html", "classGSDUtil" ],
