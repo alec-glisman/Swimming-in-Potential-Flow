@@ -72,6 +72,8 @@
   - [x] Update how hydrodynamic forces are calculated
 
 - Integration
+  - [ ] Figure out how to calculate the initial quaternions
+  - [ ] Save initial position data in systemData class for quaternion rotation
   - [x] Check that udwadia method is being used
   - [ ] Update linear constraint system such that the only constraint is the quaternion unit norm for each body (systemData).
   - [ ] Put some sort of smart check so that Udwadia system updated only when not time-dependent
