@@ -2,6 +2,7 @@
 #   FLAGS ACCEPTED:
 #       CMAKE_BUILD_TYPE ["Release", "Debug", "Profile"]
 #       ENABLE_TESTING ["True", "False"]
+#       ENABLE_COVERAGE ["True", "False"]
 #   GENERATORS TESTED:
 #       "Unix Makefiles"   
 #   COMPILERS TESTED:
@@ -187,6 +188,16 @@ IF(CMAKE_BUILD_TYPE STREQUAL "Profile")
     SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fno-omit-frame-pointer -fopenmp -march=native -O3 -mfpmath=sse -funroll-loops -lboost_system -ltbb -lpthread -m64 -lmkl_intel_lp64 -lmkl_tbb_thread -lmkl_core -lm -ldl -Wno-deprecated-declarations")
 
 ENDIF()
+
+IF(ENABLE_COVERAGE STREQUAL "True" OR CMAKE_BUILD_TYPE STREQUAL "Debug")
+
+    SET(CMAKE_CXX_OUTPUT_EXTENSION_REPLACE ON)
+    
+    SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fprofile-arcs -ftest-coverage")
+    SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fprofile-arcs -ftest-coverage")
+
+ENDIF()
+
 # !SECTION
 
 
@@ -242,23 +253,25 @@ MESSAGE( STATUS "${Cyan}" "Include Dir: ${SPDLOG_INCLUDE_DIRS}" "${ColourReset}"
 MESSAGE( STATUS "${Cyan}" "Libraries: ${SPDLOG_LIBRARIES}" "${ColourReset}")
 MESSAGE("")
 
-# Unit testing libraries
-MESSAGE( "${BoldMagenta}" "External Dependency: Catch2" "${ColourReset}" )
-FIND_PACKAGE(Catch2 2.13.6 REQUIRED)
-MESSAGE( STATUS "${Cyan}" "Found: ${Catch2_FOUND}" "${ColourReset}")
-MESSAGE( STATUS "${Cyan}" "Include Dir: ${Catch2_INCLUDE_DIRS}" "${ColourReset}")
-INCLUDE(CTest)
-INCLUDE(Catch)
-MESSAGE("")
 # !SECTION
 
 
 
 # SECTION: Internal libraries
-# Add other CMake files
 ADD_SUBDIRECTORY(src)
 
 IF(ENABLE_TESTING STREQUAL "True" OR CMAKE_BUILD_TYPE STREQUAL "Debug")
+
+    ENABLE_TESTING()
+
+    # Unit testing libraries
+    MESSAGE( "${BoldMagenta}" "External Dependency: Catch2" "${ColourReset}" )
+    FIND_PACKAGE(Catch2 2.13.6 REQUIRED)
+    MESSAGE( STATUS "${Cyan}" "Found: ${Catch2_FOUND}" "${ColourReset}")
+    MESSAGE( STATUS "${Cyan}" "Include Dir: ${Catch2_INCLUDE_DIRS}" "${ColourReset}")
+    INCLUDE(CTest)
+    INCLUDE(Catch)
+    MESSAGE("")
 
     ADD_SUBDIRECTORY(tests)
 
