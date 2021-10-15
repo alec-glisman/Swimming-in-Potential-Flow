@@ -553,6 +553,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     {
         return m_num_DoF;
     }
+
     /* ANCHOR: Tensors set in constructor */
     const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>>&
     tensI3() const
