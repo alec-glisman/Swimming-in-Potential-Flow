@@ -69,20 +69,27 @@
   - [x] Update $\nabla_{R} \bm{M}$ calculation with $\bm{\beta}$
   - [x] Make $\nabla_{R} \bm{M}$ 3rd order tensor
   - [x] Compute the $\bm{N}^{(i)}$ 3rd order tensors and $\tilde{\mathbf{M}}$ 2nd order tensors
-  - [ ] Update how hydrodynamic forces are calculated
+  - [x] Update how hydrodynamic forces are calculated
 
 - Integration
   - [x] Check that udwadia method is being used
-  - [ ] Update linear constraint system such that the only constraint is the quaternion unit norm for each body.
-  - [ ] Update acceleration calculations (only use body DoF and also output particle DoF)
+  - [ ] Update linear constraint system such that the only constraint is the quaternion unit norm for each body (systemData).
+  - [ ] Put some sort of smart check so that Udwadia system updated only when not time-dependent
+  - [ ] Update integration kinematic calculations with only body components
+    - [ ] Write function to convert body velocities to particle velocities
+    - [ ] Write function to convert body accelerations to particle velocities
+    - [ ] Write function to convert body positions to particle positions
 
 ## Tensor module optimization
 
 - [x] move thread-pool and device to engine class
 - [ ] Make sure all calls to TensorCast and MatrixCast have a device to compute on
+- [ ] Make sure all tensor calculations have a device to compute on
 - [ ] Optimize all contraction operations with a device
+  - [ ] Try using the default device to check performance
 - [ ] Add GPU offloading (#define EIGEN_USE_GPU)
   - <https://www.tensorflow.org/guide/create_op#compile_the_op_using_your_system_compiler_tensorflow_binary_installation>
+  - See if this can be done with type doubles. I think I read that this only works with floats?
 - [ ] Remove all setters/getters in systemData that are unused
 
 ## Bugs to Fix
