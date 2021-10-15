@@ -15,6 +15,7 @@
                 "build_debug",
                 "-DCMAKE_BUILD_TYPE=Debug",
                 "-DENABLE_TESTING=True",
+                "-DENABLE_COVERAGE=True",
                 "-DCMAKE_EXPORT_COMPILE_COMMANDS=True"
             ],
             "problemMatcher": [
@@ -88,6 +89,7 @@
                 "build_release",
                 "-DCMAKE_BUILD_TYPE=Release",
                 "-DENABLE_TESTING=True",
+                "-DENABLE_COVERAGE=True",
                 "-DCMAKE_EXPORT_COMPILE_COMMANDS=True"
             ],
             "problemMatcher": [
@@ -141,6 +143,7 @@
                 "build_profile",
                 "-DCMAKE_BUILD_TYPE=Profile",
                 "-DENABLE_TESTING=True",
+                "-DENABLE_COVERAGE=True",
                 "-DCMAKE_EXPORT_COMPILE_COMMANDS=True"
             ],
             "problemMatcher": [
