@@ -47,7 +47,8 @@ IF(APPLE)  # Build on laptop PC
 
     SET(CMAKE_MACOSX_RPATH 1)
     SET(CMAKE_SKIP_BUILD_RPATH FALSE)
-    SET(CMAKE_BUILD_RPATH "/opt/intel/oneapi/mkl/latest")
+    SET(CMAKE_BUILD_RPATH "/opt/intel/oneapi/mkl/latest/lib")
+    SET(CMAKE_PREFIX_PATH "/opt/intel/oneapi/mkl/latest/lib:${CMAKE_PREFIX_PATH}")
     
     SET(CMAKE_C_COMPILER /usr/local/bin/gcc-11 CACHE PATH "")
     SET(CMAKE_CXX_COMPILER /usr/local/bin/g++-11 CACHE PATH "")
@@ -99,6 +100,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.5.1 FATAL_ERROR)
 SET(CMAKE_MODULE_PATH 
     ${CMAKE_MODULE_PATH}
     ${CMAKE_CURRENT_SOURCE_DIR}/include/cmake_modules)
+
 #!SECTION
 
 
@@ -131,6 +133,7 @@ ELSE()  # Use CUDA when not on MacOS
 
 ENDIF()
 
+
 PROJECT(
         bodies_in_potential_flow
         VERSION "0.1.0"
@@ -152,6 +155,7 @@ ELSE()
     MESSAGE(FATAL_ERROR "Compiler ID: ${CMAKE_CXX_COMPILER_ID}")
 
 ENDIF()
+
 # !SECTION
 
 
@@ -163,8 +167,8 @@ SET(CMAKE_C_FLAGS_DEBUG
     "-g -O0 -fno-omit-frame-pointer -fopenmp -lboost_system -ltbb -lpthread -m64 -lmkl_intel_lp64 -lmkl_tbb_thread -lmkl_core -lm -ldl -Wno-unknown-pragmas -Wall -Wextra -Wlogical-op -Wredundant-decls -Wshadow -Wuninitialized -Warray-bounds -Wcast-align -Wcast-qual -Wdisabled-optimization -Wdiv-by-zero -Wendif-labels -Wformat-extra-args -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wimport -Winit-self -Winline -Winvalid-pch -Wlogical-op -Wmissing-declarations -Wno-missing-format-attribute -Wmissing-include-dirs -Wmultichar -Wpacked -Wpointer-arith -Wreturn-type -Wsequence-point -Wsign-compare -Wstrict-aliasing -Wstrict-aliasing=2 -Wswitch -Wno-unused -Wno-sign-compare -Wno-cast-qual -Wno-redundant-decls -Wvariadic-macros -Wwrite-strings")
 
 
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native -O3 -mfpmath=sse -funroll-loops -fopenmp -lboost_system -ltbb -lpthread -m64 -lmkl_intel_lp64 -lmkl_tbb_thread -lmkl_core -lm -ldl -Wno-deprecated-declarations")
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native -O3 -mfpmath=sse -funroll-loops -fopenmp -lboost_system -ltbb -lpthread -m64 -lmkl_intel_lp64 -lmkl_tbb_thread -lmkl_core -lm -ldl -Wno-deprecated-declarations")
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native -O3 -mfpmath=sse -funroll-loops -fopenmp -lboost_system -ltbb -lpthread -m64  -lmkl_core -lmkl_intel_lp64 -lmkl_tbb_thread -lm -ldl -Wno-deprecated-declarations")
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native -O3 -mfpmath=sse -funroll-loops -fopenmp -lboost_system -ltbb -lpthread -m64 -lmkl_core -lmkl_intel_lp64 -lmkl_tbb_thread -lm -ldl -Wno-deprecated-declarations")
 
 
 IF(CMAKE_BUILD_TYPE STREQUAL "Profile")
@@ -205,8 +209,8 @@ MESSAGE("")
 
 # Optimization libraries
 MESSAGE( "${BoldMagenta}" "External Dependency: Intel MKL" "${ColourReset}" )
-SET(MKL_THREADING tbb_thread)
 SET(MKL_INTERFACE_FULL intel_lp64)
+SET(MKL_THREADING tbb_thread)
 FIND_PACKAGE(MKL REQUIRED)    
 MESSAGE( STATUS "${Cyan}" "Found: ${MKL_FOUND}" "${ColourReset}")
 MESSAGE( STATUS "${Cyan}" "Include Dir: ${MKL_INCLUDE_DIR}" "${ColourReset}")
