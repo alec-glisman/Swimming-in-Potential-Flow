@@ -1,27 +1,34 @@
-# Make all of source code a library
+# Library variables
+SET(LIB_NAME "simulation_system")
+
+SET(LIB_FILES 
+    systemData.cpp systemData.hpp 
+    engine.cpp engine.hpp
+    progressBar.hpp)
+
+SET(LIB_LINKS 
+    ${MKL_LIBRARIES} 
+    Eigen3::Eigen
+    data_io)
+
+# COMPUTE ARCHITECTURES: GeForce RTX 3080: Compute Capability 8.6 GeForce
+# GTX 1080 TI: Compute Capability 6.1
 IF(DEFINED CMAKE_CUDA_COMPILER)
 
-    # COMPUTE ARCHITECTURES: GeForce RTX 3080: Compute Capability 8.6 GeForce
-    # GTX 1080 TI: Compute Capability 6.1
-    SET_TARGET_PROPERTIES(simulation_system PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
-    SET_PROPERTY(TARGET simulation_system PROPERTY CUDA_ARCHITECTURES 86 61)
+    SET_TARGET_PROPERTIES(${LIB_NAME} PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+    SET_PROPERTY(TARGET ${LIB_NAME} PROPERTY CUDA_ARCHITECTURES 86 61)
 
 ENDIF()
 
+# Make all of source code a library
 ADD_LIBRARY(
-    simulation_system
-    systemData.cpp 
-    systemData.hpp 
-    engine.cpp 
-    engine.hpp
-    progressBar.hpp
-)
-    
+    ${LIB_NAME}
+    ${LIB_FILES}
+    )
+
+# Link other libraries 
 TARGET_LINK_LIBRARIES(
-    simulation_system
+    ${LIB_NAME}
     PUBLIC
-    spdlog::spdlog_header_only
-    ${MKL_LIBRARIES}
-    Eigen3::Eigen
-    data_io
-)
+    ${LIB_LINKS}
+    )
