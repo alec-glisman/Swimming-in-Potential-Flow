@@ -259,8 +259,6 @@ ADD_SUBDIRECTORY(src)
 
 IF(ENABLE_TESTING STREQUAL "True" OR CMAKE_BUILD_TYPE STREQUAL "Debug")
 
-    ENABLE_TESTING()
-
     # Unit testing libraries
     MESSAGE( "${BoldMagenta}" "External Dependency: Catch2" "${ColourReset}" )
     FIND_PACKAGE(Catch2 2.13.6 REQUIRED)
