@@ -46,8 +46,11 @@ IF(APPLE)  # Build on laptop PC
     MESSAGE(STATUS "${BoldGreen}" "Compiling on MacOS" "${ColourReset}")
 
     SET(CMAKE_MACOSX_RPATH 1)
-    set(CMAKE_SKIP_BUILD_RPATH FALSE)
-    set(CMAKE_BUILD_RPATH "/opt/intel/oneapi/mkl/latest/lib")
+    SET(CMAKE_SKIP_BUILD_RPATH FALSE)
+    SET(CMAKE_BUILD_RPATH "/opt/intel/oneapi/mkl/latest/lib")
+    
+    SET(CMAKE_C_COMPILER /usr/local/bin/gcc-11 CACHE PATH "")
+    SET(CMAKE_CXX_COMPILER /usr/local/bin/g++-11 CACHE PATH "")
 
 ELSEIF("$ENV{USER}" STREQUAL "aglisman")  # Build on desktop PC
 
@@ -55,8 +58,8 @@ ELSEIF("$ENV{USER}" STREQUAL "aglisman")  # Build on desktop PC
 
     SET(CMAKE_CUDA_COMPILER "/opt/nvidia/hpc_sdk/Linux_x86_64/21.9/cuda/bin/nvcc")
 
-    set(CMAKE_C_COMPILER /usr/bin/gcc-11 CACHE PATH "")
-    set(CMAKE_CXX_COMPILER /usr/bin/g++-11 CACHE PATH "")
+    SET(CMAKE_C_COMPILER /usr/bin/gcc-11 CACHE PATH "")
+    SET(CMAKE_CXX_COMPILER /usr/bin/g++-11 CACHE PATH "")
 
     
 ELSEIF("$ENV{USER}" STREQUAL "alec")  # Build on Brady group servers
@@ -124,12 +127,9 @@ MESSAGE("")
 # SECTION: Project configuration
 # Add project command
 IF(APPLE)
-
     SET(LANGS CXX C)
     
-
 ELSE()  # Use CUDA when not on MacOS
-
     SET(LANGS CXX C CUDA)
 
 ENDIF()
@@ -143,19 +143,16 @@ PROJECT(
             "https://github.com/alec-glisman/bodies-in-potential-flow"
         LANGUAGES ${LANGS})
 
+
 # GCC requirements
 IF("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
-
     IF(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 11)
-
         MESSAGE(FATAL_ERROR "GCC version must be at least 11! Using: ${CMAKE_CXX_COMPILER_VERSION}")
-
     ENDIF()
 
 ELSE()
-
     MESSAGE(WARNING "You are using an unsupported compiler! Compilation has only been tested with GCC.")
-    MESSAGE(WARNING "Compiler ID: ${CMAKE_CXX_COMPILER_ID}")
+    MESSAGE(FATAL_ERROR "Compiler ID: ${CMAKE_CXX_COMPILER_ID}")
 
 ENDIF()
 # !SECTION
