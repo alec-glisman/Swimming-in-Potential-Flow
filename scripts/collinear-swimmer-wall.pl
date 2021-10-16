@@ -102,12 +102,15 @@ system( "cmake \"${cwd}\" -G \"${generator}\" -DCMAKE_BUILD_TYPE=${build} -DENAB
 system( "make -j" ) 
     and die "Building project failed: $!";
 
-# Run Catch2 unit tests
-if (${enableTesting} eq "True") {
-    system( "make tests" ) 
-            and die "Unit tests failed: $!";
-}
 
+# Run Catch2 unit tests
+chdir "tests"
+    or die "Could not move to build directory: $!";
+
+if (${enableTesting} eq "True") {
+    system( "./tests" ) 
+            and die "Unit test failed: $!";
+}
 
 # Change back to main directory
 chdir $cwd 
