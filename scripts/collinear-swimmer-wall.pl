@@ -61,7 +61,7 @@ my $analysisDir      = "figures";
 
 # Host hardware
 my $numThreads = 0;
-if ((index($host, "MacBook-Pro") != -1) or (index($host, "MBP") != -1)) {
+if ((index($host, "MacBook-Pro") != -1) or (index($host, "mbp") != -1)) {
     $numThreads = 8;
 } elsif ((index($host, "alec-glisman-PC-Ubuntu") != -1) or (index($host, "alec-glisman-PC-Windows") != -1)) {
     $numThreads  = 16;
