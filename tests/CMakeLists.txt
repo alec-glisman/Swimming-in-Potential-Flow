@@ -11,7 +11,7 @@ ENDIF()
 
 # Copy data input files for unit tests
 CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/input/data.gsd"
-    "${CMAKE_CURRENT_BINARY_DIR}/input"
+    "${CMAKE_CURRENT_BINARY_DIR}/input/data.gsd"
     COPYONLY
     )
 
