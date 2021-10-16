@@ -79,8 +79,6 @@ ENDIF()
 # Export compile commands
 SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-
-
 # C++/CUDA requirements
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CUDA_STANDARD 14)
@@ -94,6 +92,7 @@ SET(CMAKE_CUDA_ARCHITECTURES 86 61)
 
 # CMake requirements
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5.1 FATAL_ERROR)
+
 SET(CMAKE_MODULE_PATH 
     ${CMAKE_MODULE_PATH}
     ${CMAKE_CURRENT_SOURCE_DIR}/include/cmake_modules)
@@ -126,29 +125,23 @@ MESSAGE("")
 # Add project command
 IF(APPLE)
 
-    PROJECT(
-        bodies_in_potential_flow
-        VERSION "0.1.0"
-        DESCRIPTION
-            "Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible)"
-        HOMEPAGE_URL
-            "https://github.com/alec-glisman/bodies-in-potential-flow"
-        LANGUAGES CXX C)
+    SET(LANGS CXX C)
+    
 
 ELSE()  # Use CUDA when not on MacOS
 
-    PROJECT(
+    SET(LANGS CXX C CUDA)
+
+ENDIF()
+
+PROJECT(
         bodies_in_potential_flow
         VERSION "0.1.0"
         DESCRIPTION
             "Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible)"
         HOMEPAGE_URL
             "https://github.com/alec-glisman/bodies-in-potential-flow"
-        LANGUAGES CXX C CUDA)
-
-ENDIF()
-
-
+        LANGUAGES ${LANGS})
 
 # GCC requirements
 IF("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
