@@ -10,9 +10,10 @@ IF(DEFINED CMAKE_CUDA_COMPILER)
 ENDIF()
 
 # Copy data input files for unit tests
-file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/input/data.gsd"
-        DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/input/data.gsd"
-)
+CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/input/data.gsd"
+    "${CMAKE_CURRENT_BINARY_DIR}/input/data.gsd"
+    COPYONLY
+    )
 
 # Add catch as an interface library
 ADD_LIBRARY(Catch INTERFACE)
