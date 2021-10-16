@@ -108,6 +108,7 @@
         ".latexmkrc": "shellscript",
         "*.j2": "yaml",
         "*.dev": "properties",
+        "Doxyfile": "properties",
         "random": "cpp",
         "__bit_reference": "cpp",
         "__config": "cpp",
@@ -209,7 +210,8 @@
         "eigen": "cpp",
         "tensor": "cpp",
         "core": "cpp",
-        "specialfunctions": "cpp"
+        "specialfunctions": "cpp",
+        "threadpool": "cpp"
     },
     "python.analysis.extraPaths": [
         "./python"
