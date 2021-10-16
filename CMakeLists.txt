@@ -194,12 +194,6 @@ IF(ENABLE_COVERAGE STREQUAL "True" OR CMAKE_BUILD_TYPE STREQUAL "Debug")
     ADD_COMPILE_OPTIONS("--coverage")
     ADD_LINK_OPTIONS("--coverage")
    
-    SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_RELEASE} -fprofile-arcs -ftest-coverage")
-    SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_RELEASE} -fprofile-arcs -ftest-coverage")
-    
-    SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fprofile-arcs -ftest-coverage")
-    SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fprofile-arcs -ftest-coverage")
-
 ENDIF()
 
 # !SECTION
