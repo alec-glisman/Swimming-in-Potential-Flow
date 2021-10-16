@@ -102,6 +102,13 @@ system( "cmake \"${cwd}\" -G \"${generator}\" -DCMAKE_BUILD_TYPE=${build} -DENAB
 system( "make -j" ) 
     and die "Building project failed: $!";
 
+# Run Catch2 unit tests
+if (${enableTesting} eq "True") {
+    system( "make tests" ) 
+            and die "Unit tests failed: $!";
+}
+
+
 # Change back to main directory
 chdir $cwd 
     or die "Could not move back to base directory: $!";
@@ -109,11 +116,6 @@ chdir $cwd
 # Make data directory
 make_path( "data" );
 
-# Run Catch2 unit tests
-if (${enableTesting} eq "True") {
-    system( "\"${buildDir}/tests/./tests\"" ) 
-            and die "Unit test failed: $!";
-}
 
 # Add newline characters
 print "\n\n\n";
