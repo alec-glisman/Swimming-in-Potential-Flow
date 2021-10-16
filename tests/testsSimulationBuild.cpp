@@ -19,8 +19,8 @@ TEST_CASE("Load and parse data from GSD file", "[GSD][I/O]")
 {
     /* Parameters
      * REVIEW[epic=Assumptions]: Assuming that the tests are called from project base dir */
-    std::string inputDataFile = "tests/data.gsd";
-    std::string outputDir     = "tests/output";
+    std::string inputDataFile = "input/data.gsd";
+    std::string outputDir     = "output";
 
     /* Initialize variables */
     std::shared_ptr<gsd_handle> handle{new gsd_handle};
@@ -31,8 +31,7 @@ TEST_CASE("Load and parse data from GSD file", "[GSD][I/O]")
 
     SECTION("Load GSD data")
     {
-        REQUIRE_NOTHROW(return_val =
-                            gsd_open(handle.get(), inputDataFile.c_str(), GSD_OPEN_READONLY));
+        REQUIRE_NOTHROW(return_val = gsd_open(handle.get(), inputDataFile.c_str(), GSD_OPEN_READONLY));
         REQUIRE(return_val == 0);
     }
 
