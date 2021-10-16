@@ -46,9 +46,8 @@ IF(APPLE)  # Build on laptop PC
     MESSAGE(STATUS "${BoldGreen}" "Compiling on MacOS" "${ColourReset}")
 
     SET(CMAKE_MACOSX_RPATH 1)
-    SET(CMAKE_SKIP_BUILD_RPATH FALSE)
     SET(CMAKE_BUILD_RPATH "/opt/intel/oneapi/mkl/latest/lib")
-    SET(CMAKE_PREFIX_PATH "/opt/intel/oneapi/mkl/latest/lib:${CMAKE_PREFIX_PATH}")
+    SET(CMAKE_BUILD_RPATH "/opt/intel/oneapi/tbb/latest/lib")
     
     SET(CMAKE_C_COMPILER /usr/local/bin/gcc-11 CACHE PATH "")
     SET(CMAKE_CXX_COMPILER /usr/local/bin/g++-11 CACHE PATH "")
