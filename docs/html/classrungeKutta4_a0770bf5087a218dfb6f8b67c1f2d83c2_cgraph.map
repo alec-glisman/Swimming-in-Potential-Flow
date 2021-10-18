@@ -1,0 +1,4 @@
+<map id="rungeKutta4::accelerationUpdate" name="rungeKutta4::accelerationUpdate">
+<area shape="rect" id="node1" title="Helper function for integrateSecondOrder()." alt="" coords="5,5,176,47"/>
+<area shape="rect" id="node2" href="$classrungeKutta4.html#af8d44cd795c66d601274a8db5bf37b97" title="Calculates the body acceleration components given the constraints established by the Udwadia linear s..." alt="" coords="224,13,412,39"/>
+</map>

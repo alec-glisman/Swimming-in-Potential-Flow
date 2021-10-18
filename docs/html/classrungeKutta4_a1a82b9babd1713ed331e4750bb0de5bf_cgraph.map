@@ -1,6 +1,6 @@
 <map id="rungeKutta4::integrate" name="rungeKutta4::integrate">
-<area shape="rect" id="node1" title=" " alt="" coords="5,13,159,39"/>
-<area shape="rect" id="node2" href="$classrungeKutta4.html#a1c2b8361774957efcf5c6fa5a34f86af" title=" " alt="" coords="207,5,405,47"/>
-<area shape="rect" id="node3" href="$classrungeKutta4.html#ae10430251a847d2f415848b882702c50" title=" " alt="" coords="453,5,627,47"/>
-<area shape="rect" id="node4" href="$classrungeKutta4.html#af8d44cd795c66d601274a8db5bf37b97" title=" " alt="" coords="675,13,868,39"/>
+<area shape="rect" id="node1" title="Public function to call internal numerical Runge Kutta integration functions." alt="" coords="5,13,156,39"/>
+<area shape="rect" id="node2" href="$classrungeKutta4.html#a1c2b8361774957efcf5c6fa5a34f86af" title="2nd order Runge&#45;Kutta 4th order integration. Integrates known acceleration body components into veloc..." alt="" coords="204,5,399,47"/>
+<area shape="rect" id="node3" href="$classrungeKutta4.html#a0770bf5087a218dfb6f8b67c1f2d83c2" title="Helper function for integrateSecondOrder()." alt="" coords="447,5,617,47"/>
+<area shape="rect" id="node4" href="$classrungeKutta4.html#af8d44cd795c66d601274a8db5bf37b97" title="Calculates the body acceleration components given the constraints established by the Udwadia linear s..." alt="" coords="665,13,853,39"/>
 </map>

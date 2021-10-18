@@ -28,8 +28,9 @@ var searchData=
   ['color_5fmap_43',['color_map',['../classplotStyling_1_1PlotStyling.html#a28102df395fd89cc7ec3c8a6a85319e0',1,'plotStyling::PlotStyling']]],
   ['complete_5fchar_44',['complete_char',['../classProgressBar.html#abdd5b8df629d27add55ccebf7c94df05',1,'ProgressBar']]],
   ['continuous_5fcolors_45',['continuous_colors',['../classplotStyling_1_1PlotStyling.html#a29ca9f2799690330a6ae2b4367c4f2e1',1,'plotStyling::PlotStyling']]],
-  ['cross_46',['cross',['../helper__math_8h.html#a2e4be24f36bc31a9d0b35540aaa5fb71',1,'helper_math.h']]],
-  ['crossprodmat_47',['crossProdMat',['../classsystemData.html#a0a77c933b764fb36c64ec5e66011482c',1,'systemData']]],
-  ['csr_5fmat_5fnorminf_48',['csr_mat_norminf',['../helper__cusolver_8h.html#acc115ad8f91197d469e02b12a5219c24',1,'helper_cusolver.h']]],
-  ['curve_49',['curve',['../classplotStyling_1_1PlotStyling.html#a04d7b01c0a39c9749118441a35554923',1,'plotStyling::PlotStyling']]]
+  ['convertbody2particledof_46',['convertBody2ParticleDoF',['../classsystemData.html#a2a35b86c91b3a2eb19612e6a2124a3ae',1,'systemData']]],
+  ['cross_47',['cross',['../helper__math_8h.html#a2e4be24f36bc31a9d0b35540aaa5fb71',1,'helper_math.h']]],
+  ['crossprodmat_48',['crossProdMat',['../classsystemData.html#a0a77c933b764fb36c64ec5e66011482c',1,'systemData']]],
+  ['csr_5fmat_5fnorminf_49',['csr_mat_norminf',['../helper__cusolver_8h.html#acc115ad8f91197d469e02b12a5219c24',1,'helper_cusolver.h']]],
+  ['curve_50',['curve',['../classplotStyling_1_1PlotStyling.html#a04d7b01c0a39c9749118441a35554923',1,'plotStyling::PlotStyling']]]
 ];

@@ -167,6 +167,15 @@ Updated hydrodynamics</h1>
 </li>
 <li>[x] Move 3rd axis indexing function to data from hydrodynamics</li>
 <li>[x] Move crossProduct matrix function from hydrodynamics</li>
+<li>[x] <code><a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a></code> add function to calculate all inter-particle distances from relevant locater points</li>
+<li>[x] <code><a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a></code> save body number data for each particle</li>
+<li>[ ] Save initial position data in <a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a> class for quaternion rotation (normalized).</li>
+<li>[ ] Update integration kinematic calculations with only body components<ul>
+<li>[ ] Write function to convert body velocities to particle velocities</li>
+<li>[x] Write function to convert body accelerations to particle velocities</li>
+<li>[x] Write function to convert body positions to particle positions</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>General-use functions for hydrodynamics<ul>
@@ -178,16 +187,11 @@ Updated hydrodynamics</h1>
 </li>
 <li>Integration<ul>
 <li>[x] Figure out how to calculate the initial quaternions</li>
-<li>[ ] Save initial position data in <a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a> class for quaternion rotation</li>
 <li>[x] Check that udwadia method is being used</li>
-<li>[ ] Update linear constraint system such that the only constraint is the quaternion unit norm for each body (<a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a>).</li>
-<li>[ ] Put some sort of smart check so that Udwadia system updated only when not time-dependent</li>
-<li>[ ] Update integration kinematic calculations with only body components<ul>
-<li>[ ] Write function to convert body velocities to particle velocities</li>
-<li>[ ] Write function to convert body accelerations to particle velocities</li>
-<li>[ ] Write function to convert body positions to particle positions</li>
-</ul>
-</li>
+<li>[x] Make sure particle positions are updated first, then update <a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a>, then update <a class="el" href="classpotentialHydrodynamics.html" title="Computes hydrodynamic tensors (mass, forces) on a finite number of spheres in potential flow.">potentialHydrodynamics</a></li>
+<li>[x] Update linear constraint system such that the only constraint is the quaternion unit norm for each body (<a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a>).</li>
+<li>[x] Change 2nd order integration to use body components.</li>
+<li>[ ] Figure out how to calculate particle positions from body positions simply and with no assumptions.</li>
 </ul>
 </li>
 </ul>
@@ -195,9 +199,9 @@ Updated hydrodynamics</h1>
 Tensor module optimization</h1>
 <ul>
 <li>[x] move thread-pool and device to engine class</li>
-<li>[ ] Make sure all calls to TensorCast and MatrixCast have a device to compute on</li>
-<li>[ ] Make sure all tensor calculations have a device to compute on</li>
-<li>[ ] Optimize all contraction operations with a device<ul>
+<li>[x] Make sure all calls to TensorCast and MatrixCast have a device to compute on</li>
+<li>[x] Make sure all tensor calculations have a device to compute on</li>
+<li>[x] Optimize all contraction operations with a device<ul>
 <li>[ ] Try using the default device to check performance</li>
 </ul>
 </li>
@@ -242,7 +246,7 @@ Additional features</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Oct 15 2021 13:48:02 for Bodies in Potential Flow by
+    <li class="footer">Generated on Mon Oct 18 2021 14:36:19 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

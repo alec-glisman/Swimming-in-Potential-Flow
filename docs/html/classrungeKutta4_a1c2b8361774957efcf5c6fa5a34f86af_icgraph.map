@@ -1,4 +1,4 @@
 <map id="rungeKutta4::integrateSecondOrder" name="rungeKutta4::integrateSecondOrder">
-<area shape="rect" id="node1" title=" " alt="" coords="207,5,405,47"/>
-<area shape="rect" id="node2" href="$classrungeKutta4.html#a1a82b9babd1713ed331e4750bb0de5bf" title=" " alt="" coords="5,13,159,39"/>
+<area shape="rect" id="node1" title="2nd order Runge&#45;Kutta 4th order integration. Integrates known acceleration body components into veloc..." alt="" coords="204,5,399,47"/>
+<area shape="rect" id="node2" href="$classrungeKutta4.html#a1a82b9babd1713ed331e4750bb0de5bf" title="Public function to call internal numerical Runge Kutta integration functions." alt="" coords="5,13,156,39"/>
 </map>

@@ -145,39 +145,39 @@ Include dependency graph for testsSimulationBuild.cpp:</div>
 
 <p class="definition">Definition at line <a class="el" href="testsSimulationBuild_8cpp_source.html#l00018">18</a> of file <a class="el" href="testsSimulationBuild_8cpp_source.html">testsSimulationBuild.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="comment">/* Parameters</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">     * REVIEW[epic=Assumptions]: Assuming that the tests are called from project base dir */</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    std::string inputDataFile = <span class="stringliteral">&quot;tests/data.gsd&quot;</span>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    std::string outputDir     = <span class="stringliteral">&quot;tests/output&quot;</span>;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="comment">/* Initialize variables */</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    std::shared_ptr&lt;gsd_handle&gt; handle{<span class="keyword">new</span> gsd_handle};</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">int</span>                         return_val{-1};</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    std::shared_ptr&lt;systemData&gt; system;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    std::shared_ptr&lt;engine&gt;     eng;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    SECTION(<span class="stringliteral">&quot;Load GSD data&quot;</span>)</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    {</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        REQUIRE_NOTHROW(return_val =</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                            <a class="code" href="gsd_8c.html#ad8933dcce55fd8101b5688f382c10a8e">gsd_open</a>(handle.get(), inputDataFile.c_str(), <a class="code" href="gsd_8h.html#a23a9970f53fda4e8902697670300ec98a22f5dee98250b8ead7d43cc1a347f205">GSD_OPEN_READONLY</a>));</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        REQUIRE(return_val == 0);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    }</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    SECTION(<span class="stringliteral">&quot;Initialize simulation&quot;</span>)</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        REQUIRE_NOTHROW(system = std::make_shared&lt;systemData&gt;(inputDataFile, outputDir));</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        REQUIRE_NOTHROW(system-&gt;<a class="code" href="classsystemData.html#ad2ba3455704ef6cec1aac76a417e91e9">initializeData</a>());</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        REQUIRE_NOTHROW(eng = std::make_shared&lt;engine&gt;(system));</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="comment">/* I/O Parameters */</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    std::string inputDataFile = <span class="stringliteral">&quot;input/data.gsd&quot;</span>;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    std::string outputDir     = <span class="stringliteral">&quot;output&quot;</span>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    SECTION(<span class="stringliteral">&quot;Load GSD data&quot;</span>)</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    {</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="comment">/* Initialize variables */</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        std::shared_ptr&lt;gsd_handle&gt; handle{<span class="keyword">new</span> gsd_handle};</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keywordtype">int</span>                         return_val{-1};</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        REQUIRE_NOTHROW(return_val = <a class="code" href="gsd_8c.html#ad8933dcce55fd8101b5688f382c10a8e">gsd_open</a>(handle.get(), inputDataFile.c_str(), <a class="code" href="gsd_8h.html#a23a9970f53fda4e8902697670300ec98a22f5dee98250b8ead7d43cc1a347f205">GSD_OPEN_READONLY</a>));</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        REQUIRE(return_val == 0);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    }</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    SECTION(<span class="stringliteral">&quot;Initialize simulation&quot;</span>)</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="comment">/* Initialize variables */</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        std::shared_ptr&lt;systemData&gt; system;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        std::shared_ptr&lt;engine&gt;     eng;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        REQUIRE_NOTHROW(system = std::make_shared&lt;systemData&gt;(inputDataFile, outputDir));</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        REQUIRE_NOTHROW(system-&gt;<a class="code" href="classsystemData.html#ad2ba3455704ef6cec1aac76a417e91e9">initializeData</a>());</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        REQUIRE_NOTHROW(eng = std::make_shared&lt;engine&gt;(system));</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    }</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}</div>
 </div><!-- fragment -->
 <p class="reference">References <a class="el" href="gsd_8c_source.html#l01642">gsd_open()</a>, <a class="el" href="gsd_8h_source.html#l00062">GSD_OPEN_READONLY</a>, and <a class="el" href="systemData_8cpp_source.html#l00034">systemData::initializeData()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="testsSimulationBuild_8cpp_ac2b102ba50512565940601db33c64cf2_cgraph.svg" width="1211" height="692"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="testsSimulationBuild_8cpp_ac2b102ba50512565940601db33c64cf2_cgraph.svg" width="1211" height="858"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 
 </div>
@@ -191,7 +191,7 @@ Here is the call graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_59425e443f801f1f2fd8bbe4959a3ccf.html">tests</a></li><li class="navelem"><a class="el" href="testsSimulationBuild_8cpp.html">testsSimulationBuild.cpp</a></li>
-    <li class="footer">Generated on Fri Oct 15 2021 13:48:02 for Bodies in Potential Flow by
+    <li class="footer">Generated on Mon Oct 18 2021 14:36:19 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

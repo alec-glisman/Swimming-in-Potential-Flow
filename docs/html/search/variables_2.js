@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['col_5fbeetle_888',['col_beetle',['../classplotStyling_1_1PlotStyling.html#afd0ba7111ebb3ddc3b8691ac7e411711',1,'plotStyling::PlotStyling']]],
-  ['col_5fcategorical_889',['col_categorical',['../classplotStyling_1_1PlotStyling.html#a33139ef2d4c54bf422fc56fe9fd96472',1,'plotStyling::PlotStyling']]],
-  ['col_5fdiverge_890',['col_diverge',['../classplotStyling_1_1PlotStyling.html#af0f3236d8f3739f72f66bc4afa7175ce',1,'plotStyling::PlotStyling']]],
-  ['col_5fsunset_891',['col_sunset',['../classplotStyling_1_1PlotStyling.html#aa04867a3ceae8a919a119f7b287f5578',1,'plotStyling::PlotStyling']]],
-  ['color_5fid_892',['color_ID',['../classplotStyling_1_1PlotStyling.html#a43f8227c4e2e057a4117625faa40fd00',1,'plotStyling::PlotStyling']]],
-  ['color_5fid_5fincrement_893',['color_ID_increment',['../classplotStyling_1_1PlotStyling.html#a1544666b36bba2c488e85d000b41606a',1,'plotStyling::PlotStyling']]],
-  ['color_5fmap_894',['color_map',['../classplotStyling_1_1PlotStyling.html#a28102df395fd89cc7ec3c8a6a85319e0',1,'plotStyling::PlotStyling']]],
-  ['complete_5fchar_895',['complete_char',['../classProgressBar.html#abdd5b8df629d27add55ccebf7c94df05',1,'ProgressBar']]],
-  ['continuous_5fcolors_896',['continuous_colors',['../classplotStyling_1_1PlotStyling.html#a29ca9f2799690330a6ae2b4367c4f2e1',1,'plotStyling::PlotStyling']]]
+  ['col_5fbeetle_895',['col_beetle',['../classplotStyling_1_1PlotStyling.html#afd0ba7111ebb3ddc3b8691ac7e411711',1,'plotStyling::PlotStyling']]],
+  ['col_5fcategorical_896',['col_categorical',['../classplotStyling_1_1PlotStyling.html#a33139ef2d4c54bf422fc56fe9fd96472',1,'plotStyling::PlotStyling']]],
+  ['col_5fdiverge_897',['col_diverge',['../classplotStyling_1_1PlotStyling.html#af0f3236d8f3739f72f66bc4afa7175ce',1,'plotStyling::PlotStyling']]],
+  ['col_5fsunset_898',['col_sunset',['../classplotStyling_1_1PlotStyling.html#aa04867a3ceae8a919a119f7b287f5578',1,'plotStyling::PlotStyling']]],
+  ['color_5fid_899',['color_ID',['../classplotStyling_1_1PlotStyling.html#a43f8227c4e2e057a4117625faa40fd00',1,'plotStyling::PlotStyling']]],
+  ['color_5fid_5fincrement_900',['color_ID_increment',['../classplotStyling_1_1PlotStyling.html#a1544666b36bba2c488e85d000b41606a',1,'plotStyling::PlotStyling']]],
+  ['color_5fmap_901',['color_map',['../classplotStyling_1_1PlotStyling.html#a28102df395fd89cc7ec3c8a6a85319e0',1,'plotStyling::PlotStyling']]],
+  ['complete_5fchar_902',['complete_char',['../classProgressBar.html#abdd5b8df629d27add55ccebf7c94df05',1,'ProgressBar']]],
+  ['continuous_5fcolors_903',['continuous_colors',['../classplotStyling_1_1PlotStyling.html#a29ca9f2799690330a6ae2b4367c4f2e1',1,'plotStyling::PlotStyling']]]
 ];

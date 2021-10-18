@@ -4,7 +4,7 @@ var classrungeKutta4 =
     [ "~rungeKutta4", "classrungeKutta4.html#a0dd2d5886f2a98d4dbc4427ebaa82c9c", null ],
     [ "integrate", "classrungeKutta4.html#a1a82b9babd1713ed331e4750bb0de5bf", null ],
     [ "integrateSecondOrder", "classrungeKutta4.html#a1c2b8361774957efcf5c6fa5a34f86af", null ],
-    [ "accelerationUpdate", "classrungeKutta4.html#ae10430251a847d2f415848b882702c50", null ],
+    [ "accelerationUpdate", "classrungeKutta4.html#a0770bf5087a218dfb6f8b67c1f2d83c2", null ],
     [ "udwadiaKalaba", "classrungeKutta4.html#af8d44cd795c66d601274a8db5bf37b97", null ],
     [ "m_system", "classrungeKutta4.html#a24ee2a7674db9afb4f3d6e91a972fa5a", null ],
     [ "m_potHydro", "classrungeKutta4.html#a38cfec1cedaf31ce325ff367af4eea1d", null ],
@@ -13,6 +13,7 @@ var classrungeKutta4 =
     [ "m_dt", "classrungeKutta4.html#aa34bc59a36e672214e03e1b56d204966", null ],
     [ "m_c1_2_dt", "classrungeKutta4.html#a78e1264f47eeaff22b4897e2dd62606b", null ],
     [ "m_c1_6_dt", "classrungeKutta4.html#abd227f36f24c5e80c690d12716d51463", null ],
+    [ "m_3M", "classrungeKutta4.html#a5e77521db6b988fe4b53174b1ae52b21", null ],
     [ "m_c1_2", "classrungeKutta4.html#af8ebefcdf3489dbd1bd5c70246018971", null ],
     [ "m_c1_6", "classrungeKutta4.html#af48938d4718a225f5edcd977707d131d", null ]
 ];
