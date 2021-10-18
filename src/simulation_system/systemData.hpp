@@ -63,8 +63,11 @@ class systemData : public std::enable_shared_from_this<systemData>
      * @brief Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constraints.
      * Assumes `m_t` is current simulation time to update variables at.
      *
-     * @details Many functions are called and there is a dependency chain between them. All function calls can be run in
-     * any order besides gradientChangeOfVariableTensors(), which depends on rigidBodyMotionTensors() being run first.
+     * @details Many functions are called and there is a dependency chain between them.
+     *
+     * `particleLocaterDistances()` must be called before `rigidBodyMotionTensors()`.
+     * `rigidBodyMotionTensors()` must be called before `gradientChangeOfVariableTensors()`
+     *
      * This is assuming the Udwadia linear constraint system (@f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} = \mathbf{b}
      * @f$ ) is independent of configuration.
      *
@@ -255,6 +258,8 @@ class systemData : public std::enable_shared_from_this<systemData>
     /// 2) locater particle listed first in order and denotes when to switch body index to next body.
     /// ex: (1, 0, 0, 1, 0, 0)
     Eigen::VectorXi m_particle_type_id;
+    /// (N x 1) Group assembly (swimmer) number that each particle belongs to
+    Eigen::VectorXi m_particle_group_id;
 
     /* ANCHOR: material parameters */
     /// mass density of fluid
@@ -315,8 +320,6 @@ class systemData : public std::enable_shared_from_this<systemData>
     /// (7M x 1) both linear and quaternion D.o.F. of body locaters
     Eigen::VectorXd m_accelerations_bodies;
 
-    /// (4N x 1) (linear) displacements of all particles from respective locater points
-    Eigen::VectorXd m_displacements_particles;
     /// (4N x 1) quaternions of all particles
     Eigen::VectorXd m_orientations_particles;
     /// (3N x 1) (linear) positions of all particles
@@ -325,6 +328,9 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::VectorXd m_velocities_particles;
     /// (3N x 1) (linear) accelerations of all particles
     Eigen::VectorXd m_accelerations_particles;
+
+    /// (3N x 1) (linear) displacements of all particles from respective locater points
+    Eigen::VectorXd m_displacements_particles;
 
     /// (3M x 1) (linear) positions of all bodies
     Eigen::VectorXd m_positions_locater_particles;

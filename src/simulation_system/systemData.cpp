@@ -72,8 +72,20 @@ systemData::initializeData()
     m_kappa_tilde(1, 1, 6) = 1;
     m_kappa_tilde(2, 0, 6) = -1;
 
+    // initialize particle vectors
+    m_particle_group_id = Eigen::VectorXi::Zero(m_num_particles);
+
+    for (int j = 0; j < m_num_particles; j++)
+    {
+        const double body_num  = (m_particle_type_id.segment(0, j + 1).array() == 1).count() - 1;
+        m_particle_group_id(j) = std::round(body_num); // convert data type
+    }
+    assert(m_particle_group_id(0) == 0 && "Particle 0 must belong to group 0");
+    assert(m_particle_group_id(m_num_particles) == m_num_bodies && "Particle N must belong to group N");
+
     // initialize kinematic vectors
-    m_displacements_particles              = Eigen::VectorXd::Zero(3 * m_num_particles);
+    m_displacements_particles = Eigen::VectorXd::Zero(3 * m_num_particles);
+
     m_positions_locater_particles          = Eigen::VectorXd::Zero(3 * m_num_bodies);
     m_velocities_particles_articulation    = Eigen::VectorXd::Zero(3 * m_num_particles);
     m_accelerations_particles_articulation = Eigen::VectorXd::Zero(3 * m_num_particles);
@@ -179,38 +191,14 @@ systemData::particleLocaterDistances()
 {
     m_displacements_particles.setZero();
 
-    Eigen::Vector4d R_c_body; ///< R_c^{(i)}, locater position
-
-    int body_num{-1}; // -1 as first particle should be locater particle and increment this
-    assert(m_particle_type_id(0) == 1 && "First particle index must be locater by convention");
-
     for (int j = 0; j < m_num_particles; j++)
     {
+        const int particle_id_3{3 * j};
+        const int body_id_7{7 * m_particle_group_id(j)};
 
-        if (m_particle_type_id(j) == 1)
-        {
-            // Zero out the relevent locater values
-            R_c_body.setZero();
-            // Increment body count
-            body_num += 1;
-
-            // Get locater position of body i
-            R_c_body.segment<3>(1).noalias() = m_positions_locater_particles.segment<3>(3 * body_num);
-
-            // Continue to next loop as all elements are zero
-            continue;
-        }
-
-        // j -> particle number
-        const int j3{3 * j};
-        const int j4{4 * j};
-
-        // 4-vector version of particle j position (prepend zero element)
-        Eigen::Vector4d R_j         = Eigen::Vector4d::Zero(4, 1);
-        R_j.segment<3>(1).noalias() = m_positions_particles.segment<3>(j3);
+        m_displacements_particles.segment<3>(particle_id_3).noalias() =
+            m_positions_particles.segment<3>(particle_id_3) - m_positions_bodies.segment<3>(body_id_7);
     }
-
-    assert(body_num + 1 == m_num_bodies && "Not all bodies were indexed correctly");
 }
 
 void
@@ -277,56 +265,39 @@ systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
     /* ANCHOR: Compute m_rbm_conn */
     m_rbm_conn.setZero();
 
-    for (int i = 0; i < m_num_particles; i++)
+    for (int j = 0; j < m_num_particles; j++)
     {
-        const int             i3{3 * i};
-        const Eigen::Vector3d R_i = m_positions_particles.segment<3>(i3);
+        const int particle_id_3{3 * j};
+        const int body_id_6{6 * m_particle_group_id(j)};
 
-        // Calculate which body j particle i belongs to
-        const int body_j = (m_particle_type_id.segment(0, i + 1).array() == 1).count() - 1;
-        const int j6{6 * body_j};
-        const int j7{7 * body_j};
-
-        // (negative) moment arm of particle about its body's locater position
-        Eigen::Vector3d n_dr = m_positions_bodies.segment<3>(j7);
-        n_dr.noalias() -= R_i;
-
-        // skew-symmetric matrix representation of cross product
+        // skew-symmetric matrix representation of (negative) cross product
         Eigen::Matrix3d n_dr_cross;
-        crossProdMat(n_dr, n_dr_cross);
+        crossProdMat(-m_displacements_particles.segment<3>(particle_id_3), n_dr_cross);
 
         // rigid body motion connectivity tensor elements
-        m_rbm_conn.block<3, 3>(j6, i3).noalias()     = m_I3;       // translation-translation couple
-        m_rbm_conn.block<3, 3>(j6 + 3, i3).noalias() = n_dr_cross; // translation-rotation couple
-
-        if (i == 0)
-        {
-            assert(body_j == 0 && "First particle must be part of body 0.");
-        }
-        if (i == m_num_particles - 1)
-        {
-            assert(body_j + 1 == m_num_bodies && "Last particle must be part of body M.");
-        }
+        m_rbm_conn.block<3, 3>(body_id_6, particle_id_3).noalias()     = m_I3;       // translation-translation couple
+        m_rbm_conn.block<3, 3>(body_id_6 + 3, particle_id_3).noalias() = n_dr_cross; // translation-rotation couple
     }
 
     /* ANCHOR: Compute m_psi_conv_quat_ang */
     m_psi_conv_quat_ang.setZero();
 
-    for (int k = 0; k < m_num_bodies; k++)
+    for (int i = 0; i < m_num_bodies; i++)
     {
-        const int k6{6 * k};
-        const int k7{7 * k};
+        const int body_id_6{6 * m_particle_group_id(i)};
+        const int body_id_7{7 * m_particle_group_id(i)};
 
         // matrix E from quaterion of body k
         Eigen::Matrix<double, 3, 4> E_theta_k;
-        eMatrix(m_positions_bodies.segment<4>(k7 + 3), E_theta_k);
+        eMatrix(m_positions_bodies.segment<4>(body_id_7 + 3), E_theta_k);
 
         // matrix elements of Psi
-        m_psi_conv_quat_ang.block<3, 3>(k6, k7).noalias()         = m_I3; // no conversion from linear components
-        m_psi_conv_quat_ang.block<3, 4>(k6 + 3, k7 + 3).noalias() = 2 * E_theta_k; // angular-quaternion velocity couple
+        m_psi_conv_quat_ang.block<3, 3>(body_id_6, body_id_7).noalias() = m_I3; // no conversion from linear components
+        m_psi_conv_quat_ang.block<3, 4>(body_id_6 + 3, body_id_7 + 3).noalias() =
+            2 * E_theta_k; // angular-quaternion velocity couple
     }
 
-    /* ANCHOR: Compute m_rbm_conn_T_quat */
+    /* ANCHOR: Compute m_rbm_conn_T_quat & m_tens_rbm_conn_T_quat */
     m_rbm_conn_T_quat.noalias() = m_rbm_conn.transpose() * m_psi_conv_quat_ang;
     m_tens_rbm_conn_T_quat      = TensorCast(m_rbm_conn_T_quat);
 }
@@ -365,12 +336,9 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
         // j -> particle number
         const int j3{3 * j};
 
-        // 4-vector version of particle j position (prepend zero element)
-        Eigen::Vector4d R_j         = Eigen::Vector4d::Zero(4, 1);
-        R_j.segment<3>(1).noalias() = m_positions_particles.segment<3>(j3);
-
         // matrix P_tilde from moment arm
-        const Eigen::Vector4d       dr = R_j - R_c_body;
+        Eigen::Vector4d dr         = Eigen::Vector4d::Zero(4, 1);
+        dr.segment<3>(1).noalias() = m_displacements_particles.segment<3>(j3);
         Eigen::Matrix<double, 3, 4> P_j_tilde_hold;
         eMatrix(dr, P_j_tilde_hold);
         Eigen::Matrix<double, 4, 3> P_j_tilde = P_j_tilde_hold.transpose();
