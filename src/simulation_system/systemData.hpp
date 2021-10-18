@@ -66,7 +66,8 @@ class systemData : public std::enable_shared_from_this<systemData>
      * @details Many functions are called and there is a dependency chain between them.
      *
      * `particleLocaterDistances()` must be called before `rigidBodyMotionTensors()`.
-     * `rigidBodyMotionTensors()` must be called before `gradientChangeOfVariableTensors()`
+     * `rigidBodyMotionTensors()` must be called before `gradientChangeOfVariableTensors()`.
+     * `convertBody2ParticleDoF()` must be called after all previous functions.
      *
      * This is assuming the Udwadia linear constraint system (@f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} = \mathbf{b}
      * @f$ ) is independent of configuration.
@@ -174,6 +175,13 @@ class systemData : public std::enable_shared_from_this<systemData>
     void
     gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device);
 
+    /**
+     * @brief Computes the particle D.o.F. from the body D.o.F.
+     *
+     * @details Currently only computes the velocity and acceleration D.o.F. components
+     *
+     * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
+     */
     void
     convertBody2ParticleDoF(Eigen::ThreadPoolDevice& device);
 
