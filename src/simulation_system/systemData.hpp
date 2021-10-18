@@ -174,6 +174,9 @@ class systemData : public std::enable_shared_from_this<systemData>
     void
     gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device);
 
+    void
+    convertBody2ParticleDoF(Eigen::ThreadPoolDevice& device);
+
     /* SECTION: Static functions */
     /**
      * @brief Computes the E matrix of quaternion (4-vector) input
@@ -332,14 +335,9 @@ class systemData : public std::enable_shared_from_this<systemData>
     /// (3N x 1) (linear) displacements of all particles from respective locater points
     Eigen::VectorXd m_displacements_particles;
 
-    /// (4N x 1) initial 4-vector normalized (linear) displacements of all particles from respective locater points
-    Eigen::VectorXd m_initial_norm_displacements_particles;
-
-    /// (3M x 1) (linear) positions of all bodies
-    Eigen::VectorXd m_positions_locater_particles;
-    /// (3N x 1) (linear) velocities of all bodies
+    /// (3N x 1) (linear) articulation velocities of all particles
     Eigen::VectorXd m_velocities_particles_articulation;
-    /// (3N x 1) (linear) accelerations of all bodies
+    /// (3N x 1) (linear) articulation accelerations of all particles
     Eigen::VectorXd m_accelerations_particles_articulation;
 
     /* ANCHOR: rigid body motion tensors */

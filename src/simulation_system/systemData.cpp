@@ -84,10 +84,8 @@ systemData::initializeData()
     assert(m_particle_group_id(m_num_particles - 1) == m_num_bodies - 1 && "Particle N must belong to group N");
 
     // initialize kinematic vectors
-    m_displacements_particles              = Eigen::VectorXd::Zero(3 * m_num_particles);
-    m_initial_norm_displacements_particles = Eigen::VectorXd::Zero(4 * m_num_particles);
+    m_displacements_particles = Eigen::VectorXd::Zero(3 * m_num_particles);
 
-    m_positions_locater_particles          = Eigen::VectorXd::Zero(3 * m_num_bodies);
     m_velocities_particles_articulation    = Eigen::VectorXd::Zero(3 * m_num_particles);
     m_accelerations_particles_articulation = Eigen::VectorXd::Zero(3 * m_num_particles);
 
@@ -116,20 +114,6 @@ systemData::initializeData()
 
     spdlog::get(m_logName)->info("Initializing constraints");
     update(single_core_device);
-
-    // set other initial data
-    spdlog::get(m_logName)->info("Setting other initial data");
-
-    m_initial_norm_displacements_particles.setZero();
-
-    for (int j = 0; j < m_num_particles; j++)
-    {
-        const int particle_id_3{3 * j};
-        const int particle_id_4{4 * j};
-
-        m_initial_norm_displacements_particles.segment<3>(particle_id_4 + 1).noalias() =
-            m_displacements_particles.segment<3>(particle_id_3).normalized();
-    }
 }
 
 void
@@ -200,7 +184,6 @@ systemData::update(Eigen::ThreadPoolDevice& device)
     gradientChangeOfVariableTensors(device);
 }
 
-// FIXME: Set displacements as 4N vector and use in later functions
 void
 systemData::particleLocaterDistances()
 {
@@ -422,4 +405,9 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
         Eigen::array<Eigen::Index, 3> extents          = {3, 4, 7};
         m_rbm_conn_T_quat_grad.slice(offsets, extents) = angular_gradient;
     }
+}
+
+void
+systemData::convertBody2ParticleDoF(Eigen::ThreadPoolDevice& device)
+{
 }
