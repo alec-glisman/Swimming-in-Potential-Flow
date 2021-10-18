@@ -42,6 +42,9 @@ systemData::initializeData()
     m_num_DoF         = 6 * m_num_bodies; // D.o.F. are linear and angular positions of body centers
     m_num_constraints = m_num_bodies;     // 1 unit quaternion constraint per body
 
+    // initialize other integrator parameters
+    m_t0 = m_t;
+
     // initialize general-use tensors
     m_levi_cevita.setZero();
 
@@ -257,7 +260,13 @@ systemData::udwadiaLinearSystem()
     m_Udwadia_A.setZero();
     m_Udwadia_b.setZero();
 
-    // TODO: Implement the constraint linear system for the unit quaternions
+    for (int body_id = 0; body_id < m_num_bodies; body_id++)
+    {
+        const int body_id_7{7 * body_id};
+
+        m_Udwadia_A.block<1, 4>(body_id, body_id_7 + 3).noalias() = m_positions_bodies.segment<4>(body_id_7 + 3);
+        m_Udwadia_b(body_id) = -m_velocities_bodies.segment<4>(body_id_7 + 3).squaredNorm();
+    }
 }
 
 void

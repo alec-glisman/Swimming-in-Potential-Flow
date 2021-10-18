@@ -82,8 +82,7 @@
   - [x] Figure out how to calculate the initial quaternions
   - [x] Check that udwadia method is being used
   - [ ] Make sure particle positions are updated first, then update systemData, then update potentialHydrodynamics
-  - [ ] Update linear constraint system such that the only constraint is the quaternion unit norm for each body (systemData).
-  - [ ] Put some sort of smart check so that Udwadia system updated only when not time-dependent
+  - [x] Update linear constraint system such that the only constraint is the quaternion unit norm for each body (systemData).
   - [ ] Change 2nd order integration to use body components.
 
 ## Tensor module optimization

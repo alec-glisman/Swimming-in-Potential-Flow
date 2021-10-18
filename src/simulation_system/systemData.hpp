@@ -301,6 +301,8 @@ class systemData : public std::enable_shared_from_this<systemData>
     double m_dt{-1.0};
     /// (dimensionless) final simulation time
     double m_tf{-1.0};
+    /// (dimensionless) initial simulation time
+    double m_t0{0.0};
     /// (dimensionless) current simulation time
     double m_t{0.0};
     /// simulation system characteristic timescale
