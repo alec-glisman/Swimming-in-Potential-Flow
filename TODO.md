@@ -81,9 +81,10 @@
 - Integration
   - [x] Figure out how to calculate the initial quaternions
   - [x] Check that udwadia method is being used
-  - [ ] Make sure particle positions are updated first, then update systemData, then update potentialHydrodynamics
+  - [x] Make sure particle positions are updated first, then update systemData, then update potentialHydrodynamics
   - [x] Update linear constraint system such that the only constraint is the quaternion unit norm for each body (systemData).
-  - [ ] Change 2nd order integration to use body components.
+  - [x] Change 2nd order integration to use body components.
+  - [ ] Figure out how to calculate particle positions from body positions simply and with no assumptions.
 
 ## Tensor module optimization
 
