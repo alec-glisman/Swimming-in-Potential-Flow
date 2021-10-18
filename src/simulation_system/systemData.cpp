@@ -425,12 +425,12 @@ systemData::convertBody2ParticleDoF(Eigen::ThreadPoolDevice& device)
     const Eigen::array<Eigen::IndexPair<int>, 2> contract_ijk_jk = {
         Eigen::IndexPair<int>(1, 0), Eigen::IndexPair<int>(2, 1)}; // {i j k}, {j k} --> {i}
 
-    Eigen::Tensor<double, 1> xi    = TensorCast(m_velocities_bodies);
-    Eigen::Tensor<double, 1> xi_xi = xi.contract(xi, outer_product);
+    const Eigen::Tensor<double, 1> xi    = TensorCast(m_velocities_bodies);
+    const Eigen::Tensor<double, 2> xi_xi = xi.contract(xi, outer_product);
 
-    // Eigen::Tensor<double, 1> velocities_rbm_particles;
-    // velocities_rbm_particles.device(device) = m_rbm_conn_T_quat_grad.contract(xi_xi, contract_ijk_jk);
+    Eigen::Tensor<double, 1> velocities_rbm_particles = Eigen::Tensor<double, 1>(3 * m_num_particles);
+    velocities_rbm_particles.device(device)           = m_rbm_conn_T_quat_grad.contract(xi_xi, contract_ijk_jk);
 
-    // m_accelerations_bodies.noalias() = MatrixCast(velocities_rbm_particles, 3 * m_num_particles, 1, device);
-    // m_accelerations_bodies.noalias() += m_accelerations_particles_articulation;
+    m_accelerations_bodies.noalias() = MatrixCast(velocities_rbm_particles, 3 * m_num_particles, 1, device);
+    m_accelerations_bodies.noalias() += m_accelerations_particles_articulation;
 }
