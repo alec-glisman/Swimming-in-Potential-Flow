@@ -282,7 +282,7 @@ potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     m_M_tilde_tilde.device(device) = m_system->tensRbmConnTQuat().contract(m_tens_M_total, contract_li_lj);
 
     m_M_tilde.device(device) = m_M_tilde_tilde.contract(m_system->tensRbmConnTQuat(), contract_il_lj);
-    m_mat_M_tilde            = MatrixCast(m_M_tilde_tilde, m_7M, m_7M);
+    m_mat_M_tilde            = MatrixCast(m_M_tilde, m_7M, m_7M);
 
     /* ANCHOR: Compute linear combinations of GRADIENTS of total mass matrix and rbm_conn_t_quat */
     // N^{(1)}

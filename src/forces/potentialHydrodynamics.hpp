@@ -203,7 +203,7 @@ class potentialHydrodynamics
     Eigen::Tensor<double, 2> m_M_tilde_tilde;
     /// (7M x 7M) @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} @f$
     Eigen::Tensor<double, 2> m_M_tilde;
-    /// (7M x 7M) `Eigen::Matrix` form of `m_M_tilde_tilde`
+    /// (7M x 7M) `Eigen::Matrix` form of `m_M_tilde`
     Eigen::MatrixXd m_mat_M_tilde;
 
     // ANCHOR: constants
