@@ -145,8 +145,10 @@ rungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
      * Q_con is the generalized constraint forces */
 
     // calculate Q
-    Eigen::VectorXd Q = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    if (m_system->fluidDensity() > 0) // hydrodynamic force
+    Eigen::VectorXd Q = Eigen::VectorXd::Zero(7 * m_system->numBodies());
+
+    // hydrodynamic force
+    if (m_system->fluidDensity() > 0)
     {
         Q.noalias() += m_potHydro->fHydroNoInertia();
     }
@@ -157,11 +159,12 @@ rungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
      * + is Moore-Penrose inverse */
 
     // calculate M^{1/2} & M^{-1/2}
-    Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> eigensolver(m_potHydro->mTotal());
+    Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> eigensolver(m_potHydro->mTilde()); // = M
     if (eigensolver.info() != Eigen::Success)
     {
-        spdlog::get(m_logName)->error("Computing eigendecomposition of M_total failed at t={0}", m_system->t());
-        throw std::runtime_error("Computing eigendecomposition of M_total failed");
+        spdlog::get(m_logName)->error("Computing eigendecomposition of effective total mass matrix failed at t={0}",
+                                      m_system->t());
+        throw std::runtime_error("Computing eigendecomposition of effective total mass matrix failed");
     }
     const Eigen::MatrixXd M_total_halfPower         = eigensolver.operatorSqrt();
     const Eigen::MatrixXd M_total_negativeHalfPower = eigensolver.operatorInverseSqrt();
@@ -172,7 +175,7 @@ rungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
     const Eigen::MatrixXd K             = M_total_halfPower * AM_nHalf_pInv;
 
     // calculate Q_con
-    const Eigen::MatrixXd M_total_inv   = m_potHydro->mTotal().inverse();
+    const Eigen::MatrixXd M_total_inv   = m_potHydro->mTilde().inverse();
     const Eigen::MatrixXd M_total_invQ  = M_total_inv * Q;
     const Eigen::VectorXd AM_total_invQ = m_system->udwadiaA() * M_total_invQ;
     Eigen::VectorXd       b_tilde       = m_system->udwadiaB();
