@@ -88,9 +88,9 @@
 ## Tensor module optimization
 
 - [x] move thread-pool and device to engine class
-- [ ] Make sure all calls to TensorCast and MatrixCast have a device to compute on
-- [ ] Make sure all tensor calculations have a device to compute on
-- [ ] Optimize all contraction operations with a device
+- [x] Make sure all calls to TensorCast and MatrixCast have a device to compute on
+- [x] Make sure all tensor calculations have a device to compute on
+- [x] Optimize all contraction operations with a device
   - [ ] Try using the default device to check performance
 - [ ] Add GPU offloading (#define EIGEN_USE_GPU)
   - <https://www.tensorflow.org/guide/create_op#compile_the_op_using_your_system_compiler_tensorflow_binary_installation>
