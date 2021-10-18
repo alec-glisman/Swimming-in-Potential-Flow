@@ -182,6 +182,9 @@ systemData::update(Eigen::ThreadPoolDevice& device)
 
     // NOTE: Call gradientChangeOfVariableTensors() after rigidBodyMotionTensors()
     gradientChangeOfVariableTensors(device);
+
+    // NOTE: Call convertBody2ParticleDoF() after all previous functions
+    convertBody2ParticleDoF(device);
 }
 
 void
@@ -375,13 +378,14 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
         const Eigen::TensorFixedSize<double, Eigen::Sizes<7, 3>> tens_n_D_alpha       = TensorCast(n_D_alpha);
 
         // 1) Compute result_{i m k} = levi_cevita{l i m} n_D_alpha_{k l}
-        Eigen::array<Eigen::IndexPair<int>, 1> contract_lim_kl = {Eigen::IndexPair<int>(0, 1)}; // {i m k}
+        const Eigen::array<Eigen::IndexPair<int>, 1> contract_lim_kl = {Eigen::IndexPair<int>(0, 1)}; // {i m k}
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 7>> d_rCrossMat_d_xi;
         d_rCrossMat_d_xi.device(device) = m_levi_cevita.contract(tens_n_D_alpha, contract_lim_kl);
 
         // 2) Compute result_{i j k} = d_rCrossMat_d_xi_{i m k} two_E_body{m j}
-        Eigen::array<Eigen::IndexPair<int>, 1> contract_imk_mj = {Eigen::IndexPair<int>(1, 0)}; // {i k j}, must shuffle
-        Eigen::array<int, 3>                   swap_last_two_indices({0, 2, 1});
+        const Eigen::array<Eigen::IndexPair<int>, 1> contract_imk_mj = {
+            Eigen::IndexPair<int>(1, 0)}; // {i k j}, must shuffle
+        const Eigen::array<int, 3> swap_last_two_indices({0, 2, 1});
 
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 7, 4>> d_rCrossMat_d_xi_times_two_E_body_preshuffle;
         d_rCrossMat_d_xi_times_two_E_body_preshuffle.device(device) =
@@ -392,7 +396,7 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
             d_rCrossMat_d_xi_times_two_E_body_preshuffle.shuffle(swap_last_two_indices);
 
         // 3) Compute result_{i j k} = two_r_cross_mat_{i m} Kappa_tilde_{m j k} (same indices as (2))
-        Eigen::array<Eigen::IndexPair<int>, 1> contract_im_mjk = {Eigen::IndexPair<int>(1, 0)}; // {i j k}
+        const Eigen::array<Eigen::IndexPair<int>, 1> contract_im_mjk = {Eigen::IndexPair<int>(1, 0)}; // {i j k}
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> rCrossMat_times_d_E_body_d_xi;
         rCrossMat_times_d_E_body_d_xi.device(device) = tens_two_r_cross_mat.contract(m_kappa_tilde, contract_im_mjk);
 
@@ -401,8 +405,8 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
         angular_gradient.device(device) = -d_rCrossMat_d_xi_times_two_E_body - rCrossMat_times_d_E_body_d_xi;
 
         // output matrix indices
-        Eigen::array<Eigen::Index, 3> offsets          = {particle_id_3, body_id_7 + 3, body_id_7};
-        Eigen::array<Eigen::Index, 3> extents          = {3, 4, 7};
+        const Eigen::array<Eigen::Index, 3> offsets    = {particle_id_3, body_id_7 + 3, body_id_7};
+        const Eigen::array<Eigen::Index, 3> extents    = {3, 4, 7};
         m_rbm_conn_T_quat_grad.slice(offsets, extents) = angular_gradient;
     }
 }
@@ -410,4 +414,23 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
 void
 systemData::convertBody2ParticleDoF(Eigen::ThreadPoolDevice& device)
 {
+    /* ANCHOR: Convert velocity D.o.F. */
+    m_velocities_particles.noalias() = m_rbm_conn_T_quat * m_velocities_bodies;
+    m_velocities_particles.noalias() += m_velocities_particles_articulation;
+
+    /* ANCHOR: Convert acceleration D.o.F. */
+
+    // Eigen::Tensor contraction indices
+    const Eigen::array<Eigen::IndexPair<int>, 0> outer_product   = {}; // no contractions
+    const Eigen::array<Eigen::IndexPair<int>, 2> contract_ijk_jk = {
+        Eigen::IndexPair<int>(1, 0), Eigen::IndexPair<int>(2, 1)}; // {i j k}, {j k} --> {i}
+
+    Eigen::Tensor<double, 1> xi    = TensorCast(m_velocities_bodies);
+    Eigen::Tensor<double, 1> xi_xi = xi.contract(xi, outer_product);
+
+    // Eigen::Tensor<double, 1> velocities_rbm_particles;
+    // velocities_rbm_particles.device(device) = m_rbm_conn_T_quat_grad.contract(xi_xi, contract_ijk_jk);
+
+    // m_accelerations_bodies.noalias() = MatrixCast(velocities_rbm_particles, 3 * m_num_particles, 1, device);
+    // m_accelerations_bodies.noalias() += m_accelerations_particles_articulation;
 }

@@ -191,10 +191,10 @@ void
 potentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
 {
     // eigen tensor contraction variables
-    Eigen::array<Eigen::IndexPair<int>, 1>  contract_ijl_kl  = {Eigen::IndexPair<int>(2, 1)};
-    Eigen::array<Eigen::IndexPair<long>, 0> empty_index_list = {};
-    Eigen::array<int, 3>                    shuffle_one_right({2, 0, 1});
-    Eigen::array<int, 3>                    shuffle_one_left({1, 2, 1});
+    const Eigen::array<Eigen::IndexPair<int>, 1>  contract_ijl_kl  = {Eigen::IndexPair<int>(2, 1)};
+    const Eigen::array<Eigen::IndexPair<long>, 0> empty_index_list = {};
+    const Eigen::array<int, 3>                    shuffle_one_right({2, 0, 1});
+    const Eigen::array<int, 3>                    shuffle_one_left({1, 2, 1});
 
     // set matrices to zero
     m_grad_M_added.setZero();
@@ -234,12 +234,12 @@ potentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
         Mij_i += gradM1_c2 * tens_rr.contract(TensorCast(r_ij), empty_index_list);
 
         // indices to start at
-        Eigen::array<Eigen::Index, 3> offsets_ij_i = {i_part, j_part, i_part};
-        Eigen::array<Eigen::Index, 3> offsets_ij_j = {i_part, j_part, j_part};
-        Eigen::array<Eigen::Index, 3> offsets_ji_i = {j_part, i_part, i_part};
-        Eigen::array<Eigen::Index, 3> offsets_ji_j = {j_part, i_part, j_part};
+        const Eigen::array<Eigen::Index, 3> offsets_ij_i = {i_part, j_part, i_part};
+        const Eigen::array<Eigen::Index, 3> offsets_ij_j = {i_part, j_part, j_part};
+        const Eigen::array<Eigen::Index, 3> offsets_ji_i = {j_part, i_part, i_part};
+        const Eigen::array<Eigen::Index, 3> offsets_ji_j = {j_part, i_part, j_part};
         // length of data to access
-        Eigen::array<Eigen::Index, 3> extents = {3, 3, 3};
+        const Eigen::array<Eigen::Index, 3> extents = {3, 3, 3};
 
         // M_{ij, i}: Matrix Element (Anti-Symmetric upon exchange of derivative, Symmetric upon
         // exchange of first two indices)
@@ -272,11 +272,11 @@ void
 potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
 {
     // contraction indices
-    Eigen::array<Eigen::IndexPair<int>, 1> contract_li_lj = {Eigen::IndexPair<int>(0, 0)}; // = A^T B
-    Eigen::array<Eigen::IndexPair<int>, 1> contract_il_lj = {Eigen::IndexPair<int>(1, 0)}; // = A B
+    const Eigen::array<Eigen::IndexPair<int>, 1> contract_li_lj = {Eigen::IndexPair<int>(0, 0)}; // = A^T B
+    const Eigen::array<Eigen::IndexPair<int>, 1> contract_il_lj = {Eigen::IndexPair<int>(1, 0)}; // = A B
 
     // tensor index shuffling
-    Eigen::array<int, 3> flip_last_two_indices({0, 2, 1}); // (i, j, k) --> (i, k, j)
+    const Eigen::array<int, 3> flip_last_two_indices({0, 2, 1}); // (i, j, k) --> (i, k, j)
 
     /* ANCHOR: Compute linear combinations of total mass matrix and rbm_conn_t_quat */
     m_M_tilde_tilde.device(device) = m_system->tensRbmConnTQuat().contract(m_tens_M_total, contract_li_lj);
@@ -315,13 +315,15 @@ void
 potentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
 {
     // tensor contraction indices
-    Eigen::array<Eigen::IndexPair<int>, 0> empty_index_list = {}; // outer product
-    Eigen::array<Eigen::IndexPair<int>, 2> contract_jki_jk = {Eigen::IndexPair<int>(0, 0), Eigen::IndexPair<int>(1, 1)};
-    Eigen::array<Eigen::IndexPair<int>, 2> contract_ijk_jk = {Eigen::IndexPair<int>(1, 0), Eigen::IndexPair<int>(2, 1)};
-    Eigen::array<Eigen::IndexPair<int>, 1> contract_ij_j   = {Eigen::IndexPair<int>(1, 0)};
+    const Eigen::array<Eigen::IndexPair<int>, 0> empty_index_list = {}; // outer product
+    const Eigen::array<Eigen::IndexPair<int>, 2> contract_jki_jk  = {Eigen::IndexPair<int>(0, 0),
+                                                                    Eigen::IndexPair<int>(1, 1)};
+    const Eigen::array<Eigen::IndexPair<int>, 2> contract_ijk_jk  = {Eigen::IndexPair<int>(1, 0),
+                                                                    Eigen::IndexPair<int>(2, 1)};
+    const Eigen::array<Eigen::IndexPair<int>, 1> contract_ij_j    = {Eigen::IndexPair<int>(1, 0)};
 
     // tensor index shuffling
-    Eigen::array<int, 3> flip_first_two_indices({1, 0, 2}); // (i, j, k) --> (j, i, k)
+    const Eigen::array<int, 3> flip_first_two_indices({1, 0, 2}); // (i, j, k) --> (j, i, k)
 
     // get kinematic tensors from systemData class
     Eigen::Tensor<double, 1> xi_dot  = TensorCast(m_system->velocitiesBodies());
