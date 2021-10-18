@@ -64,15 +64,9 @@ class systemData : public std::enable_shared_from_this<systemData>
      * Assumes `m_t` is current simulation time to update variables at.
      *
      * @details Many functions are called and there is a dependency chain between them.
+     * The functions are grouped in the implementation and clearly denote the relative ordering that must occur.
      *
-     * `particleLocaterDistances()` must be called before `rigidBodyMotionTensors()`.
-     * `rigidBodyMotionTensors()` must be called before `gradientChangeOfVariableTensors()`.
-     * `convertBody2ParticleDoF()` must be called after all previous functions.
-     *
-     * This is assuming the Udwadia linear constraint system (@f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} = \mathbf{b}
-     * @f$ ) is independent of configuration.
-     *
-     * @param device device (CPU thread-pool or GPU) used to speed up tensor calculations
+     * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
      */
     void
     update(Eigen::ThreadPoolDevice& device);

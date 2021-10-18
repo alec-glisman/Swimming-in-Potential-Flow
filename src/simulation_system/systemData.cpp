@@ -173,22 +173,21 @@ systemData::checkInput()
 void
 systemData::update(Eigen::ThreadPoolDevice& device)
 {
-    // NOTE: Must be called before rbm tensors
-    particleLocaterDistances();
-
-    // NOTE: Ordering of following functions does not matter
+    // NOTE: Articulation functions calculated 1st
+    positionsArticulation();
     velocitiesArticulation();
     accelerationsArticulation();
 
+    // NOTE: Rigid body motion tensors calculated 2nd
+    positionsParticlesfromBodies();
     rigidBodyMotionTensors(device);
-
-    udwadiaLinearSystem();
-
-    // NOTE: Call gradientChangeOfVariableTensors() after rigidBodyMotionTensors()
     gradientChangeOfVariableTensors(device);
 
-    // NOTE: Call convertBody2ParticleDoF() after all previous functions
+    // NOTE: Particle degrees of freedom calculated 3rd
     convertBody2ParticleDoF(device);
+
+    // NOTE: Udwadia linear system calculated 4th
+    udwadiaLinearSystem();
 }
 
 void
@@ -209,11 +208,23 @@ systemData::particleLocaterDistances()
 void
 systemData::positionsParticlesfromBodies()
 {
+    // TODO
 }
 
 void
 systemData::positionsArticulation()
 {
+    double t_dimensional{m_tau * m_t};
+
+    // articulation acceleration magnitudes
+    const double r1_mag = (m_sys_spec_U0 / m_sys_spec_omega) * sin(m_sys_spec_omega * t_dimensional);
+    const double r3_mag =
+        (m_sys_spec_U0 / m_sys_spec_omega) * sin(m_sys_spec_omega * t_dimensional + m_sys_spec_phase_shift);
+
+    // Zero and then calculate m_accelerations_particles_articulation
+    m_positions_particles_articulation.setZero();
+
+    // TODO
 }
 
 void
@@ -221,34 +232,20 @@ systemData::velocitiesArticulation()
 {
     double t_dimensional{m_tau * m_t};
 
-    // ANCHOR: Orientation vectors, q = R_1 - R_3
-    Eigen::Vector3d q = m_positions_particles.segment<3>(3 * 0) - m_positions_particles.segment<3>(3 * 2);
-    q.normalize();
-    Eigen::Vector3d q_tilde = q;
-    q_tilde(2) *= -1;
-
     // articulation velocity magnitudes
     const double v1_mag = m_sys_spec_U0 * cos(m_sys_spec_omega * t_dimensional);
     const double v3_mag = m_sys_spec_U0 * cos(m_sys_spec_omega * t_dimensional + m_sys_spec_phase_shift);
 
     // Zero and then calculate  m_velocities_particles_articulation
     m_velocities_particles_articulation.setZero();
-    m_velocities_particles_articulation.segment<3>(3 * 0).noalias() = v1_mag * q;
-    m_velocities_particles_articulation.segment<3>(3 * 2).noalias() = v3_mag * q;
-    m_velocities_particles_articulation.segment<3>(3 * 3).noalias() = v1_mag * q_tilde;
-    m_velocities_particles_articulation.segment<3>(3 * 5).noalias() = v3_mag * q_tilde;
+
+    // TODO
 }
 
 void
 systemData::accelerationsArticulation()
 {
     double t_dimensional{m_tau * m_t};
-
-    // ANCHOR: Orientation vectors, q = R_1 - R_3
-    Eigen::Vector3d q = m_positions_particles.segment<3>(3 * 0) - m_positions_particles.segment<3>(3 * 2);
-    q.normalize();
-    Eigen::Vector3d q_tilde = q;
-    q_tilde(2) *= -1;
 
     // articulation acceleration magnitudes
     const double a1_mag = -m_sys_spec_U0 * m_sys_spec_omega * sin(m_sys_spec_omega * t_dimensional);
@@ -257,10 +254,8 @@ systemData::accelerationsArticulation()
 
     // Zero and then calculate m_accelerations_particles_articulation
     m_accelerations_particles_articulation.setZero();
-    m_accelerations_particles_articulation.segment<3>(3 * 0).noalias() = a1_mag * q;
-    m_accelerations_particles_articulation.segment<3>(3 * 2).noalias() = a3_mag * q;
-    m_accelerations_particles_articulation.segment<3>(3 * 3).noalias() = a1_mag * q_tilde;
-    m_accelerations_particles_articulation.segment<3>(3 * 5).noalias() = a3_mag * q_tilde;
+
+    // TODO
 }
 
 /* REVIEW[epic=Change,order=1]: Change udwadiaLinearSystem() for different systems
