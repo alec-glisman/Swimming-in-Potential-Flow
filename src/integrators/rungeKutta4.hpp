@@ -61,16 +61,55 @@ class rungeKutta4
      */
     ~rungeKutta4();
 
+    /**
+     * @brief Public function to call internal numerical Runge Kutta integration functions.
+     *
+     * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
+     */
     void
     integrate(Eigen::ThreadPoolDevice& device);
 
   private:
+    /**
+     * @brief 2nd order Runge-Kutta 4th order integration. Integrates known acceleration body components into velocity
+     * and then positional components.
+     *
+     * @details Solve system of form: @f$ y'(t) = f( y(t),  t ) @f$
+     *
+     * @see **REFERENCE:**
+     * https://www.physicsforums.com/threads/using-runge-kutta-method-for-position-calc.553663/post-3634957
+     *
+     * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
+     */
     void
     integrateSecondOrder(Eigen::ThreadPoolDevice& device);
 
+    /**
+     * @brief Helper function for `integrateSecondOrder()`.
+     *
+     * @details Function will update system data, then hydrodynamic data, and finally call `udwadiaKalaba()` to
+     * calculate the body acceleration components at a given system time.
+     *
+     * @param acc (output) body acceleration vector that will be overwritten
+     * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
+     */
     void
     accelerationUpdate(Eigen::VectorXd& acc, Eigen::ThreadPoolDevice& device);
 
+    /**
+     * @brief Calculates the body acceleration components given the constraints established by the Udwadia linear system
+     * (calculated in the `systemData` class).
+     *
+     * @see **Original paper on constrained Lagrangian dynamics:** Udwadia, Firdaus E., and Robert E. Kalaba. "A new
+     * perspective on constrained motion." Proceedings of the Royal Society of London. Series A: Mathematical and
+     * Physical Sciences 439.1906 (1992): 407-410.
+     *
+     * @see **Application of algorithm to unit quaternion vectors:** Udwadia, Firdaus E., and Aaron D. Schutte. "An
+     * alternative derivation of the quaternion equations of motion for rigid-body rotational dynamics."
+     * (2010): 044505.
+     *
+     * @param acc (output) body acceleration vector that will be overwritten
+     */
     void
     udwadiaKalaba(Eigen::VectorXd& acc);
 

@@ -45,11 +45,6 @@ rungeKutta4::integrate(Eigen::ThreadPoolDevice& device)
 void
 rungeKutta4::integrateSecondOrder(Eigen::ThreadPoolDevice& device)
 {
-    /* ANCHOR: Solve system of form: y'(t) = f( y(t),  t )
-     * @REFERENCE:
-     * https://www.physicsforums.com/threads/using-runge-kutta-method-for-position-calc.553663/post-3634957
-     */
-
     /* Step 1: k1 = f( y(t_0),  t_0 ),
      * initial conditions at current step */
     const double          t1{m_system->t()};
