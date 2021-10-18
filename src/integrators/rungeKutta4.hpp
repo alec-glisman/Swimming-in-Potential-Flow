@@ -76,7 +76,7 @@ class rungeKutta4
      *
      * @details Solve system of form: @f$ y'(t) = f( y(t),  t ) @f$
      *
-     * @see **REFERENCE:**
+     * @see **Reference:**
      * https://www.physicsforums.com/threads/using-runge-kutta-method-for-position-calc.553663/post-3634957
      *
      * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
