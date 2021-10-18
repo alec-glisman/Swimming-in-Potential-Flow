@@ -81,7 +81,7 @@ systemData::initializeData()
         m_particle_group_id(j) = std::round(body_num); // convert data type
     }
     assert(m_particle_group_id(0) == 0 && "Particle 0 must belong to group 0");
-    assert(m_particle_group_id(m_num_particles) == m_num_bodies && "Particle N must belong to group N");
+    assert(m_particle_group_id(m_num_particles - 1) == m_num_bodies - 1 && "Particle N must belong to group N");
 
     // initialize kinematic vectors
     m_displacements_particles = Eigen::VectorXd::Zero(3 * m_num_particles);
