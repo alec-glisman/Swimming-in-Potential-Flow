@@ -63,8 +63,8 @@
     - [x] $\nabla_{\xi} \bm{A}$
   - [x] Move 3rd axis indexing function to data from hydrodynamics
   - [x] Move crossProduct matrix function from hydrodynamics
-  - [ ] `systemData` add function to calculate all inter-particle distances from relevant locater points once and then integrate into `potentialHydrodynamics`
-  - [ ] `systemData` save body number data for each particle
+  - [x] `systemData` add function to calculate all inter-particle distances from relevant locater points
+  - [x] `systemData` save body number data for each particle
   - [ ] Save initial position data in systemData class for quaternion rotation (normalized).
   - [ ] Update integration kinematic calculations with only body components
     - [ ] Write function to convert body velocities to particle velocities
