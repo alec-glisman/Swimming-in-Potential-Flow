@@ -267,6 +267,12 @@ systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
 
     for (int j = 0; j < m_num_particles; j++)
     {
+        if (m_particle_type_id(j) == 1)
+        {
+            // Continue to next loop as all elements are zero
+            continue;
+        }
+
         const int particle_id_3{3 * j};
         const int body_id_6{6 * m_particle_group_id(j)};
 
@@ -308,75 +314,60 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
     /* ANCHOR: Compute m_conv_body_2_part_dof and m_tens_conv_body_2_part_dof */
     m_conv_body_2_part_dof.setZero();
 
-    int                         body_num{-1}; // -1 as first particle should be locater particle and increment this
-    Eigen::Matrix<double, 3, 4> twoE_body;    ///< 2 * E_body
-    Eigen::Vector4d             R_c_body;     ///< R_c^{(i)}, locater position
-
-    assert(m_particle_type_id(0) == 1 && "First particle index must be locater by convention");
     for (int j = 0; j < m_num_particles; j++)
     {
-
         if (m_particle_type_id(j) == 1)
         {
-            // Zero out the relevent locater values
-            twoE_body.setZero();
-            R_c_body.setZero();
-            // Increment body count
-            body_num += 1;
-
-            // Get locater position of body i
-            R_c_body.segment<3>(1).noalias() = m_positions_locater_particles.segment<3>(3 * body_num);
-            // Get E matrix representation of body quaternion from m_psi_conv_quat_ang
-            twoE_body.noalias() = m_psi_conv_quat_ang.block<3, 4>(6 * body_num + 3, 7 * body_num + 3);
-
             // Continue to next loop as all elements are zero
             continue;
         }
 
-        // j -> particle number
-        const int j3{3 * j};
+        const int particle_id_3{3 * j};
+        const int body_id_6{6 * m_particle_group_id(j)};
+        const int body_id_7{7 * m_particle_group_id(j)};
 
-        // matrix P_tilde from moment arm
+        // (4 vector) displacement of particle from locater point moment arm
         Eigen::Vector4d dr         = Eigen::Vector4d::Zero(4, 1);
-        dr.segment<3>(1).noalias() = m_displacements_particles.segment<3>(j3);
-        Eigen::Matrix<double, 3, 4> P_j_tilde_hold;
-        eMatrix(dr, P_j_tilde_hold);
-        Eigen::Matrix<double, 4, 3> P_j_tilde = P_j_tilde_hold.transpose();
+        dr.segment<3>(1).noalias() = m_displacements_particles.segment<3>(particle_id_3);
+
+        // quaternion product representation of particle displacement (transpose)
+        Eigen::Matrix<double, 3, 4> P_j_tilde_T;
+        eMatrix(dr, P_j_tilde_T);
+        Eigen::Matrix<double, 4, 3> P_j_tilde = P_j_tilde_T.transpose();
 
         // change of variables gradient tensor elements
-        m_conv_body_2_part_dof.block<3, 3>(7 * body_num, j3).noalias() = -m_I3; // translation-translation couple
-        m_conv_body_2_part_dof.block<3, 3>(7 * body_num + 4, j3).noalias() =
-            twoE_body * P_j_tilde; // quaternion-rotation couple (first row is zero)
+        m_conv_body_2_part_dof.block<3, 3>(body_id_7, particle_id_3).noalias() =
+            -m_I3; // translation-translation couple
+        m_conv_body_2_part_dof.block<3, 3>(body_id_7 + 4, particle_id_3).noalias() =
+            m_psi_conv_quat_ang.block<3, 4>(body_id_6 + 3, body_id_7 + 3) *
+            P_j_tilde; // quaternion-rotation couple (first row is zero)
     }
-    assert(body_num + 1 == m_num_bodies && "Not all bodies were indexed correctly");
 
     m_tens_conv_body_2_part_dof = TensorCast(m_conv_body_2_part_dof);
 
     /* ANCHOR : Compute m_rbm_conn_T_quat_grad */
     m_rbm_conn_T_quat_grad.setZero();
-    body_num = -1;
 
-    assert(m_particle_type_id(0) == 1 && "First particle index must be locater by convention");
-    for (int i = 0; i < m_num_particles; i++)
+    for (int j = 0; j < m_num_particles; j++)
     {
-        if (m_particle_type_id(i) == 1)
+        if (m_particle_type_id(j) == 1)
         {
-            // Increment body count
-            body_num += 1;
-
             // Continue to next loop as all elements are zero
             continue;
         }
 
+        const int particle_id_3{3 * j};
+        const int body_id_6{6 * m_particle_group_id(j)};
+        const int body_id_7{7 * m_particle_group_id(j)};
+
         // get moment arm to locater point from C
-        const Eigen::Matrix3d two_r_cross_mat = -2 * m_rbm_conn.block<3, 3>(6 * body_num + 3, 3 * i);
+        const Eigen::Matrix3d two_r_cross_mat = -2 * m_rbm_conn.block<3, 3>(body_id_6 + 3, particle_id_3);
 
         // get E matrix representation of body quaternion from m_psi_conv_quat_ang
-        const Eigen::Matrix<double, 3, 4> two_E_body =
-            m_psi_conv_quat_ang.block<3, 4>(6 * body_num + 3, 7 * body_num + 3);
+        const Eigen::Matrix<double, 3, 4> two_E_body = m_psi_conv_quat_ang.block<3, 4>(body_id_6 + 3, body_id_7 + 3);
 
         // get change of variable matrix element D_{\alpha}
-        const Eigen::Matrix<double, 7, 3> n_D_alpha = -m_conv_body_2_part_dof.block<7, 3>(7 * body_num, 3 * i);
+        const Eigen::Matrix<double, 7, 3> n_D_alpha = -m_conv_body_2_part_dof.block<7, 3>(body_id_7, particle_id_3);
 
         /* ANCHOR: tensor contractions to produce result */
 
@@ -412,9 +403,8 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
         angular_gradient.device(device) = -d_rCrossMat_d_xi_times_two_E_body - rCrossMat_times_d_E_body_d_xi;
 
         // output matrix indices
-        Eigen::array<Eigen::Index, 3> offsets          = {3 * i, 7 * body_num + 3, 7 * body_num};
+        Eigen::array<Eigen::Index, 3> offsets          = {particle_id_3, body_id_7 + 3, body_id_7};
         Eigen::array<Eigen::Index, 3> extents          = {3, 4, 7};
         m_rbm_conn_T_quat_grad.slice(offsets, extents) = angular_gradient;
     }
-    assert(body_num + 1 == m_num_bodies && "Not all bodies were indexed correctly");
 }
