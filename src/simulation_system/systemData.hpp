@@ -108,9 +108,26 @@ class systemData : public std::enable_shared_from_this<systemData>
     /**
      * @brief Computes the distance from each particle to its respective body's locater point.
      *
+     * @todo remove this function (and m_displacements_particles) in favor of the output from positionsArticulation()
      */
     void
     particleLocaterDistances();
+
+    /**
+     * @brief Computes the positions of all particles from given locater positions and body orientations
+     *
+     */
+    void
+    positionsParticlesfromBodies();
+
+    /**
+     * @brief Computes the articulation (linear) positions of the particles relative to their respective locater
+     * points.
+     *
+     * @review_swimmer Change assignment of `m_positions_particles_articulation` for
+     */
+    void
+    positionsArticulation();
 
     /**
      * @brief Computes the articulation (linear) velocities of the particles relative to their respective locater
@@ -119,7 +136,7 @@ class systemData : public std::enable_shared_from_this<systemData>
      * @review_swimmer Change assignment of `m_velocities_particles_articulation` for
      */
     void
-    velocitiesArticulation(); // FIXME: redo in light of new particle ordering
+    velocitiesArticulation();
 
     /**
      * @brief Computes the articulation (linear) accelerations of the particles relative to their respective locater
@@ -129,7 +146,7 @@ class systemData : public std::enable_shared_from_this<systemData>
      * different systems
      */
     void
-    accelerationsArticulation(); // FIXME: redo in light of new particle ordering
+    accelerationsArticulation();
 
     /**
      * @brief Computes the Udwadia constraint matrix and vector to uphold the quaternion unitary norm for each body.
@@ -345,6 +362,8 @@ class systemData : public std::enable_shared_from_this<systemData>
     /// (3N x 1) (linear) displacements of all particles from respective locater points
     Eigen::VectorXd m_displacements_particles;
 
+    /// (3N x 1) (linear) articulation positions of all particles
+    Eigen::VectorXd m_positions_particles_articulation;
     /// (3N x 1) (linear) articulation velocities of all particles
     Eigen::VectorXd m_velocities_particles_articulation;
     /// (3N x 1) (linear) articulation accelerations of all particles

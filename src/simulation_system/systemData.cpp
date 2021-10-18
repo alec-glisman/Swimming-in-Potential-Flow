@@ -78,10 +78,10 @@ systemData::initializeData()
     // initialize particle vectors
     m_particle_group_id = Eigen::VectorXi::Zero(m_num_particles);
 
-    for (int j = 0; j < m_num_particles; j++)
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
-        const double body_num  = (m_particle_type_id.segment(0, j + 1).array() == 1).count() - 1;
-        m_particle_group_id(j) = std::round(body_num); // convert data type
+        const double body_num            = (m_particle_type_id.segment(0, particle_id + 1).array() == 1).count() - 1;
+        m_particle_group_id(particle_id) = std::round(body_num); // convert data type
     }
     assert(m_particle_group_id(0) == 0 && "Particle 0 must belong to group 0");
     assert(m_particle_group_id(m_num_particles - 1) == m_num_bodies - 1 && "Particle N must belong to group N");
@@ -89,6 +89,7 @@ systemData::initializeData()
     // initialize kinematic vectors
     m_displacements_particles = Eigen::VectorXd::Zero(3 * m_num_particles);
 
+    m_positions_particles_articulation     = Eigen::VectorXd::Zero(3 * m_num_particles);
     m_velocities_particles_articulation    = Eigen::VectorXd::Zero(3 * m_num_particles);
     m_accelerations_particles_articulation = Eigen::VectorXd::Zero(3 * m_num_particles);
 
@@ -206,9 +207,19 @@ systemData::particleLocaterDistances()
 }
 
 void
+systemData::positionsParticlesfromBodies()
+{
+}
+
+void
+systemData::positionsArticulation()
+{
+}
+
+void
 systemData::velocitiesArticulation()
 {
-    double dimensional_time{m_tau * m_t};
+    double t_dimensional{m_tau * m_t};
 
     // ANCHOR: Orientation vectors, q = R_1 - R_3
     Eigen::Vector3d q = m_positions_particles.segment<3>(3 * 0) - m_positions_particles.segment<3>(3 * 2);
@@ -217,8 +228,8 @@ systemData::velocitiesArticulation()
     q_tilde(2) *= -1;
 
     // articulation velocity magnitudes
-    const double v1_mag = m_sys_spec_U0 * cos(m_sys_spec_omega * dimensional_time);
-    const double v3_mag = m_sys_spec_U0 * cos(m_sys_spec_omega * dimensional_time + m_sys_spec_phase_shift);
+    const double v1_mag = m_sys_spec_U0 * cos(m_sys_spec_omega * t_dimensional);
+    const double v3_mag = m_sys_spec_U0 * cos(m_sys_spec_omega * t_dimensional + m_sys_spec_phase_shift);
 
     // Zero and then calculate  m_velocities_particles_articulation
     m_velocities_particles_articulation.setZero();
@@ -231,7 +242,7 @@ systemData::velocitiesArticulation()
 void
 systemData::accelerationsArticulation()
 {
-    double dimensional_time{m_tau * m_t};
+    double t_dimensional{m_tau * m_t};
 
     // ANCHOR: Orientation vectors, q = R_1 - R_3
     Eigen::Vector3d q = m_positions_particles.segment<3>(3 * 0) - m_positions_particles.segment<3>(3 * 2);
@@ -240,9 +251,9 @@ systemData::accelerationsArticulation()
     q_tilde(2) *= -1;
 
     // articulation acceleration magnitudes
-    const double a1_mag = -m_sys_spec_U0 * m_sys_spec_omega * sin(m_sys_spec_omega * dimensional_time);
+    const double a1_mag = -m_sys_spec_U0 * m_sys_spec_omega * sin(m_sys_spec_omega * t_dimensional);
     const double a3_mag =
-        -m_sys_spec_U0 * m_sys_spec_omega * sin(m_sys_spec_omega * dimensional_time + m_sys_spec_phase_shift);
+        -m_sys_spec_U0 * m_sys_spec_omega * sin(m_sys_spec_omega * t_dimensional + m_sys_spec_phase_shift);
 
     // Zero and then calculate m_accelerations_particles_articulation
     m_accelerations_particles_articulation.setZero();
@@ -275,16 +286,16 @@ systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
     /* ANCHOR: Compute m_rbm_conn */
     m_rbm_conn.setZero();
 
-    for (int j = 0; j < m_num_particles; j++)
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
-        if (m_particle_type_id(j) == 1)
+        if (m_particle_type_id(particle_id) == 1)
         {
             // Continue to next loop as all elements are zero
             continue;
         }
 
-        const int particle_id_3{3 * j};
-        const int body_id_6{6 * m_particle_group_id(j)};
+        const int particle_id_3{3 * particle_id};
+        const int body_id_6{6 * m_particle_group_id(particle_id)};
 
         // skew-symmetric matrix representation of (negative) cross product
         Eigen::Matrix3d n_dr_cross;
@@ -298,10 +309,10 @@ systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
     /* ANCHOR: Compute m_psi_conv_quat_ang */
     m_psi_conv_quat_ang.setZero();
 
-    for (int i = 0; i < m_num_bodies; i++)
+    for (int body_id = 0; body_id < m_num_bodies; body_id++)
     {
-        const int body_id_6{6 * m_particle_group_id(i)};
-        const int body_id_7{7 * m_particle_group_id(i)};
+        const int body_id_6{6 * m_particle_group_id(body_id)};
+        const int body_id_7{7 * m_particle_group_id(body_id)};
 
         // matrix E from quaterion of body k
         Eigen::Matrix<double, 3, 4> E_theta_k;
@@ -324,17 +335,17 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
     /* ANCHOR: Compute m_conv_body_2_part_dof and m_tens_conv_body_2_part_dof */
     m_conv_body_2_part_dof.setZero();
 
-    for (int j = 0; j < m_num_particles; j++)
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
-        if (m_particle_type_id(j) == 1)
+        if (m_particle_type_id(particle_id) == 1)
         {
             // Continue to next loop as all elements are zero
             continue;
         }
 
-        const int particle_id_3{3 * j};
-        const int body_id_6{6 * m_particle_group_id(j)};
-        const int body_id_7{7 * m_particle_group_id(j)};
+        const int particle_id_3{3 * particle_id};
+        const int body_id_6{6 * m_particle_group_id(particle_id)};
+        const int body_id_7{7 * m_particle_group_id(particle_id)};
 
         // (4 vector) displacement of particle from locater point moment arm
         Eigen::Vector4d dr         = Eigen::Vector4d::Zero(4, 1);
@@ -358,17 +369,17 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
     /* ANCHOR : Compute m_rbm_conn_T_quat_grad */
     m_rbm_conn_T_quat_grad.setZero();
 
-    for (int j = 0; j < m_num_particles; j++)
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
-        if (m_particle_type_id(j) == 1)
+        if (m_particle_type_id(particle_id) == 1)
         {
             // Continue to next loop as all elements are zero
             continue;
         }
 
-        const int particle_id_3{3 * j};
-        const int body_id_6{6 * m_particle_group_id(j)};
-        const int body_id_7{7 * m_particle_group_id(j)};
+        const int particle_id_3{3 * particle_id};
+        const int body_id_6{6 * m_particle_group_id(particle_id)};
+        const int body_id_7{7 * m_particle_group_id(particle_id)};
 
         // get moment arm to locater point from C
         const Eigen::Matrix3d two_r_cross_mat = -2 * m_rbm_conn.block<3, 3>(body_id_6 + 3, particle_id_3);
