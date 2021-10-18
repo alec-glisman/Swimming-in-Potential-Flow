@@ -173,10 +173,44 @@ systemData::update(Eigen::ThreadPoolDevice& device)
     gradientChangeOfVariableTensors(device);
 }
 
+// FIXME: Set displacements as 4N vector and use in later functions
 void
 systemData::particleLocaterDistances()
 {
     m_displacements_particles.setZero();
+
+    Eigen::Vector4d R_c_body; ///< R_c^{(i)}, locater position
+
+    int body_num{-1}; // -1 as first particle should be locater particle and increment this
+    assert(m_particle_type_id(0) == 1 && "First particle index must be locater by convention");
+
+    for (int j = 0; j < m_num_particles; j++)
+    {
+
+        if (m_particle_type_id(j) == 1)
+        {
+            // Zero out the relevent locater values
+            R_c_body.setZero();
+            // Increment body count
+            body_num += 1;
+
+            // Get locater position of body i
+            R_c_body.segment<3>(1).noalias() = m_positions_locater_particles.segment<3>(3 * body_num);
+
+            // Continue to next loop as all elements are zero
+            continue;
+        }
+
+        // j -> particle number
+        const int j3{3 * j};
+        const int j4{4 * j};
+
+        // 4-vector version of particle j position (prepend zero element)
+        Eigen::Vector4d R_j         = Eigen::Vector4d::Zero(4, 1);
+        R_j.segment<3>(1).noalias() = m_positions_particles.segment<3>(j3);
+    }
+
+    assert(body_num + 1 == m_num_bodies && "Not all bodies were indexed correctly");
 }
 
 void
