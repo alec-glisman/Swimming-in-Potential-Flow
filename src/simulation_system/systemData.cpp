@@ -73,6 +73,7 @@ systemData::initializeData()
     m_kappa_tilde(2, 0, 6) = -1;
 
     // initialize kinematic vectors
+    m_displacements_particles              = Eigen::VectorXd::Zero(3 * m_num_particles);
     m_positions_locater_particles          = Eigen::VectorXd::Zero(3 * m_num_bodies);
     m_velocities_particles_articulation    = Eigen::VectorXd::Zero(3 * m_num_particles);
     m_accelerations_particles_articulation = Eigen::VectorXd::Zero(3 * m_num_particles);
@@ -157,6 +158,9 @@ systemData::checkInput()
 void
 systemData::update(Eigen::ThreadPoolDevice& device)
 {
+    // NOTE: Must be called before rbm tensors
+    particleLocaterDistances();
+
     // NOTE: Ordering of following functions does not matter
     velocitiesArticulation();
     accelerationsArticulation();
@@ -167,6 +171,12 @@ systemData::update(Eigen::ThreadPoolDevice& device)
 
     // NOTE: Call gradientChangeOfVariableTensors() after rigidBodyMotionTensors()
     gradientChangeOfVariableTensors(device);
+}
+
+void
+systemData::particleLocaterDistances()
+{
+    m_displacements_particles.setZero();
 }
 
 void
