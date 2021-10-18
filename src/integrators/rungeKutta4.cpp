@@ -26,6 +26,8 @@ rungeKutta4::rungeKutta4(std::shared_ptr<systemData> sys, std::shared_ptr<potent
     m_c1_6_dt = m_c1_6 * m_dt;
     spdlog::get(m_logName)->info("1/6 * dt (dimensional): {0}", m_c1_6_dt);
 
+    m_3M = 3 * m_system->numBodies();
+
     spdlog::get(m_logName)->info("Constructor complete");
     spdlog::get(m_logName)->flush();
 }
@@ -50,51 +52,42 @@ rungeKutta4::integrateSecondOrder(Eigen::ThreadPoolDevice& device)
     const double          t1{m_system->t()};
     const Eigen::VectorXd v1 = m_system->velocitiesParticles();
     const Eigen::VectorXd x1 = m_system->positionsParticles();
-    Eigen::VectorXd       a1 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a1, device);
+
+    Eigen::VectorXd a1 = Eigen::VectorXd::Zero(m_3M);
+    accelerationUpdate(t1, a1, device);
 
     /* Step 2: k2 = f( y(t_0) + k1 * dt/2,  t_0 + dt/2 )
      * time rate-of-change k1 evaluated halfway through time step (midpoint) */
+    const double    t2{t1 + 0.50 * m_system->dt()};
     Eigen::VectorXd v2 = v1;
     v2.noalias() += m_c1_2_dt * a1;
     Eigen::VectorXd x2 = x1;
     x2.noalias() += m_c1_2_dt * v2;
 
-    m_system->setVelocitiesParticles(v2);
-    m_system->setPositionsParticles(x2);
-
-    m_system->setT(t1 + 0.50 * m_system->dt());
-
-    Eigen::VectorXd a2 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a2, device);
+    Eigen::VectorXd a2 = Eigen::VectorXd::Zero(m_3M);
+    accelerationUpdate(t2, a2, device);
 
     /* Step 3: k3 = f( y(t_0) + k2 * dt/2,  t_0 + dt/2 )
      * time rate-of-change k2 evaluated halfway through time step (midpoint) */
+    const double    t3{t2};
     Eigen::VectorXd v3 = v1;
     v3.noalias() += m_c1_2_dt * a2;
     Eigen::VectorXd x3 = x1;
     x3.noalias() += m_c1_2_dt * v3;
 
-    m_system->setVelocitiesParticles(v3);
-    m_system->setPositionsParticles(x3);
-
-    Eigen::VectorXd a3 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a3, device);
+    Eigen::VectorXd a3 = Eigen::VectorXd::Zero(m_3M);
+    accelerationUpdate(t3, a3, device);
 
     /* Step 4: k4 = f( y(t_0) + k3 * dt,  t_0 + dt )
      * time rate-of-change k3 evaluated at end of step (endpoint) */
+    const double    t4{t1 + m_system->dt()};
     Eigen::VectorXd v4 = v1;
     v4.noalias() += m_dt * a3;
     Eigen::VectorXd x4 = x1;
     x4.noalias() += m_dt * v4;
 
-    m_system->setVelocitiesParticles(v4);
-    m_system->setPositionsParticles(x4);
-
-    m_system->setT(t1 + m_system->dt());
-
-    Eigen::VectorXd a4 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a4, device);
+    Eigen::VectorXd a4 = Eigen::VectorXd::Zero(m_3M);
+    accelerationUpdate(t4, a4, device);
 
     /* ANCHOR: Calculate kinematics at end of time step */
     Eigen::VectorXd v_out = a1;
@@ -111,24 +104,23 @@ rungeKutta4::integrateSecondOrder(Eigen::ThreadPoolDevice& device)
     x_out *= m_c1_6_dt;
     x_out.noalias() += x1;
 
-    m_system->setVelocitiesParticles(v_out);
-    m_system->setPositionsParticles(x_out);
+    Eigen::VectorXd a_out = Eigen::VectorXd::Zero(m_3M);
+    accelerationUpdate(t4, a_out, device);
 
-    Eigen::VectorXd a_out = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a_out, device);
-    m_system->setAccelerationsParticles(a_out);
-
+    // reset system time to t1 of this integration step as `engine` class manages updating system time at end of each
+    // step
     m_system->setT(t1);
 }
 
 void
-rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, Eigen::ThreadPoolDevice& device)
+rungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& acc, Eigen::ThreadPoolDevice& device)
 {
-    // NOTE: Order matters, m_system update must be called before m_potHydro
-    m_system->update(device);   // update Udwadia linear system
-    m_potHydro->update(device); // update hydrodynamic tensors and forces
+    // NOTE: Order of all 4 function calls must remain the same
+    m_system->setT(t);
+    m_system->update(device);
+    m_potHydro->update(device);
 
-    udwadiaKalaba(acc); // solve for acceleration components
+    udwadiaKalaba(acc);
 }
 
 void

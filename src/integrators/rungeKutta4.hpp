@@ -87,14 +87,15 @@ class rungeKutta4
     /**
      * @brief Helper function for `integrateSecondOrder()`.
      *
-     * @details Function will update system data, then hydrodynamic data, and finally call `udwadiaKalaba()` to
-     * calculate the body acceleration components at a given system time.
+     * @details Function will update simulation time, then system data, then hydrodynamic data, and finally call
+     * `udwadiaKalaba()` to calculate the body acceleration components at a given system time.
      *
+     * @param t current integration time
      * @param acc (output) body acceleration vector that will be overwritten
      * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
      */
     void
-    accelerationUpdate(Eigen::VectorXd& acc, Eigen::ThreadPoolDevice& device);
+    accelerationUpdate(const double t, Eigen::VectorXd& acc, Eigen::ThreadPoolDevice& device);
 
     /**
      * @brief Calculates the body acceleration components given the constraints established by the Udwadia linear system
@@ -132,6 +133,10 @@ class rungeKutta4
     double m_c1_2_dt{-1.0};
     /// (dimensional) 1/6 integrator finite time step
     double m_c1_6_dt{-1.0};
+
+    // tensor length variables
+    /// = 3 M
+    int m_3M{-1};
 
     // constants
     /// = 1/2
