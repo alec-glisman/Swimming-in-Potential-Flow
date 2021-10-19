@@ -87,9 +87,10 @@ systemData::initializeData()
     assert(m_particle_group_id(m_num_particles - 1) == m_num_bodies - 1 && "Particle N must belong to group N");
 
     // initialize kinematic vectors
-    m_positions_particles_articulation     = Eigen::VectorXd::Zero(3 * m_num_particles);
-    m_velocities_particles_articulation    = Eigen::VectorXd::Zero(3 * m_num_particles);
-    m_accelerations_particles_articulation = Eigen::VectorXd::Zero(3 * m_num_particles);
+    m_positions_particles_articulation_init_norm = Eigen::VectorXd::Zero(3 * m_num_particles);
+    m_positions_particles_articulation           = Eigen::VectorXd::Zero(3 * m_num_particles);
+    m_velocities_particles_articulation          = Eigen::VectorXd::Zero(3 * m_num_particles);
+    m_accelerations_particles_articulation       = Eigen::VectorXd::Zero(3 * m_num_particles);
 
     // initialize constraint matrices
     m_Udwadia_A = Eigen::MatrixXd::Zero(m_num_constraints, m_num_DoF);
@@ -108,6 +109,26 @@ systemData::initializeData()
     m_tens_conv_body_2_part_dof.setZero();
     m_rbm_conn_T_quat_grad = Eigen::Tensor<double, 3>(3 * m_num_particles, 7 * m_num_bodies, 7 * m_num_bodies);
     m_rbm_conn_T_quat_grad.setZero();
+
+    // Set initial configuration orientation
+    spdlog::get(m_logName)->info("Setting initial configuration orientation");
+    m_positions_particles_articulation_init_norm.setZero();
+
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
+    {
+        if (m_particle_type_id(particle_id) == 1)
+        {
+            continue; // continue to next loop as all elements are zero
+        }
+
+        const int particle_id_3{3 * particle_id};
+        const int body_id_7{7 * m_particle_group_id(body_id)};
+
+        const Eigen::Vector3d disp =
+            m_positions_particles.segment<3>(particle_id_3) - m_positions_bodies.segment<3>(body_id_7);
+
+        m_positions_particles_articulation_init_norm.segment<3>(particle_id_3).noalias() = disp.normalized();
+    }
 
     // initialize constraints
     spdlog::get(m_logName)->critical("Setting up temporary single-thread eigen device");
@@ -300,8 +321,8 @@ systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
 
     for (int body_id = 0; body_id < m_num_bodies; body_id++)
     {
-        const int body_id_6{6 * m_particle_group_id(body_id)};
-        const int body_id_7{7 * m_particle_group_id(body_id)};
+        const int body_id_6{6 * body_id};
+        const int body_id_7{7 * body_id};
 
         // matrix E from quaterion of body k
         Eigen::Matrix<double, 3, 4> E_theta_k;
