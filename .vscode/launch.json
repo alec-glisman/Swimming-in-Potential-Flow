@@ -55,7 +55,7 @@
             "stopAtEntry": false,
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerArgs": "--args \"${workspaceFolder}/build_debug/src/./bodies_in_potential_flow\" tests/input/data.gsd temp/output",
+            "miDebuggerArgs": "--args \"${workspaceFolder}/build_debug/src/./bodies_in_potential_flow\" test/input/data.gsd temp/output",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -78,7 +78,7 @@
             "preLaunchTask": "Debug: build",
             "program": "${workspaceFolder}/build_debug/src/bodies_in_potential_flow",
             "args": [
-                "${workspaceFolder}/tests/input/data.gsd",
+                "${workspaceFolder}/test/input/data.gsd",
                 "${workspaceFolder}/temp/output"
             ],
             "stopAtEntry": false,
@@ -98,7 +98,7 @@
             // Resolved by CMake Tools:
             "cwd": "${workspaceFolder}",
             "preLaunchTask": "Debug: build",
-            "program": "${workspaceFolder}/build_debug/tests/tests",
+            "program": "${workspaceFolder}/build_debug/test/tests",
             "args": [],
             "stopAtEntry": false,
             "externalConsole": false,
