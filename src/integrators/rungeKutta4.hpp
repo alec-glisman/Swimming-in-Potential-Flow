@@ -98,8 +98,16 @@ class rungeKutta4
     accelerationUpdate(const double t, Eigen::VectorXd& acc, Eigen::ThreadPoolDevice& device);
 
     /**
-     * @brief Calculates the body acceleration components given the constraints established by the Udwadia linear system
-     * (calculated in the `systemData` class).
+     * @brief Replaces 2nd 1/2 of D.o.F. with image of 1st 1/2 assuming the reflection plane is @f$ z = 0 @f$.
+     *
+     * @param acc (output) body acceleration vector that will be overwritten
+     */
+    void
+    imageAcceleration(Eigen::VectorXd& acc);
+
+    /**
+     * @brief Calculates the body acceleration components given the constraints established by the Udwadia linear
+     * system (calculated in the `systemData` class).
      *
      * @see **Original paper on constrained Lagrangian dynamics:** Udwadia, Firdaus E., and Robert E. Kalaba. "A new
      * perspective on constrained motion." Proceedings of the Royal Society of London. Series A: Mathematical and

@@ -121,6 +121,26 @@ rungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& acc, Eigen::Thr
     m_potHydro->update(device);
 
     udwadiaKalaba(acc);
+
+    if (m_system->imageSystem())
+    {
+        imageAcceleration(acc);
+    }
+}
+
+void
+rungeKutta4::imageAcceleration(Eigen::VectorXd& acc)
+{
+    for (int particle_id = 0; particle_id < m_system->numParticles(); particle_id++)
+    {
+        const int particle_id_3{3 * particle_id};
+
+        // Image system: flip x-y components, leave z unchanged
+        if (particle_id >= (m_system->numParticles() / 2))
+        {
+            acc.segment<2>(particle_id_3) *= -1;
+        }
+    }
 }
 
 void

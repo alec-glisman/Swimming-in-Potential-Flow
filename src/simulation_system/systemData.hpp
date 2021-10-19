@@ -230,6 +230,11 @@ class systemData : public std::enable_shared_from_this<systemData>
     /* !SECTION */
 
     /* SECTION: Attributes */
+    /* ANCHOR: Simulation hyperparameters */
+    /// If the simulation system is constrained to be that of an image (neglect second 1/2 of DoF)
+    /// @review_swimmer change if not using image-system constraints
+    const bool m_image_system{true};
+
     /* ANCHOR: general attributes */
     // data i/o
     std::string m_inputGSDFile;
@@ -407,6 +412,12 @@ class systemData : public std::enable_shared_from_this<systemData>
     /* SECTION: Setters and getters */
   public:
     /* ANCHOR: general attributes */
+    bool
+    imageSystem() const
+    {
+        return m_image_system;
+    }
+
     // data i/o
     std::string
     inputGSDFile() const
