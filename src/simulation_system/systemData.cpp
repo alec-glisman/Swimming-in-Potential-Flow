@@ -132,8 +132,8 @@ systemData::initializeData()
 
         m_positions_particles_articulation_init_norm.segment<3>(particle_id_3).noalias() = disp.normalized();
 
-        spdlog::get(m_logName)->info("Particle {0} orientation: [{1:03.3f}, {2:03.3f}, {3:03.3f}]", particle_id + 1,
-                                     m_positions_particles_articulation_init_norm(particle_id_3),
+        spdlog::get(m_logName)->info("Particle {0} initial orientation: [{1:03.3f}, {2:03.3f}, {3:03.3f}]",
+                                     particle_id + 1, m_positions_particles_articulation_init_norm(particle_id_3),
                                      m_positions_particles_articulation_init_norm(particle_id_3 + 1),
                                      m_positions_particles_articulation_init_norm(particle_id_3 + 2));
     }
