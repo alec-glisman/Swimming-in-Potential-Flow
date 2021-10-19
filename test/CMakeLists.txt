@@ -15,9 +15,6 @@ CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/input/data.gsd"
     COPYONLY
     )
 
-# Add catch as an interface library
-ADD_LIBRARY(Catch INTERFACE)
-
 # Add test executable
 ADD_EXECUTABLE(tests 
                testMain.cpp 
@@ -36,6 +33,7 @@ TARGET_LINK_LIBRARIES(
     integrators
     )
 
-ADD_TEST(NAME tests COMMAND tests)
+INCLUDE(CTest)
+INCLUDE(Catch)
 
-ENABLE_TESTING()
+catch_discover_tests(tests)
