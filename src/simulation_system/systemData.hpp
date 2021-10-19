@@ -15,6 +15,7 @@
 
 /* Include all external project dependencies */
 // Logging
+#include <spdlog/fmt/ostr.h>
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
 // eigen3(Linear algebra)
@@ -98,6 +99,13 @@ class systemData : public std::enable_shared_from_this<systemData>
      */
     void
     checkInput();
+
+    /**
+     * @brief Logs private attributes to logfile
+     *
+     */
+    void
+    logData();
 
     /**
      * @brief Computes the orientation (unit vector) of a particle with respect to its locater point
@@ -343,11 +351,6 @@ class systemData : public std::enable_shared_from_this<systemData>
     /// (7M x 1) both linear and quaternion D.o.F. of body locaters
     Eigen::VectorXd m_accelerations_bodies;
 
-    /// (3N x 1) orientations of all particles
-    Eigen::VectorXd m_orientations_particles;
-    /// (4N x 1) quaternions of all particles
-    Eigen::VectorXd m_quaternions_particles;
-
     /// (3N x 1) (linear) positions of all particles
     Eigen::VectorXd m_positions_particles;
     /// (3N x 1) (linear) velocities of all particles
@@ -355,7 +358,12 @@ class systemData : public std::enable_shared_from_this<systemData>
     /// (3N x 1) (linear) accelerations of all particles
     Eigen::VectorXd m_accelerations_particles;
 
-    /// (3N x 1) (linear) initial (normalized) articulation positions of all particles
+    /// (3N x 1) orientations of all particles
+    Eigen::VectorXd m_orientations_particles;
+    /// (4N x 1) quaternions of all particles
+    Eigen::VectorXd m_quaternions_particles;
+
+    /// (3N x 1) (linear) *initial* (normalized) articulation positions of all particles
     Eigen::VectorXd m_positions_particles_articulation_init_norm;
 
     /// (3N x 1) (linear) articulation positions of all particles
