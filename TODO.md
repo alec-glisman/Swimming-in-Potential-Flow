@@ -117,3 +117,10 @@
 - [x] Make kinematic variables in systemData class private
   - [x] Add getter and setter functions
 - [ ] Write WCA potential
+- [ ] Convert Perl scripts to Python
+- [ ] Separate GSDUtil and systemData
+  - [ ] Move GSDUtil creation to engine class
+  - [ ] Move systemData creation to engine class
+    - [ ] Main constructor now only requires the IO path strings
+    - [ ] Make 2nd engine constructor that takes in a pre-made systemData class
+  - [ ] Move GSD return values from systemData to GSDUtil
