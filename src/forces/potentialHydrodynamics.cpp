@@ -4,9 +4,6 @@
 
 #include <potentialHydrodynamics.hpp>
 
-// REVIEW[epic=Debug]: Uncomment line below to prevent all runtime checks from executing in debug
-// #define NO_HYDRO_CHECK
-
 potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
 {
     // save classes
@@ -134,14 +131,14 @@ potentialHydrodynamics::calcParticleDistances()
      * particles \alpha and \beta) */
     for (int i = 0; i < m_num_pair_inter; i++)
     {
-        m_r_ab.col(i).noalias() = m_system->positionsParticles()(Eigen::seqN(3 * m_alphaVec[i], 3));
-        m_r_ab.col(i).noalias() -= m_system->positionsParticles()(Eigen::seqN(3 * m_betaVec[i], 3));
+        m_r_ab.col(i).noalias() = m_system->positionsParticles().segment<3>(3 * m_alphaVec[i]);
+        m_r_ab.col(i).noalias() -= m_system->positionsParticles().segment<3>(3 * m_betaVec[i]);
 
         m_r_mag_ab[i] = m_r_ab.col(i).norm(); //[1]; |r| between 2 particles
 
-#if !defined(NDEBUG) && !defined(NO_HYDRO_CHECKS)
-        spdlog::get(m_logName)->critical("Checking distance between pairs {0} & {1}", m_alphaVec[i], m_betaVec[i]);
-        spdlog::get(m_logName)->critical("Interparticle distance is {0}", m_r_mag_ab[i]);
+#if !defined(NDEBUG)
+        spdlog::get(m_logName)->critical("Checking distance between particle pair [{0}, {1}]: {2:.3f}", m_alphaVec[i],
+                                         m_betaVec[i], m_r_mag_ab[i]);
         spdlog::get(m_logName)->flush();
 #endif
     }
