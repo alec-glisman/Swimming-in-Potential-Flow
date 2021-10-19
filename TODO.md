@@ -87,6 +87,19 @@
   - [x] Rewrite kinematic constraints using quaternions
   - [x] Figure out how to calculate particle positions from body positions simply and with no assumptions.
 
+## Python modules
+
+- [ ] Add doxygen comments to all 5 python files
+- [ ] Add examples to call scripts in the doxygen notation
+- [ ] Create/modify files to input to testing scripts in input directory and give GSD files better names. Also maybe use larger dt
+
+## Code coverage
+
+- [ ] See if `make test` can also run the tests
+- [ ] Find out how to analyze code coverage
+- [ ] Start code coverage with `simulationData` class
+- [ ] Testing class should inherit from parent data class. May need to change private to protected to be able to access them correctly.
+
 ## Tensor module optimization
 
 - [x] move thread-pool and device to engine class
@@ -107,6 +120,7 @@
 
 ## Verifications
 
+- [ ] Move assertions to testing classes
 - [ ] Check that all quaternions obey the unit-norm requirement
 - [ ] Check that the collinear swimmer (isolated) recovers the expected results
   - [ ] Verify collinear constraint upheld for the wall system.
