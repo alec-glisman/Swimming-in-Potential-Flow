@@ -255,6 +255,37 @@ systemData::logData()
                                      m_accelerations_particles(particle_id_3 + 2));
     }
 
+    /* ANCHOR: Output particle *articulation* data */
+    spdlog::get(m_logName)->info("Particle articulation positions:");
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
+    {
+        const int particle_id_3{3 * particle_id};
+        spdlog::get(m_logName)->info("\tParticle {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}]", particle_id + 1,
+                                     m_positions_particles_articulation(particle_id_3),
+                                     m_positions_particles_articulation(particle_id_3 + 1),
+                                     m_positions_particles_articulation(particle_id_3 + 2));
+    }
+
+    spdlog::get(m_logName)->info("Particle articulation velocities:");
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
+    {
+        const int particle_id_3{3 * particle_id};
+        spdlog::get(m_logName)->info("\tParticle {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}]", particle_id + 1,
+                                     m_velocities_particles_articulation(particle_id_3),
+                                     m_velocities_particles_articulation(particle_id_3 + 1),
+                                     m_velocities_particles_articulation(particle_id_3 + 2));
+    }
+
+    spdlog::get(m_logName)->info("Particle articulation accelerations:");
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
+    {
+        const int particle_id_3{3 * particle_id};
+        spdlog::get(m_logName)->info("\tParticle {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}]", particle_id + 1,
+                                     m_accelerations_particles_articulation(particle_id_3),
+                                     m_accelerations_particles_articulation(particle_id_3 + 1),
+                                     m_accelerations_particles_articulation(particle_id_3 + 2));
+    }
+
     /* ANCHOR: Output body data */
     spdlog::get(m_logName)->info("(linear) Body positions:");
     for (int body_id = 0; body_id < m_num_bodies; body_id++)
