@@ -46,8 +46,10 @@ IF(APPLE)  # Build on laptop PC
     MESSAGE(STATUS "${BoldGreen}" "Compiling on MacOS" "${ColourReset}")
 
     SET(CMAKE_MACOSX_RPATH 1)
-    SET(CMAKE_BUILD_RPATH "/opt/intel/oneapi/mkl/latest/lib")
-    SET(CMAKE_BUILD_RPATH "/opt/intel/oneapi/tbb/latest/lib")
+    SET(CMAKE_BUILD_RPATH  
+        ${CMAKE_BUILD_RPATH}
+        "/opt/intel/oneapi/mkl/latest/lib"
+        "/opt/intel/oneapi/tbb/latest/lib")
     
     SET(CMAKE_C_COMPILER /usr/local/bin/gcc-11 CACHE PATH "")
     SET(CMAKE_CXX_COMPILER /usr/local/bin/g++-11 CACHE PATH "")
@@ -252,8 +254,6 @@ IF(ENABLE_TESTING STREQUAL "True" OR CMAKE_BUILD_TYPE STREQUAL "Debug")
     FIND_PACKAGE(Catch2 2.13.6 REQUIRED)
     MESSAGE( STATUS "${Cyan}" "Found: ${Catch2_FOUND}" "${ColourReset}")
     MESSAGE( STATUS "${Cyan}" "Include Dir: ${Catch2_INCLUDE_DIRS}" "${ColourReset}")
-    INCLUDE(CTest)
-    INCLUDE(Catch)
     MESSAGE("")
 
     ADD_SUBDIRECTORY(test)
