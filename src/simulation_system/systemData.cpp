@@ -151,6 +151,9 @@ systemData::initializeData()
 
     spdlog::get(m_logName)->info("Initializing constraints");
     update(single_core_device);
+
+    spdlog::get(m_logName)->info("Initialization complete");
+    spdlog::get(m_logName)->flush();
 }
 
 void
