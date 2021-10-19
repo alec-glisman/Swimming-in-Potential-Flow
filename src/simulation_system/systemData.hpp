@@ -100,11 +100,11 @@ class systemData : public std::enable_shared_from_this<systemData>
     checkInput();
 
     /**
-     * @brief Computes the positions of all particles from given locater positions and body orientations
+     * @brief Computes the orientation (unit vector) of a particle with respect to its locater point
      *
      */
     void
-    positionsParticlesfromBodies();
+    orientationsArticulation();
 
     /**
      * @brief Computes the articulation (linear) positions of the particles relative to their respective locater
@@ -133,6 +133,13 @@ class systemData : public std::enable_shared_from_this<systemData>
      */
     void
     accelerationsArticulation();
+
+    /**
+     * @brief Computes the positions of all particles from given locater positions and body orientations
+     *
+     */
+    void
+    positionsParticlesfromBodies();
 
     /**
      * @brief Computes the Udwadia constraint matrix and vector to uphold the quaternion unitary norm for each body.
@@ -336,8 +343,11 @@ class systemData : public std::enable_shared_from_this<systemData>
     /// (7M x 1) both linear and quaternion D.o.F. of body locaters
     Eigen::VectorXd m_accelerations_bodies;
 
-    /// (4N x 1) quaternions of all particles
+    /// (3N x 1) orientations of all particles
     Eigen::VectorXd m_orientations_particles;
+    /// (4N x 1) quaternions of all particles
+    Eigen::VectorXd m_quaternions_particles;
+
     /// (3N x 1) (linear) positions of all particles
     Eigen::VectorXd m_positions_particles;
     /// (3N x 1) (linear) velocities of all particles
@@ -704,12 +714,12 @@ class systemData : public std::enable_shared_from_this<systemData>
     const Eigen::VectorXd&
     orientationsParticles() const
     {
-        return m_orientations_particles;
+        return m_quaternions_particles;
     }
     void
     setOrientationsParticles(const Eigen::VectorXd& orientations_particles)
     {
-        m_orientations_particles = orientations_particles;
+        m_quaternions_particles = orientations_particles;
     }
 
     const Eigen::VectorXd&

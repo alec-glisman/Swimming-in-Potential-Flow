@@ -65,9 +65,9 @@
   - [x] Move crossProduct matrix function from hydrodynamics
   - [x] `systemData` add function to calculate all inter-particle distances from relevant locater points
   - [x] `systemData` save body number data for each particle
-  - [ ] Save initial position data in systemData class for quaternion rotation (normalized).
-  - [ ] Update integration kinematic calculations with only body components
-    - [ ] Write function to convert body velocities to particle velocities
+  - [x] Save initial position data in systemData class for quaternion rotation (normalized).
+  - [x] Update integration kinematic calculations with only body components
+    - [x] Write function to convert body velocities to particle velocities
     - [x] Write function to convert body accelerations to particle velocities
     - [x] Write function to convert body positions to particle positions
 
@@ -84,8 +84,8 @@
   - [x] Make sure particle positions are updated first, then update systemData, then update potentialHydrodynamics
   - [x] Update linear constraint system such that the only constraint is the quaternion unit norm for each body (systemData).
   - [x] Change 2nd order integration to use body components.
-  - [ ] Rewrite kinematic constraints using quaternions
-  - [ ] Figure out how to calculate particle positions from body positions simply and with no assumptions.
+  - [x] Rewrite kinematic constraints using quaternions
+  - [x] Figure out how to calculate particle positions from body positions simply and with no assumptions.
 
 ## Tensor module optimization
 

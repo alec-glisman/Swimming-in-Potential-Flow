@@ -157,7 +157,7 @@ systemData::checkInput()
 {
     spdlog::get(m_logName)->info("Input checking assertions");
 
-    assert(m_orientations_particles.size() == 4 * m_num_particles &&
+    assert(m_quaternions_particles.size() == 4 * m_num_particles &&
            "Particle orientation (unit quaternions) vector has incorrect length, not 4N.");
     assert(m_positions_particles.size() == 3 * m_num_particles &&
            "Particle position vector has incorrect length, not 3N.");
@@ -192,27 +192,55 @@ systemData::checkInput()
 void
 systemData::update(Eigen::ThreadPoolDevice& device)
 {
-    // NOTE: Articulation functions calculated 1st
+    // NOTE: Internal particle orientation D.o.F. calculated 1st
+    orientationsArticulation();
+
+    // NOTE: Articulation functions calculated 2nd (need m_orientations_particles)
     positionsArticulation();
     velocitiesArticulation();
     accelerationsArticulation();
 
-    // NOTE: Rigid body motion tensors calculated 2nd (need m_positions_particles_articulation)
+    // NOTE: Rigid body motion tensors calculated 3rd (need m_positions_particles_articulation)
     positionsParticlesfromBodies();
     rigidBodyMotionTensors(device);
     gradientChangeOfVariableTensors(device);
 
-    // NOTE: Particle degrees of freedom calculated 3rd (need rbm tensors)
+    // NOTE: Particle degrees of freedom calculated 4th (need rbm tensors)
     convertBody2ParticleDoF(device);
 
-    // NOTE: Udwadia linear system calculated 4th
+    // NOTE: Udwadia linear system calculated 5th
     udwadiaLinearSystem();
 }
 
 void
-systemData::positionsParticlesfromBodies()
+systemData::orientationsArticulation()
 {
-    // TODO
+    m_orientations_particles.setZero();
+
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
+    {
+        if (m_particle_type_id(particle_id) == 1)
+        {
+            continue; // continue to next loop as all elements are zero
+        }
+
+        const int particle_id_3{3 * particle_id};
+        const int body_id_7{7 * m_particle_group_id(particle_id)};
+
+        // Get unit quaternion for body that particle_id is a member of
+        const Eigen::Quaterniond particle_quat(m_positions_bodies.segment<4>(body_id_7 + 3));
+
+        // Rotate particle from initial configuration using unit quaternion
+        Eigen::Quaterniond orient_init;
+        orient_init.w()   = 0.0;
+        orient_init.vec() = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
+
+        const Eigen::Quaterniond orient_rot = particle_quat * orient_init * particle_quat.inverse();
+        assert(abs(orient_rot.w()) < 1e-12 && "0th component of particle orientation vector is not zero");
+
+        // Output rotated orientation
+        m_orientations_particles.segment<3>(particle_id_3).noalias() = orient_rot.vec();
+    }
 }
 
 void
@@ -237,9 +265,11 @@ systemData::positionsArticulation()
             continue; // continue to next loop as all elements are zero
         }
 
-        // Get unit quaternion for body that particle_id is a member of
+        const int particle_id_3{3 * particle_id};
+        const int body_id_7{7 * m_particle_group_id(particle_id)};
 
-        // Calculate rotated position
+        m_positions_particles_articulation.segment<3>(particle_id_3).noalias() =
+            particle_distances(particle_id) * m_orientations_particles.segment<3>(particle_id_3);
     }
 }
 
@@ -252,10 +282,25 @@ systemData::velocitiesArticulation()
     const double v1_mag = m_sys_spec_U0 * cos(m_sys_spec_omega * t_dimensional);
     const double v3_mag = m_sys_spec_U0 * cos(m_sys_spec_omega * t_dimensional + m_sys_spec_phase_shift);
 
+    Eigen::VectorXd particle_velocities(m_num_bodies);
+    particle_velocities << v1_mag, 0.0, v3_mag, -v1_mag, 0.0, -v3_mag;
+
     // Zero and then calculate  m_velocities_particles_articulation
     m_velocities_particles_articulation.setZero();
 
-    // TODO
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
+    {
+        if (m_particle_type_id(particle_id) == 1)
+        {
+            continue; // continue to next loop as all elements are zero
+        }
+
+        const int particle_id_3{3 * particle_id};
+        const int body_id_7{7 * m_particle_group_id(particle_id)};
+
+        m_velocities_particles_articulation.segment<3>(particle_id_3).noalias() =
+            particle_velocities(particle_id) * m_orientations_particles.segment<3>(particle_id_3);
+    }
 }
 
 void
@@ -268,14 +313,40 @@ systemData::accelerationsArticulation()
     const double a3_mag =
         -m_sys_spec_U0 * m_sys_spec_omega * sin(m_sys_spec_omega * t_dimensional + m_sys_spec_phase_shift);
 
+    Eigen::VectorXd particle_accelerations(m_num_bodies);
+    particle_accelerations << a1_mag, 0.0, a3_mag, -a1_mag, 0.0, -a3_mag;
+
     // Zero and then calculate m_accelerations_particles_articulation
     m_accelerations_particles_articulation.setZero();
 
-    // TODO
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
+    {
+        if (m_particle_type_id(particle_id) == 1)
+        {
+            continue; // continue to next loop as all elements are zero
+        }
+
+        const int particle_id_3{3 * particle_id};
+        const int body_id_7{7 * m_particle_group_id(particle_id)};
+
+        m_velocities_particles_articulation.segment<3>(particle_id_3).noalias() =
+            particle_accelerations(particle_id) * m_orientations_particles.segment<3>(particle_id_3);
+    }
 }
 
-/* REVIEW[epic=Change,order=1]: Change udwadiaLinearSystem() for different systems
- */
+void
+systemData::positionsParticlesfromBodies()
+{
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
+    {
+        const int particle_id_3{3 * particle_id};
+        const int body_id_7{7 * m_particle_group_id(particle_id)};
+
+        m_positions_particles.segment<3>(particle_id_3).noalias() =
+            m_positions_bodies.segment<3>(body_id_7) + m_positions_particles_articulation.segment<3>(particle_id_3);
+    }
+}
+
 void
 systemData::udwadiaLinearSystem()
 {
