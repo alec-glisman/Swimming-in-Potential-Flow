@@ -356,7 +356,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::VectorXd m_accelerations_particles;
 
     /// (3N x 1) (linear) initial (normalized) articulation positions of all particles
-    Eigen::VectorXd m_positions_particles_articulation_init_norm; // TODO
+    Eigen::VectorXd m_positions_particles_articulation_init_norm;
 
     /// (3N x 1) (linear) articulation positions of all particles
     Eigen::VectorXd m_positions_particles_articulation;
@@ -388,10 +388,11 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::Tensor<double, 2> m_tens_conv_body_2_part_dof;
 
     /* ANCHOR: Udwadia constraint linear system */
-    /// (M x N) linear operator defining relationship between constraints on @f$ \ddot{\boldsymbol{\xi}} @f$.
+    /// (number_constraints x 7M) linear operator defining relationship between constraints on @f$
+    /// \ddot{\boldsymbol{\xi}} @f$.
     Eigen::MatrixXd m_Udwadia_A;
 
-    /// (M x 1) Result of @f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} @f$
+    /// (number of constraints x 1) Result of @f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} @f$
     Eigen::VectorXd m_Udwadia_b;
     /* !SECTION */
 

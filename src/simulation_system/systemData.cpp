@@ -39,11 +39,16 @@ systemData::initializeData()
     parseGSD();
 
     // initialize D.o.F. parameters
-    m_num_DoF         = 6 * m_num_bodies; // D.o.F. are linear and angular positions of body centers
-    m_num_constraints = m_num_bodies;     // 1 unit quaternion constraint per body
+    spdlog::get(m_logName)->info("Setting D.o.F. parameters");
+    m_num_DoF = 6 * m_num_bodies; // D.o.F. are linear and angular positions of body centers
+    spdlog::get(m_logName)->info("Degrees of freedom: {0}", m_num_DoF);
+    m_num_constraints = m_num_bodies; // 1 unit quaternion constraint per body
+    spdlog::get(m_logName)->info("Number of constraints: {0}", m_num_constraints);
 
     // initialize other integrator parameters
+    spdlog::get(m_logName)->info("Setting integrator parameters");
     m_t0 = m_t;
+    spdlog::get(m_logName)->info("Initial integration time: {0}", m_t0);
 
     // initialize general-use tensors
     m_levi_cevita.setZero();
@@ -90,13 +95,14 @@ systemData::initializeData()
     assert(m_particle_group_id(m_num_particles - 1) == m_num_bodies - 1 && "Particle N must belong to group N");
 
     // initialize kinematic vectors
+    m_orientations_particles                     = Eigen::VectorXd::Zero(3 * m_num_particles);
     m_positions_particles_articulation_init_norm = Eigen::VectorXd::Zero(3 * m_num_particles);
     m_positions_particles_articulation           = Eigen::VectorXd::Zero(3 * m_num_particles);
     m_velocities_particles_articulation          = Eigen::VectorXd::Zero(3 * m_num_particles);
     m_accelerations_particles_articulation       = Eigen::VectorXd::Zero(3 * m_num_particles);
 
     // initialize constraint matrices
-    m_Udwadia_A = Eigen::MatrixXd::Zero(m_num_constraints, m_num_DoF);
+    m_Udwadia_A = Eigen::MatrixXd::Zero(m_num_constraints, m_num_DoF + m_num_constraints);
     m_Udwadia_b = Eigen::VectorXd::Zero(m_num_constraints);
 
     // initialize rigid body motion matrices
@@ -237,17 +243,19 @@ systemData::orientationsArticulation()
 
         // Get unit quaternion for body that particle_id is a member of
         const Eigen::Quaterniond particle_quat(m_positions_bodies.segment<4>(body_id_7 + 3));
+        assert(abs(particle_quat.norm() - 1.0) < 1e-12 && "Quaternion is not unitary");
 
         // Rotate particle from initial configuration using unit quaternion
         Eigen::Quaterniond orient_init;
         orient_init.w()   = 0.0;
         orient_init.vec() = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
 
-        const Eigen::Quaterniond orient_rot = particle_quat * orient_init * particle_quat.inverse();
+        const Eigen::Quaterniond orient_rot    = particle_quat * orient_init * particle_quat.inverse();
+        const Eigen::Vector3d    orient_rot_3d = orient_rot.vec();
         assert(abs(orient_rot.w()) < 1e-12 && "0th component of particle orientation vector is not zero");
 
         // Output rotated orientation
-        m_orientations_particles.segment<3>(particle_id_3).noalias() = orient_rot.vec();
+        m_orientations_particles.segment<3>(particle_id_3).noalias() = orient_rot_3d;
     }
 }
 
@@ -261,7 +269,7 @@ systemData::positionsArticulation()
     const double r3_mag =
         (m_sys_spec_U0 / m_sys_spec_omega) * sin(m_sys_spec_omega * t_dimensional + m_sys_spec_phase_shift);
 
-    Eigen::VectorXd particle_distances(m_num_bodies);
+    Eigen::VectorXd particle_distances(m_num_particles);
     particle_distances << r1_mag, 0.0, r3_mag, r1_mag, 0.0, r3_mag;
 
     m_positions_particles_articulation.setZero();
@@ -290,7 +298,7 @@ systemData::velocitiesArticulation()
     const double v1_mag = m_sys_spec_U0 * cos(m_sys_spec_omega * t_dimensional);
     const double v3_mag = m_sys_spec_U0 * cos(m_sys_spec_omega * t_dimensional + m_sys_spec_phase_shift);
 
-    Eigen::VectorXd particle_velocities(m_num_bodies);
+    Eigen::VectorXd particle_velocities(m_num_particles);
     particle_velocities << v1_mag, 0.0, v3_mag, -v1_mag, 0.0, -v3_mag;
 
     // Zero and then calculate  m_velocities_particles_articulation
@@ -321,7 +329,7 @@ systemData::accelerationsArticulation()
     const double a3_mag =
         -m_sys_spec_U0 * m_sys_spec_omega * sin(m_sys_spec_omega * t_dimensional + m_sys_spec_phase_shift);
 
-    Eigen::VectorXd particle_accelerations(m_num_bodies);
+    Eigen::VectorXd particle_accelerations(m_num_particles);
     particle_accelerations << a1_mag, 0.0, a3_mag, -a1_mag, 0.0, -a3_mag;
 
     // Zero and then calculate m_accelerations_particles_articulation
