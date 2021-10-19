@@ -86,7 +86,6 @@
   - [x] Change 2nd order integration to use body components.
   - [x] Rewrite kinematic constraints using quaternions
   - [x] Figure out how to calculate particle positions from body positions simply and with no assumptions.
-  - [ ] Add method to integrator class to use image system convention for updating kinematics (only integrate 1/2 DoF and set other by constraint)
 
 ## Tensor module optimization
 
