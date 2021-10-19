@@ -176,12 +176,12 @@ systemData::update(Eigen::ThreadPoolDevice& device)
     velocitiesArticulation();
     accelerationsArticulation();
 
-    // NOTE: Rigid body motion tensors calculated 2nd
+    // NOTE: Rigid body motion tensors calculated 2nd (need m_positions_particles_articulation)
     positionsParticlesfromBodies();
     rigidBodyMotionTensors(device);
     gradientChangeOfVariableTensors(device);
 
-    // NOTE: Particle degrees of freedom calculated 3rd
+    // NOTE: Particle degrees of freedom calculated 3rd (need rbm tensors)
     convertBody2ParticleDoF(device);
 
     // NOTE: Udwadia linear system calculated 4th
