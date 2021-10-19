@@ -82,6 +82,8 @@ systemData::initializeData()
     {
         const double body_num            = (m_particle_type_id.segment(0, particle_id + 1).array() == 1).count() - 1;
         m_particle_group_id(particle_id) = std::round(body_num); // convert data type
+
+        spdlog::get(m_logName)->info("Particle {0} group id: {1}}", particle_id + 1, m_particle_group_id(particle_id));
     }
     assert(m_particle_group_id(0) == 0 && "Particle 0 must belong to group 0");
     assert(m_particle_group_id(m_num_particles - 1) == m_num_bodies - 1 && "Particle N must belong to group N");
@@ -128,6 +130,11 @@ systemData::initializeData()
             m_positions_particles.segment<3>(particle_id_3) - m_positions_bodies.segment<3>(body_id_7);
 
         m_positions_particles_articulation_init_norm.segment<3>(particle_id_3).noalias() = disp.normalized();
+
+        spdlog::get(m_logName)->info("Particle {0} orientation: [{1:03.3f}, {2:03.3f}, {3:03.3f}]", particle_id + 1,
+                                     m_positions_particles_articulation_init_norm(particle_id_3),
+                                     m_positions_particles_articulation_init_norm(particle_id_3 + 1),
+                                     m_positions_particles_articulation_init_norm(particle_id_3 + 2));
     }
 
     // initialize constraints
