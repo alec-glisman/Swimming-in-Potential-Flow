@@ -152,6 +152,9 @@ systemData::initializeData()
     spdlog::get(m_logName)->info("Initializing constraints");
     update(single_core_device);
 
+    // output data
+    logData();
+
     spdlog::get(m_logName)->info("Initialization complete");
     spdlog::get(m_logName)->flush();
 }
@@ -204,6 +207,81 @@ systemData::checkInput()
 
     assert(m_wca_epsilon >= 0.0 && "WCA_epsilon must be non-negative.");
     assert(m_wca_sigma >= 0.0 && "WCA_sigma must be non-negative.");
+}
+
+void
+systemData::logData()
+{
+    /* ANCHOR: Output simulation data */
+    spdlog::get(m_logName)->info("Starting logdata()");
+    spdlog::get(m_logName)->info("time: {0}", m_t);
+
+    /* ANCHOR: Output particle data */
+    spdlog::get(m_logName)->info("Particle orientations:");
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
+    {
+        const int particle_id_3{3 * particle_id};
+        spdlog::get(m_logName)->info("\tParticle {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}]", particle_id + 1,
+                                     m_orientations_particles(particle_id_3),
+                                     m_orientations_particles(particle_id_3 + 1),
+                                     m_orientations_particles(particle_id_3 + 2));
+    }
+
+    spdlog::get(m_logName)->info("Particle positions:");
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
+    {
+        const int particle_id_3{3 * particle_id};
+        spdlog::get(m_logName)->info("\tParticle {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}]", particle_id + 1,
+                                     m_positions_particles(particle_id_3), m_positions_particles(particle_id_3 + 1),
+                                     m_positions_particles(particle_id_3 + 2));
+    }
+
+    spdlog::get(m_logName)->info("Particle velocities:");
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
+    {
+        const int particle_id_3{3 * particle_id};
+        spdlog::get(m_logName)->info("\tParticle {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}]", particle_id + 1,
+                                     m_velocities_particles(particle_id_3), m_velocities_particles(particle_id_3 + 1),
+                                     m_velocities_particles(particle_id_3 + 2));
+    }
+
+    spdlog::get(m_logName)->info("Particle accelerations:");
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
+    {
+        const int particle_id_3{3 * particle_id};
+        spdlog::get(m_logName)->info("\tParticle {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}]", particle_id + 1,
+                                     m_accelerations_particles(particle_id_3),
+                                     m_accelerations_particles(particle_id_3 + 1),
+                                     m_accelerations_particles(particle_id_3 + 2));
+    }
+
+    /* ANCHOR: Output body data */
+    spdlog::get(m_logName)->info("(linear) Body positions:");
+    for (int body_id = 0; body_id < m_num_bodies; body_id++)
+    {
+        const int body_id_7{7 * body_id};
+        spdlog::get(m_logName)->info("\tBody {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}]", body_id + 1,
+                                     m_positions_bodies(body_id_7), m_positions_bodies(body_id_7 + 1),
+                                     m_positions_bodies(body_id_7 + 2));
+    }
+    spdlog::get(m_logName)->info("(linear) Body velocities:");
+    for (int body_id = 0; body_id < m_num_bodies; body_id++)
+    {
+        const int body_id_7{7 * body_id};
+        spdlog::get(m_logName)->info("\tBody {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}]", body_id + 1,
+                                     m_velocities_bodies(body_id_7), m_velocities_bodies(body_id_7 + 1),
+                                     m_velocities_bodies(body_id_7 + 2));
+    }
+    spdlog::get(m_logName)->info("(linear) Body accelerations:");
+    for (int body_id = 0; body_id < m_num_bodies; body_id++)
+    {
+        const int body_id_7{7 * body_id};
+        spdlog::get(m_logName)->info("\tBody {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}]", body_id + 1,
+                                     m_accelerations_bodies(body_id_7), m_accelerations_bodies(body_id_7 + 1),
+                                     m_accelerations_bodies(body_id_7 + 2));
+    }
+
+    spdlog::get(m_logName)->info("Ending logdata()");
 }
 
 void
