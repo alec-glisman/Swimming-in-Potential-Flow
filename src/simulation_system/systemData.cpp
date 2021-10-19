@@ -273,7 +273,7 @@ systemData::positionsArticulation()
         (m_sys_spec_U0 / m_sys_spec_omega) * sin(m_sys_spec_omega * t_dimensional + m_sys_spec_phase_shift);
 
     Eigen::VectorXd particle_distances(m_num_particles);
-    particle_distances << r1_mag, 0.0, r3_mag, r1_mag, 0.0, r3_mag;
+    particle_distances << 0.0, r1_mag, r3_mag, 0.0, r1_mag, r3_mag;
 
     m_positions_particles_articulation.setZero();
 
@@ -302,7 +302,7 @@ systemData::velocitiesArticulation()
     const double v3_mag = m_sys_spec_U0 * cos(m_sys_spec_omega * t_dimensional + m_sys_spec_phase_shift);
 
     Eigen::VectorXd particle_velocities(m_num_particles);
-    particle_velocities << v1_mag, 0.0, v3_mag, -v1_mag, 0.0, -v3_mag;
+    particle_velocities << 0.0, v1_mag, v3_mag, 0.0, v1_mag, v3_mag;
 
     // Zero and then calculate  m_velocities_particles_articulation
     m_velocities_particles_articulation.setZero();
@@ -319,6 +319,12 @@ systemData::velocitiesArticulation()
 
         m_velocities_particles_articulation.segment<3>(particle_id_3).noalias() =
             particle_velocities(particle_id) * m_orientations_particles.segment<3>(particle_id_3);
+
+        // Image system: flip x-y components, leave z unchanged
+        if (particle_id >= (m_num_particles / 2))
+        {
+            m_velocities_particles_articulation.segment<2>(particle_id_3) *= -1;
+        }
     }
 }
 
@@ -333,7 +339,7 @@ systemData::accelerationsArticulation()
         -m_sys_spec_U0 * m_sys_spec_omega * sin(m_sys_spec_omega * t_dimensional + m_sys_spec_phase_shift);
 
     Eigen::VectorXd particle_accelerations(m_num_particles);
-    particle_accelerations << a1_mag, 0.0, a3_mag, -a1_mag, 0.0, -a3_mag;
+    particle_accelerations << 0.0, a1_mag, a3_mag, 0.0, a1_mag, a3_mag;
 
     // Zero and then calculate m_accelerations_particles_articulation
     m_accelerations_particles_articulation.setZero();
@@ -350,6 +356,12 @@ systemData::accelerationsArticulation()
 
         m_velocities_particles_articulation.segment<3>(particle_id_3).noalias() =
             particle_accelerations(particle_id) * m_orientations_particles.segment<3>(particle_id_3);
+
+        // Image system: flip x-y components, leave z unchanged
+        if (particle_id >= (m_num_particles / 2))
+        {
+            m_velocities_particles_articulation.segment<2>(particle_id_3) *= -1;
+        }
     }
 }
 
