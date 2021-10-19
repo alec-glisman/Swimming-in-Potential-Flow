@@ -141,7 +141,7 @@ potentialHydrodynamics::calcParticleDistances()
 
 #if !defined(NDEBUG) && !defined(NO_HYDRO_CHECKS)
         spdlog::get(m_logName)->critical("Checking distance between pairs {0} & {1}", m_alphaVec[i], m_betaVec[i]);
-        spdlog::get(m_logName)->critical("Interparticle distance is", m_r_mag_ab[i]);
+        spdlog::get(m_logName)->critical("Interparticle distance is {0}", m_r_mag_ab[i]);
         spdlog::get(m_logName)->flush();
 #endif
     }
