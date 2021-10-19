@@ -87,8 +87,6 @@ systemData::initializeData()
     assert(m_particle_group_id(m_num_particles - 1) == m_num_bodies - 1 && "Particle N must belong to group N");
 
     // initialize kinematic vectors
-    m_displacements_particles = Eigen::VectorXd::Zero(3 * m_num_particles);
-
     m_positions_particles_articulation     = Eigen::VectorXd::Zero(3 * m_num_particles);
     m_velocities_particles_articulation    = Eigen::VectorXd::Zero(3 * m_num_particles);
     m_accelerations_particles_articulation = Eigen::VectorXd::Zero(3 * m_num_particles);
@@ -191,21 +189,6 @@ systemData::update(Eigen::ThreadPoolDevice& device)
 }
 
 void
-systemData::particleLocaterDistances()
-{
-    m_displacements_particles.setZero();
-
-    for (int j = 0; j < m_num_particles; j++)
-    {
-        const int particle_id_3{3 * j};
-        const int body_id_7{7 * m_particle_group_id(j)};
-
-        m_displacements_particles.segment<3>(particle_id_3).noalias() =
-            m_positions_particles.segment<3>(particle_id_3) - m_positions_bodies.segment<3>(body_id_7);
-    }
-}
-
-void
 systemData::positionsParticlesfromBodies()
 {
     // TODO
@@ -294,7 +277,7 @@ systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
 
         // skew-symmetric matrix representation of (negative) cross product
         Eigen::Matrix3d n_dr_cross;
-        crossProdMat(-m_displacements_particles.segment<3>(particle_id_3), n_dr_cross);
+        crossProdMat(-m_positions_particles_articulation.segment<3>(particle_id_3), n_dr_cross);
 
         // rigid body motion connectivity tensor elements
         m_rbm_conn.block<3, 3>(body_id_6, particle_id_3).noalias()     = m_I3;       // translation-translation couple
@@ -344,7 +327,7 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
 
         // (4 vector) displacement of particle from locater point moment arm
         Eigen::Vector4d dr         = Eigen::Vector4d::Zero(4, 1);
-        dr.segment<3>(1).noalias() = m_displacements_particles.segment<3>(particle_id_3);
+        dr.segment<3>(1).noalias() = m_positions_particles_articulation.segment<3>(particle_id_3);
 
         // quaternion product representation of particle displacement (transpose)
         Eigen::Matrix<double, 3, 4> P_j_tilde_T;

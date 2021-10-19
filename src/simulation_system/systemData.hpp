@@ -100,14 +100,6 @@ class systemData : public std::enable_shared_from_this<systemData>
     checkInput();
 
     /**
-     * @brief Computes the distance from each particle to its respective body's locater point.
-     *
-     * @todo remove this function (and m_displacements_particles) in favor of the output from positionsArticulation()
-     */
-    void
-    particleLocaterDistances();
-
-    /**
      * @brief Computes the positions of all particles from given locater positions and body orientations
      *
      */
@@ -352,9 +344,6 @@ class systemData : public std::enable_shared_from_this<systemData>
     Eigen::VectorXd m_velocities_particles;
     /// (3N x 1) (linear) accelerations of all particles
     Eigen::VectorXd m_accelerations_particles;
-
-    /// (3N x 1) (linear) displacements of all particles from respective locater points
-    Eigen::VectorXd m_displacements_particles;
 
     /// (3N x 1) (linear) articulation positions of all particles
     Eigen::VectorXd m_positions_particles_articulation;
