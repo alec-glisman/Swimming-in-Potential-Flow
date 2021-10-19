@@ -463,13 +463,13 @@ systemData::accelerationsArticulation()
         const int particle_id_3{3 * particle_id};
         const int body_id_7{7 * m_particle_group_id(particle_id)};
 
-        m_velocities_particles_articulation.segment<3>(particle_id_3).noalias() =
+        m_accelerations_particles_articulation.segment<3>(particle_id_3).noalias() =
             particle_accelerations(particle_id) * m_orientations_particles.segment<3>(particle_id_3);
 
         // Image system: flip x-y components, leave z unchanged
         if (particle_id >= (m_num_particles / 2))
         {
-            m_velocities_particles_articulation.segment<2>(particle_id_3) *= -1;
+            m_accelerations_particles_articulation.segment<2>(particle_id_3) *= -1;
         }
     }
 }
