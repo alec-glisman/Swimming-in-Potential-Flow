@@ -34,14 +34,11 @@ Testing
 docs/latex/**
 # !SECTION
 
-
 # SECTION PYTHON
 # Python caches
 *.pyc
 *.pkl
 # !SECTION (PYTHON)
-
-
 
 # SECTION: CMAKE
 # Build directories
@@ -49,8 +46,6 @@ cmake-*
 build/*
 build*
 # !SECTION (CMAKE)
-
-
 
 # SECTION: C++
 # Prerequisites
@@ -87,8 +82,6 @@ build*
 *.app
 # !SECTION (C++)
 
-
-
 # SECTION: CACHES
 # clangd language server files
 .clangd/*
@@ -107,8 +100,6 @@ build*
 *.DS_Store
 # !SECTION (CACHES)
 
-
-
 # SECTION: EXCEPTIONS
 # Save everything in directories below
 !input/**
@@ -124,6 +115,7 @@ test/output/**
 
 # VSCode files
 !.vscode/*
+.vscode/perl-lang/**
 
 # CMAKE files
 !**/CMakeLists.txt
