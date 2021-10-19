@@ -34,7 +34,7 @@ Further information can be found at the end of this readme.
 `requirements`: [Files and scripts relevant for loading C++, Perl, and Python dependencies.](requirements/README.md)  
 `scripts`: Perl scripts to run many simulations simultaneously and analyze the results.  
 `src`: [C++ code for the simulation.](src/README.md)  
-`tests`: [C++ code containing unit tests for simulation.](tests/README.md)
+`test`: [C++ code containing unit test for simulation.](test/README.md)
 
 ## Data I/O
 

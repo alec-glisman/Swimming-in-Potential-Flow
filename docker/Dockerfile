@@ -178,7 +178,7 @@ COPY input /bodies-in-potential-flow/input
 COPY python /bodies-in-potential-flow/python
 COPY scripts /bodies-in-potential-flow/scripts
 COPY src /bodies-in-potential-flow/src
-COPY tests /bodies-in-potential-flow/tests
+COPY test /bodies-in-potential-flow/test
 COPY CMakeLists.txt /bodies-in-potential-flow/CMakeLists.txt
 
 # Make output directories for data IO from container

@@ -32,7 +32,7 @@ use warnings;                      # give warnings
 
 # Compiler
 my $build          = "Debug";                  # CMake built type, OPTIONS: Release, Debug, Profile
-my $enableTesting  = "True";                   # Unit tests, OPTIONS: (False) OFF, (True) ON
+my $enableTesting  = "True";                   # Unit test, OPTIONS: (False) OFF, (True) ON
 my $enableCoverage = "False";                   # Testing Coverage, OPTIONS: (False) OFF, (True) ON
 my $buildDir       = "build";                  # Title whatever you want build folder to be
 my $generator      = "Unix Makefiles";         # Only tested with this option
@@ -103,12 +103,12 @@ system( "make -j" )
     and die "Building project failed: $!";
 
 
-# Run Catch2 unit tests
-chdir "tests"
+# Run Catch2 unit test
+chdir "test"
     or die "Could not move to build directory: $!";
 
 if (${enableTesting} eq "True") {
-    system( "./tests" ) 
+    system( "./test" ) 
             and die "Unit test failed: $!";
 }
 
