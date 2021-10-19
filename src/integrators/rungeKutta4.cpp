@@ -50,8 +50,8 @@ rungeKutta4::integrateSecondOrder(Eigen::ThreadPoolDevice& device)
     /* Step 1: k1 = f( y(t_0),  t_0 ),
      * initial conditions at current step */
     const double          t1{m_system->t()};
-    const Eigen::VectorXd v1 = m_system->velocitiesParticles();
-    const Eigen::VectorXd x1 = m_system->positionsParticles();
+    const Eigen::VectorXd v1 = m_system->velocitiesBodies();
+    const Eigen::VectorXd x1 = m_system->positionsBodies();
 
     Eigen::VectorXd a1 = Eigen::VectorXd::Zero(m_3M);
     accelerationUpdate(t1, a1, device);
@@ -172,5 +172,5 @@ rungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
     // calculate accelerations
     Eigen::VectorXd Q_total = Q;
     Q_total.noalias() += Q_con;
-    acc.noalias() = m_potHydro->mTotal().llt().solve(Q_total);
+    acc.noalias() = m_potHydro->mTilde().llt().solve(Q_total);
 }
