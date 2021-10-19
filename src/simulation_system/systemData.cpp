@@ -204,10 +204,22 @@ systemData::positionsArticulation()
     const double r3_mag =
         (m_sys_spec_U0 / m_sys_spec_omega) * sin(m_sys_spec_omega * t_dimensional + m_sys_spec_phase_shift);
 
-    // Zero and then calculate m_accelerations_particles_articulation
+    Eigen::VectorXd particle_distances(m_num_bodies);
+    particle_distances << r1_mag, 0.0, r3_mag, r1_mag, 0.0, r3_mag;
+
     m_positions_particles_articulation.setZero();
 
-    // TODO
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
+    {
+        if (m_particle_type_id(particle_id) == 1)
+        {
+            continue; // continue to next loop as all elements are zero
+        }
+
+        // Get unit quaternion for body particle_id is part of
+
+        // Calculate rotated position
+    }
 }
 
 void
@@ -268,8 +280,7 @@ systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
     {
         if (m_particle_type_id(particle_id) == 1)
         {
-            // Continue to next loop as all elements are zero
-            continue;
+            continue; // continue to next loop as all elements are zero
         }
 
         const int particle_id_3{3 * particle_id};
@@ -317,8 +328,7 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
     {
         if (m_particle_type_id(particle_id) == 1)
         {
-            // Continue to next loop as all elements are zero
-            continue;
+            continue; // continue to next loop as all elements are zero
         }
 
         const int particle_id_3{3 * particle_id};

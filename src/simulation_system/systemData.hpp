@@ -345,6 +345,9 @@ class systemData : public std::enable_shared_from_this<systemData>
     /// (3N x 1) (linear) accelerations of all particles
     Eigen::VectorXd m_accelerations_particles;
 
+    /// (3N x 1) (linear) initial (normalized) articulation positions of all particles
+    Eigen::VectorXd m_positions_particles_articulation_init_norm; // TODO
+
     /// (3N x 1) (linear) articulation positions of all particles
     Eigen::VectorXd m_positions_particles_articulation;
     /// (3N x 1) (linear) articulation velocities of all particles
