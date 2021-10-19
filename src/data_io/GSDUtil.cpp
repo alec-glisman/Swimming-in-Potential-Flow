@@ -383,15 +383,19 @@ GSDUtil::readParticles()
         // only fill for locater particles
         if (m_system->particleTypeId()(i) == 1)
         {
-            positions_bodies.segment<3>(7 * body_count).noalias() = m_system->positionsParticles().segment<3>(3 * i);
+            const int body_id_7{7 * body_count};
+            const int particle_id_3{3 * i};
 
-            positions_bodies.segment<4>(7 * body_count + 3).noalias() =
-                m_system->orientationsParticles().segment<4>(3 * i);
+            positions_bodies.segment<3>(body_id_7).noalias() = m_system->positionsParticles().segment<3>(particle_id_3);
 
-            velocities_bodies.segment<3>(7 * body_count).noalias() = m_system->velocitiesParticles().segment<3>(3 * i);
+            positions_bodies.segment<4>(body_id_7 + 3).noalias() =
+                m_system->orientationsParticles().segment<4>(particle_id_3);
 
-            accelerations_bodies.segment<3>(7 * body_count).noalias() =
-                m_system->accelerationsParticles().segment<3>(3 * i);
+            velocities_bodies.segment<3>(body_id_7).noalias() =
+                m_system->velocitiesParticles().segment<3>(particle_id_3);
+
+            accelerations_bodies.segment<3>(body_id_7).noalias() =
+                m_system->accelerationsParticles().segment<3>(particle_id_3);
 
             body_count++;
         }
