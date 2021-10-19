@@ -59,24 +59,23 @@ var NAVTREE =
       ] ],
       [ "Files", "md_src_README.html#autotoc_md33", null ]
     ] ],
-    [ "Directory: tests", "md_tests_README.html", null ],
     [ "Directory: python", "md_python_README.html", [
-      [ "Subdirectory: analysis", "md_python_README.html#autotoc_md36", null ],
-      [ "Subdirectory: initial_configurations", "md_python_README.html#autotoc_md37", null ],
-      [ "Files", "md_python_README.html#autotoc_md38", null ]
+      [ "Subdirectory: analysis", "md_python_README.html#autotoc_md35", null ],
+      [ "Subdirectory: initial_configurations", "md_python_README.html#autotoc_md36", null ],
+      [ "Files", "md_python_README.html#autotoc_md37", null ]
     ] ],
     [ "Directory: profile", "md_profile_README.html", [
-      [ "Subdirectory (submodule): <a href=\"https://github.com/brendangregg/FlameGraph\">FlameGraph</a>", "md_profile_README.html#autotoc_md40", null ],
-      [ "Subdirectory: Linux", "md_profile_README.html#autotoc_md41", null ],
-      [ "Subdirectory: MacOS", "md_profile_README.html#autotoc_md42", null ]
+      [ "Subdirectory (submodule): <a href=\"https://github.com/brendangregg/FlameGraph\">FlameGraph</a>", "md_profile_README.html#autotoc_md39", null ],
+      [ "Subdirectory: Linux", "md_profile_README.html#autotoc_md40", null ],
+      [ "Subdirectory: MacOS", "md_profile_README.html#autotoc_md41", null ]
     ] ],
     [ "Project Development Progress", "md_TODO.html", [
-      [ "Get project running", "md_TODO.html#autotoc_md44", null ],
-      [ "Updated hydrodynamics", "md_TODO.html#autotoc_md45", null ],
-      [ "Tensor module optimization", "md_TODO.html#autotoc_md46", null ],
-      [ "Bugs to Fix", "md_TODO.html#autotoc_md47", null ],
-      [ "Verifications", "md_TODO.html#autotoc_md48", null ],
-      [ "Additional features", "md_TODO.html#autotoc_md49", null ]
+      [ "Get project running", "md_TODO.html#autotoc_md43", null ],
+      [ "Updated hydrodynamics", "md_TODO.html#autotoc_md44", null ],
+      [ "Tensor module optimization", "md_TODO.html#autotoc_md45", null ],
+      [ "Bugs to Fix", "md_TODO.html#autotoc_md46", null ],
+      [ "Verifications", "md_TODO.html#autotoc_md47", null ],
+      [ "Additional features", "md_TODO.html#autotoc_md48", null ]
     ] ],
     [ "Todo List", "todo.html", null ],
     [ "Altering Swimmer Design List", "review.html", null ],
@@ -89,9 +88,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "GSDUtilPy_8py.html",
-"classsystemData.html#a6de128a9bc5cb36f3346fff29ff94c00",
-"gsd_8h.html#a58654880dd98b2bc32e429810b7d2623",
-"helper__math_8h.html#abc9bcbeeb5a34af30746f5b0d186d050"
+"classsystemData.html#a6bd16f2dd99236594ce5b12cd2cab57a",
+"gsd_8h.html#a5813a2a637516567a2b42dc745ec1118a6e5c1ccf3040cebc0dbcf562fd4291cb",
+"helper__math_8h.html#abb3a3e03a44492443c19dcb4154da9c1"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

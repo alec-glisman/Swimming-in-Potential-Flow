@@ -109,7 +109,7 @@ $(document).ready(function(){initNavTree('classpotentialHydrodynamics.html','');
 <div class="dynheader">
 Collaboration diagram for potentialHydrodynamics:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classpotentialHydrodynamics__coll__graph.svg" width="768" height="3428"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classpotentialHydrodynamics__coll__graph.svg" width="768" height="3516"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 <table class="memberdecls">
@@ -908,11 +908,11 @@ Here is the caller graph for this function:</div>
 <div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <span class="keyword">const</span> Eigen::array&lt;int, 3&gt; flip_first_two_indices({1, 0, 2}); <span class="comment">// (i, j, k) --&gt; (j, i, k)</span></div>
 <div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160; </div>
 <div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    <span class="comment">// get kinematic tensors from systemData class</span></div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    Eigen::Tensor&lt;double, 1&gt; xi_dot  = <a class="code" href="helper__eigenTensorConversion_8hpp.html#a3a32f7de3f099464192073a93b34d580">TensorCast</a>(<a class="code" href="classpotentialHydrodynamics.html#a4210023c2fcc2353222744fcc6809e38">m_system</a>-&gt;velocitiesBodies());</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    Eigen::Tensor&lt;double, 1&gt; xi_ddot = <a class="code" href="helper__eigenTensorConversion_8hpp.html#a3a32f7de3f099464192073a93b34d580">TensorCast</a>(<a class="code" href="classpotentialHydrodynamics.html#a4210023c2fcc2353222744fcc6809e38">m_system</a>-&gt;accelerationsBodies());</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    Eigen::Tensor&lt;double, 1&gt; xi_dot  = <a class="code" href="helper__eigenTensorConversion_8hpp.html#a3a32f7de3f099464192073a93b34d580">TensorCast</a>(<a class="code" href="classpotentialHydrodynamics.html#a4210023c2fcc2353222744fcc6809e38">m_system</a>-&gt;velocitiesBodies(), <a class="code" href="classpotentialHydrodynamics.html#aafd05344e40a330767c235e9e6d8d129">m_7M</a>);</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    Eigen::Tensor&lt;double, 1&gt; xi_ddot = <a class="code" href="helper__eigenTensorConversion_8hpp.html#a3a32f7de3f099464192073a93b34d580">TensorCast</a>(<a class="code" href="classpotentialHydrodynamics.html#a4210023c2fcc2353222744fcc6809e38">m_system</a>-&gt;accelerationsBodies(), <a class="code" href="classpotentialHydrodynamics.html#aafd05344e40a330767c235e9e6d8d129">m_7M</a>);</div>
 <div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160; </div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    Eigen::Tensor&lt;double, 1&gt; V     = <a class="code" href="helper__eigenTensorConversion_8hpp.html#a3a32f7de3f099464192073a93b34d580">TensorCast</a>(<a class="code" href="classpotentialHydrodynamics.html#a4210023c2fcc2353222744fcc6809e38">m_system</a>-&gt;velocitiesParticlesArticulation());</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    Eigen::Tensor&lt;double, 1&gt; V_dot = <a class="code" href="helper__eigenTensorConversion_8hpp.html#a3a32f7de3f099464192073a93b34d580">TensorCast</a>(<a class="code" href="classpotentialHydrodynamics.html#a4210023c2fcc2353222744fcc6809e38">m_system</a>-&gt;accelerationsParticlesArticulation());</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    Eigen::Tensor&lt;double, 1&gt; V     = <a class="code" href="helper__eigenTensorConversion_8hpp.html#a3a32f7de3f099464192073a93b34d580">TensorCast</a>(<a class="code" href="classpotentialHydrodynamics.html#a4210023c2fcc2353222744fcc6809e38">m_system</a>-&gt;velocitiesParticlesArticulation(), <a class="code" href="classpotentialHydrodynamics.html#ad6cd57564cc2fafa2ff106e2a4c2147c">m_3N</a>);</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    Eigen::Tensor&lt;double, 1&gt; V_dot = <a class="code" href="helper__eigenTensorConversion_8hpp.html#a3a32f7de3f099464192073a93b34d580">TensorCast</a>(<a class="code" href="classpotentialHydrodynamics.html#a4210023c2fcc2353222744fcc6809e38">m_system</a>-&gt;accelerationsParticlesArticulation(), <a class="code" href="classpotentialHydrodynamics.html#ad6cd57564cc2fafa2ff106e2a4c2147c">m_3N</a>);</div>
 <div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160; </div>
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    <span class="comment">// calculate 2nd order kinematic tensors</span></div>
 <div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    Eigen::Tensor&lt;double, 2&gt; V_V = Eigen::Tensor&lt;double, 2&gt;(<a class="code" href="classpotentialHydrodynamics.html#ad6cd57564cc2fafa2ff106e2a4c2147c">m_3N</a>, <a class="code" href="classpotentialHydrodynamics.html#ad6cd57564cc2fafa2ff106e2a4c2147c">m_3N</a>);</div>
@@ -1992,7 +1992,7 @@ Here is the caller graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="classpotentialHydrodynamics.html">potentialHydrodynamics</a></li>
-    <li class="footer">Generated on Mon Oct 18 2021 14:36:19 for Bodies in Potential Flow by
+    <li class="footer">Generated on Tue Oct 19 2021 10:12:59 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

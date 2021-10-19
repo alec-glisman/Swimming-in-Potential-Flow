@@ -95,7 +95,7 @@ $(document).ready(function(){initNavTree('md_TODO.html',''); initResizable(); })
 <div class="title">Project Development Progress </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md44"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md43"></a>
 Get project running</h1>
 <ul>
 <li>[x] Decide on input data schema<ul>
@@ -128,7 +128,7 @@ Get project running</h1>
 <li>[x] Perl script to run many simulations</li>
 <li>[x] Python analysis script to analyze data and generate plots</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md45"></a>
+<h1><a class="anchor" id="autotoc_md44"></a>
 Updated hydrodynamics</h1>
 <ul>
 <li>Add quaternions to simulation<ul>
@@ -169,9 +169,9 @@ Updated hydrodynamics</h1>
 <li>[x] Move crossProduct matrix function from hydrodynamics</li>
 <li>[x] <code><a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a></code> add function to calculate all inter-particle distances from relevant locater points</li>
 <li>[x] <code><a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a></code> save body number data for each particle</li>
-<li>[ ] Save initial position data in <a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a> class for quaternion rotation (normalized).</li>
-<li>[ ] Update integration kinematic calculations with only body components<ul>
-<li>[ ] Write function to convert body velocities to particle velocities</li>
+<li>[x] Save initial position data in <a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a> class for quaternion rotation (normalized).</li>
+<li>[x] Update integration kinematic calculations with only body components<ul>
+<li>[x] Write function to convert body velocities to particle velocities</li>
 <li>[x] Write function to convert body accelerations to particle velocities</li>
 <li>[x] Write function to convert body positions to particle positions</li>
 </ul>
@@ -191,11 +191,12 @@ Updated hydrodynamics</h1>
 <li>[x] Make sure particle positions are updated first, then update <a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a>, then update <a class="el" href="classpotentialHydrodynamics.html" title="Computes hydrodynamic tensors (mass, forces) on a finite number of spheres in potential flow.">potentialHydrodynamics</a></li>
 <li>[x] Update linear constraint system such that the only constraint is the quaternion unit norm for each body (<a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a>).</li>
 <li>[x] Change 2nd order integration to use body components.</li>
-<li>[ ] Figure out how to calculate particle positions from body positions simply and with no assumptions.</li>
+<li>[x] Rewrite kinematic constraints using quaternions</li>
+<li>[x] Figure out how to calculate particle positions from body positions simply and with no assumptions.</li>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md46"></a>
+<h1><a class="anchor" id="autotoc_md45"></a>
 Tensor module optimization</h1>
 <ul>
 <li>[x] move thread-pool and device to engine class</li>
@@ -212,7 +213,7 @@ Tensor module optimization</h1>
 </li>
 <li>[ ] Remove all setters/getters in <a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a> that are unused</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md47"></a>
+<h1><a class="anchor" id="autotoc_md46"></a>
 Bugs to Fix</h1>
 <ul>
 <li>Figure out why python configuration script is not outputting correct data<ul>
@@ -221,7 +222,7 @@ Bugs to Fix</h1>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md48"></a>
+<h1><a class="anchor" id="autotoc_md47"></a>
 Verifications</h1>
 <ul>
 <li>[ ] Check that all quaternions obey the unit-norm requirement</li>
@@ -231,14 +232,25 @@ Verifications</h1>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md49"></a>
+<h1><a class="anchor" id="autotoc_md48"></a>
 Additional features</h1>
 <ul>
 <li>[x] Make kinematic variables in <a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a> class private<ul>
 <li>[x] Add getter and setter functions</li>
 </ul>
 </li>
-<li>[ ] Write WCA potential </li>
+<li>[ ] Write WCA potential</li>
+<li>[ ] Convert Perl scripts to Python</li>
+<li>[ ] Separate <a class="el" href="classGSDUtil.html" title="Wrapper class for gsd.h to load data from input GSD file into systemData class.">GSDUtil</a> and <a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a><ul>
+<li>[ ] Move <a class="el" href="classGSDUtil.html" title="Wrapper class for gsd.h to load data from input GSD file into systemData class.">GSDUtil</a> creation to engine class</li>
+<li>[ ] Move <a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a> creation to engine class<ul>
+<li>[ ] Main constructor now only requires the IO path strings</li>
+<li>[ ] Make 2nd engine constructor that takes in a pre-made <a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a> class</li>
+</ul>
+</li>
+<li>[ ] Move GSD return values from <a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a> to <a class="el" href="classGSDUtil.html" title="Wrapper class for gsd.h to load data from input GSD file into systemData class.">GSDUtil</a> </li>
+</ul>
+</li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
@@ -246,7 +258,7 @@ Additional features</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Oct 18 2021 14:36:19 for Bodies in Potential Flow by
+    <li class="footer">Generated on Tue Oct 19 2021 10:12:59 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

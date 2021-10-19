@@ -62,18 +62,18 @@
 <path fill="none" stroke="midnightblue" d="M441.47,-67C431.59,-67 421.52,-67 411.97,-67"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="441.67,-70.5 451.67,-67 441.67,-63.5 441.67,-70.5"/>
 </g>
-<!-- Node13 -->
-<g id="node13" class="node">
-<title>Node13</title>
-<g id="a_node13"><a xlink:href="gsd_8h.html#adb92d5142812c19bf4ee33cbde439131" target="_top" xlink:title=" ">
+<!-- Node12 -->
+<g id="node12" class="node">
+<title>Node12</title>
+<g id="a_node12"><a xlink:href="gsd_8h.html#adb92d5142812c19bf4ee33cbde439131" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="322,-19.5 322,-38.5 394,-38.5 394,-19.5 322,-19.5"/>
 <text text-anchor="middle" x="358" y="-26.5" font-family="Helvetica,sans-Serif" font-size="10.00">gsd_upgrade</text>
 </a>
 </g>
 </g>
-<!-- Node2&#45;&gt;Node13 -->
-<g id="edge12" class="edge">
-<title>Node2&#45;&gt;Node13</title>
+<!-- Node2&#45;&gt;Node12 -->
+<g id="edge11" class="edge">
+<title>Node2&#45;&gt;Node12</title>
 <path fill="none" stroke="midnightblue" d="M460.45,-54.87C438.89,-49.37 413.84,-42.99 394.03,-37.93"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="459.85,-58.33 470.4,-57.41 461.58,-51.55 459.85,-58.33"/>
 </g>
@@ -137,18 +137,18 @@
 <path fill="none" stroke="midnightblue" d="M294.25,-58.94C274.6,-56.42 253.86,-53.76 237.76,-51.69"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="294.04,-62.45 304.4,-60.25 294.93,-55.5 294.04,-62.45"/>
 </g>
-<!-- Node11 -->
-<g id="node11" class="node">
-<title>Node11</title>
-<g id="a_node11"><a xlink:href="gsd_8h.html#a02ac7984034069d508b1c7ccbe702bac" target="_top" xlink:title=" ">
+<!-- Node10 -->
+<g id="node10" class="node">
+<title>Node10</title>
+<g id="a_node10"><a xlink:href="gsd_8h.html#a02ac7984034069d508b1c7ccbe702bac" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="171.5,-0.5 171.5,-19.5 244.5,-19.5 244.5,-0.5 171.5,-0.5"/>
 <text text-anchor="middle" x="208" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">gsd_truncate</text>
 </a>
 </g>
 </g>
-<!-- Node6&#45;&gt;Node11 -->
-<g id="edge10" class="edge">
-<title>Node6&#45;&gt;Node11</title>
+<!-- Node6&#45;&gt;Node10 -->
+<g id="edge9" class="edge">
+<title>Node6&#45;&gt;Node10</title>
 <path fill="none" stroke="midnightblue" d="M315.76,-54.15C310.4,-52.22 305.04,-50.15 300,-48 283.36,-40.89 280.6,-36.2 264,-29 256.12,-25.58 247.41,-22.34 239.29,-19.53"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="314.7,-57.49 325.3,-57.46 316.99,-50.87 314.7,-57.49"/>
 </g>
@@ -156,44 +156,29 @@
 <g id="node9" class="node">
 <title>Node9</title>
 <g id="a_node9"><a xlink:href="classGSDUtil.html#a2567bdb7f5952a76984552e0591fa330" target="_top" xlink:title="Construct a new GSDUtil object.">
-<polygon fill="none" stroke="black" points="10,-76.5 10,-95.5 106,-95.5 106,-76.5 10,-76.5"/>
-<text text-anchor="middle" x="58" y="-83.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::GSDUtil</text>
+<polygon fill="none" stroke="black" points="10,-38.5 10,-57.5 106,-57.5 106,-38.5 10,-38.5"/>
+<text text-anchor="middle" x="58" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::GSDUtil</text>
 </a>
 </g>
 </g>
 <!-- Node8&#45;&gt;Node9 -->
 <g id="edge8" class="edge">
 <title>Node8&#45;&gt;Node9</title>
-<path fill="none" stroke="midnightblue" d="M168.64,-57.85C146.3,-63.58 118.27,-70.78 96.14,-76.46"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="169.65,-61.2 178.46,-55.33 167.91,-54.42 169.65,-61.2"/>
-</g>
-<!-- Node10 -->
-<g id="node10" class="node">
-<title>Node10</title>
-<g id="a_node10"><a xlink:href="testsSimulationBuild_8cpp.html#ac2b102ba50512565940601db33c64cf2" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="black" points="20.5,-38.5 20.5,-57.5 95.5,-57.5 95.5,-38.5 20.5,-38.5"/>
-<text text-anchor="middle" x="58" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">TEST_CASE</text>
-</a>
-</g>
-</g>
-<!-- Node8&#45;&gt;Node10 -->
-<g id="edge9" class="edge">
-<title>Node8&#45;&gt;Node10</title>
-<path fill="none" stroke="midnightblue" d="M168.26,-48C145.8,-48 117.68,-48 95.6,-48"/>
+<path fill="none" stroke="midnightblue" d="M168.35,-48C149.29,-48 126.16,-48 106.08,-48"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="168.46,-51.5 178.46,-48 168.46,-44.5 168.46,-51.5"/>
 </g>
-<!-- Node12 -->
-<g id="node12" class="node">
-<title>Node12</title>
-<g id="a_node12"><a xlink:href="classGSDUtil.html#a78b796cb5093b0aa6f5d2573658fcca1" target="_top" xlink:title="Removes all frames and data from GSD file. This returns GSD to a &quot;new file&quot; state.">
+<!-- Node11 -->
+<g id="node11" class="node">
+<title>Node11</title>
+<g id="a_node11"><a xlink:href="classGSDUtil.html#a78b796cb5093b0aa6f5d2573658fcca1" target="_top" xlink:title="Removes all frames and data from GSD file. This returns GSD to a &quot;new file&quot; state.">
 <polygon fill="none" stroke="black" points="0,-0.5 0,-19.5 116,-19.5 116,-0.5 0,-0.5"/>
 <text text-anchor="middle" x="58" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::truncateGSD</text>
 </a>
 </g>
 </g>
-<!-- Node11&#45;&gt;Node12 -->
-<g id="edge11" class="edge">
-<title>Node11&#45;&gt;Node12</title>
+<!-- Node10&#45;&gt;Node11 -->
+<g id="edge10" class="edge">
+<title>Node10&#45;&gt;Node11</title>
 <path fill="none" stroke="midnightblue" d="M161.14,-10C146.91,-10 131.04,-10 116.14,-10"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="161.17,-13.5 171.17,-10 161.17,-6.5 161.17,-13.5"/>
 </g>
