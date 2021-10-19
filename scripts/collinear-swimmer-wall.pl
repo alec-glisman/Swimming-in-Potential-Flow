@@ -31,8 +31,8 @@ use warnings;                      # give warnings
 # SECTION: Input variables that user must specify before running script
 
 # Compiler
-my $build          = "Debug";                  # CMake built type, OPTIONS: Release, Debug, Profile
-my $enableTesting  = "True";                   # Unit test, OPTIONS: (False) OFF, (True) ON
+my $build          = "Release";                 # CMake built type, OPTIONS: Release, Debug, Profile
+my $enableTesting  = "True";                    # Unit test, OPTIONS: (False) OFF, (True) ON
 my $enableCoverage = "False";                   # Testing Coverage, OPTIONS: (False) OFF, (True) ON
 my $buildDir       = "build";                  # Title whatever you want build folder to be
 my $generator      = "Unix Makefiles";         # Only tested with this option
