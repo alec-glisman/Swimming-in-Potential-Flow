@@ -20,8 +20,8 @@ ADD_LIBRARY(Catch INTERFACE)
 
 # Add test executable
 ADD_EXECUTABLE(tests 
-               testsMain.cpp 
-               testsSimulationBuild.cpp)
+               testMain.cpp 
+               testSimulationBuild.cpp)
 
 TARGET_LINK_LIBRARIES(
     tests
