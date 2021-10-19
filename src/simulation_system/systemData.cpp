@@ -237,7 +237,7 @@ systemData::positionsArticulation()
             continue; // continue to next loop as all elements are zero
         }
 
-        // Get unit quaternion for body particle_id is part of
+        // Get unit quaternion for body that particle_id is a member of
 
         // Calculate rotated position
     }
