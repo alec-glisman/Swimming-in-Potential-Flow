@@ -326,11 +326,11 @@ potentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     const Eigen::array<int, 3> flip_first_two_indices({1, 0, 2}); // (i, j, k) --> (j, i, k)
 
     // get kinematic tensors from systemData class
-    Eigen::Tensor<double, 1> xi_dot  = TensorCast(m_system->velocitiesBodies());
-    Eigen::Tensor<double, 1> xi_ddot = TensorCast(m_system->accelerationsBodies());
+    Eigen::Tensor<double, 1> xi_dot  = TensorCast(m_system->velocitiesBodies(), m_7M);
+    Eigen::Tensor<double, 1> xi_ddot = TensorCast(m_system->accelerationsBodies(), m_7M);
 
-    Eigen::Tensor<double, 1> V     = TensorCast(m_system->velocitiesParticlesArticulation());
-    Eigen::Tensor<double, 1> V_dot = TensorCast(m_system->accelerationsParticlesArticulation());
+    Eigen::Tensor<double, 1> V     = TensorCast(m_system->velocitiesParticlesArticulation(), m_3N);
+    Eigen::Tensor<double, 1> V_dot = TensorCast(m_system->accelerationsParticlesArticulation(), m_3N);
 
     // calculate 2nd order kinematic tensors
     Eigen::Tensor<double, 2> V_V = Eigen::Tensor<double, 2>(m_3N, m_3N);
