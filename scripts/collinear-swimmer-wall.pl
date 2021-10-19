@@ -108,8 +108,8 @@ chdir "test"
     or die "Could not move to build directory: $!";
 
 if (${enableTesting} eq "True") {
-    system( "./test" ) 
-            and die "Unit test failed: $!";
+    system( "./tests" ) 
+            and die "Unit tests failed: $!";
 }
 
 # Change back to main directory
