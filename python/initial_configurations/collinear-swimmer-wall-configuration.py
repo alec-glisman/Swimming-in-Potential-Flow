@@ -3,9 +3,7 @@
 __author__ = "Alec Glisman"
 
 Example:
-    python3 python/initial_configurations/" . "collinear-swimmer-wall-configuration.py \
-        --GSD-path="test/input/data.gsd" --dt=1e-2 --R-avg=4.0 --Z-height=6.0 \
-        --phase-angle=-1.57079632679e+0 --U0=2.0 --omega=1.0
+    python3 python/initial_configurations collinear-swimmer-wall-configuration.py --GSD-path=data.gsd --dt=1e-2 --R-avg=4.0 --Z-height=6.0 --phase-angle=-1.57079632679e+0 --U0=2.0 --omega=1.0
 """
 
 # SECTION: Dependencies
