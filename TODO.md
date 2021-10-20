@@ -89,8 +89,8 @@
 
 ## Python modules
 
-- [ ] Add doxygen comments to all 5 python files
-- [ ] Add examples to call scripts in the doxygen notation
+- [x] Add doxygen comments to all 5 python files
+- [x] Add examples to call scripts in the doxygen notation
 - [ ] Create/modify files to input to testing scripts in input directory and give GSD files better names. Also maybe use larger dt
 
 ## Code coverage
