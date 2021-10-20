@@ -92,7 +92,7 @@ class GSDUtilPy:
         wca_epsilon = np.array([wca_epsilon], dtype=np.double)
         wca_sigma = np.array([wca_sigma], dtype=np.double)
 
-        image_system = np.array([image_system], dtype=bool)
+        image_system = np.array([image_system], dtype=np.int32)
 
         # Save data
         self.snapshot.log['integrator/dt'] = dt

@@ -3,7 +3,7 @@
 __author__ = "Alec Glisman"
 
 Example:
-    python3 python/initial_configurations collinear-swimmer-wall-configuration.py --GSD-path=data.gsd --dt=1e-2 --R-avg=4.0 --Z-height=6.0 --phase-angle=-1.57079632679e+0 --U0=2.0 --omega=1.0
+    python3 python/initial_configurations/collinear-swimmer-wall-configuration.py --GSD-path=data.gsd --dt=1e-6 --R-avg=4.0 --Z-height=6.0 --phase-angle=-1.57079632679e+0 --U0=2.0 --omega=1.0 --image-system=1
 """
 
 # SECTION: Dependencies
@@ -161,7 +161,8 @@ if __name__ == "__main__":
     phase_angle = np.double(options.u_phase_angle)
     U0 = np.double(options.u_U0)
     omega = np.double(options.u_omega)
-    image_system = bool(options.u_image_system)
+    # REVIEW: {1: image system, 0: regular system}
+    image_system = int(options.u_image_system)
 
     epsilon = (U0 / omega) / R_avg
     tau = (2.0 * np.pi) / omega

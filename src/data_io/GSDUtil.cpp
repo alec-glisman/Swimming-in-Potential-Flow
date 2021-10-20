@@ -254,11 +254,12 @@ GSDUtil::readParameters()
     spdlog::get(m_logName)->info("wca_sigma : {0}", wca_sigma);
     assert(wca_sigma == m_system->wcaSigma() && "wca_sigma not properly set");
 
-    spdlog::get(m_logName)->info("GSD parsing image_sys");
-    bool image_system{false};
-    return_bool = readChunk(&image_system, m_frame, "log/parameters/image_system", 1);
+    spdlog::get(m_logName)->info("GSD parsing image_system");
+    int image_system_int{-1};
+    return_bool = readChunk(&image_system_int, m_frame, "log/parameters/image_system", 4);
     m_system->setReturnBool(return_bool);
     checkGSDReturn();
+    const bool image_system{image_system_int == 1};
     m_system->setImageSystem(image_system);
     spdlog::get(m_logName)->info("image_sys : {0}", image_system);
     assert(image_system == m_system->imageSystem() && "image_sys not properly set");
