@@ -43,6 +43,7 @@
         "hoomd",
         "horz",
         "installdeps",
+        "ints",
         "ipykernel",
         "irrotational",
         "isclose",

@@ -91,10 +91,10 @@
 
 - [x] Add doxygen comments to all 5 python files
 - [x] Add examples to call scripts in the doxygen notation
-- [ ] Create/modify files to input to testing scripts in input directory and give GSD files better names. Also maybe use larger dt
-- [ ] Change image_sys var
-  - [ ] C++: change parsing to type int and then convert to bool after parsing
-  - [ ] Python: change type to integer as well
+- [x] Create/modify files to input to testing scripts in input directory and give GSD files better names. Also maybe use larger dt
+- [x] Change image_sys var
+  - [x] C++: change parsing to type int and then convert to bool after parsing
+  - [x] Python: change type to integer as well
 
 ## Code coverage
 
