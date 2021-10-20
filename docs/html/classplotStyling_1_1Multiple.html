@@ -100,8 +100,10 @@ $(document).ready(function(){initNavTree('classplotStyling_1_1Multiple.html','')
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="plotStyling_8py_source.html#l00565">565</a> of file <a class="el" href="plotStyling_8py_source.html">plotStyling.py</a>.</p>
+<div class="textblock"><p>Helper class for LaTeX formatting. </p>
+<dl class="section user"><dt>References</dt><dd><a href="https://stackoverflow.com/a/53586826/13215572">https://stackoverflow.com/a/53586826/13215572</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="plotStyling_8py_source.html#l00742">742</a> of file <a class="el" href="plotStyling_8py_source.html">plotStyling.py</a>.</p>
 </div><div class="dynheader">
 Collaboration diagram for plotStyling.Multiple:</div>
 <div class="dyncontent">
@@ -165,13 +167,13 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="plotStyling_8py_source.html#l00567">567</a> of file <a class="el" href="plotStyling_8py_source.html">plotStyling.py</a>.</p>
-<div class="fragment"><div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;    <span class="keyword">def </span>__init__(self, denominator=2, number=np.pi, latex=r&#39;\pi&#39;):</div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160; </div>
-<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;        self.denominator = denominator</div>
-<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;        self.number = number</div>
-<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;        self.latex = latex</div>
-<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160; </div>
+<p class="definition">Definition at line <a class="el" href="plotStyling_8py_source.html#l00744">744</a> of file <a class="el" href="plotStyling_8py_source.html">plotStyling.py</a>.</p>
+<div class="fragment"><div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;        self.latex = latex</div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160; </div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;    <span class="keyword">def </span>locator(self):</div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;        <span class="keywordflow">return</span> plt.MultipleLocator(self.number / self.denominator)</div>
+<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160; </div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;    <span class="keyword">def </span>formatter(self):</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -192,12 +194,12 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="plotStyling_8py_source.html#l00573">573</a> of file <a class="el" href="plotStyling_8py_source.html">plotStyling.py</a>.</p>
-<div class="fragment"><div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;    <span class="keyword">def </span>locator(self):</div>
-<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;        <span class="keywordflow">return</span> plt.MultipleLocator(self.number / self.denominator)</div>
-<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160; </div>
+<p class="definition">Definition at line <a class="el" href="plotStyling_8py_source.html#l00750">750</a> of file <a class="el" href="plotStyling_8py_source.html">plotStyling.py</a>.</p>
+<div class="fragment"><div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;        <span class="keywordflow">return</span> plt.FuncFormatter(<a class="code" href="namespaceplotStyling.html#a3b2ba8616eda02341c67ce92b602edfa">multiple_formatter</a>(self.denominator, self.number, self.latex))</div>
+<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160; </div>
+<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;<span class="comment"># !SECTION</span></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="plotStyling_8py_source.html#l00569">plotStyling.Multiple.denominator</a>, and <a class="el" href="plotStyling_8py_source.html#l00570">plotStyling.Multiple.number</a>.</p>
+<p class="reference">References <a class="el" href="plotStyling_8py_source.html#l00746">plotStyling.Multiple.denominator</a>, and <a class="el" href="plotStyling_8py_source.html#l00747">plotStyling.Multiple.number</a>.</p>
 
 </div>
 </div>
@@ -217,13 +219,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="plotStyling_8py_source.html#l00576">576</a> of file <a class="el" href="plotStyling_8py_source.html">plotStyling.py</a>.</p>
-<div class="fragment"><div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;    <span class="keyword">def </span>formatter(self):</div>
-<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;        <span class="keywordflow">return</span> plt.FuncFormatter(<a class="code" href="namespaceplotStyling.html#a3b2ba8616eda02341c67ce92b602edfa">multiple_formatter</a>(self.denominator, self.number, self.latex))</div>
-<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160; </div>
-<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;<span class="comment"># !SECTION</span></div>
-</div><!-- fragment -->
-<p class="reference">References <a class="el" href="plotStyling_8py_source.html#l00569">plotStyling.Multiple.denominator</a>, <a class="el" href="plotStyling_8py_source.html#l00571">plotStyling.Multiple.latex</a>, <a class="el" href="plotStyling_8py_source.html#l00522">plotStyling.multiple_formatter()</a>, and <a class="el" href="plotStyling_8py_source.html#l00570">plotStyling.Multiple.number</a>.</p>
+<p class="definition">Definition at line <a class="el" href="plotStyling_8py_source.html#l00753">753</a> of file <a class="el" href="plotStyling_8py_source.html">plotStyling.py</a>.</p>
+<div class="fragment"></div><!-- fragment -->
+<p class="reference">References <a class="el" href="plotStyling_8py_source.html#l00746">plotStyling.Multiple.denominator</a>, <a class="el" href="plotStyling_8py_source.html#l00748">plotStyling.Multiple.latex</a>, <a class="el" href="plotStyling_8py_source.html#l00674">plotStyling.multiple_formatter()</a>, and <a class="el" href="plotStyling_8py_source.html#l00747">plotStyling.Multiple.number</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -245,9 +243,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="plotStyling_8py_source.html#l00569">569</a> of file <a class="el" href="plotStyling_8py_source.html">plotStyling.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="plotStyling_8py_source.html#l00746">746</a> of file <a class="el" href="plotStyling_8py_source.html">plotStyling.py</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="plotStyling_8py_source.html#l00576">plotStyling.Multiple.formatter()</a>, and <a class="el" href="plotStyling_8py_source.html#l00573">plotStyling.Multiple.locator()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="plotStyling_8py_source.html#l00753">plotStyling.Multiple.formatter()</a>, and <a class="el" href="plotStyling_8py_source.html#l00750">plotStyling.Multiple.locator()</a>.</p>
 
 </div>
 </div>
@@ -263,9 +261,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="plotStyling_8py_source.html#l00570">570</a> of file <a class="el" href="plotStyling_8py_source.html">plotStyling.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="plotStyling_8py_source.html#l00747">747</a> of file <a class="el" href="plotStyling_8py_source.html">plotStyling.py</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="plotStyling_8py_source.html#l00576">plotStyling.Multiple.formatter()</a>, and <a class="el" href="plotStyling_8py_source.html#l00573">plotStyling.Multiple.locator()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="plotStyling_8py_source.html#l00753">plotStyling.Multiple.formatter()</a>, and <a class="el" href="plotStyling_8py_source.html#l00750">plotStyling.Multiple.locator()</a>.</p>
 
 </div>
 </div>
@@ -281,9 +279,9 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="plotStyling_8py_source.html#l00571">571</a> of file <a class="el" href="plotStyling_8py_source.html">plotStyling.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="plotStyling_8py_source.html#l00748">748</a> of file <a class="el" href="plotStyling_8py_source.html">plotStyling.py</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="plotStyling_8py_source.html#l00576">plotStyling.Multiple.formatter()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="plotStyling_8py_source.html#l00753">plotStyling.Multiple.formatter()</a>.</p>
 
 </div>
 </div>
@@ -292,12 +290,12 @@ Here is the call graph for this function:</div>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="anamespaceplotStyling_html_a3b2ba8616eda02341c67ce92b602edfa"><div class="ttname"><a href="namespaceplotStyling.html#a3b2ba8616eda02341c67ce92b602edfa">plotStyling.multiple_formatter</a></div><div class="ttdeci">def multiple_formatter(denominator=2, number=np.pi, latex=r'\pi')</div><div class="ttdef"><b>Definition:</b> <a href="plotStyling_8py_source.html#l00522">plotStyling.py:522</a></div></div>
+<div class="ttc" id="anamespaceplotStyling_html_a3b2ba8616eda02341c67ce92b602edfa"><div class="ttname"><a href="namespaceplotStyling.html#a3b2ba8616eda02341c67ce92b602edfa">plotStyling.multiple_formatter</a></div><div class="ttdeci">def multiple_formatter(denominator=2, number=np.pi, latex=r'\pi')</div><div class="ttdoc">Get LaTeX in axis labels of plots.</div><div class="ttdef"><b>Definition:</b> <a href="plotStyling_8py_source.html#l00674">plotStyling.py:674</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceplotStyling.html">plotStyling</a></li><li class="navelem"><a class="el" href="classplotStyling_1_1Multiple.html">Multiple</a></li>
-    <li class="footer">Generated on Tue Oct 19 2021 10:12:59 for Bodies in Potential Flow by
+    <li class="footer">Generated on Tue Oct 19 2021 20:50:24 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

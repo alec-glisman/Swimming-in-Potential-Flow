@@ -26,6 +26,7 @@ var collinear_swimmer_wall_configuration_8py =
     [ "phase_angle", "collinear-swimmer-wall-configuration_8py.html#a09bc5accb5e5ee05fda74cde71589254", null ],
     [ "U0", "collinear-swimmer-wall-configuration_8py.html#a840d2d5fc1d230fcc4cad3790963957b", null ],
     [ "omega", "collinear-swimmer-wall-configuration_8py.html#afdd822921933552c470939bb60f4ae1d", null ],
+    [ "image_system", "collinear-swimmer-wall-configuration_8py.html#a8d05e51de588209935b9570cd7f16a7b", null ],
     [ "epsilon", "collinear-swimmer-wall-configuration_8py.html#a1ba3ea4ea1cc1e7ec033ac0713a01680", null ],
     [ "tau", "collinear-swimmer-wall-configuration_8py.html#a02186abd4f14eaa03641249e186960c1", null ]
 ];

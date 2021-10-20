@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title=" ">
+<g id="a_node1"><a xlink:title="Get LaTeX in axis labels of plots.">
 <polygon fill="#bfbfbf" stroke="black" points="177,-0.5 177,-30.5 276,-30.5 276,-0.5 177,-0.5"/>
 <text text-anchor="start" x="185" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">plotStyling.multiple</text>
 <text text-anchor="middle" x="226.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">_formatter</text>

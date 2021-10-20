@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title=" ">
+<g id="a_node1"><a xlink:title="Removes issue with times character in mathTex output of plots.">
 <polygon fill="#bfbfbf" stroke="black" points="194,-63.5 194,-93.5 320,-93.5 320,-63.5 194,-63.5"/>
 <text text-anchor="start" x="202" y="-81.5" font-family="Helvetica,sans-Serif" font-size="10.00">plotStyling.PlotStyling.fix</text>
 <text text-anchor="middle" x="257" y="-70.5" font-family="Helvetica,sans-Serif" font-size="10.00">_unicode_chars</text>
@@ -21,7 +21,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classplotStyling_1_1PlotStyling.html#a04d7b01c0a39c9749118441a35554923" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="classplotStyling_1_1PlotStyling.html#a04d7b01c0a39c9749118441a35554923" target="_top" xlink:title="Draws a curve from input data on the current plt figure.">
 <polygon fill="none" stroke="black" points="9,-126 9,-145 149,-145 149,-126 9,-126"/>
 <text text-anchor="middle" x="79" y="-133" font-family="Helvetica,sans-Serif" font-size="10.00">plotStyling.PlotStyling.curve</text>
 </a>
@@ -36,7 +36,7 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="classplotStyling_1_1PlotStyling.html#ae9dad8a775b78d990054ce69ab8bff44" target="_top" xlink:title=" ">
+<g id="a_node3"><a xlink:href="classplotStyling_1_1PlotStyling.html#ae9dad8a775b78d990054ce69ab8bff44" target="_top" xlink:title="Saves the current plt figure as an image.">
 <polygon fill="none" stroke="black" points="0,-88 0,-107 158,-107 158,-88 0,-88"/>
 <text text-anchor="middle" x="79" y="-95" font-family="Helvetica,sans-Serif" font-size="10.00">plotStyling.PlotStyling.save_plot</text>
 </a>
@@ -51,7 +51,7 @@
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="classplotStyling_1_1PlotStyling.html#a80a5368cd8edc6ada4f8aff47c02bbac" target="_top" xlink:title=" ">
+<g id="a_node4"><a xlink:href="classplotStyling_1_1PlotStyling.html#a80a5368cd8edc6ada4f8aff47c02bbac" target="_top" xlink:title="Draws a scatter from input data on the current plt figure.">
 <polygon fill="none" stroke="black" points="6,-50 6,-69 152,-69 152,-50 6,-50"/>
 <text text-anchor="middle" x="79" y="-57" font-family="Helvetica,sans-Serif" font-size="10.00">plotStyling.PlotStyling.scatter</text>
 </a>
@@ -66,7 +66,7 @@
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
-<g id="a_node5"><a xlink:href="classplotStyling_1_1PlotStyling.html#a9ac60643dc06c24e2287342c431f0f1e" target="_top" xlink:title=" ">
+<g id="a_node5"><a xlink:href="classplotStyling_1_1PlotStyling.html#a9ac60643dc06c24e2287342c431f0f1e" target="_top" xlink:title="Draws a scatter and connecting dashed lines from input data on the current plt figure.">
 <polygon fill="none" stroke="black" points="6,-0.5 6,-30.5 152,-30.5 152,-0.5 6,-0.5"/>
 <text text-anchor="start" x="14" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">plotStyling.PlotStyling.scatter</text>
 <text text-anchor="middle" x="79" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">_dashed</text>

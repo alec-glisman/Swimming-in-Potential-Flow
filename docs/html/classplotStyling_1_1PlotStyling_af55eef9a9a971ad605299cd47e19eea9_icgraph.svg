@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title=" ">
+<g id="a_node1"><a xlink:title="Suppresses console output of function calls (used for eps no transparent background issue)">
 <polygon fill="#bfbfbf" stroke="black" points="194,-0.5 194,-30.5 349,-30.5 349,-0.5 194,-0.5"/>
 <text text-anchor="start" x="202" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">plotStyling.PlotStyling.suppress</text>
 <text text-anchor="middle" x="271.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">_stdout</text>
@@ -21,7 +21,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classplotStyling_1_1PlotStyling.html#ae9dad8a775b78d990054ce69ab8bff44" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="classplotStyling_1_1PlotStyling.html#ae9dad8a775b78d990054ce69ab8bff44" target="_top" xlink:title="Saves the current plt figure as an image.">
 <polygon fill="none" stroke="black" points="0,-6 0,-25 158,-25 158,-6 0,-6"/>
 <text text-anchor="middle" x="79" y="-13" font-family="Helvetica,sans-Serif" font-size="10.00">plotStyling.PlotStyling.save_plot</text>
 </a>

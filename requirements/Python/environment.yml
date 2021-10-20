@@ -3,6 +3,7 @@ channels:
   - defaults
   - conda-forge
   - intel
+  - chen
 dependencies:
   - pylint
   - autopep8

@@ -8,6 +8,7 @@
         "!**/Modules/**": true
     },
     "cSpell.words": [
+        "amsbsy",
         "amsfonts",
         "amsmath",
         "amssymb",

@@ -1,6 +1,8 @@
 <map id="rungeKutta4::integrate" name="rungeKutta4::integrate">
-<area shape="rect" id="node1" title="Public function to call internal numerical Runge Kutta integration functions." alt="" coords="5,13,156,39"/>
-<area shape="rect" id="node2" href="$classrungeKutta4.html#a1c2b8361774957efcf5c6fa5a34f86af" title="2nd order Runge&#45;Kutta 4th order integration. Integrates known acceleration body components into veloc..." alt="" coords="204,5,399,47"/>
-<area shape="rect" id="node3" href="$classrungeKutta4.html#a0770bf5087a218dfb6f8b67c1f2d83c2" title="Helper function for integrateSecondOrder()." alt="" coords="447,5,617,47"/>
-<area shape="rect" id="node4" href="$classrungeKutta4.html#af8d44cd795c66d601274a8db5bf37b97" title="Calculates the body acceleration components given the constraints established by the Udwadia linear s..." alt="" coords="665,13,853,39"/>
+<area shape="rect" id="node1" title="Public function to call internal numerical Runge Kutta integration functions." alt="" coords="5,56,156,83"/>
+<area shape="rect" id="node2" href="$classrungeKutta4.html#a1c2b8361774957efcf5c6fa5a34f86af" title="2nd order Runge&#45;Kutta 4th order integration. Integrates known acceleration body components into veloc..." alt="" coords="204,49,399,90"/>
+<area shape="rect" id="node3" href="$classrungeKutta4.html#a1d0bdd2f2a30a970ae66577e1d0b6a42" title="Helper function for integrateSecondOrder()." alt="" coords="447,49,617,90"/>
+<area shape="rect" id="node4" href="$classrungeKutta4.html#a8142c4494ec260fd5676735baca12891" title="Replaces 2nd 1/2 of body acceleration D.o.F. with image of 1st 1/2 assuming the reflection plane is ." alt="" coords="675,5,863,32"/>
+<area shape="rect" id="node5" href="$classrungeKutta4.html#a8fb1d493e6e66a276e6b447f5bc04151" title="Replaces 2nd 1/2 of body position and velocity D.o.F. with image of 1st 1/2 assuming the reflection p..." alt="" coords="665,56,872,83"/>
+<area shape="rect" id="node6" href="$classrungeKutta4.html#af8d44cd795c66d601274a8db5bf37b97" title="Calculates the body acceleration components given the constraints established by the Udwadia linear s..." alt="" coords="675,107,863,133"/>
 </map>

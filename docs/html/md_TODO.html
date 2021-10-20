@@ -95,7 +95,7 @@ $(document).ready(function(){initNavTree('md_TODO.html',''); initResizable(); })
 <div class="title">Project Development Progress </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md43"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md44"></a>
 Get project running</h1>
 <ul>
 <li>[x] Decide on input data schema<ul>
@@ -128,7 +128,7 @@ Get project running</h1>
 <li>[x] Perl script to run many simulations</li>
 <li>[x] Python analysis script to analyze data and generate plots</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md44"></a>
+<h1><a class="anchor" id="autotoc_md45"></a>
 Updated hydrodynamics</h1>
 <ul>
 <li>Add quaternions to simulation<ul>
@@ -196,7 +196,22 @@ Updated hydrodynamics</h1>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md45"></a>
+<h1><a class="anchor" id="autotoc_md46"></a>
+Python modules</h1>
+<ul>
+<li>[ ] Add doxygen comments to all 5 python files</li>
+<li>[ ] Add examples to call scripts in the doxygen notation</li>
+<li>[ ] Create/modify files to input to testing scripts in input directory and give GSD files better names. Also maybe use larger dt</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md47"></a>
+Code coverage</h1>
+<ul>
+<li>[ ] See if <code>make test</code> can also run the tests</li>
+<li>[ ] Find out how to analyze code coverage</li>
+<li>[ ] Start code coverage with <code>simulationData</code> class</li>
+<li>[ ] Testing class should inherit from parent data class. May need to change private to protected to be able to access them correctly.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md48"></a>
 Tensor module optimization</h1>
 <ul>
 <li>[x] move thread-pool and device to engine class</li>
@@ -213,7 +228,7 @@ Tensor module optimization</h1>
 </li>
 <li>[ ] Remove all setters/getters in <a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a> that are unused</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md46"></a>
+<h1><a class="anchor" id="autotoc_md49"></a>
 Bugs to Fix</h1>
 <ul>
 <li>Figure out why python configuration script is not outputting correct data<ul>
@@ -222,9 +237,10 @@ Bugs to Fix</h1>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md47"></a>
+<h1><a class="anchor" id="autotoc_md50"></a>
 Verifications</h1>
 <ul>
+<li>[ ] Move assertions to testing classes</li>
 <li>[ ] Check that all quaternions obey the unit-norm requirement</li>
 <li>[ ] Check that the collinear swimmer (isolated) recovers the expected results<ul>
 <li>[ ] Verify collinear constraint upheld for the wall system.</li>
@@ -232,7 +248,7 @@ Verifications</h1>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md48"></a>
+<h1><a class="anchor" id="autotoc_md51"></a>
 Additional features</h1>
 <ul>
 <li>[x] Make kinematic variables in <a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a> class private<ul>
@@ -258,7 +274,7 @@ Additional features</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Oct 19 2021 10:12:59 for Bodies in Potential Flow by
+    <li class="footer">Generated on Tue Oct 19 2021 20:50:24 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

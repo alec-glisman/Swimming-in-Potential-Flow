@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="namespaceplotStyling.html#a3b2ba8616eda02341c67ce92b602edfa" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="namespaceplotStyling.html#a3b2ba8616eda02341c67ce92b602edfa" target="_top" xlink:title="Get LaTeX in axis labels of plots.">
 <polygon fill="none" stroke="black" points="177,-0.5 177,-30.5 276,-30.5 276,-0.5 177,-0.5"/>
 <text text-anchor="start" x="185" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">plotStyling.multiple</text>
 <text text-anchor="middle" x="226.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">_formatter</text>

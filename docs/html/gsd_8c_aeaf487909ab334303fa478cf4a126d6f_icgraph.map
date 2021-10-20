@@ -1,10 +1,11 @@
 <map id="gsd_byte_buffer_allocate" name="gsd_byte_buffer_allocate">
 <area shape="rect" id="node1" title=" " alt="" coords="596,81,763,108"/>
 <area shape="rect" id="node2" href="$gsd_8c.html#ac159dfbfd790607f85073ad2d8464a8b" title=" " alt="" coords="405,56,548,83"/>
-<area shape="rect" id="node8" href="$gsd_8h.html#adb92d5142812c19bf4ee33cbde439131" title=" " alt="" coords="429,107,525,133"/>
+<area shape="rect" id="node9" href="$gsd_8h.html#adb92d5142812c19bf4ee33cbde439131" title=" " alt="" coords="429,107,525,133"/>
 <area shape="rect" id="node3" href="$gsd_8h.html#a157d14770365926fde71a7787871bc63" title=" " alt="" coords="208,5,357,32"/>
 <area shape="rect" id="node4" href="$gsd_8h.html#ae0add799755285c1108a7b97b2ed7e00" title=" " alt="" coords="243,56,322,83"/>
-<area shape="rect" id="node6" href="$gsd_8h.html#a02ac7984034069d508b1c7ccbe702bac" title=" " alt="" coords="234,107,331,133"/>
-<area shape="rect" id="node5" href="$classGSDUtil.html#a2567bdb7f5952a76984552e0591fa330" title="Construct a new GSDUtil object." alt="" coords="19,56,147,83"/>
-<area shape="rect" id="node7" href="$classGSDUtil.html#a78b796cb5093b0aa6f5d2573658fcca1" title="Removes all frames and data from GSD file. This returns GSD to a &quot;new file&quot; state." alt="" coords="5,107,160,133"/>
+<area shape="rect" id="node7" href="$gsd_8h.html#a02ac7984034069d508b1c7ccbe702bac" title=" " alt="" coords="234,107,331,133"/>
+<area shape="rect" id="node5" href="$classGSDUtil.html#a2567bdb7f5952a76984552e0591fa330" title="Construct a new GSDUtil object." alt="" coords="19,5,147,32"/>
+<area shape="rect" id="node6" href="$testSimulationBuild_8cpp.html#ac2b102ba50512565940601db33c64cf2" title=" " alt="" coords="33,56,133,83"/>
+<area shape="rect" id="node8" href="$classGSDUtil.html#a78b796cb5093b0aa6f5d2573658fcca1" title="Removes all frames and data from GSD file. This returns GSD to a &quot;new file&quot; state." alt="" coords="5,107,160,133"/>
 </map>

@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title=" ">
+<g id="a_node1"><a xlink:title="Draws a curve from input data on the current plt figure.">
 <polygon fill="#bfbfbf" stroke="black" points="0,-6 0,-25 140,-25 140,-6 0,-6"/>
 <text text-anchor="middle" x="70" y="-13" font-family="Helvetica,sans-Serif" font-size="10.00">plotStyling.PlotStyling.curve</text>
 </a>
@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classplotStyling_1_1PlotStyling.html#a5a1a500ff6a749cb493c1c462f895f2d" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="classplotStyling_1_1PlotStyling.html#a5a1a500ff6a749cb493c1c462f895f2d" target="_top" xlink:title="Removes issue with times character in mathTex output of plots.">
 <polygon fill="none" stroke="black" points="176,-0.5 176,-30.5 302,-30.5 302,-0.5 176,-0.5"/>
 <text text-anchor="start" x="184" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">plotStyling.PlotStyling.fix</text>
 <text text-anchor="middle" x="239" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">_unicode_chars</text>
