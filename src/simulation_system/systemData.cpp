@@ -338,8 +338,6 @@ systemData::logData()
 void
 systemData::update(Eigen::ThreadPoolDevice& device)
 {
-    logData(); // FIXME: Remove after debugging
-
     // NOTE: Internal particle orientation D.o.F. calculated 1st
     convertBody2ParticleOrient();
 
