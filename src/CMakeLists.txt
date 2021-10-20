@@ -1,3 +1,22 @@
+# Executable variables
+SET(EXE_NAME "bodies_in_potential_flow")
+
+SET(EXE_FILES 
+    main.cpp 
+    )
+
+SET(EXE_LINKS 
+    spdlog::spdlog_header_only
+    ${Boost_LIBRARIES}
+    ${MKL_LIBRARIES}
+    Eigen3::Eigen
+    data_io
+    simulation_system
+    forces
+    integrators
+    )
+
+
 # Include directories in header search paths (-I flag)
 INCLUDE_DIRECTORIES(data_io)
 INCLUDE_DIRECTORIES(simulation_system)
@@ -15,18 +34,16 @@ ADD_SUBDIRECTORY(simulation_system)
 ADD_SUBDIRECTORY(forces)
 ADD_SUBDIRECTORY(integrators)
 
-# Main project executable
-ADD_EXECUTABLE(bodies_in_potential_flow main.cpp)
 
+# Make all of source code a library
+ADD_EXECUTABLE(
+    ${EXE_NAME}
+    ${EXE_FILES}
+    )
+
+# Link other libraries 
 TARGET_LINK_LIBRARIES(
-    bodies_in_potential_flow
+    ${EXE_NAME}
     PUBLIC
-    spdlog::spdlog_header_only
-    ${Boost_LIBRARIES}
-    ${MKL_LIBRARIES}
-    Eigen3::Eigen
-    data_io
-    simulation_system
-    forces
-    integrators
+    ${EXE_LINKS}
     )
