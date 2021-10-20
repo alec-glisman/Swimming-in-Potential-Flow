@@ -825,6 +825,17 @@ class systemData : public std::enable_shared_from_this<systemData>
         return m_Udwadia_b;
     }
     /* !SECTION */
+
+    const Eigen::VectorXd&
+    quaternionsParticles() const
+    {
+        return m_quaternions_particles;
+    }
+    void
+    setQuaternionsParticles(const Eigen::VectorXd& quaternions_particles)
+    {
+        m_quaternions_particles = quaternions_particles;
+    }
 };
 
 #endif
