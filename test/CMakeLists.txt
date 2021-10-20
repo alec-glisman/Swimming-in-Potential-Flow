@@ -10,8 +10,8 @@ IF(DEFINED CMAKE_CUDA_COMPILER)
 ENDIF()
 
 # Copy data input files for unit tests
-CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/input/data.gsd"
-    "${CMAKE_CURRENT_BINARY_DIR}/input/data.gsd"
+CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/../test/input/collinear_swimmer_wall/initial_frame_dt1e-6_Z-height6.gsd"
+    "${CMAKE_CURRENT_BINARY_DIR}/input/collinear_swimmer_wall/initial_frame_dt1e-6_Z-height6.gsd"
     COPYONLY
     )
 
