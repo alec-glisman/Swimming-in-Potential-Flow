@@ -19,8 +19,8 @@ CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/../test/input/collinear_swimmer_wall
 
 # Add test executable
 ADD_EXECUTABLE(tests 
-               testMain.cpp 
-               testSimulationBuild.cpp)
+               test-main.cpp 
+               test-simulation.cpp)
 
 TARGET_LINK_LIBRARIES(
     tests
