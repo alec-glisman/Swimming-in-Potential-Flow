@@ -1,3 +1,12 @@
+"""Script to analyze a single GSD file.
+
+__author__ = "Alec Glisman"
+
+Example:
+    "python3 python/analysis/collinear-swimmer-wall-individual-analysis.py \
+        --relative-path=temp/output --output-dir=temp/output/figures
+"""
+
 # SECTION: Depdencendies
 
 # External Dependencies

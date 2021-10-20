@@ -1,3 +1,12 @@
+"""Script to analyze multiple GSD files varying a single simulation parameters.
+
+__author__ = "Alec Glisman"
+
+Example:
+    "python3 python/analysis/collinear-swimmer-wall-aggregate-analysis.py \
+        --relative-path=temp/output --output-dir=temp/output/figures
+"""
+
 # SECTION: Depdencendies
 
 # External Dependencies
