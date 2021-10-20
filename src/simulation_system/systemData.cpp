@@ -296,29 +296,36 @@ systemData::logData()
     }
 
     /* ANCHOR: Output body data */
-    spdlog::get(m_logName)->info("(linear) Body positions:");
+    spdlog::get(m_logName)->info("Body positions:");
     for (int body_id = 0; body_id < m_num_bodies; body_id++)
     {
         const int body_id_7{7 * body_id};
-        spdlog::get(m_logName)->info("\tBody {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}]", body_id + 1,
-                                     m_positions_bodies(body_id_7), m_positions_bodies(body_id_7 + 1),
-                                     m_positions_bodies(body_id_7 + 2));
+        spdlog::get(m_logName)->info(
+            "\tBody {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}, {4:03.3f}, {5:03.3f}, {6:03.3f}, {7:03.3f}]", body_id + 1,
+            m_positions_bodies(body_id_7), m_positions_bodies(body_id_7 + 1), m_positions_bodies(body_id_7 + 2),
+            m_positions_bodies(body_id_7 + 3), m_positions_bodies(body_id_7 + 4), m_positions_bodies(body_id_7 + 5),
+            m_positions_bodies(body_id_7 + 6));
     }
-    spdlog::get(m_logName)->info("(linear) Body velocities:");
+    spdlog::get(m_logName)->info("Body velocities:");
     for (int body_id = 0; body_id < m_num_bodies; body_id++)
     {
         const int body_id_7{7 * body_id};
-        spdlog::get(m_logName)->info("\tBody {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}]", body_id + 1,
-                                     m_velocities_bodies(body_id_7), m_velocities_bodies(body_id_7 + 1),
-                                     m_velocities_bodies(body_id_7 + 2));
+        spdlog::get(m_logName)->info(
+            "\tBody {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}, {4:03.3f}, {5:03.3f}, {6:03.3f}, {7:03.3f}]", body_id + 1,
+            m_velocities_bodies(body_id_7), m_velocities_bodies(body_id_7 + 1), m_velocities_bodies(body_id_7 + 2),
+            m_velocities_bodies(body_id_7 + 3), m_velocities_bodies(body_id_7 + 4), m_velocities_bodies(body_id_7 + 5),
+            m_velocities_bodies(body_id_7 + 6));
     }
-    spdlog::get(m_logName)->info("(linear) Body accelerations:");
+    spdlog::get(m_logName)->info("Body accelerations:");
     for (int body_id = 0; body_id < m_num_bodies; body_id++)
     {
         const int body_id_7{7 * body_id};
-        spdlog::get(m_logName)->info("\tBody {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}]", body_id + 1,
-                                     m_accelerations_bodies(body_id_7), m_accelerations_bodies(body_id_7 + 1),
-                                     m_accelerations_bodies(body_id_7 + 2));
+        spdlog::get(m_logName)->info(
+            "\tBody {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}, {4:03.3f}, {5:03.3f}, {6:03.3f}, {7:03.3f}]", body_id + 1,
+            m_accelerations_bodies(body_id_7), m_accelerations_bodies(body_id_7 + 1),
+            m_accelerations_bodies(body_id_7 + 2), m_accelerations_bodies(body_id_7 + 3),
+            m_accelerations_bodies(body_id_7 + 4), m_accelerations_bodies(body_id_7 + 5),
+            m_accelerations_bodies(body_id_7 + 6));
     }
 
     spdlog::get(m_logName)->info("Ending logdata()");
