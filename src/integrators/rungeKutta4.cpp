@@ -26,7 +26,7 @@ rungeKutta4::rungeKutta4(std::shared_ptr<systemData> sys, std::shared_ptr<potent
     m_c1_6_dt = m_c1_6 * m_dt;
     spdlog::get(m_logName)->info("1/6 * dt (dimensional): {0}", m_c1_6_dt);
 
-    m_3M = 3 * m_system->numBodies();
+    m_7M = 7 * m_system->numBodies();
 
     spdlog::get(m_logName)->info("Constructor complete");
     spdlog::get(m_logName)->flush();
@@ -53,7 +53,7 @@ rungeKutta4::integrateSecondOrder(Eigen::ThreadPoolDevice& device)
     Eigen::VectorXd v1 = m_system->velocitiesBodies();
     Eigen::VectorXd x1 = m_system->positionsBodies();
 
-    Eigen::VectorXd a1 = Eigen::VectorXd::Zero(m_3M);
+    Eigen::VectorXd a1 = Eigen::VectorXd::Zero(m_7M);
     accelerationUpdate(t1, x1, v1, a1, device);
 
     /* Step 2: k2 = f( y(t_0) + k1 * dt/2,  t_0 + dt/2 )
@@ -64,7 +64,7 @@ rungeKutta4::integrateSecondOrder(Eigen::ThreadPoolDevice& device)
     Eigen::VectorXd x2 = x1;
     x2.noalias() += m_c1_2_dt * v2;
 
-    Eigen::VectorXd a2 = Eigen::VectorXd::Zero(m_3M);
+    Eigen::VectorXd a2 = Eigen::VectorXd::Zero(m_7M);
     accelerationUpdate(t2, x2, v2, a2, device);
 
     /* Step 3: k3 = f( y(t_0) + k2 * dt/2,  t_0 + dt/2 )
@@ -75,7 +75,7 @@ rungeKutta4::integrateSecondOrder(Eigen::ThreadPoolDevice& device)
     Eigen::VectorXd x3 = x1;
     x3.noalias() += m_c1_2_dt * v3;
 
-    Eigen::VectorXd a3 = Eigen::VectorXd::Zero(m_3M);
+    Eigen::VectorXd a3 = Eigen::VectorXd::Zero(m_7M);
     accelerationUpdate(t3, x3, v3, a3, device);
 
     /* Step 4: k4 = f( y(t_0) + k3 * dt,  t_0 + dt )
@@ -86,7 +86,7 @@ rungeKutta4::integrateSecondOrder(Eigen::ThreadPoolDevice& device)
     Eigen::VectorXd x4 = x1;
     x4.noalias() += m_dt * v4;
 
-    Eigen::VectorXd a4 = Eigen::VectorXd::Zero(m_3M);
+    Eigen::VectorXd a4 = Eigen::VectorXd::Zero(m_7M);
     accelerationUpdate(t4, x4, v4, a4, device);
 
     /* ANCHOR: Calculate kinematics at end of time step */
@@ -104,7 +104,7 @@ rungeKutta4::integrateSecondOrder(Eigen::ThreadPoolDevice& device)
     x_out *= m_c1_6_dt;
     x_out.noalias() += x1;
 
-    Eigen::VectorXd a_out = Eigen::VectorXd::Zero(m_3M);
+    Eigen::VectorXd a_out = Eigen::VectorXd::Zero(m_7M);
     accelerationUpdate(t4, x_out, v_out, a_out, device);
 
     // reset system time to t1 as `engine` class manages updating system time at end of each step
@@ -211,13 +211,20 @@ rungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
      * Q is the forces present in unconstrained system
      * Q_con is the generalized constraint forces */
 
+    int body_dof = m_system->numBodies();
+
+    if (m_system->imageSystem())
+    {
+        body_dof /= 2;
+    }
+
     // calculate Q
-    Eigen::VectorXd Q = Eigen::VectorXd::Zero(7 * m_system->numBodies());
+    Eigen::VectorXd Q = Eigen::VectorXd::Zero(7 * body_dof);
 
     // hydrodynamic force
     if (m_system->fluidDensity() > 0)
     {
-        Q.noalias() += m_potHydro->fHydroNoInertia();
+        Q.noalias() += m_potHydro->fHydroNoInertia().segment(0, 7 * body_dof);
     }
 
     /* calculate Q_con = K (b - A * M_eff^{-1} * Q)
@@ -225,19 +232,7 @@ rungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
      * Linear proportionality: K = M_eff^{1/2} * (A * M_eff^{-1/2})^{+};
      * + is Moore-Penrose inverse */
 
-    Eigen::MatrixXd M_eff;
-
-    if (m_system->imageSystem())
-    {
-        const int img_body_start_7 = 7 * (m_system->numBodies() / 2);
-
-        M_eff.noalias() =
-            m_potHydro->mTilde().block(img_body_start_7, img_body_start_7, img_body_start_7, img_body_start_7);
-    }
-    else
-    {
-        M_eff.noalias() = m_potHydro->mTilde();
-    }
+    const Eigen::MatrixXd M_eff = m_potHydro->mTilde().block(0, 0, 7 * body_dof, 7 * body_dof);
 
     // calculate M^{1/2} & M^{-1/2}
     Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> eigensolver(M_eff);

@@ -161,8 +161,8 @@ class rungeKutta4
     double m_c1_6_dt{-1.0};
 
     // tensor length variables
-    /// = 3 M
-    int m_3M{-1};
+    /// = 7M
+    int m_7M{-1};
 
     // constants
     /// = 1/2

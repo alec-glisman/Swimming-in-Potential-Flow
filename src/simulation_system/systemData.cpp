@@ -40,9 +40,18 @@ systemData::initializeData()
 
     // initialize D.o.F. parameters
     spdlog::get(m_logName)->info("Setting D.o.F. parameters");
-    m_num_DoF = 6 * m_num_bodies; // D.o.F. are linear and angular positions of body centers
+    if (m_image_system)
+    {
+        m_num_DoF         = 6 * (m_num_bodies / 2);
+        m_num_constraints = (m_num_bodies / 2);
+    }
+    else
+    {
+        m_num_DoF         = 6 * m_num_bodies; // D.o.F. are linear and angular positions of body centers
+        m_num_constraints = m_num_bodies;     // 1 unit quaternion constraint per body
+    }
+
     spdlog::get(m_logName)->info("Degrees of freedom: {0}", m_num_DoF);
-    m_num_constraints = m_num_bodies; // 1 unit quaternion constraint per body
     spdlog::get(m_logName)->info("Number of constraints: {0}", m_num_constraints);
 
     // initialize other integrator parameters
@@ -493,7 +502,7 @@ systemData::udwadiaLinearSystem()
     m_Udwadia_A.setZero();
     m_Udwadia_b.setZero();
 
-    for (int body_id = 0; body_id < m_num_bodies; body_id++)
+    for (int body_id = 0; body_id < m_num_constraints; body_id++)
     {
         const int body_id_7{7 * body_id};
 
