@@ -5,7 +5,7 @@
 #include <systemData.hpp>
 
 systemData::systemData(std::string inputGSDFile, std::string outputDir)
-    : m_inputGSDFile(std::move(inputGSDFile)), m_outputDir(std::move(outputDir))
+    : m_inputGSDFile(inputGSDFile), m_outputDir(outputDir)
 {
     // Initialize logger
     m_logFile   = m_outputDir + "/logs/" + m_logName + "-log.txt";
@@ -28,6 +28,7 @@ systemData::~systemData()
     spdlog::get(m_logName)->info("systemData destructor called");
     gsd_close(m_handle.get());
     spdlog::get(m_logName)->flush();
+    spdlog::drop(m_logName);
 }
 
 void

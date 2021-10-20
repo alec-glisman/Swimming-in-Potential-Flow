@@ -107,6 +107,7 @@ potentialHydrodynamics::~potentialHydrodynamics()
 {
     spdlog::get(m_logName)->info("Destructing potential hydrodynamics");
     spdlog::get(m_logName)->flush();
+    spdlog::drop(m_logName);
 }
 
 void

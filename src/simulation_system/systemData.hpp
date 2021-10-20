@@ -435,6 +435,11 @@ class systemData : public std::enable_shared_from_this<systemData>
     {
         return m_outputDir;
     }
+    void
+    setOutputDir(const std::string& outputDir)
+    {
+        m_outputDir = outputDir;
+    }
 
     // GSD data
     std::shared_ptr<GSDUtil>

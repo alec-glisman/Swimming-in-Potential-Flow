@@ -69,6 +69,7 @@ GSDUtil::~GSDUtil()
 {
     spdlog::get(m_logName)->info("GSDUtil destructor called");
     spdlog::get(m_logName)->flush();
+    spdlog::drop(m_logName);
 }
 
 void

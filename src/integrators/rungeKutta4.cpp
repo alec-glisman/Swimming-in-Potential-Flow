@@ -36,6 +36,7 @@ rungeKutta4::~rungeKutta4()
 {
     spdlog::get(m_logName)->info("Destructing Runge-Kutta 4th order");
     spdlog::get(m_logName)->flush();
+    spdlog::drop(m_logName);
 }
 
 void

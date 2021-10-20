@@ -44,6 +44,7 @@ engine::~engine()
 {
     spdlog::get(m_logName)->info("Destructing engine");
     spdlog::get(m_logName)->flush();
+    spdlog::drop(m_logName);
 }
 
 void
