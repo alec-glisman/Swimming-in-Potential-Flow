@@ -146,7 +146,7 @@ rungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::Vec
         udwadiaKalaba(acc);
     }
 
-    m_system->setPositionsBodies(acc);
+    m_system->setAccelerationsBodies(acc);
 }
 
 void
