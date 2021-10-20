@@ -338,6 +338,8 @@ systemData::logData()
 void
 systemData::update(Eigen::ThreadPoolDevice& device)
 {
+    logData(); // FIXME: Remove after debugging
+
     // NOTE: Internal particle orientation D.o.F. calculated 1st
     orientationsArticulation();
 
@@ -347,12 +349,12 @@ systemData::update(Eigen::ThreadPoolDevice& device)
     accelerationsArticulation();
 
     // NOTE: Rigid body motion tensors calculated 3rd (need m_positions_particles_articulation)
-    positionsParticlesfromBodies();
+    convertBody2ParticlePos();
     rigidBodyMotionTensors(device);
     gradientChangeOfVariableTensors(device);
 
     // NOTE: Particle degrees of freedom calculated 4th (need rbm tensors)
-    convertBody2ParticleDoF(device);
+    convertBody2ParticleVelAcc(device);
 
     // NOTE: Udwadia linear system calculated 5th
     udwadiaLinearSystem();
@@ -491,19 +493,6 @@ systemData::accelerationsArticulation()
         {
             m_accelerations_particles_articulation.segment<2>(particle_id_3) *= -1;
         }
-    }
-}
-
-void
-systemData::positionsParticlesfromBodies()
-{
-    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
-    {
-        const int particle_id_3{3 * particle_id};
-        const int body_id_7{7 * m_particle_group_id(particle_id)};
-
-        m_positions_particles.segment<3>(particle_id_3).noalias() =
-            m_positions_bodies.segment<3>(body_id_7) + m_positions_particles_articulation.segment<3>(particle_id_3);
     }
 }
 
@@ -672,7 +661,20 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
 }
 
 void
-systemData::convertBody2ParticleDoF(Eigen::ThreadPoolDevice& device)
+systemData::convertBody2ParticlePos()
+{
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
+    {
+        const int particle_id_3{3 * particle_id};
+        const int body_id_7{7 * m_particle_group_id(particle_id)};
+
+        m_positions_particles.segment<3>(particle_id_3).noalias() =
+            m_positions_bodies.segment<3>(body_id_7) + m_positions_particles_articulation.segment<3>(particle_id_3);
+    }
+}
+
+void
+systemData::convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device)
 {
     /* ANCHOR: Convert velocity D.o.F. */
     m_velocities_particles.noalias() = m_rbm_conn_T_quat * m_velocities_bodies;
