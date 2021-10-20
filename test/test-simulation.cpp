@@ -10,71 +10,76 @@
 #define CATCH_CONFIG_CONSOLE_WIDTH 300
 #include <catch2/catch.hpp> // unit testing framework
 #include <gsd.h>            // GSD File
+// Logging
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/spdlog.h>
 // STL
 #include <fstream> // std::ifstream
 #include <memory>  // for std::unique_ptr and std::shared_ptr
 #include <string>  // std::string
 
-SCENARIO("Open GSD file", "[gsd]")
+TEST_CASE("Open GSD file", "[gsd]")
 {
-    GIVEN("Collinear wall system initial conditions GSD input.")
-    {
-        // I/O Parameters
-        std::string inputDataFile = "input/collinear_swimmer_wall/initial_frame_dt1e-6_Z-height6.gsd";
-        std::string outputDir     = "output";
+    // I/O Parameters
+    std::string inputDataFile = "input/collinear_swimmer_wall/initial_frame_dt1e-2_Z-height6.gsd";
 
-        // GSD loading parameters
-        std::shared_ptr<gsd_handle> handle{new gsd_handle};
-        int                         return_val{-1};
+    // GSD loading parameters
+    std::shared_ptr<gsd_handle> handle{new gsd_handle};
+    int                         return_val{-1};
 
-        // check inputDataFile exists
-        std::ifstream inputDataStream(inputDataFile);
-        REQUIRE(inputDataStream);
+    // verify inputDataFile exists
+    std::ifstream inputDataStream(inputDataFile);
+    REQUIRE(inputDataStream);
 
-        WHEN("GSD is opened")
-        {
-            REQUIRE_NOTHROW(return_val = gsd_open(handle.get(), inputDataFile.c_str(), GSD_OPEN_READONLY));
-
-            THEN("File opened successfully")
-            {
-                INFO("GSD open return value: " << return_val);
-                REQUIRE(return_val == 0);
-            }
-        }
-    }
+    // verify gsd file can be opened correctly
+    REQUIRE_NOTHROW(return_val = gsd_open(handle.get(), inputDataFile.c_str(), GSD_OPEN_READONLY));
+    INFO("GSD open return value: " << return_val);
+    REQUIRE(return_val == 0);
 }
 
-SCENARIO("Run simulation system",
-         "[engine][progressBar][systemData][rungeKutta4][potentialHydrodynamics][gsd][GSDUtil]")
+TEST_CASE("Initialize simulation system", "[engine][systemData][rungeKutta4][potentialHydrodynamics][gsd][GSDUtil]")
 {
-    GIVEN("Collinear wall system initial conditions GSD input.")
-    {
-        // I/O Parameters
-        std::string inputDataFile = "input/collinear_swimmer_wall/initial_frame_dt1e-6_Z-height6.gsd";
-        std::string outputDir     = "output";
+    // close all previous loggers
+    spdlog::drop_all();
 
-        // simulation classes
-        std::shared_ptr<systemData> system;
-        std::shared_ptr<engine>     eng;
+    // I/O Parameters
+    std::string inputDataFile = "input/collinear_swimmer_wall/initial_frame_dt1e-2_Z-height6.gsd";
+    std::string outputDir     = "output-systemData-init";
 
-        WHEN("simulationSystem initialized")
-        {
-            REQUIRE_NOTHROW(system = std::make_shared<systemData>(inputDataFile, outputDir));
-            REQUIRE_NOTHROW(system->initializeData());
+    // simulation classes
+    std::shared_ptr<systemData> system;
+    std::shared_ptr<engine>     eng;
 
-            THEN("Initialization successful")
-            {
-                REQUIRE(system->gSDParsed());
-            }
-        }
+    // Construct and initialize simulationSystem class
+    REQUIRE_NOTHROW(system = std::make_shared<systemData>(inputDataFile, outputDir));
+    REQUIRE_NOTHROW(system->initializeData());
 
-        WHEN("engine initialized and run")
-        {
-            THEN("Time integration completes successfully")
-            {
-                REQUIRE_NOTHROW(eng = std::make_shared<engine>(system));
-                REQUIRE_NOTHROW(eng->run());
-            }
-        }
-    }
+    // Verify data was correctly parsed from GSD to simulation
+    REQUIRE(system->gSDParsed());
+
+    // Construct simulation engine
+    REQUIRE_NOTHROW(eng = std::make_shared<engine>(system));
+}
+
+TEST_CASE("Run simulation system", "[engine][progressBar][systemData][rungeKutta4][potentialHydrodynamics]")
+{
+    // close all previous loggers
+    spdlog::drop_all();
+
+    // I/O Parameters
+    std::string inputDataFile = "input/collinear_swimmer_wall/initial_frame_dt1e-2_Z-height6.gsd";
+    std::string outputDir     = "output-engine-run";
+
+    // simulation classes
+    std::shared_ptr<systemData> system;
+    std::shared_ptr<engine>     eng;
+
+    // Construct and initialize simulation classes
+    REQUIRE_NOTHROW(system = std::make_shared<systemData>(inputDataFile, outputDir));
+    REQUIRE_NOTHROW(system->initializeData());
+    REQUIRE_NOTHROW(eng = std::make_shared<engine>(system));
+
+    // Verify simulation can run without error
+    REQUIRE_NOTHROW(eng->run());
 }
