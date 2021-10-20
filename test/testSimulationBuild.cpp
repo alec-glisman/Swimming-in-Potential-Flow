@@ -18,7 +18,7 @@
 TEST_CASE("Load and parse data from GSD file", "[GSD][I/O]")
 {
     /* I/O Parameters */
-    std::string inputDataFile = "input/data.gsd";
+    std::string inputDataFile = "input/collinear_swimmer_wall/initial_frame_dt1e-6_Z-height6.gsd";
     std::string outputDir     = "output";
 
     SECTION("Load GSD data")
