@@ -91,19 +91,37 @@ class rungeKutta4
      * `udwadiaKalaba()` to calculate the body acceleration components at a given system time.
      *
      * @param t current integration time
+     * @param pos body position vector that will be overwritten (if image system)
+     * @param vel body velocity vector that will be overwritten (if image system)
      * @param acc (output) body acceleration vector that will be overwritten
      * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
      */
     void
-    accelerationUpdate(const double t, Eigen::VectorXd& acc, Eigen::ThreadPoolDevice& device);
+    accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::VectorXd& vel, Eigen::VectorXd& acc,
+                       Eigen::ThreadPoolDevice& device);
 
     /**
-     * @brief Replaces 2nd 1/2 of D.o.F. with image of 1st 1/2 assuming the reflection plane is @f$ z = 0 @f$.
+     * @brief Replaces 2nd 1/2 of body position and velocity D.o.F. with image of 1st 1/2 assuming the reflection plane
+     * is @f$ z = 0 @f$.
+     *
+     * @see For discussion of how to invert z-axis of quaternion: https://stackoverflow.com/a/33999726
+     *
+     * @param pos (output) body position vector that will be overwritten
+     * @param vel (output) body velocity vector that will be overwritten
+     */
+    void
+    imageBodyPosVel(Eigen::VectorXd& pos, Eigen::VectorXd& vel);
+
+    /**
+     * @brief Replaces 2nd 1/2 of body acceleration D.o.F. with image of 1st 1/2 assuming the reflection plane
+     * is @f$ z = 0 @f$.
+     *
+     * @see For discussion of how to invert z-axis of quaternion: https://stackoverflow.com/a/33999726
      *
      * @param acc (output) body acceleration vector that will be overwritten
      */
     void
-    imageAcceleration(Eigen::VectorXd& acc);
+    imageBodyAcc(Eigen::VectorXd& acc);
 
     /**
      * @brief Calculates the body acceleration components given the constraints established by the Udwadia linear
