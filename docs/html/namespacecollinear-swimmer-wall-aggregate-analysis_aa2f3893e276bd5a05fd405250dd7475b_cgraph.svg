@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title=" ">
+<g id="a_node1"><a xlink:title="Calculates leading order net translation of locater point for collinear swimmer after one period of a...">
 <polygon fill="#bfbfbf" stroke="black" points="0,-0.5 0,-41.5 116,-41.5 116,-0.5 0,-0.5"/>
 <text text-anchor="start" x="8" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">collinear&#45;swimmer&#45;wall</text>
 <text text-anchor="start" x="8" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45;aggregate&#45;analysis.dZ</text>
@@ -22,7 +22,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="namespacecollinear-swimmer-wall-aggregate-analysis.html#a160162a09e4b3db334296a2f37af9177" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="namespacecollinear-swimmer-wall-aggregate-analysis.html#a160162a09e4b3db334296a2f37af9177" target="_top" xlink:title="Function for D: derivative of mass matrix elements, dimensionless.">
 <polygon fill="none" stroke="black" points="152,-6 152,-36 272,-36 272,-6 152,-6"/>
 <text text-anchor="start" x="160" y="-24" font-family="Helvetica,sans-Serif" font-size="10.00">collinear&#45;swimmer&#45;wall</text>
 <text text-anchor="middle" x="212" y="-13" font-family="Helvetica,sans-Serif" font-size="10.00">&#45;aggregate&#45;analysis.f_D</text>

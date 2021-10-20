@@ -3,8 +3,7 @@
 __author__ = "Alec Glisman"
 
 Example:
-    "python3 python/analysis/collinear-swimmer-wall-aggregate-analysis.py \
-        --relative-path=temp/output --output-dir=temp/output/figures
+    python3 python/analysis/collinear-swimmer-wall-aggregate-analysis.py --relative-path=temp/output --output-dir=temp/output/figures
 """
 
 # SECTION: Depdencendies
@@ -39,8 +38,16 @@ parser.add_option("--output-dir", dest="u_output_dir",
 # !SECTION: (User input options)
 
 
-# Function for D: derivative of mass matrix elements, dimensionless
 def f_D(x):
+    """Function for D: derivative of mass matrix elements, dimensionless
+
+    Args:
+        x (np.array): Numpy array of average particle pair separation
+
+    Returns:
+        np.array: Leading order gradient term in Taylor expansion for locater point net translation after one period of articulation.
+    """
+
     # In R/a coordinates
     numerator = 3.0 * (-68.0 + 93.0 * np.power(x, 3))
     denominator = x * np.square(17.0 - 18.0 * np.power(x, 3))
@@ -49,18 +56,50 @@ def f_D(x):
 
 # Function for \Delta Z / a
 def dZ_leadingOrder(phi, U0, omega, a, x):
+    """Calculates leading order net translation of locater point for collinear swimmer after one period of articulation
+
+    Args:
+        phi (float): phase_angle between oscillator pairs
+        U0 (float): velocity articulation oscillation amplitude
+        omega (float): oscillation frequency
+        a (float): radius of spheres
+        x (float): average particle pair separation
+
+    Returns:
+        float: Leading order Taylor expansion for locater point net translation after one period of articulation
+    """
+
     # In R/a coordinates
     return -(np.pi * np.sin(phi)) * np.square(U0 / (a * omega)) * f_D(x)
 
 
 # Function to calculate relative error
 def relErr(exact, approximate):
+    """Calculates the relative error of approximate relative to exact solutions
+
+    Args:
+        exact (float): Exact solution to use as ground truth
+        approximate (float): Approximate numerical result
+
+    Returns:
+        float: relative error
+    """
+
     return np.divide(np.abs(exact - approximate), np.abs(exact))
 
 # Function to load data, perform analysis, and generate plots
 
 
 def aggregate_plots(relative_path, output_dir):
+    """Analyze a single GSD file.
+
+    Args:
+        relative_path (str): path to GSD files to load
+        output_dir (str): path to output of numerical analysis
+
+    Example:
+        python3 python/analysis/collinear-swimmer-wall-individual-analysis.py --relative-path=temp/output --output-dir=temp/output/figures
+    """
 
     # SECTION: Parameters for function
 
@@ -418,6 +457,8 @@ def aggregate_plots(relative_path, output_dir):
 
 # SECTION: For use when being called from command line
 if __name__ == "__main__":
+    """Main method
+    """
 
     # parse user input
     options, remainder = parser.parse_args(sys.argv[1:])

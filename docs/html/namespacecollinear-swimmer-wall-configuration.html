@@ -179,17 +179,17 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00072">72</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
-<div class="fragment"><div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">def </span><a class="code" href="namespacecollinear-swimmer-wall-configuration.html#ae34ebb5ccbfea8e528c3836768a93b39">initializeGSD</a>():</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">global</span> gsd_class</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    gsd_class = <a class="code" href="namespaceGSDUtilPy.html">GSDUtilPy</a>(gsd_path, create_gsd=<span class="keyword">True</span>)</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    gsd_class.setLogParameters(dt, t, tf, tau, num_steps_output,</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                               fluid_density, particle_density, wca_epsilon, wca_sigma,</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                               image_system)</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    gsd_class.setParticleParameters(n, types=types, typeid=typeid)</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00084">84</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<div class="fragment"><div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    gsd_class = <a class="code" href="namespaceGSDUtilPy.html">GSDUtilPy</a>(gsd_path, create_gsd=<span class="keyword">True</span>)</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    gsd_class.setLogParameters(dt, t, tf, tau, num_steps_output,</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                               fluid_density, particle_density, wca_epsilon, wca_sigma,</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                               image_system)</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    gsd_class.setParticleParameters(n, types=types, typeid=typeid)</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keyword">def </span><a class="code" href="namespacecollinear-swimmer-wall-configuration.html#af92c6e38d93a3b8b752d6167ca0e1931">setInitialConditions</a>():</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -208,38 +208,38 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00082">82</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
-<div class="fragment"><div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="keyword">def </span><a class="code" href="namespacecollinear-swimmer-wall-configuration.html#af92c6e38d93a3b8b752d6167ca0e1931">setInitialConditions</a>():</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="comment"># orientation</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    quat = np.zeros((n, 4), dtype=np.double)</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    no_rotation_quat = np.array([1.0, 0.0, 0.0, 0.0], dtype=np.double)</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    quat[0] = no_rotation_quat</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    quat[1] = no_rotation_quat</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    quat[2] = no_rotation_quat</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    quat[3] = no_rotation_quat</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    quat[4] = no_rotation_quat</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    quat[5] = no_rotation_quat</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="comment"># position</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    pos = np.zeros((n, 3), dtype=np.double)</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    pos[0] = [0.0, 0.0, Z_height]</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    pos[1] = [R_avg, 0.0, Z_height]</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    pos[2] = [- R_avg + (U0 / omega) * np.sin(phase_angle), 0.0, Z_height]</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    pos[3] = [0.0, 0.0, -Z_height]</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    pos[4] = [R_avg, 0.0, -Z_height]</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    pos[5] = [- R_avg + (U0 / omega) * np.sin(phase_angle), 0.0, -Z_height]</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="comment"># velocity NOTE[epic=Assumptions]: must be calculated in simulation system (C++)</span></div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    vel = np.zeros_like(pos, dtype=np.double)</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="comment"># acceleration NOTE[epic=Assumptions]: must be calculated in simulation system (C++)</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    acc = np.zeros_like(pos, dtype=np.double)</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="comment"># output data</span></div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    gsd_class.setKinematics(quat, pos, vel, acc)</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00094">94</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<div class="fragment"><div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="comment"># orientation</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    quat = np.zeros((n, 4), dtype=np.double)</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    no_rotation_quat = np.array([1.0, 0.0, 0.0, 0.0], dtype=np.double)</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    quat[0] = no_rotation_quat</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    quat[1] = no_rotation_quat</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    quat[2] = no_rotation_quat</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    quat[3] = no_rotation_quat</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    quat[4] = no_rotation_quat</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    quat[5] = no_rotation_quat</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="comment"># position</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    pos = np.zeros((n, 3), dtype=np.double)</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    pos[0] = [0.0, 0.0, Z_height]</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    pos[1] = [R_avg, 0.0, Z_height]</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    pos[2] = [- R_avg + (U0 / omega) * np.sin(phase_angle), 0.0, Z_height]</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    pos[3] = [0.0, 0.0, -Z_height]</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    pos[4] = [R_avg, 0.0, -Z_height]</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    pos[5] = [- R_avg + (U0 / omega) * np.sin(phase_angle), 0.0, -Z_height]</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="comment"># velocity NOTE[epic=Assumptions]: must be calculated in simulation system (C++)</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    vel = np.zeros_like(pos, dtype=np.double)</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="comment"># acceleration NOTE[epic=Assumptions]: must be calculated in simulation system (C++)</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    acc = np.zeros_like(pos, dtype=np.double)</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="comment"># output data</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    gsd_class.setKinematics(quat, pos, vel, acc)</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="keyword">def </span><a class="code" href="namespacecollinear-swimmer-wall-configuration.html#a913b52e835a57692861622a542856792">setSystemData</a>():</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -258,36 +258,36 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00113">113</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
-<div class="fragment"><div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="keyword">def </span><a class="code" href="namespacecollinear-swimmer-wall-configuration.html#a913b52e835a57692861622a542856792">setSystemData</a>():</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="comment"># get snapshot</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    snapshot = gsd_class.snapshot</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="comment"># convert data to GSD expected type</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    l_R_avg = np.array([R_avg], dtype=np.double)</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    l_Z_height = np.array([Z_height], dtype=np.double)</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    l_U0 = np.array([U0], dtype=np.double)</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    l_omega = np.array([omega], dtype=np.double)</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    l_phase_angle = np.array([phase_angle], dtype=np.double)</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    l_U_swim = np.zeros(6, dtype=np.double)</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    l_A_swim = np.zeros(6, dtype=np.double)</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="comment"># output data</span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/R_avg&#39;</span>] = l_R_avg</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/Z_height&#39;</span>] = l_Z_height</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/U0&#39;</span>] = l_U0</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/omega&#39;</span>] = l_omega</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/phase_shift&#39;</span>] = l_phase_angle</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/U_swim&#39;</span>] = l_U_swim</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/A_swim&#39;</span>] = l_A_swim</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="comment"># !SECTION: (GSD Creation)</span></div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="comment"># SECTION: For use when being called from command line</span></div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
-</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00125">125</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<div class="fragment"><div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="comment"># get snapshot</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    snapshot = gsd_class.snapshot</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="comment"># convert data to GSD expected type</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    l_R_avg = np.array([R_avg], dtype=np.double)</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    l_Z_height = np.array([Z_height], dtype=np.double)</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    l_U0 = np.array([U0], dtype=np.double)</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    l_omega = np.array([omega], dtype=np.double)</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    l_phase_angle = np.array([phase_angle], dtype=np.double)</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    l_U_swim = np.zeros(6, dtype=np.double)</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    l_A_swim = np.zeros(6, dtype=np.double)</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <span class="comment"># output data</span></div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/R_avg&#39;</span>] = l_R_avg</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/Z_height&#39;</span>] = l_Z_height</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/U0&#39;</span>] = l_U0</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/omega&#39;</span>] = l_omega</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/phase_shift&#39;</span>] = l_phase_angle</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/U_swim&#39;</span>] = l_U_swim</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/A_swim&#39;</span>] = l_A_swim</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="comment"># !SECTION: (GSD Creation)</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160; </div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="comment"># SECTION: For use when being called from command line</span></div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;Main method</span></div>
+<span class="stringliteral"></div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
@@ -303,7 +303,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00018">18</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00030">30</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 </div>
 </div>
@@ -319,7 +319,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00019">19</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00031">31</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 </div>
 </div>
@@ -335,7 +335,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00020">20</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00032">32</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 </div>
 </div>
@@ -351,7 +351,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00021">21</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00033">33</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 </div>
 </div>
@@ -367,7 +367,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00050">50</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00062">62</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="rungeKutta4_8cpp_source.html#l00115">rungeKutta4.accelerationUpdate()</a>, <a class="el" href="helper__math_8h_source.html#l01146">lerp()</a>, and <a class="el" href="GSDUtil_8cpp_source.html#l00174">GSDUtil.readParameters()</a>.</p>
 
@@ -385,7 +385,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00051">51</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00063">63</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00174">GSDUtil.readParameters()</a>.</p>
 
@@ -403,7 +403,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00052">52</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00064">64</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00174">GSDUtil.readParameters()</a>, and <a class="el" href="systemData_8hpp_source.html#l00698">systemData.setNumStepsOutput()</a>.</p>
 
@@ -421,7 +421,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00055">55</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00067">67</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00174">GSDUtil.readParameters()</a>, and <a class="el" href="systemData_8hpp_source.html#l00544">systemData.setFluidDensity()</a>.</p>
 
@@ -439,7 +439,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00056">56</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00068">68</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00174">GSDUtil.readParameters()</a>, and <a class="el" href="systemData_8hpp_source.html#l00555">systemData.setParticleDensity()</a>.</p>
 
@@ -457,7 +457,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00059">59</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00071">71</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00174">GSDUtil.readParameters()</a>, and <a class="el" href="systemData_8hpp_source.html#l00567">systemData.setWcaEpsilon()</a>.</p>
 
@@ -475,7 +475,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00060">60</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00072">72</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00174">GSDUtil.readParameters()</a>, and <a class="el" href="systemData_8hpp_source.html#l00578">systemData.setWcaSigma()</a>.</p>
 
@@ -493,7 +493,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00063">63</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00075">75</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="helper__cusolver_8h_source.html#l00098">display_matrix()</a>, <a class="el" href="helper__cusolver_8h_source.html#l00061">mat_norminf()</a>, <a class="el" href="helper__math_8h_source.html#l01427">reflect()</a>, and <a class="el" href="helper__cusolver_8h_source.html#l00049">vec_norminf()</a>.</p>
 
@@ -511,7 +511,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00064">64</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00076">76</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00174">GSDUtil.readParameters()</a>.</p>
 
@@ -529,7 +529,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00065">65</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00077">77</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 </div>
 </div>
@@ -545,7 +545,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00145">145</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00160">160</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 </div>
 </div>
@@ -561,7 +561,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00145">145</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00160">160</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 </div>
 </div>
@@ -577,7 +577,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00146">146</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00161">161</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 </div>
 </div>
@@ -593,7 +593,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00147">147</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00162">162</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00174">GSDUtil.readParameters()</a>, and <a class="el" href="GSDUtil_8cpp_source.html#l00512">GSDUtil.writeParameters()</a>.</p>
 
@@ -611,7 +611,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00148">148</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00163">163</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00420">GSDUtil.readSystemSpecifics()</a>.</p>
 
@@ -629,7 +629,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00149">149</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00164">164</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 </div>
 </div>
@@ -645,7 +645,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00150">150</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00165">165</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 </div>
 </div>
@@ -661,7 +661,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00151">151</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00166">166</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00420">GSDUtil.readSystemSpecifics()</a>.</p>
 
@@ -679,7 +679,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00152">152</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00167">167</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00420">GSDUtil.readSystemSpecifics()</a>.</p>
 
@@ -697,7 +697,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00153">153</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00168">168</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00174">GSDUtil.readParameters()</a>, and <a class="el" href="systemData_8hpp_source.html#l00421">systemData.setImageSystem()</a>.</p>
 
@@ -715,7 +715,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00155">155</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00170">170</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 </div>
 </div>
@@ -731,7 +731,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00156">156</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00171">171</a> of file <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html">collinear-swimmer-wall-configuration.py</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00174">GSDUtil.readParameters()</a>.</p>
 
@@ -739,15 +739,14 @@ Variables</h2></td></tr>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="anamespacecollinear-swimmer-wall-configuration_html_a913b52e835a57692861622a542856792"><div class="ttname"><a href="namespacecollinear-swimmer-wall-configuration.html#a913b52e835a57692861622a542856792">collinear-swimmer-wall-configuration.setSystemData</a></div><div class="ttdeci">def setSystemData()</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-configuration_8py_source.html#l00113">collinear-swimmer-wall-configuration.py:113</a></div></div>
-<div class="ttc" id="anamespacecollinear-swimmer-wall-configuration_html_af92c6e38d93a3b8b752d6167ca0e1931"><div class="ttname"><a href="namespacecollinear-swimmer-wall-configuration.html#af92c6e38d93a3b8b752d6167ca0e1931">collinear-swimmer-wall-configuration.setInitialConditions</a></div><div class="ttdeci">def setInitialConditions()</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-configuration_8py_source.html#l00082">collinear-swimmer-wall-configuration.py:82</a></div></div>
+<div class="ttc" id="anamespacecollinear-swimmer-wall-configuration_html_a913b52e835a57692861622a542856792"><div class="ttname"><a href="namespacecollinear-swimmer-wall-configuration.html#a913b52e835a57692861622a542856792">collinear-swimmer-wall-configuration.setSystemData</a></div><div class="ttdeci">def setSystemData()</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-configuration_8py_source.html#l00125">collinear-swimmer-wall-configuration.py:125</a></div></div>
+<div class="ttc" id="anamespacecollinear-swimmer-wall-configuration_html_af92c6e38d93a3b8b752d6167ca0e1931"><div class="ttname"><a href="namespacecollinear-swimmer-wall-configuration.html#af92c6e38d93a3b8b752d6167ca0e1931">collinear-swimmer-wall-configuration.setInitialConditions</a></div><div class="ttdeci">def setInitialConditions()</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-configuration_8py_source.html#l00094">collinear-swimmer-wall-configuration.py:94</a></div></div>
 <div class="ttc" id="anamespaceGSDUtilPy_html"><div class="ttname"><a href="namespaceGSDUtilPy.html">GSDUtilPy</a></div><div class="ttdef"><b>Definition:</b> <a href="GSDUtilPy_8py_source.html#l00001">GSDUtilPy.py:1</a></div></div>
-<div class="ttc" id="anamespacecollinear-swimmer-wall-configuration_html_ae34ebb5ccbfea8e528c3836768a93b39"><div class="ttname"><a href="namespacecollinear-swimmer-wall-configuration.html#ae34ebb5ccbfea8e528c3836768a93b39">collinear-swimmer-wall-configuration.initializeGSD</a></div><div class="ttdeci">def initializeGSD()</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-configuration_8py_source.html#l00072">collinear-swimmer-wall-configuration.py:72</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacecollinear-swimmer-wall-configuration.html">collinear-swimmer-wall-configuration</a></li>
-    <li class="footer">Generated on Tue Oct 19 2021 21:12:50 for Bodies in Potential Flow by
+    <li class="footer">Generated on Tue Oct 19 2021 21:46:37 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

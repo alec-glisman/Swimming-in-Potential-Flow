@@ -162,8 +162,9 @@ Variables</h2></td></tr>
 <dd>
 list List of strings that give compressed filepaths found and matched. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="simulationDataLoad_8py_source.html#l00036">36</a> of file <a class="el" href="simulationDataLoad_8py_source.html">simulationDataLoad.py</a>.</p>
-<div class="fragment"><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<p class="definition">Definition at line <a class="el" href="simulationDataLoad_8py_source.html#l00035">35</a> of file <a class="el" href="simulationDataLoad_8py_source.html">simulationDataLoad.py</a>.</p>
+<div class="fragment"><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="stringliteral"></span> </div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="stringliteral">    data_path = []</span></div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="stringliteral"></span> </div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="stringliteral">    for r in relative_path_base_dir:</span></div>
@@ -236,8 +237,9 @@ Here is the caller graph for this function:</div>
 <dd>
 list List of <a class="el" href="namespaceGSDUtilPy.html">GSDUtilPy</a> classes that have GSD data parsed </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="simulationDataLoad_8py_source.html#l00078">78</a> of file <a class="el" href="simulationDataLoad_8py_source.html">simulationDataLoad.py</a>.</p>
-<div class="fragment"><div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<p class="definition">Definition at line <a class="el" href="simulationDataLoad_8py_source.html#l00077">77</a> of file <a class="el" href="simulationDataLoad_8py_source.html">simulationDataLoad.py</a>.</p>
+<div class="fragment"><div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="stringliteral"></span> </div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="stringliteral">    # get filename without extension</span></div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="stringliteral">    filename = Path(tar_data_path)</span></div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="stringliteral">    filename_wo_ext = filename.with_suffix(&#39;&#39;).with_suffix(&#39;&#39;)</span></div>
@@ -323,8 +325,9 @@ Here is the caller graph for this function:</div>
 <dd>
 pd DataFrame containing all data parsed from input gsd_files </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="simulationDataLoad_8py_source.html#l00133">133</a> of file <a class="el" href="simulationDataLoad_8py_source.html">simulationDataLoad.py</a>.</p>
-<div class="fragment"><div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<p class="definition">Definition at line <a class="el" href="simulationDataLoad_8py_source.html#l00132">132</a> of file <a class="el" href="simulationDataLoad_8py_source.html">simulationDataLoad.py</a>.</p>
+<div class="fragment"><div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="stringliteral"></span> </div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="stringliteral">    # NOTE: Assuming each GSD has same number of frames and particles</span></div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="stringliteral">    nframes = gsd_files[0].trajectory.file.nframes</span></div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="stringliteral">    nparticles = gsd_files[0].snapshot.particles.N</span></div>
@@ -531,41 +534,42 @@ pd DataFrame containing all data parsed from input. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="simulationDataLoad_8py_source.html#l00296">296</a> of file <a class="el" href="simulationDataLoad_8py_source.html">simulationDataLoad.py</a>.</p>
 <div class="fragment"><div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;<span class="stringliteral">    data_df = []</span></div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;<span class="stringliteral">    # Find path to relevant compressed data</span></div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;<span class="stringliteral">    comp_data_path = find_compressed_data(</span></div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;<span class="stringliteral">        relative_path_base_dir, sim_parameters_varied)</span></div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;<span class="stringliteral">    for i in range(len(comp_data_path)):  # loop over data source directories</span></div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;<span class="stringliteral">        data_source_gsd_files = []</span></div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;<span class="stringliteral">        for j in range(len(comp_data_path[i])):  # loop over parameters varied</span></div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;<span class="stringliteral">            # Load GSD files from compressed data</span></div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;<span class="stringliteral">            gsd_current = load_compressed_data(comp_data_path[i][j])</span></div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;<span class="stringliteral">            # Parse GSD files</span></div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;<span class="stringliteral">            if (len(gsd_current) &gt; 0):</span></div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="stringliteral">                data_source_gsd_files.append(gsd_current)</span></div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;<span class="stringliteral">        # Flatten output</span></div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;<span class="stringliteral">        data_source_gsd_files = [</span></div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;<span class="stringliteral">            item for sublist in data_source_gsd_files for item in sublist]</span></div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;<span class="stringliteral">        # Parse GSD files</span></div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;<span class="stringliteral">        try:</span></div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;<span class="stringliteral">            data_df.append(parse_loaded_data(data_source_gsd_files))</span></div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;<span class="stringliteral">        except:</span></div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;<span class="stringliteral">            raise RuntimeError(f&quot;Failed on iteration {i}&quot;)</span></div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;<span class="stringliteral">    # Combine all data</span></div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;<span class="stringliteral">    all_data_df = pd.concat(data_df)</span></div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;<span class="stringliteral">    return all_data_df</span></div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="stringliteral">    data_df = []</span></div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;<span class="stringliteral">    # Find path to relevant compressed data</span></div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;<span class="stringliteral">    comp_data_path = find_compressed_data(</span></div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;<span class="stringliteral">        relative_path_base_dir, sim_parameters_varied)</span></div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;<span class="stringliteral">    for i in range(len(comp_data_path)):  # loop over data source directories</span></div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;<span class="stringliteral">        data_source_gsd_files = []</span></div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;<span class="stringliteral">        for j in range(len(comp_data_path[i])):  # loop over parameters varied</span></div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;<span class="stringliteral">            # Load GSD files from compressed data</span></div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;<span class="stringliteral">            gsd_current = load_compressed_data(comp_data_path[i][j])</span></div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;<span class="stringliteral">            # Parse GSD files</span></div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="stringliteral">            if (len(gsd_current) &gt; 0):</span></div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="stringliteral">                data_source_gsd_files.append(gsd_current)</span></div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;<span class="stringliteral">        # Flatten output</span></div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;<span class="stringliteral">        data_source_gsd_files = [</span></div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="stringliteral">            item for sublist in data_source_gsd_files for item in sublist]</span></div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;<span class="stringliteral">        # Parse GSD files</span></div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;<span class="stringliteral">        try:</span></div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;<span class="stringliteral">            data_df.append(parse_loaded_data(data_source_gsd_files))</span></div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;<span class="stringliteral">        except:</span></div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;<span class="stringliteral">            raise RuntimeError(f&quot;Failed on iteration {i}&quot;)</span></div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;<span class="stringliteral">    # Combine all data</span></div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;<span class="stringliteral">    all_data_df = pd.concat(data_df)</span></div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;<span class="stringliteral">    return all_data_df</span></div>
 <span class="stringliteral"></div><!-- fragment -->
-<p class="reference">References <a class="el" href="simulationDataLoad_8py_source.html#l00036">find_compressed_data()</a>, <a class="el" href="simulationDataLoad_8py_source.html#l00078">load_compressed_data()</a>, and <a class="el" href="simulationDataLoad_8py_source.html#l00133">parse_loaded_data()</a>.</p>
+<p class="reference">References <a class="el" href="simulationDataLoad_8py_source.html#l00035">find_compressed_data()</a>, <a class="el" href="simulationDataLoad_8py_source.html#l00077">load_compressed_data()</a>, and <a class="el" href="simulationDataLoad_8py_source.html#l00132">parse_loaded_data()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -629,7 +633,7 @@ Here is the call graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacesimulationDataLoad.html">simulationDataLoad</a></li>
-    <li class="footer">Generated on Tue Oct 19 2021 21:12:50 for Bodies in Potential Flow by
+    <li class="footer">Generated on Tue Oct 19 2021 21:46:37 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

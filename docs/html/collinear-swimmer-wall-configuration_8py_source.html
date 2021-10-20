@@ -95,180 +95,193 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-configuration_8
 <div class="title">collinear-swimmer-wall-configuration.py</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="collinear-swimmer-wall-configuration_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html">    1</a></span>&#160;<span class="comment"># SECTION: Dependencies</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"># External dependencies</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">import</span> numpy <span class="keyword">as</span> np                 <span class="comment"># mathematical data structures</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">import</span> sys                         <span class="comment"># access system data</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">import</span> os                          <span class="comment"># access system data</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">from</span> optparse <span class="keyword">import</span> OptionParser  <span class="comment"># Get user input</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"># Internal Dependencies (NOTE: Assuming file called from project base directory)</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;sys.path.insert(0, os.getcwd() + <span class="stringliteral">&#39;/python&#39;</span>)</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">from</span> GSDUtilPy <span class="keyword">import</span> GSDUtilPy  <span class="comment"># noqa: E402</span></div>
+<a href="collinear-swimmer-wall-configuration_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html">    1</a></span>&#160;<span class="stringliteral">&quot;&quot;&quot;Script to create GSD file for specified system</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="stringliteral">__author__ = &quot;Alec Glisman&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="stringliteral">Example:</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="stringliteral">    python3 python/initial_configurations/&quot; . &quot;collinear-swimmer-wall-configuration.py \</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="stringliteral">        --GSD-path=&quot;test/input/data.gsd&quot; --dt=1e-2 --R-avg=4.0 --Z-height=6.0 \</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="stringliteral">        --phase-angle=-1.57079632679e+0 --U0=2.0 --omega=1.0</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"># SECTION: Dependencies</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"># !SECTION (Dependencies)</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment"># SECTION: Parse user input options</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a9e93a4eac8c1e0137e3c5335b0f5eac1">   18</a></span>&#160;parser = OptionParser()</div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a3ff4ad67080c163e8738ce34d5be22e8">   19</a></span>&#160;parser.add_option(<span class="stringliteral">&quot;--GSD-path&quot;</span>, dest=<span class="stringliteral">&quot;u_gsd_path&quot;</span>,</div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#aa460a5630fab369551975bdd56da1ee5">   20</a></span>&#160;                  help=<span class="stringliteral">&quot;Path to GSD file to be created&quot;</span>,</div>
-<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#adfc2cf1d69f93f25e832b9acff1212f4">   21</a></span>&#160;                  metavar=<span class="stringliteral">&quot;string&quot;</span>)</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;parser.add_option(<span class="stringliteral">&quot;--dt&quot;</span>, dest=<span class="stringliteral">&quot;u_dt&quot;</span>,</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                  help=<span class="stringliteral">&quot;(dimensionless) time-step for numerical integration&quot;</span>,</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                  metavar=<span class="stringliteral">&quot;double&quot;</span>)</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;parser.add_option(<span class="stringliteral">&quot;--R-avg&quot;</span>, dest=<span class="stringliteral">&quot;u_R_avg&quot;</span>,</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                  help=<span class="stringliteral">&quot;(dimensionless) average inter-particle pair separation during articulation period&quot;</span>,</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                  metavar=<span class="stringliteral">&quot;double&quot;</span>)</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;parser.add_option(<span class="stringliteral">&quot;--Z-height&quot;</span>, dest=<span class="stringliteral">&quot;u_Z_height&quot;</span>,</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                  help=<span class="stringliteral">&quot;(dimensionless) Initial height of collinear swimmer above wall&quot;</span>,</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                  metavar=<span class="stringliteral">&quot;double&quot;</span>)</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;parser.add_option(<span class="stringliteral">&quot;--phase-angle&quot;</span>, dest=<span class="stringliteral">&quot;u_phase_angle&quot;</span>,</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                  help=<span class="stringliteral">&quot;phase angle between oscillating pairs&quot;</span>,</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                  metavar=<span class="stringliteral">&quot;double&quot;</span>)</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;parser.add_option(<span class="stringliteral">&quot;--U0&quot;</span>, dest=<span class="stringliteral">&quot;u_U0&quot;</span>,</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                  help=<span class="stringliteral">&quot;velocity oscillation amplitude&quot;</span>,</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                  metavar=<span class="stringliteral">&quot;double&quot;</span>)</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;parser.add_option(<span class="stringliteral">&quot;--omega&quot;</span>, dest=<span class="stringliteral">&quot;u_omega&quot;</span>,</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                  help=<span class="stringliteral">&quot;velocity oscillation frequency&quot;</span>,</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                  metavar=<span class="stringliteral">&quot;double&quot;</span>)</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;parser.add_option(<span class="stringliteral">&quot;--image-system&quot;</span>, dest=<span class="stringliteral">&quot;u_image_system&quot;</span>,</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                  help=<span class="stringliteral">&quot;Is the system under consideration an image system (about z-axis)&quot;</span>,</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                  metavar=<span class="stringliteral">&quot;bool&quot;</span>)</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment"># !SECTION (Parse user input options)</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment"># SECTION: Parameters</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment"># Integrator parameters</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a6a824634418cf15d423aa78f18338f40">   50</a></span>&#160;t = 0.0</div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a80ade03e792fc01344bb847f51d1a2e7">   51</a></span>&#160;tf = 25.0</div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#af246bdd09ccf84c90f0166fd813ea6ec">   52</a></span>&#160;num_steps_output = 10000</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"># External dependencies</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">import</span> numpy <span class="keyword">as</span> np                 <span class="comment"># mathematical data structures</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">import</span> sys                         <span class="comment"># access system data</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">import</span> os                          <span class="comment"># access system data</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">from</span> optparse <span class="keyword">import</span> OptionParser  <span class="comment"># Get user input</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"># Internal Dependencies (NOTE: Assuming file called from project base directory)</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;sys.path.insert(0, os.getcwd() + <span class="stringliteral">&#39;/python&#39;</span>)</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">from</span> GSDUtilPy <span class="keyword">import</span> GSDUtilPy  <span class="comment"># noqa: E402</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment"># !SECTION (Dependencies)</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"># SECTION: Parse user input options</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;parser = OptionParser()</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;parser.add_option(<span class="stringliteral">&quot;--GSD-path&quot;</span>, dest=<span class="stringliteral">&quot;u_gsd_path&quot;</span>,</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a9e93a4eac8c1e0137e3c5335b0f5eac1">   30</a></span>&#160;                  help=<span class="stringliteral">&quot;Path to GSD file to be created&quot;</span>,</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a3ff4ad67080c163e8738ce34d5be22e8">   31</a></span>&#160;                  metavar=<span class="stringliteral">&quot;string&quot;</span>)</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#aa460a5630fab369551975bdd56da1ee5">   32</a></span>&#160;parser.add_option(<span class="stringliteral">&quot;--dt&quot;</span>, dest=<span class="stringliteral">&quot;u_dt&quot;</span>,</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#adfc2cf1d69f93f25e832b9acff1212f4">   33</a></span>&#160;                  help=<span class="stringliteral">&quot;(dimensionless) time-step for numerical integration&quot;</span>,</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                  metavar=<span class="stringliteral">&quot;double&quot;</span>)</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;parser.add_option(<span class="stringliteral">&quot;--R-avg&quot;</span>, dest=<span class="stringliteral">&quot;u_R_avg&quot;</span>,</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                  help=<span class="stringliteral">&quot;(dimensionless) average inter-particle pair separation during articulation period&quot;</span>,</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                  metavar=<span class="stringliteral">&quot;double&quot;</span>)</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;parser.add_option(<span class="stringliteral">&quot;--Z-height&quot;</span>, dest=<span class="stringliteral">&quot;u_Z_height&quot;</span>,</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                  help=<span class="stringliteral">&quot;(dimensionless) Initial height of collinear swimmer above wall&quot;</span>,</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                  metavar=<span class="stringliteral">&quot;double&quot;</span>)</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;parser.add_option(<span class="stringliteral">&quot;--phase-angle&quot;</span>, dest=<span class="stringliteral">&quot;u_phase_angle&quot;</span>,</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                  help=<span class="stringliteral">&quot;phase angle between oscillating pairs&quot;</span>,</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                  metavar=<span class="stringliteral">&quot;double&quot;</span>)</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;parser.add_option(<span class="stringliteral">&quot;--U0&quot;</span>, dest=<span class="stringliteral">&quot;u_U0&quot;</span>,</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                  help=<span class="stringliteral">&quot;velocity oscillation amplitude&quot;</span>,</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                  metavar=<span class="stringliteral">&quot;double&quot;</span>)</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;parser.add_option(<span class="stringliteral">&quot;--omega&quot;</span>, dest=<span class="stringliteral">&quot;u_omega&quot;</span>,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                  help=<span class="stringliteral">&quot;velocity oscillation frequency&quot;</span>,</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                  metavar=<span class="stringliteral">&quot;double&quot;</span>)</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;parser.add_option(<span class="stringliteral">&quot;--image-system&quot;</span>, dest=<span class="stringliteral">&quot;u_image_system&quot;</span>,</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                  help=<span class="stringliteral">&quot;Is the system under consideration an image system (about z-axis)&quot;</span>,</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                  metavar=<span class="stringliteral">&quot;bool&quot;</span>)</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment"># Material parameters</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a6d357da349984e656047132b52785ee5">   55</a></span>&#160;fluid_density = 1.0</div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a1aa52fed727ed5353368316423f5561d">   56</a></span>&#160;particle_density = 1.0</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment"># Potential parameters</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a94b6d636bf5186285921fdda6c1e3c1e">   59</a></span>&#160;wca_epsilon = 0.0</div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a518175f31fe958bd18063a321343432e">   60</a></span>&#160;wca_sigma = 0.0</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment"># Particle parameters</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#abb68b1183bbd83ecd21a083bc29d7160">   63</a></span>&#160;n = 6</div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#aa0af4e4271e661164da516f481432720">   64</a></span>&#160;types = [<span class="stringliteral">&#39;constrained&#39;</span>, <span class="stringliteral">&#39;locater&#39;</span>]</div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a1e9783549acb474476aad63fdbfdf0cc">   65</a></span>&#160;typeid = np.array([1, 0, 0, 1, 0, 0], dtype=np.uint32)</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment"># !SECTION (Parameters)</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment"># SECTION: GSD Creation</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#ae34ebb5ccbfea8e528c3836768a93b39">   72</a></span>&#160;<span class="keyword">def </span><a class="code" href="namespacecollinear-swimmer-wall-configuration.html#ae34ebb5ccbfea8e528c3836768a93b39">initializeGSD</a>():</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">global</span> gsd_class</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    gsd_class = <a class="code" href="classGSDUtilPy_1_1GSDUtilPy.html">GSDUtilPy</a>(gsd_path, create_gsd=<span class="keyword">True</span>)</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    gsd_class.setLogParameters(dt, t, tf, tau, num_steps_output,</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                               fluid_density, particle_density, wca_epsilon, wca_sigma,</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                               image_system)</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    gsd_class.setParticleParameters(n, types=types, typeid=typeid)</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment"># !SECTION (Parse user input options)</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment"># SECTION: Parameters</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment"># Integrator parameters</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;t = 0.0</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;tf = 25.0</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a6a824634418cf15d423aa78f18338f40">   62</a></span>&#160;num_steps_output = 10000</div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a80ade03e792fc01344bb847f51d1a2e7">   63</a></span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#af246bdd09ccf84c90f0166fd813ea6ec">   64</a></span>&#160;<span class="comment"># Material parameters</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;fluid_density = 1.0</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;particle_density = 1.0</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a6d357da349984e656047132b52785ee5">   67</a></span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a1aa52fed727ed5353368316423f5561d">   68</a></span>&#160;<span class="comment"># Potential parameters</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;wca_epsilon = 0.0</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;wca_sigma = 0.0</div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a94b6d636bf5186285921fdda6c1e3c1e">   71</a></span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a518175f31fe958bd18063a321343432e">   72</a></span>&#160;<span class="comment"># Particle parameters</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;n = 6</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;types = [<span class="stringliteral">&#39;constrained&#39;</span>, <span class="stringliteral">&#39;locater&#39;</span>]</div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#abb68b1183bbd83ecd21a083bc29d7160">   75</a></span>&#160;typeid = np.array([1, 0, 0, 1, 0, 0], dtype=np.uint32)</div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#aa0af4e4271e661164da516f481432720">   76</a></span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a1e9783549acb474476aad63fdbfdf0cc">   77</a></span>&#160;<span class="comment"># !SECTION (Parameters)</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="comment"># SECTION: GSD Creation</span></div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#af92c6e38d93a3b8b752d6167ca0e1931">   82</a></span>&#160;<span class="keyword">def </span><a class="code" href="namespacecollinear-swimmer-wall-configuration.html#af92c6e38d93a3b8b752d6167ca0e1931">setInitialConditions</a>():</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="comment"># orientation</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    quat = np.zeros((n, 4), dtype=np.double)</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    no_rotation_quat = np.array([1.0, 0.0, 0.0, 0.0], dtype=np.double)</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    quat[0] = no_rotation_quat</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    quat[1] = no_rotation_quat</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    quat[2] = no_rotation_quat</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    quat[3] = no_rotation_quat</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    quat[4] = no_rotation_quat</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    quat[5] = no_rotation_quat</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="keyword">def </span><a class="code" href="namespacecollinear-swimmer-wall-configuration.html#ae34ebb5ccbfea8e528c3836768a93b39">initializeGSD</a>():</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">global</span> gsd_class</div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#ae34ebb5ccbfea8e528c3836768a93b39">   84</a></span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    gsd_class = <a class="code" href="classGSDUtilPy_1_1GSDUtilPy.html">GSDUtilPy</a>(gsd_path, create_gsd=<span class="keyword">True</span>)</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    gsd_class.setLogParameters(dt, t, tf, tau, num_steps_output,</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                               fluid_density, particle_density, wca_epsilon, wca_sigma,</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                               image_system)</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    gsd_class.setParticleParameters(n, types=types, typeid=typeid)</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keyword">def </span><a class="code" href="namespacecollinear-swimmer-wall-configuration.html#af92c6e38d93a3b8b752d6167ca0e1931">setInitialConditions</a>():</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="comment"># position</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    pos = np.zeros((n, 3), dtype=np.double)</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    pos[0] = [0.0, 0.0, Z_height]</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    pos[1] = [R_avg, 0.0, Z_height]</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    pos[2] = [- R_avg + (U0 / omega) * np.sin(phase_angle), 0.0, Z_height]</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    pos[3] = [0.0, 0.0, -Z_height]</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    pos[4] = [R_avg, 0.0, -Z_height]</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    pos[5] = [- R_avg + (U0 / omega) * np.sin(phase_angle), 0.0, -Z_height]</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="comment"># velocity NOTE[epic=Assumptions]: must be calculated in simulation system (C++)</span></div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    vel = np.zeros_like(pos, dtype=np.double)</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="comment"># acceleration NOTE[epic=Assumptions]: must be calculated in simulation system (C++)</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    acc = np.zeros_like(pos, dtype=np.double)</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="comment"># output data</span></div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    gsd_class.setKinematics(quat, pos, vel, acc)</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#af92c6e38d93a3b8b752d6167ca0e1931">   94</a></span>&#160;    <span class="comment"># orientation</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    quat = np.zeros((n, 4), dtype=np.double)</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    no_rotation_quat = np.array([1.0, 0.0, 0.0, 0.0], dtype=np.double)</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    quat[0] = no_rotation_quat</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    quat[1] = no_rotation_quat</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    quat[2] = no_rotation_quat</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    quat[3] = no_rotation_quat</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    quat[4] = no_rotation_quat</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    quat[5] = no_rotation_quat</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="comment"># position</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    pos = np.zeros((n, 3), dtype=np.double)</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    pos[0] = [0.0, 0.0, Z_height]</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    pos[1] = [R_avg, 0.0, Z_height]</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    pos[2] = [- R_avg + (U0 / omega) * np.sin(phase_angle), 0.0, Z_height]</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    pos[3] = [0.0, 0.0, -Z_height]</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    pos[4] = [R_avg, 0.0, -Z_height]</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    pos[5] = [- R_avg + (U0 / omega) * np.sin(phase_angle), 0.0, -Z_height]</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a913b52e835a57692861622a542856792">  113</a></span>&#160;<span class="keyword">def </span><a class="code" href="namespacecollinear-swimmer-wall-configuration.html#a913b52e835a57692861622a542856792">setSystemData</a>():</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="comment"># get snapshot</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    snapshot = gsd_class.snapshot</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="comment"># convert data to GSD expected type</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    l_R_avg = np.array([R_avg], dtype=np.double)</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    l_Z_height = np.array([Z_height], dtype=np.double)</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    l_U0 = np.array([U0], dtype=np.double)</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    l_omega = np.array([omega], dtype=np.double)</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    l_phase_angle = np.array([phase_angle], dtype=np.double)</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    l_U_swim = np.zeros(6, dtype=np.double)</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    l_A_swim = np.zeros(6, dtype=np.double)</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="comment"># output data</span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/R_avg&#39;</span>] = l_R_avg</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/Z_height&#39;</span>] = l_Z_height</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/U0&#39;</span>] = l_U0</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/omega&#39;</span>] = l_omega</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/phase_shift&#39;</span>] = l_phase_angle</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/U_swim&#39;</span>] = l_U_swim</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/A_swim&#39;</span>] = l_A_swim</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="comment"># !SECTION: (GSD Creation)</span></div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="comment"># SECTION: For use when being called from command line</span></div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="keyword">global</span> gsd_path, dt, R_avg, Z_height, phase_angle, U0, omega, image_system, epsilon, tau</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="comment"># Parse user input</span></div>
-<div class="line"><a name="l00145"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a629d65526d68e90e39a5612b3729f4df">  145</a></span>&#160;    options, remainder = parser.parse_args(sys.argv[1:])</div>
-<div class="line"><a name="l00146"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#aef28f0c3112974a2be8cb5a2f1d5e1d0">  146</a></span>&#160;    gsd_path = str(options.u_gsd_path)</div>
-<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#aa83d4b16b6838a456527210ede4ff95c">  147</a></span>&#160;    dt = np.double(options.u_dt)</div>
-<div class="line"><a name="l00148"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#ad61278b805a689fc9a51fdb4a13b2f50">  148</a></span>&#160;    R_avg = np.double(options.u_R_avg)</div>
-<div class="line"><a name="l00149"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#abdcc35bf3f774c58ddcfca18dc8f4ff3">  149</a></span>&#160;    Z_height = np.double(options.u_Z_height)</div>
-<div class="line"><a name="l00150"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a09bc5accb5e5ee05fda74cde71589254">  150</a></span>&#160;    phase_angle = np.double(options.u_phase_angle)</div>
-<div class="line"><a name="l00151"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a840d2d5fc1d230fcc4cad3790963957b">  151</a></span>&#160;    U0 = np.double(options.u_U0)</div>
-<div class="line"><a name="l00152"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#afdd822921933552c470939bb60f4ae1d">  152</a></span>&#160;    omega = np.double(options.u_omega)</div>
-<div class="line"><a name="l00153"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a8d05e51de588209935b9570cd7f16a7b">  153</a></span>&#160;    image_system = bool(options.u_image_system)</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="comment"># velocity NOTE[epic=Assumptions]: must be calculated in simulation system (C++)</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    vel = np.zeros_like(pos, dtype=np.double)</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="comment"># acceleration NOTE[epic=Assumptions]: must be calculated in simulation system (C++)</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    acc = np.zeros_like(pos, dtype=np.double)</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="comment"># output data</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    gsd_class.setKinematics(quat, pos, vel, acc)</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="keyword">def </span><a class="code" href="namespacecollinear-swimmer-wall-configuration.html#a913b52e835a57692861622a542856792">setSystemData</a>():</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
+<div class="line"><a name="l00125"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a913b52e835a57692861622a542856792">  125</a></span>&#160;    <span class="comment"># get snapshot</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    snapshot = gsd_class.snapshot</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="comment"># convert data to GSD expected type</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    l_R_avg = np.array([R_avg], dtype=np.double)</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    l_Z_height = np.array([Z_height], dtype=np.double)</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    l_U0 = np.array([U0], dtype=np.double)</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    l_omega = np.array([omega], dtype=np.double)</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    l_phase_angle = np.array([phase_angle], dtype=np.double)</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    l_U_swim = np.zeros(6, dtype=np.double)</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    l_A_swim = np.zeros(6, dtype=np.double)</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <span class="comment"># output data</span></div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/R_avg&#39;</span>] = l_R_avg</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/Z_height&#39;</span>] = l_Z_height</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/U0&#39;</span>] = l_U0</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/omega&#39;</span>] = l_omega</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/phase_shift&#39;</span>] = l_phase_angle</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/U_swim&#39;</span>] = l_U_swim</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    snapshot.log[<span class="stringliteral">&#39;swimmer/A_swim&#39;</span>] = l_A_swim</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="comment"># !SECTION: (GSD Creation)</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160; </div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="comment"># SECTION: For use when being called from command line</span></div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;Main method</span></div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
-<div class="line"><a name="l00155"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a1ba3ea4ea1cc1e7ec033ac0713a01680">  155</a></span>&#160;    epsilon = (U0 / omega) / R_avg</div>
-<div class="line"><a name="l00156"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a02186abd4f14eaa03641249e186960c1">  156</a></span>&#160;    tau = (2.0 * np.pi) / omega</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160; </div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <a class="code" href="namespacecollinear-swimmer-wall-configuration.html#ae34ebb5ccbfea8e528c3836768a93b39">initializeGSD</a>()         <span class="comment"># Create GSD, set log parameters, set particle parameters</span></div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <a class="code" href="namespacecollinear-swimmer-wall-configuration.html#af92c6e38d93a3b8b752d6167ca0e1931">setInitialConditions</a>()  <span class="comment"># set kinematics</span></div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <a class="code" href="namespacecollinear-swimmer-wall-configuration.html#a913b52e835a57692861622a542856792">setSystemData</a>()         <span class="comment"># set data specific to given simulation system</span></div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    gsd_class.saveSnapshot()</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; </div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="comment"># !SECTION (For use when being called from command line)</span></div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keyword">global</span> gsd_path, dt, R_avg, Z_height, phase_angle, U0, omega, image_system, epsilon, tau</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="comment"># Parse user input</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    options, remainder = parser.parse_args(sys.argv[1:])</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    gsd_path = str(options.u_gsd_path)</div>
+<div class="line"><a name="l00160"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a629d65526d68e90e39a5612b3729f4df">  160</a></span>&#160;    dt = np.double(options.u_dt)</div>
+<div class="line"><a name="l00161"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#aef28f0c3112974a2be8cb5a2f1d5e1d0">  161</a></span>&#160;    R_avg = np.double(options.u_R_avg)</div>
+<div class="line"><a name="l00162"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#aa83d4b16b6838a456527210ede4ff95c">  162</a></span>&#160;    Z_height = np.double(options.u_Z_height)</div>
+<div class="line"><a name="l00163"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#ad61278b805a689fc9a51fdb4a13b2f50">  163</a></span>&#160;    phase_angle = np.double(options.u_phase_angle)</div>
+<div class="line"><a name="l00164"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#abdcc35bf3f774c58ddcfca18dc8f4ff3">  164</a></span>&#160;    U0 = np.double(options.u_U0)</div>
+<div class="line"><a name="l00165"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a09bc5accb5e5ee05fda74cde71589254">  165</a></span>&#160;    omega = np.double(options.u_omega)</div>
+<div class="line"><a name="l00166"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a840d2d5fc1d230fcc4cad3790963957b">  166</a></span>&#160;    image_system = bool(options.u_image_system)</div>
+<div class="line"><a name="l00167"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#afdd822921933552c470939bb60f4ae1d">  167</a></span>&#160; </div>
+<div class="line"><a name="l00168"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a8d05e51de588209935b9570cd7f16a7b">  168</a></span>&#160;    epsilon = (U0 / omega) / R_avg</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    tau = (2.0 * np.pi) / omega</div>
+<div class="line"><a name="l00170"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a1ba3ea4ea1cc1e7ec033ac0713a01680">  170</a></span>&#160; </div>
+<div class="line"><a name="l00171"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-configuration.html#a02186abd4f14eaa03641249e186960c1">  171</a></span>&#160;    <a class="code" href="namespacecollinear-swimmer-wall-configuration.html#ae34ebb5ccbfea8e528c3836768a93b39">initializeGSD</a>()         <span class="comment"># Create GSD, set log parameters, set particle parameters</span></div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <a class="code" href="namespacecollinear-swimmer-wall-configuration.html#af92c6e38d93a3b8b752d6167ca0e1931">setInitialConditions</a>()  <span class="comment"># set kinematics</span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <a class="code" href="namespacecollinear-swimmer-wall-configuration.html#a913b52e835a57692861622a542856792">setSystemData</a>()         <span class="comment"># set data specific to given simulation system</span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    gsd_class.saveSnapshot()</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="comment"># !SECTION (For use when being called from command line)</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="anamespacecollinear-swimmer-wall-configuration_html_a913b52e835a57692861622a542856792"><div class="ttname"><a href="namespacecollinear-swimmer-wall-configuration.html#a913b52e835a57692861622a542856792">collinear-swimmer-wall-configuration.setSystemData</a></div><div class="ttdeci">def setSystemData()</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-configuration_8py_source.html#l00113">collinear-swimmer-wall-configuration.py:113</a></div></div>
+<div class="ttc" id="anamespacecollinear-swimmer-wall-configuration_html_a913b52e835a57692861622a542856792"><div class="ttname"><a href="namespacecollinear-swimmer-wall-configuration.html#a913b52e835a57692861622a542856792">collinear-swimmer-wall-configuration.setSystemData</a></div><div class="ttdeci">def setSystemData()</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-configuration_8py_source.html#l00125">collinear-swimmer-wall-configuration.py:125</a></div></div>
 <div class="ttc" id="aclassGSDUtilPy_1_1GSDUtilPy_html"><div class="ttname"><a href="classGSDUtilPy_1_1GSDUtilPy.html">GSDUtilPy.GSDUtilPy</a></div><div class="ttdoc">Convert data from user to GSD schema and save frame to file.</div><div class="ttdef"><b>Definition:</b> <a href="GSDUtilPy_8py_source.html#l00020">GSDUtilPy.py:20</a></div></div>
-<div class="ttc" id="anamespacecollinear-swimmer-wall-configuration_html_af92c6e38d93a3b8b752d6167ca0e1931"><div class="ttname"><a href="namespacecollinear-swimmer-wall-configuration.html#af92c6e38d93a3b8b752d6167ca0e1931">collinear-swimmer-wall-configuration.setInitialConditions</a></div><div class="ttdeci">def setInitialConditions()</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-configuration_8py_source.html#l00082">collinear-swimmer-wall-configuration.py:82</a></div></div>
-<div class="ttc" id="anamespacecollinear-swimmer-wall-configuration_html_ae34ebb5ccbfea8e528c3836768a93b39"><div class="ttname"><a href="namespacecollinear-swimmer-wall-configuration.html#ae34ebb5ccbfea8e528c3836768a93b39">collinear-swimmer-wall-configuration.initializeGSD</a></div><div class="ttdeci">def initializeGSD()</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-configuration_8py_source.html#l00072">collinear-swimmer-wall-configuration.py:72</a></div></div>
+<div class="ttc" id="anamespacecollinear-swimmer-wall-configuration_html_af92c6e38d93a3b8b752d6167ca0e1931"><div class="ttname"><a href="namespacecollinear-swimmer-wall-configuration.html#af92c6e38d93a3b8b752d6167ca0e1931">collinear-swimmer-wall-configuration.setInitialConditions</a></div><div class="ttdeci">def setInitialConditions()</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-configuration_8py_source.html#l00094">collinear-swimmer-wall-configuration.py:94</a></div></div>
+<div class="ttc" id="anamespacecollinear-swimmer-wall-configuration_html_ae34ebb5ccbfea8e528c3836768a93b39"><div class="ttname"><a href="namespacecollinear-swimmer-wall-configuration.html#ae34ebb5ccbfea8e528c3836768a93b39">collinear-swimmer-wall-configuration.initializeGSD</a></div><div class="ttdeci">def initializeGSD()</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-configuration_8py_source.html#l00084">collinear-swimmer-wall-configuration.py:84</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_7837fde3ab9c1fb2fc5be7b717af8d79.html">python</a></li><li class="navelem"><a class="el" href="dir_d586c9a8800ac8257027f396f0cd6d99.html">initial_configurations</a></li><li class="navelem"><a class="el" href="collinear-swimmer-wall-configuration_8py.html">collinear-swimmer-wall-configuration.py</a></li>
-    <li class="footer">Generated on Tue Oct 19 2021 21:12:50 for Bodies in Potential Flow by
+    <li class="footer">Generated on Tue Oct 19 2021 21:46:36 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

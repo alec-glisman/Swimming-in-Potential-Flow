@@ -3,8 +3,7 @@
 __author__ = "Alec Glisman"
 
 Example:
-    "python3 python/analysis/collinear-swimmer-wall-individual-analysis.py \
-        --relative-path=temp/output --output-dir=temp/output/figures
+    python3 python/analysis/collinear-swimmer-wall-individual-analysis.py --relative-path=temp/output --output-dir=temp/output/figures
 """
 
 # SECTION: Depdencendies
@@ -41,9 +40,17 @@ parser.add_option("--output-dir", dest="u_output_dir",
 
 
 def aggregate_plots(relative_path, output_dir):
+    """Script to analyze a single GSD file.
+
+    Args:
+        relative_path (str): path to GSD files to load
+        output_dir (str): path to output of numerical analysis
+
+    Example:
+        python3 python/analysis/collinear-swimmer-wall-individual-analysis.py --relative-path=temp/output --output-dir=temp/output/figures
+    """
 
     # SECTION: Parameters for function
-
     output_dir = relative_path + "/" + output_dir + "/"
     gsd_files = []
     epsOutput = True
@@ -385,6 +392,8 @@ def aggregate_plots(relative_path, output_dir):
 
 # SECTION: For use when being called from command line
 if __name__ == "__main__":
+    """Main method
+    """
 
     # parse user input
     options, remainder = parser.parse_args(sys.argv[1:])

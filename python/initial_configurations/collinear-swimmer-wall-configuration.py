@@ -149,6 +149,9 @@ def setSystemData():
 # SECTION: For use when being called from command line
 
 if __name__ == "__main__":
+    """Main method
+    """
+
     global gsd_path, dt, R_avg, Z_height, phase_angle, U0, omega, image_system, epsilon, tau
 
     # Parse user input

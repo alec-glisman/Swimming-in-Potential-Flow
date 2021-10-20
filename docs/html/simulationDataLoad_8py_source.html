@@ -121,16 +121,16 @@ $(document).ready(function(){initNavTree('simulationDataLoad_8py_source.html',''
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">def </span><a class="code" href="namespacesimulationDataLoad.html#a95311b311258be707b05eead2f52571e">find_compressed_data</a>(relative_path_base_dir, sim_parameters_varied):</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="stringliteral">    Locates compressed data files and returns paths as list of strings.</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="stringliteral">    Args:</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="stringliteral">        relative_path_base_dir (list): List of strings that give path to base directory from which to search for compressed data files</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="stringliteral">        sim_parameters_varied (list): List of strings detailing which simulation parameters are varied. These must appear in compressed filename string.</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="stringliteral">    Returns:</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="stringliteral">        list: List of strings that give compressed filepaths found and matched.</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="namespacesimulationDataLoad.html#a95311b311258be707b05eead2f52571e">   36</a></span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;Locates compressed data files and returns paths as list of strings.</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="stringliteral">    Args:</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="stringliteral">        relative_path_base_dir (list): List of strings that give path to base directory from which to search for compressed data files</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="stringliteral">        sim_parameters_varied (list): List of strings detailing which simulation parameters are varied. These must appear in compressed filename string.</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="stringliteral">    Returns:</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="stringliteral">        list: List of strings that give compressed filepaths found and matched.</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="namespacesimulationDataLoad.html#a95311b311258be707b05eead2f52571e">   35</a></span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    data_path = []</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordflow">for</span> r <span class="keywordflow">in</span> relative_path_base_dir:</div>
@@ -160,19 +160,19 @@ $(document).ready(function(){initNavTree('simulationDataLoad_8py_source.html',''
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">def </span><a class="code" href="namespacesimulationDataLoad.html#a7923bc96a25c1889b0bcf68199d58284">load_compressed_data</a>(tar_data_path):</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="stringliteral">    untar and load data using GSDUtilPy class</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="stringliteral">    Args:</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="stringliteral">        tar_data_path (str): String that give compressed file path to untar and parse.</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="stringliteral">    Raises:</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="stringliteral">        IOError: Input tar_data_path does not point to a tarfile</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="stringliteral">        IOError: No data found was parsed inside tar_data_path</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="stringliteral">    Returns:</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="stringliteral">        list: List of GSDUtilPy classes that have GSD data parsed</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="namespacesimulationDataLoad.html#a7923bc96a25c1889b0bcf68199d58284">   78</a></span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;untar and load data using GSDUtilPy class</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="stringliteral">    Args:</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="stringliteral">        tar_data_path (str): String that give compressed file path to untar and parse.</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="stringliteral">    Raises:</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="stringliteral">        IOError: Input tar_data_path does not point to a tarfile</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="stringliteral">        IOError: No data found was parsed inside tar_data_path</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="stringliteral">    Returns:</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="stringliteral">        list: List of GSDUtilPy classes that have GSD data parsed</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="namespacesimulationDataLoad.html#a7923bc96a25c1889b0bcf68199d58284">   77</a></span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="comment"># get filename without extension</span></div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    filename = Path(tar_data_path)</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    filename_wo_ext = filename.with_suffix(<span class="stringliteral">&#39;&#39;</span>).with_suffix(<span class="stringliteral">&#39;&#39;</span>)</div>
@@ -215,19 +215,19 @@ $(document).ready(function(){initNavTree('simulationDataLoad_8py_source.html',''
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="keyword">def </span><a class="code" href="namespacesimulationDataLoad.html#aa150368134a2e30b231c87aeeb6c6eda">parse_loaded_data</a>(gsd_files):</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="stringliteral">    Parses input GSD files and outputs to pandas DataFrame</span></div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="stringliteral">    Args:</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="stringliteral">        gsd_files (list): List of GSD files to parse</span></div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="stringliteral">    Raises:</span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="stringliteral">        RuntimeError: Could not load data from initial frame of GSD</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="stringliteral">        RuntimeError: Could not load data from final frame of GSD. NOTE: Assumes that all files in gsd_files have the same number of frames.</span></div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="stringliteral">    Returns:</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="stringliteral">        pd.DataFrame: DataFrame containing all data parsed from input gsd_files</span></div>
-<div class="line"><a name="l00133"></a><span class="lineno"><a class="line" href="namespacesimulationDataLoad.html#aa150368134a2e30b231c87aeeb6c6eda">  133</a></span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;Parses input GSD files and outputs to pandas DataFrame</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="stringliteral">    Args:</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="stringliteral">        gsd_files (list): List of GSD files to parse</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="stringliteral">    Raises:</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="stringliteral">        RuntimeError: Could not load data from initial frame of GSD</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="stringliteral">        RuntimeError: Could not load data from final frame of GSD. NOTE: Assumes that all files in gsd_files have the same number of frames.</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="stringliteral">    Returns:</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="stringliteral">        pd.DataFrame: DataFrame containing all data parsed from input gsd_files</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno"><a class="line" href="namespacesimulationDataLoad.html#aa150368134a2e30b231c87aeeb6c6eda">  132</a></span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="comment"># NOTE: Assuming each GSD has same number of frames and particles</span></div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    nframes = gsd_files[0].trajectory.file.nframes</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    nparticles = gsd_files[0].snapshot.particles.N</div>
@@ -391,51 +391,52 @@ $(document).ready(function(){initNavTree('simulationDataLoad_8py_source.html',''
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<span class="stringliteral">    Returns:</span></div>
 <div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;<span class="stringliteral">        pd.DataFrame: DataFrame containing all data parsed from input.</span></div>
 <div class="line"><a name="l00296"></a><span class="lineno"><a class="line" href="namespacesimulationDataLoad.html#ae3187c41888f046bcc6417834e68e241">  296</a></span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    data_df = []</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160; </div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    <span class="comment"># Find path to relevant compressed data</span></div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    comp_data_path = <a class="code" href="namespacesimulationDataLoad.html#a95311b311258be707b05eead2f52571e">find_compressed_data</a>(</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;        relative_path_base_dir, sim_parameters_varied)</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160; </div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(len(comp_data_path)):  <span class="comment"># loop over data source directories</span></div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160; </div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        data_source_gsd_files = []</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160; </div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;        <span class="keywordflow">for</span> j <span class="keywordflow">in</span> range(len(comp_data_path[i])):  <span class="comment"># loop over parameters varied</span></div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160; </div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;            <span class="comment"># Load GSD files from compressed data</span></div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;            gsd_current = <a class="code" href="namespacesimulationDataLoad.html#a7923bc96a25c1889b0bcf68199d58284">load_compressed_data</a>(comp_data_path[i][j])</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160; </div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;            <span class="comment"># Parse GSD files</span></div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;            <span class="keywordflow">if</span> (len(gsd_current) &gt; 0):</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;                data_source_gsd_files.append(gsd_current)</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160; </div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        <span class="comment"># Flatten output</span></div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;        data_source_gsd_files = [</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;            item <span class="keywordflow">for</span> sublist <span class="keywordflow">in</span> data_source_gsd_files <span class="keywordflow">for</span> item <span class="keywordflow">in</span> sublist]</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160; </div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        <span class="comment"># Parse GSD files</span></div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        <span class="keywordflow">try</span>:</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;            data_df.append(<a class="code" href="namespacesimulationDataLoad.html#aa150368134a2e30b231c87aeeb6c6eda">parse_loaded_data</a>(data_source_gsd_files))</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160; </div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;        <span class="keywordflow">except</span>:</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;            <span class="keywordflow">raise</span> RuntimeError(f<span class="stringliteral">&quot;Failed on iteration {i}&quot;</span>)</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160; </div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <span class="comment"># Combine all data</span></div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    all_data_df = pd.concat(data_df)</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    <span class="keywordflow">return</span> all_data_df</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160; </div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    data_df = []</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160; </div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    <span class="comment"># Find path to relevant compressed data</span></div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    comp_data_path = <a class="code" href="namespacesimulationDataLoad.html#a95311b311258be707b05eead2f52571e">find_compressed_data</a>(</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        relative_path_base_dir, sim_parameters_varied)</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160; </div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(len(comp_data_path)):  <span class="comment"># loop over data source directories</span></div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160; </div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;        data_source_gsd_files = []</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160; </div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;        <span class="keywordflow">for</span> j <span class="keywordflow">in</span> range(len(comp_data_path[i])):  <span class="comment"># loop over parameters varied</span></div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160; </div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;            <span class="comment"># Load GSD files from compressed data</span></div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;            gsd_current = <a class="code" href="namespacesimulationDataLoad.html#a7923bc96a25c1889b0bcf68199d58284">load_compressed_data</a>(comp_data_path[i][j])</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160; </div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;            <span class="comment"># Parse GSD files</span></div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;            <span class="keywordflow">if</span> (len(gsd_current) &gt; 0):</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;                data_source_gsd_files.append(gsd_current)</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;        <span class="comment"># Flatten output</span></div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        data_source_gsd_files = [</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;            item <span class="keywordflow">for</span> sublist <span class="keywordflow">in</span> data_source_gsd_files <span class="keywordflow">for</span> item <span class="keywordflow">in</span> sublist]</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160; </div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        <span class="comment"># Parse GSD files</span></div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;        <span class="keywordflow">try</span>:</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;            data_df.append(<a class="code" href="namespacesimulationDataLoad.html#aa150368134a2e30b231c87aeeb6c6eda">parse_loaded_data</a>(data_source_gsd_files))</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160; </div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;        <span class="keywordflow">except</span>:</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;            <span class="keywordflow">raise</span> RuntimeError(f<span class="stringliteral">&quot;Failed on iteration {i}&quot;</span>)</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160; </div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    <span class="comment"># Combine all data</span></div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    all_data_df = pd.concat(data_df)</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    <span class="keywordflow">return</span> all_data_df</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="aclassGSDUtilPy_1_1GSDUtilPy_html"><div class="ttname"><a href="classGSDUtilPy_1_1GSDUtilPy.html">GSDUtilPy.GSDUtilPy</a></div><div class="ttdoc">Convert data from user to GSD schema and save frame to file.</div><div class="ttdef"><b>Definition:</b> <a href="GSDUtilPy_8py_source.html#l00020">GSDUtilPy.py:20</a></div></div>
 <div class="ttc" id="anamespacesimulationDataLoad_html_ae3187c41888f046bcc6417834e68e241"><div class="ttname"><a href="namespacesimulationDataLoad.html#ae3187c41888f046bcc6417834e68e241">simulationDataLoad.gsd_df</a></div><div class="ttdeci">def gsd_df(relative_path_base_dir, sim_parameters_varied)</div><div class="ttdoc">Wrapper function that combines previous function into single call that can do all data parsing and lo...</div><div class="ttdef"><b>Definition:</b> <a href="simulationDataLoad_8py_source.html#l00296">simulationDataLoad.py:296</a></div></div>
-<div class="ttc" id="anamespacesimulationDataLoad_html_a7923bc96a25c1889b0bcf68199d58284"><div class="ttname"><a href="namespacesimulationDataLoad.html#a7923bc96a25c1889b0bcf68199d58284">simulationDataLoad.load_compressed_data</a></div><div class="ttdeci">def load_compressed_data(tar_data_path)</div><div class="ttdoc">untar and load data using GSDUtilPy class</div><div class="ttdef"><b>Definition:</b> <a href="simulationDataLoad_8py_source.html#l00078">simulationDataLoad.py:78</a></div></div>
-<div class="ttc" id="anamespacesimulationDataLoad_html_a95311b311258be707b05eead2f52571e"><div class="ttname"><a href="namespacesimulationDataLoad.html#a95311b311258be707b05eead2f52571e">simulationDataLoad.find_compressed_data</a></div><div class="ttdeci">def find_compressed_data(relative_path_base_dir, sim_parameters_varied)</div><div class="ttdoc">Locates compressed data files and returns paths as list of strings.</div><div class="ttdef"><b>Definition:</b> <a href="simulationDataLoad_8py_source.html#l00036">simulationDataLoad.py:36</a></div></div>
-<div class="ttc" id="anamespacesimulationDataLoad_html_aa150368134a2e30b231c87aeeb6c6eda"><div class="ttname"><a href="namespacesimulationDataLoad.html#aa150368134a2e30b231c87aeeb6c6eda">simulationDataLoad.parse_loaded_data</a></div><div class="ttdeci">def parse_loaded_data(gsd_files)</div><div class="ttdoc">Parses input GSD files and outputs to pandas DataFrame.</div><div class="ttdef"><b>Definition:</b> <a href="simulationDataLoad_8py_source.html#l00133">simulationDataLoad.py:133</a></div></div>
+<div class="ttc" id="anamespacesimulationDataLoad_html_a7923bc96a25c1889b0bcf68199d58284"><div class="ttname"><a href="namespacesimulationDataLoad.html#a7923bc96a25c1889b0bcf68199d58284">simulationDataLoad.load_compressed_data</a></div><div class="ttdeci">def load_compressed_data(tar_data_path)</div><div class="ttdoc">untar and load data using GSDUtilPy class</div><div class="ttdef"><b>Definition:</b> <a href="simulationDataLoad_8py_source.html#l00077">simulationDataLoad.py:77</a></div></div>
+<div class="ttc" id="anamespacesimulationDataLoad_html_a95311b311258be707b05eead2f52571e"><div class="ttname"><a href="namespacesimulationDataLoad.html#a95311b311258be707b05eead2f52571e">simulationDataLoad.find_compressed_data</a></div><div class="ttdeci">def find_compressed_data(relative_path_base_dir, sim_parameters_varied)</div><div class="ttdoc">Locates compressed data files and returns paths as list of strings.</div><div class="ttdef"><b>Definition:</b> <a href="simulationDataLoad_8py_source.html#l00035">simulationDataLoad.py:35</a></div></div>
+<div class="ttc" id="anamespacesimulationDataLoad_html_aa150368134a2e30b231c87aeeb6c6eda"><div class="ttname"><a href="namespacesimulationDataLoad.html#aa150368134a2e30b231c87aeeb6c6eda">simulationDataLoad.parse_loaded_data</a></div><div class="ttdeci">def parse_loaded_data(gsd_files)</div><div class="ttdoc">Parses input GSD files and outputs to pandas DataFrame.</div><div class="ttdef"><b>Definition:</b> <a href="simulationDataLoad_8py_source.html#l00132">simulationDataLoad.py:132</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_7837fde3ab9c1fb2fc5be7b717af8d79.html">python</a></li><li class="navelem"><a class="el" href="simulationDataLoad_8py.html">simulationDataLoad.py</a></li>
-    <li class="footer">Generated on Tue Oct 19 2021 21:12:50 for Bodies in Potential Flow by
+    <li class="footer">Generated on Tue Oct 19 2021 21:46:37 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>
