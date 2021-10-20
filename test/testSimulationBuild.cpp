@@ -13,8 +13,6 @@
 #include <memory> // for std::unique_ptr and std::shared_ptr
 #include <string> // std::string
 
-/* Forward declarations */
-
 TEST_CASE("Load and parse data from GSD file", "[GSD][I/O]")
 {
     /* I/O Parameters */

@@ -101,12 +101,9 @@ system( "make -j" )
   and die "Building project failed: $!";
 
 
-# Run Catch2 unit test
-chdir "test"
-  or die "Could not move to build directory: $!";
-
+# Run Catch2 unit tests
 if (${enableTesting} eq "True") {
-	system( "./tests" )
+	system( "make test" )
 	  and die "Unit tests failed: $!";
 }
 

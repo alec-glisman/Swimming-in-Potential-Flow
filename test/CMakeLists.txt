@@ -15,6 +15,8 @@ CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/../test/input/collinear_swimmer_wall
     COPYONLY
     )
 
+# Catch2 CMake integration: https://github.com/catchorg/Catch2/blob/devel/docs/cmake-integration.md
+
 # Add test executable
 ADD_EXECUTABLE(tests 
                testMain.cpp 
