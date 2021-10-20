@@ -70,6 +70,30 @@
             }
         },
         {
+            "name": "(gdb) Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            // Resolved by CMake Tools:
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Debug: build",
+            "program": "${workspaceFolder}/build_debug/test/./tests",
+            "stopAtEntry": false,
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "logging": {
+                "engineLogging": false,
+                "trace": false,
+                "traceResponse": false
+            }
+        },
+        {
             "name": "(lldb) Main",
             "type": "cppdbg",
             "request": "launch",
