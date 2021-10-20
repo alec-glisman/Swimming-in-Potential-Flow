@@ -307,7 +307,7 @@ GSDUtil::readParticles()
     m_system->setAccelerationsBodies(n7_vec);
 
     // quaternions
-    spdlog::get(m_logName)->info("GSD parsing orientationsParticles");
+    spdlog::get(m_logName)->info("GSD parsing quaternion");
     double d_quat[4 * m_system->numParticles()];
     auto return_bool = readChunk(&d_quat, m_frame, "log/particles/double_orientation", m_system->numParticles() * 4 * 8,
                                  m_system->numParticles());
@@ -323,7 +323,7 @@ GSDUtil::readParticles()
         spdlog::get(m_logName)->info("Particle {0} quaternion : [{1:03.3f}, {2:03.3f}, {3:03.3f}, {4:03.3f}]", i + 1,
                                      d_quat[4 * i], d_quat[4 * i + 1], d_quat[4 * i + 2], d_quat[4 * i + 3]);
     }
-    m_system->setOrientationsParticles(quaternions);
+    m_system->setQuaternionsParticles(quaternions);
 
     // positions
     spdlog::get(m_logName)->info("GSD parsing position");
@@ -395,11 +395,12 @@ GSDUtil::readParticles()
         {
             const int body_id_7{7 * body_count};
             const int particle_id_3{3 * i};
+            const int particle_id_4{4 * i};
 
             positions_bodies.segment<3>(body_id_7).noalias() = m_system->positionsParticles().segment<3>(particle_id_3);
 
             positions_bodies.segment<4>(body_id_7 + 3).noalias() =
-                m_system->orientationsParticles().segment<4>(particle_id_3);
+                m_system->quaternionsParticles().segment<4>(particle_id_4);
 
             velocities_bodies.segment<3>(body_id_7).noalias() =
                 m_system->velocitiesParticles().segment<3>(particle_id_3);
