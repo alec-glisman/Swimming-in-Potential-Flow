@@ -1,4 +1,4 @@
 <map id="simulationDataLoad.find_compressed_data" name="simulationDataLoad.find_compressed_data">
-<area shape="rect" id="node1" title=" " alt="" coords="233,5,396,47"/>
-<area shape="rect" id="node2" href="$namespacesimulationDataLoad.html#ae3187c41888f046bcc6417834e68e241" title=" " alt="" coords="5,13,185,39"/>
+<area shape="rect" id="node1" title="Locates compressed data files and returns paths as list of strings." alt="" coords="233,5,396,47"/>
+<area shape="rect" id="node2" href="$namespacesimulationDataLoad.html#ae3187c41888f046bcc6417834e68e241" title="Wrapper function that combines previous function into single call that can do all data parsing and lo..." alt="" coords="5,13,185,39"/>
 </map>

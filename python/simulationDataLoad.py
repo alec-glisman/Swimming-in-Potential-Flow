@@ -1,3 +1,8 @@
+"""Helper functions to load compressed simulation data into pandas dataframes.
+
+__author__ = "Alec Glisman"
+"""
+
 # External Dependencies
 import os                          # Access system file-tree
 import sys                         # Modify system parameters
@@ -19,6 +24,15 @@ from GSDUtilPy import GSDUtilPy  # noqa: E402
 
 
 def find_compressed_data(relative_path_base_dir, sim_parameters_varied):
+    """Locates compressed data files and returns paths as list of strings.
+
+    Args:
+        relative_path_base_dir (list): List of strings that give path to base directory from which to search for compressed data files
+        sim_parameters_varied (list): List of strings detailing which simulation parameters are varied. These must appear in compressed filename string.
+
+    Returns:
+        list: List of strings that give compressed filepaths found and matched.
+    """
 
     data_path = []
 
@@ -49,6 +63,18 @@ def find_compressed_data(relative_path_base_dir, sim_parameters_varied):
 
 
 def load_compressed_data(tar_data_path):
+    """untar and load data using GSDUtilPy class
+
+    Args:
+        tar_data_path (str): String that give compressed file path to untar and parse.
+
+    Raises:
+        IOError: Input tar_data_path does not point to a tarfile
+        IOError: No data found was parsed inside tar_data_path
+
+    Returns:
+        list: List of GSDUtilPy classes that have GSD data parsed
+    """
 
     # get filename without extension
     filename = Path(tar_data_path)
@@ -92,6 +118,18 @@ def load_compressed_data(tar_data_path):
 
 
 def parse_loaded_data(gsd_files):
+    """Parses input GSD files and outputs to pandas DataFrame
+
+    Args:
+        gsd_files (list): List of GSD files to parse
+
+    Raises:
+        RuntimeError: Could not load data from initial frame of GSD
+        RuntimeError: Could not load data from final frame of GSD. NOTE: Assumes that all files in gsd_files have the same number of frames.
+
+    Returns:
+        pd.DataFrame: DataFrame containing all data parsed from input gsd_files
+    """
 
     # NOTE: Assuming each GSD has same number of frames and particles
     nframes = gsd_files[0].trajectory.file.nframes
@@ -244,6 +282,18 @@ def parse_loaded_data(gsd_files):
 
 
 def gsd_df(relative_path_base_dir, sim_parameters_varied):
+    """Wrapper function that combines previous function into single call that can do all data parsing and loading.
+
+    Args:
+        relative_path_base_dir (list): List of strings that give path to base directory from which to search for compressed data files
+        sim_parameters_varied (list): List of strings detailing which simulation parameters are varied. These must appear in compressed filename string.
+
+    Raises:
+        RuntimeError: parseLoadedData() threw an error.
+
+    Returns:
+        pd.DataFrame: DataFrame containing all data parsed from input.
+    """
 
     data_df = []
 

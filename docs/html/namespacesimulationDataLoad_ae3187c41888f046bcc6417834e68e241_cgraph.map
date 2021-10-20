@@ -1,6 +1,6 @@
 <map id="simulationDataLoad.gsd_df" name="simulationDataLoad.gsd_df">
-<area shape="rect" id="node1" title=" " alt="" coords="5,78,185,105"/>
-<area shape="rect" id="node2" href="$namespacesimulationDataLoad.html#a95311b311258be707b05eead2f52571e" title=" " alt="" coords="239,5,401,47"/>
-<area shape="rect" id="node3" href="$namespacesimulationDataLoad.html#a7923bc96a25c1889b0bcf68199d58284" title=" " alt="" coords="237,71,403,112"/>
-<area shape="rect" id="node4" href="$namespacesimulationDataLoad.html#aa150368134a2e30b231c87aeeb6c6eda" title=" " alt="" coords="233,136,407,177"/>
+<area shape="rect" id="node1" title="Wrapper function that combines previous function into single call that can do all data parsing and lo..." alt="" coords="5,78,185,105"/>
+<area shape="rect" id="node2" href="$namespacesimulationDataLoad.html#a95311b311258be707b05eead2f52571e" title="Locates compressed data files and returns paths as list of strings." alt="" coords="239,5,401,47"/>
+<area shape="rect" id="node3" href="$namespacesimulationDataLoad.html#a7923bc96a25c1889b0bcf68199d58284" title="untar and load data using GSDUtilPy class" alt="" coords="237,71,403,112"/>
+<area shape="rect" id="node4" href="$namespacesimulationDataLoad.html#aa150368134a2e30b231c87aeeb6c6eda" title="Parses input GSD files and outputs to pandas DataFrame." alt="" coords="233,136,407,177"/>
 </map>

@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title=" ">
+<g id="a_node1"><a xlink:title="Wrapper function that combines previous function into single call that can do all data parsing and lo...">
 <polygon fill="#bfbfbf" stroke="black" points="0,-55 0,-74 135,-74 135,-55 0,-55"/>
 <text text-anchor="middle" x="67.5" y="-62" font-family="Helvetica,sans-Serif" font-size="10.00">simulationDataLoad.gsd_df</text>
 </a>
@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="namespacesimulationDataLoad.html#a95311b311258be707b05eead2f52571e" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="namespacesimulationDataLoad.html#a95311b311258be707b05eead2f52571e" target="_top" xlink:title="Locates compressed data files and returns paths as list of strings.">
 <polygon fill="none" stroke="black" points="175,-98.5 175,-128.5 297,-128.5 297,-98.5 175,-98.5"/>
 <text text-anchor="start" x="183" y="-116.5" font-family="Helvetica,sans-Serif" font-size="10.00">simulationDataLoad.find</text>
 <text text-anchor="middle" x="236" y="-105.5" font-family="Helvetica,sans-Serif" font-size="10.00">_compressed_data</text>
@@ -36,7 +36,7 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="namespacesimulationDataLoad.html#a7923bc96a25c1889b0bcf68199d58284" target="_top" xlink:title=" ">
+<g id="a_node3"><a xlink:href="namespacesimulationDataLoad.html#a7923bc96a25c1889b0bcf68199d58284" target="_top" xlink:title="untar and load data using GSDUtilPy class">
 <polygon fill="none" stroke="black" points="174,-49.5 174,-79.5 298,-79.5 298,-49.5 174,-49.5"/>
 <text text-anchor="start" x="182" y="-67.5" font-family="Helvetica,sans-Serif" font-size="10.00">simulationDataLoad.load</text>
 <text text-anchor="middle" x="236" y="-56.5" font-family="Helvetica,sans-Serif" font-size="10.00">_compressed_data</text>
@@ -52,7 +52,7 @@
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="namespacesimulationDataLoad.html#aa150368134a2e30b231c87aeeb6c6eda" target="_top" xlink:title=" ">
+<g id="a_node4"><a xlink:href="namespacesimulationDataLoad.html#aa150368134a2e30b231c87aeeb6c6eda" target="_top" xlink:title="Parses input GSD files and outputs to pandas DataFrame.">
 <polygon fill="none" stroke="black" points="171,-0.5 171,-30.5 301,-30.5 301,-0.5 171,-0.5"/>
 <text text-anchor="start" x="179" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">simulationDataLoad.parse</text>
 <text text-anchor="middle" x="236" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">_loaded_data</text>
