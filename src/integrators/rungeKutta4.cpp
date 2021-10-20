@@ -158,26 +158,26 @@ rungeKutta4::imageBodyPosVel(Eigen::VectorXd& pos, Eigen::VectorXd& vel)
     {
         // indices
         const int body_id_7{7 * (img_body_id - img_body_start)};
-        const int img_body_id_3{7 * img_body_id};
+        const int img_body_id_7{7 * img_body_id};
 
         /* ANCHOR: Position image system: mirror image about xy-plane (transform z --> -z) */
-        pos.segment<7>(img_body_id_3).noalias() = pos.segment<7>(body_id_7);
+        pos.segment<7>(img_body_id_7) = pos.segment<7>(body_id_7);
 
         // (linear components) flip z component, leave x-y unchanged
-        pos.segment<1>(img_body_id_3 + 2) *= -1;
+        pos.segment<1>(img_body_id_7 + 2) *= -1;
 
         // (quaternion components) flip x-y components of quaternion vector part (see note in header file: look for "C1
         // and C2 are mirrored along the Z-axis")
-        pos.segment<2>(img_body_id_3 + 4) *= -1;
+        pos.segment<2>(img_body_id_7 + 4) *= -1;
 
         /* ANCHOR: Velocity image system: invert x-y components to have image dipoles  */
-        vel.segment<7>(img_body_id_3).noalias() = vel.segment<7>(body_id_7);
+        vel.segment<7>(img_body_id_7) = vel.segment<7>(body_id_7);
 
         // (linear components) flip x-y components, leave z unchanged
-        vel.segment<2>(img_body_id_3) *= -1;
+        vel.segment<2>(img_body_id_7) *= -1;
 
         // (quaternion components) same transform as positional transform
-        vel.segment<2>(img_body_id_3 + 4) *= -1;
+        vel.segment<2>(img_body_id_7 + 4) *= -1;
     }
 }
 
@@ -190,16 +190,16 @@ rungeKutta4::imageBodyAcc(Eigen::VectorXd& acc)
     {
         // indices
         const int body_id_7{7 * (img_body_id - img_body_start)};
-        const int img_body_id_3{7 * img_body_id};
+        const int img_body_id_7{7 * img_body_id};
 
         /* ANCHOR: Acceleration image system: invert x-y components to have image dipoles  */
-        acc.segment<7>(img_body_id_3).noalias() = acc.segment<7>(body_id_7);
+        acc.segment<7>(img_body_id_7) = acc.segment<7>(body_id_7);
 
         // (linear components) flip x-y components, leave z unchanged
-        acc.segment<2>(img_body_id_3) *= -1;
+        acc.segment<2>(img_body_id_7) *= -1;
 
         // (quaternion components) same transform as positional transform
-        acc.segment<2>(img_body_id_3 + 4) *= -1;
+        acc.segment<2>(img_body_id_7 + 4) *= -1;
     }
 }
 
