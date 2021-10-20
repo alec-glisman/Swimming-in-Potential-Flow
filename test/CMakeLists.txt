@@ -15,6 +15,7 @@ SET(EXE_LINKS
     simulation_system
     forces
     integrators
+    test_simulation_system
     )
 
 # Copy data input files for unit tests
@@ -28,7 +29,7 @@ CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/../test/input/collinear_swimmer_wall
     )
 
 
-# Include directories in header search paths (-I flag)
+# Include source directories in header search paths (-I flag)
 INCLUDE_DIRECTORIES(../src/data_io)
 INCLUDE_DIRECTORIES(../src/simulation_system)
 INCLUDE_DIRECTORIES(../src/forces)
@@ -38,6 +39,14 @@ INCLUDE_DIRECTORIES(../src/helpers/eigen)
 IF(DEFINED CMAKE_CUDA_COMPILER)
     INCLUDE_DIRECTORIES(../src/helpers/cuda)
 ENDIF()
+
+# Include test directories in header search paths (-I flag)
+INCLUDE_DIRECTORIES(simulation_system)
+
+
+# Add subdirectories to the build (processes CMakeLists.txt in these dirs)
+ADD_SUBDIRECTORY(simulation_system)
+
 
 # Make all of source code a library
 ADD_EXECUTABLE(
