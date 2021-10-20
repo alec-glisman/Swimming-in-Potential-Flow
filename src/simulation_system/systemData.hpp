@@ -233,7 +233,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     /* ANCHOR: Simulation hyperparameters */
     /// If the simulation system is constrained to be that of an image (neglect second 1/2 of DoF)
     /// @review_swimmer change if not using image-system constraints
-    const bool m_image_system{true};
+    bool m_image_system{false};
 
     /* ANCHOR: general attributes */
     // data i/o
@@ -416,6 +416,11 @@ class systemData : public std::enable_shared_from_this<systemData>
     imageSystem() const
     {
         return m_image_system;
+    }
+    void
+    setImageSystem(bool image_system)
+    {
+        m_image_system = image_system;
     }
 
     // data i/o

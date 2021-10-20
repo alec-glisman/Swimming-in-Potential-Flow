@@ -37,6 +37,9 @@ parser.add_option("--U0", dest="u_U0",
 parser.add_option("--omega", dest="u_omega",
                   help="velocity oscillation frequency",
                   metavar="double")
+parser.add_option("--image-system", dest="u_image_system",
+                  help="Is the system under consideration an image system (about z-axis)",
+                  metavar="bool")
 
 # !SECTION (Parse user input options)
 
@@ -71,7 +74,8 @@ def initializeGSD():
 
     gsd_class = GSDUtilPy(gsd_path, create_gsd=True)
     gsd_class.setLogParameters(dt, t, tf, tau, num_steps_output,
-                               fluid_density, particle_density, wca_epsilon, wca_sigma)
+                               fluid_density, particle_density, wca_epsilon, wca_sigma,
+                               image_system)
     gsd_class.setParticleParameters(n, types=types, typeid=typeid)
 
 
@@ -135,7 +139,7 @@ def setSystemData():
 # SECTION: For use when being called from command line
 
 if __name__ == "__main__":
-    global gsd_path, dt, R_avg, Z_height, phase_angle, U0, omega, epsilon, tau
+    global gsd_path, dt, R_avg, Z_height, phase_angle, U0, omega, image_system, epsilon, tau
 
     # Parse user input
     options, remainder = parser.parse_args(sys.argv[1:])
@@ -146,6 +150,7 @@ if __name__ == "__main__":
     phase_angle = np.double(options.u_phase_angle)
     U0 = np.double(options.u_U0)
     omega = np.double(options.u_omega)
+    image_system = bool(options.u_image_system)
 
     epsilon = (U0 / omega) / R_avg
     tau = (2.0 * np.pi) / omega

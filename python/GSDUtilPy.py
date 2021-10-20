@@ -41,7 +41,8 @@ class GSDUtilPy:
                          dt, t, tf, tau,
                          num_steps_output=1000,
                          fluid_density=1.0, particle_density=1.0,
-                         wca_epsilon=0.0, wca_sigma=0.0):
+                         wca_epsilon=0.0, wca_sigma=0.0,
+                         image_system=False):
         # Convert data types to GSD expected type
         dt = np.array([dt], dtype=np.double)
         t = np.array([t], dtype=np.double)
@@ -55,6 +56,8 @@ class GSDUtilPy:
         wca_epsilon = np.array([wca_epsilon], dtype=np.double)
         wca_sigma = np.array([wca_sigma], dtype=np.double)
 
+        image_system = np.array([image_system], dtype=bool)
+
         # Save data
         self.snapshot.log['integrator/dt'] = dt
         self.snapshot.log['integrator/t'] = t
@@ -67,6 +70,8 @@ class GSDUtilPy:
 
         self.snapshot.log['wca/epsilon'] = wca_epsilon
         self.snapshot.log['wca/sigma'] = wca_sigma
+
+        self.snapshot.log['parameters/image_system'] = image_system
 
     def setParticleParameters(self, N, types=None, typeid=None, diameter=None):
         if self.newGSD:

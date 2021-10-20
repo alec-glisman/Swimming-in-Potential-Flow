@@ -26,6 +26,7 @@
         "cuda",
         "cwise",
         "ddot",
+        "decomp",
         "disp",
         "dockerignore",
         "Doxygen",
