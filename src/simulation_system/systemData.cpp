@@ -171,7 +171,7 @@ systemData::initializeData()
 void
 systemData::parseGSD()
 {
-    spdlog::get(m_logName)->info("Running parseGSD()");
+    spdlog::get(m_logName)->info("Starting parseGSD()");
 
     // parse GSD file and load data into *this
     m_gsdUtil    = std::make_shared<GSDUtil>(shared_from_this());
@@ -179,6 +179,9 @@ systemData::parseGSD()
 
     // verify data is not a-physical
     checkInput();
+
+    spdlog::get(m_logName)->info("Ending parseGSD()");
+    spdlog::get(m_logName)->flush();
 }
 
 void
@@ -329,6 +332,7 @@ systemData::logData()
     }
 
     spdlog::get(m_logName)->info("Ending logdata()");
+    spdlog::get(m_logName)->flush();
 }
 
 void
