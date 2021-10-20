@@ -341,7 +341,7 @@ systemData::update(Eigen::ThreadPoolDevice& device)
     logData(); // FIXME: Remove after debugging
 
     // NOTE: Internal particle orientation D.o.F. calculated 1st
-    orientationsArticulation();
+    convertBody2ParticleOrient();
 
     // NOTE: Articulation functions calculated 2nd (need m_orientations_particles)
     positionsArticulation();
@@ -358,39 +358,6 @@ systemData::update(Eigen::ThreadPoolDevice& device)
 
     // NOTE: Udwadia linear system calculated 5th
     udwadiaLinearSystem();
-}
-
-void
-systemData::orientationsArticulation()
-{
-    m_orientations_particles.setZero();
-
-    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
-    {
-        if (m_particle_type_id(particle_id) == 1)
-        {
-            continue; // continue to next loop as all elements are zero
-        }
-
-        const int particle_id_3{3 * particle_id};
-        const int body_id_7{7 * m_particle_group_id(particle_id)};
-
-        // Get unit quaternion for body that particle_id is a member of
-        const Eigen::Quaterniond particle_quat(m_positions_bodies.segment<4>(body_id_7 + 3));
-        assert(abs(particle_quat.norm() - 1.0) < 1e-12 && "Quaternion is not unitary");
-
-        // Rotate particle from initial configuration using unit quaternion
-        Eigen::Quaterniond orient_init;
-        orient_init.w()   = 0.0;
-        orient_init.vec() = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
-
-        const Eigen::Quaterniond orient_rot    = particle_quat * orient_init * particle_quat.inverse();
-        const Eigen::Vector3d    orient_rot_3d = orient_rot.vec();
-        assert(abs(orient_rot.w()) < 1e-12 && "0th component of particle orientation vector is not zero");
-
-        // Output rotated orientation
-        m_orientations_particles.segment<3>(particle_id_3).noalias() = orient_rot_3d;
-    }
 }
 
 void
@@ -657,6 +624,39 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
         const Eigen::array<Eigen::Index, 3> offsets    = {particle_id_3, body_id_7 + 3, body_id_7};
         const Eigen::array<Eigen::Index, 3> extents    = {3, 4, 7};
         m_rbm_conn_T_quat_grad.slice(offsets, extents) = angular_gradient;
+    }
+}
+
+void
+systemData::convertBody2ParticleOrient()
+{
+    m_orientations_particles.setZero();
+
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
+    {
+        if (m_particle_type_id(particle_id) == 1)
+        {
+            continue; // continue to next loop as all elements are zero
+        }
+
+        const int particle_id_3{3 * particle_id};
+        const int body_id_7{7 * m_particle_group_id(particle_id)};
+
+        // Get unit quaternion for body that particle_id is a member of
+        const Eigen::Quaterniond particle_quat(m_positions_bodies.segment<4>(body_id_7 + 3));
+        assert(abs(particle_quat.norm() - 1.0) < 1e-12 && "Quaternion is not unitary");
+
+        // Rotate particle from initial configuration using unit quaternion
+        Eigen::Quaterniond orient_init;
+        orient_init.w()   = 0.0;
+        orient_init.vec() = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
+
+        const Eigen::Quaterniond orient_rot    = particle_quat * orient_init * particle_quat.inverse();
+        const Eigen::Vector3d    orient_rot_3d = orient_rot.vec();
+        assert(abs(orient_rot.w()) < 1e-12 && "0th component of particle orientation vector is not zero");
+
+        // Output rotated orientation
+        m_orientations_particles.segment<3>(particle_id_3).noalias() = orient_rot_3d;
     }
 }
 

@@ -108,13 +108,6 @@ class systemData : public std::enable_shared_from_this<systemData>
     logData();
 
     /**
-     * @brief Computes the orientation (unit vector) of a particle with respect to its locater point
-     *
-     */
-    void
-    orientationsArticulation();
-
-    /**
      * @brief Computes the articulation (linear) positions of the particles relative to their respective locater
      * points.
      *
@@ -141,13 +134,6 @@ class systemData : public std::enable_shared_from_this<systemData>
      */
     void
     accelerationsArticulation();
-
-    /**
-     * @brief Computes the positions of all particles from given locater positions and body orientations
-     *
-     */
-    void
-    positionsParticlesfromBodies();
 
     /**
      * @brief Computes the Udwadia constraint matrix and vector to uphold the quaternion unitary norm for each body.
@@ -194,6 +180,20 @@ class systemData : public std::enable_shared_from_this<systemData>
     gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device);
 
     /**
+     * @brief Computes the orientation (unit vector) of a particle with respect to its locater point
+     *
+     */
+    void
+    convertBody2ParticleOrient();
+
+    /**
+     * @brief Computes the positions of all particles from given locater positions and body orientations
+     *
+     */
+    void
+    convertBody2ParticlePos();
+
+    /**
      * @brief Computes the particle D.o.F. from the body D.o.F.
      *
      * @details Currently only computes the velocity and acceleration D.o.F. components
@@ -201,7 +201,7 @@ class systemData : public std::enable_shared_from_this<systemData>
      * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
      */
     void
-    convertBody2ParticleDoF(Eigen::ThreadPoolDevice& device);
+    convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device);
 
     /* SECTION: Static functions */
     /**
@@ -737,6 +737,17 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     // particles
     const Eigen::VectorXd&
+    quaternionsParticles() const
+    {
+        return m_quaternions_particles;
+    }
+    void
+    setQuaternionsParticles(const Eigen::VectorXd& quaternions_particles)
+    {
+        m_quaternions_particles = quaternions_particles;
+    }
+
+    const Eigen::VectorXd&
     orientationsParticles() const
     {
         return m_quaternions_particles;
@@ -825,17 +836,6 @@ class systemData : public std::enable_shared_from_this<systemData>
         return m_Udwadia_b;
     }
     /* !SECTION */
-
-    const Eigen::VectorXd&
-    quaternionsParticles() const
-    {
-        return m_quaternions_particles;
-    }
-    void
-    setQuaternionsParticles(const Eigen::VectorXd& quaternions_particles)
-    {
-        m_quaternions_particles = quaternions_particles;
-    }
 };
 
 #endif
