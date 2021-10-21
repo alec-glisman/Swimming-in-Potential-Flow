@@ -2,17 +2,14 @@ name: Test
 on: [push, pull_request]
 
 jobs:
-  build:
-    name: Build [${{ join(matrix.config, '_') }}]
+  run:
+    name: Code Coverage
     runs-on: ubuntu-latest
     
     env:
-      CXXFLAGS: '-Werror'
+      CLICOLOR_FORCE: '0'
 
     steps:
-    - name: Clean workspace
-      run: rm -rf ./*
-
     - name: Checkout
       uses: actions/checkout@v2.3.4
       with:
@@ -27,71 +24,11 @@ jobs:
                       -DCMAKE_BUILD_TYPE=Debug \
                       -DENABLE_TESTING=True \
                       -DENABLE_COVERAGE=True \
-                      -DCMAKE_INSTALL_PREFIX=${GITHUB_WORKSPACE}/install
     
     - name: Build
-      run: ninja install -j $(($(getconf _NPROCESSORS_ONLN) + 2))
+      run: ninja -j $(($(getconf _NPROCESSORS_ONLN) + 2))
       working-directory: build
 
-    - name: Remove object files
-      run: find build -type f -name '*.o' -delete
-
-    # Tar the build directory to preserve permissions and reduce HTTP requests on upload.
-    - name: 'Tar build'
-      run: tar --use-compress-program='zstd -10 -T0' -cvf build.tar build
-
-    - name: 'Tar install'
-      run: tar --use-compress-program='zstd -10 -T0' -cvf install.tar install
-
-    # Upload the tarballs. Retain the file for a limited time in case developers need to download
-    # and run tests locally for further debugging.
-    - name: 'Upload build'
-      uses: actions/upload-artifact@v2.2.4
-      with:
-        name: build-${{ join(matrix.config, '_') }}-${{ github.sha }}
-        path: build.tar
-        retention-days: 7
-        
-    - name: 'Upload install'
-      uses: actions/upload-artifact@v2.2.4
-      with:
-        name: install-${{ join(matrix.config, '_') }}-${{ github.sha }}
-        path: install.tar
-        retention-days: 7
-
-  ctest:
-    name: Run ctest [${{ join(matrix.config, '_') }}]
-    needs: build
-    runs-on: ${{ matrix.runner }}
-
-    container:
-      image: glotzerlab/ci:2021.07-${{ matrix.config[0] }}
-      options: ${{ matrix.docker_options }} -e CUDA_VISIBLE_DEVICES
-
-    strategy:
-      matrix:
-        include:
-        - {config: [clang11_py39, mpi, tbb, jit], runner: ubuntu-latest, docker_options: '' }
-        - {config: [gcc11_py39], runner: ubuntu-latest, docker_options: '' }
-        - {config: [cuda11_gcc9_py38, mpi], runner: [self-hosted,GPU], docker_options: '--gpus=all --device /dev/nvidia0 --device /dev/nvidia1 --device /dev/nvidia-uvm --device /dev/nvidia-uvm-tools --device /dev/nvidiactl' }
-        - {config: [cuda11_gcc9_py38], runner: [self-hosted,GPU], docker_options: '--gpus=all --device /dev/nvidia0 --device /dev/nvidia1 --device /dev/nvidia-uvm --device /dev/nvidia-uvm-tools --device /dev/nvidiactl' }
-
-    steps:
-    - name: Clean workspace
-      run: rm -rf ./*
-
-    - name: Download build
-      uses: actions/download-artifact@v2.0.10
-      with:
-        name: build-${{ join(matrix.config, '_') }}-${{ github.sha }}
-    - name: Untar build
-      run: tar --use-compress-program='zstd -10 -T0' -xvf build.tar
-
     - name: Run tests
-      run: >-
-        ctest
-        -T test
-        --output-on-failure
-        --test-output-size-failed 1048576
-        --test-output-size-passed 1048576
+      run: "ninja coverage"
       working-directory: build
