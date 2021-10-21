@@ -12,7 +12,7 @@
                 "ENABLE_TESTING": "True",
                 "ENABLE_COVERAGE": "True",
                 "CMAKE_INSTALL_PREFiX": "${sourceDir}/install-debug"
-            },
+            }
         }
     ],
     "buildPresets": [
