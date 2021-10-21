@@ -12,7 +12,7 @@
 #endif
 
 // Intel MKL
-#ifdef INTEL_MKL_VERSION
+#if __has_include("mkl.h")
 #define EIGEN_USE_MKL_ALL
 #else
 #pragma message(" !! COMPILING WITHOUT INTEL MKL OPTIMIZATIONS !! ")
