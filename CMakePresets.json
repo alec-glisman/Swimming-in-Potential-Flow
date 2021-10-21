@@ -2,7 +2,7 @@
     "version": 2,
     "configurePresets": [
         {
-            "name": "debug-config",
+            "name": "ninja-multi-vcpkg",
             "displayName": "Debug configuration",
             "description": "Basic debug configuration with testing and coverage enabled",
             "generator": "Ninja",
@@ -12,7 +12,7 @@
                 "ENABLE_TESTING": "True",
                 "ENABLE_COVERAGE": "True",
                 "CMAKE_INSTALL_PREFiX": "${sourceDir}/install-debug"
-            }
+            },
         }
     ],
     "buildPresets": [
@@ -20,7 +20,7 @@
             "name": "debug-build",
             "description": "Debug building",
             "displayName": "Build the basic debug configuration",
-            "configurePreset": "debug-config"
+            "configurePreset": "ninja-multi-vcpkg"
         }
     ],
     "testPresets": [
@@ -28,7 +28,7 @@
             "name": "debug-test",
             "description": "Debug testing",
             "displayName": "Test the basic debug configuration",
-            "configurePreset": "debug-config"
+            "configurePreset": "ninja-multi-vcpkg"
         }
     ]
 }
