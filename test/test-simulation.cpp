@@ -22,7 +22,7 @@
 TEST_CASE("Open GSD file", "[gsd]")
 {
     // I/O Parameters
-    std::string inputDataFile = "input/collinear_swimmer_wall/initial_frame_dt1e-2_Z-height6.gsd";
+    std::string inputDataFile = "input/collinear_swimmer_wall/initial_frame_dt1e-1_Z-height6.gsd";
 
     // GSD loading parameters
     std::shared_ptr<gsd_handle> handle{new gsd_handle};
@@ -44,7 +44,7 @@ TEST_CASE("Initialize simulation system", "[engine][systemData][rungeKutta4][pot
     spdlog::drop_all();
 
     // I/O Parameters
-    std::string inputDataFile = "input/collinear_swimmer_wall/initial_frame_dt1e-2_Z-height6.gsd";
+    std::string inputDataFile = "input/collinear_swimmer_wall/initial_frame_dt1e-1_Z-height6.gsd";
     std::string outputDir     = "output-systemData-init";
 
     // simulation classes
@@ -68,7 +68,7 @@ TEST_CASE("Run simulation system", "[engine][progressBar][systemData][rungeKutta
     spdlog::drop_all();
 
     // I/O Parameters
-    std::string inputDataFile = "input/collinear_swimmer_wall/initial_frame_dt1e-2_Z-height6.gsd";
+    std::string inputDataFile = "input/collinear_swimmer_wall/initial_frame_dt1e-1_Z-height6.gsd";
     std::string outputDir     = "output-engine-run";
 
     // simulation classes
