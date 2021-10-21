@@ -176,7 +176,6 @@ IF(CMAKE_BUILD_TYPE STREQUAL "Profile")
 
 ENDIF()
 
-
 # !SECTION
 
 
@@ -247,13 +246,20 @@ IF(ENABLE_TESTING STREQUAL "True" OR CMAKE_BUILD_TYPE STREQUAL "Debug")
     MESSAGE( STATUS "${Cyan}" "Include Dir: ${Catch2_INCLUDE_DIRS}" "${ColourReset}")
     MESSAGE("")
     
-    IF(ENABLE_COVERAGE STREQUAL "True" AND CMAKE_COMPILER_IS_GNUCXX)
+    IF(ENABLE_COVERAGE STREQUAL "True")
 
         MESSAGE( "${BoldMagenta}" "External Dependency: Code coverage" "${ColourReset}" )
         INCLUDE(CodeCoverage)
         MESSAGE("")
 
         APPEND_COVERAGE_COMPILER_FLAGS()
+
+        # optional excludes - None needed here
+        SET(COVERAGE_EXCLUDES
+            "/home/aglisman/.linuxbrew/**"
+            "11/**"
+            "/usr/include/**"
+            )
 
     ENDIF()
 

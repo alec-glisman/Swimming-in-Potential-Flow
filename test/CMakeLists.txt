@@ -68,18 +68,20 @@ INCLUDE(CTest)
 INCLUDE(Catch)
 CATCH_DISCOVER_TESTS(tests)
 
+IF(ENABLE_COVERAGE STREQUAL "True")
 
-# lcov: https://stackoverflow.com/questions/52255589/code-coverage-analysis-using-codecoverage-cmake-with-multiple-targets
-SETUP_TARGET_FOR_COVERAGE_LCOV(
-        NAME coverage       # New target name
-        EXECUTABLE ctest -j # Executable in PROJECT_BINARY_DIR
-        DEPENDENCIES
-            ${EXE_NAME}     # Dependencies to build first
-    )
+    # lcov: https://stackoverflow.com/questions/52255589/code-coverage-analysis-using-codecoverage-cmake-with-multiple-targets
+    SETUP_TARGET_FOR_COVERAGE_LCOV(
+            NAME coverage                 # New target name
+            EXECUTABLE ctest -j          # Executable in PROJECT_BINARY_DIR
+            DEPENDENCIES ${EXE_NAME}     # Dependencies to build first
+        )
 
-# gcovr: https://stackoverflow.com/a/62730462/13215572
-SETUP_TARGET_FOR_COVERAGE_GCOVR_HTML(
-            NAME ${EXE_NAME}_coverage_html
-            EXECUTABLE ${EXE_NAME}
-            DEPENDENCIES ${EXE_LINKS}
-    )
+    # gcovr: https://stackoverflow.com/a/62730462/13215572
+    SETUP_TARGET_FOR_COVERAGE_GCOVR_HTML(
+                NAME ${EXE_NAME}_coverage_html
+                EXECUTABLE ${EXE_NAME}
+                DEPENDENCIES ${EXE_LINKS}
+        )
+
+ENDIF()
