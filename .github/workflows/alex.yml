@@ -1,7 +1,10 @@
-name: Alex
+name: Language Linting
 on: [push, pull_request]
+
 jobs:
-  run:
+  alex-linting:
     runs-on: ubuntu-latest
     steps:
-      uses: theashraf/alex-action@master
+      - uses: actions/checkout@master
+      - name: alex
+        uses: theashraf/alex-action@master
