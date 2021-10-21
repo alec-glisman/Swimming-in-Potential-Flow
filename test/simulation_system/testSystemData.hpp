@@ -12,6 +12,9 @@
 /* Include all internal project dependencies */
 #include <systemData.hpp>
 
+/* Include all external project dependencies */
+#include <random> // std::uniform_real_distribution, std::default_random_engine
+
 /**
  * @class testSystemData
  *
