@@ -130,7 +130,7 @@ IF(APPLE)
     SET(LANGS CXX C)
     
 ELSE()  # Use CUDA when not on MacOS
-    SET(LANGS CXX C CUDA)
+    SET(LANGS CXX C)
 
 ENDIF()
 
