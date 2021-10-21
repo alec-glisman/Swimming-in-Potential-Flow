@@ -11,13 +11,21 @@
 #error This header cannot be compiled by nvcc
 #endif
 
+// Intel MKL
+#ifdef INTEL_MKL_VERSION
+#define EIGEN_USE_MKL_ALL
+#else
+#pragma message(" !! COMPILING WITHOUT INTEL MKL OPTIMIZATIONS !! ")
+#endif
 // eigen3(Linear algebra)
 #define EIGEN_NO_AUTOMATIC_RESIZING
-#define EIGEN_USE_MKL_ALL
 #define EIGEN_USE_THREADS
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/Eigen>
 #include <eigen3/unsupported/Eigen/CXX11/Tensor>
+#include <eigen3/unsupported/Eigen/CXX11/ThreadPool>
+// eigen3 conversion between Eigen::Tensor (unsupported) and Eigen::Matrix
+#include <helper_eigenTensorConversion.hpp>
 
 template <typename T> using MatrixType = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>;
 template <typename T> using VectorType = Eigen::Matrix<T, Eigen::Dynamic, 1>;

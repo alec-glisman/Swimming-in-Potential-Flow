@@ -14,19 +14,25 @@
 #include <gsd.h>       // GSD File
 
 /* Include all external project dependencies */
-// Logging
-#include <spdlog/fmt/ostr.h>
-#include <spdlog/sinks/basic_file_sink.h>
-#include <spdlog/spdlog.h>
+// Intel MKL
+#ifdef INTEL_MKL_VERSION
+#define EIGEN_USE_MKL_ALL
+#else
+#pragma message(" !! COMPILING WITHOUT INTEL MKL OPTIMIZATIONS !! ")
+#endif
 // eigen3(Linear algebra)
 #define EIGEN_NO_AUTOMATIC_RESIZING
-#define EIGEN_USE_MKL_ALL
 #define EIGEN_USE_THREADS
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/Eigen>
 #include <eigen3/unsupported/Eigen/CXX11/Tensor>
 #include <eigen3/unsupported/Eigen/CXX11/ThreadPool>
+// eigen3 conversion between Eigen::Tensor (unsupported) and Eigen::Matrix
 #include <helper_eigenTensorConversion.hpp>
+// Logging
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/spdlog.h>
 // STL
 #include <memory>    // for std::unique_ptr and std::shared_ptr
 #include <stdexcept> // std::errors
