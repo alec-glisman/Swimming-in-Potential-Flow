@@ -1,23 +1,10 @@
 #!/usr/bin/env bash
 
-# NOTE: Assumes that homebrew is already installed on computer
-brew install boost spdlog catch2 libomp
-brew install eigen --HEAD  # HEAD needed for Eigen::seqN()
-
+# Install dependnencies via vcpkg
+vcpkg/./bootstrap-vcpkg.sh -disableMetrics
+vcpkg/./vcpkg install
 
 # NOTE: Using Assuming DEBIAN linux environment
-# Intel GPU Drivers
-# @SOURCE: https://dgpu-docs.intel.com/installation-guides/ubuntu/ubuntu-focal.html
-sudo apt-get install -y gpg-agent wget
-wget -qO - https://repositories.intel.com/graphics/intel-graphics.key | sudo apt-key add -
-sudo apt-add-repository 'deb [arch=amd64] https://repositories.intel.com/graphics/ubuntu focal main'
-
-# Intel (oneAPI dependencies)
-# @SOURCE: https://dgpu-docs.intel.com/installation-guides/ubuntu/ubuntu-focal.html
-sudo apt install -y intel-opencl-icd intel-level-zero-gpu level-zero intel-media-va-driver-non-free libmfx1
-sudo apt install -y libigc-dev intel-igc-cm libigdfcl-dev libigfxcmrt-dev level-zero-dev
-
-
 # Install OneAPI
 # @SOURCE: https://software.intel.com/content/www/us/en/develop/documentation/installation-guide-for-intel-oneapi-toolkits-linux/top/installation/install-using-package-managers/apt.html
 

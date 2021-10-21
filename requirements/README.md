@@ -5,7 +5,7 @@ Files and scripts relevant for loading C++, Perl, and Python dependencies.
 ## Subdirectory: C++
 
 Contains shell script to install all relevant dependencies.
-The script makes two assumptions: (1) [homebrew](https://brew.sh/) is installed locally on the computer and (2) the apt package manager exists to install Intel MKL dependencies via Intel oneAPI.
+The script assumes the apt package manager exists to install Intel MKL dependencies via Intel oneAPI.
 
 ## Subdirectory: Perl
 
