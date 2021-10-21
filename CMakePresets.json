@@ -1,34 +1,50 @@
 {
-    "version": 2,
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 5,
+        "patch": 1
+    },
     "configurePresets": [
         {
-            "name": "ninja-multi-vcpkg",
-            "displayName": "Debug configuration",
-            "description": "Basic debug configuration with testing and coverage enabled",
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build-debug",
+            "name": "default",
+            "displayName": "Default Config",
+            "description": "Default build using Ninja Multi-Config generator (testing, coverage)",
+            "generator": "Ninja Multi-Config",
+            "binaryDir": "${sourceDir}/build/debug",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "ENABLE_TESTING": "True",
                 "ENABLE_COVERAGE": "True",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install-debug"
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "True"
             }
+        },
+        {
+            "name": "ninja-multi-vcpkg",
+            "inherits": "default",
+            "description": "Build for GitHub action"
+        },
+        {
+            "name": "makefiles",
+            "inherits": "default",
+            "description": "Default build using Unix Makefiles generator",
+            "generator": "Unix Makefiles"
         }
     ],
     "buildPresets": [
         {
-            "name": "debug-build",
-            "description": "Debug building",
-            "displayName": "Build the basic debug configuration",
-            "configurePreset": "ninja-multi-vcpkg"
+            "name": "default",
+            "displayName": "Default Build",
+            "description": "Build default debug configuration",
+            "configurePreset": "default"
         }
     ],
     "testPresets": [
         {
-            "name": "debug-test",
-            "description": "Debug testing",
-            "displayName": "Test the basic debug configuration",
-            "configurePreset": "ninja-multi-vcpkg"
+            "name": "default",
+            "displayName": "Default Tests",
+            "description": "Test default debug build",
+            "configurePreset": "default"
         }
     ]
 }
