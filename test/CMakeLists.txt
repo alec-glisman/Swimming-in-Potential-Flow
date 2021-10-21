@@ -86,4 +86,11 @@ IF(ENABLE_COVERAGE STREQUAL "True")
                 DEPENDENCIES ${EXE_LINKS}
         )
 
+    SETUP_TARGET_FOR_COVERAGE_GCOVR_XML(
+                NAME ${EXE_NAME}_coverage_xml
+                EXECUTABLE ${EXE_NAME}
+                BASE_DIRECTORY "../" 
+                DEPENDENCIES ${EXE_LINKS}
+        )
+
 ENDIF()
