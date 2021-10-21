@@ -1,0 +1,7 @@
+name: Alex
+on: [push, pull_request]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      uses: theashraf/alex-action@master
