@@ -19,7 +19,7 @@ jobs:
       - name: Restore artifacts, or setup vcpkg for building artifacts
         uses: lukka/run-vcpkg@v10
         id: runvcpkg  # Always specify the specific _version_ of the action you need, `v10` in this case.
-        with:
+        #with:
           # This is the default location of the directory containing vcpkg sources.
           # Change it to the right location if needed.
           # vcpkgDirectory: '${{ github.workspace }}/vcpkg'
@@ -27,7 +27,7 @@ jobs:
           # If not using a submodule for vcpkg sources, this specifies which commit
           # id must be checkout from a Git repo. It must not set if using a submodule
           # for vcpkg.
-          vcpkgGitCommitId: '30b217b1ede50f6c27b7234388114f4b0d60a3f7'
+          # vcpkgGitCommitId: '${{ matrix.vcpkgCommitId }}'
 
           # This is the glob expression used to locate the vpkg.json and add its
           # hash to the cache key. Change it to match a single manifest file you want
