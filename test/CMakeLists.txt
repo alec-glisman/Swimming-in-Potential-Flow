@@ -80,14 +80,14 @@ IF(ENABLE_COVERAGE STREQUAL "True")
 
     # gcovr: https://stackoverflow.com/a/62730462/13215572
     SETUP_TARGET_FOR_COVERAGE_GCOVR_HTML(
-                NAME ${EXE_NAME}_coverage_html
+                NAME coverage_html
                 EXECUTABLE ${EXE_NAME}
                 BASE_DIRECTORY "../" 
                 DEPENDENCIES ${EXE_LINKS}
         )
 
     SETUP_TARGET_FOR_COVERAGE_GCOVR_XML(
-                NAME ${EXE_NAME}_coverage_xml
+                NAME coverage_xml
                 EXECUTABLE ${EXE_NAME}
                 BASE_DIRECTORY "../" 
                 DEPENDENCIES ${EXE_LINKS}
