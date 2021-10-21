@@ -2,6 +2,7 @@
     "name": "bodies-in-potential-flow",
     "version-string": "2.0-alpha",
     "description": "Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible).",
+    "builtin-baseline": "9f6157af4e5b04ab3cc63150a20b1bad901a7d0b",
     "dependencies": [
         {
             "name": "boost",
