@@ -63,9 +63,21 @@
             "label": "Debug: test",
             "type": "shell",
             "options": {
-                "cwd": "${workspaceFolder}"
+                "cwd": "${workspaceFolder}/build_debug"
             },
-            "command": "build_debug/tests/./tests",
+            "command": "make test",
+            "dependsOn": "Debug: build",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Debug: coverage",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}/build_debug"
+            },
+            "command": "make coverage",
             "group": {
                 "kind": "test",
                 "isDefault": true
