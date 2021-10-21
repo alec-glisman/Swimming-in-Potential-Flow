@@ -81,7 +81,7 @@ IF(ENABLE_COVERAGE STREQUAL "True")
     SETUP_TARGET_FOR_COVERAGE_GCOVR_HTML(
                 NAME ${EXE_NAME}_coverage_html
                 EXECUTABLE ${EXE_NAME}
-                BASE_DIRECTORY "${PROJECT_SOURCE_DIR}"
+                BASE_DIRECTORY "../" 
                 DEPENDENCIES ${EXE_LINKS}
         )
 

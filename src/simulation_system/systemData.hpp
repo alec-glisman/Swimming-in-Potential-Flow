@@ -229,6 +229,9 @@ class systemData : public std::enable_shared_from_this<systemData>
     };
     /* !SECTION */
 
+    /* SECTION: Friend classes */
+    friend class testSystemData;
+
     /* SECTION: Attributes */
     /* ANCHOR: Simulation hyperparameters */
     /// If the simulation system is constrained to be that of an image (neglect second 1/2 of DoF)

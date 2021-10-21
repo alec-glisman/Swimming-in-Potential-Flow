@@ -2,7 +2,7 @@
 SET(LIB_NAME "test_simulation_system")
 
 SET(LIB_FILES 
-    test-systemData.cpp test-systemData.hpp 
+    testSystemData.cpp testSystemData.hpp 
     )
 
 SET(LIB_LINKS 
