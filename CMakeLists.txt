@@ -209,6 +209,13 @@ MESSAGE(STATUS "${Cyan}" "Include Dir: ${Boost_INCLUDE_DIR}" "${ColourReset}")
 MESSAGE("")
 
 # Optimization libraries
+MESSAGE( "${BoldMagenta}" "External Dependency: Intel TBB" "${ColourReset}" )
+FIND_PACKAGE(TBB CONFIG REQUIRED)    
+MESSAGE( STATUS "${Cyan}" "Found: ${TBB_FOUND}" "${ColourReset}")
+MESSAGE( STATUS "${Cyan}" "Include Dir: ${TBB_INCLUDE_DIRS}" "${ColourReset}")
+MESSAGE( STATUS "${Cyan}" "Library Dir: ${TBB_LIBRARIES}" "${ColourReset}")
+MESSAGE("")
+
 MESSAGE( "${BoldMagenta}" "External Dependency: Intel MKL" "${ColourReset}" )
 SET(MKL_INTERFACE_FULL intel_lp64)
 SET(MKL_THREADING tbb_thread)
@@ -216,13 +223,6 @@ FIND_PACKAGE(MKL REQUIRED)
 MESSAGE( STATUS "${Cyan}" "Found: ${MKL_FOUND}" "${ColourReset}")
 MESSAGE( STATUS "${Cyan}" "Include Dir: ${MKL_INCLUDE_DIR}" "${ColourReset}")
 MESSAGE( STATUS "${Cyan}" "Library Dir: ${MKL_LIBRARIES}" "${ColourReset}")
-MESSAGE("")
-
-MESSAGE( "${BoldMagenta}" "External Dependency: Intel TBB" "${ColourReset}" )
-FIND_PACKAGE(TBB REQUIRED)    
-MESSAGE( STATUS "${Cyan}" "Found: ${TBB_FOUND}" "${ColourReset}")
-MESSAGE( STATUS "${Cyan}" "Include Dir: ${TBB_INCLUDE_DIRS}" "${ColourReset}")
-MESSAGE( STATUS "${Cyan}" "Library Dir: ${TBB_LIBRARIES}" "${ColourReset}")
 MESSAGE("")
 
 # Linear algebra libraries
