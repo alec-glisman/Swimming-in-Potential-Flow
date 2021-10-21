@@ -33,7 +33,7 @@ use warnings;                      # give warnings
 my $enableTesting  = "True";                    # Unit tests,        OPTIONS: (False) OFF, (True) ON
 my $enableCoverage = "False";                   # Testing coverage,  OPTIONS: (False) OFF, (True) ON
 my $build          = "Release";                 # CMake built type,  OPTIONS: Release, Debug, Profile
-my $generator      = "Unix Makefiles";          # CMake generator,   OPTIONS: "Unix Makefiles", "Ninja"
+my $generator      = "Ninja";                   # CMake generator,   OPTIONS: "Unix Makefiles", "Ninja"
 my $buildDir       = "build/" . lc $build;      # Build folder path
 
 # C++ Simulation
@@ -95,20 +95,43 @@ chdir $buildDir
   or die "Could not move to build directory: $!";
 
 # Configure and build the project
-system( "cmake \"${cwd}\" -G \"${generator}\" -DCMAKE_BUILD_TYPE=${build} -DENABLE_TESTING=${enableTesting} -DENABLE_COVERAGE=${enableCoverage}")
+$ENV{'CLICOLOR_FORCE'} = 0;  # vcpkg fails without this
+
+system( " cmake \"${cwd}\" -G \"${generator}\" -DCMAKE_BUILD_TYPE=${build} -DENABLE_TESTING=${enableTesting} -DENABLE_COVERAGE=${enableCoverage} -DCMAKE_TOOLCHAIN_FILE=\"${cwd}/vcpkg/scripts/buildsystems/vcpkg.cmake\"")
   and die "Configuring project failed: $!";
-system( "make -j" )
-  and die "Building project failed: $!";
 
+if($generator eq "Unix Makefiles") {
 
-# Run Catch2 unit tests
-if(${enableCoverage} eq "True") {
-	system( "make coverage" )
-	  and die "Code coverage failed: $!";
-}elsif (${enableTesting} eq "True") {
-	system( "make test" )
-	  and die "Unit tests failed: $!";
+	# Build project
+	system( "make -j" )
+	  and die "Building project failed: $!";
+
+	# Run Catch2 unit tests
+	if(${enableCoverage} eq "True") {
+		system( "make coverage" )
+		  and die "Code coverage failed: $!";
+
+	}elsif (${enableTesting} eq "True") {
+		system( "make test" )
+		  and die "Unit tests failed: $!";
+	}
+}elsif($generator eq "Ninja") {
+
+	# Build project
+	system( "ninja -j ${numThreads}" )
+	  and die "Building project failed: $!";
+
+	# Run Catch2 unit tests
+	if(${enableCoverage} eq "True") {
+		system( "ninja coverage" )
+		  and die "Code coverage failed: $!";
+
+	}elsif (${enableTesting} eq "True") {
+		system( "ninja test" )
+		  and die "Unit tests failed: $!";
+	}
 }
+
 
 # Change back to main directory
 chdir $cwd
