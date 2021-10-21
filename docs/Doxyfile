@@ -885,6 +885,11 @@ INPUT = main.md \
     src/integrators \
     src/simulation_system \
     test \
+    test/data_io \
+    test/forces \
+    test/helpers/eigen \
+    test/integrators \
+    test/simulation_system \
     scripts \
     python \
     python/initial_configurations \
