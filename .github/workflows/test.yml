@@ -4,36 +4,53 @@ on: [push, pull_request]
 jobs:
   run:
     name: Code Coverage
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     
     env:
       CLICOLOR_FORCE: '0'
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2.3.4
-      with:
-        path: code
-        submodules: true
-  
-    - name: Configure
-      run: |
-        cmake ${{ github.workspace }} -G Ninja -B build \
-                      -DCMAKE_BUILD_TYPE=Debug \
-                      -DENABLE_TESTING=True \
-                      -DENABLE_COVERAGE=True \
-                      -DCMAKE_TOOLCHAIN_FILE=$${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake
+      
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+        with:
+          path: code
+          submodules: true
     
-    - name: Build
-      run: ninja -j $(($(getconf _NPROCESSORS_ONLN) + 2))
-      working-directory: build
+      - uses: lukka/get-cmake@latest
+      - name: dir
+        run: find $RUNNER_WORKSPACE
+        shell: bash
 
-    - name: Run tests
-      run: "ninja coverage"
-      working-directory: build
+      - name: Restore artifacts, or setup vcpkg for building artifacts
+        uses: lukka/run-vcpkg@v10
+        id: runvcpkg 
 
-    - name: Upload results to CodeCov
-      uses: codecov/codecov-action@v2
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-        verbose: true # optional (default = false)
+      - name: List $RUNNER_WORKSPACE before build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+      
+      - name: Prints output of run-vcpkg's action.
+        run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}
+
+      - name: Configure
+        run: |
+          cmake ${{ github.workspace }} -G Ninja -B build \
+                        -DCMAKE_BUILD_TYPE=Debug \
+                        -DENABLE_TESTING=True \
+                        -DENABLE_COVERAGE=True \
+                        -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake
+      
+      - name: Build
+        run: ninja -j $(($(getconf _NPROCESSORS_ONLN) + 2))
+        working-directory: build
+
+      - name: Run tests
+        run: "ninja coverage"
+        working-directory: build
+
+      - name: Upload results to CodeCov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          verbose: true # optional (default = false)
