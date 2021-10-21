@@ -238,9 +238,8 @@ IF(ENABLE_COVERAGE STREQUAL "True")
 
     MESSAGE( "${BoldMagenta}" "External Dependency: Code coverage" "${ColourReset}" )
     INCLUDE(CodeCoverage)
-    MESSAGE("")
-
     APPEND_COVERAGE_COMPILER_FLAGS()
+    MESSAGE("")
 
     # optional excludes - None needed here
     SET(COVERAGE_EXCLUDES
