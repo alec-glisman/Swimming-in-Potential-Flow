@@ -3,7 +3,8 @@ SET(EXE_NAME "tests")
 
 SET(EXE_FILES 
     test-main.cpp 
-    test-simulation.cpp
+    test-simulation_system.cpp
+    # test-simulation.cpp
     )
 
 SET(EXE_LINKS 
