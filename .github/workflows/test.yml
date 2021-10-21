@@ -23,9 +23,9 @@ jobs:
       - name: Get latest CMake and Ninja
         uses: lukka/get-cmake@latest
 
-      - name: List $RUNNER_WORKSPACE before build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
+      # - name: List $RUNNER_WORKSPACE before build
+      #   run: find $RUNNER_WORKSPACE
+      #   shell: bash
 
       - name: Restore artifacts, or setup vcpkg for building artifacts
         uses: lukka/run-vcpkg@v10
