@@ -10,7 +10,7 @@
             "command": "cmake",
             "args": [
                 "-G",
-                "\"Unix Makefiles\"",
+                "Ninja",
                 "-B",
                 "build/debug",
                 "-DCMAKE_BUILD_TYPE=Debug",
@@ -96,7 +96,7 @@
             "command": "cmake",
             "args": [
                 "-G",
-                "\"Unix Makefiles\"",
+                "Ninja",
                 "-B",
                 "build/release",
                 "-DCMAKE_BUILD_TYPE=Release",
@@ -150,7 +150,7 @@
             "command": "cmake",
             "args": [
                 "-G",
-                "\"Unix Makefiles\"",
+                "Ninja",
                 "-B",
                 "build/profile",
                 "-DCMAKE_BUILD_TYPE=Profile",
