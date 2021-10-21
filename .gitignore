@@ -80,6 +80,11 @@ build*
 *.exe
 *.out
 *.app
+
+# Code coverage (gcov, lcov, gcovr)
+*.gcno,
+*.gcda,
+*.gcov
 # !SECTION (C++)
 
 # SECTION: CACHES
