@@ -102,7 +102,11 @@ system( "make -j" )
 
 
 # Run Catch2 unit tests
-if (${enableTesting} eq "True") {
+if(${enableCoverage} eq "True") {
+	system( "make coverage" )
+	  and die "Code coverage failed: $!";
+}
+elsif (${enableTesting} eq "True") {
 	system( "make test" )
 	  and die "Unit tests failed: $!";
 }
