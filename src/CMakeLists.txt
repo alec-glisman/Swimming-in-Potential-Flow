@@ -7,7 +7,6 @@ SET(EXE_FILES
 
 SET(EXE_LINKS 
     spdlog::spdlog_header_only
-    ${Boost_LIBRARIES}
     ${MKL_LIBRARIES}
     Eigen3::Eigen
     data_io

@@ -192,22 +192,6 @@ ENDIF()
 # SECTION: External libraries
 MESSAGE("")
 
-# BOOST libraries
-MESSAGE( "${BoldMagenta}" "External Dependency: Boost" "${ColourReset}" )
-SET(Boost_USE_STATIC_LIBS OFF)
-SET(Boost_USE_DEBUG_LIBS OFF)
-SET(Boost_USE_RELEASE_LIBS ON)
-SET(Boost_USE_MULTITHREADED ON)
-SET(Boost_USE_STATIC_RUNTIME OFF)
-
-FIND_PACKAGE(Boost 1.71.0 REQUIRED)
-INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
-LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
-MESSAGE(STATUS "${Cyan}" "Found: ${Boost_FOUND}" "${ColourReset}")
-MESSAGE(STATUS "${Cyan}" "Version: ${Boost_VERSION}" "${ColourReset}")
-MESSAGE(STATUS "${Cyan}" "Include Dir: ${Boost_INCLUDE_DIR}" "${ColourReset}")
-MESSAGE("")
-
 # Optimization libraries
 MESSAGE( "${BoldMagenta}" "External Dependency: Intel TBB" "${ColourReset}" )
 FIND_PACKAGE(TBB)    
