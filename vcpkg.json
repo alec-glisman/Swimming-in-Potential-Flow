@@ -20,10 +20,6 @@
         {
             "name": "catch2",
             "version>=": "2.13.6"
-        },
-        {
-            "name": "tbb",
-            "version>=": "2020_U3#5"
         }
     ]
 }
