@@ -105,7 +105,6 @@ build*
 
 # vcpkg installed
 vcpkg_installed/**
-
 # !SECTION (CACHES)
 
 # SECTION: EXCEPTIONS
