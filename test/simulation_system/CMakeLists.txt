@@ -2,12 +2,11 @@
 SET(LIB_NAME "test_simulation_system")
 
 SET(LIB_FILES 
-    testSystemData.cpp testSystemData.hpp 
+    testSystemData.hpp testSystemData.cpp 
     )
 
 SET(LIB_LINKS 
-    simulation_system
-    )
+    simulation_system)
 
 # Make all of source code a library
 ADD_LIBRARY(
