@@ -1,17 +1,49 @@
-name: Codecov
+name: Build and test code coverage.
 on: [push, pull_request]
 jobs:
   run:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
-      - name: Fetch
-        uses: actions/checkout@master
-      - name: Test
-        run: |
-          gcc -ftest-coverage -fprofile-arcs -O0 -o test test.c lib.c
-          ./test
-          gcov -abcfu lib.c
-      - name: Upload
+      
+      - name: Fetch actions (v2)
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - uses: lukka/get-cmake@latest
+      - name: dir
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+
+      - name: Restore artifacts, or setup vcpkg for building artifacts
+        uses: lukka/run-vcpkg@v10
+        id: runvcpkg
+        with:
+          # This one is not needed, as it is the default value anyway.
+          # vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+          vcpkgJsonGlob: '**/vcpkg.json'
+
+      - name: List $RUNNER_WORKSPACE before build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+      - name: Prints output of run-vcpkg's action.
+        run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
+      - name: Run CMake+vcpkg+Ninja
+        uses: lukka/run-cmake@v10
+        id: runcmake
+        with:
+          cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
+          configurePreset: 'ninja-multi-vcpkg'
+          buildPreset: 'ninja-multi-vcpkg'
+      - name: List $RUNNER_WORKSPACE after build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+
+      - name: Upload coverage results to Codecov
         uses: codecov/codecov-action@v1
         with:
           files: ./lib.c.gcov
+
+
+
+          
