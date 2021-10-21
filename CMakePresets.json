@@ -2,16 +2,33 @@
     "version": 2,
     "configurePresets": [
         {
-            "name": "gnu-default",
-            "displayName": "GNU GCC 11",
-            "description": "Configures project using gcc-11",
-            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "name": "debug-config",
+            "displayName": "Debug configuration",
+            "description": "Basic debug configuration with testing and coverage enabled",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-debug",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "ENABLE_TESTING": "True",
                 "ENABLE_COVERAGE": "True",
-                "CMAKE_INSTALL_PREFiX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_INSTALL_PREFiX": "${sourceDir}/install-debug"
             }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "debug-build",
+            "description": "Debug building",
+            "displayName": "Build the basic debug configuration",
+            "configurePreset": "debug-config"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "debug-test",
+            "description": "Debug testing",
+            "displayName": "Test the basic debug configuration",
+            "configurePreset": "debug-config"
         }
     ]
 }

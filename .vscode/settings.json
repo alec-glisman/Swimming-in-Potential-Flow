@@ -100,6 +100,7 @@
         "untar",
         "vcpkg",
         "viridis",
+        "vpkg",
         "xaxis",
         "xlabel",
         "xlim",
