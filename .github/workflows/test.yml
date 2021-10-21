@@ -17,8 +17,10 @@ jobs:
           path: code
           submodules: true
     
-      - uses: lukka/get-cmake@latest
-      - name: dir
+      - name: Get latest CMake and Nina
+        uses: lukka/get-cmake@latest
+
+      - name: List $RUNNER_WORKSPACE before build
         run: find $RUNNER_WORKSPACE
         shell: bash
 
@@ -26,28 +28,24 @@ jobs:
         uses: lukka/run-vcpkg@v10
         id: runvcpkg 
 
-      - name: List $RUNNER_WORKSPACE before build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
-      
       - name: Prints output of run-vcpkg's action.
         run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}
 
       - name: Configure
         run: |
-          cmake ${{ github.workspace }} -G Ninja -B build \
+          cmake ${{ github.workspace }}/code -G Ninja -B build \
                         -DCMAKE_BUILD_TYPE=Debug \
                         -DENABLE_TESTING=True \
                         -DENABLE_COVERAGE=True \
-                        -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake
+                        -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/code/vcpkg/scripts/buildsystems/vcpkg.cmake
       
       - name: Build
         run: ninja -j $(($(getconf _NPROCESSORS_ONLN) + 2))
-        working-directory: build
+        working-directory: code/build
 
       - name: Run tests
         run: "ninja coverage"
-        working-directory: build
+        working-directory: code/build
 
       - name: Upload results to CodeCov
         uses: codecov/codecov-action@v2
