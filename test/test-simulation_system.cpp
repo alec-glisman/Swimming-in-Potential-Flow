@@ -23,13 +23,9 @@ TEST_CASE("Test systemData class", "[systemData]")
     std::shared_ptr<systemData>     system;
     std::shared_ptr<testSystemData> testSystem;
 
-    // Construct and initialize systemData class
+    // Construct systenData class
     REQUIRE_NOTHROW(system = std::make_shared<systemData>(inputDataFile, outputDir));
-    REQUIRE_NOTHROW(system->initializeData());
-    // // Verify data was correctly parsed from GSD to simulation
-    REQUIRE(system->gSDParsed());
-
-    // Construct and initialized testSystemData
+    // Construct testSystemData class
     REQUIRE_NOTHROW(testSystem = std::make_shared<testSystemData>(system));
 
     // Return value test
@@ -40,4 +36,8 @@ TEST_CASE("Test systemData class", "[systemData]")
         REQUIRE_NOTHROW(return_val = testSystem->testCrossProdMat());
         REQUIRE(return_val == 0);
     }
+
+    // REQUIRE_NOTHROW(system->initializeData());
+    // Verify data was correctly parsed from GSD to simulation
+    // REQUIRE(system->gSDParsed());
 }
