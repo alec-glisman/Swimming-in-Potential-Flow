@@ -47,8 +47,18 @@ class GSDUtil;
 class systemData : public std::enable_shared_from_this<systemData>
 {
   public:
+    /**
+     * @brief Construct a new system Data object
+     *
+     * @param inputGSDFile string path to (already created and set-up) GSD frame
+     * @param outputDir string path to output directory for I/O
+     */
     systemData(std::string inputGSDFile, std::string outputDir);
 
+    /**
+     * @brief Destroy the system Data object
+     *
+     */
     ~systemData();
 
     /**
@@ -231,6 +241,7 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     /* SECTION: Friend classes */
     friend class testSystemData;
+    /* !SECTION */
 
     /* SECTION: Attributes */
     /* ANCHOR: Simulation hyperparameters */
