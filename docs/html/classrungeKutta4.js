@@ -15,7 +15,7 @@ var classrungeKutta4 =
     [ "m_dt", "classrungeKutta4.html#aa34bc59a36e672214e03e1b56d204966", null ],
     [ "m_c1_2_dt", "classrungeKutta4.html#a78e1264f47eeaff22b4897e2dd62606b", null ],
     [ "m_c1_6_dt", "classrungeKutta4.html#abd227f36f24c5e80c690d12716d51463", null ],
-    [ "m_3M", "classrungeKutta4.html#a5e77521db6b988fe4b53174b1ae52b21", null ],
+    [ "m_7M", "classrungeKutta4.html#a685906199cbdd996802298aedd12acd2", null ],
     [ "m_c1_2", "classrungeKutta4.html#af8ebefcdf3489dbd1bd5c70246018971", null ],
     [ "m_c1_6", "classrungeKutta4.html#af48938d4718a225f5edcd977707d131d", null ]
 ];

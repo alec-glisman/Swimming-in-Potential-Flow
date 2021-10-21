@@ -121,13 +121,13 @@ Project structure: links to relevant readme files</h1>
 <h1><a class="anchor" id="autotoc_md4"></a>
 Data I/O</h1>
 <p>All data is input and output from simulation using the <a href="https://gsd.readthedocs.io/en/stable/index.html">HOOMD GSD format</a>. The <a href="https://gsd.readthedocs.io/en/stable/python-module-gsd.fl.html">schema</a> is well-documented.</p>
-<p>I will be making a few modifications and make extensive use of the <code>log</code> section of the schema to save data I desire. Many variables are stored as floats, but I output a number of variables as doubles in the logs section for accuracy in further computations.</p>
+<p>I will be making a few modifications and make extensive use of the <code>log</code> section of the schema to save additional data. Many variables are stored as floats, but I output a number of variables as doubles in the logs section for accuracy in further computations.</p>
 <p>Frame 0 is created using a Python script and passed into the C++ simulation. The simulation then updates parameters (such as kinematics), and outputs the "true" initial frame as Frame 1. For this reason, there could be issues when loading data from frame 0 and any data that is not an input parameter should not be used for further work.</p>
 <h1><a class="anchor" id="autotoc_md5"></a>
 Modify repository for other potential flow systems</h1>
-<p>The simulation system can be easily adapted for other configurations and constraints.</p>
+<p>The simulation system can be readily adapted for other configurations and constraints.</p>
 <p>The code that must be changed inside the C++ framework is tagged with comments of the form <code>\xrefitem review "Review" "Altering Swimmer Design List"</code> and are found in the Doxygen documentation page named "Altering Swimmer Design List". The relevant classes to modify are the <a href="src/simulation_system/systemData.hpp"><code>systemData</code></a> and <a href="src/data_io/GSDUtil.hpp"><code>GSDUtil</code></a>.</p>
-<p>Of course, separate Python scripts for GSD initialization and numerical analysis must also be generated. These can be found in <a href="python/initial_configurations"><code>python/initial_configurations</code></a> and <a href="python/analysis"><code>python/analysis</code></a> directories, respectively.</p>
+<p>Separate Python scripts for GSD initialization and numerical analysis must also be generated. These can be found in <a href="python/initial_configurations"><code>python/initial_configurations</code></a> and <a href="python/analysis"><code>python/analysis</code></a> directories, respectively.</p>
 <h1><a class="anchor" id="autotoc_md6"></a>
 External dependencies</h1>
 <p>Further information found in <a class="el" href="md_requirements_README.html">`requirements`</a> directory readme.</p>
@@ -164,7 +164,7 @@ Integrated into project</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Oct 19 2021 21:46:37 for Bodies in Potential Flow by
+    <li class="footer">Generated on Thu Oct 21 2021 10:46:42 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

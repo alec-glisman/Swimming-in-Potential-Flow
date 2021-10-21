@@ -68,10 +68,10 @@
 <!-- Node7 -->
 <g id="node7" class="node">
 <title>Node7</title>
-<g id="a_node7"><a xlink:href="classsystemData.html#a2a35b86c91b3a2eb19612e6a2124a3ae" target="_top" xlink:title="Computes the particle D.o.F. from the body D.o.F.">
+<g id="a_node7"><a xlink:href="classsystemData.html#adc3f589f2fc622293dce85c53f215823" target="_top" xlink:title="Computes the particle D.o.F. from the body D.o.F.">
 <polygon fill="none" stroke="black" points="442,-137 442,-167 578,-167 578,-137 442,-137"/>
 <text text-anchor="start" x="450" y="-155" font-family="Helvetica,sans-Serif" font-size="10.00">systemData::convertBody2</text>
-<text text-anchor="middle" x="510" y="-144" font-family="Helvetica,sans-Serif" font-size="10.00">ParticleDoF</text>
+<text text-anchor="middle" x="510" y="-144" font-family="Helvetica,sans-Serif" font-size="10.00">ParticleVelAcc</text>
 </a>
 </g>
 </g>
@@ -205,7 +205,7 @@
 <!-- Node10 -->
 <g id="node10" class="node">
 <title>Node10</title>
-<g id="a_node10"><a xlink:href="testSimulationBuild_8cpp.html#ac2b102ba50512565940601db33c64cf2" target="_top" xlink:title=" ">
+<g id="a_node10"><a xlink:href="test-simulation_8cpp.html#ad247837e3960442b6e67b555c11a84f8" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="0,-93.5 0,-112.5 75,-112.5 75,-93.5 0,-93.5"/>
 <text text-anchor="middle" x="37.5" y="-100.5" font-family="Helvetica,sans-Serif" font-size="10.00">TEST_CASE</text>
 </a>

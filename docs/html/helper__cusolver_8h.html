@@ -177,14 +177,14 @@ Macros</h2></td></tr>
 <p class="definition">Definition at line <a class="el" href="helper__cusolver_8h_source.html#l00049">49</a> of file <a class="el" href="helper__cusolver_8h_source.html">helper_cusolver.h</a>.</p>
 <div class="fragment"><div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                                           {</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keywordtype">double</span> norminf = 0;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; <a class="code" href="namespacecollinear-swimmer-wall-configuration.html#abb68b1183bbd83ecd21a083bc29d7160">n</a>; j++) {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; n; j++) {</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">double</span> x_abs = <a class="code" href="helper__math_8h.html#aad6a2701675cd2a4bc1b1da7b79948ae">fabs</a>(x[j]);</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    norminf = (norminf &gt; x_abs) ? norminf : x_abs;</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  }</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="keywordflow">return</span> norminf;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="helper__math_8h_source.html#l01395">fabs()</a>, and <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00075">collinear-swimmer-wall-configuration::n</a>.</p>
+<p class="reference">References <a class="el" href="helper__math_8h_source.html#l01395">fabs()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -236,7 +236,7 @@ Here is the call graph for this function:</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordtype">double</span> norminf = 0;</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; m; i++) {</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordtype">double</span> sum = 0.0;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; <a class="code" href="namespacecollinear-swimmer-wall-configuration.html#abb68b1183bbd83ecd21a083bc29d7160">n</a>; j++) {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; n; j++) {</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;      <span class="keywordtype">double</span> A_abs = <a class="code" href="helper__math_8h.html#aad6a2701675cd2a4bc1b1da7b79948ae">fabs</a>(A[i + j * lda]);</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;      sum += A_abs;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    }</div>
@@ -245,7 +245,7 @@ Here is the call graph for this function:</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="keywordflow">return</span> norminf;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="helper__math_8h_source.html#l01395">fabs()</a>, and <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00075">collinear-swimmer-wall-configuration::n</a>.</p>
+<p class="reference">References <a class="el" href="helper__math_8h_source.html#l01395">fabs()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -400,7 +400,7 @@ Here is the call graph for this function:</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">int</span> baseA =</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      (CUSPARSE_INDEX_BASE_ONE == cusparseGetMatIndexBase(descrA)) ? 1 : 0;</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  printf(<span class="stringliteral">&quot;m = %d, n = %d, nnz = %d, matlab base-1\n&quot;</span>, m, <a class="code" href="namespacecollinear-swimmer-wall-configuration.html#abb68b1183bbd83ecd21a083bc29d7160">n</a>, nnzA);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  printf(<span class="stringliteral">&quot;m = %d, n = %d, nnz = %d, matlab base-1\n&quot;</span>, m, n, nnzA);</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> row = 0; row &lt; m; row++) {</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> start = csrRowPtrA[row] - baseA;</div>
@@ -413,19 +413,16 @@ Here is the call graph for this function:</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  }</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="collinear-swimmer-wall-configuration_8py_source.html#l00075">collinear-swimmer-wall-configuration::n</a>.</p>
-
 </div>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="ahelper__math_8h_html_aad6a2701675cd2a4bc1b1da7b79948ae"><div class="ttname"><a href="helper__math_8h.html#aad6a2701675cd2a4bc1b1da7b79948ae">fabs</a></div><div class="ttdeci">__host__ __device__ float2 fabs(float2 v)</div><div class="ttdef"><b>Definition:</b> <a href="helper__math_8h_source.html#l01395">helper_math.h:1395</a></div></div>
-<div class="ttc" id="anamespacecollinear-swimmer-wall-configuration_html_abb68b1183bbd83ecd21a083bc29d7160"><div class="ttname"><a href="namespacecollinear-swimmer-wall-configuration.html#abb68b1183bbd83ecd21a083bc29d7160">collinear-swimmer-wall-configuration.n</a></div><div class="ttdeci">int n</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-configuration_8py_source.html#l00075">collinear-swimmer-wall-configuration.py:75</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_0c26bd22f254302c4dfbaa95bf527e9d.html">helpers</a></li><li class="navelem"><a class="el" href="dir_d54f985c9a00fdf32f5208dabda08809.html">cuda</a></li><li class="navelem"><a class="el" href="helper__cusolver_8h.html">helper_cusolver.h</a></li>
-    <li class="footer">Generated on Tue Oct 19 2021 21:46:37 for Bodies in Potential Flow by
+    <li class="footer">Generated on Thu Oct 21 2021 10:46:42 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>
