@@ -259,6 +259,7 @@ IF(ENABLE_TESTING STREQUAL "True" OR CMAKE_BUILD_TYPE STREQUAL "Debug")
             "/home/aglisman/.linuxbrew/**"
             "11/**"
             "/usr/include/**"
+            "/Applications/**"
             )
 
     ENDIF()
