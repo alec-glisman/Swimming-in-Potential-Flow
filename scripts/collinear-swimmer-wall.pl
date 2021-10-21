@@ -30,11 +30,11 @@ use warnings;                      # give warnings
 # SECTION: Input variables that user must specify before running script
 
 # Compiler
-my $build          = "Release";                 # CMake built type, OPTIONS: Release, Debug, Profile
-my $enableTesting  = "True";                    # Unit test, OPTIONS: (False) OFF, (True) ON
-my $enableCoverage = "False";                   # Testing Coverage, OPTIONS: (False) OFF, (True) ON
-my $buildDir       = "build";                  # Title whatever you want build folder to be
-my $generator      = "Unix Makefiles";         # Only tested with this option
+my $enableTesting  = "True";                    # Unit tests,        OPTIONS: (False) OFF, (True) ON
+my $enableCoverage = "False";                   # Testing coverage,  OPTIONS: (False) OFF, (True) ON
+my $build          = "Release";                 # CMake built type,  OPTIONS: Release, Debug, Profile
+my $generator      = "Unix Makefiles";          # CMake generator,   OPTIONS: "Unix Makefiles", "Ninja"
+my $buildDir       = "build/" . lc $build;      # Build folder path
 
 # C++ Simulation
 my $simulationTag    = "collinear-swimmer-wall";
@@ -105,8 +105,7 @@ system( "make -j" )
 if(${enableCoverage} eq "True") {
 	system( "make coverage" )
 	  and die "Code coverage failed: $!";
-}
-elsif (${enableTesting} eq "True") {
+}elsif (${enableTesting} eq "True") {
 	system( "make test" )
 	  and die "Unit tests failed: $!";
 }
