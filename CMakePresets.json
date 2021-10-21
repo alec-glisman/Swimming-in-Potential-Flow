@@ -18,6 +18,9 @@
                 "ENABLE_COVERAGE": "True",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "True",
                 "CMAKE_TOOLCHAIN_FILE": "vcpkg/scripts/buildsystems/vcpkg.cmake"
+            },
+            "environment": {
+                "CLICOLOR_FORCE": "0"
             }
         },
         {
