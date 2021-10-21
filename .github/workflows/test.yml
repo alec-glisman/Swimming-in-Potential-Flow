@@ -40,20 +40,21 @@ jobs:
           # for vcpkg.
           vcpkgGitCommitId: '4474aba1e77be2d643eb684298b7d5479cad9a1f'
 
-      - name: Prints output of run-vcpkg's action.
-        run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}
+      - name: Run CMake consuming CMakePreset.json and vcpkg.json by mean of vcpkg.
+        uses: lukka/run-cmake@v10
+        with:
+          # This is the default path to the CMakeLists.txt along side the
+          # CMakePresets.json. Change if you need have CMakeLists.txt and CMakePresets.json
+          # located elsewhere.
+          cmakeListsTxtPath: '${{ github.workspace }}/code/CMakeLists.txt'
 
-      - name: Configure
-        run: |
-          cmake ${{ github.workspace }}/code -G Ninja -B build \
-                        -DCMAKE_BUILD_TYPE=Debug \
-                        -DENABLE_TESTING=True \
-                        -DENABLE_COVERAGE=True \
-                        -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/code/vcpkg/scripts/buildsystems/vcpkg.cmake
-      
-      - name: Build
-        run: ninja -j $(($(getconf _NPROCESSORS_ONLN) + 2))
-        working-directory: code/build
+          # This is the name of the CMakePresets.json's configuration to use to generate
+          # the project files. This configuration leverages the vcpkg.cmake toolchain file to
+          # run vcpkg and install all dependencies specified in vcpkg.json.
+          configurePreset: 'default'
+
+          # This is the name of the CMakePresets.json's configuration to build the project.
+          buildPreset: 'default'
 
       - name: Run tests
         run: "ninja coverage"
