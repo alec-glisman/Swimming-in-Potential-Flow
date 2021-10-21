@@ -33,7 +33,7 @@ TEST_CASE("Test systemData class", "[systemData]")
     REQUIRE_NOTHROW(testSystem = std::make_shared<testSystemData>(system));
 
     // Return value test
-    int return_val{0};
+    int return_val{-1};
 
     SECTION("Test static helper functions")
     {
