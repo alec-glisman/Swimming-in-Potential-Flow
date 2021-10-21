@@ -131,6 +131,7 @@ IF(APPLE)
     
 ELSE()  # Use CUDA when not on MacOS
     SET(LANGS CXX C)
+    # SET(LANGS CXX CUDA)  # TODO: Add cuda back later (removed for GitHub actions)
 
 ENDIF()
 
@@ -148,12 +149,12 @@ PROJECT(
 # GCC requirements
 IF("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
     IF(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 11)
-        MESSAGE(FATAL_ERROR "GCC version must be at least 11! Using: ${CMAKE_CXX_COMPILER_VERSION}")
+        MESSAGE(WARNING "GCC version must be at least 11! Using: ${CMAKE_CXX_COMPILER_VERSION}")
     ENDIF()
 
 ELSE()
     MESSAGE(WARNING "You are using an unsupported compiler! Compilation has only been tested with GCC.")
-    MESSAGE(FATAL_ERROR "Compiler ID: ${CMAKE_CXX_COMPILER_ID}")
+    MESSAGE(WARNING "Compiler ID: ${CMAKE_CXX_COMPILER_ID}")
 
 ENDIF()
 
