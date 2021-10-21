@@ -5,7 +5,6 @@
             "name": "gnu-default",
             "displayName": "GNU GCC 11",
             "description": "Configures project using gcc-11",
-            "generator": "Unix Makefiles",
             "binaryDir": "${sourceDir}/out/build/${presetName}",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
