@@ -85,7 +85,7 @@
   - [x] Update linear constraint system such that the only constraint is the quaternion unit norm for each body (systemData).
   - [x] Change 2nd order integration to use body components.
   - [x] Rewrite kinematic constraints using quaternions
-  - [x] Figure out how to calculate particle positions from body positions simply and with no assumptions.
+  - [x] Figure out how to calculate particle positions from body positions and with no assumptions.
 
 ## Python modules
 

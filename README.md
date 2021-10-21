@@ -41,7 +41,7 @@ Further information can be found at the end of this readme.
 All data is input and output from simulation using the [HOOMD GSD format](https://gsd.readthedocs.io/en/stable/index.html).
 The [schema](https://gsd.readthedocs.io/en/stable/python-module-gsd.fl.html) is well-documented.
 
-I will be making a few modifications and make extensive use of the `log` section of the schema to save data I desire.
+I will be making a few modifications and make extensive use of the `log` section of the schema to save additional data.
 Many variables are stored as floats, but I output a number of variables as doubles in the logs section for accuracy in further computations.
 
 Frame 0 is created using a Python script and passed into the C++ simulation.
@@ -50,12 +50,12 @@ For this reason, there could be issues when loading data from frame 0 and any da
 
 ## Modify repository for other potential flow systems
 
-The simulation system can be easily adapted for other configurations and constraints.
+The simulation system can be readily adapted for other configurations and constraints.
 
 The code that must be changed inside the C++ framework is tagged with comments of the form `@review_swimmer` and are found in the Doxygen documentation page named "Altering Swimmer Design List".
 The relevant classes to modify are the [`systemData`](src/simulation_system/systemData.hpp) and [`GSDUtil`](src/data_io/GSDUtil.hpp).
 
-Of course, separate Python scripts for GSD initialization and numerical analysis must also be generated.
+Separate Python scripts for GSD initialization and numerical analysis must also be generated.
 These can be found in [`python/initial_configurations`](python/initial_configurations) and [`python/analysis`](python/analysis) directories, respectively.
 
 ## External dependencies
