@@ -249,6 +249,7 @@ IF(ENABLE_COVERAGE STREQUAL "True")
         "/opt/intel/**"
         "/Applications/**"
         "${PROJECT_SOURCE_DIR}/src/main.cpp"
+        "${PROJECT_SOURCE_DIR}/test/**"
         )
 
 ENDIF()
