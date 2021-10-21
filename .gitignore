@@ -15,7 +15,6 @@ temp*
 *.svg
 *.txt
 *.out
-*.json
 *.lammpstrj
 *.gsd
 *.tar.xz
