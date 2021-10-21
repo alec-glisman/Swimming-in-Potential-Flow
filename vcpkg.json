@@ -1,0 +1,31 @@
+{
+    "name": "bodies-in-potential-flow",
+    "version-string": "2.0-alpha",
+    "description": "Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible).",
+    "dependencies": [
+        {
+            "name": "boost",
+            "version>=": "1.71.0"
+        },
+        {
+            "name": "eigen3",
+            "version>=": "3.4.0"
+        },
+        {
+            "name": "spdlog",
+            "version>=": "1.9.1"
+        },
+        {
+            "name": "catch2",
+            "version>=": "2.13.6"
+        },
+        {
+            "name": "intel-mkl",
+            "version>=": "2020.0.0"
+        },
+        {
+            "name": "tbb",
+            "version>=": "2020_U3"
+        }
+    ]
+}
