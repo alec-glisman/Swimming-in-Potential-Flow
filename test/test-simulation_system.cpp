@@ -35,6 +35,9 @@ TEST_CASE("Test systemData class", "[systemData]")
     {
         REQUIRE_NOTHROW(return_val = testSystem->testCrossProdMat());
         REQUIRE(return_val == 0);
+
+        REQUIRE_NOTHROW(return_val = testSystem->testEMatrix());
+        REQUIRE(return_val == 0);
     }
 
     // REQUIRE_NOTHROW(system->initializeData());

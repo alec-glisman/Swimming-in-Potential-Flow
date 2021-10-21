@@ -30,13 +30,13 @@ class testSystemData
      *
      * @param sys systemData class to test
      */
-    explicit testSystemData(std::shared_ptr<systemData> sys);
+    explicit testSystemData(std::shared_ptr<systemData> sys) : m_system(sys){};
 
     /**
      * @brief Destroy the test System Data object
      *
      */
-    ~testSystemData();
+    ~testSystemData() = default;
 
     /**
      * @brief Test `systemData::crossProdMat()`
@@ -45,6 +45,14 @@ class testSystemData
      */
     int
     testCrossProdMat();
+
+    /**
+     * @brief Test `systemData::eMatrix()`
+     *
+     * @return int Number of failed tests
+     */
+    int
+    testEMatrix();
 
   private:
 };

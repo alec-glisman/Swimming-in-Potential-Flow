@@ -4,15 +4,6 @@
 
 #include <testSystemData.hpp>
 
-testSystemData::testSystemData(std::shared_ptr<systemData> sys)
-{
-    m_system = sys;
-}
-
-testSystemData::~testSystemData()
-{
-}
-
 int
 testSystemData::testCrossProdMat()
 {
@@ -63,6 +54,14 @@ testSystemData::testCrossProdMat()
     Eigen::Matrix3d test_mat_x_1;
     m_system->crossProdMat(x_1, test_mat_x_1);
     num_failed_tests += !(test_mat_x_1.isApprox(mat_x_1));
+
+    return num_failed_tests;
+}
+
+int
+testSystemData::testEMatrix()
+{
+    int num_failed_tests{0};
 
     return num_failed_tests;
 }
