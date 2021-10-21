@@ -11,8 +11,6 @@
                 "ENABLE_TESTING": "True",
                 "ENABLE_COVERAGE": "True",
                 "CMAKE_INSTALL_PREFiX": "${sourceDir}/out/install/${presetName}",
-                "CMAKE_C_COMPILER": "gcc-11",
-                "CMAKE_CXX_COMPILER": "g++-11"
             }
         }
     ]
