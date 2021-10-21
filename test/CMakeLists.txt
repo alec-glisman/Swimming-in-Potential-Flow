@@ -23,8 +23,9 @@ CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/../test/input/collinear_swimmer_wall
     "${CMAKE_CURRENT_BINARY_DIR}/input/collinear_swimmer_wall/initial_frame_dt1e-6_Z-height6.gsd"
     COPYONLY
     )
-CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/../test/input/collinear_swimmer_wall/initial_frame_dt1e-2_Z-height6.gsd"
-    "${CMAKE_CURRENT_BINARY_DIR}/input/collinear_swimmer_wall/initial_frame_dt1e-2_Z-height6.gsd"
+
+CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/../test/input/collinear_swimmer_wall/initial_frame_dt1e-1_Z-height6.gsd"
+    "${CMAKE_CURRENT_BINARY_DIR}/input/collinear_swimmer_wall/initial_frame_dt1e-1_Z-height6.gsd"
     COPYONLY
     )
 
@@ -61,8 +62,24 @@ TARGET_LINK_LIBRARIES(
     ${EXE_LINKS}
     )
 
+
 # Catch2 CMake integration: https://github.com/catchorg/Catch2/blob/devel/docs/cmake-integration.md
 INCLUDE(CTest)
 INCLUDE(Catch)
+CATCH_DISCOVER_TESTS(tests)
 
-catch_discover_tests(tests)
+
+# lcov: https://stackoverflow.com/questions/52255589/code-coverage-analysis-using-codecoverage-cmake-with-multiple-targets
+SETUP_TARGET_FOR_COVERAGE_LCOV(
+        NAME coverage       # New target name
+        EXECUTABLE ctest -j # Executable in PROJECT_BINARY_DIR
+        DEPENDENCIES
+            ${EXE_NAME}     # Dependencies to build first
+    )
+
+# gcovr: https://stackoverflow.com/a/62730462/13215572
+SETUP_TARGET_FOR_COVERAGE_GCOVR_HTML(
+            NAME ${EXE_NAME}_coverage_html
+            EXECUTABLE ${EXE_NAME}
+            DEPENDENCIES ${EXE_LINKS}
+    )

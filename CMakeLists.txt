@@ -53,6 +53,8 @@ IF(APPLE)  # Build on laptop PC
     
     SET(CMAKE_C_COMPILER /usr/local/bin/gcc-11 CACHE PATH "")
     SET(CMAKE_CXX_COMPILER /usr/local/bin/g++-11 CACHE PATH "")
+    
+    SET(GCOV_PATH "/usr/local/bin/gcov-11")
 
 ELSEIF("$ENV{USER}" STREQUAL "aglisman")  # Build on desktop PC
 
@@ -97,11 +99,7 @@ SET(CMAKE_CUDA_ARCHITECTURES 86 61)
 
 # CMake requirements
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5.1 FATAL_ERROR)
-
-SET(CMAKE_MODULE_PATH 
-    ${CMAKE_MODULE_PATH}
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/cmake_modules)
-
+LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/include/cmake_modules")
 #!SECTION
 
 
@@ -178,12 +176,6 @@ IF(CMAKE_BUILD_TYPE STREQUAL "Profile")
 
 ENDIF()
 
-IF(ENABLE_COVERAGE STREQUAL "True" OR CMAKE_BUILD_TYPE STREQUAL "Debug")
-
-    ADD_COMPILE_OPTIONS("--coverage")
-    ADD_LINK_OPTIONS("--coverage")
-   
-ENDIF()
 
 # !SECTION
 
@@ -243,7 +235,6 @@ MESSAGE("")
 # !SECTION
 
 
-
 # SECTION: Internal libraries
 ADD_SUBDIRECTORY(src)
 
@@ -255,10 +246,20 @@ IF(ENABLE_TESTING STREQUAL "True" OR CMAKE_BUILD_TYPE STREQUAL "Debug")
     MESSAGE( STATUS "${Cyan}" "Found: ${Catch2_FOUND}" "${ColourReset}")
     MESSAGE( STATUS "${Cyan}" "Include Dir: ${Catch2_INCLUDE_DIRS}" "${ColourReset}")
     MESSAGE("")
+    
+    IF(ENABLE_COVERAGE STREQUAL "True" AND CMAKE_COMPILER_IS_GNUCXX)
 
-    ADD_SUBDIRECTORY(test)
+        MESSAGE( "${BoldMagenta}" "External Dependency: Code coverage" "${ColourReset}" )
+        INCLUDE(CodeCoverage)
+        MESSAGE("")
+
+        APPEND_COVERAGE_COMPILER_FLAGS()
+
+    ENDIF()
 
     ENABLE_TESTING()
+
+    ADD_SUBDIRECTORY(test)
 
 ENDIF()
 # !SECTION
