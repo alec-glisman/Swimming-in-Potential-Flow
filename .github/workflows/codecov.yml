@@ -1,5 +1,6 @@
 name: Build and test code coverage.
 on: [push, pull_request]
+
 jobs:
   run:
     runs-on: ubuntu-20.04
@@ -17,11 +18,27 @@ jobs:
 
       - name: Restore artifacts, or setup vcpkg for building artifacts
         uses: lukka/run-vcpkg@v10
-        id: runvcpkg
+        id: runvcpkg  # Always specify the specific _version_ of the action you need, `v10` in this case.
         with:
-          # This one is not needed, as it is the default value anyway.
+          # This is the default location of the directory containing vcpkg sources.
+          # Change it to the right location if needed.
           # vcpkgDirectory: '${{ github.workspace }}/vcpkg'
-          vcpkgJsonGlob: '**/vcpkg.json'
+
+          # If not using a submodule for vcpkg sources, this specifies which commit
+          # id must be checkout from a Git repo. It must not set if using a submodule
+          # for vcpkg.
+          vcpkgGitCommitId: '30b217b1ede50f6c27b7234388114f4b0d60a3f7'
+
+          # This is the glob expression used to locate the vpkg.json and add its
+          # hash to the cache key. Change it to match a single manifest file you want
+          # to use.
+          # vcpkgJsonGlob: '**/vcpkg.json'
+
+          # This is needed to run `vcpkg install` command (after vcpkg is built) in
+          # the directory where vcpkg.json has been located. Default is false,
+          # It is highly suggested to let `run-cmake` to run vcpkg (i.e. `false`)
+          # (i.e. let CMake run `vcpkg install`) using the vcpkg.cmake toolchain.
+          # runVcpkgInstall: true
 
       - name: List $RUNNER_WORKSPACE before build
         run: find $RUNNER_WORKSPACE
