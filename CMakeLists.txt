@@ -64,6 +64,8 @@ ELSEIF("$ENV{USER}" STREQUAL "aglisman")  # Build on desktop PC
 
     SET(CMAKE_C_COMPILER /usr/bin/gcc-11 CACHE PATH "")
     SET(CMAKE_CXX_COMPILER /usr/bin/g++-11 CACHE PATH "")
+    
+    SET(GCOV_PATH "/usr/bin/gcov-11")
 
     
 ELSEIF("$ENV{USER}" STREQUAL "alec")  # Build on Brady group servers
@@ -231,13 +233,28 @@ MESSAGE( STATUS "${Cyan}" "Include Dir: ${SPDLOG_INCLUDE_DIRS}" "${ColourReset}"
 MESSAGE( STATUS "${Cyan}" "Libraries: ${SPDLOG_LIBRARIES}" "${ColourReset}")
 MESSAGE("")
 
-# !SECTION
+IF(ENABLE_COVERAGE STREQUAL "True")
+
+    MESSAGE( "${BoldMagenta}" "External Dependency: Code coverage" "${ColourReset}" )
+    INCLUDE(CodeCoverage)
+    MESSAGE("")
+
+    APPEND_COVERAGE_COMPILER_FLAGS()
+
+    # optional excludes - None needed here
+    SET(COVERAGE_EXCLUDES
+        "/home/aglisman/.linuxbrew/**"
+        "/usr/include/**"
+        "/usr/lib/**"
+        "/opt/intel/**"
+        "/Applications/**"
+        "${PROJECT_SOURCE_DIR}/src/main.cpp"
+        )
+
+ENDIF()
 
 
-# SECTION: Internal libraries
-ADD_SUBDIRECTORY(src)
-
-IF(ENABLE_TESTING STREQUAL "True" OR CMAKE_BUILD_TYPE STREQUAL "Debug")
+IF(ENABLE_TESTING STREQUAL "True")
 
     # Unit testing libraries
     MESSAGE( "${BoldMagenta}" "External Dependency: Catch2" "${ColourReset}" )
@@ -245,26 +262,18 @@ IF(ENABLE_TESTING STREQUAL "True" OR CMAKE_BUILD_TYPE STREQUAL "Debug")
     MESSAGE( STATUS "${Cyan}" "Found: ${Catch2_FOUND}" "${ColourReset}")
     MESSAGE( STATUS "${Cyan}" "Include Dir: ${Catch2_INCLUDE_DIRS}" "${ColourReset}")
     MESSAGE("")
-    
-    IF(ENABLE_COVERAGE STREQUAL "True")
-
-        MESSAGE( "${BoldMagenta}" "External Dependency: Code coverage" "${ColourReset}" )
-        INCLUDE(CodeCoverage)
-        MESSAGE("")
-
-        APPEND_COVERAGE_COMPILER_FLAGS()
-
-        # optional excludes - None needed here
-        SET(COVERAGE_EXCLUDES
-            "/home/aglisman/.linuxbrew/**"
-            "11/**"
-            "/usr/include/**"
-            "/Applications/**"
-            )
-
-    ENDIF()
 
     ENABLE_TESTING()
+
+ENDIF()
+
+# !SECTION
+
+
+# SECTION: Internal libraries
+ADD_SUBDIRECTORY(src)
+
+IF(ENABLE_TESTING STREQUAL "True")
 
     ADD_SUBDIRECTORY(test)
 
