@@ -76,18 +76,20 @@ Further information found in [`requirements`](requirements/README.md) directory 
 
 ### Must install separately
 
-- [Boost](https://www.boost.org/) (v1.71.0): All-purpose STL extension
-- [Intel MKL](https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html#gs.7owc4e) (oneAPI v2021.1.1): Optimized mathematical instructions
-- [OpenMP](https://www.openmp.org/) (4.5): Multi-platform shared-memory multiprocessing programming
+#### vcpkg
+
 - [Eigen3](https://gitlab.com/libeigen/eigen) (3.4.0): Linear algebra
 - [spdlog](https://github.com/gabime/spdlog) (v1.9.1): Logging
 - [Catch2](https://github.com/catchorg/Catch2) (v2.13.6): Unit testing
 
-All dependencies can be installed using [`vcpkg`](https://github.com/microsoft/vcpkg).
 Manifest is found at base of repository and command `vcpkg/./vcpkg install` will manage installation.
 Note that the [vcpkg Intel MKL](https://vcpkg.info/port/intel-mkl) will only verify MKL is installed and not install it on its own.
 Therefore, oneAPI must still be downloaded and installed manually.
 
-### Integrated into project
+#### Intel OneAPI
 
-- [gsd](https://github.com/glotzerlab/gsd) (v2.4.2): Simulation data output
+- [Intel MKL](https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html#gs.7owc4e) (oneAPI v2021.1.1): Optimized mathematical instructions -[Intel TBB](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onetbb.html#gs.ds0y09) (oneAPI v2021.1.1): Parallel computing on multi-core processors
+
+#### Included with compiler
+
+- [OpenMP](https://www.openmp.org/) (4.5): Multi-platform shared-memory multiprocessing programming
