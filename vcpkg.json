@@ -22,10 +22,6 @@
             "version>=": "2.13.6"
         },
         {
-            "name": "intel-mkl",
-            "version>=": "2020.0.0#2"
-        },
-        {
             "name": "tbb",
             "version>=": "2020_U3#5"
         }
