@@ -102,6 +102,10 @@ build*
 # MacOS files
 .DS_Store
 *.DS_Store
+
+# vcpkg installed
+vcpkg_installed/**
+
 # !SECTION (CACHES)
 
 # SECTION: EXCEPTIONS
