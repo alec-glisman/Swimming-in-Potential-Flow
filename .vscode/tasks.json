@@ -12,7 +12,7 @@
                 "-G",
                 "\"Unix Makefiles\"",
                 "-B",
-                "build_debug",
+                "build/debug",
                 "-DCMAKE_BUILD_TYPE=Debug",
                 "-DENABLE_TESTING=True",
                 "-DENABLE_COVERAGE=True",
@@ -31,7 +31,7 @@
             "command": "cmake",
             "args": [
                 "--build",
-                "build_debug",
+                "build/debug",
                 "-j"
             ],
             "group": {
@@ -48,7 +48,7 @@
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "command": "build_debug/src/./bodies_in_potential_flow",
+            "command": "build/debug/src/./bodies_in_potential_flow",
             "args": [
                 "test/input/collinear_swimmer_wall/initial_frame_dt1e-6_Z-height6.gsd",
                 "temp/output"
@@ -63,7 +63,7 @@
             "label": "Debug: test",
             "type": "shell",
             "options": {
-                "cwd": "${workspaceFolder}/build_debug"
+                "cwd": "${workspaceFolder}/build/debug"
             },
             "command": "make test",
             "dependsOn": "Debug: build",
@@ -75,7 +75,7 @@
             "label": "Debug: coverage",
             "type": "shell",
             "options": {
-                "cwd": "${workspaceFolder}/build_debug"
+                "cwd": "${workspaceFolder}/build/debug"
             },
             "command": "make coverage",
             "group": {
@@ -98,7 +98,7 @@
                 "-G",
                 "\"Unix Makefiles\"",
                 "-B",
-                "build_release",
+                "build/release",
                 "-DCMAKE_BUILD_TYPE=Release",
                 "-DENABLE_TESTING=True",
                 "-DENABLE_COVERAGE=True",
@@ -117,7 +117,7 @@
             "command": "cmake",
             "args": [
                 "--build",
-                "build_release",
+                "build/release",
                 "-j"
             ],
             "problemMatcher": [
@@ -130,7 +130,7 @@
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "command": "build_release/src/./bodies_in_potential_flow",
+            "command": "build/release/src/./bodies_in_potential_flow",
             "args": [
                 "test/input/collinear_swimmer_wall/initial_frame_dt1e-6_Z-height6.gsd",
                 "temp/output"
@@ -152,7 +152,7 @@
                 "-G",
                 "\"Unix Makefiles\"",
                 "-B",
-                "build_profile",
+                "build/profile",
                 "-DCMAKE_BUILD_TYPE=Profile",
                 "-DENABLE_TESTING=True",
                 "-DENABLE_COVERAGE=True",
@@ -171,7 +171,7 @@
             "command": "cmake",
             "args": [
                 "--build",
-                "build_profile",
+                "build/profile",
                 "-j"
             ],
             "problemMatcher": [
@@ -184,7 +184,7 @@
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "command": "build_profile/src/./bodies_in_potential_flow",
+            "command": "build/profile/src/./bodies_in_potential_flow",
             "args": [
                 "test/input/collinear_swimmer_wall/initial_frame_dt1e-6_Z-height6.gsd",
                 "temp/output"
