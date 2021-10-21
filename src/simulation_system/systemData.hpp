@@ -47,6 +47,10 @@ class GSDUtil;
 class systemData : public std::enable_shared_from_this<systemData>
 {
   public:
+    /**
+     * @brief Construct a new system Data object. Default constructor.
+     *
+     */
     systemData() = default;
 
     /**
