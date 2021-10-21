@@ -44,7 +44,14 @@
             "name": "default",
             "displayName": "Default Tests",
             "description": "Test default debug build",
-            "configurePreset": "default"
+            "configurePreset": "default",
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": true
+            },
+            "output": {
+                "outputOnFailure": true
+            }
         }
     ]
 }
