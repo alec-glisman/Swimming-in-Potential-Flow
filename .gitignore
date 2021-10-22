@@ -99,10 +99,6 @@ build*
 .cache/*
 .cache*
 
-# MacOS files
-.DS_Store
-*.DS_Store
-
 # vcpkg installed
 vcpkg_installed/**
 # !SECTION (CACHES)
@@ -126,4 +122,12 @@ test/output/**
 
 # CMAKE files
 !**/CMakeLists.txt
+
+# Documentation
+!docs/**
+
 # !SECTION (EXCEPTIONS)
+
+# MacOS files
+.DS_Store
+*.DS_Store
