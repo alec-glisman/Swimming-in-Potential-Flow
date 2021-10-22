@@ -4,7 +4,7 @@ Study dynamics of inertial active matter in potential flow (irrotational, incomp
 
 Author: Alec Glisman
 
-[![Test](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml/badge.svg)](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml)
+[![Code Coverage](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml/badge.svg)](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml)
 
 ## Code documentation
 
