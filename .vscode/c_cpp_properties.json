@@ -10,19 +10,13 @@
         {
             "name": "Mac",
             "includePath": [
-                "${workspaceFolder}/**",
-                "${workspaceFolder}/include/**",
-                "${workspaceFolder}/include/spdlog/include",
-                "${workspaceFolder}/include/Eigen/",
-                "${workspaceFolder}/src/integrators",
-                "${workspaceFolder}/src/data_io",
-                "/usr/local/include",
-                "${workspaceFolder}/src/simulation_system"
+                "/usr/local/include/**",
+                "${workspaceFolder}/**"
             ],
             "defines": [],
             "compilerPath": "/usr/local/bin/gcc-11",
             "compilerArgs": [],
-            "cStandard": "c11",
+            "cStandard": "c17",
             "cppStandard": "c++17",
             "intelliSenseMode": "gcc-x64",
             "configurationProvider": "vector-of-bool.cmake-tools",
@@ -31,26 +25,30 @@
                     "${workspaceFolder}/**"
                 ],
                 "limitSymbolsToIncludedHeaders": true
-            }
+            },
+            "macFrameworkPath": [],
+            "compileCommands": "${workspaceFolder}/build/debug/compile_commands.json"
         },
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/home/aglisman/.linuxbrew/include/**"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/gcc",
+            "compilerPath": "/usr/bin/gcc-11",
             "compilerArgs": [],
-            "cStandard": "c11",
+            "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "gcc-x64",
+            "intelliSenseMode": "linux-gcc-x64",
             "configurationProvider": "vector-of-bool.cmake-tools",
             "browse": {
                 "path": [
                     "${workspaceFolder}/**"
                 ],
                 "limitSymbolsToIncludedHeaders": true
-            }
+            },
+            "compileCommands": "${workspaceFolder}/build/debug/compile_commands.json"
         }
     ],
     "version": 4

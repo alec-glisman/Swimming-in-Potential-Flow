@@ -1,12 +1,18 @@
 [submodule "include/Catch2"]
-	path = include/Catch2
-	url = https://github.com/catchorg/Catch2.git
+path = include/Catch2
+url = https://github.com/catchorg/Catch2.git
 [submodule "include/Eigen"]
-	path = include/Eigen
-	url = https://gitlab.com/libeigen/eigen.git
+path = include/Eigen
+url = https://gitlab.com/libeigen/eigen.git
 [submodule "include/spdlog"]
-	path = include/spdlog
-	url = https://github.com/gabime/spdlog.git
+path = include/spdlog
+url = https://github.com/gabime/spdlog.git
 [submodule "include/gsd"]
-	path = include/gsd
-	url = https://github.com/glotzerlab/gsd.git
+path = include/gsd
+url = https://github.com/glotzerlab/gsd.git
+[submodule "profile/FlameGraph"]
+path = profile/FlameGraph
+url = https://github.com/brendangregg/FlameGraph.git
+[submodule "vcpkg"]
+	path = vcpkg
+	url = https://github.com/Microsoft/vcpkg.git

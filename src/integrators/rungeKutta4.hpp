@@ -14,103 +14,167 @@
 #include <systemData.hpp>
 
 /* Include all external project dependencies */
-// eigen3 (Linear algebra)
+// Intel MKL
+#if __has_include("mkl.h")
+#define EIGEN_USE_MKL_ALL
+#else
+#pragma message(" !! COMPILING WITHOUT INTEL MKL OPTIMIZATIONS !! ")
+#endif
+// eigen3(Linear algebra)
+#define EIGEN_NO_AUTOMATIC_RESIZING
+#define EIGEN_USE_THREADS
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/Eigen>
-#include <eigen3/Eigen/Eigenvalues>
-#define EIGEN_USE_MKL_ALL
-#include <eigen3/Eigen/src/Core/util/MKL_support.h>
+#include <eigen3/unsupported/Eigen/CXX11/Tensor>
+#include <eigen3/unsupported/Eigen/CXX11/ThreadPool>
+// eigen3 conversion between Eigen::Tensor (unsupported) and Eigen::Matrix
+#include <helper_eigenTensorConversion.hpp>
 // Logging
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
+// Debugging
+#include <iostream>
 
 /* Forward declarations */
 class systemData;
 
+/**
+ * @class rungeKutta4
+ *
+ * @brief Standard Runge-Kutta 4th order integration.
+ *
+ * @details Integrates both velocity and positional degrees of freedom simultaneously from known acceleration
+ * components.
+ * Orientational components are handled with quaterions and the Udwadia-Kalaba constrained Lagrangian Dynamics formalism
+ * is used to ensure unitary norms of each quaternion. The true D.o.F. integrated are those of the body components and
+ * individual particle components are calculated via the rigid body motion connectivity tensors.
+ *
+ */
 class rungeKutta4
 {
   public:
-    rungeKutta4(std::shared_ptr<systemData> sys, std::shared_ptr<potentialHydrodynamics> hydro);
+    /**
+     * @brief Construct a new runge Kutta4 object
+     *
+     * @param sys systemData class to gather data from
+     * @param hydro potentialHydrodynamics class to get hydrodynamic force data from
+     */
+    explicit rungeKutta4(std::shared_ptr<systemData> sys, std::shared_ptr<potentialHydrodynamics> hydro);
 
+    /**
+     * @brief Destroy the runge Kutta4 object
+     *
+     */
     ~rungeKutta4();
 
+    /**
+     * @brief Public function to call internal numerical Runge Kutta integration functions.
+     *
+     * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
+     */
     void
-    integrate();
+    integrate(Eigen::ThreadPoolDevice& device);
 
   private:
-    /* REVIEW[epic=Change]: Change initializeSpecificVars() for different systems and load data into
-     * m_systemParam */
+    /**
+     * @brief 2nd order Runge-Kutta 4th order integration. Integrates known acceleration body components into velocity
+     * and then positional components.
+     *
+     * @details Solve system of form: @f$ y'(t) = f( y(t),  t ) @f$
+     *
+     * @see **Reference:**
+     * https://www.physicsforums.com/threads/using-runge-kutta-method-for-position-calc.553663/post-3634957
+     *
+     * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
+     */
     void
-    initializeSpecificVars();
+    integrateSecondOrder(Eigen::ThreadPoolDevice& device);
 
-    /* REVIEW[epic=Change]: Change constraint linear system (A, b) for each system. May need to
-     * change dimensions of Eigen matrixes and vectors */
+    /**
+     * @brief Helper function for `integrateSecondOrder()`.
+     *
+     * @details Function will update simulation time, then system data, then hydrodynamic data, and finally call
+     * `udwadiaKalaba()` to calculate the body acceleration components at a given system time.
+     *
+     * @param t current integration time
+     * @param pos body position vector that will be overwritten (if image system)
+     * @param vel body velocity vector that will be overwritten (if image system)
+     * @param acc (output) body acceleration vector that will be overwritten
+     * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
+     */
     void
-    accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time);
+    accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::VectorXd& vel, Eigen::VectorXd& acc,
+                       Eigen::ThreadPoolDevice& device);
 
-    /* REVIEW[epic=Change]: Change rbmconn if particles do not all move identically with respect to
-     * a single locater point */
-    /* NOTE: before calling this method, make sure to call articulationVel(), articulationAcc(), and
-     * rLoc() */
+    /**
+     * @brief Replaces 2nd 1/2 of body position and velocity D.o.F. with image of 1st 1/2 assuming the reflection plane
+     * is @f$ z = 0 @f$.
+     *
+     * @see For discussion of how to invert z-axis of quaternion: https://stackoverflow.com/a/33999726
+     *
+     * @param pos (output) body position vector that will be overwritten
+     * @param vel (output) body velocity vector that will be overwritten
+     */
     void
-    momentumLinAngFree();
+    imageBodyPosVel(Eigen::VectorXd& pos, Eigen::VectorXd& vel);
 
-    /* REVIEW[epic=Change]: Change assignment of m_velArtic for different systems */
+    /**
+     * @brief Replaces 2nd 1/2 of body acceleration D.o.F. with image of 1st 1/2 assuming the reflection plane
+     * is @f$ z = 0 @f$.
+     *
+     * @see For discussion of how to invert z-axis of quaternion: https://stackoverflow.com/a/33999726
+     *
+     * @param acc (output) body acceleration vector that will be overwritten
+     */
     void
-    articulationVel(double dimensional_time);
+    imageBodyAcc(Eigen::VectorXd& acc);
 
-    /* REVIEW[epic=Change]: Change assignment of m_accArtic for different systems */
+    /**
+     * @brief Calculates the body acceleration components given the constraints established by the Udwadia linear
+     * system (calculated in the `systemData` class).
+     *
+     * @see **Original paper on constrained Lagrangian dynamics:** Udwadia, Firdaus E., and Robert E. Kalaba. "A new
+     * perspective on constrained motion." Proceedings of the Royal Society of London. Series A: Mathematical and
+     * Physical Sciences 439.1906 (1992): 407-410.
+     *
+     * @see **Application of algorithm to unit quaternion vectors:** Udwadia, Firdaus E., and Aaron D. Schutte. "An
+     * alternative derivation of the quaternion equations of motion for rigid-body rotational dynamics."
+     * (2010): 044505.
+     *
+     * @param acc (output) body acceleration vector that will be overwritten
+     */
     void
-    articulationAcc(double dimensional_time);
-
-    /* REVIEW[epic=Change]: Change assignment of m_RLoc for different systems */
-    void
-    rLoc();
-
-    /* Function takes in vector in vector cross-product expression: c = a \times b
-     * vec must be 'a' in above equation
-     * Output is the matrix representation of 'a \times' operator */
-    void
-    crossProdMat(const Eigen::Vector3d& vec, Eigen::Matrix3d& mat)
-    {
-        mat << 0, -vec(2), vec(1), vec(2), 0, -vec(0), -vec(1), vec(0), 0;
-    };
-
-    /* REVIEW[epic=Change,order=0]: change parameters stored for different systems */
-    // system specific data
-    struct systemParameters
-    {
-        double U0{-1.0};
-        double omega{-1.0};
-        double phaseShift{-1.0};
-        double RAvg{-1.0};
-    };
+    udwadiaKalaba(Eigen::VectorXd& acc);
 
     // classes
-    std::shared_ptr<systemData>             m_system;
+    /// shared pointer reference to `systemData` class
+    std::shared_ptr<systemData> m_system;
+    /// shared pointer reference to `potentialHydrodynamics` class
     std::shared_ptr<potentialHydrodynamics> m_potHydro;
 
-    // structs
-    systemParameters m_systemParam;
-
     // logging
-    std::string       m_logFile;
+    /// path of logfile for spdlog to write to
+    std::string m_logFile;
+    /// filename of logfile for spdlog to write to
     const std::string m_logName{"rungeKutta4"};
 
-    // (linear and angular) "momentum" and "force" balance parameters
-    Eigen::Vector3d m_RLoc;
-    Eigen::VectorXd m_velArtic;
-    Eigen::VectorXd m_accArtic;
-
     // time step variables
+    /// (dimensional) integrator finite time step
     double m_dt{-1.0};
+    /// (dimensional) 1/2 integrator finite time step
     double m_c1_2_dt{-1.0};
+    /// (dimensional) 1/6 integrator finite time step
     double m_c1_6_dt{-1.0};
 
+    // tensor length variables
+    /// = 7M
+    int m_7M{-1};
+
     // constants
+    /// = 1/2
     const double m_c1_2{0.50};
+    /// = 1/6
     const double m_c1_6{1.0 / 6.0};
-    const double m_c2{2.0};
 };
 
 #endif // BODIES_IN_POTENTIAL_FLOW_RUNGE_KUTTA_4_H

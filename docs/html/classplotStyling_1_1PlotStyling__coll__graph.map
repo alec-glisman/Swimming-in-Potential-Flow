@@ -1,0 +1,3 @@
+<map id="plotStyling.PlotStyling" name="plotStyling.PlotStyling">
+<area shape="rect" id="node1" title="Creates a matplotlib.pyplot plot using input data and specifications." alt="" coords="5,5,179,875"/>
+</map>

@@ -4,11 +4,11 @@ Python scripts to generate GSD files to input to simulation as well as analyze G
 
 ## Subdirectory: analysis
 
-Directory contains Python scripts that analyze GSD files (output from C++ simulation).  
+Directory contains Python scripts that analyze GSD files (output from C++ simulation).
 
 ## Subdirectory: initial_configurations
 
-`initial_configurations`: Directory contains Python scripts that create GSD files (input to C++ simulation).  
+`initial_configurations`: Directory contains Python scripts that create GSD files (input to C++ simulation).
 
 ## Files
 
@@ -18,19 +18,19 @@ Directory contains Python scripts that analyze GSD files (output from C++ simula
 - `setLogParameters()` outputs integrator, material, and other parameters to GSD.
 - `setParticleParameters()` outputs configuration and particle type parameters to GSD.
 - `setKinematics()` outputs kinematic data in both float and double data types to GSD.
-**Note that the acceleration components are output to moment_inertia as GSD does not store acceleration by default.**
+  **Note that the acceleration components are output to moment_inertia as GSD does not store acceleration by default.**
 
 `plotStyling.py`: Python class to create plots in a consistent format using matplotlib.pyplot
 
 - Initializer sets all class parameters
 - `make_plot()` should be called after initializer and creates the matplotlib.pyplot object.
-If running interactively (jupyter notebook), set `showPlot=True` to use backend that can show plot live.
-Otherwise, use `showPlot=False` to use more efficient backend.
+  If running interactively (jupyter notebook), set `showPlot=True` to use backend that can show plot live.
+  Otherwise, use `showPlot=False` to use more efficient backend.
 - `save_plot()` save plot to desired output path.
 - Data plotting options
-  - `curve()` plot data as a solid line between data points.  
-  - `scatter()` plot data as points.  
-  - `scatter_dashed()` plot data as points connected via dashed lines.  
+  - `curve()` plot data as a solid line between data points.
+  - `scatter()` plot data as points.
+  - `scatter_dashed()` plot data as points connected via dashed lines.
 - Plot elements
   - `legend()` add a legend to plot
   - `textbox()` add text to plot

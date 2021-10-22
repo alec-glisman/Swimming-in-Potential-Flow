@@ -12,28 +12,32 @@ temp*
 *.xlsx
 *.png
 *.eps
+*.svg
 *.txt
 *.out
-*.json
 *.lammpstrj
 *.gsd
+*.tar.xz
 
 # Testing data output
 Testing
 
 # traces
 *.trace
-
+*.data
 # !SECTION (DATA)
 
-
+# SECTION: DOCUMENTATION
+# Doxygen
+!docs/html/**
+docs/latex/**
+# !SECTION
 
 # SECTION PYTHON
 # Python caches
 *.pyc
+*.pkl
 # !SECTION (PYTHON)
-
-
 
 # SECTION: CMAKE
 # Build directories
@@ -41,8 +45,6 @@ cmake-*
 build/*
 build*
 # !SECTION (CMAKE)
-
-
 
 # SECTION: C++
 # Prerequisites
@@ -77,9 +79,12 @@ build*
 *.exe
 *.out
 *.app
+
+# Code coverage (gcov, lcov, gcovr)
+*.gcno,
+*.gcda,
+*.gcov
 # !SECTION (C++)
-
-
 
 # SECTION: CACHES
 # clangd language server files
@@ -97,9 +102,10 @@ build*
 # MacOS files
 .DS_Store
 *.DS_Store
+
+# vcpkg installed
+vcpkg_installed/**
 # !SECTION (CACHES)
-
-
 
 # SECTION: EXCEPTIONS
 # Save everything in directories below
@@ -107,9 +113,8 @@ build*
 input/.DS_Store
 !requirements/**
 !src/**
-!tests/**
-tests/output/**
-!data_tag/**
+!test/**
+test/output/**
 
 # Important configurations
 !.cmake-format.json
@@ -117,6 +122,7 @@ tests/output/**
 
 # VSCode files
 !.vscode/*
+.vscode/perl-lang/**
 
 # CMAKE files
 !**/CMakeLists.txt

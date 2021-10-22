@@ -1,0 +1,6 @@
+<map id="systemData::rigidBodyMotionTensors" name="systemData::rigidBodyMotionTensors">
+<area shape="rect" id="node1" title="Computes the rigid body motion connectivity tensors." alt="" coords="5,49,200,90"/>
+<area shape="rect" id="node2" href="$classsystemData.html#a0a77c933b764fb36c64ec5e66011482c" title="Function takes in vector in vector cross&#45;product expression: ." alt="" coords="248,5,431,32"/>
+<area shape="rect" id="node3" href="$classsystemData.html#a19a83a255eb6f1de4bcfe2ea8e31ffa9" title="Computes the E matrix of quaternion (4&#45;vector) input." alt="" coords="267,56,411,83"/>
+<area shape="rect" id="node4" href="$helper__eigenTensorConversion_8hpp.html#a3a32f7de3f099464192073a93b34d580" title="Convert Eigen::Matrix &#45;&#45;&gt; Eigen::Tensor." alt="" coords="295,107,384,133"/>
+</map>

@@ -25,10 +25,10 @@
             "cwd": "${workspaceFolder}",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/python/analysis/collinear-swimmer-aggregate-analysis.py",
+            "program": "${workspaceFolder}/python/analysis/collinear-swimmer-wall-aggregate-analysis.py",
             "console": "integratedTerminal",
             "args": [
-                "--relative-path=${workspaceFolder}/data/2021-08-19.09-18-08_collinear-swimmer_varyRelDisp",
+                "--relative-path=${workspaceFolder}/data/2021-08-23.17-05-55_collinear-swimmer-wall_varyRelDisp",
                 "--output-dir=figures"
             ]
         },
@@ -37,10 +37,10 @@
             "cwd": "${workspaceFolder}",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/python/analysis/collinear-swimmer-individual-analysis.py",
+            "program": "${workspaceFolder}/python/analysis/collinear-swimmer-wall-individual-analysis.py",
             "console": "integratedTerminal",
             "args": [
-                "--relative-path=${workspaceFolder}/temp_2021-08-18.14-20-10_collinear-swimmer_varyRelDisp/sim_6",
+                "--relative-path=${workspaceFolder}/temp_2021-08-30.12-25-21_collinear-swimmer-wall_varyDt/sim_1",
                 "--output-dir=figures"
             ]
         },
@@ -55,7 +55,31 @@
             "stopAtEntry": false,
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerArgs": "--args \"${workspaceFolder}/build_debug/src/./bodies_in_potential_flow\" temp/input.gsd temp/output",
+            "miDebuggerArgs": "--args \"${workspaceFolder}/build_debug/src/./bodies_in_potential_flow\" test/input/collinear_swimmer_wall/initial_frame_dt1e-6_Z-height6.gsd temp/output",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "logging": {
+                "engineLogging": false,
+                "trace": false,
+                "traceResponse": false
+            }
+        },
+        {
+            "name": "(gdb) Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            // Resolved by CMake Tools:
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Debug: build",
+            "program": "${workspaceFolder}/build_debug/test/./tests",
+            "stopAtEntry": false,
+            "externalConsole": false,
+            "MIMode": "gdb",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -76,11 +100,30 @@
             // Resolved by CMake Tools:
             "cwd": "${workspaceFolder}",
             "preLaunchTask": "Debug: build",
-            "program": "${workspaceFolder}/build_debug/src/./bodies_in_potential_flow",
+            "program": "${workspaceFolder}/build_debug/src/bodies_in_potential_flow",
             "args": [
-                "temp/test.gsd",
-                "temp/output"
+                "${workspaceFolder}/test/input/collinear_swimmer_wall/initial_frame_dt1e-6_Z-height6.gsd",
+                "${workspaceFolder}/temp/output"
             ],
+            "stopAtEntry": false,
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "setupCommands": [],
+            "logging": {
+                "engineLogging": false,
+                "trace": false,
+                "traceResponse": false
+            }
+        },
+        {
+            "name": "(lldb) Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            // Resolved by CMake Tools:
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Debug: build",
+            "program": "${workspaceFolder}/build_debug/test/tests",
+            "args": [],
             "stopAtEntry": false,
             "externalConsole": false,
             "MIMode": "lldb",

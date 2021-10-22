@@ -14,48 +14,464 @@
 #include <gsd.h>       // GSD File
 
 /* Include all external project dependencies */
-// Logging
-#include <spdlog/sinks/basic_file_sink.h>
-#include <spdlog/spdlog.h>
+// Intel MKL
+#if __has_include("mkl.h")
+#define EIGEN_USE_MKL_ALL
+#else
+#pragma message(" !! COMPILING WITHOUT INTEL MKL OPTIMIZATIONS !! ")
+#endif
 // eigen3(Linear algebra)
+#define EIGEN_NO_AUTOMATIC_RESIZING
+#define EIGEN_USE_THREADS
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/Eigen>
-#define EIGEN_USE_MKL_ALL
-#include <eigen3/Eigen/src/Core/util/MKL_support.h>
+#include <eigen3/unsupported/Eigen/CXX11/Tensor>
+#include <eigen3/unsupported/Eigen/CXX11/ThreadPool>
+// eigen3 conversion between Eigen::Tensor (unsupported) and Eigen::Matrix
+#include <helper_eigenTensorConversion.hpp>
+// Logging
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/spdlog.h>
 // STL
 #include <memory>    // for std::unique_ptr and std::shared_ptr
 #include <stdexcept> // std::errors
 #include <string>    // std::string
+#include <thread>    // std::thread::hardware_concurrency(); number of physical cores
 
 /* Forward declarations */
 class GSDUtil;
 
+/**
+ * @class systemData
+ *
+ * @brief Class contains all data structures relevant to the simulation framework.
+ * Note that after construction, `initializeData()` must be called to properly load
+ * data from a GSD file.
+ *
+ */
 class systemData : public std::enable_shared_from_this<systemData>
 {
   public:
+    /**
+     * @brief Construct a new system Data object. Default constructor.
+     *
+     */
+    systemData() = default;
+
+    /**
+     * @brief Construct a new system Data object
+     *
+     * @param inputGSDFile string path to (already created and set-up) GSD frame
+     * @param outputDir string path to output directory for I/O
+     */
     systemData(std::string inputGSDFile, std::string outputDir);
 
+    /**
+     * @brief Destroy the system Data object
+     *
+     */
     ~systemData();
 
+    /**
+     * @brief Function loads data from GSD file using `GSDUtil` class.
+     *
+     * @details Must be called after class construction before data can properly
+     * be integrated using the `engine` class.
+     */
+    void
+    initializeData();
+
+    /**
+     * @brief Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constraints.
+     * Assumes `m_t` is current simulation time to update variables at.
+     *
+     * @details Many functions are called and there is a dependency chain between them.
+     * The functions are grouped in the implementation and clearly denote the relative ordering that must occur.
+     *
+     * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
+     */
+    void
+    update(Eigen::ThreadPoolDevice& device);
+
+  private:
+    /**
+     * @brief Passes `this` (`systemData` shared pointer instance) into `GSDUtil` constructor to load data from input
+     * GSD file into `this`.
+     *
+     * @details Function called by `initializeData()` and is the reason that data can only be initialized after
+     * constructor has completed. This stems from an issue in the following line of code: `m_gsdUtil    =
+     * std::make_shared<GSDUtil>(shared_from_this());`. From the C++ standard, the `shared_from_this()` function can
+     * only execute once the object referenced by `this` has been fully constructed. If I could get around this issue,
+     * then only the class constructor would need to be called. This is safer and nicer. The code currently modifies the
+     * attribute `m_GSD_parsed` to true to give some check that the system has been properly initialized. The `engine`
+     * class also checks that this boolean has been set.
+     *
+     * @todo Find a better way to handle passing of `this` to `GSDUtil` so that this can be done in `systemData`
+     * constructor.
+     */
     void
     parseGSD();
 
+    /**
+     * @brief Various assertions to check data loaded from GSD is at least physical.
+     *
+     * @details This is by no means exhaustive and should not be taken to mean data has been loaded correctly or as
+     * expected.
+     */
     void
-    check_gsd_return();
+    checkInput();
 
+    /**
+     * @brief Logs private attributes to logfile
+     *
+     */
     void
-    resizeTensors();
+    logData();
+
+    /**
+     * @brief Computes the articulation (linear) positions of the particles relative to their respective locater
+     * points.
+     *
+     * @review_swimmer Change assignment of `m_positions_particles_articulation` for
+     */
+    void
+    positionsArticulation();
+
+    /**
+     * @brief Computes the articulation (linear) velocities of the particles relative to their respective locater
+     * points.
+     *
+     * @review_swimmer Change assignment of `m_velocities_particles_articulation` for
+     */
+    void
+    velocitiesArticulation();
+
+    /**
+     * @brief Computes the articulation (linear) accelerations of the particles relative to their respective locater
+     * points.
+     *
+     * @review_swimmer Change assignment of `m_accelerations_particles_articulation` for
+     * different systems
+     */
+    void
+    accelerationsArticulation();
+
+    /**
+     * @brief Computes the Udwadia constraint matrix and vector to uphold the quaternion unitary norm for each body.
+     *
+     * @review_swimmer Change assignment of `m_Udwadia_A` and `m_Udwadia_B` for different systems.
+     *
+     * @see **Original paper on constrained Lagrangian dynamics:** Udwadia, Firdaus E., and Robert E. Kalaba. "A new
+     * perspective on constrained motion." Proceedings of the Royal Society of London. Series A: Mathematical and
+     * Physical Sciences 439.1906 (1992): 407-410.
+     *
+     * @see **Application of algorithm to unit quaternion vectors:** Udwadia, Firdaus E., and Aaron D. Schutte. "An
+     * alternative derivation of the quaternion equations of motion for rigid-body rotational dynamics."
+     * (2010): 044505.
+     */
+    void
+    udwadiaLinearSystem();
+
+    /**
+     * @brief Computes the rigid body motion connectivity tensors.
+     *
+     * @details This function computes the tensors required to convert body locater kinematics into particle
+     * kinematics. It relies on `m_particle_type_id` being set with the correct convention.
+     *
+     * @see **Analogous paper for swimming rbm tensors** (NOTE: they also included torques associated with spherical
+     * rotation about internal axes. We do not worry about that here due to no-flux boundary conditions on surfaces
+     * rather than no-slip boundary conditions): Swan, James W., et al. "Modeling hydrodynamic self-propulsion with
+     * Stokesian Dynamics. Or teaching Stokesian Dynamics to swim." Physics of Fluids 23.7 (2011): 071901.
+     *
+     * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
+     */
+    void
+    rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device);
+
+    /**
+     * @brief Computes the gradients rigid body motion connectivity tensors and tensors associated with change
+     * of variable degrees of freedom.
+     *
+     * @details This function computes the tensors required to convert gradient body locater kinematics into
+     * particle kinematics. It relies on `m_particle_type_id` being set with the correct convention.
+     *
+     * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
+     */
+    void
+    gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device);
+
+    /**
+     * @brief Computes the orientation (unit vector) of a particle with respect to its locater point
+     *
+     */
+    void
+    convertBody2ParticleOrient();
+
+    /**
+     * @brief Computes the positions of all particles from given locater positions and body orientations
+     *
+     */
+    void
+    convertBody2ParticlePos();
+
+    /**
+     * @brief Computes the particle D.o.F. from the body D.o.F.
+     *
+     * @details Currently only computes the velocity and acceleration D.o.F. components
+     *
+     * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
+     */
+    void
+    convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device);
+
+    /* SECTION: Static functions */
+    /**
+     * @brief Computes the E matrix of quaternion (4-vector) input
+     *
+     * @param vec Input 4-vector
+     * @param mat Output matrix representation
+     */
+    static inline void
+    eMatrix(const Eigen::Vector4d& vec, Eigen::Matrix<double, 3, 4>& mat)
+    {
+        mat << -vec(1), vec(0), -vec(3), vec(2), -vec(2), vec(3), vec(0), -vec(1), -vec(3), -vec(2), vec(1), vec(0);
+    };
+
+    /**
+     * @brief Function takes in vector in vector cross-product expression: @f$ c = a \times b @f$
+     *
+     * @param vec Input 3-vector must be @f$ a @f$ in above equation.
+     * @param mat Matrix representation of @f$ a \times @f$ operator.
+     */
+    static inline void
+    crossProdMat(const Eigen::Vector3d& vec, Eigen::Matrix3d& mat)
+    {
+        mat << 0, -vec(2), vec(1), vec(2), 0, -vec(0), -vec(1), vec(0), 0;
+    };
+    /* !SECTION */
+
+    /* SECTION: Friend classes */
+    friend class testSystemData;
+    /* !SECTION */
+
+    /* SECTION: Attributes */
+    /* ANCHOR: Simulation hyperparameters */
+    /// If the simulation system is constrained to be that of an image (neglect second 1/2 of DoF)
+    /// @review_swimmer change if not using image-system constraints
+    bool m_image_system{false};
+
+    /* ANCHOR: general attributes */
+    // data i/o
+    std::string m_inputGSDFile;
+    std::string m_outputDir;
+
+    // logging
+    /// path of logfile for spdlog to write to
+    std::string m_logFile;
+    /// filename of logfile for spdlog to write to
+    const std::string m_logName{"systemData"};
+
+    // GSD data
+    /// shared pointer reference to `GSDUtil` class
+    std::shared_ptr<GSDUtil>    m_gsdUtil;
+    std::shared_ptr<gsd_handle> m_handle{new gsd_handle};
+    /// defaults to GSD_SUCCESS return value
+    int m_return_val{0};
+    /// defaults to successful parse GSD flag
+    bool m_return_bool{true};
+    // defaults to no GSD being parsed. Must be changed using `parseGSD()`
+    bool m_GSD_parsed{false};
+
+    /* ANCHOR: System specific data, change parameters stored for different systems */
+    /**
+     * @brief Swimming kinematic constraint velocity amplitude of kinematic constraint between particle pairs
+     *
+     * @review_swimmer Change parameters stored for different systems
+     *
+     */
+    double m_sys_spec_U0{-1.0};
+    /**
+     * @brief Swimming kinematic constraint oscillation frequency
+     *
+     * @review_swimmer Change parameters stored for different systems
+     *
+     */
+    double m_sys_spec_omega{-1.0};
+    /**
+     * @brief Swimming kinematic constraint phase shift (in radians between oscillators)
+     *
+     * @review_swimmer Change parameters stored for different systems
+     *
+     */
+    double m_sys_spec_phase_shift{-1.0};
+    /**
+     * @brief Swimming kinematic constraint time-average spatial separation between a particle pair during oscillation
+     *
+     * @review_swimmer Change parameters stored for different systems
+     *
+     */
+    double m_sys_spec_R_avg{-1.0};
+
+    /* ANCHOR: particle parameters */
+    /// (N x 1) REVIEW[epic=assumptions] 1) {0: constrained particle, 1: locater particle}.
+    /// 2) locater particle listed first in order and denotes when to switch body index to next body.
+    /// ex: (1, 0, 0, 1, 0, 0)
+    Eigen::VectorXi m_particle_type_id;
+    /// (N x 1) Group assembly (swimmer) number that each particle belongs to
+    Eigen::VectorXi m_particle_group_id;
+
+    /* ANCHOR: material parameters */
+    /// mass density of fluid
+    double m_fluid_density{-1};
+    /// mass density of solid spheres
+    double m_particle_density{-1};
+
+    /* ANCHOR: potential parameters */
+    /// WCA energy scale @f$ \epsilon_{\mathrm{WCA}} @f$
+    double m_wca_epsilon{-1};
+    /// WCA length scale @f$ \sigma_{\mathrm{WCA}} @f$
+    double m_wca_sigma{-1};
+
+    /* ANCHOR: degrees of freedom */
+    /// = 3
+    int m_num_spatial_dim{-1};
+    /// = N
+    int m_num_particles{-1};
+    /// = M
+    int m_num_bodies{-1};
+    /// = 6M
+    int m_num_DoF{-1};
+    /// = M
+    int m_num_constraints{-1};
+
+    /* ANCHOR: integrator parameters */
+    /// (dimensionless) integration @f$ \Delta t @f$
+    double m_dt{-1.0};
+    /// (dimensionless) final simulation time
+    double m_tf{-1.0};
+    /// (dimensionless) initial simulation time
+    double m_t0{0.0};
+    /// (dimensionless) current simulation time
+    double m_t{0.0};
+    /// simulation system characteristic timescale
+    double m_tau{-1.0};
+    /// current simulation timestep (iteration)
+    int m_timestep{-1};
+    /// how many simulation steps to output to GSD
+    int m_num_steps_output{-1};
+
+    /* ANCHOR: Tensors set in constructor */
+    // "identity" tensors
+    /// (3 x 3) 2nd order identity tensor
+    const Eigen::Matrix3d m_I3 = Eigen::Matrix3d::Identity(3, 3);
+    /// (3 x 3) tensor version of `m_I3`
+    const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> m_tens_I3 = TensorCast(m_I3);
+
+    // general-use tensors
+    /// (3 x 3 x 3) (skew-symmetric) 3rd order identity tensor
+    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> m_levi_cevita;
+    /// (3 x 4 x 7) @f$ \nabla_{\xi_{\alpha}} \boldsymbol{E}{(\boldsymbol{\theta})} @f$
+    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> m_kappa_tilde;
+
+    /* ANCHOR: kinematic vectors */
+    /// (7M x 1) both linear and quaternion D.o.F. of body locaters
+    Eigen::VectorXd m_positions_bodies;
+    /// (7M x 1) both linear and quaternion D.o.F. of body locaters
+    Eigen::VectorXd m_velocities_bodies;
+    /// (7M x 1) both linear and quaternion D.o.F. of body locaters
+    Eigen::VectorXd m_accelerations_bodies;
+
+    /// (3N x 1) (linear) positions of all particles
+    Eigen::VectorXd m_positions_particles;
+    /// (3N x 1) (linear) velocities of all particles
+    Eigen::VectorXd m_velocities_particles;
+    /// (3N x 1) (linear) accelerations of all particles
+    Eigen::VectorXd m_accelerations_particles;
+
+    /// (3N x 1) orientations of all particles
+    Eigen::VectorXd m_orientations_particles;
+    /// (4N x 1) quaternions of all particles
+    Eigen::VectorXd m_quaternions_particles;
+
+    /// (3N x 1) (linear) *initial* (normalized) articulation positions of all particles
+    Eigen::VectorXd m_positions_particles_articulation_init_norm;
+
+    /// (3N x 1) (linear) articulation positions of all particles
+    Eigen::VectorXd m_positions_particles_articulation;
+    /// (3N x 1) (linear) articulation velocities of all particles
+    Eigen::VectorXd m_velocities_particles_articulation;
+    /// (3N x 1) (linear) articulation accelerations of all particles
+    Eigen::VectorXd m_accelerations_particles_articulation;
+
+    /* ANCHOR: rigid body motion tensors */
+    /// (6M x 3N) @f$ \boldsymbol{\Sigma} @f$ rigid body motion connectivity tensor
+    Eigen::MatrixXd m_rbm_conn;
+    /// (6M x 7M) @f$ \boldsymbol{\Psi} @f$ converts linear/quaternion body velocity D.o.F. to linear/angular
+    /// velocity D.o.F.
+    Eigen::MatrixXd m_psi_conv_quat_ang;
+    /// (3N x 7M) @f$ \boldsymbol{C} @f$ converts linear/quaternion body velocity D.o.F. to linear particle
+    /// velocities (NOTE: this was \f$ \boldsymbol{A} \f$ in written work)
+    Eigen::MatrixXd m_rbm_conn_T_quat;
+
+    /// (3N x 7M) tensor version of `m_rbm_conn_T_quat`
+    Eigen::Tensor<double, 2> m_tens_rbm_conn_T_quat;
+    /// (3N x 7M x 7M) @f$ \nabla_{\xi} \boldsymbol{C} @f$
+    Eigen::Tensor<double, 3> m_rbm_conn_T_quat_grad;
+
+    /// (7M x 3N) converts particle position D.o.F. to body position/quaternion D.o.F. (NOTE: this was
+    /// @f$ \boldsymbol{\beta} @f$ in written work)
+    Eigen::MatrixXd m_conv_body_2_part_dof;
+
+    /// (7M x 3N) tensor version of `m_conv_body_2_part_dof`
+    Eigen::Tensor<double, 2> m_tens_conv_body_2_part_dof;
+
+    /* ANCHOR: Udwadia constraint linear system */
+    /// (number_constraints x 7M) linear operator defining relationship between constraints on @f$
+    /// \ddot{\boldsymbol{\xi}} @f$.
+    Eigen::MatrixXd m_Udwadia_A;
+
+    /// (number of constraints x 1) Result of @f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} @f$
+    Eigen::VectorXd m_Udwadia_b;
+    /* !SECTION */
+
+    /* SECTION: Setters and getters */
+  public:
+    /* ANCHOR: general attributes */
+    bool
+    imageSystem() const
+    {
+        return m_image_system;
+    }
+    void
+    setImageSystem(bool image_system)
+    {
+        m_image_system = image_system;
+    }
+
+    // data i/o
+    std::string
+    inputGSDFile() const
+    {
+        return m_inputGSDFile;
+    }
 
     std::string
     outputDir() const
     {
         return m_outputDir;
     }
-
     void
-    setReturnVal(int return_val)
+    setOutputDir(const std::string& outputDir)
     {
-        m_return_val = return_val;
+        m_outputDir = outputDir;
+    }
+
+    // GSD data
+    std::shared_ptr<GSDUtil>
+    gsdUtil() const
+    {
+        return m_gsdUtil;
     }
 
     std::shared_ptr<gsd_handle>
@@ -64,15 +480,15 @@ class systemData : public std::enable_shared_from_this<systemData>
         return m_handle;
     }
 
-    int
-    timestep() const
-    {
-        return m_timestep;
-    }
     void
-    setTimestep(int timestep)
+    setReturnVal(int return_val)
     {
-        m_timestep = timestep;
+        m_return_val = return_val;
+    }
+    int
+    returnVal()
+    {
+        return m_return_val;
     }
 
     void
@@ -80,79 +496,76 @@ class systemData : public std::enable_shared_from_this<systemData>
     {
         m_return_bool = return_bool;
     }
-
-    std::string
-    inputGSDFile() const
+    bool
+    returnBool()
     {
-        return m_inputGSDFile;
+        return m_return_bool;
     }
 
-    int
-    numDim()
+    bool
+    gSDParsed() const
     {
-        return m_num_dim;
+        return m_GSD_parsed;
+    }
+
+    /* ANCHOR: System specific data, change parameters stored for different systems */
+    double
+    sysSpecU0() const
+    {
+        return m_sys_spec_U0;
     }
     void
-    setNumDim(int num_dim)
+    setSysSpecU0(double sys_spec_U0)
     {
-        m_num_dim = num_dim;
-    }
-
-    int
-    numParticles() const
-    {
-        return m_num_particles;
-    }
-    void
-    setNumParticles(int num_particles)
-    {
-        m_num_particles = num_particles;
+        m_sys_spec_U0 = sys_spec_U0;
     }
 
     double
-    dt() const
+    sysSpecOmega() const
     {
-        return m_dt;
+        return m_sys_spec_omega;
     }
     void
-    setDt(double dt)
+    setSysSpecOmega(double sys_spec_omega)
     {
-        m_dt = dt;
+        m_sys_spec_omega = sys_spec_omega;
     }
 
     double
-    t() const
+    sysSpecPhaseShift() const
     {
-        return m_t;
+        return m_sys_spec_phase_shift;
     }
     void
-    setT(double t)
+    setSysSpecPhaseShift(double sys_spec_phaseShift)
     {
-        m_t = t;
+        m_sys_spec_phase_shift = sys_spec_phaseShift;
     }
 
     double
-    tf() const
+    sysSpecRAvg() const
     {
-        return m_tf;
+        return m_sys_spec_R_avg;
     }
     void
-    setTf(double tf)
+    setSysSpecRAvg(double sys_spec_RAvg)
     {
-        m_tf = tf;
+        m_sys_spec_R_avg = sys_spec_RAvg;
     }
 
-    int
-    numStepsOutput() const
+    /* ANCHOR: particle parameters */
+    const Eigen::VectorXi&
+    particleTypeId() const
     {
-        return m_num_steps_output;
+        return m_particle_type_id;
     }
     void
-    setNumStepsOutput(int num_steps_output)
+    setParticleTypeId(const Eigen::VectorXi& particle_type_id)
     {
-        m_num_steps_output = num_steps_output;
+        m_particle_type_id = particle_type_id;
     }
 
+    /* ANCHOR: material parameters */
     double
     fluidDensity() const
     {
@@ -175,17 +588,7 @@ class systemData : public std::enable_shared_from_this<systemData>
         m_particle_density = particle_density;
     }
 
-    double
-    wcaSigma() const
-    {
-        return m_wca_sigma;
-    }
-    void
-    setWcaSigma(double wca_sigma)
-    {
-        m_wca_sigma = wca_sigma;
-    }
-
+    /* ANCHOR: potential parameters */
     double
     wcaEpsilon() const
     {
@@ -197,10 +600,102 @@ class systemData : public std::enable_shared_from_this<systemData>
         m_wca_epsilon = wca_epsilon;
     }
 
-    std::shared_ptr<GSDUtil>
-    gsdUtil() const
+    double
+    wcaSigma() const
     {
-        return m_gsdUtil;
+        return m_wca_sigma;
+    }
+    void
+    setWcaSigma(double wca_sigma)
+    {
+        m_wca_sigma = wca_sigma;
+    }
+
+    /* ANCHOR: degrees of freedom */
+    int
+    numSpatialDim() const
+    {
+        return m_num_spatial_dim;
+    }
+    void
+    setNumSpatialDim(int num_spatial_dim)
+    {
+        m_num_spatial_dim = num_spatial_dim;
+    }
+
+    int
+    numParticles() const
+    {
+        return m_num_particles;
+    }
+    void
+    setNumParticles(int num_particles)
+    {
+        m_num_particles = num_particles;
+    }
+
+    int
+    numBodies() const
+    {
+        return m_num_bodies;
+    }
+    void
+    setNumBodies(int num_bodies)
+    {
+        m_num_bodies = num_bodies;
+    }
+
+    int
+    numDoF()
+    {
+        return m_num_DoF;
+    }
+
+    /* ANCHOR: Tensors set in constructor */
+    const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>>&
+    tensI3() const
+    {
+        return m_tens_I3;
+    }
+
+    const Eigen::Matrix3d&
+    i3() const
+    {
+        return m_I3;
+    }
+
+    /* ANCHOR: integrator parameters */
+    double
+    dt() const
+    {
+        return m_dt;
+    }
+    void
+    setDt(double dt)
+    {
+        m_dt = dt;
+    }
+
+    double
+    tf() const
+    {
+        return m_tf;
+    }
+    void
+    setTf(double tf)
+    {
+        m_tf = tf;
+    }
+
+    double
+    t() const
+    {
+        return m_t;
+    }
+    void
+    setT(double t)
+    {
+        m_t = t;
     }
 
     double
@@ -214,90 +709,164 @@ class systemData : public std::enable_shared_from_this<systemData>
         m_tau = tau;
     }
 
-    bool
-    gSDParsed() const
+    int
+    timestep() const
     {
-        return m_GSD_parsed;
+        return m_timestep;
+    }
+    void
+    setTimestep(int timestep)
+    {
+        m_timestep = timestep;
+    }
+
+    int
+    numStepsOutput() const
+    {
+        return m_num_steps_output;
+    }
+    void
+    setNumStepsOutput(int num_steps_output)
+    {
+        m_num_steps_output = num_steps_output;
+    }
+
+    /* ANCHOR: kinematic vectors */
+    // bodies
+    const Eigen::VectorXd&
+    positionsBodies() const
+    {
+        return m_positions_bodies;
+    }
+    void
+    setPositionsBodies(const Eigen::VectorXd& positions_bodies)
+    {
+        m_positions_bodies = positions_bodies;
     }
 
     const Eigen::VectorXd&
-    positions() const
+    velocitiesBodies() const
     {
-        return m_positions;
+        return m_velocities_bodies;
     }
     void
-    setPositions(const Eigen::VectorXd& positions)
+    setVelocitiesBodies(const Eigen::VectorXd& velocities_bodies)
     {
-        m_positions = positions;
+        m_velocities_bodies = velocities_bodies;
     }
 
     const Eigen::VectorXd&
-    velocities() const
+    accelerationsBodies() const
     {
-        return m_velocities;
+        return m_accelerations_bodies;
     }
     void
-    setVelocities(const Eigen::VectorXd& velocities)
+    setAccelerationsBodies(const Eigen::VectorXd& accelerations_bodies)
     {
-        m_velocities = velocities;
+        m_accelerations_bodies = accelerations_bodies;
+    }
+
+    // particles
+    const Eigen::VectorXd&
+    quaternionsParticles() const
+    {
+        return m_quaternions_particles;
+    }
+    void
+    setQuaternionsParticles(const Eigen::VectorXd& quaternions_particles)
+    {
+        m_quaternions_particles = quaternions_particles;
     }
 
     const Eigen::VectorXd&
-    accelerations() const
+    orientationsParticles() const
     {
-        return m_accelerations;
+        return m_quaternions_particles;
     }
     void
-    setAccelerations(const Eigen::VectorXd& accelerations)
+    setOrientationsParticles(const Eigen::VectorXd& orientations_particles)
     {
-        m_accelerations = accelerations;
+        m_quaternions_particles = orientations_particles;
     }
 
-  private:
+    const Eigen::VectorXd&
+    positionsParticles() const
+    {
+        return m_positions_particles;
+    }
     void
-    checkInput();
+    setPositionsParticles(const Eigen::VectorXd& positions_particles)
+    {
+        m_positions_particles = positions_particles;
+    }
 
-    // classes
-    std::shared_ptr<GSDUtil> m_gsdUtil;
+    const Eigen::VectorXd&
+    velocitiesParticles() const
+    {
+        return m_velocities_particles;
+    }
+    void
+    setVelocitiesParticles(const Eigen::VectorXd& velocities_particles)
+    {
+        m_velocities_particles = velocities_particles;
+    }
 
-    // constructor
-    std::string m_inputGSDFile;
-    std::string m_outputDir;
+    const Eigen::VectorXd&
+    accelerationsParticles() const
+    {
+        return m_accelerations_particles;
+    }
+    void
+    setAccelerationsParticles(const Eigen::VectorXd& accelerations_particles)
+    {
+        m_accelerations_particles = accelerations_particles;
+    }
 
-    // logging
-    std::string       m_logFile;
-    const std::string m_logName{"systemData"};
+    // particle articulations
+    const Eigen::VectorXd&
+    velocitiesParticlesArticulation() const
+    {
+        return m_velocities_particles_articulation;
+    }
 
-    // GSD
-    std::shared_ptr<gsd_handle> m_handle{new gsd_handle};
-    int                         m_return_val{0};
-    bool                        m_return_bool{true};
-    bool                        m_GSD_parsed{false};
+    const Eigen::VectorXd&
+    accelerationsParticlesArticulation() const
+    {
+        return m_accelerations_particles_articulation;
+    }
 
-    // kinematics
-    Eigen::VectorXd m_positions;
-    Eigen::VectorXd m_velocities;
-    Eigen::VectorXd m_accelerations;
+    /* ANCHOR: rigid body motion tensors */
+    const Eigen::Tensor<double, 2>&
+    tensRbmConnTQuat() const
+    {
+        return m_tens_rbm_conn_T_quat;
+    }
 
-    // degrees of freedom
-    int m_num_dim{-1};
-    int m_num_particles{-1};
+    const Eigen::Tensor<double, 3>&
+    tensRbmConnTQuatGrad() const
+    {
+        return m_rbm_conn_T_quat_grad;
+    }
 
-    // integrator
-    double m_dt{-1.0};
-    double m_tf{-1.0};
-    double m_t{0.0};
-    double m_tau{-1.0};
-    int    m_timestep{-1};
-    int    m_num_steps_output{-1};
+    const Eigen::Tensor<double, 2>&
+    tensConvBody2PartDof() const
+    {
+        return m_tens_conv_body_2_part_dof;
+    }
 
-    // material parameters
-    double m_fluid_density{-1};
-    double m_particle_density{-1};
+    /* ANCHOR: Udwadia constraint linear system */
+    const Eigen::MatrixXd&
+    udwadiaA() const
+    {
+        return m_Udwadia_A;
+    }
 
-    // potential parameters
-    double m_wca_epsilon{-1};
-    double m_wca_sigma{-1};
+    const Eigen::VectorXd&
+    udwadiaB() const
+    {
+        return m_Udwadia_b;
+    }
+    /* !SECTION */
 };
 
 #endif

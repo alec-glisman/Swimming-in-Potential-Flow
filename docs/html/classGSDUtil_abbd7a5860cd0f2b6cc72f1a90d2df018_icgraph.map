@@ -1,0 +1,10 @@
+<map id="GSDUtil::frame" name="GSDUtil::frame">
+<area shape="rect" id="node1" title=" " alt="" coords="623,56,735,83"/>
+<area shape="rect" id="node2" href="$classGSDUtil.html#a2e27650b5d6bc1a874ee9fa070041dd5" title="Construct a new GSDUtil object." alt="" coords="439,31,567,57"/>
+<area shape="rect" id="node3" href="$classGSDUtil.html#a86d2352b694afc6a0c938a13b3acec9d" title="Finds and then loads data from GSD." alt="" coords="432,81,575,108"/>
+<area shape="rect" id="node4" href="$classGSDUtil.html#a2015dcdcdb33be9106f5c8f45f8564cc" title="Read header information from GSD frame m_frame" alt="" coords="209,5,356,32"/>
+<area shape="rect" id="node6" href="$classGSDUtil.html#a31f9c7368ebd89c6293d9d9d83598e62" title="Read parameter information from GSD frame m_frame" alt="" coords="197,56,368,83"/>
+<area shape="rect" id="node7" href="$classGSDUtil.html#ad404c3879fb81c0b73b2335ea6e4676a" title="Read particle information from GSD frame m_frame" alt="" coords="205,107,360,133"/>
+<area shape="rect" id="node8" href="$classGSDUtil.html#a278d1db9ece12bdc1268780313d83daf" title="Reads system specific variables from GSD frame m_frame" alt="" coords="181,157,384,184"/>
+<area shape="rect" id="node5" href="$classGSDUtil.html#a2567bdb7f5952a76984552e0591fa330" title="Construct a new GSDUtil object." alt="" coords="5,81,133,108"/>
+</map>

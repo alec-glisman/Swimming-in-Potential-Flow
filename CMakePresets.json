@@ -1,0 +1,61 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 5,
+        "patch": 1
+    },
+    "configurePresets": [
+        {
+            "name": "default",
+            "displayName": "Default Config",
+            "description": "Default build using Ninja generator (testing, coverage)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "ENABLE_TESTING": "True",
+                "ENABLE_COVERAGE": "True",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "True",
+                "CMAKE_TOOLCHAIN_FILE": "vcpkg/scripts/buildsystems/vcpkg.cmake"
+            },
+            "environment": {
+                "CLICOLOR_FORCE": "0"
+            }
+        },
+        {
+            "name": "ninja-multi-vcpkg",
+            "inherits": "default",
+            "description": "Build for GitHub action"
+        },
+        {
+            "name": "makefiles",
+            "inherits": "default",
+            "description": "Default build using Unix Makefiles generator",
+            "generator": "Unix Makefiles"
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "default",
+            "displayName": "Default Build",
+            "description": "Build default debug configuration",
+            "configurePreset": "default"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "default",
+            "displayName": "Default Tests",
+            "description": "Test default debug build",
+            "configurePreset": "default",
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": true
+            },
+            "output": {
+                "outputOnFailure": true
+            }
+        }
+    ]
+}

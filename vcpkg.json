@@ -1,0 +1,21 @@
+{
+    "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
+    "name": "bodies-in-potential-flow",
+    "version": "2.0.0",
+    "description": "Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible).",
+    "builtin-baseline": "4474aba1e77be2d643eb684298b7d5479cad9a1f",
+    "dependencies": [
+        {
+            "name": "eigen3",
+            "version>=": "3.3.9#1"
+        },
+        {
+            "name": "spdlog",
+            "version>=": "1.9.2"
+        },
+        {
+            "name": "catch2",
+            "version>=": "2.13.6"
+        }
+    ]
+}

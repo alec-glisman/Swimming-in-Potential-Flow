@@ -1,35 +1,14 @@
-# @AUTHOR: alec-glisman (GitHub)
-#
-# NOTE:
-#   This module is built to serve as a style guide for generating
-#   publication quality plots.
-#   Guiding principles for plot design:
-#      * Axes as minimal as possible
-#      * Key elements "pop out" more with thicker lines
-#      * Minimize negative space
-#
-# USEAGE:
-#    # Instantiate class instance anc create back-end figure
-#    sample_plot = PlotStyling(num_lines,
-#                        r"x_axis_label", r"y_axis_label",
-#                        title=None, loglog=False,
-#                        outputDir="", figName="sample_plot",
-#                        eps=False,
-#                        continuousColors=False)
-#    mod_plot.make_plot()
-#
-#    # Curves & scatters
-#    mod_plot.curve(x_data, y_data, thin_curve=False, dashed_curve=False,
-#                zorder=0, label=r"$data$", color=None)
-#
-#    # Legend & text elements
-#    mod_plot.legend(title=None, loc='best',
-#                    bbox_to_anchor=(0.01, 0.01, 0.98, 0.98),
-#                    ncol=1)
-#
-#    # Save plot
-#    mod_plot.save_plot()
+"""Python plotting module
 
+This module is built to serve as a style guide for generating publication quality plots
+
+Guiding principles for plot design:
+    Axes as minimal as possible
+    Key elements "pop out" more with thicker lines
+    Minimize negative space
+
+__author__ = "Alec Glisman"
+"""
 
 # SECTION: Dependencies
 
@@ -57,6 +36,39 @@ import colorcet as cc                  # plotting colormaps
 
 
 class PlotStyling:
+    """Creates a `matplotlib.pyplot` plot using input data and specifications
+
+    Raises:
+        ValueError: numLines input must be < 255 for continuous colorscheme output
+        ValueError: numLines input must be < 10 for continuous colorscheme output
+
+    Returns:
+        plot: matplotlib plot with specified attributes
+
+    Example:
+            # Instantiate class instance anc create back-end figure
+            numLines = 1
+            CoM_Plot = PlotStyling(numLines,
+                                r"$\mathrm{Z}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
+                                title=None, loglog=False,
+                                outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-height", eps=epsOutput,
+                                continuousColors=False)
+
+            # Curves & scatters
+            CoM_Plot.make_plot()
+            CoM_Plot.scatter_dashed(Z_height_srt, CoM_disp_srt, order=1, label="Simulation")
+
+            # Add legend
+            CoM_Plot.legend(title=r"$\epsilon \leq$" + "{}".format(fmt(np.max(epsilon))),
+                            loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
+
+            # Legend & text elements
+            CoM_Plot.set_major_minor_ticks( xMajorLoc=1, xMinorLoc=0.5, yMajorLoc=None, yMinorLoc=None)
+            CoM_Plot.set_yaxis_scientific()
+
+            # Save plot
+            CoM_Plot.save_plot()
+    """
 
     # SECTION: Static parameters
 
@@ -68,7 +80,7 @@ class PlotStyling:
     # either 'tableau-colorblind10' or 'seaborn-colorblind'
     plt.style.use(["tableau-colorblind10"])
     # Set the packages required for LaTeX rendering
-    plt.rcParams['text.latex.preamble'] = r'\usepackage{amsfonts,amsmath,amssymb,amsthm,mathrsfs}'
+    mpl.rcParams['text.latex.preamble'] = r"\usepackage{amsfonts,amsmath,amsbsy,amssymb,bm,amsthm,mathrsfs,fixmath}"
 
     # Use mathtext, not LaTeX
     mpl.rcParams.update({
@@ -118,18 +130,35 @@ class PlotStyling:
     col_categorical = [darkBlue, red, darkgreen, magenta, black,
                        orange, lightBlue, lightGreen, purple, brown]
 
-
 # !SECTION
 
 
 # SECTION: Initializer
-
 
     def __init__(self, numLines,
                  x_label, y_label,
                  title=None, loglog=False,
                  outputDir=None, figName=None, eps=False,
                  continuousColors=False):
+        """Initializes plotStyling class.
+
+        Args:
+            numLines (int): Number of lines/scatters to draw in plot window.
+            x_label (str): x-axis labelling text.
+            y_label (str): y-axis labelling text.
+
+        Kwargs:
+            title (str): Plot title text. Defaults to None.
+            loglog (bool): Change x and y axes to log-log scaling. Defaults to False.
+            outputDir (str): Output directory for plots and analysis text files. Defaults to None.
+            figName (str): Output filename for plot. Defaults to None.
+            eps (bool): Output plots as eps (outputs as png if False). Defaults to False.
+            continuousColors (bool): Use the continuous colorscheme. Defaults to False.
+
+        Raises:
+            ValueError: numLines input must be < 255 for continuous colorscheme output
+            ValueError: numLines input must be < 10 for continuous colorscheme output
+        """
 
         # Plot text elements
         self.x_label = x_label
@@ -187,8 +216,12 @@ class PlotStyling:
 
 # SECTION: Make the plot figure
 
-
     def make_plot(self, showPlot=False):
+        """Call function first after initialization to set plt backend and create figure.
+
+        Kwargs:
+            showPlot (bool): Display the plt output to screen (useful in Jupyter notebooks). Defaults to False.
+        """
 
         if showPlot:
 
@@ -246,10 +279,22 @@ class PlotStyling:
 
 # SECTION: Continuous curves
 
-
     def curve(self, x_data, y_data,
               thin_curve=False, dashed_curve=False,
               zorder=None, label=None, color=None):
+        """Draws a curve from input data on the current plt figure
+
+        Args:
+            x_data (np.array): x-axis data.
+            y_data (np.array): y-axis data.
+
+        Kwargs:
+            thin_curve (bool): Use a thinner curve weight. Defaults to False.
+            dashed_curve (bool): Make the curve dashed. Defaults to False.
+            zorder (int): z-axis position of the curve relative to other drawn components. Defaults to None.
+            label (str): Text label for data in the legend. Defaults to None.
+            color (str): Known matplotlib string representation of a desired color to use when drawing. Defaults to None.
+        """
 
         # Set color
         local_color = color
@@ -284,9 +329,23 @@ class PlotStyling:
 
 # SECTION: Discrete data points
 
-
     def scatter(self, x_data, y_data,
                 marker=None, zorder=None, label=None, color=None):
+        """Draws a scatter from input data on the current plt figure.
+
+        Args:
+            x_data (np.array): x-axis data.
+            y_data (np.array): y-axis data.
+
+        Kwargs:
+            marker (str): Known matplotlib string representation of a desired marker to use on scatter. Defaults to None.
+            zorder (int): z-axis position of the curve relative to other drawn components. Defaults to None.
+            label (str): Text label for data in the legend. Defaults to None.
+            color (str): Known matplotlib string representation of a desired color to use when drawing. Defaults to None.
+
+        Returns:
+            scatter: matplotlib.pyplot return from plot command
+        """
 
         # Set color
         local_color = color
@@ -314,6 +373,21 @@ class PlotStyling:
         return scatter
 
     def scatter_dashed(self, x_data, y_data, marker=None, zorder=None, label=None, color=None):
+        """Draws a scatter and connecting dashed lines from input data on the current plt figure.
+
+        Args:
+            x_data (np.array): x-axis data.
+            y_data (np.array): y-axis data.
+
+        Kwargs:
+            marker (str): Known matplotlib string representation of a desired marker to use on scatter. Defaults to None.
+            zorder (int): z-axis position of the curve relative to other drawn components. Defaults to None.
+            label (str): Text label for data in the legend. Defaults to None.
+            color (str): Known matplotlib string representation of a desired color to use when drawing. Defaults to None.
+
+        Returns:
+            scatter: matplotlib.pyplot return from plot command
+        """
 
         # Set color
         local_color = color
@@ -347,8 +421,15 @@ class PlotStyling:
 
 # SECTION: Legend
 
-
     def legend(self, title=None, loc='best', bbox_to_anchor=None, ncol=1):
+        """Draws a legend on current plt figure.
+
+        Kwargs:
+            title (str): Legend title text. Defaults to None.
+            loc (str): Known matplotlib string representation of output legend location region. Defaults to 'best'.
+            bbox_to_anchor (tuple): (lower_left_x_pos, lower_left_y_pos, x_span, y_span). Defaults to None.
+            ncol (int): Number of columns in legend. Defaults to 1.
+        """
 
         legend = self.ax.legend(title=title, loc=loc, bbox_to_anchor=bbox_to_anchor,
                                 fontsize=self.legend_size,
@@ -364,8 +445,20 @@ class PlotStyling:
 
 # SECTION: Text elements
 
+
     def textbox(self, text, x_loc, y_loc,
                 horz_align="center", vert_align="center"):
+        """Draw text element on current plt figure
+
+        Args:
+            text (str): Text to draw
+            x_loc (float): x position of text (0-1)
+            y_loc (float): y position of text (0-1)
+
+        Kwargs:
+            horz_align (str): Horizontal alignment text in box. Defaults to "center".
+            vert_align (str): Vertical alignment of text in box. Defaults to "center".
+        """
 
         plt.text(x_loc, y_loc, text,
                  fontsize=self.legend_title_size,
@@ -376,8 +469,11 @@ class PlotStyling:
 
 # SECTION: Axes
 
-
     def set_yaxis_scientific(self):
+        """Change numeric labelling of current plt figure y-axis to scientific.
+
+        Order of magnitude appears above the y-axis and multiplicative coefficient shown along the axis.
+        """
 
         plt.ticklabel_format(style='sci', axis='y',
                              scilimits=(0, 2), useOffset=True)
@@ -385,6 +481,10 @@ class PlotStyling:
         t.set_size(self.tick_size)
 
     def set_xaxis_scientific(self):
+        """Change numeric labelling of current plt figure x-axis to scientific.
+
+        Order of magnitude appears to right of the x-axis and multiplicative coefficient shown along the axis. 
+        """
 
         plt.ticklabel_format(style='sci', axis='x',
                              scilimits=(0, 2), useOffset=True)
@@ -392,16 +492,32 @@ class PlotStyling:
         t.set_size(self.tick_size)
 
     def set_xaxis_tick_scalar_formatter(self):
+        """Force all x-axis numeric labels to use floating point notation and not scientific notation.
+
+        Useful in log-log plots where x-axis spans 1 order of magnitude, which leads into scientific notation labells colliding.
+        """
 
         self.ax.xaxis.set_minor_formatter(mtk.ScalarFormatter())
         self.ax.xaxis.set_major_formatter(mtk.ScalarFormatter())
 
     def set_yaxis_tick_scalar_formatter(self):
+        """Force all y-axis numeric labels to use floating point notation and not scientific notation.
+
+        Useful in log-log plots where y-axis spans 1 order of magnitude, which leads into scientific notation labells colliding.
+        """
 
         self.ax.yaxis.set_minor_formatter(mtk.ScalarFormatter())
         self.ax.yaxis.set_major_formatter(mtk.ScalarFormatter())
 
     def set_major_minor_ticks(self, xMajorLoc=None, xMinorLoc=None, yMajorLoc=None, yMinorLoc=None):
+        """Set the major and minor tick locations for both/either the x and y axes.
+
+        Kwargs:
+            xMajorLoc (float): Distance betwen major x-axis ticks. Defaults to None.
+            xMinorLoc (float): Distance between minor x-axis ticks. Defaults to None.
+            yMajorLoc (float): Distance between major y-axis ticks. Defaults to None.
+            yMinorLoc (float): Distance between major y-axis ticks. Defaults to None.
+        """
 
         if xMajorLoc is not None:
             self.ax.xaxis.set_major_locator(
@@ -420,6 +536,15 @@ class PlotStyling:
                 mpl.ticker.MultipleLocator(yMinorLoc))
 
     def set_latex_axis_labels(self, axis='x', axisScale=np.pi, denominator=2, minorTicks=4, latex=r'\pi'):
+        """Change the desired axis's labelling to use LaTeX characters
+
+        Kwargs:
+            axis (str): Desired axis to alter labelling. Defaults to 'x'.
+            axisScale (float): Value to set axis (tick) scaling. Defaults to np.pi.
+            denominator (int): Number of major ticks per axisScale. Defaults to 2.
+            minorTicks (int): Number of minor ticks betwen major ticks. Defaults to 4.
+            latex (regexp): LaTeX value to display. Defaults to pi.
+        """
 
         major = Multiple(denominator, axisScale, latex)
         minor = Multiple(denominator*minorTicks, axisScale, latex)
@@ -440,8 +565,12 @@ class PlotStyling:
 
 # SECTION: Save figure
 
-
     def save_plot(self, showPlot=False):
+        """Saves the current plt figure as an image
+
+        Kwargs:
+            showPlot (bool): Show the plot after saving to current screen. Defaults to False.
+        """
 
         self.fix_unicode_chars()
 
@@ -462,11 +591,13 @@ class PlotStyling:
 
 # SECTION: Remove unicode issues
 
-    # Removes issue with \times character in mathTex output of plots:
-    # @Source: https://stackoverflow.com/questions/47253462/matplotlib-2-mathtext-glyph-errors-in-tick-labels
-
 
     def fix_unicode_chars(self):
+        """Removes issue with times character in mathTex output of plots
+
+        References:
+            https://stackoverflow.com/questions/47253462/matplotlib-2-mathtext-glyph-errors-in-tick-labels
+        """
 
         # Force the figure to be drawn
         logger = logging.getLogger('matplotlib.mathtext')
@@ -500,11 +631,13 @@ class PlotStyling:
         self.ax.yaxis.set_tick_params(
             which='both', labelsize=self.tick_size, pad=self.label_pad)
 
-    # Suppresses console output of function calls (used for eps no transparent background issue)
-    # @Source: https://stackoverflow.com/questions/2125702/how-to-suppress-console-output-in-python
-    # @User: charleslparker
     @ contextmanager
     def suppress_stdout(self):
+        """Suppresses console output of function calls (used for eps no transparent background issue)
+
+        References:
+            https://stackoverflow.com/a/25061573/13215572
+        """
 
         with open(os.devnull, "w") as devnull:
             old_stdout = sys.stdout
@@ -527,8 +660,27 @@ class PlotStyling:
 # @Source: https://stackoverflow.com/questions/40642061/how-to-set-axis-ticks-in-multiples-of-pi-python-matplotlib
 # @User: Scott Centoni
 def multiple_formatter(denominator=2, number=np.pi, latex=r'\pi'):
+    """Get LaTeX in axis labels of plots
+
+    References: 
+        https://stackoverflow.com/a/53586826/13215572
+
+    Kwargs:
+        denominator (int): [description]. Defaults to 2.
+        number (float): Value to set axis (tick) scaling. Defaults to np.pi.
+        latex (regexp): LaTeX value to display. Defaults to pi.
+    """
 
     def gcd(a, b):
+        """Calculates the greatest common denominator between inputs a and b
+
+        Args:
+            a (int): input 1 for gcd
+            b (int): input 2 for gcd
+
+        Returns:
+            int: gcd of two inputs
+        """
 
         while b:
             a, b = b, a % b
@@ -536,6 +688,15 @@ def multiple_formatter(denominator=2, number=np.pi, latex=r'\pi'):
         return a
 
     def _multiple_formatter(x, pos):
+        """Converts LaTeX input to parseable form for matplotlib pyplot
+
+        Args:
+            x (str): Not sure
+            pos (str): Note sure
+
+        Returns:
+            str: LaTeX formatted
+        """
 
         den = denominator
         num = np.int(np.rint(den*x/number))
@@ -570,6 +731,11 @@ def multiple_formatter(denominator=2, number=np.pi, latex=r'\pi'):
 
 
 class Multiple:
+    """Helper class for LaTeX formatting.
+
+    References: 
+        https://stackoverflow.com/a/53586826/13215572
+    """
 
     def __init__(self, denominator=2, number=np.pi, latex=r'\pi'):
 

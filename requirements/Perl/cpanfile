@@ -1,3 +1,5 @@
+requires 'Sys::Info';
+requires 'Sys::Info::Driver::Unknown::Device::CPU';
 requires 'File::Slurp';
 requires 'File::Tee';
 requires 'Path::Tiny';

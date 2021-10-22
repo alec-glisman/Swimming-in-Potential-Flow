@@ -16,11 +16,21 @@
 #include <systemData.hpp>
 
 /* Include all external project dependencies */
-// eigen3 (Linear algebra)
+// Intel MKL
+#if __has_include("mkl.h")
+#define EIGEN_USE_MKL_ALL
+#else
+#pragma message(" !! COMPILING WITHOUT INTEL MKL OPTIMIZATIONS !! ")
+#endif
+// eigen3(Linear algebra)
+#define EIGEN_NO_AUTOMATIC_RESIZING
+#define EIGEN_USE_THREADS
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/Eigen>
-#define EIGEN_USE_MKL_ALL
-#include <eigen3/Eigen/src/Core/util/MKL_support.h>
+#include <eigen3/unsupported/Eigen/CXX11/Tensor>
+#include <eigen3/unsupported/Eigen/CXX11/ThreadPool>
+// eigen3 conversion between Eigen::Tensor (unsupported) and Eigen::Matrix
+#include <helper_eigenTensorConversion.hpp>
 // Logging
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
@@ -33,19 +43,48 @@
 /* Forward declarations */
 class systemData;
 
+/**
+ * @class engine
+ *
+ * @brief Manages the time integration of the simulation system as well as when to output data to GSD.
+ *
+ */
 class engine
 {
   public:
-    engine(std::shared_ptr<systemData> sys);
+    /**
+     * @brief Construct a new engine object
+     *
+     * @param sys `systemData` class to collect data from. Must be fully initialized and have GSD data loaded.
+     */
+    explicit engine(std::shared_ptr<systemData> sys);
 
+    /**
+     * @brief Destroy the engine object
+     *
+     */
     ~engine();
 
+    /**
+     * @brief Runs the simulation from @f$ t_0 @f$ to @f$ t_0f @f$.
+     *
+     * @details Method creates an `Eigen::ThreadPool` and `Eigen::ThreadPoolDevice` that is passed
+     * to the `integrate()` method to speed up `Eigen::Tensor` computations.
+     * Method also calculates the total number of integration steps required and manages the output
+     * of the `progressBar` class.
+     *
+     */
     void
     run();
 
   private:
+    /**
+     * @brief Updates the simulation framework 1 time step.
+     *
+     * @param device device (CPU thread-pool or GPU) used to speed up tensor calculations
+     */
     void
-    integrate();
+    integrate(Eigen::ThreadPoolDevice& device);
 
     // classes
     std::shared_ptr<systemData>             m_system;
@@ -57,8 +96,13 @@ class engine
     std::string       m_logFile;
     const std::string m_logName{"engine"};
 
+    // eigen parallelization parameters
+    /// number of physical CPU cores to use in tensor calculations
+    const int m_num_physical_cores = std::thread::hardware_concurrency();
+
     // ProgressBar output
-    const double m_outputPercentile{0.02};
+    /// Percentage of simulation progress at which to output a GSD frame
+    const double m_outputPercentile{0.01};
 };
 
 #endif // BODIES_IN_POTENTIAL_FLOW_ENGINE_H

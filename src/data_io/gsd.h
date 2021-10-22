@@ -11,16 +11,16 @@
 
 #ifdef __cplusplus
 extern "C"
-    {
+{
 #endif
 
-    /*! \file gsd.h
-        \brief Declare GSD data types and C API
+    /*! @file gsd.h
+        @brief Declare GSD data types and C API
     */
 
     /// Identifiers for the gsd data chunk element types
     enum gsd_type
-        {
+    {
         /// Unsigned 8-bit integer.
         GSD_TYPE_UINT8 = 1,
 
@@ -50,11 +50,11 @@ extern "C"
 
         /// 64-bit floating point number.
         GSD_TYPE_DOUBLE
-        };
+    };
 
     /// Flag for GSD file open options
     enum gsd_open_flag
-        {
+    {
         /// Open for both reading and writing
         GSD_OPEN_READWRITE = 1,
 
@@ -63,11 +63,11 @@ extern "C"
 
         /// Open only for writing
         GSD_OPEN_APPEND
-        };
+    };
 
     /// Error return values
     enum gsd_error
-        {
+    {
         /// Success.
         GSD_SUCCESS = 0,
 
@@ -101,21 +101,21 @@ extern "C"
             GSD_OPEN_READWRITE.
         */
         GSD_ERROR_FILE_MUST_BE_READABLE = -9,
-        };
+    };
 
     enum
-        {
+    {
         /** v1 file: Size of a GSD name in memory. v2 file: The name buffer size is a multiple of
             GSD_NAME_SIZE.
         */
         GSD_NAME_SIZE = 64
-        };
+    };
 
     enum
-        {
+    {
         /// Reserved bytes in the header structure
         GSD_RESERVED_BYTES = 80
-        };
+    };
 
     /** GSD file header
 
@@ -125,7 +125,7 @@ extern "C"
         @warning All members are **read-only** to the caller.
     */
     struct gsd_header
-        {
+    {
         /// Magic number marking that this is a GSD file.
         uint64_t magic;
 
@@ -155,7 +155,7 @@ extern "C"
 
         /// Reserved for future use.
         char reserved[GSD_RESERVED_BYTES];
-        };
+    };
 
     /** Index entry
 
@@ -164,7 +164,7 @@ extern "C"
         @warning All members are **read-only** to the caller.
     */
     struct gsd_index_entry
-        {
+    {
         /// Frame index of the chunk.
         uint64_t frame;
 
@@ -185,14 +185,14 @@ extern "C"
 
         /// Flags (for internal use).
         uint8_t flags;
-        };
+    };
 
     /** Name/id mapping
 
         A string name paired with an ID. Used for storing sorted name/id mappings in a hash map.
     */
     struct gsd_name_id_pair
-        {
+    {
         /// Pointer to name (actual name storage is allocated in gsd_handle)
         char* name;
 
@@ -201,27 +201,27 @@ extern "C"
 
         /// Entry id
         uint16_t id;
-        };
+    };
 
     /** Name/id hash map
 
         A hash map of string names to integer identifiers.
     */
     struct gsd_name_id_map
-        {
+    {
         /// Name/id mappings
         struct gsd_name_id_pair* v;
 
         /// Number of entries in the mapping
         size_t size;
-        };
+    };
 
     /** Array of index entries
 
         May point to a mapped location of index entries in the file or an in-memory buffer.
     */
     struct gsd_index_buffer
-        {
+    {
         /// Indices in the buffer
         struct gsd_index_entry* data;
 
@@ -236,7 +236,7 @@ extern "C"
 
         /// Number of bytes mapped
         size_t mapped_len;
-        };
+    };
 
     /** Byte buffer
 
@@ -244,7 +244,7 @@ extern "C"
         used to hold the names.
     */
     struct gsd_byte_buffer
-        {
+    {
         /// Data
         char* data;
 
@@ -253,7 +253,7 @@ extern "C"
 
         /// Number of bytes available in the buffer
         size_t reserved;
-        };
+    };
 
     /** Name buffer
 
@@ -261,13 +261,13 @@ extern "C"
         is 64 bytes. In v2 files, only one NULL terminator is placed between each name.
     */
     struct gsd_name_buffer
-        {
+    {
         /// Data
         struct gsd_byte_buffer data;
 
         /// Number of names in the list
         size_t n_names;
-        };
+    };
 
     /** File handle
 
@@ -279,7 +279,7 @@ extern "C"
         @warning All members are **read-only** to the caller.
     */
     struct gsd_handle
-        {
+    {
         /// File descriptor
         int fd;
 
@@ -315,7 +315,7 @@ extern "C"
 
         /// Access the names in the namelist
         struct gsd_name_id_map name_map;
-        };
+    };
 
     /** Specify a version
 
@@ -324,7 +324,8 @@ extern "C"
 
         @return a packed version number aaaa.bbbb suitable for storing in a gsd file version entry.
     */
-    uint32_t gsd_make_version(unsigned int major, unsigned int minor);
+    uint32_t
+    gsd_make_version(unsigned int major, unsigned int minor);
 
     /** Create a GSD file
 
@@ -343,10 +344,8 @@ extern "C"
           - GSD_SUCCESS (0) on success. Negative value on failure:
           - GSD_ERROR_IO: IO error (check errno).
     */
-    int gsd_create(const char* fname,
-                   const char* application,
-                   const char* schema,
-                   uint32_t schema_version);
+    int
+    gsd_create(const char* fname, const char* application, const char* schema, uint32_t schema_version);
 
     /** Create and open a GSD file
 
@@ -374,13 +373,9 @@ extern "C"
           - GSD_ERROR_FILE_CORRUPT: Corrupt file.
           - GSD_ERROR_MEMORY_ALLOCATION_FAILED: Unable to allocate memory.
     */
-    int gsd_create_and_open(struct gsd_handle* handle,
-                            const char* fname,
-                            const char* application,
-                            const char* schema,
-                            uint32_t schema_version,
-                            enum gsd_open_flag flags,
-                            int exclusive_create);
+    int
+    gsd_create_and_open(struct gsd_handle* handle, const char* fname, const char* application, const char* schema,
+                        uint32_t schema_version, enum gsd_open_flag flags, int exclusive_create);
 
     /** Open a GSD file
 
@@ -402,7 +397,8 @@ extern "C"
           - GSD_ERROR_FILE_CORRUPT: Corrupt file.
           - GSD_ERROR_MEMORY_ALLOCATION_FAILED: Unable to allocate memory.
     */
-    int gsd_open(struct gsd_handle* handle, const char* fname, enum gsd_open_flag flags);
+    int
+    gsd_open(struct gsd_handle* handle, const char* fname, enum gsd_open_flag flags);
 
     /** Truncate a GSD file
 
@@ -421,7 +417,8 @@ extern "C"
           - GSD_ERROR_FILE_CORRUPT: Corrupt file.
           - GSD_ERROR_MEMORY_ALLOCATION_FAILED: Unable to allocate memory.
     */
-    int gsd_truncate(struct gsd_handle* handle);
+    int
+    gsd_truncate(struct gsd_handle* handle);
 
     /** Close a GSD file
 
@@ -441,7 +438,8 @@ extern "C"
           - GSD_ERROR_IO: IO error (check errno).
           - GSD_ERROR_INVALID_ARGUMENT: *handle* is NULL.
     */
-    int gsd_close(struct gsd_handle* handle);
+    int
+    gsd_close(struct gsd_handle* handle);
 
     /** Commit the current frame and increment the frame counter.
 
@@ -459,7 +457,8 @@ extern "C"
           - GSD_ERROR_FILE_MUST_BE_WRITABLE: The file was opened read-only.
           - GSD_ERROR_MEMORY_ALLOCATION_FAILED: Unable to allocate memory.
     */
-    int gsd_end_frame(struct gsd_handle* handle);
+    int
+    gsd_end_frame(struct gsd_handle* handle);
 
     /** Write a data chunk to the current frame
 
@@ -492,13 +491,9 @@ extern "C"
           - GSD_ERROR_NAMELIST_FULL: The file cannot store any additional unique chunk names.
           - GSD_ERROR_MEMORY_ALLOCATION_FAILED: failed to allocate memory.
     */
-    int gsd_write_chunk(struct gsd_handle* handle,
-                        const char* name,
-                        enum gsd_type type,
-                        uint64_t N,
-                        uint32_t M,
-                        uint8_t flags,
-                        const void* data);
+    int
+    gsd_write_chunk(struct gsd_handle* handle, const char* name, enum gsd_type type, uint64_t N, uint32_t M,
+                    uint8_t flags, const void* data);
 
     /** Find a chunk in the GSD file
 
@@ -534,7 +529,8 @@ extern "C"
           - GSD_ERROR_FILE_MUST_BE_READABLE: The file was opened in append mode.
           - GSD_ERROR_FILE_CORRUPT: The GSD file is corrupt.
     */
-    int gsd_read_chunk(struct gsd_handle* handle, void* data, const struct gsd_index_entry* chunk);
+    int
+    gsd_read_chunk(struct gsd_handle* handle, void* data, const struct gsd_index_entry* chunk);
 
     /** Get the number of frames in the GSD file
 
@@ -544,7 +540,8 @@ extern "C"
 
         @return The number of frames in the file, or 0 on error.
     */
-    uint64_t gsd_get_nframes(struct gsd_handle* handle);
+    uint64_t
+    gsd_get_nframes(struct gsd_handle* handle);
 
     /** Query size of a GSD type ID.
 
@@ -552,7 +549,8 @@ extern "C"
 
         @return Size of the given type in bytes, or 0 for an unknown type ID.
     */
-    size_t gsd_sizeof_type(enum gsd_type type);
+    size_t
+    gsd_sizeof_type(enum gsd_type type);
 
     /** Search for chunk names in a gsd file.
 
@@ -586,10 +584,11 @@ extern "C"
           - GSD_ERROR_INVALID_ARGUMENT: *handle* is NULL
           - GSD_ERROR_FILE_MUST_BE_WRITABLE: The file was opened in read-only mode.
     */
-    int gsd_upgrade(struct gsd_handle* handle);
+    int
+    gsd_upgrade(struct gsd_handle* handle);
 
 #ifdef __cplusplus
-    }
+}
 #endif
 
 #endif // #ifndef GSD_H

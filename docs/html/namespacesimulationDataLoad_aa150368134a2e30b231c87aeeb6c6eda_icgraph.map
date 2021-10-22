@@ -1,0 +1,4 @@
+<map id="simulationDataLoad.parse_loaded_data" name="simulationDataLoad.parse_loaded_data">
+<area shape="rect" id="node1" title="Parses input GSD files and outputs to pandas DataFrame." alt="" coords="233,5,407,47"/>
+<area shape="rect" id="node2" href="$namespacesimulationDataLoad.html#ae3187c41888f046bcc6417834e68e241" title="Wrapper function that combines previous function into single call that can do all data parsing and lo..." alt="" coords="5,13,185,39"/>
+</map>

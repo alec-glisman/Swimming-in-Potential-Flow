@@ -12,6 +12,15 @@
 #include <iomanip>  // String formatting (std::setprecision())
 #include <iostream> // data printing
 
+/**
+ * @class ProgressBar
+ *
+ * @brief Creates and displays a progress bar to terminal screen.
+ *
+ * @details Uses carriage return to update screen state (not newline)
+ *
+ * @authors (GitHub) prakhar1989, alec-glisman
+ */
 class ProgressBar
 {
   private:
@@ -46,8 +55,7 @@ class ProgressBar
         unsigned int pos      = (int)(bar_width * progress);
 
         std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-        auto                                  time_elapsed =
-            std::chrono::duration_cast<std::chrono::seconds>(now - start_time).count();
+        auto time_elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - start_time).count();
 
         std::cout << "[";
 
@@ -67,16 +75,14 @@ class ProgressBar
         double iterationPerSecond = double(ticks) / double(time_elapsed);
 
         double hourLeft = std::floor(double(total_ticks - ticks) / (iterationPerSecond * 3600));
-        double minLeft =
-            static_cast<int>(double(total_ticks - ticks) / (iterationPerSecond * 60.0)) % 60;
-        double secLeft = static_cast<int>(double(total_ticks - ticks) / iterationPerSecond) % 60;
+        double minLeft  = static_cast<int>(double(total_ticks - ticks) / (iterationPerSecond * 60.0)) % 60;
+        double secLeft  = static_cast<int>(double(total_ticks - ticks) / iterationPerSecond) % 60;
 
-        std::cout << "] " << int(progress * 100.0) << "% [" << std::setprecision(0) << std::fixed
-                  << hourElapsed << ":" << std::setprecision(0) << std::fixed << minElapsed << ":"
-                  << std::setprecision(0) << std::fixed << secElapsed << " <- "
-                  << std::setprecision(0) << std::fixed << hourLeft << ":" << std::setprecision(0)
-                  << std::fixed << minLeft << ":" << std::setprecision(0) << std::fixed << secLeft
-                  << ", " << std::setprecision(0) << std::fixed << iterationPerSecond << "it/s"
+        std::cout << "] " << int(progress * 100.0) << "% [" << std::setprecision(0) << std::fixed << hourElapsed << ":"
+                  << std::setprecision(0) << std::fixed << minElapsed << ":" << std::setprecision(0) << std::fixed
+                  << secElapsed << " <- " << std::setprecision(0) << std::fixed << hourLeft << ":"
+                  << std::setprecision(0) << std::fixed << minLeft << ":" << std::setprecision(0) << std::fixed
+                  << secLeft << ", " << std::setprecision(0) << std::fixed << iterationPerSecond << "it/s"
                   << "]\r";
         std::cout.flush();
     }

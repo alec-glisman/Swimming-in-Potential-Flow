@@ -1,11 +1,30 @@
+# Executable variables
+SET(EXE_NAME "bodies_in_potential_flow")
+
+SET(EXE_FILES 
+    main.cpp 
+    )
+
+SET(EXE_LINKS 
+    spdlog::spdlog_header_only
+    ${MKL_LIBRARIES}
+    Eigen3::Eigen
+    data_io
+    simulation_system
+    forces
+    integrators
+    )
+
+
 # Include directories in header search paths (-I flag)
 INCLUDE_DIRECTORIES(data_io)
 INCLUDE_DIRECTORIES(simulation_system)
 INCLUDE_DIRECTORIES(forces)
 INCLUDE_DIRECTORIES(integrators)
+INCLUDE_DIRECTORIES(helpers/eigen)
 
 IF(DEFINED CMAKE_CUDA_COMPILER)
-    INCLUDE_DIRECTORIES(cuda_helpers)
+    INCLUDE_DIRECTORIES(helpers/cuda)
 ENDIF()
 
 # Add subdirectories to the build (processes CMakeLists.txt in these dirs)
@@ -14,18 +33,16 @@ ADD_SUBDIRECTORY(simulation_system)
 ADD_SUBDIRECTORY(forces)
 ADD_SUBDIRECTORY(integrators)
 
-# Main project executable
-ADD_EXECUTABLE(bodies_in_potential_flow main.cpp)
 
+# Make all of source code a library
+ADD_EXECUTABLE(
+    ${EXE_NAME}
+    ${EXE_FILES}
+    )
+
+# Link other libraries 
 TARGET_LINK_LIBRARIES(
-    bodies_in_potential_flow
-    PRIVATE
-    spdlog::spdlog_header_only
-    ${Boost_LIBRARIES}
-    Eigen3::Eigen
-    Catch2::Catch2
-    data_io
-    simulation_system
-    forces
-    integrators
+    ${EXE_NAME}
+    PUBLIC
+    ${EXE_LINKS}
     )

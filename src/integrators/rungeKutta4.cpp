@@ -4,8 +4,7 @@
 
 #include <rungeKutta4.hpp>
 
-rungeKutta4::rungeKutta4(std::shared_ptr<systemData>             sys,
-                         std::shared_ptr<potentialHydrodynamics> hydro)
+rungeKutta4::rungeKutta4(std::shared_ptr<systemData> sys, std::shared_ptr<potentialHydrodynamics> hydro)
 {
     // save classes
     m_system   = sys;
@@ -27,73 +26,69 @@ rungeKutta4::rungeKutta4(std::shared_ptr<systemData>             sys,
     m_c1_6_dt = m_c1_6 * m_dt;
     spdlog::get(m_logName)->info("1/6 * dt (dimensional): {0}", m_c1_6_dt);
 
-    // Set specific variables to each system
-    initializeSpecificVars();
+    m_7M = 7 * m_system->numBodies();
+
+    spdlog::get(m_logName)->info("Constructor complete");
+    spdlog::get(m_logName)->flush();
 }
 
 rungeKutta4::~rungeKutta4()
 {
     spdlog::get(m_logName)->info("Destructing Runge-Kutta 4th order");
+    spdlog::get(m_logName)->flush();
+    spdlog::drop(m_logName);
 }
 
 void
-rungeKutta4::integrate()
+rungeKutta4::integrate(Eigen::ThreadPoolDevice& device)
 {
-    double time{m_system->t() * m_system->tau()};
+    integrateSecondOrder(device); // Udwadia-Kalaba method only gives acceleration components
+}
 
-    /* ANCHOR: Solve system of form: y'(t) = f( y(t),  t )
-     * @REFERENCE:
-     * https://www.physicsforums.com/threads/using-runge-kutta-method-for-position-calc.553663/post-3634957
-     */
-
+void
+rungeKutta4::integrateSecondOrder(Eigen::ThreadPoolDevice& device)
+{
     /* Step 1: k1 = f( y(t_0),  t_0 ),
      * initial conditions at current step */
-    Eigen::VectorXd v1 = m_system->velocities();
-    Eigen::VectorXd x1 = m_system->positions();
-    Eigen::VectorXd a1 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a1, time);
+    const double    t1{m_system->t()};
+    Eigen::VectorXd v1 = m_system->velocitiesBodies();
+    Eigen::VectorXd x1 = m_system->positionsBodies();
+
+    Eigen::VectorXd a1 = Eigen::VectorXd::Zero(m_7M);
+    accelerationUpdate(t1, x1, v1, a1, device);
 
     /* Step 2: k2 = f( y(t_0) + k1 * dt/2,  t_0 + dt/2 )
      * time rate-of-change k1 evaluated halfway through time step (midpoint) */
+    const double    t2{t1 + 0.50 * m_system->dt()};
     Eigen::VectorXd v2 = v1;
     v2.noalias() += m_c1_2_dt * a1;
     Eigen::VectorXd x2 = x1;
-    v2.noalias() += m_c1_2_dt * v2;
+    x2.noalias() += m_c1_2_dt * v2;
 
-    m_system->setVelocities(v2);
-    m_system->setPositions(x2);
-    m_potHydro->update();
-
-    Eigen::VectorXd a2 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a2, time + m_c1_2_dt);
+    Eigen::VectorXd a2 = Eigen::VectorXd::Zero(m_7M);
+    accelerationUpdate(t2, x2, v2, a2, device);
 
     /* Step 3: k3 = f( y(t_0) + k2 * dt/2,  t_0 + dt/2 )
      * time rate-of-change k2 evaluated halfway through time step (midpoint) */
+    const double    t3{t2};
     Eigen::VectorXd v3 = v1;
     v3.noalias() += m_c1_2_dt * a2;
     Eigen::VectorXd x3 = x1;
     x3.noalias() += m_c1_2_dt * v3;
 
-    m_system->setVelocities(v3);
-    m_system->setPositions(x3);
-    m_potHydro->update();
-
-    Eigen::VectorXd a3 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a3, time + m_c1_2_dt);
+    Eigen::VectorXd a3 = Eigen::VectorXd::Zero(m_7M);
+    accelerationUpdate(t3, x3, v3, a3, device);
 
     /* Step 4: k4 = f( y(t_0) + k3 * dt,  t_0 + dt )
      * time rate-of-change k3 evaluated at end of step (endpoint) */
+    const double    t4{t1 + m_system->dt()};
     Eigen::VectorXd v4 = v1;
     v4.noalias() += m_dt * a3;
     Eigen::VectorXd x4 = x1;
-    x4.noalias() += m_dt * v3;
+    x4.noalias() += m_dt * v4;
 
-    m_system->setVelocities(v4);
-    m_system->setPositions(x4);
-    m_potHydro->update();
-
-    Eigen::VectorXd a4 = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a4, time + m_dt);
+    Eigen::VectorXd a4 = Eigen::VectorXd::Zero(m_7M);
+    accelerationUpdate(t4, x4, v4, a4, device);
 
     /* ANCHOR: Calculate kinematics at end of time step */
     Eigen::VectorXd v_out = a1;
@@ -110,266 +105,163 @@ rungeKutta4::integrate()
     x_out *= m_c1_6_dt;
     x_out.noalias() += x1;
 
-    m_system->setVelocities(v_out);
-    m_system->setPositions(x_out);
-    m_potHydro->update();
+    Eigen::VectorXd a_out = Eigen::VectorXd::Zero(m_7M);
+    accelerationUpdate(t4, x_out, v_out, a_out, device);
 
-    Eigen::VectorXd a_out = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    accelerationUpdate(a_out, time + m_dt);
-    m_system->setAccelerations(a_out);
+    // reset system time to t1 as `engine` class manages updating system time at end of each step
+    m_system->setT(t1);
 }
 
-/* REVIEW[epic=Change,order=1]: Change initializeSpecificVars() for different systems */
 void
-rungeKutta4::initializeSpecificVars()
+rungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::VectorXd& vel, Eigen::VectorXd& acc,
+                                Eigen::ThreadPoolDevice& device)
 {
-    spdlog::get(m_logName)->info("Running initializeSpecificVars()");
+    // NOTE: Order of function calls must remain the same
+    m_system->setT(t);
 
-    auto gsdParser = m_system->gsdUtil();
+    if (m_system->imageSystem())
+    {
+        imageBodyPosVel(pos, vel);
+    }
+    m_system->setPositionsBodies(pos);
+    m_system->setVelocitiesBodies(vel);
 
-    /* ANCHOR: set specific parameters */
+    m_system->update(device);
+    m_potHydro->update(device);
 
-    // oscillation velocity amplitude
-    spdlog::get(m_logName)->info("GSD parsing U0");
-    double U0{-1.0};
-    auto   return_bool = gsdParser->readChunk(&U0, gsdParser->frame(), "log/swimmer/U0", 8);
-    m_system->setReturnBool(return_bool);
-    m_system->check_gsd_return();
-    m_systemParam.U0 = U0;
-    spdlog::get(m_logName)->info("U_0 : {0}", U0);
-    assert(m_systemParam.U0 == U0 && "U0 not properly set");
+    if (m_system->imageSystem())
+    {
+        // only update Udwadia system for "real" system not image dipoles
+        const int       img_body_start = m_system->numBodies() / 2;
+        Eigen::VectorXd acc_real_body  = acc.segment(7 * img_body_start, 7 * img_body_start);
 
-    // oscillation frequency
-    spdlog::get(m_logName)->info("GSD parsing omega");
-    double omega{-1.0};
-    return_bool = gsdParser->readChunk(&omega, gsdParser->frame(), "log/swimmer/omega", 8);
-    m_system->setReturnBool(return_bool);
-    m_system->check_gsd_return();
-    m_systemParam.omega = omega;
-    spdlog::get(m_logName)->info("omega : {0}", omega);
-    assert(m_systemParam.omega == omega && "omega not properly set");
+        udwadiaKalaba(acc_real_body);
 
-    // phase shift between oscillators
-    spdlog::get(m_logName)->info("GSD parsing phaseShift");
-    double phaseShift{-1.0};
-    return_bool =
-        gsdParser->readChunk(&phaseShift, gsdParser->frame(), "log/swimmer/phase_shift", 8);
-    m_system->setReturnBool(return_bool);
-    m_system->check_gsd_return();
-    m_systemParam.phaseShift = phaseShift;
-    spdlog::get(m_logName)->info("phaseShift : {0}", phaseShift);
-    assert(m_systemParam.phaseShift == phaseShift && "phaseShift not properly set");
+        // update acceleration components using constraints
+        acc.segment(7 * img_body_start, 7 * img_body_start).noalias() = acc_real_body;
+        imageBodyAcc(acc);
+    }
+    else
+    {
+        // update Udwadia system for all bodies
+        udwadiaKalaba(acc);
+    }
 
-    // average separation
-    spdlog::get(m_logName)->info("GSD parsing Ravg");
-    double RAvg{-1.0};
-    return_bool = gsdParser->readChunk(&RAvg, gsdParser->frame(), "log/swimmer/R_avg", 8);
-    m_system->setReturnBool(return_bool);
-    m_system->check_gsd_return();
-    m_systemParam.RAvg = RAvg;
-    spdlog::get(m_logName)->info("RAvg : {0}", RAvg);
-    assert(m_systemParam.RAvg == RAvg && "Ravg not properly set");
-
-    /* ANCHOR: set initial conditions */
-    spdlog::get(m_logName)->info("Setting initial conditions");
-
-    // set articulation velocities
-    spdlog::get(m_logName)->info("Calling articulationVel()");
-    articulationVel(0.0);
-    spdlog::get(m_logName)->info("Calling articulationAcc()");
-    articulationAcc(0.0);
-    // calculate locater point motion via linear and angular momentum free conditions
-    spdlog::get(m_logName)->info("Calling rLoc()");
-    rLoc();
-    spdlog::get(m_logName)->info("Updating (for first time) hydrodynamic tensors");
-    m_potHydro->update();
-    spdlog::get(m_logName)->info("Calling momentumLinAngFree()");
-    momentumLinAngFree();
-
-    // write updated kinematics to original frame (appending current file)
-    spdlog::get(m_logName)->info("Updating input GSD with updated kinematic initial conditions");
-    spdlog::get(m_logName)->critical(
-        "Frame 0 contains header information but incorrect kinematics");
-    spdlog::get(m_logName)->critical(
-        "Frame 1 should be treated as correct starting frame for analysis");
-    gsdParser->writeFrame();
+    m_system->setAccelerationsBodies(acc);
 }
 
-/* REVIEW[epic=Change,order=2]: Change constraint linear system (A, b) for each system */
 void
-rungeKutta4::accelerationUpdate(Eigen::VectorXd& acc, double dimensional_time)
+rungeKutta4::imageBodyPosVel(Eigen::VectorXd& pos, Eigen::VectorXd& vel)
+{
+    const int img_body_start = m_system->numBodies() / 2;
+
+    for (int img_body_id = img_body_start; img_body_id < m_system->numBodies(); img_body_id++)
+    {
+        // indices
+        const int body_id_7{7 * (img_body_id - img_body_start)};
+        const int img_body_id_7{7 * img_body_id};
+
+        /* ANCHOR: Position image system: mirror image about xy-plane (transform z --> -z) */
+        pos.segment<7>(img_body_id_7) = pos.segment<7>(body_id_7);
+
+        // (linear components) flip z component, leave x-y unchanged
+        pos.segment<1>(img_body_id_7 + 2) *= -1;
+
+        // (quaternion components) flip x-y components of quaternion vector part (see note in header file: look for "C1
+        // and C2 are mirrored along the Z-axis")
+        pos.segment<2>(img_body_id_7 + 4) *= -1;
+
+        /* ANCHOR: Velocity image system: invert x-y components to have image dipoles  */
+        vel.segment<7>(img_body_id_7) = vel.segment<7>(body_id_7);
+
+        // (linear components) flip x-y components, leave z unchanged
+        vel.segment<2>(img_body_id_7) *= -1;
+
+        // (quaternion components) same transform as positional transform
+        vel.segment<2>(img_body_id_7 + 4) *= -1;
+    }
+}
+
+void
+rungeKutta4::imageBodyAcc(Eigen::VectorXd& acc)
+{
+    const int img_body_start = m_system->numBodies() / 2;
+
+    for (int img_body_id = img_body_start; img_body_id < m_system->numBodies(); img_body_id++)
+    {
+        // indices
+        const int body_id_7{7 * (img_body_id - img_body_start)};
+        const int img_body_id_7{7 * img_body_id};
+
+        /* ANCHOR: Acceleration image system: invert x-y components to have image dipoles  */
+        acc.segment<7>(img_body_id_7) = acc.segment<7>(body_id_7);
+
+        // (linear components) flip x-y components, leave z unchanged
+        acc.segment<2>(img_body_id_7) *= -1;
+
+        // (quaternion components) same transform as positional transform
+        acc.segment<2>(img_body_id_7 + 4) *= -1;
+    }
+}
+
+void
+rungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
 {
     /* NOTE: Following the formalism developed in Udwadia & Kalaba (1992) Proc. R. Soc. Lond. A
-     * Solve system of the form M_total * acc = Q + Q_con
+     * Solve system of the form M_eff * acc = Q + Q_con
      * Q is the forces present in unconstrained system
      * Q_con is the generalized constraint forces */
 
-    // calculate Q
-    Eigen::VectorXd Q = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-    if (m_system->fluidDensity() > 0) // hydrodynamic force
+    int body_dof = m_system->numBodies();
+
+    if (m_system->imageSystem())
     {
-        Q.noalias() += m_potHydro->fHydroNoInertia();
+        body_dof /= 2;
     }
 
-    /* calculate Q_con = K (b - A * M_total^{-1} * Q)
+    // calculate Q
+    Eigen::VectorXd Q = Eigen::VectorXd::Zero(7 * body_dof);
+
+    // hydrodynamic force
+    if (m_system->fluidDensity() > 0)
+    {
+        Q.noalias() += m_potHydro->fHydroNoInertia().segment(0, 7 * body_dof);
+    }
+
+    /* calculate Q_con = K (b - A * M_eff^{-1} * Q)
      * Linear constraint system: A * acc = b
-     * Linear proportionality: K = M_total^{1/2} * (A * M_total^{-1/2})^{+};
+     * Linear proportionality: K = M_eff^{1/2} * (A * M_eff^{-1/2})^{+};
      * + is Moore-Penrose inverse */
 
-    // calculate A
-    Eigen::MatrixXd A = Eigen::MatrixXd::Zero(2, 9);
-    A(0, 0)           = 1.0;
-    A(0, 3)           = -1.0;
-    A(1, 3)           = -1.0;
-    A(1, 6)           = 1.0;
-    // calculate B
-    Eigen::Vector2d b = Eigen::Vector2d::Zero(2, 1);
-    b(0) = -m_systemParam.U0 * m_systemParam.omega * sin(m_systemParam.omega * dimensional_time);
-    b(1) = -m_systemParam.U0 * m_systemParam.omega *
-           sin(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
+    const Eigen::MatrixXd M_eff = m_potHydro->mTilde().block(0, 0, 7 * body_dof, 7 * body_dof);
 
     // calculate M^{1/2} & M^{-1/2}
-    Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> eigensolver(m_potHydro->mTotal());
+    Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> eigensolver(M_eff);
     if (eigensolver.info() != Eigen::Success)
     {
-        spdlog::get(m_logName)->error("Computing eigendecomposition of M_total failed at t={0}",
+        spdlog::get(m_logName)->error("Computing eigendecomposition of effective total mass matrix failed at t={0}",
                                       m_system->t());
-        throw std::runtime_error("Computing eigendecomposition of M_total failed");
+        throw std::runtime_error("Computing eigendecomposition of effective total mass matrix failed");
     }
-    Eigen::MatrixXd M_total_halfPower         = eigensolver.operatorSqrt();
-    Eigen::MatrixXd M_total_negativeHalfPower = eigensolver.operatorInverseSqrt();
+    const Eigen::MatrixXd M_eff_halfPower         = eigensolver.operatorSqrt();
+    const Eigen::MatrixXd M_eff_negativeHalfPower = eigensolver.operatorInverseSqrt();
 
     // calculate K
-    Eigen::MatrixXd AM_nHalf      = A * M_total_negativeHalfPower;
-    Eigen::MatrixXd AM_nHalf_pInv = AM_nHalf.completeOrthogonalDecomposition().pseudoInverse();
-    Eigen::MatrixXd K             = M_total_halfPower * AM_nHalf_pInv;
+    const Eigen::MatrixXd AM_nHalf      = m_system->udwadiaA() * M_eff_negativeHalfPower;
+    const Eigen::MatrixXd AM_nHalf_pInv = AM_nHalf.completeOrthogonalDecomposition().pseudoInverse();
+    const Eigen::MatrixXd K             = M_eff_halfPower * AM_nHalf_pInv;
 
     // calculate Q_con
-    Eigen::MatrixXd M_total_inv   = m_potHydro->mTotal().inverse();
-    Eigen::MatrixXd M_total_invQ  = M_total_inv * Q;
-    Eigen::VectorXd AM_total_invQ = A * M_total_invQ;
-    Eigen::VectorXd b_tilde       = b;
-    b_tilde.noalias() -= AM_total_invQ;
-    Eigen::VectorXd Q_con = K * b_tilde;
+    const Eigen::MatrixXd M_eff_inv   = M_eff.inverse();
+    const Eigen::MatrixXd M_eff_invQ  = M_eff_inv * Q;
+    const Eigen::VectorXd AM_eff_invQ = m_system->udwadiaA() * M_eff_invQ;
+    Eigen::VectorXd       b_tilde     = m_system->udwadiaB();
+    b_tilde.noalias() -= AM_eff_invQ;
+    const Eigen::VectorXd Q_con = K * b_tilde;
 
     // calculate accelerations
     Eigen::VectorXd Q_total = Q;
     Q_total.noalias() += Q_con;
-    acc.noalias() = m_potHydro->mTotal().llt().solve(Q_total);
-}
-
-void
-rungeKutta4::momentumLinAngFree()
-{
-    /* ANCHOR: Solve for rigid body motion (rbm) tensors */
-    // initialize variables
-    Eigen::Matrix3d I       = Eigen::Matrix3d::Identity(3, 3);                        // [3 x 3]
-    Eigen::MatrixXd rbmconn = Eigen::MatrixXd::Zero(6, 3 * m_system->numParticles()); // [6 x 3N]
-
-    // assemble the rigid body motion connectivity tensor (Sigma);  [6 x 3N]
-    for (int i = 0; i < m_system->numParticles(); i++)
-    {
-        int i3{3 * i};
-
-        Eigen::Vector3d n_dr = -m_system->positions().segment<3>(i3);
-        n_dr.noalias() += m_RLoc;
-        Eigen::Matrix3d n_dr_cross;
-        crossProdMat(n_dr, n_dr_cross);
-
-        rbmconn.block<3, 3>(0, i3).noalias() = I;          // translation-translation couple
-        rbmconn.block<3, 3>(3, i3).noalias() = n_dr_cross; // translation-rotation couple
-    }
-    Eigen::MatrixXd rbmconn_T = rbmconn.transpose();
-
-    // calculate M_tilde = Sigma * M_total * Sigma^T;  [6 x 6]
-    Eigen::MatrixXd M_tilde_hold = m_potHydro->mTotal() * rbmconn_T;
-    Eigen::MatrixXd M_tilde      = rbmconn * M_tilde_hold;
-
-    /* ANCHOR: Solve for rigid body motion velocity components */
-    // calculate P_script = Sigma * M_total * V_articulation;  [6 x 1]
-    Eigen::VectorXd P_script_hold = m_potHydro->mTotal() * m_velArtic;
-    Eigen::VectorXd P_script      = rbmconn * P_script_hold;
-
-    // calculate U_swim = - M_tilde_inv * P_script; U_swim has translation and rotation
-    // components
-    Eigen::VectorXd U_swim = -M_tilde.fullPivLu().solve(P_script);
-
-    /* ANCHOR: Output velocity data back to m_system */
-    // calculate U = Sigma^T * U_swim + v_artic
-    Eigen::VectorXd U_out = rbmconn_T * U_swim;
-    U_out.noalias() += m_velArtic;
-    m_system->setVelocities(U_out);
-
-    // update hydrodynamic force terms for acceleration components
-    m_potHydro->updateForcesOnly();
-
-    /* ANCHOR: Solve for rigid body motion acceleration components */
-    // calculate b = a_artic + W * r + [v_artic ^ ]^T * Omega_C;  Omega_C = U_swim(3::5)
-    Eigen::Vector3d Omega_C = U_swim.segment<3>(3);
-
-    Eigen::Matrix3d W = Omega_C * Omega_C.transpose();
-    W.noalias() -= Omega_C.squaredNorm() * I;
-
-    Eigen::Matrix3d n_v_artic_cross;
-    Eigen::VectorXd b = m_accArtic;
-
-    for (int i = 0; i < m_system->numParticles(); i++)
-    {
-        int i3{3 * i};
-
-        Eigen::Vector3d dr = m_system->positions().segment<3>(i3);
-        dr.noalias() -= m_RLoc;
-        b.segment<3>(i3).noalias() += W * dr;
-
-        crossProdMat(-m_velArtic.segment<3>(i3), n_v_artic_cross);
-        b.segment<3>(i3).noalias() += n_v_artic_cross * Omega_C;
-    }
-
-    // calculate gMUU = \nabla M_added : U jdU
-    Eigen::VectorXd gMUU = m_potHydro->t2VelGrad();
-
-    // calculate F_script = Sigma * (M_total * b + gMUU)
-    Eigen::VectorXd F_script_hold = m_potHydro->mTotal() * b;
-    F_script_hold.noalias() += gMUU;
-    Eigen::VectorXd F_script = rbmconn * F_script_hold;
-
-    // calculate A_swim = - M_tilde_inv * F_script; A_swim has translation and rotation
-    // components
-    Eigen::VectorXd A_swim = -M_tilde.fullPivLu().solve(F_script);
-
-    /* ANCHOR: Output acceleration data back to m_system */
-    // calculate A = Sigma^T * A_swim + b
-    Eigen::VectorXd A_out = rbmconn_T * A_swim;
-    A_out.noalias() += b;
-    m_system->setAccelerations(A_out);
-}
-
-/* REVIEW[epic=Change,order=3]: Change assignment of m_velArtic for different systems */
-void
-rungeKutta4::articulationVel(double dimensional_time)
-{
-    m_velArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-
-    m_velArtic(0) = m_systemParam.U0 * cos(m_systemParam.omega * dimensional_time);
-    m_velArtic(6) =
-        m_systemParam.U0 * cos(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
-}
-
-/* REVIEW[epic=Change,order=4]: Change assignment of m_accArtic for different systems */
-void
-rungeKutta4::articulationAcc(double dimensional_time)
-{
-    m_accArtic = Eigen::VectorXd::Zero(3 * m_system->numParticles());
-
-    m_accArtic(0) =
-        -m_systemParam.U0 * m_systemParam.omega * sin(m_systemParam.omega * dimensional_time);
-    m_accArtic(6) = -m_systemParam.U0 * m_systemParam.omega *
-                    sin(m_systemParam.omega * dimensional_time + m_systemParam.phaseShift);
-}
-
-/* REVIEW[epic=Change,order=5]: Change assignment of m_RLoc for different systems */
-void
-rungeKutta4::rLoc()
-{
-    m_RLoc = m_system->positions().segment<3>(3);
+    /// @todo Try changing llt() decomp into the decomp already done for eigendecomp
+    acc.noalias() = M_eff.llt().solve(Q_total);
 }
