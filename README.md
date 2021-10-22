@@ -7,6 +7,8 @@ Author: Alec Glisman
 [![Code Coverage](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml/badge.svg)](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml)
 [![Build](https://codecov.io/gh/alec-glisman/bodies-in-potential-flow/branch/body_locater_quaternion/graph/badge.svg?token=3IUPDIX1D1)](https://codecov.io/gh/alec-glisman/bodies-in-potential-flow)
 
+![Collinear Swimmer](/Users/alecglisman/VSCodeProjects/local-bodies-in-potential-flow/docs/images/collinear_swimmer.png)
+
 ## Code documentation
 
 Code is documented using [Doxygen](https://www.doxygen.nl/index.html) and can be found in the [`docs`](docs) directory.
