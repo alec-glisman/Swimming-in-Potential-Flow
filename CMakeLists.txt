@@ -169,22 +169,36 @@ ENDIF()
 
 
 # SECTION: Compilation flags
-SET(CMAKE_CXX_FLAGS_DEBUG
-    "-g -O0 -fno-omit-frame-pointer -fopenmp -lboost_system -ltbb -lpthread -m64 -lmkl_intel_lp64 -lmkl_tbb_thread -lmkl_core -lm -ldl -Wno-unknown-pragmas -Wall -Wextra -Wlogical-op -Wredundant-decls -Wshadow -Woverloaded-virtual -Wuninitialized -Warray-bounds -Wcast-align -Wcast-qual -Wdisabled-optimization -Wdiv-by-zero -Wendif-labels -Wformat-extra-args -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wimport -Winit-self -Winline -Winvalid-pch -Wlogical-op -Wmissing-declarations -Wno-missing-format-attribute -Wmissing-include-dirs -Wmultichar -Wpacked -Wpointer-arith -Wreturn-type -Wsequence-point -Wsign-compare -Wstrict-aliasing -Wstrict-aliasing=2 -Wswitch -Wno-unused -Wno-sign-compare -Wno-cast-qual -Wno-redundant-decls -Wvariadic-macros -Wwrite-strings")
-SET(CMAKE_C_FLAGS_DEBUG
-    "-g -O0 -fno-omit-frame-pointer -fopenmp -lboost_system -ltbb -lpthread -m64 -lmkl_intel_lp64 -lmkl_tbb_thread -lmkl_core -lm -ldl -Wno-unknown-pragmas -Wall -Wextra -Wlogical-op -Wredundant-decls -Wshadow -Wuninitialized -Warray-bounds -Wcast-align -Wcast-qual -Wdisabled-optimization -Wdiv-by-zero -Wendif-labels -Wformat-extra-args -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wimport -Winit-self -Winline -Winvalid-pch -Wlogical-op -Wmissing-declarations -Wno-missing-format-attribute -Wmissing-include-dirs -Wmultichar -Wpacked -Wpointer-arith -Wreturn-type -Wsequence-point -Wsign-compare -Wstrict-aliasing -Wstrict-aliasing=2 -Wswitch -Wno-unused -Wno-sign-compare -Wno-cast-qual -Wno-redundant-decls -Wvariadic-macros -Wwrite-strings")
 
+# Debug build flags
+STRING(CONCAT CXX_DEBUG "-g -O0 -fno-omit-frame-pointer -fopenmp"
+    " -Wno-unknown-pragmas -Wall -Wextra -Wlogical-op -Wredundant-decls -Wshadow -Woverloaded-virtual -Wuninitialized"
+    " -Warray-bounds -Wcast-align -Wcast-qual -Wdisabled-optimization -Wdiv-by-zero -Wendif-labels -Wformat-extra-args"
+    " -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wimport -Winit-self -Winline -Winvalid-pch -Wlogical-op"
+    " -Wmissing-declarations -Wno-missing-format-attribute -Wmissing-include-dirs -Wmultichar -Wpacked -Wpointer-arith"
+    " -Wreturn-type -Wsequence-point -Wsign-compare -Wstrict-aliasing -Wstrict-aliasing=2 -Wswitch -Wno-unused"
+    " -Wno-sign-compare -Wno-cast-qual -Wno-redundant-decls -Wvariadic-macros -Wwrite-strings")
+STRING(CONCAT C_DEBUG "-g -O0 -fno-omit-frame-pointer -fopenmp"
+    " -Wno-unknown-pragmas -Wall -Wextra -Wlogical-op -Wredundant-decls -Wshadow -Wuninitialized"
+    " -Warray-bounds -Wcast-align -Wcast-qual -Wdisabled-optimization -Wdiv-by-zero -Wendif-labels -Wformat-extra-args"
+    " -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wimport -Winit-self -Winline -Winvalid-pch -Wlogical-op" 
+    " -Wmissing-declarations -Wno-missing-format-attribute -Wmissing-include-dirs -Wmultichar -Wpacked"
+    " -Wpointer-arith -Wreturn-type -Wsequence-point -Wsign-compare -Wstrict-aliasing -Wstrict-aliasing=2 -Wswitch -Wno-unused"
+    " -Wno-sign-compare -Wno-cast-qual -Wno-redundant-decls -Wvariadic-macros -Wwrite-strings")
 
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native -O3 -mfpmath=sse -funroll-loops -fopenmp -lboost_system -ltbb -lpthread -m64 -lmkl_intel_lp64 -lmkl_tbb_thread -lmkl_core -lm -ldl -Wno-deprecated-declarations")
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native -O3 -mfpmath=sse -funroll-loops -fopenmp -lboost_system -ltbb -lpthread -m64 -lmkl_intel_lp64 -lmkl_tbb_thread -lmkl_core -lm -ldl -Wno-deprecated-declarations")
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${CXX_DEBUG}")
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} ${C_DEBUG}")
 
+# Release build flags
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native -O3 -mfpmath=sse -funroll-loops -fopenmp  -Wno-deprecated-declarations")
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native -O3 -mfpmath=sse -funroll-loops -fopenmp -Wno-deprecated-declarations")
 
+# Profile build flags
 IF(CMAKE_BUILD_TYPE STREQUAL "Profile")
 
-    ADD_COMPILE_OPTIONS(-fno-omit-frame-pointer -fopenmp -march=native -O3 -mfpmath=sse -funroll-loops -lboost_system -ltbb -lpthread -m64 -lmkl_intel_lp64 -lmkl_tbb_thread -lmkl_core -lm -ldl -Wno-deprecated-declarations)
+    ADD_COMPILE_OPTIONS(-fno-omit-frame-pointer)
 
 ENDIF()
-
 # !SECTION
 
 
@@ -214,6 +228,18 @@ MESSAGE( STATUS "${Cyan}" "Found: ${MKL_FOUND}" "${ColourReset}")
 MESSAGE( STATUS "${Cyan}" "Include Dir: ${MKL_INCLUDE_DIR}" "${ColourReset}")
 MESSAGE( STATUS "${Cyan}" "Library Dir: ${MKL_LIBRARIES}" "${ColourReset}")
 MESSAGE("")
+
+# MKL and TBB specific flags
+IF(${MKL_FOUND} AND ${TBB_FOUND})
+    
+    ADD_COMPILE_OPTIONS(-ltbb -lpthread -m64 -lmkl_intel_lp64 -lmkl_tbb_thread -lmkl_core -lm -ldl)
+
+ELSEIF(${MKL_FOUND})
+    
+    ADD_COMPILE_OPTIONS(-lpthread -m64 -lmkl_intel_lp64 -lmkl_core -lm -ldl)
+
+ENDIF()
+
 
 # Linear algebra libraries
 MESSAGE( "${BoldMagenta}" "External Dependency: Eigen3" "${ColourReset}" )
