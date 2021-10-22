@@ -20,6 +20,9 @@ jobs:
     
       - name: Get latest CMake and Ninja
         uses: lukka/get-cmake@latest
+      
+      - name: Install lcov
+        run: sudo apt install -y lcov
 
       - name: Restore artifacts, or setup vcpkg for building artifacts
         uses: lukka/run-vcpkg@v10
