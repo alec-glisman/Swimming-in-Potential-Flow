@@ -10,7 +10,6 @@ SET(EXE_FILES
 SET(EXE_LINKS 
     Catch2::Catch2
     spdlog::spdlog_header_only
-    ${MKL_LIBRARIES}
     data_io
     simulation_system
     forces
