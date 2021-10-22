@@ -267,11 +267,15 @@ IF(ENABLE_COVERAGE STREQUAL "True")
     SET(COVERAGE_EXCLUDES
         "/home/aglisman/.linuxbrew/**"
         "/usr/include/**"
+        "include/**"
         "/usr/lib/**"
         "/opt/intel/**"
         "/Applications/**"
         "${PROJECT_SOURCE_DIR}/src/main.cpp"
-        "${PROJECT_SOURCE_DIR}/test/**"
+        "test/**"
+        "vcpkg/**"
+        "vcpkg_installed/**"
+        "build/**"
         )
 
 ENDIF()
