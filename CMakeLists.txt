@@ -217,7 +217,7 @@ MESSAGE("")
 
 # Linear algebra libraries
 MESSAGE( "${BoldMagenta}" "External Dependency: Eigen3" "${ColourReset}" )
-FIND_PACKAGE(Eigen3 3.4.0 REQUIRED)
+FIND_PACKAGE(Eigen3 3.3.9 REQUIRED)
 MESSAGE( STATUS "${Cyan}" "Found: ${EIGEN3_FOUND}" "${ColourReset}")
 MESSAGE( STATUS "${Cyan}" "Include Dir: ${EIGEN3_INCLUDE_DIR}" "${ColourReset}")
 MESSAGE("")
