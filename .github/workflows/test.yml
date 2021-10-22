@@ -6,36 +6,35 @@ jobs:
     name: Code Coverage
     runs-on: ubuntu-20.04
     continue-on-error: true
-    
+
     env:
-      CLICOLOR_FORCE: '0'
+      CLICOLOR_FORCE: "0"
 
     steps:
-      
       - name: Checkout
         uses: actions/checkout@v2.3.4
         with:
           path: code
           submodules: true
-    
+
       - name: Get latest CMake and Ninja
         uses: lukka/get-cmake@latest
-      
+
       - name: Install lcov and gcovr
         run: sudo apt install -y lcov gcovr
 
       - name: Restore artifacts, or setup vcpkg for building artifacts
         uses: lukka/run-vcpkg@v10
-        id: runvcpkg 
+        id: runvcpkg
         with:
           # This is the default location of the directory containing vcpkg sources.
           # Change it to the right location if needed.
-          vcpkgDirectory: '${{ github.workspace }}/code/vcpkg'
+          vcpkgDirectory: "${{ github.workspace }}/code/vcpkg"
 
           # If not using a submodule for vcpkg sources, this specifies which commit
           # id must be checkout from a Git repo. It must not set if using a submodule
           # for vcpkg.
-          vcpkgGitCommitId: '4474aba1e77be2d643eb684298b7d5479cad9a1f'
+          vcpkgGitCommitId: "4474aba1e77be2d643eb684298b7d5479cad9a1f"
 
       - name: List $RUNNER_WORKSPACE before build
         run: find $RUNNER_WORKSPACE
@@ -47,15 +46,15 @@ jobs:
           # This is the default path to the CMakeLists.txt along side the
           # CMakePresets.json. Change if you need have CMakeLists.txt and CMakePresets.json
           # located elsewhere.
-          cmakeListsTxtPath: '${{ github.workspace }}/code/CMakeLists.txt'
+          cmakeListsTxtPath: "${{ github.workspace }}/code/CMakeLists.txt"
 
           # This is the name of the CMakePresets.json's configuration to use to generate
           # the project files. This configuration leverages the vcpkg.cmake toolchain file to
           # run vcpkg and install all dependencies specified in vcpkg.json.
-          configurePreset: 'default'
+          configurePreset: "default"
 
           # This is the name of the CMakePresets.json's configuration to build the project.
-          buildPreset: 'default'
+          buildPreset: "default"
 
       - name: List $RUNNER_WORKSPACE after build
         run: find $RUNNER_WORKSPACE
@@ -63,7 +62,7 @@ jobs:
 
       - name: Run tests
         run: "ninja coverage"
-        working-directory: '${{ github.workspace }}/code/build'
+        working-directory: "${{ github.workspace }}/code/build/debug"
 
       - name: Upload results to CodeCov
         uses: codecov/codecov-action@v2
