@@ -9,8 +9,6 @@ jobs:
     
     env:
       CLICOLOR_FORCE: '0'
-      VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
-
 
     steps:
       
@@ -22,10 +20,6 @@ jobs:
     
       - name: Get latest CMake and Ninja
         uses: lukka/get-cmake@latest
-
-      # - name: List $RUNNER_WORKSPACE before build
-      #   run: find $RUNNER_WORKSPACE
-      #   shell: bash
 
       - name: Restore artifacts, or setup vcpkg for building artifacts
         uses: lukka/run-vcpkg@v10
@@ -39,6 +33,10 @@ jobs:
           # id must be checkout from a Git repo. It must not set if using a submodule
           # for vcpkg.
           vcpkgGitCommitId: '4474aba1e77be2d643eb684298b7d5479cad9a1f'
+
+      - name: List $RUNNER_WORKSPACE before build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
 
       - name: Run CMake consuming CMakePreset.json and vcpkg.json by mean of vcpkg.
         uses: lukka/run-cmake@v10
