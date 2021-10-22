@@ -4,6 +4,7 @@ Study dynamics of inertial active matter in potential flow (irrotational, incomp
 
 Author: Alec Glisman
 
+[![Build](https://codecov.io/gh/alec-glisman/bodies-in-potential-flow/branch/body_locater_quaternion/graph/badge.svg?token=3IUPDIX1D1)](https://codecov.io/gh/alec-glisman/bodies-in-potential-flow)
 [![Code Coverage](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml/badge.svg)](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml)
 
 ## Code documentation
