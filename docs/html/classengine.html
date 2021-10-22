@@ -103,7 +103,7 @@ $(document).ready(function(){initNavTree('classengine.html',''); initResizable()
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Manages the time integration of the simulation system as well as when to output data to GSD. </p>
 
-<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00046">46</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00052">52</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="engine_8hpp_source.html">engine.hpp</a>&gt;</code></p>
 <div class="dynheader">
@@ -220,7 +220,7 @@ Private Attributes</h2></td></tr>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;flush();</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="engine_8hpp_source.html#l00090">m_logFile</a>, <a class="el" href="engine_8hpp_source.html#l00091">m_logName</a>, <a class="el" href="engine_8hpp_source.html#l00085">m_potHydro</a>, <a class="el" href="engine_8hpp_source.html#l00087">m_progressBar</a>, <a class="el" href="engine_8hpp_source.html#l00086">m_rk4Integrator</a>, and <a class="el" href="engine_8hpp_source.html#l00084">m_system</a>.</p>
+<p class="reference">References <a class="el" href="engine_8hpp_source.html#l00096">m_logFile</a>, <a class="el" href="engine_8hpp_source.html#l00097">m_logName</a>, <a class="el" href="engine_8hpp_source.html#l00091">m_potHydro</a>, <a class="el" href="engine_8hpp_source.html#l00093">m_progressBar</a>, <a class="el" href="engine_8hpp_source.html#l00092">m_rk4Integrator</a>, and <a class="el" href="engine_8hpp_source.html#l00090">m_system</a>.</p>
 
 </div>
 </div>
@@ -248,7 +248,7 @@ Private Attributes</h2></td></tr>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    spdlog::drop(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>);</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="engine_8hpp_source.html#l00091">m_logName</a>.</p>
+<p class="reference">References <a class="el" href="engine_8hpp_source.html#l00097">m_logName</a>.</p>
 
 </div>
 </div>
@@ -323,7 +323,7 @@ Private Attributes</h2></td></tr>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    spdlog::get(<a class="code" href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">m_logName</a>)-&gt;flush();</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="engine_8cpp_source.html#l00104">integrate()</a>, <a class="el" href="engine_8hpp_source.html#l00091">m_logName</a>, <a class="el" href="engine_8hpp_source.html#l00095">m_num_physical_cores</a>, <a class="el" href="engine_8hpp_source.html#l00099">m_outputPercentile</a>, <a class="el" href="engine_8hpp_source.html#l00087">m_progressBar</a>, and <a class="el" href="engine_8hpp_source.html#l00084">m_system</a>.</p>
+<p class="reference">References <a class="el" href="engine_8cpp_source.html#l00104">integrate()</a>, <a class="el" href="engine_8hpp_source.html#l00097">m_logName</a>, <a class="el" href="engine_8hpp_source.html#l00101">m_num_physical_cores</a>, <a class="el" href="engine_8hpp_source.html#l00105">m_outputPercentile</a>, <a class="el" href="engine_8hpp_source.html#l00093">m_progressBar</a>, and <a class="el" href="engine_8hpp_source.html#l00090">m_system</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="test-simulation_8cpp_source.html#l00065">TEST_CASE()</a>.</p>
 <div class="dynheader">
@@ -376,7 +376,7 @@ Here is the caller graph for this function:</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <a class="code" href="classengine.html#ab42bae227e8d6bde5d5ebe226b1a99ac">m_rk4Integrator</a>-&gt;integrate(device);</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="engine_8hpp_source.html#l00086">m_rk4Integrator</a>.</p>
+<p class="reference">References <a class="el" href="engine_8hpp_source.html#l00092">m_rk4Integrator</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00051">run()</a>.</p>
 <div class="dynheader">
@@ -408,7 +408,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00084">84</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00090">90</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00007">engine()</a>, and <a class="el" href="engine_8cpp_source.html#l00051">run()</a>.</p>
 
@@ -434,7 +434,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00085">85</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00091">91</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00007">engine()</a>.</p>
 
@@ -460,7 +460,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00086">86</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00092">92</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00007">engine()</a>, and <a class="el" href="engine_8cpp_source.html#l00104">integrate()</a>.</p>
 
@@ -486,7 +486,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00087">87</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00093">93</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00007">engine()</a>, and <a class="el" href="engine_8cpp_source.html#l00051">run()</a>.</p>
 
@@ -512,7 +512,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00090">90</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00096">96</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00007">engine()</a>.</p>
 
@@ -538,7 +538,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00091">91</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00097">97</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00007">engine()</a>, <a class="el" href="engine_8cpp_source.html#l00051">run()</a>, and <a class="el" href="engine_8cpp_source.html#l00043">~engine()</a>.</p>
 
@@ -566,7 +566,7 @@ Here is the caller graph for this function:</div>
 
 <p>number of physical CPU cores to use in tensor calculations </p>
 
-<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00095">95</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00101">101</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00051">run()</a>.</p>
 
@@ -594,7 +594,7 @@ Here is the caller graph for this function:</div>
 
 <p>Percentage of simulation progress at which to output a GSD frame. </p>
 
-<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00099">99</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="engine_8hpp_source.html#l00105">105</a> of file <a class="el" href="engine_8hpp_source.html">engine.hpp</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="engine_8cpp_source.html#l00051">run()</a>.</p>
 
@@ -606,20 +606,20 @@ Here is the caller graph for this function:</div>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aclassengine_html_ab42bae227e8d6bde5d5ebe226b1a99ac"><div class="ttname"><a href="classengine.html#ab42bae227e8d6bde5d5ebe226b1a99ac">engine::m_rk4Integrator</a></div><div class="ttdeci">std::shared_ptr&lt; rungeKutta4 &gt; m_rk4Integrator</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00086">engine.hpp:86</a></div></div>
+<div class="ttc" id="aclassengine_html_ab42bae227e8d6bde5d5ebe226b1a99ac"><div class="ttname"><a href="classengine.html#ab42bae227e8d6bde5d5ebe226b1a99ac">engine::m_rk4Integrator</a></div><div class="ttdeci">std::shared_ptr&lt; rungeKutta4 &gt; m_rk4Integrator</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00092">engine.hpp:92</a></div></div>
 <div class="ttc" id="aclassengine_html_a5c9fba1e8b0611c00438c9ba8736e348"><div class="ttname"><a href="classengine.html#a5c9fba1e8b0611c00438c9ba8736e348">engine::integrate</a></div><div class="ttdeci">void integrate(Eigen::ThreadPoolDevice &amp;device)</div><div class="ttdoc">Updates the simulation framework 1 time step.</div><div class="ttdef"><b>Definition:</b> <a href="engine_8cpp_source.html#l00104">engine.cpp:104</a></div></div>
-<div class="ttc" id="aclassengine_html_a79e5e036684d522159ef64ac42576476"><div class="ttname"><a href="classengine.html#a79e5e036684d522159ef64ac42576476">engine::m_system</a></div><div class="ttdeci">std::shared_ptr&lt; systemData &gt; m_system</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00084">engine.hpp:84</a></div></div>
-<div class="ttc" id="aclassengine_html_adaf942d3d92c4d6a88358755fba6e7af"><div class="ttname"><a href="classengine.html#adaf942d3d92c4d6a88358755fba6e7af">engine::m_logFile</a></div><div class="ttdeci">std::string m_logFile</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00090">engine.hpp:90</a></div></div>
-<div class="ttc" id="aclassengine_html_a88541de1c141d7d2c77f08b062f56a91"><div class="ttname"><a href="classengine.html#a88541de1c141d7d2c77f08b062f56a91">engine::m_outputPercentile</a></div><div class="ttdeci">const double m_outputPercentile</div><div class="ttdoc">Percentage of simulation progress at which to output a GSD frame.</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00099">engine.hpp:99</a></div></div>
-<div class="ttc" id="aclassengine_html_a2bb2d3c900042df38e1a093ee21169d0"><div class="ttname"><a href="classengine.html#a2bb2d3c900042df38e1a093ee21169d0">engine::m_progressBar</a></div><div class="ttdeci">std::shared_ptr&lt; ProgressBar &gt; m_progressBar</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00087">engine.hpp:87</a></div></div>
-<div class="ttc" id="aclassengine_html_a6f7f54be0e646830f19eb105346eb7e5"><div class="ttname"><a href="classengine.html#a6f7f54be0e646830f19eb105346eb7e5">engine::m_potHydro</a></div><div class="ttdeci">std::shared_ptr&lt; potentialHydrodynamics &gt; m_potHydro</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00085">engine.hpp:85</a></div></div>
-<div class="ttc" id="aclassengine_html_a0e0b1453f9b5bc57e39695e31aa06d45"><div class="ttname"><a href="classengine.html#a0e0b1453f9b5bc57e39695e31aa06d45">engine::m_num_physical_cores</a></div><div class="ttdeci">const int m_num_physical_cores</div><div class="ttdoc">number of physical CPU cores to use in tensor calculations</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00095">engine.hpp:95</a></div></div>
-<div class="ttc" id="aclassengine_html_aa2ac00dd1a57e6016b84f6a2eb6d3b0d"><div class="ttname"><a href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">engine::m_logName</a></div><div class="ttdeci">const std::string m_logName</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00091">engine.hpp:91</a></div></div>
+<div class="ttc" id="aclassengine_html_a79e5e036684d522159ef64ac42576476"><div class="ttname"><a href="classengine.html#a79e5e036684d522159ef64ac42576476">engine::m_system</a></div><div class="ttdeci">std::shared_ptr&lt; systemData &gt; m_system</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00090">engine.hpp:90</a></div></div>
+<div class="ttc" id="aclassengine_html_adaf942d3d92c4d6a88358755fba6e7af"><div class="ttname"><a href="classengine.html#adaf942d3d92c4d6a88358755fba6e7af">engine::m_logFile</a></div><div class="ttdeci">std::string m_logFile</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00096">engine.hpp:96</a></div></div>
+<div class="ttc" id="aclassengine_html_a88541de1c141d7d2c77f08b062f56a91"><div class="ttname"><a href="classengine.html#a88541de1c141d7d2c77f08b062f56a91">engine::m_outputPercentile</a></div><div class="ttdeci">const double m_outputPercentile</div><div class="ttdoc">Percentage of simulation progress at which to output a GSD frame.</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00105">engine.hpp:105</a></div></div>
+<div class="ttc" id="aclassengine_html_a2bb2d3c900042df38e1a093ee21169d0"><div class="ttname"><a href="classengine.html#a2bb2d3c900042df38e1a093ee21169d0">engine::m_progressBar</a></div><div class="ttdeci">std::shared_ptr&lt; ProgressBar &gt; m_progressBar</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00093">engine.hpp:93</a></div></div>
+<div class="ttc" id="aclassengine_html_a6f7f54be0e646830f19eb105346eb7e5"><div class="ttname"><a href="classengine.html#a6f7f54be0e646830f19eb105346eb7e5">engine::m_potHydro</a></div><div class="ttdeci">std::shared_ptr&lt; potentialHydrodynamics &gt; m_potHydro</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00091">engine.hpp:91</a></div></div>
+<div class="ttc" id="aclassengine_html_a0e0b1453f9b5bc57e39695e31aa06d45"><div class="ttname"><a href="classengine.html#a0e0b1453f9b5bc57e39695e31aa06d45">engine::m_num_physical_cores</a></div><div class="ttdeci">const int m_num_physical_cores</div><div class="ttdoc">number of physical CPU cores to use in tensor calculations</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00101">engine.hpp:101</a></div></div>
+<div class="ttc" id="aclassengine_html_aa2ac00dd1a57e6016b84f6a2eb6d3b0d"><div class="ttname"><a href="classengine.html#aa2ac00dd1a57e6016b84f6a2eb6d3b0d">engine::m_logName</a></div><div class="ttdeci">const std::string m_logName</div><div class="ttdef"><b>Definition:</b> <a href="engine_8hpp_source.html#l00097">engine.hpp:97</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="classengine.html">engine</a></li>
-    <li class="footer">Generated on Thu Oct 21 2021 10:46:42 for Bodies in Potential Flow by
+    <li class="footer">Generated on Fri Oct 22 2021 08:02:12 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

@@ -97,6 +97,8 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="contents">
 <div class="textblock"><p>Study dynamics of inertial active matter in potential flow (irrotational, incompressible).</p>
 <p>Author: Alec Glisman</p>
+<p><a href="https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml"><object type="image/svg+xml" data="https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml/badge.svg" style="pointer-events: none;">Code Coverage</object></a> <a href="https://codecov.io/gh/alec-glisman/bodies-in-potential-flow"><object type="image/svg+xml" data="https://codecov.io/gh/alec-glisman/bodies-in-potential-flow/branch/body_locater_quaternion/graph/badge.svg?token=3IUPDIX1D1" style="pointer-events: none;">Build</object></a></p>
+<p><img src="docs/images/collinear_swimmer_white_background.png" alt="Collinear Swimmer" class="inline"/></p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Code documentation</h1>
 <p>Code is documented using <a href="https://www.doxygen.nl/index.html">Doxygen</a> and can be found in the [<code>docs</code>](docs) directory. Open the documentation locally via opening the <a href="docs/html/index.html">main index page</a>.</p>
@@ -144,19 +146,23 @@ Software tested</h2>
 </ul>
 <h2><a class="anchor" id="autotoc_md8"></a>
 Must install separately</h2>
+<h3><a class="anchor" id="autotoc_md9"></a>
+vcpkg</h3>
 <ul>
-<li><a href="https://www.boost.org/">Boost</a> (v1.71.0): All-purpose STL extension</li>
-<li><a href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html#gs.7owc4e">Intel MKL</a> (oneAPI v2021.1.1): Optimized mathematical instructions</li>
-<li><a href="https://www.openmp.org/">OpenMP</a> (4.5): Multi-platform shared-memory multiprocessing programming</li>
-<li><a href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/onetbb.html#gs.ds0y09">Intel TBB</a> (oneAPI v2021.1.1): Parallel computing on multi-core processors</li>
 <li><a href="https://gitlab.com/libeigen/eigen">Eigen3</a> (3.4.0): Linear algebra</li>
 <li><a href="https://github.com/gabime/spdlog">spdlog</a> (v1.9.1): Logging</li>
 <li><a href="https://github.com/catchorg/Catch2">Catch2</a> (v2.13.6): Unit testing</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md9"></a>
-Integrated into project</h2>
+<p>Manifest is found at base of repository and command <code>vcpkg/./vcpkg install</code> will manage installation. Note that the <a href="https://vcpkg.info/port/intel-mkl">vcpkg Intel MKL</a> will only verify MKL is installed and not install it on its own. Therefore, oneAPI must still be downloaded and installed manually.</p>
+<h3><a class="anchor" id="autotoc_md10"></a>
+Intel OneAPI</h3>
 <ul>
-<li><a href="https://github.com/glotzerlab/gsd">gsd</a> (v2.4.2): Simulation data output </li>
+<li><a href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html#gs.7owc4e">Intel MKL</a> (oneAPI v2021.1.1): Optimized mathematical instructions -<a href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/onetbb.html#gs.ds0y09">Intel TBB</a> (oneAPI v2021.1.1): Parallel computing on multi-core processors</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md11"></a>
+Included with compiler</h3>
+<ul>
+<li><a href="https://www.openmp.org/">OpenMP</a> (4.5): Multi-platform shared-memory multiprocessing programming </li>
 </ul>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
@@ -164,7 +170,7 @@ Integrated into project</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Oct 21 2021 10:46:42 for Bodies in Potential Flow by
+    <li class="footer">Generated on Fri Oct 22 2021 08:02:13 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

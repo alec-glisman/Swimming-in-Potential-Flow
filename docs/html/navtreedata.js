@@ -31,54 +31,47 @@ var NAVTREE =
       [ "Modify repository for other potential flow systems", "index.html#autotoc_md5", null ],
       [ "External dependencies", "index.html#autotoc_md6", [
         [ "Software tested", "index.html#autotoc_md7", null ],
-        [ "Must install separately", "index.html#autotoc_md8", null ],
-        [ "Integrated into project", "index.html#autotoc_md9", null ]
+        [ "Must install separately", "index.html#autotoc_md8", [
+          [ "vcpkg", "index.html#autotoc_md9", null ],
+          [ "Intel OneAPI", "index.html#autotoc_md10", null ],
+          [ "Included with compiler", "index.html#autotoc_md11", null ]
+        ] ]
       ] ]
     ] ],
     [ "Directory: requirements", "md_requirements_README.html", [
-      [ "Subdirectory: C++", "md_requirements_README.html#autotoc_md11", null ],
-      [ "Subdirectory: Perl", "md_requirements_README.html#autotoc_md12", null ],
-      [ "Subdirectory: Python", "md_requirements_README.html#autotoc_md13", null ]
+      [ "Subdirectory: C++", "md_requirements_README.html#autotoc_md13", null ],
+      [ "Subdirectory: Perl", "md_requirements_README.html#autotoc_md14", null ],
+      [ "Subdirectory: Python", "md_requirements_README.html#autotoc_md15", null ]
     ] ],
     [ "Directory: src", "md_src_README.html", [
-      [ "Subdirectory: cuda_helpers", "md_src_README.html#autotoc_md16", null ],
-      [ "Subdirectory: data_io", "md_src_README.html#autotoc_md18", [
-        [ "Class: gsd", "md_src_README.html#autotoc_md19", null ],
-        [ "Class: GSDUtil", "md_src_README.html#autotoc_md20", null ]
+      [ "Subdirectory: cuda_helpers", "md_src_README.html#autotoc_md18", null ],
+      [ "Subdirectory: data_io", "md_src_README.html#autotoc_md20", [
+        [ "Class: gsd", "md_src_README.html#autotoc_md21", null ],
+        [ "Class: GSDUtil", "md_src_README.html#autotoc_md22", null ]
       ] ],
-      [ "Subdirectory: forces", "md_src_README.html#autotoc_md22", [
-        [ "Class: potentialHydrodynamics", "md_src_README.html#autotoc_md23", null ]
+      [ "Subdirectory: forces", "md_src_README.html#autotoc_md24", [
+        [ "Class: potentialHydrodynamics", "md_src_README.html#autotoc_md25", null ]
       ] ],
-      [ "Subdirectory: integrators", "md_src_README.html#autotoc_md25", [
-        [ "Class: rungeKutta4", "md_src_README.html#autotoc_md26", null ]
+      [ "Subdirectory: integrators", "md_src_README.html#autotoc_md27", [
+        [ "Class: rungeKutta4", "md_src_README.html#autotoc_md28", null ]
       ] ],
-      [ "Subdirectory: simulation_system", "md_src_README.html#autotoc_md28", [
-        [ "Class: engine", "md_src_README.html#autotoc_md29", null ],
-        [ "Class: progressBar", "md_src_README.html#autotoc_md30", null ],
-        [ "Class: systemData", "md_src_README.html#autotoc_md31", null ]
+      [ "Subdirectory: simulation_system", "md_src_README.html#autotoc_md30", [
+        [ "Class: engine", "md_src_README.html#autotoc_md31", null ],
+        [ "Class: progressBar", "md_src_README.html#autotoc_md32", null ],
+        [ "Class: systemData", "md_src_README.html#autotoc_md33", null ]
       ] ],
-      [ "Files", "md_src_README.html#autotoc_md33", null ]
+      [ "Files", "md_src_README.html#autotoc_md35", null ]
     ] ],
     [ "Directory: test", "md_test_README.html", null ],
     [ "Directory: python", "md_python_README.html", [
-      [ "Subdirectory: analysis", "md_python_README.html#autotoc_md36", null ],
-      [ "Subdirectory: initial_configurations", "md_python_README.html#autotoc_md37", null ],
-      [ "Files", "md_python_README.html#autotoc_md38", null ]
+      [ "Subdirectory: analysis", "md_python_README.html#autotoc_md38", null ],
+      [ "Subdirectory: initial_configurations", "md_python_README.html#autotoc_md39", null ],
+      [ "Files", "md_python_README.html#autotoc_md40", null ]
     ] ],
     [ "Directory: profile", "md_profile_README.html", [
-      [ "Subdirectory (submodule): <a href=\"https://github.com/brendangregg/FlameGraph\">FlameGraph</a>", "md_profile_README.html#autotoc_md40", null ],
-      [ "Subdirectory: Linux", "md_profile_README.html#autotoc_md41", null ],
-      [ "Subdirectory: MacOS", "md_profile_README.html#autotoc_md42", null ]
-    ] ],
-    [ "Project Development Progress", "md_TODO.html", [
-      [ "Get project running", "md_TODO.html#autotoc_md44", null ],
-      [ "Updated hydrodynamics", "md_TODO.html#autotoc_md45", null ],
-      [ "Python modules", "md_TODO.html#autotoc_md46", null ],
-      [ "Code coverage", "md_TODO.html#autotoc_md47", null ],
-      [ "Tensor module optimization", "md_TODO.html#autotoc_md48", null ],
-      [ "Bugs to Fix", "md_TODO.html#autotoc_md49", null ],
-      [ "Verifications", "md_TODO.html#autotoc_md50", null ],
-      [ "Additional features", "md_TODO.html#autotoc_md51", null ]
+      [ "Subdirectory (submodule): <a href=\"https://github.com/brendangregg/FlameGraph\">FlameGraph</a>", "md_profile_README.html#autotoc_md42", null ],
+      [ "Subdirectory: Linux", "md_profile_README.html#autotoc_md43", null ],
+      [ "Subdirectory: MacOS", "md_profile_README.html#autotoc_md44", null ]
     ] ],
     [ "Todo List", "todo.html", null ],
     [ "Altering Swimmer Design List", "review.html", null ],
@@ -92,8 +85,8 @@ var NAVTREEINDEX =
 [
 "GSDUtilPy_8py.html",
 "classsystemData.html#ae2e0f3a0542b6caffe9c62557de23285",
-"helper__math_8h.html#a26c49763a45d00cd11d802e00c52ae30",
-"helper__multiprocess_8h.html#a87c9efdf573e374c279d7d3dca3a6c6b"
+"helper__math_8h.html#a2778db976af87b1e1e3222b716806de7",
+"helper__multiprocess_8h.html#a963c63f1d4be099ba2afec1e8d4af4b9"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
