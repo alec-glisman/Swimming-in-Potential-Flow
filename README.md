@@ -69,13 +69,13 @@ Further information found in [`requirements`](requirements/README.md) directory 
 
 ### Software tested
 
-- ZSH >= v5.8
-- Intel oneAPI >= v2021.1.1
-- CUDA >= v11.3
-- CMake >= v3.16.3
-- GCC >= v11.1.0
-- Python (Miniconda3) >= v3.9.5
-- Perl >= v5.30.0
+- ZSH v5.8
+- Intel oneAPI v2021.1.1
+- CUDA v11.3
+- CMake v3.16.3
+- GCC v11.1.0
+- Python (Miniconda3) v3.9.5
+- Perl v5.30.0
 
 ### Must install separately
 
@@ -91,7 +91,8 @@ Therefore, oneAPI must still be downloaded and installed manually.
 
 #### Intel OneAPI
 
-- [Intel MKL](https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html#gs.7owc4e) (oneAPI v2021.1.1): Optimized mathematical instructions -[Intel TBB](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onetbb.html#gs.ds0y09) (oneAPI v2021.1.1): Parallel computing on multi-core processors
+- [Intel MKL](https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html#gs.7owc4e) (oneAPI v2021.1.1): Optimized mathematical instructions
+- [Intel TBB](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onetbb.html#gs.ds0y09) (oneAPI v2021.1.1): Parallel computing on multi-core processors
 
 #### Included with compiler
 
