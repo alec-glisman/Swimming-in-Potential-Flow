@@ -57,9 +57,13 @@ jobs:
           # This is the name of the CMakePresets.json's configuration to build the project.
           buildPreset: 'default'
 
+      - name: List $RUNNER_WORKSPACE after build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+
       - name: Run tests
         run: "ninja coverage"
-        working-directory: code/build
+        working-directory: '${{ github.workspace }}/code/build'
 
       - name: Upload results to CodeCov
         uses: codecov/codecov-action@v2
