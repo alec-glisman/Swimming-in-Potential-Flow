@@ -155,3 +155,12 @@ testSystemData::testEMatrix()
 
     return num_failed_tests;
 }
+
+int
+testSystemData::testRigidBodyMotionTensors()
+{
+    const int num_tests{4};
+    int       num_failed_tests{0};
+
+    return num_failed_tests;
+}

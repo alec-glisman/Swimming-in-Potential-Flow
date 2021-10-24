@@ -57,6 +57,14 @@ class testSystemData
     int
     testEMatrix();
 
+    /**
+     * @brief Test `systemData::rigidBodyMotionTensors()`
+     *
+     * @return int Number of failed tests
+     */
+    int
+    testRigidBodyMotionTensors();
+
   private:
 };
 
