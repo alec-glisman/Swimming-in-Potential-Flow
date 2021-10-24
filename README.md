@@ -5,8 +5,8 @@ Study dynamics of inertial active matter in potential flow (irrotational, incomp
 Author: [Alec Glisman](https://github.com/alec-glisman)
 
 [![CodeFactor](https://www.codefactor.io/repository/github/alec-glisman/bodies-in-potential-flow/badge?s=20f98d924642ab5cf3e3379e8ac68ff4a01876b2)](https://www.codefactor.io/repository/github/alec-glisman/bodies-in-potential-flow)
-[![Code Coverage](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml/badge.svg)](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml)
-[![Build](https://codecov.io/gh/alec-glisman/bodies-in-potential-flow/branch/body_locater_quaternion/graph/badge.svg?token=3IUPDIX1D1)](https://codecov.io/gh/alec-glisman/bodies-in-potential-flow)
+[![Build](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml/badge.svg)](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/alec-glisman/bodies-in-potential-flow/branch/master/graph/badge.svg?token=3IUPDIX1D1)](https://codecov.io/gh/alec-glisman/bodies-in-potential-flow)
 
 ![Collinear Swimmer](docs/images/collinear_swimmer_white_background.png)
 
