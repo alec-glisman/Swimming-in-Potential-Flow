@@ -138,7 +138,7 @@ rungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::Vec
         udwadiaKalaba(acc_real_body);
 
         // update acceleration components using constraints
-        acc.segment(7 * img_body_start, 7 * img_body_start).noalias() = acc_real_body;
+        acc.segment(0, 7 * img_body_start).noalias() = acc_real_body;
         imageBodyAcc(acc);
     }
     else
