@@ -132,13 +132,13 @@ rungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::Vec
     if (m_system->imageSystem())
     {
         // only update Udwadia system for "real" system not image dipoles
-        const int       img_body_start = m_system->numBodies() / 2;
-        Eigen::VectorXd acc_real_body  = acc.segment(0, 7 * img_body_start);
+        const int       num_img_bodies = m_system->numBodies() / 2;
+        Eigen::VectorXd acc_real_body  = acc.segment(0, 7 * num_img_bodies);
 
         udwadiaKalaba(acc_real_body);
 
         // update acceleration components using constraints
-        acc.segment(0, 7 * img_body_start).noalias() = acc_real_body;
+        acc.segment(0, 7 * num_img_bodies).noalias() = acc_real_body;
         imageBodyAcc(acc);
     }
     else
