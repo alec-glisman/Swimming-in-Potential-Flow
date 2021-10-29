@@ -214,8 +214,6 @@ rungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
      * Q is the forces present in unconstrained system
      * Q_con is the generalized constraint forces */
 
-    Eigen::IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
-
     int body_dof = m_system->numBodies(); // = m
 
     if (m_system->imageSystem())
@@ -277,9 +275,12 @@ rungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
     Eigen::VectorXd Q_total = Q; // [7m, 1]
     Q_total.noalias() += Q_con;
     /// @todo Try changing llt() decomp into the decomp already done for eigendecomp
-    acc.noalias() = M_eff.llt().solve(Q_total);
+    acc.noalias() = M_eff_inv * Q_total;
 
+    // debugging print statements
+    Eigen::IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
     std::cout << "M_eff:\n" << M_eff.format(CleanFmt) << "\n\n" << std::endl;
+    std::cout << "M_eff_inv:\n" << M_eff_inv.format(CleanFmt) << "\n\n" << std::endl;
     std::cout << "K:\n" << K.format(CleanFmt) << "\n\n" << std::endl;
     std::cout << "udwadiaA:\n" << m_system->udwadiaA().format(CleanFmt) << "\n\n" << std::endl;
     std::cout << "udwadiaB:\n" << m_system->udwadiaB().format(CleanFmt) << "\n\n" << std::endl;
