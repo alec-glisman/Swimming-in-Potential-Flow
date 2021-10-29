@@ -51,11 +51,11 @@
             // Resolved by CMake Tools:
             "cwd": "${workspaceFolder}",
             "preLaunchTask": "Debug: build",
-            "program": "${workspaceFolder}/build_debug/src/./bodies_in_potential_flow",
+            "program": "${workspaceFolder}/build/debug/src/./bodies_in_potential_flow",
             "stopAtEntry": false,
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerArgs": "--args \"${workspaceFolder}/build_debug/src/./bodies_in_potential_flow\" test/input/collinear_swimmer_wall/initial_frame_dt1e-6_Z-height6.gsd temp/output",
+            "miDebuggerArgs": "--args \"${workspaceFolder}/build/debug/src/./bodies_in_potential_flow\" test/input/collinear_swimmer_wall/initial_frame_dt1e-6_Z-height6.gsd temp/output",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -76,7 +76,7 @@
             // Resolved by CMake Tools:
             "cwd": "${workspaceFolder}",
             "preLaunchTask": "Debug: build",
-            "program": "${workspaceFolder}/build_debug/test/./tests",
+            "program": "${workspaceFolder}/build/debug/test/./tests",
             "stopAtEntry": false,
             "externalConsole": false,
             "MIMode": "gdb",
@@ -100,7 +100,7 @@
             // Resolved by CMake Tools:
             "cwd": "${workspaceFolder}",
             "preLaunchTask": "Debug: build",
-            "program": "${workspaceFolder}/build_debug/src/bodies_in_potential_flow",
+            "program": "${workspaceFolder}/build/debug/src/bodies_in_potential_flow",
             "args": [
                 "${workspaceFolder}/test/input/collinear_swimmer_wall/initial_frame_dt1e-6_Z-height6.gsd",
                 "${workspaceFolder}/temp/output"
@@ -122,7 +122,7 @@
             // Resolved by CMake Tools:
             "cwd": "${workspaceFolder}",
             "preLaunchTask": "Debug: build",
-            "program": "${workspaceFolder}/build_debug/test/tests",
+            "program": "${workspaceFolder}/build/debug/test/tests",
             "args": [],
             "stopAtEntry": false,
             "externalConsole": false,
