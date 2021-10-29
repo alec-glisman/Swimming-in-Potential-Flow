@@ -153,12 +153,12 @@ rungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::Vec
 void
 rungeKutta4::imageBodyPosVel(Eigen::VectorXd& pos, Eigen::VectorXd& vel)
 {
-    const int img_body_start = m_system->numBodies() / 2;
+    const int num_img_bodies = m_system->numBodies() / 2;
 
-    for (int img_body_id = img_body_start; img_body_id < m_system->numBodies(); img_body_id++)
+    for (int img_body_id = num_img_bodies; img_body_id < m_system->numBodies(); img_body_id++)
     {
         // indices
-        const int body_id_7{7 * (img_body_id - img_body_start)};
+        const int body_id_7{7 * (img_body_id - num_img_bodies)};
         const int img_body_id_7{7 * img_body_id};
 
         /* ANCHOR: Position image system: mirror image about xy-plane (transform z --> -z) */
@@ -185,12 +185,12 @@ rungeKutta4::imageBodyPosVel(Eigen::VectorXd& pos, Eigen::VectorXd& vel)
 void
 rungeKutta4::imageBodyAcc(Eigen::VectorXd& acc)
 {
-    const int img_body_start = m_system->numBodies() / 2;
+    const int num_img_bodies = m_system->numBodies() / 2;
 
-    for (int img_body_id = img_body_start; img_body_id < m_system->numBodies(); img_body_id++)
+    for (int img_body_id = num_img_bodies; img_body_id < m_system->numBodies(); img_body_id++)
     {
         // indices
-        const int body_id_7{7 * (img_body_id - img_body_start)};
+        const int body_id_7{7 * (img_body_id - num_img_bodies)};
         const int img_body_id_7{7 * img_body_id};
 
         /* ANCHOR: Acceleration image system: invert x-y components to have image dipoles  */
