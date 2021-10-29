@@ -275,7 +275,7 @@ rungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
     Eigen::VectorXd Q_total = Q; // [7m, 1]
     Q_total.noalias() += Q_con;
     /// @todo Try changing llt() decomp into the decomp already done for eigendecomp
-    acc.noalias() = M_eff_inv * Q_total;
+    acc.noalias() = M_eff_inv * Q_total; // [7m, 1]
 
     // debugging print statements
     Eigen::IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
