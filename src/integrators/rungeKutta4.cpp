@@ -214,7 +214,9 @@ rungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
      * Q is the forces present in unconstrained system
      * Q_con is the generalized constraint forces */
 
-    int body_dof = m_system->numBodies();
+    Eigen::IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
+
+    int body_dof = m_system->numBodies(); // = m
 
     if (m_system->imageSystem())
     {
@@ -224,7 +226,7 @@ rungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
     const int body_dof_7{body_dof * 7};
 
     // calculate Q
-    Eigen::VectorXd Q = Eigen::VectorXd::Zero(body_dof_7);
+    Eigen::VectorXd Q = Eigen::VectorXd::Zero(body_dof_7); // [7m, 1]
 
     // hydrodynamic force
     if (m_system->fluidDensity() > 0)
@@ -237,7 +239,7 @@ rungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
      * Linear proportionality: K = M_eff^{1/2} * (A * M_eff^{-1/2})^{+};
      * + is Moore-Penrose inverse */
 
-    const Eigen::MatrixXd M_eff = m_potHydro->mTilde().block(0, 0, body_dof_7, body_dof_7);
+    const Eigen::MatrixXd M_eff = m_potHydro->mTilde().block(0, 0, body_dof_7, body_dof_7); // [7m, 7m]
 
     // calculate M^{1/2} & M^{-1/2}
     Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> eigensolver(M_eff);
@@ -247,25 +249,39 @@ rungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
                                       m_system->t());
         throw std::runtime_error("Computing eigendecomposition of effective total mass matrix failed");
     }
-    const Eigen::MatrixXd M_eff_halfPower         = eigensolver.operatorSqrt();
-    const Eigen::MatrixXd M_eff_negativeHalfPower = eigensolver.operatorInverseSqrt();
+    const Eigen::MatrixXd M_eff_halfPower         = eigensolver.operatorSqrt();        // [7m, 7m]
+    const Eigen::MatrixXd M_eff_negativeHalfPower = eigensolver.operatorInverseSqrt(); // [7m, 7m]
+
+    // verify M is positive semi-definite
+#if !defined(NDEBUG)
+    if (!M_eff.isApprox(M_eff.transpose()) || (eigensolver.eigenvalues().array() < 0.0).any())
+    {
+        throw std::runtime_error("M_eff is non semi-positive definite matrix!");
+    }
+#endif
 
     // calculate K
-    const Eigen::MatrixXd AM_nHalf      = m_system->udwadiaA() * M_eff_negativeHalfPower;
-    const Eigen::MatrixXd AM_nHalf_pInv = AM_nHalf.completeOrthogonalDecomposition().pseudoInverse();
-    const Eigen::MatrixXd K             = M_eff_halfPower * AM_nHalf_pInv;
+    const Eigen::MatrixXd AM_nHalf      = m_system->udwadiaA() * M_eff_negativeHalfPower; // [c, 7m] = [c, 7m] [7m, 7m]
+    const Eigen::MatrixXd AM_nHalf_pInv = AM_nHalf.completeOrthogonalDecomposition().pseudoInverse(); // [7m, c]
+    const Eigen::MatrixXd K             = M_eff_halfPower * AM_nHalf_pInv;                            // [7m, c]
 
     // calculate Q_con
-    const Eigen::MatrixXd M_eff_inv   = M_eff.inverse();
-    const Eigen::MatrixXd M_eff_invQ  = M_eff_inv * Q;
-    const Eigen::VectorXd AM_eff_invQ = m_system->udwadiaA() * M_eff_invQ;
-    Eigen::VectorXd       b_tilde     = m_system->udwadiaB();
+    const Eigen::MatrixXd M_eff_inv   = M_eff.inverse();                   // [7m, 7m]
+    const Eigen::MatrixXd M_eff_invQ  = M_eff_inv * Q;                     // [7m, 1]
+    const Eigen::VectorXd AM_eff_invQ = m_system->udwadiaA() * M_eff_invQ; // [c, 1] = [c, 7m] [7m, 1]
+    Eigen::VectorXd       b_tilde     = m_system->udwadiaB();              // [c, 1]
     b_tilde.noalias() -= AM_eff_invQ;
-    const Eigen::VectorXd Q_con = K * b_tilde;
+    const Eigen::VectorXd Q_con = K * b_tilde; // [7m, 1] = [7m, c] [c, 1]
 
     // calculate accelerations
-    Eigen::VectorXd Q_total = Q;
+    Eigen::VectorXd Q_total = Q; // [7m, 1]
     Q_total.noalias() += Q_con;
     /// @todo Try changing llt() decomp into the decomp already done for eigendecomp
     acc.noalias() = M_eff.llt().solve(Q_total);
+
+    std::cout << "M_eff:\n" << M_eff.format(CleanFmt) << "\n\n" << std::endl;
+    std::cout << "K:\n" << K.format(CleanFmt) << "\n\n" << std::endl;
+    std::cout << "udwadiaA:\n" << m_system->udwadiaA().format(CleanFmt) << "\n\n" << std::endl;
+    std::cout << "udwadiaB:\n" << m_system->udwadiaB().format(CleanFmt) << "\n\n" << std::endl;
+    std::cout << "acc:\n" << acc.format(CleanFmt) << "\n\n" << std::endl;
 }
