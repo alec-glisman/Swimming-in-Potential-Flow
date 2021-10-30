@@ -10,6 +10,10 @@ Author: [Alec Glisman](https://github.com/alec-glisman)
 
 ![Collinear Swimmer](docs/images/collinear_swimmer_white_background.png)
 
+## Recent activity
+
+<!--START_SECTION:activity-->
+
 ## Code documentation
 
 Code is documented using [Doxygen](https://www.doxygen.nl/index.html) and can be found in the [`docs`](docs) directory.
