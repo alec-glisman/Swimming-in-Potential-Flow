@@ -2,11 +2,11 @@
 
 ![Collinear Swimmer](docs/images/collinear_swimmer_white_background.png)
 
-**About:** Study dynamics of inertial active matter in potential flow (irrotational, incompressible).
-**Authors:** [Alec Glisman](https://github.com/alec-glisman)
+**About:** Study dynamics of inertial active matter in potential flow (irrotational, incompressible).  
+**Authors:** [Alec Glisman](https://github.com/alec-glisman)  
 **GitHub actions:**
 [![Code Linting](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/code-linting.yml/badge.svg)](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/code-linting.yml)
-[![Build](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml/badge.svg)](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml)
+[![Build](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml/badge.svg)](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml)  
 **Third-party services:**
 [![CodeFactor](https://www.codefactor.io/repository/github/alec-glisman/bodies-in-potential-flow/badge?s=20f98d924642ab5cf3e3379e8ac68ff4a01876b2)](https://www.codefactor.io/repository/github/alec-glisman/bodies-in-potential-flow)
 [![codecov](https://codecov.io/gh/alec-glisman/bodies-in-potential-flow/branch/master/graph/badge.svg?token=3IUPDIX1D1)](https://codecov.io/gh/alec-glisman/bodies-in-potential-flow)
