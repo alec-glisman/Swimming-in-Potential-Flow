@@ -124,17 +124,17 @@ systemData::initializeData()
     m_Udwadia_b = Eigen::VectorXd::Zero(m_num_constraints);
 
     // initialize rigid body motion matrices
-    m_rbm_conn             = Eigen::MatrixXd::Zero(6 * m_num_bodies, 3 * m_num_particles);
-    m_psi_conv_quat_ang    = Eigen::MatrixXd::Zero(6 * m_num_bodies, 7 * m_num_bodies);
-    m_rbm_conn_T_quat      = Eigen::MatrixXd::Zero(3 * m_num_particles, 7 * m_num_bodies);
-    m_tens_rbm_conn_T_quat = Eigen::Tensor<double, 2>(3 * m_num_particles, 7 * m_num_bodies);
+    m_rbm_conn             = Eigen::MatrixXd::Zero(m6, n6);
+    m_psi_conv_quat_ang    = Eigen::MatrixXd::Zero(m6, m7);
+    m_rbm_conn_T_quat      = Eigen::MatrixXd::Zero(n6, m7);
+    m_tens_rbm_conn_T_quat = Eigen::Tensor<double, 2>(n6, m7);
     m_tens_rbm_conn_T_quat.setZero();
 
     // initialize gradient matrices
-    m_conv_body_2_part_dof      = Eigen::MatrixXd::Zero(7 * m_num_bodies, 3 * m_num_particles);
-    m_tens_conv_body_2_part_dof = Eigen::Tensor<double, 2>(7 * m_num_bodies, 3 * m_num_particles);
+    m_conv_body_2_part_dof      = Eigen::MatrixXd::Zero(m7, n6);
+    m_tens_conv_body_2_part_dof = Eigen::Tensor<double, 2>(m7, n6);
     m_tens_conv_body_2_part_dof.setZero();
-    m_rbm_conn_T_quat_grad = Eigen::Tensor<double, 3>(3 * m_num_particles, 7 * m_num_bodies, 7 * m_num_bodies);
+    m_rbm_conn_T_quat_grad = Eigen::Tensor<double, 3>(n6, m7, m7);
     m_rbm_conn_T_quat_grad.setZero();
 
     // Set initial configuration orientation
