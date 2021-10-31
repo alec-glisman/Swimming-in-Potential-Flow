@@ -399,24 +399,24 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     /// (3N x 1) (linear) articulation positions of all particles
     Eigen::VectorXd m_positions_particles_articulation;
-    /// (3N x 1) (linear) articulation velocities of all particles
+    /// (6N x 1) (linear/angular) articulation velocities of all particles
     Eigen::VectorXd m_velocities_particles_articulation;
-    /// (3N x 1) (linear) articulation accelerations of all particles
+    /// (6N x 1) (linear/angular) articulation accelerations of all particles
     Eigen::VectorXd m_accelerations_particles_articulation;
 
     /* ANCHOR: rigid body motion tensors */
-    /// (6M x 3N) @f$ \boldsymbol{\Sigma} @f$ rigid body motion connectivity tensor
+    /// (6M x 6N) @f$ \boldsymbol{\Sigma} @f$ rigid body motion connectivity tensor
     Eigen::MatrixXd m_rbm_conn;
     /// (6M x 7M) @f$ \boldsymbol{\Psi} @f$ converts linear/quaternion body velocity D.o.F. to linear/angular
     /// velocity D.o.F.
     Eigen::MatrixXd m_psi_conv_quat_ang;
-    /// (3N x 7M) @f$ \boldsymbol{C} @f$ converts linear/quaternion body velocity D.o.F. to linear particle
+    /// (6N x 7M) @f$ \boldsymbol{C} @f$ converts linear/quaternion body velocity D.o.F. to linear particle
     /// velocities (NOTE: this was \f$ \boldsymbol{A} \f$ in written work)
     Eigen::MatrixXd m_rbm_conn_T_quat;
 
-    /// (3N x 7M) tensor version of `m_rbm_conn_T_quat`
+    /// (6N x 7M) tensor version of `m_rbm_conn_T_quat`
     Eigen::Tensor<double, 2> m_tens_rbm_conn_T_quat;
-    /// (3N x 7M x 7M) @f$ \nabla_{\xi} \boldsymbol{C} @f$
+    /// (6N x 7M x 7M) @f$ \nabla_{\xi} \boldsymbol{C} @f$
     Eigen::Tensor<double, 3> m_rbm_conn_T_quat_grad;
 
     /// (7M x 3N) converts particle position D.o.F. to body position/quaternion D.o.F. (NOTE: this was
