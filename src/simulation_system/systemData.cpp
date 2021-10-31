@@ -104,12 +104,20 @@ systemData::initializeData()
     assert(m_particle_group_id(0) == 0 && "Particle 0 must belong to group 0");
     assert(m_particle_group_id(m_num_particles - 1) == m_num_bodies - 1 && "Particle N must belong to group N");
 
+    // tensor lengths
+    const int n3{3 * m_num_particles};
+    const int n4{4 * m_num_particles};
+    const int n6{6 * m_num_particles};
+
+    const int m6{6 * m_num_bodies};
+    const int m7{7 * m_num_bodies};
+
     // initialize kinematic vectors
-    m_orientations_particles                     = Eigen::VectorXd::Zero(3 * m_num_particles);
-    m_positions_particles_articulation_init_norm = Eigen::VectorXd::Zero(3 * m_num_particles);
-    m_positions_particles_articulation           = Eigen::VectorXd::Zero(3 * m_num_particles);
-    m_velocities_particles_articulation          = Eigen::VectorXd::Zero(3 * m_num_particles);
-    m_accelerations_particles_articulation       = Eigen::VectorXd::Zero(3 * m_num_particles);
+    m_orientations_particles                     = Eigen::VectorXd::Zero(n3);
+    m_positions_particles_articulation_init_norm = Eigen::VectorXd::Zero(n3);
+    m_positions_particles_articulation           = Eigen::VectorXd::Zero(n3);
+    m_velocities_particles_articulation          = Eigen::VectorXd::Zero(n6);
+    m_accelerations_particles_articulation       = Eigen::VectorXd::Zero(n6);
 
     // initialize constraint matrices
     m_Udwadia_A = Eigen::MatrixXd::Zero(m_num_constraints, m_num_DoF + m_num_constraints);
