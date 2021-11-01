@@ -151,6 +151,8 @@ systemData::initializeData()
         const int particle_id_3{3 * particle_id};
         const int body_id_7{7 * m_particle_group_id(particle_id)};
 
+        /// @todo: also load data from frame0 of GSD for initial positions so that simulations can continue from
+        /// previous GSD
         const Eigen::Vector3d disp =
             m_positions_particles.segment<3>(particle_id_3) - m_positions_bodies.segment<3>(body_id_7);
 
