@@ -153,6 +153,7 @@ systemData::initializeData()
 
         /// @todo: also load data from frame0 of GSD for initial positions so that simulations can continue from
         /// previous GSD
+        /// @todo: add a check that the first frame's unit quaternions are all identity quaternions (1, 0, 0, 0)^T
         const Eigen::Vector3d disp =
             m_positions_particles.segment<3>(particle_id_3) - m_positions_bodies.segment<3>(body_id_7);
 
