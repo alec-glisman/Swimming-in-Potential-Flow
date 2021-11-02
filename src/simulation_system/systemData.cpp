@@ -41,15 +41,13 @@ systemData::initializeData()
 
     // initialize D.o.F. parameters
     spdlog::get(m_logName)->info("Setting D.o.F. parameters");
+    m_num_DoF         = 6 * m_num_bodies; // D.o.F. are linear and angular positions of body centers
+    m_num_constraints = m_num_bodies;     // 1 unit quaternion constraint per body
+
     if (m_image_system)
     {
-        m_num_DoF         = 6 * (m_num_bodies / 2);
-        m_num_constraints = (m_num_bodies / 2);
-    }
-    else
-    {
-        m_num_DoF         = 6 * m_num_bodies; // D.o.F. are linear and angular positions of body centers
-        m_num_constraints = m_num_bodies;     // 1 unit quaternion constraint per body
+        m_num_DoF /= 2;
+        m_num_constraints /= 2;
     }
 
     spdlog::get(m_logName)->info("Degrees of freedom: {0}", m_num_DoF);
