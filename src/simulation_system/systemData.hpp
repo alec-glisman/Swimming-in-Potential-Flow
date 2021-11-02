@@ -384,9 +384,9 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     /// (3N x 1) (linear) positions of all particles
     Eigen::VectorXd m_positions_particles;
-    /// (3N x 1) (linear) velocities of all particles
+    /// (6N x 1) (linear/angular) velocities of all particles
     Eigen::VectorXd m_velocities_particles;
-    /// (3N x 1) (linear) accelerations of all particles
+    /// (6N x 1) (linear/angular) accelerations of all particles
     Eigen::VectorXd m_accelerations_particles;
 
     /// (3N x 1) orientations of all particles

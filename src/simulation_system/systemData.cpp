@@ -693,22 +693,22 @@ void
 systemData::convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device)
 {
     /* ANCHOR: Convert velocity D.o.F. */
-    m_velocities_particles.noalias() = m_zeta * m_velocities_bodies;
+    m_velocities_particles.noalias() = m_zeta.transpose() * m_velocities_bodies;
     m_velocities_particles.noalias() += m_velocities_particles_articulation;
 
     /* ANCHOR: Convert acceleration D.o.F. */
 
     // Eigen::Tensor contraction indices
     const Eigen::array<Eigen::IndexPair<int>, 0> outer_product   = {}; // no contractions
-    const Eigen::array<Eigen::IndexPair<int>, 2> contract_ijk_jk = {
-        Eigen::IndexPair<int>(1, 0), Eigen::IndexPair<int>(2, 1)}; // {i j k}, {j k} --> {i}
+    const Eigen::array<Eigen::IndexPair<int>, 2> contract_jik_jk = {
+        Eigen::IndexPair<int>(0, 0), Eigen::IndexPair<int>(2, 1)}; // {j i k}, {j k} --> {i}
 
-    const Eigen::Tensor<double, 1> xi    = TensorCast(m_velocities_bodies);
-    const Eigen::Tensor<double, 2> xi_xi = xi.contract(xi, outer_product);
+    const Eigen::Tensor<double, 1> xi    = TensorCast(m_velocities_bodies); // (7M x 1)
+    const Eigen::Tensor<double, 2> xi_xi = xi.contract(xi, outer_product);  // (7M x 7M)
 
-    Eigen::Tensor<double, 1> velocities_rbm_particles = Eigen::Tensor<double, 1>(3 * m_num_particles);
-    velocities_rbm_particles.device(device)           = m_tens_zeta_grad.contract(xi_xi, contract_ijk_jk);
+    Eigen::Tensor<double, 1> velocities_rbm_particles = Eigen::Tensor<double, 1>(6 * m_num_particles); // (6N x 1)
+    velocities_rbm_particles.device(device)           = m_tens_zeta_grad.contract(xi_xi, contract_jik_jk);
 
-    m_accelerations_bodies.noalias() = MatrixCast(velocities_rbm_particles, 3 * m_num_particles, 1, device);
-    m_accelerations_bodies.noalias() += m_accelerations_particles_articulation;
+    m_accelerations_bodies.noalias() = MatrixCast(velocities_rbm_particles, 6 * m_num_particles, 1, device); // (6N x 1)
+    m_accelerations_bodies.noalias() += m_accelerations_particles_articulation;                              // (6N x 1)
 }
