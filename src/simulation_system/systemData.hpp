@@ -371,8 +371,8 @@ class systemData : public std::enable_shared_from_this<systemData>
     // general-use tensors
     /// (3 x 3 x 3) (skew-symmetric) 3rd order identity tensor
     Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> m_levi_cevita;
-    /// (3 x 4 x 7) @f$ \nabla_{\xi_{\alpha}} \boldsymbol{E}{(\boldsymbol{\theta})} @f$
-    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> m_kappa_tilde;
+    /// (3 x 4 x 7) @f$ \nabla_{\xi_{\alpha}} \boldsymbol{E}^{T}{(\boldsymbol{\theta})} @f$
+    Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> m_kappa_tilde;
 
     /* ANCHOR: kinematic vectors */
     /// (7M x 1) both linear and quaternion D.o.F. of body locaters
@@ -419,11 +419,11 @@ class systemData : public std::enable_shared_from_this<systemData>
     /// (6N x 7M x 7M) @f$ \nabla_{\xi} \boldsymbol{C} @f$
     Eigen::Tensor<double, 3> m_rbm_conn_T_quat_grad;
 
-    /// (7M x 3N) converts particle position D.o.F. to body position/quaternion D.o.F. (NOTE: this was
+    /// (7M x 6N) converts particle position D.o.F. to body position/quaternion D.o.F. (NOTE: this was
     /// @f$ \boldsymbol{\beta} @f$ in written work)
     Eigen::MatrixXd m_conv_body_2_part_dof;
 
-    /// (7M x 3N) tensor version of `m_conv_body_2_part_dof`
+    /// (7M x 6N) tensor version of `m_conv_body_2_part_dof`
     Eigen::Tensor<double, 2> m_tens_conv_body_2_part_dof;
 
     /* ANCHOR: Udwadia constraint linear system */
