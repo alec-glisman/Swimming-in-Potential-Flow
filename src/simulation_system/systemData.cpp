@@ -509,13 +509,15 @@ systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
         const int particle_id_6{6 * particle_id};
         const int body_id_6{6 * m_particle_group_id(particle_id)};
 
-        // skew-symmetric matrix representation of (negative) cross product
-        Eigen::Matrix3d n_dr_cross;
-        crossProdMat(-m_positions_particles_articulation.segment<3>(particle_id_6), n_dr_cross);
+        // skew-symmetric matrix representation of cross product
+        Eigen::Matrix3d mat_dr_cross;
+        crossProdMat(m_positions_particles_articulation.segment<3>(particle_id_6), mat_dr_cross);
 
         // rigid body motion connectivity tensor elements
-        m_rbm_conn.block<3, 3>(body_id_6, particle_id_6).noalias()     = m_I3;       // translation-translation couple
-        m_rbm_conn.block<3, 3>(body_id_6 + 3, particle_id_6).noalias() = n_dr_cross; // translation-rotation couple
+        m_rbm_conn.block<3, 3>(body_id_6, particle_id_6).noalias()     = m_I3;         // translation-translation couple
+        m_rbm_conn.block<3, 3>(body_id_6 + 3, particle_id_6).noalias() = mat_dr_cross; // translation-rotation couple
+        // FIXME? The teaching SD to swim paper had a negative sign here, but my derivations do not have that
+        m_rbm_conn.block<3, 3>(body_id_6 + 3, particle_id_6 + 3).noalias() = m_I3; // rotation-rotation couple
     }
 
     /* ANCHOR: Compute m_psi_conv_quat_ang */
