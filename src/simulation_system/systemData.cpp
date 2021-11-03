@@ -588,7 +588,7 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
     for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
         /* ANCHOR: Tensor indices */
-        const int particle_id_6{7 * particle_id};
+        const int particle_id_6{6 * particle_id};
         const int body_id_6{6 * m_particle_group_id(particle_id)};
         const int body_id_7{7 * m_particle_group_id(particle_id)};
 
@@ -611,10 +611,7 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
         const Eigen::array<Eigen::Index, 3> extents       = {4, 3, 7};
 
         // get moment arm to locater point from particle
-        const Eigen::Matrix3d two_r_cross_mat =
-            2 * m_rbm_conn.block<3, 3>(
-                    body_id_6 + 3,
-                    particle_id_6); // FIXME: This is throwing errors due to row indexing and I am not sure why
+        const Eigen::Matrix3d two_r_cross_mat = 2 * m_rbm_conn.block<3, 3>(body_id_6 + 3, particle_id_6);
         const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_two_r_cross_mat = TensorCast(two_r_cross_mat);
 
         // get E matrix representation of body quaternion from m_psi_conv_quat_ang
