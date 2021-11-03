@@ -585,6 +585,7 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
 
     for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
+        /* ANCHOR: Tensor indices */
         const int particle_id_6{7 * particle_id};
         const int body_id_6{6 * m_particle_group_id(particle_id)};
         const int body_id_7{7 * m_particle_group_id(particle_id)};
@@ -595,60 +596,54 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
         const Eigen::array<Eigen::IndexPair<int>, 1> contract_ilk_lj = {
             Eigen::IndexPair<int>(1, 0)}; // {i, l, k} . {l, j} --> {i, k, j}
         const Eigen::array<Eigen::IndexPair<int>, 1> contract_li_ljk = {
-            Eigen::IndexPair<int>(1, 0)}; // {l, i} . {l, j, k} --> {i, j, k}
+            Eigen::IndexPair<int>(0, 0)}; // {l, i} . {l, j, k} --> {i, j, k}
+        const Eigen::array<Eigen::IndexPair<int>, 1> contract_ljm_km = {
+            Eigen::IndexPair<int>(2, 1)}; // {l, j, m} . {k, m} --> {l, j, k}
 
         // `Eigen::Tensor` permute indices
         const Eigen::array<int, 3> permute_ikj_ijk({0, 2, 1}); // {i, k, j} --> {i, j, k}
 
-        // FIXME: Continue rewriting code here
+        // `Eigen::Tensor` output tensor indices start location (offset) and extent
+        const Eigen::array<Eigen::Index, 3> offsets_left  = {body_id_7 + 3, particle_id_6, body_id_7};
+        const Eigen::array<Eigen::Index, 3> offsets_right = {body_id_7 + 3, particle_id_6 + 3, body_id_7};
+        const Eigen::array<Eigen::Index, 3> extents       = {4, 3, 7};
 
-        // get moment arm to locater point from C
-        const Eigen::Matrix3d two_r_cross_mat = -2 * m_rbm_conn.block<3, 3>(body_id_6 + 3, particle_id_6);
+        // get moment arm to locater point from particle
+        const Eigen::Matrix3d two_r_cross_mat = 2 * m_rbm_conn.block<3, 3>(body_id_6 + 3, particle_id_6);
+        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_two_r_cross_mat = TensorCast(two_r_cross_mat);
 
         // get E matrix representation of body quaternion from m_psi_conv_quat_ang
         const Eigen::Matrix<double, 3, 4> two_E_body = m_psi_conv_quat_ang.block<3, 4>(body_id_6 + 3, body_id_7 + 3);
+        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4>> tens_two_E_body = TensorCast(two_E_body);
 
-        // get change of variable matrix element D_{\alpha}
-        const Eigen::Matrix<double, 7, 3> n_D_alpha = -m_chi.block<7, 3>(body_id_7, particle_id_6);
+        // get change of variable matrix element m_chi_tilde
+        const Eigen::Matrix<double, 7, 3> n_chi_tilde = -m_chi.block<7, 3>(body_id_7, particle_id_6);
+        const Eigen::TensorFixedSize<double, Eigen::Sizes<7, 3>> tens_n_chi_tilde = TensorCast(n_chi_tilde);
 
-        /* ANCHOR: tensor contractions to produce result */
+        /* ANCHOR: tensor contractions for left-half of gradient */
+        // compute grad_r_cross{l, j, k} = - m_levi_cevita{l, j, m} chi_tilde{k, m}
+        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 7>> grad_r_cross; // (3, 3, 7)  {l, j, k}
+        grad_r_cross.device(device) = m_levi_cevita.contract(tens_n_chi_tilde, contract_ljm_km);
 
-        // convert Eigen::Matrix --> Eigen::Tensor
-        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_two_r_cross_mat = TensorCast(two_r_cross_mat);
-        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4>> tens_two_E_body      = TensorCast(two_E_body);
-        const Eigen::TensorFixedSize<double, Eigen::Sizes<7, 3>> tens_n_D_alpha       = TensorCast(n_D_alpha);
+        // compute 2E_T_grad_r{i, j, k} = 2E_{l, i} grad_r_cross{l, j, k}
+        Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> two_E_grad_r_cross; // (4, 3, 7)  {i, j, k}
+        two_E_grad_r_cross.device(device) = tens_two_E_body.contract(tens_n_chi_tilde, contract_li_ljk);
 
-        // 1) Compute result_{i m k} = levi_cevita{l i m} n_D_alpha_{k l}
-        const Eigen::array<Eigen::IndexPair<int>, 1> contract_lim_kl = {Eigen::IndexPair<int>(0, 1)}; // {i m k}
-        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 7>> d_rCrossMat_d_xi;
-        d_rCrossMat_d_xi.device(device) = m_levi_cevita.contract(tens_n_D_alpha, contract_lim_kl);
+        // compute 2grad_E_r_cross_{i, k, j} = Kappa{i, l, k} r_cross{l, j}
+        Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> two_grad_E_r_cross_preshuffle; // (4, 3, 7)  {i, k, j}
+        two_grad_E_r_cross_preshuffle.device(device) = m_kappa_tilde.contract(tens_two_r_cross_mat, contract_ilk_lj);
 
-        // 2) Compute result_{i j k} = d_rCrossMat_d_xi_{i m k} two_E_body{m j}
-        const Eigen::array<Eigen::IndexPair<int>, 1> contract_imk_mj = {
-            Eigen::IndexPair<int>(1, 0)}; // {i k j}, must shuffle
-        const Eigen::array<int, 3> swap_last_two_indices({0, 2, 1});
+        // shuffle two_grad_E_r_cross_preshuffle
+        Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> two_grad_E_r_cross; // (4, 3, 7)  {i, j, k}
+        two_grad_E_r_cross.device(device) = two_grad_E_r_cross_preshuffle.shuffle(permute_ikj_ijk);
 
-        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 7, 4>> d_rCrossMat_d_xi_times_two_E_body_preshuffle;
-        d_rCrossMat_d_xi_times_two_E_body_preshuffle.device(device) =
-            d_rCrossMat_d_xi.contract(tens_two_E_body, contract_imk_mj);
+        // left term
+        const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> mixed_gradient =
+            two_grad_E_r_cross + two_E_grad_r_cross;
+        m_tens_zeta_grad.slice(offsets_left, extents) = mixed_gradient;
 
-        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> d_rCrossMat_d_xi_times_two_E_body;
-        d_rCrossMat_d_xi_times_two_E_body.device(device) =
-            d_rCrossMat_d_xi_times_two_E_body_preshuffle.shuffle(swap_last_two_indices);
-
-        // 3) Compute result_{i j k} = two_r_cross_mat_{i m} Kappa_tilde_{m j k} (same indices as (2))
-        const Eigen::array<Eigen::IndexPair<int>, 1> contract_im_mjk = {Eigen::IndexPair<int>(1, 0)}; // {i j k}
-        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> rCrossMat_times_d_E_body_d_xi;
-        rCrossMat_times_d_E_body_d_xi.device(device) = tens_two_r_cross_mat.contract(m_kappa_tilde, contract_im_mjk);
-
-        // Compute and output matrix element
-        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> angular_gradient;
-        angular_gradient.device(device) = -d_rCrossMat_d_xi_times_two_E_body - rCrossMat_times_d_E_body_d_xi;
-
-        // output matrix indices
-        const Eigen::array<Eigen::Index, 3> offsets = {particle_id_6, body_id_7 + 3, body_id_7};
-        const Eigen::array<Eigen::Index, 3> extents = {3, 4, 7};
-        m_tens_zeta_grad.slice(offsets, extents)    = angular_gradient;
+        /* ANCHOR: tensor contractions for right-half of gradient */
+        m_tens_zeta_grad.slice(offsets_right, extents) = 2 * m_kappa_tilde;
     }
 }
 
