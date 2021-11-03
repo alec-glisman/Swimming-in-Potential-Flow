@@ -154,8 +154,8 @@ class potentialHydrodynamics
     int m_num_pair_inter{-1};
 
     // tensor variables
-    /// 3N length of tensor quantities
-    int m_3N{-1};
+    /// 6N length of tensor quantities
+    int m_6N{-1};
     /// 7M length of tensor quantities
     int m_7M{-1};
 
@@ -176,36 +176,36 @@ class potentialHydrodynamics
     Eigen::MatrixXd m_c1_2_I3N;
 
     // ANCHOR: mass matrices
-    /// (3N x 3N) added mass matrix
+    /// (6N x 6N) added mass matrix
     Eigen::MatrixXd m_M_added;
-    /// (3N x 3N) intrinsic mass matrix
+    /// (6N x 6N) intrinsic mass matrix
     Eigen::MatrixXd m_M_intrinsic;
-    /// (3N x 3N) total mass matrix
+    /// (6N x 6N) total mass matrix
     Eigen::MatrixXd m_M_total;
 
-    /// (3N x 3N) tensor version of total mass matrix
+    /// (6N x 6N) tensor version of total mass matrix
     Eigen::Tensor<double, 2> m_tens_M_total;
-    /// (3N x 3N x 3N) gradient of total mass matrix (only added mass components) in particle coordinates
+    /// (6N x 6N x 6N) gradient of total mass matrix (only added mass components) in particle coordinates
     Eigen::Tensor<double, 3> m_grad_M_added;
 
-    /// (3N x 3N x 7M) gradient of total mass matrix (only added mass components) in body coordinates
+    /// (6N x 6N x 7M) gradient of total mass matrix (only added mass components) in body coordinates
     Eigen::Tensor<double, 3> m_grad_M_added_body_coords;
 
     // ANCHOR: Hydrodynamic forces
-    /// (3M x 1) total hydrodynamic force
+    /// (7M x 1) total hydrodynamic force
     Eigen::VectorXd m_F_hydro;
-    /// (3M x 1) hydrodynamic force in absence of inertial term
+    /// (7M x 1) hydrodynamic force in absence of inertial term
     Eigen::VectorXd m_F_hydroNoInertia;
 
     // ANCHOR: linear combinations of gradient of rbm and total mass matrix
-    /// (3N x 3N x 7M) @f$ \nabla_{\xi} \, \boldsymbol{M} @f$
+    /// (6N x 6N x 7M) @f$ \nabla_{\xi} \, \boldsymbol{M} @f$
     Eigen::Tensor<double, 3> m_N1;
-    /// (7M x 3N x 7M) @f$ \nabla_{\xi} \, \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} @f$
+    /// (7M x 6N x 7M) @f$ \nabla_{\xi} \, \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} @f$
     Eigen::Tensor<double, 3> m_N2;
     /// (7M x 7M x 7M) @f$ \nabla_{\xi} \, \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} \, \boldsymbol{A} @f$
     Eigen::Tensor<double, 3> m_N3;
 
-    /// (7M x 3N) @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} \, \boldsymbol{A} @f$
+    /// (7M x 6N) @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} \, \boldsymbol{A} @f$
     Eigen::Tensor<double, 2> m_M_tilde_tilde;
     /// (7M x 7M) @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} @f$
     Eigen::Tensor<double, 2> m_M_tilde;

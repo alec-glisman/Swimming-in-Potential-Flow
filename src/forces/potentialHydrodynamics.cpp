@@ -19,8 +19,8 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
     spdlog::get(m_logName)->info("Setting number of interactions to count: {0}", m_num_pair_inter);
 
     // tensor variables
-    m_3N = 3 * m_system->numParticles();
-    spdlog::get(m_logName)->info("Length of 3N tensor quantities: {0}", m_3N);
+    m_6N = 6 * m_system->numParticles();
+    spdlog::get(m_logName)->info("Length of 6N tensor quantities: {0}", m_6N);
     m_7M = 7 * m_system->numBodies();
     spdlog::get(m_logName)->info("Length of 7M tensor quantities: {0}", m_7M);
 
@@ -31,28 +31,28 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
     // Initialize mass matrices
     spdlog::get(m_logName)->info("Initializing mass matrices");
     m_M_intrinsic = (m_system->particleDensity() * m_unitSphereVol) * m_I3N;
-    m_M_added     = Eigen::MatrixXd::Zero(m_3N, m_3N);
+    m_M_added     = Eigen::MatrixXd::Zero(m_6N, m_6N);
 
     m_M_total.noalias() = m_M_added;
     m_M_total.noalias() += m_M_intrinsic;
 
     spdlog::get(m_logName)->info("Initializing mass tensors");
-    m_grad_M_added = Eigen::Tensor<double, 3>(m_3N, m_3N, m_3N);
+    m_grad_M_added = Eigen::Tensor<double, 3>(m_6N, m_6N, m_6N);
     m_grad_M_added.setZero();
-    m_grad_M_added_body_coords = Eigen::Tensor<double, 3>(m_3N, m_3N, m_7M);
+    m_grad_M_added_body_coords = Eigen::Tensor<double, 3>(m_6N, m_6N, m_7M);
     m_grad_M_added_body_coords.setZero();
-    m_tens_M_total = Eigen::Tensor<double, 2>(m_3N, m_3N);
+    m_tens_M_total = Eigen::Tensor<double, 2>(m_6N, m_6N);
     m_tens_M_total.setZero();
 
     spdlog::get(m_logName)->info("Initializing tensors used in hydrodynamic force calculations.");
-    m_N1 = Eigen::Tensor<double, 3>(m_3N, m_3N, m_7M);
+    m_N1 = Eigen::Tensor<double, 3>(m_6N, m_6N, m_7M);
     m_N1.setZero();
-    m_N2 = Eigen::Tensor<double, 3>(m_7M, m_3N, m_7M);
+    m_N2 = Eigen::Tensor<double, 3>(m_7M, m_6N, m_7M);
     m_N2.setZero();
     m_N3 = Eigen::Tensor<double, 3>(7 * m_system->numBodies(), 7 * m_system->numBodies(), 7 * m_system->numBodies());
     m_N3.setZero();
 
-    m_M_tilde_tilde = Eigen::Tensor<double, 2>(7 * m_system->numBodies(), m_3N);
+    m_M_tilde_tilde = Eigen::Tensor<double, 2>(7 * m_system->numBodies(), m_6N);
     m_M_tilde_tilde.setZero();
     m_M_tilde = Eigen::Tensor<double, 2>(m_7M, m_7M);
     m_M_tilde.setZero();
