@@ -204,14 +204,14 @@ class potentialHydrodynamics
     // ANCHOR: linear combinations of gradient of rbm and total mass matrix
     /// (6N x 6N x 7M) @f$ \nabla_{\xi} \, \boldsymbol{M} @f$
     Eigen::Tensor<double, 3> m_N1;
-    /// (7M x 6N x 7M) @f$ \nabla_{\xi} \, \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} @f$
+    /// (7M x 6N x 7M) @f$ \nabla_{\xi} \, \boldsymbol{\zeta} \, \boldsymbol{M} @f$
     Eigen::Tensor<double, 3> m_N2;
-    /// (7M x 7M x 7M) @f$ \nabla_{\xi} \, \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} \, \boldsymbol{A} @f$
+    /// (7M x 7M x 7M) @f$ \nabla_{\xi} \, \boldsymbol{\zeta} \, \boldsymbol{M} \, \boldsymbol{\zeta}^{\mathrm{T}} @f$
     Eigen::Tensor<double, 3> m_N3;
 
-    /// (7M x 7M) @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} @f$
+    /// (7M x 7M) @f$ \boldsymbol{\zeta} \, \boldsymbol{M} @f$
     Eigen::Tensor<double, 2> m_M2;
-    /// (7M x 6N) @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} \, \boldsymbol{A} @f$
+    /// (7M x 6N) @f$ \boldsymbol{\zeta} \, \boldsymbol{M} \, \boldsymbol{\zeta}^{\mathrm{T}} @f$
     Eigen::Tensor<double, 2> m_M3;
 
     /// (7M x 7M) `Eigen::Matrix` form of `m_M2`
