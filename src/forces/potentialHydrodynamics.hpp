@@ -117,7 +117,7 @@ class potentialHydrodynamics
     calcAddedMassGrad(Eigen::ThreadPoolDevice& device);
 
     /**
-     * @brief Calculates \{`m_N1`, `m_N2`, `m_N3`, `m_M_tilde`, and `m_M_tilde_tilde`\}
+     * @brief Calculates \{`m_N1`, `m_N2`, `m_N3`, `m_M2`, and `m_M3`\}
      *
      * @details Must call `calcTotalMass()` and assumes `systemData` rigid body motion tensors are up to date.
      *
@@ -209,12 +209,13 @@ class potentialHydrodynamics
     /// (7M x 7M x 7M) @f$ \nabla_{\xi} \, \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} \, \boldsymbol{A} @f$
     Eigen::Tensor<double, 3> m_N3;
 
-    /// (7M x 6N) @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} \, \boldsymbol{A} @f$
-    Eigen::Tensor<double, 2> m_M_tilde_tilde;
     /// (7M x 7M) @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} @f$
-    Eigen::Tensor<double, 2> m_M_tilde;
-    /// (7M x 7M) `Eigen::Matrix` form of `m_M_tilde`
-    Eigen::MatrixXd m_mat_M_tilde;
+    Eigen::Tensor<double, 2> m_M2;
+    /// (7M x 6N) @f$ \boldsymbol{A}^{\mathrm{T}} \, \boldsymbol{M} \, \boldsymbol{A} @f$
+    Eigen::Tensor<double, 2> m_M3;
+
+    /// (7M x 7M) `Eigen::Matrix` form of `m_M2`
+    Eigen::MatrixXd m_mat_M2;
 
     // ANCHOR: constants
     /// volume of a unit sphere
@@ -248,7 +249,7 @@ class potentialHydrodynamics
     const Eigen::MatrixXd&
     mTilde() const
     {
-        return m_mat_M_tilde;
+        return m_mat_M2;
     }
 };
 
