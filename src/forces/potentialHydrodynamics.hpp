@@ -170,16 +170,20 @@ class potentialHydrodynamics
     Eigen::MatrixXd m_r_ab;
 
     // ANCHOR: identity Matrices
-    /// (3N x 3N) identity matrix
-    Eigen::MatrixXd m_I3N;
-    /// (3N x 3N) 1/2 identity matrix
-    Eigen::MatrixXd m_c1_2_I3N;
+    /// (6N x 6N) identity matrix for (3N x 3N) subset of linear elements
+    Eigen::MatrixXd m_I6N_linear;
+    /// (6N x 6N) identity matrix for (3N x 3N) subset of angular elements
+    Eigen::MatrixXd m_I6N_angular;
+    /// (6N x 6N) 1/2 identity matrix for (3N x 3N) subset of linear elements
+    Eigen::MatrixXd m_c1_2_I6N_linear;
 
     // ANCHOR: mass matrices
     /// (6N x 6N) added mass matrix
     Eigen::MatrixXd m_M_added;
     /// (6N x 6N) intrinsic mass matrix
     Eigen::MatrixXd m_M_intrinsic;
+    /// (6N x 6N) intrinsic moment of inertia matrix (for spheres)
+    Eigen::MatrixXd m_J_intrinsic;
     /// (6N x 6N) total mass matrix
     Eigen::MatrixXd m_M_total;
 
