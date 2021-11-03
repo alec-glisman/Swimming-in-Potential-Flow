@@ -371,8 +371,8 @@ class systemData : public std::enable_shared_from_this<systemData>
     // general-use tensors
     /// (3 x 3 x 3) (skew-symmetric) 3rd order identity tensor
     Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> m_levi_cevita;
-    /// (3 x 4 x 7) @f$ \nabla_{\xi_{\alpha}} \boldsymbol{E}{(\boldsymbol{\theta})} @f$
-    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4, 7>> m_kappa_tilde;
+    /// (3 x 4 x 7) @f$ \nabla_{\xi_{\alpha}} \boldsymbol{E}^{T}{(\boldsymbol{\theta})} @f$
+    Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> m_kappa_tilde;
 
     /* ANCHOR: kinematic vectors */
     /// (7M x 1) both linear and quaternion D.o.F. of body locaters
@@ -384,9 +384,9 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     /// (3N x 1) (linear) positions of all particles
     Eigen::VectorXd m_positions_particles;
-    /// (3N x 1) (linear) velocities of all particles
+    /// (6N x 1) (linear/angular) velocities of all particles
     Eigen::VectorXd m_velocities_particles;
-    /// (3N x 1) (linear) accelerations of all particles
+    /// (6N x 1) (linear/angular) accelerations of all particles
     Eigen::VectorXd m_accelerations_particles;
 
     /// (3N x 1) orientations of all particles
@@ -410,21 +410,20 @@ class systemData : public std::enable_shared_from_this<systemData>
     /// (6M x 7M) @f$ \boldsymbol{\Psi} @f$ converts linear/quaternion body velocity D.o.F. to linear/angular
     /// velocity D.o.F.
     Eigen::MatrixXd m_psi_conv_quat_ang;
-    /// (6N x 7M) @f$ \boldsymbol{C} @f$ converts linear/quaternion body velocity D.o.F. to linear particle
-    /// velocities (NOTE: this was \f$ \boldsymbol{A} \f$ in written work)
-    Eigen::MatrixXd m_rbm_conn_T_quat;
+    /// (7M x 6N) @f$ \boldsymbol{\zeta} @f$ converts linear/angular particle velocities to linear/quaternion body
+    /// velocity D.o.F.
+    Eigen::MatrixXd m_zeta;
 
-    /// (6N x 7M) tensor version of `m_rbm_conn_T_quat`
-    Eigen::Tensor<double, 2> m_tens_rbm_conn_T_quat;
-    /// (6N x 7M x 7M) @f$ \nabla_{\xi} \boldsymbol{C} @f$
-    Eigen::Tensor<double, 3> m_rbm_conn_T_quat_grad;
+    /// (7M x 6N) tensor version of `m_zeta`
+    Eigen::Tensor<double, 2> m_tens_zeta;
+    /// (7M x 6N x 7M) @f$ \nabla_{\xi} \boldsymbol{\zeta} @f$
+    Eigen::Tensor<double, 3> m_tens_zeta_grad;
 
-    /// (7M x 3N) converts particle position D.o.F. to body position/quaternion D.o.F. (NOTE: this was
-    /// @f$ \boldsymbol{\beta} @f$ in written work)
-    Eigen::MatrixXd m_conv_body_2_part_dof;
+    /// (7M x 6N) @f$ \boldsymbol{\chi} @f$ converts particle position D.o.F. to body position/quaternion D.o.F.
+    Eigen::MatrixXd m_chi;
 
-    /// (7M x 3N) tensor version of `m_conv_body_2_part_dof`
-    Eigen::Tensor<double, 2> m_tens_conv_body_2_part_dof;
+    /// (7M x 6N) tensor version of `m_chi`
+    Eigen::Tensor<double, 2> m_tens_chi;
 
     /* ANCHOR: Udwadia constraint linear system */
     /// (number_constraints x 7M) linear operator defining relationship between constraints on @f$
@@ -839,19 +838,19 @@ class systemData : public std::enable_shared_from_this<systemData>
     const Eigen::Tensor<double, 2>&
     tensRbmConnTQuat() const
     {
-        return m_tens_rbm_conn_T_quat;
+        return m_tens_zeta;
     }
 
     const Eigen::Tensor<double, 3>&
     tensRbmConnTQuatGrad() const
     {
-        return m_rbm_conn_T_quat_grad;
+        return m_tens_zeta_grad;
     }
 
     const Eigen::Tensor<double, 2>&
     tensConvBody2PartDof() const
     {
-        return m_tens_conv_body_2_part_dof;
+        return m_tens_chi;
     }
 
     /* ANCHOR: Udwadia constraint linear system */
