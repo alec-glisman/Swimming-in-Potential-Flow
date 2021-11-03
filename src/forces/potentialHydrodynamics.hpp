@@ -161,9 +161,9 @@ class potentialHydrodynamics
 
     // ANCHOR: distance between particle pairs
     /// (s x 1) first particle number in pairwise interactions
-    Eigen::VectorXd m_alphaVec;
+    Eigen::VectorXi m_alphaVec;
     /// (s x 1) second particle number in pairwise interactions
-    Eigen::VectorXd m_betaVec;
+    Eigen::VectorXi m_betaVec;
     /// (s x 1) relative displacement between particle pairs
     Eigen::VectorXd m_r_mag_ab;
     /// (3 x s) relative displacement between particle pairs

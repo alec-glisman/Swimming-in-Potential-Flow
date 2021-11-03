@@ -76,8 +76,8 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
 
     // Assign particle pair information
     spdlog::get(m_logName)->info("Initializing particle pair information vectors");
-    m_alphaVec = Eigen::VectorXd::Zero(m_num_pair_inter);
-    m_betaVec  = Eigen::VectorXd::Zero(m_num_pair_inter);
+    m_alphaVec = Eigen::VectorXi::Zero(m_num_pair_inter);
+    m_betaVec  = Eigen::VectorXi::Zero(m_num_pair_inter);
     m_r_mag_ab = Eigen::VectorXd::Zero(m_num_pair_inter);
     m_r_ab     = Eigen::MatrixXd::Zero(3, m_num_pair_inter);
 
@@ -103,8 +103,8 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
         assert(alpha >= 0 && "Calculated alpha must be non-negative");
         assert(beta >= 0 && "Calculated beta must be non-negative");
 
-        m_alphaVec[i] = alpha;
-        m_betaVec[i]  = beta;
+        m_alphaVec(i) = alpha;
+        m_betaVec(i)  = beta;
     }
 
     // Compute all relevant quantities
@@ -148,14 +148,14 @@ potentialHydrodynamics::calcParticleDistances()
      * particles \alpha and \beta) */
     for (int i = 0; i < m_num_pair_inter; i++)
     {
-        m_r_ab.col(i).noalias() = m_system->positionsParticles().segment<3>(3 * m_alphaVec[i]);
-        m_r_ab.col(i).noalias() -= m_system->positionsParticles().segment<3>(3 * m_betaVec[i]);
+        m_r_ab.col(i).noalias() = m_system->positionsParticles().segment<3>(3 * m_alphaVec(i));
+        m_r_ab.col(i).noalias() -= m_system->positionsParticles().segment<3>(3 * m_betaVec(i));
 
         m_r_mag_ab[i] = m_r_ab.col(i).norm(); //[1]; |r| between 2 particles
 
 #if !defined(NDEBUG)
-        spdlog::get(m_logName)->critical("Checking distance between particle pair [{0}, {1}]: {2:.3f}", m_alphaVec[i],
-                                         m_betaVec[i], m_r_mag_ab[i]);
+        spdlog::get(m_logName)->critical("Checking distance between particle pair [{0}, {1}]: {2:.3f}", m_alphaVec(i),
+                                         m_betaVec(i), m_r_mag_ab[i]);
         spdlog::get(m_logName)->flush();
 #endif
     }
@@ -173,16 +173,16 @@ potentialHydrodynamics::calcAddedMass()
     for (int k = 0; k < m_num_pair_inter; k++)
     {
         // Convert (\alpha, \beta) --> (i, j) by factor of 3
-        int i_part{7 * m_alphaVec[k]};
-        int j_part{7 * m_betaVec[k]};
+        const int i_part{6 * m_alphaVec(k)};
+        const int j_part{6 * m_betaVec(k)};
 
         // Full distance between particles \alpha and \beta
-        Eigen::Vector3d r_ij     = m_r_ab.col(k); // [1]
-        double          r_mag_ij = m_r_mag_ab[k]; //[1]; |r| between 2 particles
+        const Eigen::Vector3d r_ij     = m_r_ab.col(k); // [1]
+        const double          r_mag_ij = m_r_mag_ab[k]; //[1]; |r| between 2 particles
 
         // M^{(1)} Matrix Element Constants:
-        double M1_c1 = -m_c3_2 / std::pow(r_mag_ij, 5); // [1]
-        double M1_c2 = m_c1_2 / std::pow(r_mag_ij, 3);  // [1]
+        const double M1_c1 = -m_c3_2 / std::pow(r_mag_ij, 5); // [1]
+        const double M1_c2 = m_c1_2 / std::pow(r_mag_ij, 3);  // [1]
 
         // Full matrix elements for M^{(1)}_{ij} (NOTE: missing factor of 1/2)
         Eigen::Matrix3d Mij = r_ij * r_ij.transpose(); //[1]; Outer product of \bm{r} \bm{r}
@@ -219,14 +219,14 @@ potentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
     for (int k = 0; k < m_num_pair_inter; k++)
     {
         // Convert (\alpha, \beta) --> (i, j) by factor of 3
-        int i_part{6 * m_alphaVec[k]};
-        int j_part{6 * m_betaVec[k]};
+        int i_part{6 * m_alphaVec(k)};
+        int j_part{6 * m_betaVec(k)};
 
         // Full distance between particles \alpha and \beta
-        Eigen::Vector3d r_ij     = m_r_ab.col(k);           // [1]
-        double          r_mag_ij = m_r_mag_ab[k];           //[1]; |r| between 2 particles
-        Eigen::Matrix3d r_dyad_r = r_ij * r_ij.transpose(); // [1]; Outer product of \bm{r} \bm{r}
-        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_rr = TensorCast(r_dyad_r);
+        const Eigen::Vector3d r_ij     = m_r_ab.col(k);           // [1]
+        const double          r_mag_ij = m_r_mag_ab[k];           //[1]; |r| between 2 particles
+        const Eigen::Matrix3d r_dyad_r = r_ij * r_ij.transpose(); // [1]; Outer product of \bm{r} \bm{r}
+        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_rr = TensorCast(r_dyad_r);
 
         // Constants to use in Calculation
         double gradM1_c1 =
@@ -235,12 +235,14 @@ potentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
             (m_system->fluidDensity() * m_unitSphereVol) * m_c15_2 * std::pow(r_mag_ij, -7); // mass units
 
         // outer products (I_{i j} r_{k}) and permutations
-        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_ij_r_k =
+        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_ij_r_k =
             gradM1_c1 * m_system->tensI3().contract(TensorCast(r_ij), empty_index_list);
         // shuffle all dimensions to the right by 1: (i, j, k) --> (k, i, j), (2, 0, 1)
-        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_jk_r_i = delta_ij_r_k.shuffle(shuffle_one_right);
+        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_jk_r_i =
+            delta_ij_r_k.shuffle(shuffle_one_right);
         // shuffle all dimensions to the left by 1: (i, j, k) --> (k, i, j), (1, 2, 0)
-        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_ki_r_j = delta_ij_r_k.shuffle(shuffle_one_left);
+        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_ki_r_j =
+            delta_ij_r_k.shuffle(shuffle_one_left);
 
         // full matrix element for M_{i j, i}
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> Mij_i = delta_ij_r_k + delta_jk_r_i;
