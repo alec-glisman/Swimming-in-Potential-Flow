@@ -70,7 +70,7 @@ The constructor also constructs the GSD parser class and loads data into itself.
 
 ## Files
 
-`CMakeLists.txt` links all files and external libraries into an executable named `bodies_in_potential_flow`.  
+`CMakeLists.txt` links all files and external libraries into an executable named `bodies-in-potential-flow`.  
 `main.cpp` main file of the project that constructs and runs the simulation.
 Requires two command line inputs: (1) input GSD filepath and (2) output directory to write data, respectively.
 The output directory must already exist, as the C++ code will not create it.

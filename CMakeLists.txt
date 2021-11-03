@@ -143,7 +143,7 @@ ENDIF()
 
 
 PROJECT(
-        bodies_in_potential_flow
+        bodies-in-potential-flow
         VERSION "0.1.0"
         DESCRIPTION
             "Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible)"

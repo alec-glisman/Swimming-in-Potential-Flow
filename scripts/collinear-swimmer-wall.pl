@@ -38,7 +38,7 @@ my $buildDir       = "build/" . lc $build;      # Build folder path
 
 # C++ Simulation
 my $simulationTag    = "collinear-swimmer-wall";
-my $projectName      = "bodies_in_potential_flow";
+my $projectName      = "bodies-in-potential-flow";
 my $inputDir         = "input";
 my @inputData        = ( "varyZHeight", "varyRelDisp", "varyPhaseAngle", "varyEpsilon", "varyDt" );
 my $numSimulationTypes = scalar @inputData;

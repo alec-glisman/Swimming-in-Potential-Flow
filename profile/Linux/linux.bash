@@ -27,7 +27,7 @@ output_dir="${base_dir}/profile/Linux"
 flame_graph_base_dir="${base_dir}/profile/FlameGraph"
 
 # perf arguments
-executable="${base_dir}/build_profile/src/./bodies_in_potential_flow"
+executable="${base_dir}/build_profile/src/./bodies-in-potential-flow"
 args="${base_dir}/input/starter_gsd/collinear_swimmer_wall.gsd ${output_dir}/output"
 
 # configure project

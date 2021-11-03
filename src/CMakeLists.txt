@@ -1,5 +1,5 @@
 # Executable variables
-SET(EXE_NAME "bodies_in_potential_flow")
+SET(EXE_NAME "bodies-in-potential-flow")
 
 SET(EXE_FILES 
     main.cpp 
