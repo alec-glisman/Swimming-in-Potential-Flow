@@ -555,8 +555,10 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
         const int body_id_6{6 * m_particle_group_id(particle_id)};
         const int body_id_7{7 * m_particle_group_id(particle_id)};
 
+        const bool is_locater{m_particle_group_id(particle_id) == 1};
+
         /// S_alpha = {-1 for non-locater particles, +1 for locater particles}
-        const int s_part{-1 + 2 * (m_particle_type_id(particle_id) == 1)};
+        const int s_part{-1 + 2 * is_locater};
 
         // (4 vector) displacement of particle from locater point moment arm
         Eigen::Vector4d dr_init         = Eigen::Vector4d::Zero(4, 1);
@@ -583,15 +585,22 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
 
     for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
-        if (m_particle_type_id(particle_id) == 1)
-        {
-            // Continue to next loop as all elements are zero
-            continue;
-        }
-
         const int particle_id_6{7 * particle_id};
         const int body_id_6{6 * m_particle_group_id(particle_id)};
         const int body_id_7{7 * m_particle_group_id(particle_id)};
+
+        const bool is_locater{m_particle_group_id(particle_id) == 1};
+
+        // `Eigen::Tensor` contract indices
+        const Eigen::array<Eigen::IndexPair<int>, 1> contract_ilk_lj = {
+            Eigen::IndexPair<int>(1, 0)}; // {i, l, k} . {l, j} --> {i, k, j}
+        const Eigen::array<Eigen::IndexPair<int>, 1> contract_li_ljk = {
+            Eigen::IndexPair<int>(1, 0)}; // {l, i} . {l, j, k} --> {i, j, k}
+
+        // `Eigen::Tensor` permute indices
+        const Eigen::array<int, 3> permute_ikj_ijk({0, 2, 1}); // {i, k, j} --> {i, j, k}
+
+        // FIXME: Continue rewriting code here
 
         // get moment arm to locater point from C
         const Eigen::Matrix3d two_r_cross_mat = -2 * m_rbm_conn.block<3, 3>(body_id_6 + 3, particle_id_6);
