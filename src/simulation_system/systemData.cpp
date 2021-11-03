@@ -427,11 +427,12 @@ systemData::velocitiesArticulation()
             continue; // continue to next loop as all elements are zero
         }
 
+        const int particle_id_3{3 * particle_id};
         const int particle_id_6{6 * particle_id};
         const int body_id_7{7 * m_particle_group_id(particle_id)};
 
         m_velocities_particles_articulation.segment<3>(particle_id_6).noalias() =
-            particle_velocities(particle_id) * m_orientations_particles.segment<3>(particle_id_6);
+            particle_velocities(particle_id) * m_orientations_particles.segment<3>(particle_id_3);
 
         // Image system: flip x-y components, leave z unchanged
         if (particle_id >= (m_num_particles / 2))
@@ -464,11 +465,12 @@ systemData::accelerationsArticulation()
             continue; // continue to next loop as all elements are zero
         }
 
+        const int particle_id_3{3 * particle_id};
         const int particle_id_6{6 * particle_id};
         const int body_id_7{7 * m_particle_group_id(particle_id)};
 
         m_accelerations_particles_articulation.segment<3>(particle_id_6).noalias() =
-            particle_accelerations(particle_id) * m_orientations_particles.segment<3>(particle_id_6);
+            particle_accelerations(particle_id) * m_orientations_particles.segment<3>(particle_id_3);
 
         // Image system: flip x-y components, leave z unchanged
         if (particle_id >= (m_num_particles / 2))
@@ -609,7 +611,10 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
         const Eigen::array<Eigen::Index, 3> extents       = {4, 3, 7};
 
         // get moment arm to locater point from particle
-        const Eigen::Matrix3d two_r_cross_mat = 2 * m_rbm_conn.block<3, 3>(body_id_6 + 3, particle_id_6);
+        const Eigen::Matrix3d two_r_cross_mat =
+            2 * m_rbm_conn.block<3, 3>(
+                    body_id_6 + 3,
+                    particle_id_6); // FIXME: This is throwing errors due to row indexing and I am not sure why
         const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_two_r_cross_mat = TensorCast(two_r_cross_mat);
 
         // get E matrix representation of body quaternion from m_psi_conv_quat_ang
@@ -627,10 +632,10 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
 
         // compute 2E_T_grad_r{i, j, k} = 2E_{l, i} grad_r_cross{l, j, k}
         Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> two_E_grad_r_cross; // (4, 3, 7)  {i, j, k}
-        two_E_grad_r_cross.device(device) = tens_two_E_body.contract(tens_n_chi_tilde, contract_li_ljk);
+        two_E_grad_r_cross.device(device) = tens_two_E_body.contract(grad_r_cross, contract_li_ljk);
 
         // compute 2grad_E_r_cross_{i, k, j} = Kappa{i, l, k} r_cross{l, j}
-        Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> two_grad_E_r_cross_preshuffle; // (4, 3, 7)  {i, k, j}
+        Eigen::TensorFixedSize<double, Eigen::Sizes<4, 7, 3>> two_grad_E_r_cross_preshuffle; // (4, 3, 7)  {i, k, j}
         two_grad_E_r_cross_preshuffle.device(device) = m_kappa_tilde.contract(tens_two_r_cross_mat, contract_ilk_lj);
 
         // shuffle two_grad_E_r_cross_preshuffle
