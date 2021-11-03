@@ -417,7 +417,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     /// (7M x 6N) tensor version of `m_zeta`
     Eigen::Tensor<double, 2> m_tens_zeta;
     /// (7M x 6N x 7M) @f$ \nabla_{\xi} \boldsymbol{\zeta} @f$
-    Eigen::Tensor<double, 3> m_tens_zeta_grad;
+    Eigen::Tensor<double, 3> m_tens_grad_zeta;
 
     /// (7M x 6N) @f$ \boldsymbol{\chi} @f$ converts particle position D.o.F. to body position/quaternion D.o.F.
     Eigen::MatrixXd m_chi;
@@ -836,19 +836,19 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     /* ANCHOR: rigid body motion tensors */
     const Eigen::Tensor<double, 2>&
-    tensRbmConnTQuat() const
+    tensZeta() const
     {
         return m_tens_zeta;
     }
 
     const Eigen::Tensor<double, 3>&
-    tensRbmConnTQuatGrad() const
+    tensGradZeta() const
     {
-        return m_tens_zeta_grad;
+        return m_tens_grad_zeta;
     }
 
     const Eigen::Tensor<double, 2>&
-    tensConvBody2PartDof() const
+    tensChi() const
     {
         return m_tens_chi;
     }

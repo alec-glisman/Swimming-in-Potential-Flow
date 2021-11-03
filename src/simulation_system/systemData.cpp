@@ -132,8 +132,8 @@ systemData::initializeData()
     m_chi      = Eigen::MatrixXd::Zero(m7, n6);
     m_tens_chi = Eigen::Tensor<double, 2>(m7, n6);
     m_tens_chi.setZero();
-    m_tens_zeta_grad = Eigen::Tensor<double, 3>(m7, n6, m7);
-    m_tens_zeta_grad.setZero();
+    m_tens_grad_zeta = Eigen::Tensor<double, 3>(m7, n6, m7);
+    m_tens_grad_zeta.setZero();
 
     // Set initial configuration orientation
     spdlog::get(m_logName)->info("Setting initial configuration orientation");
@@ -580,8 +580,8 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
 
     m_tens_chi = TensorCast(m_chi);
 
-    /* ANCHOR : Compute m_tens_zeta_grad */
-    m_tens_zeta_grad.setZero();
+    /* ANCHOR : Compute m_tens_grad_zeta */
+    m_tens_grad_zeta.setZero();
 
     for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
@@ -640,10 +640,10 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
         // left term
         const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> mixed_gradient =
             two_grad_E_r_cross + two_E_grad_r_cross;
-        m_tens_zeta_grad.slice(offsets_left, extents) = mixed_gradient;
+        m_tens_grad_zeta.slice(offsets_left, extents) = mixed_gradient;
 
         /* ANCHOR: tensor contractions for right-half of gradient */
-        m_tens_zeta_grad.slice(offsets_right, extents) = 2 * m_kappa_tilde;
+        m_tens_grad_zeta.slice(offsets_right, extents) = 2 * m_kappa_tilde;
     }
 }
 
@@ -711,7 +711,7 @@ systemData::convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device)
     const Eigen::Tensor<double, 2> xi_xi = xi.contract(xi, outer_product);  // (7M x 7M)
 
     Eigen::Tensor<double, 1> velocities_rbm_particles = Eigen::Tensor<double, 1>(6 * m_num_particles); // (6N x 1)
-    velocities_rbm_particles.device(device)           = m_tens_zeta_grad.contract(xi_xi, contract_jik_jk);
+    velocities_rbm_particles.device(device)           = m_tens_grad_zeta.contract(xi_xi, contract_jik_jk);
 
     m_accelerations_bodies.noalias() = MatrixCast(velocities_rbm_particles, 6 * m_num_particles, 1, device); // (6N x 1)
     m_accelerations_bodies.noalias() += m_accelerations_particles_articulation;                              // (6N x 1)
