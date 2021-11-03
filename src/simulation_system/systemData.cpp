@@ -203,10 +203,10 @@ systemData::checkInput()
            "Particle orientation (unit quaternions) vector has incorrect length, not 4N.");
     assert(m_positions_particles.size() == 3 * m_num_particles &&
            "Particle position vector has incorrect length, not 3N.");
-    assert(m_velocities_particles.size() == 3 * m_num_particles &&
-           "Particle velocity vector has incorrect length, not 3N.");
-    assert(m_accelerations_particles.size() == 3 * m_num_particles &&
-           "Particle acceleration vector has incorrect length, not 3N.");
+    assert(m_velocities_particles.size() == 6 * m_num_particles &&
+           "Particle velocity vector has incorrect length, not 6N.");
+    assert(m_accelerations_particles.size() == 6 * m_num_particles &&
+           "Particle acceleration vector has incorrect length, not 6N.");
 
     assert(m_positions_bodies.size() == 7 * m_num_bodies && "Body position vector has incorrect length, not 7M.");
     assert(m_velocities_bodies.size() == 7 * m_num_bodies && "Body velocity vector has incorrect length, not 7M.");
