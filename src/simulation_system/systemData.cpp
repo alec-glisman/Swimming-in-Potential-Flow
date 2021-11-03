@@ -559,19 +559,21 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
         const int s_part{-1 + 2 * (m_particle_type_id(particle_id) == 1)};
 
         // (4 vector) displacement of particle from locater point moment arm
-        Eigen::Vector4d dr         = Eigen::Vector4d::Zero(4, 1);
-        dr.segment<3>(1).noalias() = m_positions_particles_articulation.segment<3>(particle_id_3);
+        Eigen::Vector4d dr_init         = Eigen::Vector4d::Zero(4, 1);
+        dr_init.segment<3>(1).noalias() = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
+
+        const double r_alpha_norm{m_positions_particles_articulation.segment<3>(particle_id_3).norm()};
+        dr_init *= r_alpha_norm; // incorporate norm factor here rather than in chi calculation for numerical efficiency
 
         // quaternion product representation of particle displacement (transpose)
-        Eigen::Matrix<double, 3, 4> P_j_tilde_T;
-        eMatrix(dr, P_j_tilde_T);
-        Eigen::Matrix<double, 4, 3> P_j_tilde = P_j_tilde_T.transpose();
+        Eigen::Matrix<double, 3, 4> g_T;
+        eMatrix(dr_init, g_T);
 
         // change of variables gradient tensor elements
-        m_chi.block<3, 3>(body_id_7, particle_id_6).noalias() = -m_I3; // translation-translation couple
+        m_chi.block<3, 3>(body_id_7, particle_id_6).noalias() = s_part * m_I3; // translation-translation couple
         m_chi.block<3, 3>(body_id_7 + 4, particle_id_6).noalias() =
             m_psi_conv_quat_ang.block<3, 4>(body_id_6 + 3, body_id_7 + 3) *
-            P_j_tilde; // quaternion-rotation couple (first row is zero)
+            g_T.transpose(); // quaternion-rotation couple (first row is zero)
     }
 
     m_tens_chi = TensorCast(m_chi);
