@@ -542,6 +542,7 @@ systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
     /* ANCHOR: Compute m_zeta & m_tens_zeta */
     m_zeta.noalias() = m_psi_conv_quat_ang.transpose() * m_rbm_conn;
     m_tens_zeta      = TensorCast(m_zeta);
+    m_tens_zeta_T    = TensorCast(m_zeta.transpose());
 }
 
 void

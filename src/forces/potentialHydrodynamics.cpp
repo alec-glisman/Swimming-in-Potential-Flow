@@ -253,8 +253,7 @@ potentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
         m_grad_M_added.slice(offsets_ji_i, extents) = Mij_i;
     }
 
-    m_grad_M_added_body_coords.device(device) =
-        m_grad_M_added.contract(m_system->tensChi(), contract_ijl_kl);
+    m_grad_M_added_body_coords.device(device) = m_grad_M_added.contract(m_system->tensChi(), contract_ijl_kl);
 }
 
 void
@@ -277,7 +276,7 @@ potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     const Eigen::array<int, 3> flip_last_two_indices({0, 2, 1}); // (i, j, k) --> (i, k, j)
 
     /* ANCHOR: Compute linear combinations of total mass matrix and rbm_conn_t_quat */
-    m_M_tilde_tilde.device(device) = m_system->tensZeta().contract(m_tens_M_total, contract_li_lj);
+    m_M_tilde_tilde.device(device) = m_system->tensZetaT().contract(m_tens_M_total, contract_li_lj);
 
     m_M_tilde.device(device) = m_M_tilde_tilde.contract(m_system->tensZeta(), contract_il_lj);
     m_mat_M_tilde            = MatrixCast(m_M_tilde, m_7M, m_7M);
@@ -293,7 +292,7 @@ potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
 
     N2_term1_unshuffle.device(device) = m_system->tensGradZeta().contract(m_tens_M_total, contract_li_lj);
     N2_term1.device(device)           = N2_term1_unshuffle.shuffle(flip_last_two_indices);
-    N2_term2.device(device)           = m_system->tensZeta().contract(m_N1, contract_li_lj);
+    N2_term2.device(device)           = m_system->tensZetaT().contract(m_N1, contract_li_lj);
     m_N2.device(device)               = N2_term1 + N2_term2;
 
     // N^{(3)}
