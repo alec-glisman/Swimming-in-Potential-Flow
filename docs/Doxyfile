@@ -263,6 +263,7 @@ TAB_SIZE = 4
 
 ALIASES =
 ALIASES += "review_swimmer=\xrefitem review \"Review\" \"Altering Swimmer Design List\""
+ALIASES += "FIXME=\xrefitem fixme \"FIXME\" \"Code Changes Needed\""
 
 # Set the OPTIMIZE_OUTPUT_FOR_C tag to YES if your project consists of C sources
 # only. Doxygen will then generate output that is more tailored for C. For

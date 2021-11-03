@@ -514,9 +514,11 @@ systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
         crossProdMat(m_positions_particles_articulation.segment<3>(particle_id_6), mat_dr_cross);
 
         // rigid body motion connectivity tensor elements
-        m_rbm_conn.block<3, 3>(body_id_6, particle_id_6).noalias()     = m_I3;         // translation-translation couple
+        m_rbm_conn.block<3, 3>(body_id_6, particle_id_6).noalias() = m_I3; // translation-translation couple
+
+        /// @FIXME: The teaching SD to swim paper had a negative sign here, but my derivations do not have that
         m_rbm_conn.block<3, 3>(body_id_6 + 3, particle_id_6).noalias() = mat_dr_cross; // translation-rotation couple
-        // FIXME? The teaching SD to swim paper had a negative sign here, but my derivations do not have that
+
         m_rbm_conn.block<3, 3>(body_id_6 + 3, particle_id_6 + 3).noalias() = m_I3; // rotation-rotation couple
     }
 
