@@ -501,17 +501,14 @@ systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
 
     for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
-        if (m_particle_type_id(particle_id) == 1)
-        {
-            continue; // continue to next loop as all elements are zero
-        }
 
+        const int particle_id_3{3 * particle_id};
         const int particle_id_6{6 * particle_id};
         const int body_id_6{6 * m_particle_group_id(particle_id)};
 
         // skew-symmetric matrix representation of cross product
         Eigen::Matrix3d mat_dr_cross;
-        crossProdMat(m_positions_particles_articulation.segment<3>(particle_id_6), mat_dr_cross);
+        crossProdMat(m_positions_particles_articulation.segment<3>(particle_id_3), mat_dr_cross);
 
         // rigid body motion connectivity tensor elements
         m_rbm_conn.block<3, 3>(body_id_6, particle_id_6).noalias() = m_I3; // translation-translation couple
@@ -553,18 +550,17 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
 
     for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
-        if (m_particle_type_id(particle_id) == 1)
-        {
-            continue; // continue to next loop as all elements are zero
-        }
-
+        const int particle_id_3{3 * particle_id};
         const int particle_id_6{6 * particle_id};
         const int body_id_6{6 * m_particle_group_id(particle_id)};
         const int body_id_7{7 * m_particle_group_id(particle_id)};
 
+        /// S_alpha = {-1 for non-locater particles, +1 for locater particles}
+        const int s_part{-1 + 2 * (m_particle_type_id(particle_id) == 1)};
+
         // (4 vector) displacement of particle from locater point moment arm
         Eigen::Vector4d dr         = Eigen::Vector4d::Zero(4, 1);
-        dr.segment<3>(1).noalias() = m_positions_particles_articulation.segment<3>(particle_id_6);
+        dr.segment<3>(1).noalias() = m_positions_particles_articulation.segment<3>(particle_id_3);
 
         // quaternion product representation of particle displacement (transpose)
         Eigen::Matrix<double, 3, 4> P_j_tilde_T;
