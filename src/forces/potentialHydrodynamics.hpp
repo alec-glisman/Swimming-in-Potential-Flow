@@ -125,7 +125,7 @@ class potentialHydrodynamics
      *
      */
     void
-    calcBodyTensors(Eigen::ThreadPoolDevice& device); // TODO
+    calcBodyTensors(Eigen::ThreadPoolDevice& device);
 
     /**
      * @brief Calculates `m_F_hydro` and `m_F_hydroNoInertia`
