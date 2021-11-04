@@ -105,7 +105,7 @@ systemData::initializeData()
     // tensor lengths
     const int n3{3 * m_num_particles};
     const int n4{4 * m_num_particles};
-    const int n6{6 * m_num_particles};
+    const int n6{6 * m_num_particles}; // FIXME: Change to n7 and adjust all side-effects
 
     const int m6{6 * m_num_bodies};
     const int m7{7 * m_num_bodies};
