@@ -65,14 +65,14 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
     m_N1.setZero();
     m_N2 = Eigen::Tensor<double, 3>(m_7M, m_6N, m_7M);
     m_N2.setZero();
-    m_N3 = Eigen::Tensor<double, 3>(7 * m_system->numBodies(), 7 * m_system->numBodies(), 7 * m_system->numBodies());
+    m_N3 = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
     m_N3.setZero();
 
-    m_M3 = Eigen::Tensor<double, 2>(7 * m_system->numBodies(), m_6N);
-    m_M3.setZero();
-    m_M2 = Eigen::Tensor<double, 2>(m_7M, m_7M);
+    m_M2 = Eigen::Tensor<double, 2>(m_7M, m_6N);
     m_M2.setZero();
-    m_mat_M2 = Eigen::MatrixXd::Zero(m_7M, m_7M);
+    m_M3 = Eigen::Tensor<double, 2>(m_7M, m_7M);
+    m_M3.setZero();
+    m_mat_M3 = Eigen::MatrixXd::Zero(m_7M, m_7M);
 
     // Assign particle pair information
     spdlog::get(m_logName)->info("Initializing particle pair information vectors");
@@ -295,10 +295,10 @@ potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     const Eigen::array<int, 3> flip_last_two_indices({0, 2, 1}); // (i, j, k) --> (i, k, j)
 
     /* ANCHOR: Compute linear combinations of total mass matrix and zeta */
-    m_M3.device(device) = m_system->tensZetaT().contract(m_tens_M_total, contract_li_lj);
+    m_M2.device(device) = m_system->tensZetaT().contract(m_tens_M_total, contract_li_lj);
 
-    m_M2.device(device) = m_M3.contract(m_system->tensZeta(), contract_il_lj);
-    m_mat_M2            = MatrixCast(m_M2, m_7M, m_7M);
+    m_M3.device(device) = m_M2.contract(m_system->tensZeta(), contract_il_lj);
+    m_mat_M3            = MatrixCast(m_M3, m_7M, m_7M);
 
     /* ANCHOR: Compute linear combinations of GRADIENTS of total mass matrix and zeta */
     // N^{(1)}
@@ -321,7 +321,7 @@ potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
 
     N3_term1.device(device) = N2_term1.contract(m_system->tensZeta(), contract_il_lj);
     N3_term2.device(device) = N2_term2.contract(m_system->tensZeta(), contract_il_lj);
-    N3_term3.device(device) = m_M3.contract(m_system->tensGradZeta(), contract_il_lj);
+    N3_term3.device(device) = m_M2.contract(m_system->tensGradZeta(), contract_il_lj);
 
     m_N3.device(device) = N3_term1 + N3_term2;
     m_N3.device(device) += N3_term3;
@@ -363,7 +363,7 @@ potentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
 
     // hydrodynamic forces arising from locater point motion (3 terms; contains locater inertia term)
     Eigen::Tensor<double, 1> inertia_loc = Eigen::Tensor<double, 1>(m_7M);
-    inertia_loc.device(device)           = -m_M2.contract(xi_ddot, contract_ij_j);
+    inertia_loc.device(device)           = -m_M3.contract(xi_ddot, contract_ij_j);
 
     Eigen::Tensor<double, 1> F_loc = Eigen::Tensor<double, 1>(m_7M);
     F_loc.device(device)           = inertia_loc;
@@ -378,7 +378,7 @@ potentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     // hydrodynamic forces arising from internal D.o.F. motion (2 terms; contains internal inertia term)
     Eigen::Tensor<double, 1> F_int = Eigen::Tensor<double, 1>(m_7M);
     F_int.device(device)           = 0.50 * m_N1.contract(V_V, contract_jki_jk);
-    F_int.device(device) -= m_M3.contract(V_dot, contract_ij_j);
+    F_int.device(device) -= m_M2.contract(V_dot, contract_ij_j);
 
     // compute complete potential flow hydrodynamic force
     Eigen::Tensor<double, 1> F_hydro = Eigen::Tensor<double, 1>(m_7M);

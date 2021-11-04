@@ -237,7 +237,7 @@ rungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
      * Linear proportionality: K = M_eff^{1/2} * (A * M_eff^{-1/2})^{+};
      * + is Moore-Penrose inverse */
 
-    const Eigen::MatrixXd M_eff = m_potHydro->mTilde().block(0, 0, body_dof_7, body_dof_7); // [7m, 7m]
+    const Eigen::MatrixXd M_eff = m_potHydro->mTotalBodyCoords().block(0, 0, body_dof_7, body_dof_7); // [7m, 7m]
 
     // calculate M^{1/2} & M^{-1/2}
     Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> eigensolver(M_eff);

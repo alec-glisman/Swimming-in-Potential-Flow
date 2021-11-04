@@ -117,7 +117,7 @@ class potentialHydrodynamics
     calcAddedMassGrad(Eigen::ThreadPoolDevice& device);
 
     /**
-     * @brief Calculates \{`m_N1`, `m_N2`, `m_N3`, `m_M2`, and `m_M3`\}
+     * @brief Calculates \{`m_N1`, `m_N2`, `m_N3`, `m_M3`, and `m_M2`\}
      *
      * @details Must call `calcTotalMass()` and assumes `systemData` rigid body motion tensors are up to date.
      *
@@ -209,13 +209,13 @@ class potentialHydrodynamics
     /// (7M x 7M x 7M) @f$ \nabla_{\xi} \, \boldsymbol{\zeta} \, \boldsymbol{M} \, \boldsymbol{\zeta}^{\mathrm{T}} @f$
     Eigen::Tensor<double, 3> m_N3;
 
-    /// (7M x 7M) @f$ \boldsymbol{\zeta} \, \boldsymbol{M} @f$
-    Eigen::Tensor<double, 2> m_M2;
     /// (7M x 6N) @f$ \boldsymbol{\zeta} \, \boldsymbol{M} \, \boldsymbol{\zeta}^{\mathrm{T}} @f$
     Eigen::Tensor<double, 2> m_M3;
+    /// (7M x 7M) @f$ \boldsymbol{\zeta} \, \boldsymbol{M} @f$
+    Eigen::Tensor<double, 2> m_M2;
 
-    /// (7M x 7M) `Eigen::Matrix` form of `m_M2`
-    Eigen::MatrixXd m_mat_M2;
+    /// (7M x 7M) `Eigen::Matrix` form of `m_M3`
+    Eigen::MatrixXd m_mat_M3;
 
     // ANCHOR: constants
     /// volume of a unit sphere
@@ -247,9 +247,9 @@ class potentialHydrodynamics
     }
 
     const Eigen::MatrixXd&
-    mTilde() const
+    mTotalBodyCoords() const
     {
-        return m_mat_M2;
+        return m_mat_M3;
     }
 };
 
