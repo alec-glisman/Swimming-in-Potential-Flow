@@ -287,20 +287,20 @@ potentialHydrodynamics::calcTotalMass()
 void
 potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
 {
-    // contraction indices
+    /* ANCHOR: Indices */
+    // `Eigen::Tensor` contraction indices
     const Eigen::array<Eigen::IndexPair<int>, 1> contract_li_lj = {Eigen::IndexPair<int>(0, 0)}; // = A^T B
     const Eigen::array<Eigen::IndexPair<int>, 1> contract_il_lj = {Eigen::IndexPair<int>(1, 0)}; // = A B
-
-    // tensor index shuffling
+    // `Eigen::Tensor` permutation indices
     const Eigen::array<int, 3> flip_last_two_indices({0, 2, 1}); // (i, j, k) --> (i, k, j)
 
-    /* ANCHOR: Compute linear combinations of total mass matrix and rbm_conn_t_quat */
+    /* ANCHOR: Compute linear combinations of total mass matrix and zeta */
     m_M3.device(device) = m_system->tensZetaT().contract(m_tens_M_total, contract_li_lj);
 
     m_M2.device(device) = m_M3.contract(m_system->tensZeta(), contract_il_lj);
     m_mat_M2            = MatrixCast(m_M2, m_7M, m_7M);
 
-    /* ANCHOR: Compute linear combinations of GRADIENTS of total mass matrix and rbm_conn_t_quat */
+    /* ANCHOR: Compute linear combinations of GRADIENTS of total mass matrix and zeta */
     // N^{(1)}
     m_N1.device(device) = m_grad_M_added_body_coords;
 
