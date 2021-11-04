@@ -297,7 +297,7 @@ potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     /* ANCHOR: Compute linear combinations of total mass matrix and zeta */
     m_M2.device(device) = m_system->tensZeta().contract(m_tens_M_total, contract_il_lj);
 
-    m_M3.device(device) = m_M2.contract(m_system->tensZeta(), contract_il_lj);
+    m_M3.device(device) = m_M2.contract(m_system->tensZeta(), contract_li_jl);
     m_mat_M3            = MatrixCast(m_M3, m_7M, m_7M);
 
     /* ANCHOR: Compute linear combinations of GRADIENTS of total mass matrix and zeta */
@@ -310,18 +310,25 @@ potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     Eigen::Tensor<double, 3> N2_term2           = Eigen::Tensor<double, 3>(m_7M, m_6N, m_7M);
 
     N2_term1_unshuffle.device(device) = m_system->tensGradZeta().contract(m_tens_M_total, contract_il_lj);
-    N2_term1.device(device)           = N2_term1_unshuffle.shuffle(permute_ikj_ijk);
-    N2_term2.device(device)           = m_system->tensZeta().contract(m_N1, contract_li_jl);
-    m_N2.device(device)               = N2_term1 + N2_term2;
+
+    N2_term1.device(device) = N2_term1_unshuffle.shuffle(permute_ikj_ijk);
+    N2_term2.device(device) = m_system->tensZeta().contract(m_N1, contract_il_lj);
+
+    m_N2.device(device) = N2_term1 + N2_term2;
 
     // N^{(3)}
-    Eigen::Tensor<double, 3> N3_term1 = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
-    Eigen::Tensor<double, 3> N3_term2 = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
-    Eigen::Tensor<double, 3> N3_term3 = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
+    Eigen::Tensor<double, 3> N3_term1_unshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
+    Eigen::Tensor<double, 3> N3_term2_unshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
+    Eigen::Tensor<double, 3> N3_term1           = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
+    Eigen::Tensor<double, 3> N3_term2           = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
+    Eigen::Tensor<double, 3> N3_term3           = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
 
-    N3_term1.device(device) = N2_term1.contract(m_system->tensZeta(), contract_il_lj);
-    N3_term2.device(device) = N2_term2.contract(m_system->tensZeta(), contract_il_lj);
-    N3_term3.device(device) = m_M2.contract(m_system->tensGradZeta(), contract_il_lj);
+    N3_term1_unshuffle.device(device) = N2_term1.contract(m_system->tensZeta(), contract_li_jl);
+    N3_term2_unshuffle.device(device) = N2_term2.contract(m_system->tensZeta(), contract_li_jl);
+
+    N3_term1.device(device) = N3_term1_unshuffle.shuffle(permute_ikj_ijk);
+    N3_term2.device(device) = N3_term2_unshuffle.shuffle(permute_ikj_ijk);
+    N3_term3.device(device) = m_M2.contract(m_system->tensGradZeta(), contract_li_jl);
 
     m_N3.device(device) = N3_term1 + N3_term2;
     m_N3.device(device) += N3_term3;
