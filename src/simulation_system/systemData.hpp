@@ -416,8 +416,6 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     /// (7M x 6N) tensor version of `m_zeta`
     Eigen::Tensor<double, 2> m_tens_zeta;
-    /// (7M x 6N) tensor version of `m_zeta` transpose
-    Eigen::Tensor<double, 2> m_tens_zeta_T;
     /// (7M x 6N x 7M) @f$ \nabla_{\xi} \boldsymbol{\zeta} @f$
     Eigen::Tensor<double, 3> m_tens_grad_zeta;
 
@@ -841,12 +839,6 @@ class systemData : public std::enable_shared_from_this<systemData>
     tensZeta() const
     {
         return m_tens_zeta;
-    }
-
-    const Eigen::Tensor<double, 2>&
-    tensZetaT() const
-    {
-        return m_tens_zeta_T;
     }
 
     const Eigen::Tensor<double, 3>&

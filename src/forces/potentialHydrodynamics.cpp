@@ -289,13 +289,13 @@ potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
 {
     /* ANCHOR: Indices */
     // `Eigen::Tensor` contraction indices
-    const Eigen::array<Eigen::IndexPair<int>, 1> contract_li_lj = {Eigen::IndexPair<int>(0, 0)}; // = A^T B
     const Eigen::array<Eigen::IndexPair<int>, 1> contract_il_lj = {Eigen::IndexPair<int>(1, 0)}; // = A B
+    const Eigen::array<Eigen::IndexPair<int>, 1> contract_li_jl = {Eigen::IndexPair<int>(1, 1)}; // = A B^T
     // `Eigen::Tensor` permutation indices
-    const Eigen::array<int, 3> flip_last_two_indices({0, 2, 1}); // (i, j, k) --> (i, k, j)
+    const Eigen::array<int, 3> permute_ikj_ijk({0, 2, 1}); // (i, j, k) --> (i, j, k)
 
     /* ANCHOR: Compute linear combinations of total mass matrix and zeta */
-    m_M2.device(device) = m_system->tensZetaT().contract(m_tens_M_total, contract_li_lj);
+    m_M2.device(device) = m_system->tensZeta().contract(m_tens_M_total, contract_il_lj);
 
     m_M3.device(device) = m_M2.contract(m_system->tensZeta(), contract_il_lj);
     m_mat_M3            = MatrixCast(m_M3, m_7M, m_7M);
@@ -309,9 +309,9 @@ potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     Eigen::Tensor<double, 3> N2_term1           = Eigen::Tensor<double, 3>(m_7M, m_6N, m_7M);
     Eigen::Tensor<double, 3> N2_term2           = Eigen::Tensor<double, 3>(m_7M, m_6N, m_7M);
 
-    N2_term1_unshuffle.device(device) = m_system->tensGradZeta().contract(m_tens_M_total, contract_li_lj);
-    N2_term1.device(device)           = N2_term1_unshuffle.shuffle(flip_last_two_indices);
-    N2_term2.device(device)           = m_system->tensZetaT().contract(m_N1, contract_li_lj);
+    N2_term1_unshuffle.device(device) = m_system->tensGradZeta().contract(m_tens_M_total, contract_il_lj);
+    N2_term1.device(device)           = N2_term1_unshuffle.shuffle(permute_ikj_ijk);
+    N2_term2.device(device)           = m_system->tensZeta().contract(m_N1, contract_li_jl);
     m_N2.device(device)               = N2_term1 + N2_term2;
 
     // N^{(3)}
