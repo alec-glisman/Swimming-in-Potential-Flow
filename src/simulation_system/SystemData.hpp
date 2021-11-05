@@ -221,6 +221,10 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      * @brief Computes \nabla_{\xi} \zeta_{i \alpha} tensor for given particle number and body number.
      *
      * @details Modifies `m_tens_grad_zeta`
+     * Some variables must be pre-computed:
+     *     `m_rbm_conn`
+     *     `m_psi_conv_quat_ang`
+     *     `m_chi`
      *
      * @param particle_id Particle number (alpha, i is body number)
      */
