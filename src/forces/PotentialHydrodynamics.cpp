@@ -281,8 +281,8 @@ void
 PotentialHydrodynamics::calcTotalMass()
 {
     m_M_total.noalias() = m_M_intrinsic;
-    m_M_total.noalias() += m_M_added;
     m_M_total.noalias() += m_J_intrinsic;
+    m_M_total.noalias() += m_M_added;
 
     m_tens_M_total = TensorCast(m_M_total);
 }
