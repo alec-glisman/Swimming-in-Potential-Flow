@@ -5,8 +5,9 @@
 #       ENABLE_COVERAGE ["True", "False"]
 #   GENERATORS TESTED:
 #       "Unix Makefiles"   
+#       "Ninja"
 #   COMPILERS TESTED:
-#       gcc
+#       gcc-11
 #!SECTION
 
 # SECTION: Color output variables
