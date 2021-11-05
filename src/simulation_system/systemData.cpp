@@ -70,23 +70,23 @@ systemData::initializeData()
     m_levi_cevita(0, 1, 2) = 1;
     m_levi_cevita(1, 0, 2) = -1;
 
-    m_kappa_tilde.setZero();
+    m_kappa.setZero();
 
-    m_kappa_tilde(1, 0, 3) = 1;
-    m_kappa_tilde(2, 1, 3) = 1;
-    m_kappa_tilde(3, 2, 3) = 1;
+    m_kappa(1, 0, 3) = 1;
+    m_kappa(2, 1, 3) = 1;
+    m_kappa(3, 2, 3) = 1;
 
-    m_kappa_tilde(0, 0, 4) = -1;
-    m_kappa_tilde(3, 1, 4) = -1;
-    m_kappa_tilde(2, 2, 4) = 1;
+    m_kappa(0, 0, 4) = -1;
+    m_kappa(3, 1, 4) = -1;
+    m_kappa(2, 2, 4) = 1;
 
-    m_kappa_tilde(3, 0, 5) = 1;
-    m_kappa_tilde(0, 1, 5) = -1;
-    m_kappa_tilde(1, 2, 5) = -1;
+    m_kappa(3, 0, 5) = 1;
+    m_kappa(0, 1, 5) = -1;
+    m_kappa(1, 2, 5) = -1;
 
-    m_kappa_tilde(2, 0, 6) = -1;
-    m_kappa_tilde(1, 1, 6) = 1;
-    m_kappa_tilde(0, 2, 6) = -1;
+    m_kappa(2, 0, 6) = -1;
+    m_kappa(1, 1, 6) = 1;
+    m_kappa(0, 2, 6) = -1;
 
     // initialize particle vectors
     spdlog::get(m_logName)->info("Setting particle group (swimmer) ids");
@@ -632,7 +632,7 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
 
         // compute 2grad_E_r_cross_{i, k, j} = Kappa{i, l, k} r_cross{l, j}
         Eigen::TensorFixedSize<double, Eigen::Sizes<4, 7, 3>> two_grad_E_r_cross_preshuffle; // (4, 3, 7)  {i, k, j}
-        two_grad_E_r_cross_preshuffle.device(device) = m_kappa_tilde.contract(tens_two_r_cross_mat, contract_ilk_lj);
+        two_grad_E_r_cross_preshuffle.device(device) = m_kappa.contract(tens_two_r_cross_mat, contract_ilk_lj);
 
         // shuffle two_grad_E_r_cross_preshuffle
         Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> two_grad_E_r_cross; // (4, 3, 7)  {i, j, k}
@@ -644,7 +644,7 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
         m_tens_grad_zeta.slice(offsets_left, extents) = mixed_gradient;
 
         /* ANCHOR: tensor contractions for right-half of gradient */
-        m_tens_grad_zeta.slice(offsets_right, extents) = 2 * m_kappa_tilde;
+        m_tens_grad_zeta.slice(offsets_right, extents) = 2 * m_kappa;
     }
 }
 

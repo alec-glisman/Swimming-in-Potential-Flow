@@ -373,7 +373,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     /// (3 x 3 x 3) (skew-symmetric) 3rd order identity tensor
     Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> m_levi_cevita;
     /// (4 x 4 x 7) @f$ \nabla_{\xi_{\alpha}} \boldsymbol{E}^{T}{(\boldsymbol{\theta})} @f$
-    Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> m_kappa_tilde;
+    Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> m_kappa;
 
     /* ANCHOR: kinematic vectors */
     /// (7M x 1) both linear and quaternion D.o.F. of body locaters
