@@ -228,8 +228,8 @@ PotentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
         int j_part{7 * m_betaVec(k)};
 
         // Full distance between particles \alpha and \beta
-        const Eigen::Vector3d                                 r_ij      = m_r_ab.col(k); // (1)
-        const Eigen::TensorFixedSize<double, Eigen::Sizes<3>> tens_r_ij = TensorCast(r_ij, 3, 1);
+        const Eigen::Vector3d                                 r_ij   = m_r_ab.col(k); // (1)
+        const Eigen::TensorFixedSize<double, Eigen::Sizes<3>> tens_r = TensorCast(r_ij, 3, 1);
 
         const double          r_mag_ij{m_r_mag_ab(k)};            //(1); |r| between 2 particles
         const Eigen::Matrix3d r_dyad_r = r_ij * r_ij.transpose(); // (1); Outer product of \bm{r} \bm{r}
@@ -242,19 +242,20 @@ PotentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
                          std::pow(r_mag_ij, -7)}; // mass units
 
         // outer products (I_{i j} r_{k}) and permutations
-        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_ij_r_k =
-            gradM1_c1 * m_system->tensI3().contract(tens_r_ij, outer_product);
+        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_ij_r_k;
+        delta_ij_r_k.device(device) = gradM1_c1 * m_system->tensI3().contract(tens_r, outer_product);
         // shuffle all dimensions to the right by 1: (i, j, k) --> (k, i, j), (2, 0, 1)
-        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_jk_r_i =
-            delta_ij_r_k.shuffle(permute_ijk_kij);
+        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_jk_r_i;
+        delta_jk_r_i.device(device) = delta_ij_r_k.shuffle(permute_ijk_kij);
         // shuffle all dimensions to the left by 1: (i, j, k) --> (k, i, j), (1, 2, 0)
-        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_ki_r_j =
-            delta_ij_r_k.shuffle(permute_ijk_jki);
+        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_ki_r_j;
+        delta_ki_r_j.device(device) = delta_ij_r_k.shuffle(permute_ijk_jki);
 
         // full matrix element for M_{i j, i}
-        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> Mij_i = delta_ij_r_k + delta_jk_r_i;
-        Mij_i += delta_ki_r_j;
-        Mij_i += gradM1_c2 * tens_rr.contract(tens_r_ij, outer_product);
+        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> Mij_i;
+        Mij_i.device(device) = delta_ij_r_k + delta_jk_r_i;
+        Mij_i.device(device) += delta_ki_r_j;
+        Mij_i.device(device) += gradM1_c2 * tens_rr.contract(tens_r, outer_product);
 
         // indices to start at
         const Eigen::array<Eigen::Index, 3> offsets_ij_i = {i_part, j_part, i_part};
