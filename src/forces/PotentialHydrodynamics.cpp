@@ -180,12 +180,12 @@ PotentialHydrodynamics::calcAddedMass()
         const int j_part{7 * m_betaVec(k)};
 
         // Full distance between particles \alpha and \beta
-        const Eigen::Vector3d r_ij     = m_r_ab.col(k); // (1)
-        const double          r_mag_ij = m_r_mag_ab(k); //(1); |r| between 2 particles
+        const Eigen::Vector3d r_ij = m_r_ab.col(k);    // (1)
+        const double          r_mag_ij{m_r_mag_ab(k)}; //(1); |r| between 2 particles
 
         // M^{(1)} Matrix Element Constants:
-        const double M1_c1 = -m_c3_2 / std::pow(r_mag_ij, 5); // (1)
-        const double M1_c2 = m_c1_2 / std::pow(r_mag_ij, 3);  // (1)
+        const double M1_c1{-m_c3_2 / std::pow(r_mag_ij, 5)}; // (1)
+        const double M1_c2{m_c1_2 / std::pow(r_mag_ij, 3)};  // (1)
 
         // Full matrix elements for M^{(1)}_{ij} (NOTE: missing factor of 1/2)
         Eigen::Matrix3d Mij = r_ij * r_ij.transpose(); //(1); Outer product of \bm{r} \bm{r}
@@ -226,16 +226,16 @@ PotentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
         int j_part{7 * m_betaVec(k)};
 
         // Full distance between particles \alpha and \beta
-        const Eigen::Vector3d r_ij     = m_r_ab.col(k);           // (1)
-        const double          r_mag_ij = m_r_mag_ab(k);           //(1); |r| between 2 particles
+        const Eigen::Vector3d r_ij = m_r_ab.col(k);               // (1)
+        const double          r_mag_ij{m_r_mag_ab(k)};            //(1); |r| between 2 particles
         const Eigen::Matrix3d r_dyad_r = r_ij * r_ij.transpose(); // (1); Outer product of \bm{r} \bm{r}
         const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_rr = TensorCast(r_dyad_r);
 
         // Constants to use in Calculation
-        double gradM1_c1 =
-            -(m_system->fluidDensity() * m_unit_sphere_volume) * m_c3_2 * std::pow(r_mag_ij, -5); // mass units
-        double gradM1_c2 =
-            (m_system->fluidDensity() * m_unit_sphere_volume) * m_c15_2 * std::pow(r_mag_ij, -7); // mass units
+        double gradM1_c1{-(m_system->fluidDensity() * m_unit_sphere_volume) * m_c3_2 *
+                         std::pow(r_mag_ij, -5)}; // mass units
+        double gradM1_c2{(m_system->fluidDensity() * m_unit_sphere_volume) * m_c15_2 *
+                         std::pow(r_mag_ij, -7)}; // mass units
 
         // outer products (I_{i j} r_{k}) and permutations
         const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_ij_r_k =
