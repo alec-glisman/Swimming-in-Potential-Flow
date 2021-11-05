@@ -155,7 +155,7 @@ class PotentialHydrodynamics
 
     // tensor variables
     /// 7N length of tensor quantities
-    int m_7N{-1}; // FIXME: Change to 7N and make sure all indexing reflects this
+    int m_7N{-1};
     /// 7M length of tensor quantities
     int m_7M{-1};
 
