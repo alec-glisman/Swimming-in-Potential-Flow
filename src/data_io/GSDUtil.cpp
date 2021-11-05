@@ -293,17 +293,17 @@ GSDUtil::readParticles()
     const int combined_body_tensor_len{7 * m_system->numBodies()};
     const int orientational_tensor_len{4 * m_system->numParticles()};
     const int linear_tensor_len{3 * m_system->numParticles()};
-    const int linear_angular_tensor_len{2 * linear_tensor_len};
+    const int linear_angular_tensor_len{7 * m_system->numBodies()};
 
     Eigen::VectorXd m7_vec = Eigen::VectorXd::Zero(combined_body_tensor_len);
     Eigen::VectorXd n4_vec = Eigen::VectorXd::Zero(orientational_tensor_len);
     Eigen::VectorXd n3_vec = Eigen::VectorXd::Zero(linear_tensor_len);
-    Eigen::VectorXd n6_vec = Eigen::VectorXd::Zero(linear_angular_tensor_len);
+    Eigen::VectorXd n7_vec = Eigen::VectorXd::Zero(linear_angular_tensor_len);
 
     m_system->setOrientationsParticles(n4_vec);
     m_system->setPositionsParticles(n3_vec);
-    m_system->setVelocitiesParticles(n6_vec);
-    m_system->setAccelerationsParticles(n6_vec);
+    m_system->setVelocitiesParticles(n7_vec);
+    m_system->setAccelerationsParticles(n7_vec);
 
     m_system->setPositionsBodies(m7_vec);
     m_system->setVelocitiesBodies(m7_vec);
@@ -353,12 +353,12 @@ GSDUtil::readParticles()
                             m_system->numParticles());
     m_system->setReturnBool(return_bool);
     checkGSDReturn();
-    Eigen::VectorXd velocities = Eigen::VectorXd::Zero(6 * m_system->numParticles());
+    Eigen::VectorXd velocities = Eigen::VectorXd::Zero(7 * m_system->numParticles());
     for (int i = 0; i < m_system->numParticles(); i++)
     {
-        velocities(6 * i)     = d_vel[3 * i];
-        velocities(6 * i + 1) = d_vel[3 * i + 1];
-        velocities(6 * i + 2) = d_vel[3 * i + 2];
+        velocities(7 * i)     = d_vel[3 * i];
+        velocities(7 * i + 1) = d_vel[3 * i + 1];
+        velocities(7 * i + 2) = d_vel[3 * i + 2];
         spdlog::get(m_logName)->info("Particle {0} velocity : [{1:03.3f}, {2:03.3f}, {3:03.3f}]", i + 1, d_vel[3 * i],
                                      d_vel[3 * i + 1], d_vel[3 * i + 2]);
     }
@@ -371,12 +371,12 @@ GSDUtil::readParticles()
                             m_system->numParticles());
     m_system->setReturnBool(return_bool);
     checkGSDReturn();
-    Eigen::VectorXd accelerations = Eigen::VectorXd::Zero(6 * m_system->numParticles());
+    Eigen::VectorXd accelerations = Eigen::VectorXd::Zero(7 * m_system->numParticles());
     for (int i = 0; i < m_system->numParticles(); i++)
     {
-        accelerations(6 * i)     = d_acc[3 * i];
-        accelerations(6 * i + 1) = d_acc[3 * i + 1];
-        accelerations(6 * i + 2) = d_acc[3 * i + 2];
+        accelerations(7 * i)     = d_acc[3 * i];
+        accelerations(7 * i + 1) = d_acc[3 * i + 1];
+        accelerations(7 * i + 2) = d_acc[3 * i + 2];
         spdlog::get(m_logName)->info("Particle {0} acceleration : [{1:03.3f}, {2:03.3f}, {3:03.3f}]", i + 1,
                                      d_acc[3 * i], d_acc[3 * i + 1], d_acc[3 * i + 2]);
     }
@@ -399,7 +399,7 @@ GSDUtil::readParticles()
             const int body_id_7{7 * body_count};
             const int particle_id_3{3 * i};
             const int particle_id_4{4 * i};
-            const int particle_id_6{6 * i};
+            const int particle_id_7{7 * i};
 
             positions_bodies.segment<3>(body_id_7).noalias() = m_system->positionsParticles().segment<3>(particle_id_3);
 
@@ -407,10 +407,10 @@ GSDUtil::readParticles()
                 m_system->quaternionsParticles().segment<4>(particle_id_4);
 
             velocities_bodies.segment<3>(body_id_7).noalias() =
-                m_system->velocitiesParticles().segment<3>(particle_id_6);
+                m_system->velocitiesParticles().segment<3>(particle_id_7);
 
             accelerations_bodies.segment<3>(body_id_7).noalias() =
-                m_system->accelerationsParticles().segment<3>(particle_id_6);
+                m_system->accelerationsParticles().segment<3>(particle_id_7);
 
             body_count++;
         }
@@ -574,9 +574,9 @@ GSDUtil::writeParticles()
     vel.reserve(1); // make sure we allocate
     for (uint32_t i = 0; i < N; i++)
     {
-        vel[3 * i]     = m_system->velocitiesParticles()(6 * i);
-        vel[3 * i + 1] = m_system->velocitiesParticles()(6 * i + 1);
-        vel[3 * i + 2] = m_system->velocitiesParticles()(6 * i + 2);
+        vel[3 * i]     = m_system->velocitiesParticles()(7 * i);
+        vel[3 * i + 1] = m_system->velocitiesParticles()(7 * i + 1);
+        vel[3 * i + 2] = m_system->velocitiesParticles()(7 * i + 2);
     }
     spdlog::get(m_logName)->info("GSD writing particles/velocity");
     return_val =
@@ -588,9 +588,9 @@ GSDUtil::writeParticles()
     acc.reserve(1); // make sure we allocate
     for (uint32_t i = 0; i < N; i++)
     {
-        acc[3 * i]     = m_system->accelerationsParticles()(6 * i);
-        acc[3 * i + 1] = m_system->accelerationsParticles()(6 * i + 1);
-        acc[3 * i + 2] = m_system->accelerationsParticles()(6 * i + 2);
+        acc[3 * i]     = m_system->accelerationsParticles()(7 * i);
+        acc[3 * i + 1] = m_system->accelerationsParticles()(7 * i + 1);
+        acc[3 * i + 2] = m_system->accelerationsParticles()(7 * i + 2);
     }
     spdlog::get(m_logName)->info("GSD writing particles/moment_inertia");
     return_val =
@@ -632,9 +632,9 @@ GSDUtil::writeParticles()
     d_vel.reserve(1); // make sure we allocate
     for (uint32_t i = 0; i < N; i++)
     {
-        d_vel[3 * i]     = m_system->velocitiesParticles()(6 * i);
-        d_vel[3 * i + 1] = m_system->velocitiesParticles()(6 * i + 1);
-        d_vel[3 * i + 2] = m_system->velocitiesParticles()(6 * i + 2);
+        d_vel[3 * i]     = m_system->velocitiesParticles()(7 * i);
+        d_vel[3 * i + 1] = m_system->velocitiesParticles()(7 * i + 1);
+        d_vel[3 * i + 2] = m_system->velocitiesParticles()(7 * i + 2);
     }
     spdlog::get(m_logName)->info("GSD wri ting log/particles/double_velocity");
     return_val = gsd_write_chunk(m_system->handle().get(), "log/particles/double_velocity", GSD_TYPE_DOUBLE, N, 3, 0,
@@ -646,9 +646,9 @@ GSDUtil::writeParticles()
     d_acc.reserve(1); // make sure we allocate
     for (uint32_t i = 0; i < N; i++)
     {
-        d_acc[3 * i]     = m_system->accelerationsParticles()(6 * i);
-        d_acc[3 * i + 1] = m_system->accelerationsParticles()(6 * i + 1);
-        d_acc[3 * i + 2] = m_system->accelerationsParticles()(6 * i + 2);
+        d_acc[3 * i]     = m_system->accelerationsParticles()(7 * i);
+        d_acc[3 * i + 1] = m_system->accelerationsParticles()(7 * i + 1);
+        d_acc[3 * i + 2] = m_system->accelerationsParticles()(7 * i + 2);
     }
     spdlog::get(m_logName)->info("GSD writing log/particles/double_moment_inertia");
     return_val = gsd_write_chunk(m_system->handle().get(), "log/particles/double_moment_inertia", GSD_TYPE_DOUBLE, N, 3,
