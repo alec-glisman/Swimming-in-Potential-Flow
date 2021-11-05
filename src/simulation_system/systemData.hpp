@@ -77,7 +77,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      * @brief Function loads data from GSD file using `GSDUtil` class.
      *
      * @details Must be called after class construction before data can properly
-     * be integrated using the `engine` class.
+     * be integrated using the `Engine` class.
      */
     void
     initializeData();
@@ -104,7 +104,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      * std::make_shared<GSDUtil>(shared_from_this());`. From the C++ standard, the `shared_from_this()` function can
      * only execute once the object referenced by `this` has been fully constructed. If I could get around this issue,
      * then only the class constructor would need to be called. This is safer and nicer. The code currently modifies the
-     * attribute `m_GSD_parsed` to true to give some check that the system has been properly initialized. The `engine`
+     * attribute `m_GSD_parsed` to true to give some check that the system has been properly initialized. The `Engine`
      * class also checks that this boolean has been set.
      *
      * @todo Find a better way to handle passing of `this` to `GSDUtil` so that this can be done in `SystemData`

@@ -3,7 +3,7 @@ SET(LIB_NAME "simulation_system")
 
 SET(LIB_FILES 
     SystemData.cpp SystemData.hpp 
-    engine.cpp engine.hpp
+    Engine.cpp Engine.hpp
     progressBar.hpp)
 
 SET(LIB_LINKS 

@@ -44,26 +44,26 @@
 class SystemData;
 
 /**
- * @class engine
+ * @class Engine
  *
  * @brief Manages the time integration of the simulation system as well as when to output data to GSD.
  *
  */
-class engine
+class Engine
 {
   public:
     /**
-     * @brief Construct a new engine object
+     * @brief Construct a new Engine object
      *
      * @param sys `SystemData` class to collect data from. Must be fully initialized and have GSD data loaded.
      */
-    explicit engine(std::shared_ptr<SystemData> sys);
+    explicit Engine(std::shared_ptr<SystemData> sys);
 
     /**
-     * @brief Destroy the engine object
+     * @brief Destroy the Engine object
      *
      */
-    ~engine();
+    ~Engine();
 
     /**
      * @brief Runs the simulation from @f$ t_0 @f$ to @f$ t_0f @f$.
@@ -94,7 +94,7 @@ class engine
 
     // logging
     std::string       m_logFile;
-    const std::string m_logName{"engine"};
+    const std::string m_logName{"Engine"};
 
     // eigen parallelization parameters
     /// number of physical CPU cores to use in tensor calculations

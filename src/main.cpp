@@ -3,8 +3,8 @@
 //
 
 /* Include all internal project dependencies */
+#include <Engine.hpp>
 #include <SystemData.hpp>
-#include <engine.hpp>
 
 /* Include all external project dependencies */
 // STL
@@ -40,7 +40,7 @@ main(const int argc, const char* argv[])
     // Initialize data structures
     auto system = std::make_shared<SystemData>(inputDataFile, outputDir);
     system->initializeData();
-    auto eng = std::make_shared<engine>(system);
+    auto eng = std::make_shared<Engine>(system);
 
     // Run simulations
     eng->run();

@@ -52,9 +52,9 @@ Systems invariant to rigid spatial translation and rotation can also use the pri
 
 ## Subdirectory: simulation_system
 
-### Class: engine
+### Class: Engine
 
-The engine class assembles the simulation system and runs the time integration with the public `run()` method.
+The Engine class assembles the simulation system and runs the time integration with the public `run()` method.
 The constructor also constructs the integrators and forces needed for the dynamics.
 
 ### Class: progressBar

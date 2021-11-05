@@ -108,7 +108,7 @@ rungeKutta4::integrateSecondOrder(Eigen::ThreadPoolDevice& device)
     Eigen::VectorXd a_out = Eigen::VectorXd::Zero(m_7M);
     accelerationUpdate(t4, x_out, v_out, a_out, device);
 
-    // reset system time to t1 as `engine` class manages updating system time at end of each step
+    // reset system time to t1 as `Engine` class manages updating system time at end of each step
     m_system->setT(t1);
 }
 

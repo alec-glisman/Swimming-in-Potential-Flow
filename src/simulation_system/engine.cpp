@@ -2,9 +2,9 @@
 // Created by Alec Glisman on 07/31/21
 //
 
-#include <engine.hpp>
+#include <Engine.hpp>
 
-engine::engine(std::shared_ptr<SystemData> sys)
+Engine::Engine(std::shared_ptr<SystemData> sys)
 {
     // save classes
     m_system = sys;
@@ -12,13 +12,13 @@ engine::engine(std::shared_ptr<SystemData> sys)
     // Initialize logger
     m_logFile   = m_system->outputDir() + "/logs/" + m_logName + "-log.txt";
     auto logger = spdlog::basic_logger_mt(m_logName, m_logFile);
-    spdlog::get(m_logName)->info("Initializing engine");
+    spdlog::get(m_logName)->info("Initializing Engine");
 
     // validate system loaded GSD data
     spdlog::get(m_logName)->info("Checking input SystemData class loaded GSD data: {0}", m_system->gSDParsed());
     if (m_system->gSDParsed() == false)
     {
-        throw std::runtime_error("GSD data not loaded into SystemData class before calling engine constructor.");
+        throw std::runtime_error("GSD data not loaded into SystemData class before calling Engine constructor.");
     }
 
     // Initialize forces
@@ -40,17 +40,17 @@ engine::engine(std::shared_ptr<SystemData> sys)
     spdlog::get(m_logName)->flush();
 }
 
-engine::~engine()
+Engine::~Engine()
 {
-    spdlog::get(m_logName)->info("Destructing engine");
+    spdlog::get(m_logName)->info("Destructing Engine");
     spdlog::get(m_logName)->flush();
     spdlog::drop(m_logName);
 }
 
 void
-engine::run()
+Engine::run()
 {
-    spdlog::get(m_logName)->critical("Starting engine run");
+    spdlog::get(m_logName)->critical("Starting Engine run");
     m_progressBar->display(); // display the progress bar
 
     // calculate number of steps in integration
@@ -93,7 +93,7 @@ engine::run()
     }
 
     // Final data writing and shut down
-    spdlog::get(m_logName)->info("Ending engine run");
+    spdlog::get(m_logName)->info("Ending Engine run");
     spdlog::get(m_logName)->info("Writing frame at t = {0}", m_system->t());
     m_system->gsdUtil()->writeFrame();
     m_progressBar->display();
@@ -101,7 +101,7 @@ engine::run()
 }
 
 void
-engine::integrate(Eigen::ThreadPoolDevice& device)
+Engine::integrate(Eigen::ThreadPoolDevice& device)
 {
     m_rk4Integrator->integrate(device);
 }
