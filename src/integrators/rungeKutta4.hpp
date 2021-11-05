@@ -10,8 +10,8 @@
 #error This header cannot be compiled by nvcc
 #endif
 /* Include all internal project dependencies */
+#include <PotentialHydrodynamics.hpp>
 #include <SystemData.hpp>
-#include <potentialHydrodynamics.hpp>
 
 /* Include all external project dependencies */
 // Intel MKL
@@ -57,9 +57,9 @@ class RungeKutta4
      * @brief Construct a new runge Kutta4 object
      *
      * @param sys SystemData class to gather data from
-     * @param hydro potentialHydrodynamics class to get hydrodynamic force data from
+     * @param hydro PotentialHydrodynamics class to get hydrodynamic force data from
      */
-    explicit RungeKutta4(std::shared_ptr<SystemData> sys, std::shared_ptr<potentialHydrodynamics> hydro);
+    explicit RungeKutta4(std::shared_ptr<SystemData> sys, std::shared_ptr<PotentialHydrodynamics> hydro);
 
     /**
      * @brief Destroy the runge Kutta4 object
@@ -149,8 +149,8 @@ class RungeKutta4
     // classes
     /// shared pointer reference to `SystemData` class
     std::shared_ptr<SystemData> m_system;
-    /// shared pointer reference to `potentialHydrodynamics` class
-    std::shared_ptr<potentialHydrodynamics> m_potHydro;
+    /// shared pointer reference to `PotentialHydrodynamics` class
+    std::shared_ptr<PotentialHydrodynamics> m_potHydro;
 
     // logging
     /// path of logfile for spdlog to write to

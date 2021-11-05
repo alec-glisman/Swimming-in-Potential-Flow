@@ -11,7 +11,7 @@
 
 /* Include all internal project dependencies */
 #include <SystemData.hpp>
-#include <potentialHydrodynamics.hpp>
+#include <PotentialHydrodynamics.hpp>
 #include <ProgressBar.hpp>
 #include <RungeKutta4.hpp>
 
@@ -88,7 +88,7 @@ class Engine
 
     // classes
     std::shared_ptr<SystemData>             m_system;
-    std::shared_ptr<potentialHydrodynamics> m_potHydro;
+    std::shared_ptr<PotentialHydrodynamics> m_potHydro;
     std::shared_ptr<RungeKutta4>            m_rk4Integrator;
     std::shared_ptr<ProgressBar>            m_ProgressBar;
 

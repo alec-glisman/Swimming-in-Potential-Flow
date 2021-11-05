@@ -23,7 +23,7 @@ Engine::Engine(std::shared_ptr<SystemData> sys)
 
     // Initialize forces
     spdlog::get(m_logName)->info("Initializing potential hydrodynamics");
-    m_potHydro = std::make_shared<potentialHydrodynamics>(m_system);
+    m_potHydro = std::make_shared<PotentialHydrodynamics>(m_system);
 
     // Initialize integrator
     spdlog::get(m_logName)->info("Initializing integrator");

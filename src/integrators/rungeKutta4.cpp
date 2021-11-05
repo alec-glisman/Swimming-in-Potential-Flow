@@ -4,7 +4,7 @@
 
 #include <RungeKutta4.hpp>
 
-RungeKutta4::RungeKutta4(std::shared_ptr<SystemData> sys, std::shared_ptr<potentialHydrodynamics> hydro)
+RungeKutta4::RungeKutta4(std::shared_ptr<SystemData> sys, std::shared_ptr<PotentialHydrodynamics> hydro)
 {
     // save classes
     m_system   = sys;

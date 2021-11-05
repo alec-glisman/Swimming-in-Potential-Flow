@@ -2,7 +2,7 @@
 SET(LIB_NAME "forces")
 
 SET(LIB_FILES 
-    potentialHydrodynamics.cpp potentialHydrodynamics.hpp)
+    PotentialHydrodynamics.cpp PotentialHydrodynamics.hpp)
 
 SET(LIB_LINKS 
     spdlog::spdlog_header_only 

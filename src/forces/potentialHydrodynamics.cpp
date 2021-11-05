@@ -2,9 +2,9 @@
 // Created by Alec Glisman on 07/31/21
 //
 
-#include <potentialHydrodynamics.hpp>
+#include <PotentialHydrodynamics.hpp>
 
-potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<SystemData> sys)
+PotentialHydrodynamics::PotentialHydrodynamics(std::shared_ptr<SystemData> sys)
 {
     // save classes
     m_system = sys;
@@ -122,7 +122,7 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<SystemData> sys)
     spdlog::get(m_logName)->flush();
 }
 
-potentialHydrodynamics::~potentialHydrodynamics()
+PotentialHydrodynamics::~PotentialHydrodynamics()
 {
     spdlog::get(m_logName)->info("Destructing potential hydrodynamics");
     spdlog::get(m_logName)->flush();
@@ -130,7 +130,7 @@ potentialHydrodynamics::~potentialHydrodynamics()
 }
 
 void
-potentialHydrodynamics::update(Eigen::ThreadPoolDevice& device)
+PotentialHydrodynamics::update(Eigen::ThreadPoolDevice& device)
 {
     calcParticleDistances();
 
@@ -145,7 +145,7 @@ potentialHydrodynamics::update(Eigen::ThreadPoolDevice& device)
 }
 
 void
-potentialHydrodynamics::calcParticleDistances()
+PotentialHydrodynamics::calcParticleDistances()
 {
     /* NOTE: Fill Mass matrix elements one (3 x 3) block at a time (matrix elements between
      * particles \alpha and \beta) */
@@ -165,7 +165,7 @@ potentialHydrodynamics::calcParticleDistances()
 }
 
 void
-potentialHydrodynamics::calcAddedMass()
+PotentialHydrodynamics::calcAddedMass()
 {
     // set matrices to zero
     m_M_added.setZero();
@@ -205,7 +205,7 @@ potentialHydrodynamics::calcAddedMass()
 }
 
 void
-potentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
+PotentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
 {
     // eigen tensor contraction variables
     const Eigen::array<Eigen::IndexPair<int>, 1>  contract_ijl_kl  = {Eigen::IndexPair<int>(2, 1)};
@@ -278,7 +278,7 @@ potentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
 }
 
 void
-potentialHydrodynamics::calcTotalMass()
+PotentialHydrodynamics::calcTotalMass()
 {
     m_M_total.noalias() = m_M_intrinsic;
     m_M_total.noalias() += m_M_added;
@@ -288,7 +288,7 @@ potentialHydrodynamics::calcTotalMass()
 }
 
 void
-potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
+PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
 {
     /* ANCHOR: Indices */
     // `Eigen::Tensor` contraction indices
@@ -338,7 +338,7 @@ potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
 }
 
 void
-potentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
+PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
 {
     // tensor contraction indices
     const Eigen::array<Eigen::IndexPair<int>, 0> empty_index_list = {}; // outer product

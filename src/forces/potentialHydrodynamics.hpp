@@ -36,12 +36,12 @@
 class SystemData;
 
 /**
- * @class potentialHydrodynamics
+ * @class PotentialHydrodynamics
  *
  * @brief Computes hydrodynamic tensors (mass, forces) on a finite number of spheres in potential flow.
  *
  */
-class potentialHydrodynamics
+class PotentialHydrodynamics
 {
   public:
     /**
@@ -49,13 +49,13 @@ class potentialHydrodynamics
      *
      * @param sys SystemData class to gather data from
      */
-    explicit potentialHydrodynamics(std::shared_ptr<SystemData> sys);
+    explicit PotentialHydrodynamics(std::shared_ptr<SystemData> sys);
 
     /**
      * @brief Destroy the potential Hydrodynamics object
      *
      */
-    ~potentialHydrodynamics();
+    ~PotentialHydrodynamics();
 
     /**
      * @brief Updates all hydrodynamic quantities at current configuration (data from `SystemData`)
@@ -147,7 +147,7 @@ class potentialHydrodynamics
     /// path of logfile for spdlog to write to
     std::string m_logFile;
     /// filename of logfile for spdlog to write to
-    const std::string m_logName{"potentialHydrodynamics"};
+    const std::string m_logName{"PotentialHydrodynamics"};
 
     // For-loop variables
     /// = s. Number of pairwise interactions to count: @f$s = 1/2 \, N \, (N - 1) @f$

@@ -29,7 +29,7 @@ Wrapper for gsd class that loads data relevant to simulation.
 
 ## Subdirectory: forces
 
-### Class: potentialHydrodynamics
+### Class: PotentialHydrodynamics
 
 Calculates hydrodynamic tensors (mass matrices and gradients) and forces for spheres in potential flow.
 We only look at the leading-order dipole-dipole interactions $\mathcal{O}(r^{-3})$.
