@@ -504,57 +504,7 @@ SystemData::udwadiaLinearSystem()
 }
 
 void
-SystemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
-{
-    /* ANCHOR: Compute m_rbm_conn */
-    m_rbm_conn.setZero();
-
-    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
-    {
-
-        const int particle_id_3{3 * particle_id};
-        const int particle_id_7{7 * particle_id};
-        const int body_id_7{7 * m_particle_group_id(particle_id)};
-
-        // skew-symmetric matrix representation of cross product
-        Eigen::Matrix3d mat_dr_cross;
-        crossProdMat(m_positions_particles_articulation.segment<3>(particle_id_3), mat_dr_cross);
-
-        // rigid body motion connectivity tensor elements
-        m_rbm_conn.block<3, 3>(body_id_7, particle_id_7).noalias() = m_I3; // translation-translation couple
-
-        /// @FIXME: The teaching SD to swim paper had a negative sign here, but my derivations do not have that
-        m_rbm_conn.block<3, 3>(body_id_7 + 4, particle_id_7).noalias() = mat_dr_cross; // translation-rotation couple
-
-        m_rbm_conn(body_id_7 + 3, body_id_7 + 3) = m_sys_scalar_w; // scalar constant to make resulting matrix full-rank
-
-        m_rbm_conn.block<3, 3>(body_id_7 + 4, particle_id_7 + 4).noalias() = m_I3; // rotation-rotation couple
-    }
-
-    /* ANCHOR: Compute m_psi_conv_quat_ang */
-    m_psi_conv_quat_ang.setZero();
-
-    for (int body_id = 0; body_id < m_num_bodies; body_id++)
-    {
-        const int body_id_7{7 * body_id};
-
-        // matrix E from quaterion of body k
-        Eigen::Matrix<double, 4, 4> E_theta_k;
-        eMatrix(m_positions_bodies.segment<4>(body_id_7 + 3), E_theta_k);
-
-        // matrix elements of Psi
-        m_psi_conv_quat_ang.block<3, 3>(body_id_7, body_id_7).noalias() = m_I3; // no conversion from linear components
-        m_psi_conv_quat_ang.block<4, 4>(body_id_7 + 3, body_id_7 + 3).noalias() =
-            2 * E_theta_k; // angular-quaternion velocity couple
-    }
-
-    /* ANCHOR: Compute m_zeta & m_tens_zeta */
-    m_zeta.noalias() = m_psi_conv_quat_ang.transpose() * m_rbm_conn;
-    m_tens_zeta      = TensorCast(m_zeta);
-}
-
-void
-SystemData::chiMatrixElement(const int particle_id, Eigen::Matrix<double, 7, 3>& chi_matrix_element)
+SystemData::chiMatrixElement(const int particle_id)
 {
     /* ANCHOR: Compute G matrix element */
     // body number
@@ -562,6 +512,7 @@ SystemData::chiMatrixElement(const int particle_id, Eigen::Matrix<double, 7, 3>&
     const bool is_locater{m_particle_group_id(particle_id) == 1}; // determine if particle is locater particle
     // particle number
     const int particle_id_3{3 * particle_id};
+    const int particle_id_7{7 * particle_id};
 
     // body unit quaternion
     const Eigen::Vector4d theta_body = m_positions_bodies.segment<4>(body_id_7);
@@ -610,45 +561,145 @@ SystemData::chiMatrixElement(const int particle_id, Eigen::Matrix<double, 7, 3>&
     const Eigen::Matrix3d s_matrix = s_part * m_I3;
 
     /* ANCHOR: Compute chi matrix element */
-    chi_matrix_element.block<3, 3>(0, 0).noalias() =
+    m_chi.block<3, 3>(body_id_7, particle_id_7).noalias() =
         s_matrix; // convert body (linear) position derivatives to particle linear coordinate derivatives
-    chi_matrix_element.block<4, 3>(3, 0).noalias() =
+    m_chi.block<4, 3>(body_id_7 + 3, particle_id_7).noalias() =
         g_matrix; // convert body (quaternion) position derivatives to particle linear coordinate derivatives
 }
 
-    void
-    SystemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
+void
+SystemData::rbmMatrixElement(const int particle_id)
+{
+    const int particle_id_3{3 * particle_id};
+    const int particle_id_7{7 * particle_id};
+    const int body_id_7{7 * m_particle_group_id(particle_id)};
+
+    // skew-symmetric matrix representation of cross product
+    Eigen::Matrix3d mat_dr_cross;
+    crossProdMat(m_positions_particles_articulation.segment<3>(particle_id_3), mat_dr_cross);
+
+    // rigid body motion connectivity tensor elements
+    m_rbm_conn.block<3, 3>(body_id_7, particle_id_7).noalias() = m_I3; // translation-translation couple
+
+    /// @FIXME: The teaching SD to swim paper had a negative sign here, but my derivations do not have that
+    m_rbm_conn.block<3, 3>(body_id_7 + 4, particle_id_7).noalias() = mat_dr_cross; // translation-rotation couple
+
+    m_rbm_conn(body_id_7 + 3, body_id_7 + 3) = m_sys_scalar_w; // scalar constant to make resulting matrix full-rank
+
+    m_rbm_conn.block<3, 3>(body_id_7 + 4, particle_id_7 + 4).noalias() = m_I3; // rotation-rotation couple
+}
+
+void
+SystemData::psiMatrixElement(const int body_id)
+{
+    const int body_id_7{7 * body_id};
+
+    // matrix E from quaterion of body k
+    Eigen::Matrix<double, 4, 4> E_body;
+    eMatrix(m_positions_bodies.segment<4>(body_id_7 + 3), E_body);
+
+    // matrix elements of Psi
+    m_psi_conv_quat_ang.block<3, 3>(body_id_7, body_id_7).noalias() = m_I3; // no conversion from linear components
+    m_psi_conv_quat_ang.block<4, 4>(body_id_7 + 3, body_id_7 + 3).noalias() =
+        2 * E_body; // angular-quaternion velocity couple
+}
+
+void
+SystemData::gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice& device)
+{
+    /* ANCHOR: Tensor indices */
+    const int particle_id_7{7 * particle_id};
+    const int body_id_7{7 * m_particle_group_id(particle_id)};
+
+    const bool is_locater{m_particle_group_id(particle_id) == 1};
+
+    // `Eigen::Tensor` contract indices
+    const Eigen::array<Eigen::IndexPair<int>, 1> contract_ilk_lj = {
+        Eigen::IndexPair<int>(1, 0)}; // {i, l, k} . {l, j} --> {i, k, j}
+    const Eigen::array<Eigen::IndexPair<int>, 1> contract_li_ljk = {
+        Eigen::IndexPair<int>(0, 0)}; // {l, i} . {l, j, k} --> {i, j, k}
+    const Eigen::array<Eigen::IndexPair<int>, 1> contract_ljm_km = {
+        Eigen::IndexPair<int>(2, 1)}; // {l, j, m} . {k, m} --> {l, j, k}
+
+    // `Eigen::Tensor` permute indices
+    const Eigen::array<int, 3> permute_ikj_ijk({0, 2, 1}); // {i, k, j} --> {i, j, k}
+
+    // `Eigen::Tensor` output tensor indices start location (offset) and extent
+    const Eigen::array<Eigen::Index, 3> offsets_left  = {body_id_7 + 3, particle_id_7, body_id_7};
+    const Eigen::array<Eigen::Index, 3> offsets_right = {body_id_7 + 3, particle_id_7 + 3, body_id_7};
+    const Eigen::array<Eigen::Index, 3> extents       = {4, 3, 7};
+
+    // get moment arm to locater point from particle
+    const Eigen::Matrix3d two_r_cross_mat = 2 * m_rbm_conn.block<3, 3>(body_id_7 + 3, particle_id_7);
+    const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_two_r_cross_mat = TensorCast(two_r_cross_mat);
+
+    // get E matrix representation of body quaternion from m_psi_conv_quat_ang
+    const Eigen::Matrix<double, 3, 4> two_E_body = m_psi_conv_quat_ang.block<3, 4>(body_id_7 + 3, body_id_7 + 3);
+    const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4>> tens_two_E_body = TensorCast(two_E_body);
+
+    // get change of variable matrix element m_chi_tilde
+    const Eigen::Matrix<double, 7, 3>                        n_chi_tilde = -m_chi.block<7, 3>(body_id_7, particle_id_7);
+    const Eigen::TensorFixedSize<double, Eigen::Sizes<7, 3>> tens_n_chi_tilde = TensorCast(n_chi_tilde);
+
+    /* ANCHOR: tensor contractions for left-half of gradient */
+    // compute grad_r_cross{l, j, k} = - m_levi_cevita{l, j, m} chi_tilde{k, m}
+    Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 7>> grad_r_cross; // (3, 3, 7)  {l, j, k}
+    grad_r_cross.device(device) = m_levi_cevita.contract(tens_n_chi_tilde, contract_ljm_km);
+
+    // compute 2E_T_grad_r{i, j, k} = 2E_{l, i} grad_r_cross{l, j, k}
+    Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> two_E_grad_r_cross; // (4, 3, 7)  {i, j, k}
+    two_E_grad_r_cross.device(device) = tens_two_E_body.contract(grad_r_cross, contract_li_ljk);
+
+    // compute 2grad_E_r_cross_{i, k, j} = Kappa{i, l, k} r_cross{l, j}
+    Eigen::TensorFixedSize<double, Eigen::Sizes<4, 7, 3>> two_grad_E_r_cross_preshuffle; // (4, 3, 7)  {i, k, j}
+    two_grad_E_r_cross_preshuffle.device(device) = m_kappa.contract(tens_two_r_cross_mat, contract_ilk_lj);
+
+    // shuffle two_grad_E_r_cross_preshuffle
+    Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> two_grad_E_r_cross; // (4, 3, 7)  {i, j, k}
+    two_grad_E_r_cross.device(device) = two_grad_E_r_cross_preshuffle.shuffle(permute_ikj_ijk);
+
+    // left term
+    const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> mixed_gradient =
+        two_grad_E_r_cross + two_E_grad_r_cross;
+    m_tens_grad_zeta.slice(offsets_left, extents) = mixed_gradient;
+
+    /* ANCHOR: tensor contractions for right-half of gradient */
+    m_tens_grad_zeta.slice(offsets_right, extents) = 2 * m_kappa;
+}
+
+void
+SystemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
+{
+    /* ANCHOR: Compute m_rbm_conn */
+    m_rbm_conn.setZero();
+
+    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
+    {
+        rbmMatrixElement(particle_id);
+    }
+
+    /* ANCHOR: Compute m_psi_conv_quat_ang */
+    m_psi_conv_quat_ang.setZero();
+
+    for (int body_id = 0; body_id < m_num_bodies; body_id++)
+    {
+        psiMatrixElement(body_id);
+    }
+
+    /* ANCHOR: Compute m_zeta & m_tens_zeta */
+    m_zeta.noalias() = m_psi_conv_quat_ang.transpose() * m_rbm_conn;
+    m_tens_zeta      = TensorCast(m_zeta);
+}
+
+void
+SystemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
 {
     /* ANCHOR: Compute m_chi and m_tens_chi */
     m_chi.setZero();
 
     for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
-        const int particle_id_3{3 * particle_id};
-        const int particle_id_7{7 * particle_id};
-        const int body_id_7{7 * m_particle_group_id(particle_id)};
-
-        const bool is_locater{m_particle_group_id(particle_id) == 1};
-
-        /// S_alpha = {-1 for non-locater particles, +1 for locater particles}
-        const int s_part{-1 + 2 * is_locater};
-
-        // (4 vector) displacement of particle from locater point moment arm
-        Eigen::Vector4d dr_init         = Eigen::Vector4d::Zero(4, 1);
-        dr_init.segment<3>(1).noalias() = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
-
-        const double r_alpha_norm{m_positions_particles_articulation.segment<3>(particle_id_3).norm()};
-        dr_init *= r_alpha_norm; // incorporate norm factor here rather than in chi calculation for numerical efficiency
-
-        // quaternion product representation of particle displacement (transpose)
-        Eigen::Matrix<double, 4, 4> g_T;
-        eMatrix(dr_init, g_T);
-
-        // change of variables gradient tensor elements
-        m_chi.block<3, 3>(body_id_7, particle_id_7).noalias() = s_part * m_I3; // translation-translation couple
-        m_chi.block<4, 4>(body_id_7 + 4, particle_id_7).noalias() =
-            m_psi_conv_quat_ang.block<4, 4>(body_id_7 + 3, body_id_7 + 3) *
-            g_T.transpose(); // quaternion-rotation couple (first row is zero)
+        chiMatrixElement(particle_id);
     }
 
     m_tens_chi = TensorCast(m_chi);
@@ -658,64 +709,7 @@ SystemData::chiMatrixElement(const int particle_id, Eigen::Matrix<double, 7, 3>&
 
     for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
-        /* ANCHOR: Tensor indices */
-        const int particle_id_7{7 * particle_id};
-        const int body_id_7{7 * m_particle_group_id(particle_id)};
-
-        const bool is_locater{m_particle_group_id(particle_id) == 1};
-
-        // `Eigen::Tensor` contract indices
-        const Eigen::array<Eigen::IndexPair<int>, 1> contract_ilk_lj = {
-            Eigen::IndexPair<int>(1, 0)}; // {i, l, k} . {l, j} --> {i, k, j}
-        const Eigen::array<Eigen::IndexPair<int>, 1> contract_li_ljk = {
-            Eigen::IndexPair<int>(0, 0)}; // {l, i} . {l, j, k} --> {i, j, k}
-        const Eigen::array<Eigen::IndexPair<int>, 1> contract_ljm_km = {
-            Eigen::IndexPair<int>(2, 1)}; // {l, j, m} . {k, m} --> {l, j, k}
-
-        // `Eigen::Tensor` permute indices
-        const Eigen::array<int, 3> permute_ikj_ijk({0, 2, 1}); // {i, k, j} --> {i, j, k}
-
-        // `Eigen::Tensor` output tensor indices start location (offset) and extent
-        const Eigen::array<Eigen::Index, 3> offsets_left  = {body_id_7 + 3, particle_id_7, body_id_7};
-        const Eigen::array<Eigen::Index, 3> offsets_right = {body_id_7 + 3, particle_id_7 + 3, body_id_7};
-        const Eigen::array<Eigen::Index, 3> extents       = {4, 3, 7};
-
-        // get moment arm to locater point from particle
-        const Eigen::Matrix3d two_r_cross_mat = 2 * m_rbm_conn.block<3, 3>(body_id_7 + 3, particle_id_7);
-        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_two_r_cross_mat = TensorCast(two_r_cross_mat);
-
-        // get E matrix representation of body quaternion from m_psi_conv_quat_ang
-        const Eigen::Matrix<double, 3, 4> two_E_body = m_psi_conv_quat_ang.block<3, 4>(body_id_7 + 3, body_id_7 + 3);
-        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4>> tens_two_E_body = TensorCast(two_E_body);
-
-        // get change of variable matrix element m_chi_tilde
-        const Eigen::Matrix<double, 7, 3> n_chi_tilde = -m_chi.block<7, 3>(body_id_7, particle_id_7);
-        const Eigen::TensorFixedSize<double, Eigen::Sizes<7, 3>> tens_n_chi_tilde = TensorCast(n_chi_tilde);
-
-        /* ANCHOR: tensor contractions for left-half of gradient */
-        // compute grad_r_cross{l, j, k} = - m_levi_cevita{l, j, m} chi_tilde{k, m}
-        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 7>> grad_r_cross; // (3, 3, 7)  {l, j, k}
-        grad_r_cross.device(device) = m_levi_cevita.contract(tens_n_chi_tilde, contract_ljm_km);
-
-        // compute 2E_T_grad_r{i, j, k} = 2E_{l, i} grad_r_cross{l, j, k}
-        Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> two_E_grad_r_cross; // (4, 3, 7)  {i, j, k}
-        two_E_grad_r_cross.device(device) = tens_two_E_body.contract(grad_r_cross, contract_li_ljk);
-
-        // compute 2grad_E_r_cross_{i, k, j} = Kappa{i, l, k} r_cross{l, j}
-        Eigen::TensorFixedSize<double, Eigen::Sizes<4, 7, 3>> two_grad_E_r_cross_preshuffle; // (4, 3, 7)  {i, k, j}
-        two_grad_E_r_cross_preshuffle.device(device) = m_kappa.contract(tens_two_r_cross_mat, contract_ilk_lj);
-
-        // shuffle two_grad_E_r_cross_preshuffle
-        Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> two_grad_E_r_cross; // (4, 3, 7)  {i, j, k}
-        two_grad_E_r_cross.device(device) = two_grad_E_r_cross_preshuffle.shuffle(permute_ikj_ijk);
-
-        // left term
-        const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> mixed_gradient =
-            two_grad_E_r_cross + two_E_grad_r_cross;
-        m_tens_grad_zeta.slice(offsets_left, extents) = mixed_gradient;
-
-        /* ANCHOR: tensor contractions for right-half of gradient */
-        m_tens_grad_zeta.slice(offsets_right, extents) = 2 * m_kappa;
+        gradZetaTensorElement(particle_id, device);
     }
 }
 

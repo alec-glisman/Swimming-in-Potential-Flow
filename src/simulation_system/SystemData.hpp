@@ -174,6 +174,52 @@ class SystemData : public std::enable_shared_from_this<SystemData>
     udwadiaLinearSystem();
 
     /**
+     * @brief Computes \Sigma_{i \alpha} matrix for given particle number and body number.
+     * Sigma matrix represents the transformation of coordinates from (linear/angular) body
+     * coordinates to (linear/angular) particle relative configuration position coordinates.
+     *
+     * @details Modifies `m_rbm_conn`
+     *
+     * @param particle_id Particle number (alpha, i is body number)
+     */
+    void
+    rbmMatrixElement(const int particle_id);
+
+    /**
+     * @brief Computes \Psi matrix for given body number.
+     * \Psi matrix represents the transformation of coordinates from (linear/angular) body
+     * coordinates to (linear/quaternion) body coordinates.
+     *
+     * @details Modifies `m_psi_conv_quat_ang`
+     *
+     * @param body_id Body number
+     */
+    void
+    psiMatrixElement(const int body_id);
+
+    /**
+     * @brief Computes \chi_{i \alpha} matrix for given particle number and body number.
+     * chi matrix represents the transformation of gradient coordinates from (linear/quaternion) body
+     * coordinates to (linear) particle relative configuration position coordinates.
+     *
+     * @details Modifies `m_chi`
+     *
+     * @param particle_id Particle number (alpha, i is body number)
+     */
+    void
+    chiMatrixElement(const int particle_id);
+
+    /**
+     * @brief Computes \nabla_{\xi} \zeta_{i \alpha} tensor for given particle number and body number.
+     *
+     * @details Modifies `m_tens_grad_zeta`
+     *
+     * @param particle_id Particle number (alpha, i is body number)
+     */
+    void
+    gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice& device);
+
+    /**
      * @brief Computes the rigid body motion connectivity tensors.
      *
      * @details This function computes the tensors required to convert body locater kinematics into particle
@@ -225,17 +271,6 @@ class SystemData : public std::enable_shared_from_this<SystemData>
     void
     convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device);
 
-    /**
-     * @brief Computes \chi_{i \alpha} matrix for given particle number and body number.
-     * chi matrix represents the transformation of gradient coordinates from (linear/quaternion) body
-     * coordinates to (linear) particle relative configuration position coordinates.
-     *
-     * @param particle_id Particle number (alpha, i is body number)
-     * @param chi_matrix_element Output matrix @f$ \boldsymbol{\xhi}_{i \alpha} @f$ (7 x 3)
-     */
-    void
-    chiMatrixElement(const int particle_id, Eigen::Matrix<double, 7, 3>& chi_matrix_element);
-
     /* SECTION: Static functions */
     /**
      * @brief Function takes in vector in vector cross-product expression: @f$ c = a \times b @f$
@@ -261,7 +296,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      * @param E_body Output matrix representation
      */
     static inline void
-    eMatrix(const Eigen::Vector4d& theta, Eigen::Matrix<double, 4, 4>& E_body)
+    eMatrix(const Eigen::Vector4d& theta, Eigen::Matrix4d& E_body)
     {
         // clang-format off
         E_body << 
