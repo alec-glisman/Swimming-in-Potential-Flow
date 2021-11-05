@@ -83,6 +83,13 @@ class SystemData : public std::enable_shared_from_this<SystemData>
     initializeData();
 
     /**
+     * @brief Logs private attributes to logfile
+     *
+     */
+    void
+    logData();
+
+    /**
      * @brief Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constraints.
      * Assumes `m_t` is current simulation time to update variables at.
      *
@@ -121,13 +128,6 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      */
     void
     checkInput();
-
-    /**
-     * @brief Logs private attributes to logfile
-     *
-     */
-    void
-    logData();
 
     /**
      * @brief Computes the articulation (linear) positions of the particles relative to their respective locater
