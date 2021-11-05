@@ -263,14 +263,15 @@ class SystemData : public std::enable_shared_from_this<SystemData>
 
     /**
      * @brief Computes \chi_{i \alpha} matrix for given particle number and body number.
-     * G matrix represents
+     * chi matrix represents the transformation of gradient coordinates from (linear/quaternion) body
+     * coordinates to (linear) particle relative configuration position coordinates.
      *
      * @param body_id Body number (i)
      * @param particle_id Particle number (alpha)
      * @param chi_matrix_element Output matrix @f$ \boldsymbol{\xhi}_{i \alpha} @f$ (7 x 3)
      */
     void
-    chiMatrixElement(const double body_id, const double particle_id, Eigen::Matrix<double, 5, 3>& chi_matrix_element)
+    chiMatrixElement(const double body_id, const double particle_id, Eigen::Matrix<double, 7, 3>& chi_matrix_element)
     {
         /* ANCHOR: Compute G matrix element */
         // body unit quaternion
@@ -324,7 +325,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
         chi_matrix_element.block<3, 3>(0, 0).noalias() =
             s_matrix; // convert body (linear) position derivatives to particle linear coordinate derivatives
         chi_matrix_element.block<4, 3>(3, 0).noalias() =
-            g_matrix; // convert body (angular) position derivatives to particle linear coordinate derivatives
+            g_matrix; // convert body (quaternion) position derivatives to particle linear coordinate derivatives
     }
     /* !SECTION */
 
