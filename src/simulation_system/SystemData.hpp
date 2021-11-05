@@ -5,6 +5,7 @@
 #ifndef BODIES_IN_POTENTIAL_FLOW_SYSTEM_DATA_H
 #define BODIES_IN_POTENTIAL_FLOW_SYSTEM_DATA_H
 
+/* SECTION: Header */
 #ifdef NVCC
 #error This header cannot be compiled by nvcc
 #endif
@@ -41,6 +42,7 @@
 
 /* Forward declarations */
 class GSDUtil;
+/* !SECTION (Header) */
 
 /**
  * @class SystemData
@@ -103,6 +105,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
     update(Eigen::ThreadPoolDevice& device);
     /* !SECTION (Public methods) */
 
+    /* SECTION: Private methods */
   private:
     /**
      * @brief Passes `this` (`SystemData` shared pointer instance) into `GSDUtil` constructor to load data from input
@@ -131,6 +134,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
     void
     checkInput();
 
+    /* SECTION: Constraints */
     /**
      * @brief Computes the articulation (linear) positions of the particles relative to their respective locater
      * points.
@@ -174,7 +178,9 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      */
     void
     udwadiaLinearSystem();
+    /* !SECTION (Constraints) */
 
+    /* SECTION: Rigid body motion */
     /**
      * @brief Computes \Sigma_{i \alpha} matrix for given particle number and body number.
      * Sigma matrix represents the transformation of coordinates from (linear/angular) body
@@ -248,7 +254,9 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      */
     void
     gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device);
+    /* !SECTION (Rigid body motion) */
 
+    /* SECTION: Convert between body and particle degrees of freedom */
     /**
      * @brief Computes the orientation (unit vector) of a particle with respect to its locater point
      *
@@ -272,8 +280,9 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      */
     void
     convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device);
+    /* !SECTION (Convert between body and particle degrees of freedom) */
 
-    /* SECTION: Static functions */
+    /* SECTION: Static methods */
     /**
      * @brief Function takes in vector in vector cross-product expression: @f$ c = a \times b @f$
      *
@@ -308,7 +317,8 @@ class SystemData : public std::enable_shared_from_this<SystemData>
             -theta(3), theta(2), -theta(1), theta(0);
         // clang-format on
     };
-    /* !SECTION */
+    /* !SECTION (Static methods) */
+    /* !SECTION (Private methods)
 
     /* SECTION: Friend classes */
     friend class TestSystemData;
@@ -501,7 +511,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
 
     /// (number of constraints x 1) Result of @f$ \mathbf{A} \, \ddot{\boldsymbol{\xi}} @f$
     Eigen::VectorXd m_Udwadia_b;
-    /* !SECTION */
+    /* !SECTION (Attributes) */
 
     /* SECTION: Setters and getters */
   public:
