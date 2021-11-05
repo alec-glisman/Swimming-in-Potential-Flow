@@ -3,8 +3,8 @@
 //
 
 /* Include all internal project dependencies */
+#include <SystemData.hpp>
 #include <engine.hpp>
-#include <systemData.hpp>
 
 /* Include all external project dependencies */
 #define CATCH_CONFIG_CONSOLE_WIDTH 300
@@ -38,21 +38,21 @@ TEST_CASE("Open GSD file", "[gsd]")
     REQUIRE(return_val == 0);
 }
 
-TEST_CASE("Initialize simulation system", "[engine][systemData][rungeKutta4][potentialHydrodynamics][gsd][GSDUtil]")
+TEST_CASE("Initialize simulation system", "[engine][SystemData][rungeKutta4][potentialHydrodynamics][gsd][GSDUtil]")
 {
     // close all previous loggers
     spdlog::drop_all();
 
     // I/O Parameters
     std::string inputDataFile = "input/collinear_swimmer_wall/initial_frame_dt1e-1_Z-height6.gsd";
-    std::string outputDir     = "output-systemData-init";
+    std::string outputDir     = "output-SystemData-init";
 
     // simulation classes
-    std::shared_ptr<systemData> system;
+    std::shared_ptr<SystemData> system;
     std::shared_ptr<engine>     eng;
 
     // Construct and initialize simulationSystem class
-    REQUIRE_NOTHROW(system = std::make_shared<systemData>(inputDataFile, outputDir));
+    REQUIRE_NOTHROW(system = std::make_shared<SystemData>(inputDataFile, outputDir));
     REQUIRE_NOTHROW(system->initializeData());
 
     // Verify data was correctly parsed from GSD to simulation
@@ -62,7 +62,7 @@ TEST_CASE("Initialize simulation system", "[engine][systemData][rungeKutta4][pot
     REQUIRE_NOTHROW(eng = std::make_shared<engine>(system));
 }
 
-TEST_CASE("Run simulation system", "[engine][progressBar][systemData][rungeKutta4][potentialHydrodynamics]")
+TEST_CASE("Run simulation system", "[engine][progressBar][SystemData][rungeKutta4][potentialHydrodynamics]")
 {
     // close all previous loggers
     spdlog::drop_all();
@@ -72,11 +72,11 @@ TEST_CASE("Run simulation system", "[engine][progressBar][systemData][rungeKutta
     std::string outputDir     = "output-engine-run";
 
     // simulation classes
-    std::shared_ptr<systemData> system;
+    std::shared_ptr<SystemData> system;
     std::shared_ptr<engine>     eng;
 
     // Construct and initialize simulation classes
-    REQUIRE_NOTHROW(system = std::make_shared<systemData>(inputDataFile, outputDir));
+    REQUIRE_NOTHROW(system = std::make_shared<SystemData>(inputDataFile, outputDir));
     REQUIRE_NOTHROW(system->initializeData());
     REQUIRE_NOTHROW(eng = std::make_shared<engine>(system));
 

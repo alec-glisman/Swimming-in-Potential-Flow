@@ -4,7 +4,7 @@
 
 #include <engine.hpp>
 
-engine::engine(std::shared_ptr<systemData> sys)
+engine::engine(std::shared_ptr<SystemData> sys)
 {
     // save classes
     m_system = sys;
@@ -15,10 +15,10 @@ engine::engine(std::shared_ptr<systemData> sys)
     spdlog::get(m_logName)->info("Initializing engine");
 
     // validate system loaded GSD data
-    spdlog::get(m_logName)->info("Checking input systemData class loaded GSD data: {0}", m_system->gSDParsed());
+    spdlog::get(m_logName)->info("Checking input SystemData class loaded GSD data: {0}", m_system->gSDParsed());
     if (m_system->gSDParsed() == false)
     {
-        throw std::runtime_error("GSD data not loaded into systemData class before calling engine constructor.");
+        throw std::runtime_error("GSD data not loaded into SystemData class before calling engine constructor.");
     }
 
     // Initialize forces

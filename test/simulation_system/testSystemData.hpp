@@ -2,15 +2,15 @@
 // Created by Alec Glisman on 10/20/21
 //
 
-#ifndef BODIES_IN_POTENTIAL_FLOW_TEST_SYSTEMDATA_HPP
-#define BODIES_IN_POTENTIAL_FLOW_TEST_SYSTEMDATA_HPP
+#ifndef BODIES_IN_POTENTIAL_FLOW_TEST_SystemData_HPP
+#define BODIES_IN_POTENTIAL_FLOW_TEST_SystemData_HPP
 
 #ifdef NVCC
 #error This header cannot be compiled by nvcc
 #endif
 
 /* Include all internal project dependencies */
-#include <systemData.hpp>
+#include <SystemData.hpp>
 
 /* Include all external project dependencies */
 #include <random> // std::uniform_real_distribution, std::default_random_engine
@@ -18,22 +18,22 @@
 /**
  * @class testSystemData
  *
- * @brief Friend class to test `systemData` class
+ * @brief Friend class to test `SystemData` class
  *
  */
 class testSystemData
 {
   public:
     // classes
-    /// shared pointer reference to systemData class
-    std::shared_ptr<systemData> m_system;
+    /// shared pointer reference to SystemData class
+    std::shared_ptr<SystemData> m_system;
 
     /**
      * @brief Construct a new test System Data object
      *
-     * @param sys systemData class to test
+     * @param sys SystemData class to test
      */
-    explicit testSystemData(std::shared_ptr<systemData> sys) : m_system(sys){};
+    explicit testSystemData(std::shared_ptr<SystemData> sys) : m_system(sys){};
 
     /**
      * @brief Destroy the test System Data object
@@ -42,7 +42,7 @@ class testSystemData
     ~testSystemData() = default;
 
     /**
-     * @brief Test `systemData::crossProdMat()`
+     * @brief Test `SystemData::crossProdMat()`
      *
      * @return int Number of failed tests
      */
@@ -50,7 +50,7 @@ class testSystemData
     testCrossProdMat();
 
     /**
-     * @brief Test `systemData::eMatrix()`
+     * @brief Test `SystemData::eMatrix()`
      *
      * @return int Number of failed tests
      */
@@ -58,7 +58,7 @@ class testSystemData
     testEMatrix();
 
     /**
-     * @brief Test `systemData::rigidBodyMotionTensors()`
+     * @brief Test `SystemData::rigidBodyMotionTensors()`
      *
      * @return int Number of failed tests
      */
@@ -68,4 +68,4 @@ class testSystemData
   private:
 };
 
-#endif // BODIES_IN_POTENTIAL_FLOW_TEST_SYSTEMDATA_HPP
+#endif // BODIES_IN_POTENTIAL_FLOW_TEST_SystemData_HPP

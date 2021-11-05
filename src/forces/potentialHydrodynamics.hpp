@@ -10,7 +10,7 @@
 #error This header cannot be compiled by nvcc
 #endif
 /* Include all internal project dependencies */
-#include <systemData.hpp>
+#include <SystemData.hpp>
 
 /* Include all external project dependencies */
 // Intel MKL
@@ -33,7 +33,7 @@
 #include <spdlog/spdlog.h>
 
 /* Forward declarations */
-class systemData;
+class SystemData;
 
 /**
  * @class potentialHydrodynamics
@@ -47,9 +47,9 @@ class potentialHydrodynamics
     /**
      * @brief Construct a new potential hydrodynamics object
      *
-     * @param sys systemData class to gather data from
+     * @param sys SystemData class to gather data from
      */
-    explicit potentialHydrodynamics(std::shared_ptr<systemData> sys);
+    explicit potentialHydrodynamics(std::shared_ptr<SystemData> sys);
 
     /**
      * @brief Destroy the potential Hydrodynamics object
@@ -58,7 +58,7 @@ class potentialHydrodynamics
     ~potentialHydrodynamics();
 
     /**
-     * @brief Updates all hydrodynamic quantities at current configuration (data from `systemData`)
+     * @brief Updates all hydrodynamic quantities at current configuration (data from `SystemData`)
      *
      * @details Functions must be called in a certain grouping.
      * Functions within a group can be called in any order.
@@ -79,7 +79,7 @@ class potentialHydrodynamics
     /**
      * @brief Calculates `m_r_mag_ab` and `m_r_ab` at current configuration
      *
-     * @details Configuration specified in `systemData` class
+     * @details Configuration specified in `SystemData` class
      *
      */
     void
@@ -89,7 +89,7 @@ class potentialHydrodynamics
      * @brief Calculates `m_M_added`
      *
      * @details Must call `calcParticleDistances()` before.
-     * Configuration specified in `systemData` class.
+     * Configuration specified in `SystemData` class.
      *
      */
     void
@@ -108,7 +108,7 @@ class potentialHydrodynamics
      * @brief Calculates `m_M_added`
      *
      * @details Must call `calcParticleDistances()` before.
-     * Configuration specified in `systemData` class
+     * Configuration specified in `SystemData` class
      *
      * @param device device (CPU thread-pool or GPU) used to speed up tensor calculations
      *
@@ -119,7 +119,7 @@ class potentialHydrodynamics
     /**
      * @brief Calculates \{`m_N1`, `m_N2`, `m_N3`, `m_M3`, and `m_M2`\}
      *
-     * @details Must call `calcTotalMass()` and assumes `systemData` rigid body motion tensors are up to date.
+     * @details Must call `calcTotalMass()` and assumes `SystemData` rigid body motion tensors are up to date.
      *
      * @param device device (CPU thread-pool or GPU) used to speed up tensor calculations
      *
@@ -131,7 +131,7 @@ class potentialHydrodynamics
      * @brief Calculates `m_F_hydro` and `m_F_hydroNoInertia`
      *
      * @details Must call `calcBodyTensors()` before.
-     * Kinematics specified in `systemData` class.
+     * Kinematics specified in `SystemData` class.
      *
      * @param device device (CPU thread-pool or GPU) used to speed up tensor calculations
      *
@@ -140,8 +140,8 @@ class potentialHydrodynamics
     calcHydroForces(Eigen::ThreadPoolDevice& device);
 
     // classes
-    /// shared pointer reference to systemData class
-    std::shared_ptr<systemData> m_system;
+    /// shared pointer reference to SystemData class
+    std::shared_ptr<SystemData> m_system;
 
     // logging
     /// path of logfile for spdlog to write to

@@ -4,7 +4,7 @@
 
 #include <potentialHydrodynamics.hpp>
 
-potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
+potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<SystemData> sys)
 {
     // save classes
     m_system = sys;
@@ -351,7 +351,7 @@ potentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     // tensor index shuffling
     const Eigen::array<int, 3> flip_first_two_indices({1, 0, 2}); // (i, j, k) --> (j, i, k)
 
-    // get kinematic tensors from systemData class
+    // get kinematic tensors from SystemData class
     Eigen::Tensor<double, 1> xi_dot  = TensorCast(m_system->velocitiesBodies(), m_7M);
     Eigen::Tensor<double, 1> xi_ddot = TensorCast(m_system->accelerationsBodies(), m_7M);
 

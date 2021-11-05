@@ -10,8 +10,8 @@
 #error This header cannot be compiled by nvcc
 #endif
 /* Include all internal project dependencies */
+#include <SystemData.hpp>
 #include <potentialHydrodynamics.hpp>
-#include <systemData.hpp>
 
 /* Include all external project dependencies */
 // Intel MKL
@@ -36,7 +36,7 @@
 #include <iostream>
 
 /* Forward declarations */
-class systemData;
+class SystemData;
 
 /**
  * @class rungeKutta4
@@ -56,10 +56,10 @@ class rungeKutta4
     /**
      * @brief Construct a new runge Kutta4 object
      *
-     * @param sys systemData class to gather data from
+     * @param sys SystemData class to gather data from
      * @param hydro potentialHydrodynamics class to get hydrodynamic force data from
      */
-    explicit rungeKutta4(std::shared_ptr<systemData> sys, std::shared_ptr<potentialHydrodynamics> hydro);
+    explicit rungeKutta4(std::shared_ptr<SystemData> sys, std::shared_ptr<potentialHydrodynamics> hydro);
 
     /**
      * @brief Destroy the runge Kutta4 object
@@ -131,7 +131,7 @@ class rungeKutta4
 
     /**
      * @brief Calculates the body acceleration components given the constraints established by the Udwadia linear
-     * system (calculated in the `systemData` class).
+     * system (calculated in the `SystemData` class).
      *
      * @see **Original paper on constrained Lagrangian dynamics:** Udwadia, Firdaus E., and Robert E. Kalaba. "A new
      * perspective on constrained motion." Proceedings of the Royal Society of London. Series A: Mathematical and
@@ -147,8 +147,8 @@ class rungeKutta4
     udwadiaKalaba(Eigen::VectorXd& acc);
 
     // classes
-    /// shared pointer reference to `systemData` class
-    std::shared_ptr<systemData> m_system;
+    /// shared pointer reference to `SystemData` class
+    std::shared_ptr<SystemData> m_system;
     /// shared pointer reference to `potentialHydrodynamics` class
     std::shared_ptr<potentialHydrodynamics> m_potHydro;
 

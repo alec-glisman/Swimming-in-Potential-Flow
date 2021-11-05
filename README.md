@@ -60,7 +60,7 @@ For this reason, there could be issues when loading data from frame 0 and any da
 The simulation system can be readily adapted for other configurations and constraints.
 
 The code that must be changed inside the C++ framework is tagged with comments of the form `@review_swimmer` and are found in the Doxygen documentation page named "Altering Swimmer Design List".
-The relevant classes to modify are the [`systemData`](src/simulation_system/systemData.hpp) and [`GSDUtil`](src/data_io/GSDUtil.hpp).
+The relevant classes to modify are the [`SystemData`](src/simulation_system/SystemData.hpp) and [`GSDUtil`](src/data_io/GSDUtil.hpp).
 
 Separate Python scripts for GSD initialization and numerical analysis must also be generated.
 These can be found in [`python/initial_configurations`](python/initial_configurations) and [`python/analysis`](python/analysis) directories, respectively.

@@ -13,18 +13,18 @@
 #include <memory> // for std::unique_ptr and std::shared_ptr
 #include <string> // std::string
 
-TEST_CASE("Test systemData class", "[systemData]")
+TEST_CASE("Test SystemData class", "[SystemData]")
 {
     // I/O Parameters
     std::string inputDataFile = "input/collinear_swimmer_wall/initial_frame_dt1e-1_Z-height6.gsd";
-    std::string outputDir     = "output-systemData-init";
+    std::string outputDir     = "output-SystemData-init";
 
     // simulation classes
-    std::shared_ptr<systemData>     system;
+    std::shared_ptr<SystemData>     system;
     std::shared_ptr<testSystemData> testSystem;
 
     // Construct systenData class
-    REQUIRE_NOTHROW(system = std::make_shared<systemData>(inputDataFile, outputDir));
+    REQUIRE_NOTHROW(system = std::make_shared<SystemData>(inputDataFile, outputDir));
     // Construct testSystemData class
     REQUIRE_NOTHROW(testSystem = std::make_shared<testSystemData>(system));
 

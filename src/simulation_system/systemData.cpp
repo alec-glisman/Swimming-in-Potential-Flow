@@ -2,9 +2,9 @@
 // Created by Alec Glisman on 07/30/21
 //
 
-#include <systemData.hpp>
+#include <SystemData.hpp>
 
-systemData::systemData(std::string inputGSDFile, std::string outputDir)
+SystemData::SystemData(std::string inputGSDFile, std::string outputDir)
     : m_inputGSDFile(inputGSDFile), m_outputDir(outputDir)
 {
     // Initialize logger
@@ -23,16 +23,16 @@ systemData::systemData(std::string inputGSDFile, std::string outputDir)
     spdlog::get(m_logName)->flush();
 }
 
-systemData::~systemData()
+SystemData::~SystemData()
 {
-    spdlog::get(m_logName)->info("systemData destructor called");
+    spdlog::get(m_logName)->info("SystemData destructor called");
     gsd_close(m_handle.get());
     spdlog::get(m_logName)->flush();
     spdlog::drop(m_logName);
 }
 
 void
-systemData::initializeData()
+SystemData::initializeData()
 {
     spdlog::get(m_logName)->info("Running initializeData()");
 
@@ -182,7 +182,7 @@ systemData::initializeData()
 }
 
 void
-systemData::parseGSD()
+SystemData::parseGSD()
 {
     spdlog::get(m_logName)->info("Starting parseGSD()");
 
@@ -198,7 +198,7 @@ systemData::parseGSD()
 }
 
 void
-systemData::checkInput()
+SystemData::checkInput()
 {
     spdlog::get(m_logName)->info("Input checking assertions");
 
@@ -235,7 +235,7 @@ systemData::checkInput()
 }
 
 void
-systemData::logData()
+SystemData::logData()
 {
     /* ANCHOR: Output simulation data */
     spdlog::get(m_logName)->info("Starting logdata()");
@@ -359,7 +359,7 @@ systemData::logData()
 }
 
 void
-systemData::update(Eigen::ThreadPoolDevice& device)
+SystemData::update(Eigen::ThreadPoolDevice& device)
 {
     // NOTE: Internal particle orientation D.o.F. calculated 1st
     convertBody2ParticleOrient();
@@ -382,7 +382,7 @@ systemData::update(Eigen::ThreadPoolDevice& device)
 }
 
 void
-systemData::positionsArticulation()
+SystemData::positionsArticulation()
 {
     double t_dimensional{m_tau * m_t};
 
@@ -412,7 +412,7 @@ systemData::positionsArticulation()
 }
 
 void
-systemData::velocitiesArticulation()
+SystemData::velocitiesArticulation()
 {
     double t_dimensional{m_tau * m_t};
 
@@ -450,7 +450,7 @@ systemData::velocitiesArticulation()
 }
 
 void
-systemData::accelerationsArticulation()
+SystemData::accelerationsArticulation()
 {
     double t_dimensional{m_tau * m_t};
 
@@ -489,7 +489,7 @@ systemData::accelerationsArticulation()
 }
 
 void
-systemData::udwadiaLinearSystem()
+SystemData::udwadiaLinearSystem()
 {
     m_Udwadia_A.setZero();
     m_Udwadia_b.setZero();
@@ -504,7 +504,7 @@ systemData::udwadiaLinearSystem()
 }
 
 void
-systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
+SystemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
 {
     /* ANCHOR: Compute m_rbm_conn */
     m_rbm_conn.setZero();
@@ -537,12 +537,12 @@ systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
         const int body_id_7{7 * body_id};
 
         // matrix E from quaterion of body k
-        Eigen::Matrix<double, 3, 4> E_theta_k;
+        Eigen::Matrix<double, 4, 4> E_theta_k;
         eMatrix(m_positions_bodies.segment<4>(body_id_7 + 3), E_theta_k);
 
         // matrix elements of Psi
         m_psi_conv_quat_ang.block<3, 3>(body_id_7, body_id_7).noalias() = m_I3; // no conversion from linear components
-        m_psi_conv_quat_ang.block<3, 4>(body_id_7 + 3, body_id_7 + 3).noalias() =
+        m_psi_conv_quat_ang.block<4, 4>(body_id_7 + 3, body_id_7 + 3).noalias() =
             2 * E_theta_k; // angular-quaternion velocity couple
     }
 
@@ -552,7 +552,7 @@ systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
 }
 
 void
-systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
+SystemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
 {
     /* ANCHOR: Compute m_chi and m_tens_chi */
     m_chi.setZero();
@@ -576,13 +576,13 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
         dr_init *= r_alpha_norm; // incorporate norm factor here rather than in chi calculation for numerical efficiency
 
         // quaternion product representation of particle displacement (transpose)
-        Eigen::Matrix<double, 3, 4> g_T;
+        Eigen::Matrix<double, 4, 4> g_T;
         eMatrix(dr_init, g_T);
 
         // change of variables gradient tensor elements
         m_chi.block<3, 3>(body_id_7, particle_id_7).noalias() = s_part * m_I3; // translation-translation couple
-        m_chi.block<3, 3>(body_id_7 + 4, particle_id_7).noalias() =
-            m_psi_conv_quat_ang.block<3, 4>(body_id_7 + 3, body_id_7 + 3) *
+        m_chi.block<4, 4>(body_id_7 + 4, particle_id_7).noalias() =
+            m_psi_conv_quat_ang.block<4, 4>(body_id_7 + 3, body_id_7 + 3) *
             g_T.transpose(); // quaternion-rotation couple (first row is zero)
     }
 
@@ -655,7 +655,7 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
 }
 
 void
-systemData::convertBody2ParticleOrient()
+SystemData::convertBody2ParticleOrient()
 {
     m_orientations_particles.setZero();
 
@@ -688,7 +688,7 @@ systemData::convertBody2ParticleOrient()
 }
 
 void
-systemData::convertBody2ParticlePos()
+SystemData::convertBody2ParticlePos()
 {
     for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
@@ -701,7 +701,7 @@ systemData::convertBody2ParticlePos()
 }
 
 void
-systemData::convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device)
+SystemData::convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device)
 {
     /* ANCHOR: Convert velocity D.o.F. */
     m_velocities_particles.noalias() = m_zeta.transpose() * m_velocities_bodies;

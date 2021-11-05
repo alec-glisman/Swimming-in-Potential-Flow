@@ -10,10 +10,10 @@
 #endif
 
 /* Include all internal project dependencies */
+#include <SystemData.hpp>
 #include <potentialHydrodynamics.hpp>
 #include <progressBar.hpp>
 #include <rungeKutta4.hpp>
-#include <systemData.hpp>
 
 /* Include all external project dependencies */
 // Intel MKL
@@ -41,7 +41,7 @@
 #include <string>    // std::string
 
 /* Forward declarations */
-class systemData;
+class SystemData;
 
 /**
  * @class engine
@@ -55,9 +55,9 @@ class engine
     /**
      * @brief Construct a new engine object
      *
-     * @param sys `systemData` class to collect data from. Must be fully initialized and have GSD data loaded.
+     * @param sys `SystemData` class to collect data from. Must be fully initialized and have GSD data loaded.
      */
-    explicit engine(std::shared_ptr<systemData> sys);
+    explicit engine(std::shared_ptr<SystemData> sys);
 
     /**
      * @brief Destroy the engine object
@@ -87,7 +87,7 @@ class engine
     integrate(Eigen::ThreadPoolDevice& device);
 
     // classes
-    std::shared_ptr<systemData>             m_system;
+    std::shared_ptr<SystemData>             m_system;
     std::shared_ptr<potentialHydrodynamics> m_potHydro;
     std::shared_ptr<rungeKutta4>            m_rk4Integrator;
     std::shared_ptr<ProgressBar>            m_progressBar;

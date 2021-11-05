@@ -11,8 +11,8 @@
 #endif
 
 /* Include all internal project dependencies */
+#include <SystemData.hpp>
 #include <gsd.h> // GSD File
-#include <systemData.hpp>
 
 /* Include all external project dependencies */
 // Logging
@@ -24,12 +24,12 @@
 #include <string>    // std::string
 
 /* Forward declarations */
-class systemData;
+class SystemData;
 
 /**
  * @class GSDUtil
  *
- * @brief Wrapper class for `gsd.h` to load data from input GSD file into `systemData` class
+ * @brief Wrapper class for `gsd.h` to load data from input GSD file into `SystemData` class
  *
  */
 class GSDUtil
@@ -38,17 +38,17 @@ class GSDUtil
     /**
      * @brief Construct a new GSDUtil object
      *
-     * @param sys `systemData` class to collect data from. Its attributes will be overwritten using setter functions.
+     * @param sys `SystemData` class to collect data from. Its attributes will be overwritten using setter functions.
      */
-    explicit GSDUtil(std::shared_ptr<systemData> sys);
+    explicit GSDUtil(std::shared_ptr<SystemData> sys);
 
     /**
      * @brief Construct a new GSDUtil object
      *
-     * @param sys `systemData` class to collect data from. Its attributes will be overwritten using setter functions.
+     * @param sys `SystemData` class to collect data from. Its attributes will be overwritten using setter functions.
      * @param frame specific GSD frame number to parse
      */
-    explicit GSDUtil(std::shared_ptr<systemData> sys, uint64_t frame);
+    explicit GSDUtil(std::shared_ptr<SystemData> sys, uint64_t frame);
 
     /**
      * @brief Destroy the GSDUtil object
@@ -66,7 +66,7 @@ class GSDUtil
     truncateGSD();
 
     /**
-     * @brief Appends frame to GSD file using data from `systemData` class
+     * @brief Appends frame to GSD file using data from `SystemData` class
      *
      * @details Ends GSD frame after data is written
      *
@@ -125,7 +125,7 @@ class GSDUtil
     /**
      * @brief Reads system specific variables from GSD frame `m_frame`
      *
-     * @review_swimmer change variables loaded based on variables needed in `systemData` for specific systems.
+     * @review_swimmer change variables loaded based on variables needed in `SystemData` for specific systems.
      */
     void
     readSystemSpecifics();
@@ -152,8 +152,8 @@ class GSDUtil
     writeParticles();
 
     // classes
-    /// shared pointer reference to `systemData` class
-    std::shared_ptr<systemData> m_system;
+    /// shared pointer reference to `SystemData` class
+    std::shared_ptr<SystemData> m_system;
 
     // GSD
     /// GSD frame number

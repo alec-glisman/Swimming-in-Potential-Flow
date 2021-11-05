@@ -3,8 +3,8 @@
 //
 
 /* Include all internal project dependencies */
+#include <SystemData.hpp>
 #include <engine.hpp>
-#include <systemData.hpp>
 
 /* Include all external project dependencies */
 // STL
@@ -26,8 +26,7 @@ main(const int argc, const char* argv[])
     // Check input is of correct length
     if (argc < 3)
     {
-        throw std::runtime_error(
-            "ERROR: incorrect number of arguments!!! [executable][input data][output directory]");
+        throw std::runtime_error("ERROR: incorrect number of arguments!!! [executable][input data][output directory]");
     }
 
     // Get input files
@@ -39,7 +38,7 @@ main(const int argc, const char* argv[])
 
     /* SECTION: Set-up and run simulation */
     // Initialize data structures
-    auto system = std::make_shared<systemData>(inputDataFile, outputDir);
+    auto system = std::make_shared<SystemData>(inputDataFile, outputDir);
     system->initializeData();
     auto eng = std::make_shared<engine>(system);
 

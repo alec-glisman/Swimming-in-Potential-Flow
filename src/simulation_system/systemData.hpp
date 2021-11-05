@@ -43,21 +43,21 @@
 class GSDUtil;
 
 /**
- * @class systemData
+ * @class SystemData
  *
  * @brief Class contains all data structures relevant to the simulation framework.
  * Note that after construction, `initializeData()` must be called to properly load
  * data from a GSD file.
  *
  */
-class systemData : public std::enable_shared_from_this<systemData>
+class SystemData : public std::enable_shared_from_this<SystemData>
 {
   public:
     /**
      * @brief Construct a new system Data object. Default constructor.
      *
      */
-    systemData() = default;
+    SystemData() = default;
 
     /**
      * @brief Construct a new system Data object
@@ -65,13 +65,13 @@ class systemData : public std::enable_shared_from_this<systemData>
      * @param inputGSDFile string path to (already created and set-up) GSD frame
      * @param outputDir string path to output directory for I/O
      */
-    systemData(std::string inputGSDFile, std::string outputDir);
+    SystemData(std::string inputGSDFile, std::string outputDir);
 
     /**
      * @brief Destroy the system Data object
      *
      */
-    ~systemData();
+    ~SystemData();
 
     /**
      * @brief Function loads data from GSD file using `GSDUtil` class.
@@ -96,7 +96,7 @@ class systemData : public std::enable_shared_from_this<systemData>
 
   private:
     /**
-     * @brief Passes `this` (`systemData` shared pointer instance) into `GSDUtil` constructor to load data from input
+     * @brief Passes `this` (`SystemData` shared pointer instance) into `GSDUtil` constructor to load data from input
      * GSD file into `this`.
      *
      * @details Function called by `initializeData()` and is the reason that data can only be initialized after
@@ -107,7 +107,7 @@ class systemData : public std::enable_shared_from_this<systemData>
      * attribute `m_GSD_parsed` to true to give some check that the system has been properly initialized. The `engine`
      * class also checks that this boolean has been set.
      *
-     * @todo Find a better way to handle passing of `this` to `GSDUtil` so that this can be done in `systemData`
+     * @todo Find a better way to handle passing of `this` to `GSDUtil` so that this can be done in `SystemData`
      * constructor.
      */
     void
@@ -271,7 +271,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     /// path of logfile for spdlog to write to
     std::string m_logFile;
     /// filename of logfile for spdlog to write to
-    const std::string m_logName{"systemData"};
+    const std::string m_logName{"SystemData"};
 
     // GSD data
     /// shared pointer reference to `GSDUtil` class

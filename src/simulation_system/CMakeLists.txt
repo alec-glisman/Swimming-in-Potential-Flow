@@ -2,7 +2,7 @@
 SET(LIB_NAME "simulation_system")
 
 SET(LIB_FILES 
-    systemData.cpp systemData.hpp 
+    SystemData.cpp SystemData.hpp 
     engine.cpp engine.hpp
     progressBar.hpp)
 

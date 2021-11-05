@@ -61,9 +61,9 @@ The constructor also constructs the integrators and forces needed for the dynami
 
 `progressBar.hpp` modified version of [prakhar1989/progress-cpp](https://github.com/prakhar1989/progress-cpp.git) that displays simulation progress to terminal during execution.
 
-### Class: systemData
+### Class: SystemData
 
-The systemData class contains all relevant data for the general simulation and can be accessed through relevant getter and setter functions.
+The SystemData class contains all relevant data for the general simulation and can be accessed through relevant getter and setter functions.
 The constructor also constructs the GSD parser class and loads data into itself.
 
 ---

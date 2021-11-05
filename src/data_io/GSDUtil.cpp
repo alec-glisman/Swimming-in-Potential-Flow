@@ -5,7 +5,7 @@
 
 #include <GSDUtil.hpp>
 
-GSDUtil::GSDUtil(std::shared_ptr<systemData> sys)
+GSDUtil::GSDUtil(std::shared_ptr<SystemData> sys)
 {
     // save classes
     m_system = sys;
@@ -48,7 +48,7 @@ GSDUtil::GSDUtil(std::shared_ptr<systemData> sys)
     spdlog::get(m_logName)->flush();
 }
 
-GSDUtil::GSDUtil(std::shared_ptr<systemData> sys, uint64_t frame) : GSDUtil(sys)
+GSDUtil::GSDUtil(std::shared_ptr<SystemData> sys, uint64_t frame) : GSDUtil(sys)
 {
     m_frame = frame;
 
