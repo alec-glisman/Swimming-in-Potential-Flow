@@ -1,8 +1,8 @@
 <map id="gsd_byte_buffer_free" name="gsd_byte_buffer_free">
-<area shape="rect" id="node1" title=" " alt="" coords="379,56,521,83"/>
-<area shape="rect" id="node2" href="$gsd_8h.html#a08b4f76e3e19eda194def8c0c4b2b7a3" title=" " alt="" coords="241,5,323,32"/>
-<area shape="rect" id="node4" href="$gsd_8h.html#a02ac7984034069d508b1c7ccbe702bac" title=" " alt="" coords="233,56,331,83"/>
-<area shape="rect" id="node6" href="$gsd_8h.html#adb92d5142812c19bf4ee33cbde439131" title=" " alt="" coords="234,107,330,133"/>
-<area shape="rect" id="node3" href="$classsystemData.html#a423b9bf369d6c53a27b64c9b56004810" title="Destroy the system Data object." alt="" coords="5,5,185,32"/>
-<area shape="rect" id="node5" href="$classGSDUtil.html#a78b796cb5093b0aa6f5d2573658fcca1" title="Removes all frames and data from GSD file. This returns GSD to a &quot;new file&quot; state." alt="" coords="18,56,173,83"/>
+<area shape="rect" id="node1" title=" " alt="" coords="383,56,525,83"/>
+<area shape="rect" id="node2" href="$gsd_8h.html#a08b4f76e3e19eda194def8c0c4b2b7a3" title=" " alt="" coords="245,5,327,32"/>
+<area shape="rect" id="node4" href="$gsd_8h.html#a02ac7984034069d508b1c7ccbe702bac" title=" " alt="" coords="237,56,335,83"/>
+<area shape="rect" id="node6" href="$gsd_8h.html#adb92d5142812c19bf4ee33cbde439131" title=" " alt="" coords="238,107,334,133"/>
+<area shape="rect" id="node3" href="$classSystemData.html#aa650ece2e42d10df0a17419ed3833f36" title="Destroy the system Data object." alt="" coords="5,5,189,32"/>
+<area shape="rect" id="node5" href="$classGSDUtil.html#a78b796cb5093b0aa6f5d2573658fcca1" title="Removes all frames and data from GSD file. This returns GSD to a &quot;new file&quot; state." alt="" coords="20,56,175,83"/>
 </map>

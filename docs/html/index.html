@@ -95,10 +95,11 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="title">README: Bodies in Potential Flow </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Study dynamics of inertial active matter in potential flow (irrotational, incompressible).</p>
-<p>Author: Alec Glisman</p>
-<p><a href="https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml"><object type="image/svg+xml" data="https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml/badge.svg" style="pointer-events: none;">Code Coverage</object></a> <a href="https://codecov.io/gh/alec-glisman/bodies-in-potential-flow"><object type="image/svg+xml" data="https://codecov.io/gh/alec-glisman/bodies-in-potential-flow/branch/body_locater_quaternion/graph/badge.svg?token=3IUPDIX1D1" style="pointer-events: none;">Build</object></a></p>
-<p><img src="docs/images/collinear_swimmer_white_background.png" alt="Collinear Swimmer" class="inline"/></p>
+<div class="textblock"><p><img src="docs/images/collinear_swimmer_white_background.png" alt="Collinear Swimmer" class="inline"/></p>
+<p><b>About:</b> Study dynamics of inertial active matter in potential flow (irrotational, incompressible). <br  />
+ <b>Authors:</b> <a href="https://github.com/alec-glisman">Alec Glisman</a> <br  />
+ <b>GitHub actions:</b> <a href="https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/code-linting.yml"><object type="image/svg+xml" data="https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/code-linting.yml/badge.svg" style="pointer-events: none;">Code Linting</object></a> <a href="https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml"><object type="image/svg+xml" data="https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml/badge.svg" style="pointer-events: none;">Build</object></a> <br  />
+ <b>Third-party services:</b> <a href="https://www.codefactor.io/repository/github/alec-glisman/bodies-in-potential-flow"><img src="https://www.codefactor.io/repository/github/alec-glisman/bodies-in-potential-flow/badge?s=20f98d924642ab5cf3e3379e8ac68ff4a01876b2" alt="CodeFactor" class="inline"/></a> <a href="https://codecov.io/gh/alec-glisman/bodies-in-potential-flow"><object type="image/svg+xml" data="https://codecov.io/gh/alec-glisman/bodies-in-potential-flow/branch/master/graph/badge.svg?token=3IUPDIX1D1" style="pointer-events: none;">codecov</object></a></p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Code documentation</h1>
 <p>Code is documented using <a href="https://www.doxygen.nl/index.html">Doxygen</a> and can be found in the [<code>docs</code>](docs) directory. Open the documentation locally via opening the <a href="docs/html/index.html">main index page</a>.</p>
@@ -128,7 +129,7 @@ Data I/O</h1>
 <h1><a class="anchor" id="autotoc_md5"></a>
 Modify repository for other potential flow systems</h1>
 <p>The simulation system can be readily adapted for other configurations and constraints.</p>
-<p>The code that must be changed inside the C++ framework is tagged with comments of the form <code>\xrefitem review "Review" "Altering Swimmer Design List"</code> and are found in the Doxygen documentation page named "Altering Swimmer Design List". The relevant classes to modify are the <a href="src/simulation_system/systemData.hpp"><code>systemData</code></a> and <a href="src/data_io/GSDUtil.hpp"><code>GSDUtil</code></a>.</p>
+<p>The code that must be changed inside the C++ framework is tagged with comments of the form <code>\xrefitem review "Review" "Altering Swimmer Design List"</code> and are found in the Doxygen documentation page named "Altering Swimmer Design List". The relevant classes to modify are the <a href="src/simulation_system/SystemData.hpp"><code>SystemData</code></a> and <a href="src/data_io/GSDUtil.hpp"><code>GSDUtil</code></a>.</p>
 <p>Separate Python scripts for GSD initialization and numerical analysis must also be generated. These can be found in <a href="python/initial_configurations"><code>python/initial_configurations</code></a> and <a href="python/analysis"><code>python/analysis</code></a> directories, respectively.</p>
 <h1><a class="anchor" id="autotoc_md6"></a>
 External dependencies</h1>
@@ -136,13 +137,13 @@ External dependencies</h1>
 <h2><a class="anchor" id="autotoc_md7"></a>
 Software tested</h2>
 <ul>
-<li>ZSH &gt;= v5.8</li>
-<li>Intel oneAPI &gt;= v2021.1.1</li>
-<li>CUDA &gt;= v11.3</li>
-<li>CMake &gt;= v3.16.3</li>
-<li>GCC &gt;= v11.1.0</li>
-<li>Python (Miniconda3) &gt;= v3.9.5</li>
-<li>Perl &gt;= v5.30.0</li>
+<li>ZSH v5.8</li>
+<li>Intel oneAPI v2021.1.1</li>
+<li>CUDA v11.3</li>
+<li>CMake v3.16.3</li>
+<li>GCC v11.1.0</li>
+<li>Python (Miniconda3) v3.9.5</li>
+<li>Perl v5.30.0</li>
 </ul>
 <h2><a class="anchor" id="autotoc_md8"></a>
 Must install separately</h2>
@@ -157,7 +158,8 @@ vcpkg</h3>
 <h3><a class="anchor" id="autotoc_md10"></a>
 Intel OneAPI</h3>
 <ul>
-<li><a href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html#gs.7owc4e">Intel MKL</a> (oneAPI v2021.1.1): Optimized mathematical instructions -<a href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/onetbb.html#gs.ds0y09">Intel TBB</a> (oneAPI v2021.1.1): Parallel computing on multi-core processors</li>
+<li><a href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/onemkl.html#gs.7owc4e">Intel MKL</a> (oneAPI v2021.1.1): Optimized mathematical instructions</li>
+<li><a href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/onetbb.html#gs.ds0y09">Intel TBB</a> (oneAPI v2021.1.1): Parallel computing on multi-core processors</li>
 </ul>
 <h3><a class="anchor" id="autotoc_md11"></a>
 Included with compiler</h3>
@@ -170,7 +172,7 @@ Included with compiler</h3>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Oct 22 2021 08:02:13 for Bodies in Potential Flow by
+    <li class="footer">Generated on Fri Nov 5 2021 11:07:40 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

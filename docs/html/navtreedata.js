@@ -50,15 +50,15 @@ var NAVTREE =
         [ "Class: GSDUtil", "md_src_README.html#autotoc_md22", null ]
       ] ],
       [ "Subdirectory: forces", "md_src_README.html#autotoc_md24", [
-        [ "Class: potentialHydrodynamics", "md_src_README.html#autotoc_md25", null ]
+        [ "Class: PotentialHydrodynamics", "md_src_README.html#autotoc_md25", null ]
       ] ],
       [ "Subdirectory: integrators", "md_src_README.html#autotoc_md27", [
-        [ "Class: rungeKutta4", "md_src_README.html#autotoc_md28", null ]
+        [ "Class: RungeKutta4", "md_src_README.html#autotoc_md28", null ]
       ] ],
       [ "Subdirectory: simulation_system", "md_src_README.html#autotoc_md30", [
-        [ "Class: engine", "md_src_README.html#autotoc_md31", null ],
-        [ "Class: progressBar", "md_src_README.html#autotoc_md32", null ],
-        [ "Class: systemData", "md_src_README.html#autotoc_md33", null ]
+        [ "Class: Engine", "md_src_README.html#autotoc_md31", null ],
+        [ "Class: ProgressBar", "md_src_README.html#autotoc_md32", null ],
+        [ "Class: SystemData", "md_src_README.html#autotoc_md33", null ]
       ] ],
       [ "Files", "md_src_README.html#autotoc_md35", null ]
     ] ],
@@ -74,6 +74,7 @@ var NAVTREE =
       [ "Subdirectory: MacOS", "md_profile_README.html#autotoc_md44", null ]
     ] ],
     [ "Todo List", "todo.html", null ],
+    [ "Code Changes Needed", "fixme.html", null ],
     [ "Altering Swimmer Design List", "review.html", null ],
     [ "File List", "files.html", "files" ],
     [ "Namespace List", "namespaces.html", "namespaces" ],
@@ -83,10 +84,10 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"GSDUtilPy_8py.html",
-"classsystemData.html#ae2e0f3a0542b6caffe9c62557de23285",
-"helper__math_8h.html#a2778db976af87b1e1e3222b716806de7",
-"helper__multiprocess_8h.html#a963c63f1d4be099ba2afec1e8d4af4b9"
+"Engine_8cpp.html",
+"classSystemData.html#a918bfe2dcf64a9a289e4ab8adf0a8d40",
+"helper__math_8h.html#a049e90718d67a941c14211231346fcc9",
+"helper__math_8h.html#af0103dc52a4425925fd3f8c3481d9a21"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

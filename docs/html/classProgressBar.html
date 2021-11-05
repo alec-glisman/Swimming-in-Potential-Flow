@@ -104,9 +104,9 @@ $(document).ready(function(){initNavTree('classProgressBar.html',''); initResiza
 <p>Uses carriage return to update screen state (not newline)</p>
 <dl class="section author"><dt>Authors</dt><dd>(GitHub) prakhar1989, alec-glisman </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="progressBar_8hpp_source.html#l00024">24</a> of file <a class="el" href="progressBar_8hpp_source.html">progressBar.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ProgressBar_8hpp_source.html#l00024">24</a> of file <a class="el" href="ProgressBar_8hpp_source.html">ProgressBar.hpp</a>.</p>
 </div>
-<p><code>#include &lt;<a class="el" href="progressBar_8hpp_source.html">progressBar.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="ProgressBar_8hpp_source.html">ProgressBar.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for ProgressBar:</div>
 <div class="dyncontent">
@@ -188,7 +188,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="progressBar_8hpp_source.html#l00036">36</a> of file <a class="el" href="progressBar_8hpp_source.html">progressBar.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ProgressBar_8hpp_source.html#l00036">36</a> of file <a class="el" href="ProgressBar_8hpp_source.html">ProgressBar.hpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        : <a class="code" href="classProgressBar.html#a15ba177a41716d823d147eced0c79f35">total_ticks</a>{total}, <a class="code" href="classProgressBar.html#a3583da529fd511edfbf2a2295a3317a2">bar_width</a>{width}, <a class="code" href="classProgressBar.html#abdd5b8df629d27add55ccebf7c94df05">complete_char</a>{complete}, <a class="code" href="classProgressBar.html#a4f021e7d20bf11c8ccd65fe489adf89c">incomplete_char</a>{incomplete}</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    {</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    }</div>
@@ -229,7 +229,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="progressBar_8hpp_source.html#l00041">41</a> of file <a class="el" href="progressBar_8hpp_source.html">progressBar.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ProgressBar_8hpp_source.html#l00041">41</a> of file <a class="el" href="ProgressBar_8hpp_source.html">ProgressBar.hpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                                                        : <a class="code" href="classProgressBar.html#a15ba177a41716d823d147eced0c79f35">total_ticks</a>{total}, <a class="code" href="classProgressBar.html#a3583da529fd511edfbf2a2295a3317a2">bar_width</a>{width}</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    {</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
@@ -260,12 +260,12 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="progressBar_8hpp_source.html#l00046">46</a> of file <a class="el" href="progressBar_8hpp_source.html">progressBar.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ProgressBar_8hpp_source.html#l00046">46</a> of file <a class="el" href="ProgressBar_8hpp_source.html">ProgressBar.hpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    {</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordflow">return</span> ++<a class="code" href="classProgressBar.html#a7832bf9125014119fbcc3aa97aa2ae71">ticks</a>;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="progressBar_8hpp_source.html#l00027">ticks</a>.</p>
+<p class="reference">References <a class="el" href="ProgressBar_8hpp_source.html#l00027">ticks</a>.</p>
 
 </div>
 </div>
@@ -292,7 +292,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="progressBar_8hpp_source.html#l00052">52</a> of file <a class="el" href="progressBar_8hpp_source.html">progressBar.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ProgressBar_8hpp_source.html#l00052">52</a> of file <a class="el" href="ProgressBar_8hpp_source.html">ProgressBar.hpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    {</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordtype">float</span>        progress = (float)<a class="code" href="classProgressBar.html#a7832bf9125014119fbcc3aa97aa2ae71">ticks</a> / <a class="code" href="classProgressBar.html#a15ba177a41716d823d147eced0c79f35">total_ticks</a>;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> pos      = (int)(<a class="code" href="classProgressBar.html#a3583da529fd511edfbf2a2295a3317a2">bar_width</a> * progress);</div>
@@ -330,9 +330,9 @@ Private Attributes</h2></td></tr>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        std::cout.flush();</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="progressBar_8hpp_source.html#l00030">bar_width</a>, <a class="el" href="progressBar_8hpp_source.html#l00031">complete_char</a>, <a class="el" href="progressBar_8hpp_source.html#l00032">incomplete_char</a>, <a class="el" href="progressBar_8hpp_source.html#l00033">start_time</a>, <a class="el" href="progressBar_8hpp_source.html#l00027">ticks</a>, and <a class="el" href="progressBar_8hpp_source.html#l00029">total_ticks</a>.</p>
+<p class="reference">References <a class="el" href="ProgressBar_8hpp_source.html#l00030">bar_width</a>, <a class="el" href="ProgressBar_8hpp_source.html#l00031">complete_char</a>, <a class="el" href="ProgressBar_8hpp_source.html#l00032">incomplete_char</a>, <a class="el" href="ProgressBar_8hpp_source.html#l00033">start_time</a>, <a class="el" href="ProgressBar_8hpp_source.html#l00027">ticks</a>, and <a class="el" href="ProgressBar_8hpp_source.html#l00029">total_ticks</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="progressBar_8hpp_source.html#l00091">done()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="ProgressBar_8hpp_source.html#l00091">done()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -364,13 +364,13 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="progressBar_8hpp_source.html#l00091">91</a> of file <a class="el" href="progressBar_8hpp_source.html">progressBar.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ProgressBar_8hpp_source.html#l00091">91</a> of file <a class="el" href="ProgressBar_8hpp_source.html">ProgressBar.hpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    {</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <a class="code" href="classProgressBar.html#a909892ad623435dc7d446abea0b1435c">display</a>();</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        std::cout &lt;&lt; std::endl;</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="progressBar_8hpp_source.html#l00052">display()</a>.</p>
+<p class="reference">References <a class="el" href="ProgressBar_8hpp_source.html#l00052">display()</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -400,9 +400,9 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="progressBar_8hpp_source.html#l00027">27</a> of file <a class="el" href="progressBar_8hpp_source.html">progressBar.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ProgressBar_8hpp_source.html#l00027">27</a> of file <a class="el" href="ProgressBar_8hpp_source.html">ProgressBar.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="progressBar_8hpp_source.html#l00052">display()</a>, and <a class="el" href="progressBar_8hpp_source.html#l00046">operator++()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="ProgressBar_8hpp_source.html#l00052">display()</a>, and <a class="el" href="ProgressBar_8hpp_source.html#l00046">operator++()</a>.</p>
 
 </div>
 </div>
@@ -426,9 +426,9 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="progressBar_8hpp_source.html#l00029">29</a> of file <a class="el" href="progressBar_8hpp_source.html">progressBar.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ProgressBar_8hpp_source.html#l00029">29</a> of file <a class="el" href="ProgressBar_8hpp_source.html">ProgressBar.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="progressBar_8hpp_source.html#l00052">display()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="ProgressBar_8hpp_source.html#l00052">display()</a>.</p>
 
 </div>
 </div>
@@ -452,9 +452,9 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="progressBar_8hpp_source.html#l00030">30</a> of file <a class="el" href="progressBar_8hpp_source.html">progressBar.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ProgressBar_8hpp_source.html#l00030">30</a> of file <a class="el" href="ProgressBar_8hpp_source.html">ProgressBar.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="progressBar_8hpp_source.html#l00052">display()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="ProgressBar_8hpp_source.html#l00052">display()</a>.</p>
 
 </div>
 </div>
@@ -478,9 +478,9 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="progressBar_8hpp_source.html#l00031">31</a> of file <a class="el" href="progressBar_8hpp_source.html">progressBar.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ProgressBar_8hpp_source.html#l00031">31</a> of file <a class="el" href="ProgressBar_8hpp_source.html">ProgressBar.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="progressBar_8hpp_source.html#l00052">display()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="ProgressBar_8hpp_source.html#l00052">display()</a>.</p>
 
 </div>
 </div>
@@ -504,9 +504,9 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="progressBar_8hpp_source.html#l00032">32</a> of file <a class="el" href="progressBar_8hpp_source.html">progressBar.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ProgressBar_8hpp_source.html#l00032">32</a> of file <a class="el" href="ProgressBar_8hpp_source.html">ProgressBar.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="progressBar_8hpp_source.html#l00052">display()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="ProgressBar_8hpp_source.html#l00052">display()</a>.</p>
 
 </div>
 </div>
@@ -530,29 +530,29 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="progressBar_8hpp_source.html#l00033">33</a> of file <a class="el" href="progressBar_8hpp_source.html">progressBar.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ProgressBar_8hpp_source.html#l00033">33</a> of file <a class="el" href="ProgressBar_8hpp_source.html">ProgressBar.hpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="progressBar_8hpp_source.html#l00052">display()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="ProgressBar_8hpp_source.html#l00052">display()</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/simulation_system/<a class="el" href="progressBar_8hpp_source.html">progressBar.hpp</a></li>
+<li>src/simulation_system/<a class="el" href="ProgressBar_8hpp_source.html">ProgressBar.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aclassProgressBar_html_a3d91d6d29204c759ac597a37132084cc"><div class="ttname"><a href="classProgressBar.html#a3d91d6d29204c759ac597a37132084cc">ProgressBar::start_time</a></div><div class="ttdeci">const std::chrono::steady_clock::time_point start_time</div><div class="ttdef"><b>Definition:</b> <a href="progressBar_8hpp_source.html#l00033">progressBar.hpp:33</a></div></div>
-<div class="ttc" id="aclassProgressBar_html_a3583da529fd511edfbf2a2295a3317a2"><div class="ttname"><a href="classProgressBar.html#a3583da529fd511edfbf2a2295a3317a2">ProgressBar::bar_width</a></div><div class="ttdeci">const unsigned int bar_width</div><div class="ttdef"><b>Definition:</b> <a href="progressBar_8hpp_source.html#l00030">progressBar.hpp:30</a></div></div>
-<div class="ttc" id="aclassProgressBar_html_a15ba177a41716d823d147eced0c79f35"><div class="ttname"><a href="classProgressBar.html#a15ba177a41716d823d147eced0c79f35">ProgressBar::total_ticks</a></div><div class="ttdeci">const unsigned int total_ticks</div><div class="ttdef"><b>Definition:</b> <a href="progressBar_8hpp_source.html#l00029">progressBar.hpp:29</a></div></div>
-<div class="ttc" id="aclassProgressBar_html_a4f021e7d20bf11c8ccd65fe489adf89c"><div class="ttname"><a href="classProgressBar.html#a4f021e7d20bf11c8ccd65fe489adf89c">ProgressBar::incomplete_char</a></div><div class="ttdeci">const char incomplete_char</div><div class="ttdef"><b>Definition:</b> <a href="progressBar_8hpp_source.html#l00032">progressBar.hpp:32</a></div></div>
-<div class="ttc" id="aclassProgressBar_html_a909892ad623435dc7d446abea0b1435c"><div class="ttname"><a href="classProgressBar.html#a909892ad623435dc7d446abea0b1435c">ProgressBar::display</a></div><div class="ttdeci">void display() const</div><div class="ttdef"><b>Definition:</b> <a href="progressBar_8hpp_source.html#l00052">progressBar.hpp:52</a></div></div>
-<div class="ttc" id="aclassProgressBar_html_a7832bf9125014119fbcc3aa97aa2ae71"><div class="ttname"><a href="classProgressBar.html#a7832bf9125014119fbcc3aa97aa2ae71">ProgressBar::ticks</a></div><div class="ttdeci">unsigned int ticks</div><div class="ttdef"><b>Definition:</b> <a href="progressBar_8hpp_source.html#l00027">progressBar.hpp:27</a></div></div>
-<div class="ttc" id="aclassProgressBar_html_abdd5b8df629d27add55ccebf7c94df05"><div class="ttname"><a href="classProgressBar.html#abdd5b8df629d27add55ccebf7c94df05">ProgressBar::complete_char</a></div><div class="ttdeci">const char complete_char</div><div class="ttdef"><b>Definition:</b> <a href="progressBar_8hpp_source.html#l00031">progressBar.hpp:31</a></div></div>
+<div class="ttc" id="aclassProgressBar_html_a3d91d6d29204c759ac597a37132084cc"><div class="ttname"><a href="classProgressBar.html#a3d91d6d29204c759ac597a37132084cc">ProgressBar::start_time</a></div><div class="ttdeci">const std::chrono::steady_clock::time_point start_time</div><div class="ttdef"><b>Definition:</b> <a href="ProgressBar_8hpp_source.html#l00033">ProgressBar.hpp:33</a></div></div>
+<div class="ttc" id="aclassProgressBar_html_a3583da529fd511edfbf2a2295a3317a2"><div class="ttname"><a href="classProgressBar.html#a3583da529fd511edfbf2a2295a3317a2">ProgressBar::bar_width</a></div><div class="ttdeci">const unsigned int bar_width</div><div class="ttdef"><b>Definition:</b> <a href="ProgressBar_8hpp_source.html#l00030">ProgressBar.hpp:30</a></div></div>
+<div class="ttc" id="aclassProgressBar_html_a15ba177a41716d823d147eced0c79f35"><div class="ttname"><a href="classProgressBar.html#a15ba177a41716d823d147eced0c79f35">ProgressBar::total_ticks</a></div><div class="ttdeci">const unsigned int total_ticks</div><div class="ttdef"><b>Definition:</b> <a href="ProgressBar_8hpp_source.html#l00029">ProgressBar.hpp:29</a></div></div>
+<div class="ttc" id="aclassProgressBar_html_a4f021e7d20bf11c8ccd65fe489adf89c"><div class="ttname"><a href="classProgressBar.html#a4f021e7d20bf11c8ccd65fe489adf89c">ProgressBar::incomplete_char</a></div><div class="ttdeci">const char incomplete_char</div><div class="ttdef"><b>Definition:</b> <a href="ProgressBar_8hpp_source.html#l00032">ProgressBar.hpp:32</a></div></div>
+<div class="ttc" id="aclassProgressBar_html_a909892ad623435dc7d446abea0b1435c"><div class="ttname"><a href="classProgressBar.html#a909892ad623435dc7d446abea0b1435c">ProgressBar::display</a></div><div class="ttdeci">void display() const</div><div class="ttdef"><b>Definition:</b> <a href="ProgressBar_8hpp_source.html#l00052">ProgressBar.hpp:52</a></div></div>
+<div class="ttc" id="aclassProgressBar_html_a7832bf9125014119fbcc3aa97aa2ae71"><div class="ttname"><a href="classProgressBar.html#a7832bf9125014119fbcc3aa97aa2ae71">ProgressBar::ticks</a></div><div class="ttdeci">unsigned int ticks</div><div class="ttdef"><b>Definition:</b> <a href="ProgressBar_8hpp_source.html#l00027">ProgressBar.hpp:27</a></div></div>
+<div class="ttc" id="aclassProgressBar_html_abdd5b8df629d27add55ccebf7c94df05"><div class="ttname"><a href="classProgressBar.html#abdd5b8df629d27add55ccebf7c94df05">ProgressBar::complete_char</a></div><div class="ttdeci">const char complete_char</div><div class="ttdef"><b>Definition:</b> <a href="ProgressBar_8hpp_source.html#l00031">ProgressBar.hpp:31</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="classProgressBar.html">ProgressBar</a></li>
-    <li class="footer">Generated on Fri Oct 22 2021 08:02:13 for Bodies in Potential Flow by
+    <li class="footer">Generated on Fri Nov 5 2021 11:07:40 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

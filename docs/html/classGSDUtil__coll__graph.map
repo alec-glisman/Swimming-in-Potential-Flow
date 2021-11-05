@@ -1,13 +1,13 @@
 <map id="GSDUtil" name="GSDUtil">
-<area shape="rect" id="node1" title="Wrapper class for gsd.h to load data from input GSD file into systemData class." alt="" coords="135,301,298,584"/>
-<area shape="rect" id="node5" title=" " alt="" coords="125,698,308,775"/>
-<area shape="rect" id="node2" title=" " alt="" coords="282,3156,486,3233"/>
-<area shape="rect" id="node3" href="$classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction..." alt="" coords="267,845,502,3093"/>
-<area shape="rect" id="node4" title=" " alt="" coords="551,691,730,783"/>
-<area shape="rect" id="node6" title="STL class." alt="" coords="574,404,714,481"/>
-<area shape="rect" id="node10" title=" " alt="" coords="384,691,526,783"/>
-<area shape="rect" id="node7" title=" " alt="" coords="625,147,664,224"/>
-<area shape="rect" id="node8" title="STL class." alt="" coords="250,147,330,224"/>
-<area shape="rect" id="node9" title="STL class." alt="" coords="226,5,353,97"/>
-<area shape="rect" id="node11" title=" " alt="" coords="434,404,522,481"/>
+<area shape="rect" id="node1" title="Wrapper class for gsd.h to load data from input GSD file into SystemData class." alt="" coords="136,301,299,584"/>
+<area shape="rect" id="node5" title=" " alt="" coords="126,698,309,775"/>
+<area shape="rect" id="node2" title=" " alt="" coords="282,3171,489,3248"/>
+<area shape="rect" id="node3" href="$classSystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction..." alt="" coords="268,845,503,3108"/>
+<area shape="rect" id="node4" title=" " alt="" coords="552,691,732,783"/>
+<area shape="rect" id="node6" title="STL class." alt="" coords="576,404,716,481"/>
+<area shape="rect" id="node10" title=" " alt="" coords="385,691,528,783"/>
+<area shape="rect" id="node7" title=" " alt="" coords="626,147,665,224"/>
+<area shape="rect" id="node8" title="STL class." alt="" coords="251,147,331,224"/>
+<area shape="rect" id="node9" title="STL class." alt="" coords="228,5,354,97"/>
+<area shape="rect" id="node11" title=" " alt="" coords="435,404,523,481"/>
 </map>

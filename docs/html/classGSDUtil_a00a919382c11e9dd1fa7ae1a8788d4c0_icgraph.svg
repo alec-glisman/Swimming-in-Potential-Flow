@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classGSDUtil.html#a2567bdb7f5952a76984552e0591fa330" target="_top" xlink:title="Construct a new GSDUtil object.">
+<g id="a_node2"><a xlink:href="classGSDUtil.html#ad1910c8e68bb120e4bedac1589011fe4" target="_top" xlink:title="Construct a new GSDUtil object.">
 <polygon fill="none" stroke="black" points="0,-304.5 0,-323.5 96,-323.5 96,-304.5 0,-304.5"/>
 <text text-anchor="middle" x="48" y="-311.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::GSDUtil</text>
 </a>
@@ -125,7 +125,7 @@
 <!-- Node9 -->
 <g id="node9" class="node">
 <title>Node9</title>
-<g id="a_node9"><a xlink:href="classGSDUtil.html#ae76e4a23f0fe0bca3cd44137b56b816b" target="_top" xlink:title="Appends frame to GSD file using data from systemData class.">
+<g id="a_node9"><a xlink:href="classGSDUtil.html#ae76e4a23f0fe0bca3cd44137b56b816b" target="_top" xlink:title="Appends frame to GSD file using data from SystemData class.">
 <polygon fill="none" stroke="black" points="154,-57.5 154,-76.5 262,-76.5 262,-57.5 154,-57.5"/>
 <text text-anchor="middle" x="208" y="-64.5" font-family="Helvetica,sans-Serif" font-size="10.00">GSDUtil::writeFrame</text>
 </a>

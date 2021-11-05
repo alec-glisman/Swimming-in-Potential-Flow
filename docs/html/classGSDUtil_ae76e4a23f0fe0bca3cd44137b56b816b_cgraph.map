@@ -1,5 +1,5 @@
 <map id="GSDUtil::writeFrame" name="GSDUtil::writeFrame">
-<area shape="rect" id="node1" title="Appends frame to GSD file using data from systemData class." alt="" coords="5,190,149,216"/>
+<area shape="rect" id="node1" title="Appends frame to GSD file using data from SystemData class." alt="" coords="5,190,149,216"/>
 <area shape="rect" id="node2" href="$classGSDUtil.html#a00a919382c11e9dd1fa7ae1a8788d4c0" title="Helper function that checks data parsing from GSD is successful." alt="" coords="420,139,603,166"/>
 <area shape="rect" id="node3" href="$gsd_8c.html#aa03810337c5eebcbe716d8633eaefc5e" title=" " alt="" coords="456,418,567,444"/>
 <area shape="rect" id="node24" href="$classGSDUtil.html#a77b5ebe2817ac868ad1b171f3d7b0cae" title="Writes header information to GSD." alt="" coords="210,190,359,216"/>

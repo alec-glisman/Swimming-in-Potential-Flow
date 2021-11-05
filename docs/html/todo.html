@@ -96,10 +96,16 @@ $(document).ready(function(){initNavTree('todo.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
-<dt>Member <a class="el" href="classrungeKutta4.html#af8d44cd795c66d601274a8db5bf37b97">rungeKutta4::udwadiaKalaba</a>  (Eigen::VectorXd &amp;acc)</dt>
-<dd><a class="anchor" id="_todo000001"></a>Try changing llt() decomp into the decomp already done for eigendecomp  </dd>
-<dt>Member <a class="el" href="classsystemData.html#a74a503e80869c3ef4a9b6edefd132726">systemData::parseGSD</a>  ()</dt>
-<dd><a class="anchor" id="_todo000002"></a>Find a better way to handle passing of <code>this</code> to <code><a class="el" href="classGSDUtil.html" title="Wrapper class for gsd.h to load data from input GSD file into systemData class.">GSDUtil</a></code> so that this can be done in <code><a class="el" href="classsystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">systemData</a></code> constructor. </dd>
+<dt>Member <a class="el" href="classPotentialHydrodynamics.html#a7ef38402d3034fd4009ded220d8438fc">PotentialHydrodynamics::PotentialHydrodynamics</a>  (std::shared_ptr&lt; SystemData &gt; sys)</dt>
+<dd><a class="anchor" id="_todo000001"></a>: (1, 1) entry is the added element to the mass matrix. Verify that changing this value does not affect the end result (Issue #6). Currently defaults to the same value as the intrinsic moment of inertia.  </dd>
+<dt>Member <a class="el" href="classSystemData.html#ac3a796dc8bf1fa82ea6dec33e548924f">SystemData::initializeData</a>  ()</dt>
+<dd><p class="startdd"><a class="anchor" id="_todo000002"></a>: also load data from frame0 of GSD for initial positions so that simulations can continue from previous GSD </p>
+<p class="enddd"><a class="anchor" id="_todo000003"></a>: add a check that the first frame's unit quaternions are all identity quaternions (1, 0, 0, 0)^T  </p>
+</dd>
+<dt>Member <a class="el" href="classSystemData.html#a48c819310fb406607a0039b6136eec98">SystemData::m_sys_scalar_w</a>  </dt>
+<dd><a class="anchor" id="_todo000005"></a>: REVIEW: Verify this does not affect results  </dd>
+<dt>Member <a class="el" href="classSystemData.html#aa2eb6d7a8870f81a9f4e6484c1f8751c">SystemData::parseGSD</a>  ()</dt>
+<dd><a class="anchor" id="_todo000004"></a>Find a better way to handle passing of <code>this</code> to <code><a class="el" href="classGSDUtil.html" title="Wrapper class for gsd.h to load data from input GSD file into SystemData class.">GSDUtil</a></code> so that this can be done in <code><a class="el" href="classSystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">SystemData</a></code> constructor. </dd>
 </dl>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
@@ -107,7 +113,7 @@ $(document).ready(function(){initNavTree('todo.html',''); initResizable(); });
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Oct 22 2021 08:02:12 for Bodies in Potential Flow by
+    <li class="footer">Generated on Fri Nov 5 2021 11:07:40 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

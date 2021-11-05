@@ -1,10 +1,10 @@
 var annotated =
 [
-    [ "engine", "classengine.html", "classengine" ],
+    [ "Engine", "classEngine.html", "classEngine" ],
     [ "GSDUtil", "classGSDUtil.html", "classGSDUtil" ],
-    [ "potentialHydrodynamics", "classpotentialHydrodynamics.html", "classpotentialHydrodynamics" ],
+    [ "PotentialHydrodynamics", "classPotentialHydrodynamics.html", "classPotentialHydrodynamics" ],
     [ "ProgressBar", "classProgressBar.html", "classProgressBar" ],
-    [ "rungeKutta4", "classrungeKutta4.html", "classrungeKutta4" ],
-    [ "systemData", "classsystemData.html", "classsystemData" ],
-    [ "testSystemData", "classtestSystemData.html", "classtestSystemData" ]
+    [ "RungeKutta4", "classRungeKutta4.html", "classRungeKutta4" ],
+    [ "SystemData", "classSystemData.html", "classSystemData" ],
+    [ "TestSystemData", "classTestSystemData.html", "classTestSystemData" ]
 ];

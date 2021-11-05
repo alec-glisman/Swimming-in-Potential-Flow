@@ -3,7 +3,7 @@
 <area shape="rect" id="node2" href="$gsd_8c.html#a61daeaa70162e9bac3d241832b460278" title=" " alt="" coords="588,31,740,57"/>
 <area shape="rect" id="node5" href="$gsd_8h.html#ae22447904b925f284bf987fae448488a" title=" " alt="" coords="420,81,540,108"/>
 <area shape="rect" id="node3" href="$gsd_8h.html#aa03810337c5eebcbe716d8633eaefc5e" title=" " alt="" coords="425,5,535,32"/>
-<area shape="rect" id="node4" href="$classGSDUtil.html#ae76e4a23f0fe0bca3cd44137b56b816b" title="Appends frame to GSD file using data from systemData class." alt="" coords="5,68,149,95"/>
+<area shape="rect" id="node4" href="$classGSDUtil.html#ae76e4a23f0fe0bca3cd44137b56b816b" title="Appends frame to GSD file using data from SystemData class." alt="" coords="5,68,149,95"/>
 <area shape="rect" id="node6" href="$classGSDUtil.html#a77b5ebe2817ac868ad1b171f3d7b0cae" title="Writes header information to GSD." alt="" coords="210,43,359,69"/>
 <area shape="rect" id="node7" href="$classGSDUtil.html#aa0dc50cd5e5534260375ad4962511cf0" title="Writes parameter information to GSD." alt="" coords="197,93,372,120"/>
 <area shape="rect" id="node8" href="$classGSDUtil.html#a9464315a26a5d5e2c51bb2b4df5ee373" title="Writes particle information to GSD." alt="" coords="205,144,364,171"/>
