@@ -524,9 +524,11 @@ SystemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
         m_rbm_conn.block<3, 3>(body_id_7, particle_id_7).noalias() = m_I3; // translation-translation couple
 
         /// @FIXME: The teaching SD to swim paper had a negative sign here, but my derivations do not have that
-        m_rbm_conn.block<3, 3>(body_id_7 + 3, particle_id_7).noalias() = mat_dr_cross; // translation-rotation couple
+        m_rbm_conn.block<3, 3>(body_id_7 + 4, particle_id_7).noalias() = mat_dr_cross; // translation-rotation couple
 
-        m_rbm_conn.block<3, 3>(body_id_7 + 3, particle_id_7 + 3).noalias() = m_I3; // rotation-rotation couple
+        m_rbm_conn(body_id_7 + 3, body_id_7 + 3) = m_sys_scalar_w; // scalar constant to make resulting matrix full-rank
+
+        m_rbm_conn.block<3, 3>(body_id_7 + 4, particle_id_7 + 4).noalias() = m_I3; // rotation-rotation couple
     }
 
     /* ANCHOR: Compute m_psi_conv_quat_ang */

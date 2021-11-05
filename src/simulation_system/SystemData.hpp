@@ -390,6 +390,16 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      */
     double m_sys_spec_R_avg{-1.0};
 
+    /**
+     * @brief Arbitrary constant added to rbm tensors to allow M_eff [7M x 7M] to be full rank during integration.
+     *
+     * @see Udwadia, Schutte paper detailing how this is an arbitrary, positive constant and does not affect
+     * results numerically, as would be expected.
+     *
+     * @todo: REVIEW: Verify this does not affect results
+     */
+    const double m_sys_scalar_w{1.0};
+
     /* ANCHOR: particle parameters */
     /// (N x 1) REVIEW[epic=assumptions] 1) {0: constrained particle, 1: locater particle}.
     /// 2) locater particle listed first in order and denotes when to switch body index to next body.
