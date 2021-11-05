@@ -554,7 +554,70 @@ SystemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
 }
 
 void
-SystemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
+SystemData::chiMatrixElement(const int particle_id, Eigen::Matrix<double, 7, 3>& chi_matrix_element)
+{
+    /* ANCHOR: Compute G matrix element */
+    // body number
+    const int  body_id_7{7 * m_particle_group_id(particle_id)};
+    const bool is_locater{m_particle_group_id(particle_id) == 1}; // determine if particle is locater particle
+    // particle number
+    const int particle_id_3{3 * particle_id};
+
+    // body unit quaternion
+    const Eigen::Vector4d theta_body = m_positions_bodies.segment<4>(body_id_7);
+    // particle unit initial configuration
+    Eigen::Vector4d r_hat_init_particle = Eigen::Vector4d::Zero(4);
+    r_hat_init_particle.segment<3>(1)   = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
+
+    // Q matrices
+    Eigen::Matrix4d q2;
+    Eigen::Matrix4d q3;
+    Eigen::Matrix4d q4;
+
+    // clang-format off
+        q2 << 
+            theta_body(1), 0, 0, 0, 
+            0, theta_body(1), theta_body(2), theta_body(3),
+            0, theta_body(2), -theta_body(1), -theta_body(0),
+            0, theta_body(3), theta_body(0), -theta_body(1);
+
+        q3 << 
+            theta_body(2), 0, 0, 0, 
+            0, -theta_body(2), theta_body(1), theta_body(0),
+            0, theta_body(1), theta_body(2), theta_body(3),
+            0, -theta_body(0), theta_body(3), -theta_body(2);
+
+        q4 << 
+            theta_body(3), 0, 0, 0, 
+            0, -theta_body(3), -theta_body(0), theta_body(1),
+            0, theta_body(0), -theta_body(3), theta_body(2),
+            0, theta_body(1), theta_body(2), theta_body(3);
+    // clang-format on
+
+    // 2 * || r_particle_id ||, G_matrix prefactor
+    const double prefactor{2 * m_positions_particles_articulation.segment<3>(particle_id_3).norm()};
+
+    // G matrix element
+    Eigen::Matrix<double, 4, 3> g_matrix;
+    g_matrix.col(1).noalias() = q2 * r_hat_init_particle;
+    g_matrix.col(2).noalias() = q3 * r_hat_init_particle;
+    g_matrix.col(3).noalias() = q4 * r_hat_init_particle;
+    g_matrix *= prefactor;
+
+    /* ANCHOR: Compute S matrix element */
+    /// S_alpha = {-1 for non-locater particles, +1 for locater particles}
+    const int             s_part{-1 + 2 * is_locater};
+    const Eigen::Matrix3d s_matrix = s_part * m_I3;
+
+    /* ANCHOR: Compute chi matrix element */
+    chi_matrix_element.block<3, 3>(0, 0).noalias() =
+        s_matrix; // convert body (linear) position derivatives to particle linear coordinate derivatives
+    chi_matrix_element.block<4, 3>(3, 0).noalias() =
+        g_matrix; // convert body (quaternion) position derivatives to particle linear coordinate derivatives
+}
+
+    void
+    SystemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
 {
     /* ANCHOR: Compute m_chi and m_tens_chi */
     m_chi.setZero();
