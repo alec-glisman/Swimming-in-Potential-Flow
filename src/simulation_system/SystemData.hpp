@@ -52,6 +52,7 @@ class GSDUtil;
  */
 class SystemData : public std::enable_shared_from_this<SystemData>
 {
+    /* SECTION: Public methods */
   public:
     /**
      * @brief Construct a new system Data object. Default constructor.
@@ -100,6 +101,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      */
     void
     update(Eigen::ThreadPoolDevice& device);
+    /* !SECTION (Public methods) */
 
   private:
     /**
@@ -932,7 +934,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
     {
         return m_Udwadia_b;
     }
-    /* !SECTION */
+    /* !SECTION (Setters and getters) */
 };
 
 #endif
