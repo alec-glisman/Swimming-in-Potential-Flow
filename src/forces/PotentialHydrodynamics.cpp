@@ -262,16 +262,16 @@ PotentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
 
         // M_{ij, i}: Matrix Element (Anti-Symmetric upon exchange of derivative, Symmetric upon
         // exchange of first two indices)
-        m_grad_M_added.slice(offsets_ij_i, extents) = Mij_i;
+        m_grad_M_added.slice(offsets_ij_i, extents).device(device) = Mij_i;
 
         // M_{ij, j} = - M_{ij, i}
-        m_grad_M_added.slice(offsets_ij_j, extents) = -Mij_i;
+        m_grad_M_added.slice(offsets_ij_j, extents).device(device) = -Mij_i;
 
         // M_{ji, j} = - M_{ij, i}
-        m_grad_M_added.slice(offsets_ji_j, extents) = -Mij_i;
+        m_grad_M_added.slice(offsets_ji_j, extents).device(device) = -Mij_i;
 
         // M_{ji, i} = M_{ij, i}
-        m_grad_M_added.slice(offsets_ji_i, extents) = Mij_i;
+        m_grad_M_added.slice(offsets_ji_i, extents).device(device) = Mij_i;
     }
 
     m_grad_M_added_body_coords.device(device) = m_grad_M_added.contract(m_system->tensChi(), contract_ijl_kl);
