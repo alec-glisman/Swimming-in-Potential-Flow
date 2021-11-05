@@ -266,19 +266,24 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      * chi matrix represents the transformation of gradient coordinates from (linear/quaternion) body
      * coordinates to (linear) particle relative configuration position coordinates.
      *
-     * @param body_id Body number (i)
-     * @param particle_id Particle number (alpha)
+     * @param particle_id Particle number (alpha, i is body number)
      * @param chi_matrix_element Output matrix @f$ \boldsymbol{\xhi}_{i \alpha} @f$ (7 x 3)
      */
     void
-    chiMatrixElement(const double body_id, const double particle_id, Eigen::Matrix<double, 7, 3>& chi_matrix_element)
+    chiMatrixElement(const int particle_id, Eigen::Matrix<double, 7, 3>& chi_matrix_element)
     {
         /* ANCHOR: Compute G matrix element */
+        // body number
+        const int  body_id_7{7 * m_particle_group_id(particle_id)};
+        const bool is_locater{m_particle_group_id(particle_id) == 1}; // determine if particle is locater particle
+        // particle number
+        const int particle_id_3{3 * particle_id};
+
         // body unit quaternion
-        const Eigen::Vector4d theta_body = m_positions_bodies.segment<4>(7 * body_id);
+        const Eigen::Vector4d theta_body = m_positions_bodies.segment<4>(body_id_7);
         // particle unit initial configuration
         Eigen::Vector4d r_hat_init_particle = Eigen::Vector4d::Zero(4);
-        r_hat_init_particle.segment<3>(1)   = m_positions_particles_articulation_init_norm.segment<3>(3 * particle_id);
+        r_hat_init_particle.segment<3>(1)   = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
 
         // Q matrices
         Eigen::Matrix4d q2;
@@ -306,7 +311,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
         // clang-format on
 
         // 2 * || r_particle_id ||, G_matrix prefactor
-        const double prefactor{2 * m_positions_particles_articulation.segment<3>(3 * particle_id).norm()};
+        const double prefactor{2 * m_positions_particles_articulation.segment<3>(particle_id_3).norm()};
 
         // G matrix element
         Eigen::Matrix<double, 4, 3> g_matrix;
@@ -316,7 +321,6 @@ class SystemData : public std::enable_shared_from_this<SystemData>
         g_matrix *= prefactor;
 
         /* ANCHOR: Compute S matrix element */
-        const bool is_locater{m_particle_group_id(particle_id) == 1}; // determine if particle is locater particle
         /// S_alpha = {-1 for non-locater particles, +1 for locater particles}
         const int             s_part{-1 + 2 * is_locater};
         const Eigen::Matrix3d s_matrix = s_part * m_I3;
