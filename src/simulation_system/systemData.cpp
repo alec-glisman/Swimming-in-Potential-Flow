@@ -437,6 +437,7 @@ systemData::velocitiesArticulation()
             particle_velocities(particle_id) * m_orientations_particles.segment<3>(particle_id_3);
 
         // Image system: flip x-y components, leave z unchanged
+        // TODO: Related to Issue #3
         if (particle_id >= (m_num_particles / 2))
         {
             m_velocities_particles_articulation.segment<2>(particle_id_7) *= -1;
@@ -475,6 +476,7 @@ systemData::accelerationsArticulation()
             particle_accelerations(particle_id) * m_orientations_particles.segment<3>(particle_id_3);
 
         // Image system: flip x-y components, leave z unchanged
+        // TODO: Related to Issue #3
         if (particle_id >= (m_num_particles / 2))
         {
             m_accelerations_particles_articulation.segment<2>(particle_id_7) *= -1;

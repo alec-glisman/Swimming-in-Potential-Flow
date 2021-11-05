@@ -119,6 +119,7 @@ rungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::Vec
     // NOTE: Order of function calls must remain the same
     m_system->setT(t);
 
+    // TODO: Related to Issue #3
     if (m_system->imageSystem())
     {
         imageBodyPosVel(pos, vel);
@@ -129,6 +130,7 @@ rungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::Vec
     m_system->update(device);
     m_potHydro->update(device);
 
+    // TODO: Related to Issue #3
     if (m_system->imageSystem())
     {
         // only update Udwadia system for "real" system not image dipoles
