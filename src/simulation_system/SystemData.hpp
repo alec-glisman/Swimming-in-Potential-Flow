@@ -225,6 +225,23 @@ class SystemData : public std::enable_shared_from_this<SystemData>
     void
     convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device);
 
+    /**
+     * @brief Function takes in vector in vector cross-product expression: @f$ c = a \times b @f$
+     *
+     * @param vec Input 3-vector must be @f$ a @f$ in above equation.
+     * @param mat Matrix representation of @f$ a \times @f$ operator.
+     */
+    static inline void
+    crossProdMat(const Eigen::Vector3d& vec, Eigen::Matrix3d& mat)
+    {
+        // clang-format off
+        mat << 
+            0, -vec(2), vec(1), 
+            vec(2), 0, -vec(0), 
+            -vec(1), vec(0), 0;
+        // clang-format on
+    };
+
     /* SECTION: Static functions */
     /**
      * @brief Computes the E matrix of quaternion (4-vector) input
@@ -235,8 +252,13 @@ class SystemData : public std::enable_shared_from_this<SystemData>
     static inline void
     eMatrix(const Eigen::Vector4d& theta, Eigen::Matrix<double, 4, 4>& E_body)
     {
-        E_body << theta(0), theta(1), theta(2), theta(3), -theta(1), theta(0), theta(3), -theta(2), -theta(2),
-            -theta(3), theta(0), theta(1), -theta(3), theta(2), -theta(1), theta(0);
+        // clang-format off
+        E_body << 
+            theta(0), theta(1), theta(2), theta(3), 
+            -theta(1), theta(0), theta(3), -theta(2), 
+            -theta(2), -theta(3), theta(0), theta(1), 
+            -theta(3), theta(2), -theta(1), theta(0);
+        // clang-format on
     };
 
     /**
