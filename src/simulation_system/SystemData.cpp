@@ -504,6 +504,43 @@ SystemData::udwadiaLinearSystem()
 }
 
 void
+SystemData::rbmMatrixElement(const int particle_id)
+{
+    const int particle_id_3{3 * particle_id};
+    const int particle_id_7{7 * particle_id};
+    const int body_id_7{7 * m_particle_group_id(particle_id)};
+
+    // skew-symmetric matrix representation of cross product
+    Eigen::Matrix3d mat_dr_cross;
+    crossProdMat(m_positions_particles_articulation.segment<3>(particle_id_3), mat_dr_cross);
+
+    // rigid body motion connectivity tensor elements
+    m_rbm_conn.block<3, 3>(body_id_7, particle_id_7).noalias() = m_I3; // translation-translation couple
+
+    /// @FIXME: The teaching SD to swim paper had a negative sign here, but my derivations do not have that
+    m_rbm_conn.block<3, 3>(body_id_7 + 4, particle_id_7).noalias() = mat_dr_cross; // translation-rotation couple
+
+    m_rbm_conn(body_id_7 + 3, body_id_7 + 3) = m_sys_scalar_w; // scalar constant to make resulting matrix full-rank
+
+    m_rbm_conn.block<3, 3>(body_id_7 + 4, particle_id_7 + 4).noalias() = m_I3; // rotation-rotation couple
+}
+
+void
+SystemData::psiMatrixElement(const int body_id)
+{
+    const int body_id_7{7 * body_id};
+
+    // matrix E from quaterion of body k
+    Eigen::Matrix<double, 4, 4> E_body;
+    eMatrix(m_positions_bodies.segment<4>(body_id_7 + 3), E_body);
+
+    // matrix elements of Psi
+    m_psi_conv_quat_ang.block<3, 3>(body_id_7, body_id_7).noalias() = m_I3; // no conversion from linear components
+    m_psi_conv_quat_ang.block<4, 4>(body_id_7 + 3, body_id_7 + 3).noalias() =
+        2 * E_body; // angular-quaternion velocity couple
+}
+
+void
 SystemData::chiMatrixElement(const int particle_id)
 {
     /* ANCHOR: Compute G matrix element */
@@ -565,43 +602,6 @@ SystemData::chiMatrixElement(const int particle_id)
         s_matrix; // convert body (linear) position derivatives to particle linear coordinate derivatives
     m_chi.block<4, 3>(body_id_7 + 3, particle_id_7).noalias() =
         g_matrix; // convert body (quaternion) position derivatives to particle linear coordinate derivatives
-}
-
-void
-SystemData::rbmMatrixElement(const int particle_id)
-{
-    const int particle_id_3{3 * particle_id};
-    const int particle_id_7{7 * particle_id};
-    const int body_id_7{7 * m_particle_group_id(particle_id)};
-
-    // skew-symmetric matrix representation of cross product
-    Eigen::Matrix3d mat_dr_cross;
-    crossProdMat(m_positions_particles_articulation.segment<3>(particle_id_3), mat_dr_cross);
-
-    // rigid body motion connectivity tensor elements
-    m_rbm_conn.block<3, 3>(body_id_7, particle_id_7).noalias() = m_I3; // translation-translation couple
-
-    /// @FIXME: The teaching SD to swim paper had a negative sign here, but my derivations do not have that
-    m_rbm_conn.block<3, 3>(body_id_7 + 4, particle_id_7).noalias() = mat_dr_cross; // translation-rotation couple
-
-    m_rbm_conn(body_id_7 + 3, body_id_7 + 3) = m_sys_scalar_w; // scalar constant to make resulting matrix full-rank
-
-    m_rbm_conn.block<3, 3>(body_id_7 + 4, particle_id_7 + 4).noalias() = m_I3; // rotation-rotation couple
-}
-
-void
-SystemData::psiMatrixElement(const int body_id)
-{
-    const int body_id_7{7 * body_id};
-
-    // matrix E from quaterion of body k
-    Eigen::Matrix<double, 4, 4> E_body;
-    eMatrix(m_positions_bodies.segment<4>(body_id_7 + 3), E_body);
-
-    // matrix elements of Psi
-    m_psi_conv_quat_ang.block<3, 3>(body_id_7, body_id_7).noalias() = m_I3; // no conversion from linear components
-    m_psi_conv_quat_ang.block<4, 4>(body_id_7 + 3, body_id_7 + 3).noalias() =
-        2 * E_body; // angular-quaternion velocity couple
 }
 
 void
