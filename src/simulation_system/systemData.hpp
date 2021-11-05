@@ -229,13 +229,14 @@ class systemData : public std::enable_shared_from_this<systemData>
     /**
      * @brief Computes the E matrix of quaternion (4-vector) input
      *
-     * @param vec Input 4-vector
-     * @param mat Output matrix representation
+     * @param theta Input 4-vector (unit quaternion)
+     * @param E_body Output matrix representation
      */
     static inline void
-    eMatrix(const Eigen::Vector4d& vec, Eigen::Matrix<double, 3, 4>& mat)
+    eMatrix(const Eigen::Vector4d& theta, Eigen::Matrix<double, 4, 4>& E_body)
     {
-        mat << -vec(1), vec(0), -vec(3), vec(2), -vec(2), vec(3), vec(0), -vec(1), -vec(3), -vec(2), vec(1), vec(0);
+        E_body << theta(0), theta(1), theta(2), theta(3), -theta(1), theta(0), theta(3), -theta(2), -theta(2),
+            -theta(3), theta(0), theta(1), -theta(3), theta(2), -theta(1), theta(0);
     };
 
     /**
