@@ -62,7 +62,7 @@ TEST_CASE("Initialize simulation system", "[Engine][SystemData][rungeKutta4][pot
     REQUIRE_NOTHROW(eng = std::make_shared<Engine>(system));
 }
 
-TEST_CASE("Run simulation system", "[Engine][progressBar][SystemData][rungeKutta4][potentialHydrodynamics]")
+TEST_CASE("Run simulation system", "[Engine][ProgressBar][SystemData][rungeKutta4][potentialHydrodynamics]")
 {
     // close all previous loggers
     spdlog::drop_all();

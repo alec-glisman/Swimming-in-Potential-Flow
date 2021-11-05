@@ -4,7 +4,7 @@ SET(LIB_NAME "simulation_system")
 SET(LIB_FILES 
     SystemData.cpp SystemData.hpp 
     Engine.cpp Engine.hpp
-    progressBar.hpp)
+    ProgressBar.hpp)
 
 SET(LIB_LINKS 
     ${MKL_LIBRARIES} 

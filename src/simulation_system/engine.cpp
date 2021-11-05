@@ -29,12 +29,12 @@ Engine::Engine(std::shared_ptr<SystemData> sys)
     spdlog::get(m_logName)->info("Initializing integrator");
     m_rk4Integrator = std::make_shared<rungeKutta4>(m_system, m_potHydro);
 
-    // Initialize progressBar
-    spdlog::get(m_logName)->info("Initializing progressBar");
+    // Initialize ProgressBar
+    spdlog::get(m_logName)->info("Initializing ProgressBar");
     int num_step = (int)ceil(m_system->tf() / m_system->dt());
     spdlog::get(m_logName)->info("Numer of integration steps: {0}", num_step);
     unsigned int barWidth = 70;
-    m_progressBar         = std::make_shared<ProgressBar>(static_cast<unsigned int>(num_step), barWidth);
+    m_ProgressBar         = std::make_shared<ProgressBar>(static_cast<unsigned int>(num_step), barWidth);
 
     spdlog::get(m_logName)->info("Constructor complete");
     spdlog::get(m_logName)->flush();
@@ -51,7 +51,7 @@ void
 Engine::run()
 {
     spdlog::get(m_logName)->critical("Starting Engine run");
-    m_progressBar->display(); // display the progress bar
+    m_ProgressBar->display(); // display the progress bar
 
     // calculate number of steps in integration
     double t_remaining{m_system->tf() - m_system->t()};
@@ -77,7 +77,7 @@ Engine::run()
         // Update time for next step
         m_system->setT(m_system->t() + m_system->dt());
         m_system->setTimestep(m_system->timestep() + 1);
-        ++(*m_progressBar);
+        ++(*m_ProgressBar);
 
         // Output data
         if ((m_system->timestep() % write_step == 0) || (m_system->t() >= m_system->tf()))
@@ -88,7 +88,7 @@ Engine::run()
         }
         if (m_system->timestep() % display_step == 0)
         {
-            m_progressBar->display(); // display the progress bar
+            m_ProgressBar->display(); // display the progress bar
         }
     }
 
@@ -96,7 +96,7 @@ Engine::run()
     spdlog::get(m_logName)->info("Ending Engine run");
     spdlog::get(m_logName)->info("Writing frame at t = {0}", m_system->t());
     m_system->gsdUtil()->writeFrame();
-    m_progressBar->display();
+    m_ProgressBar->display();
     spdlog::get(m_logName)->flush();
 }
 

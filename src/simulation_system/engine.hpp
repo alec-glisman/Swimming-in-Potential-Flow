@@ -12,7 +12,7 @@
 /* Include all internal project dependencies */
 #include <SystemData.hpp>
 #include <potentialHydrodynamics.hpp>
-#include <progressBar.hpp>
+#include <ProgressBar.hpp>
 #include <rungeKutta4.hpp>
 
 /* Include all external project dependencies */
@@ -71,7 +71,7 @@ class Engine
      * @details Method creates an `Eigen::ThreadPool` and `Eigen::ThreadPoolDevice` that is passed
      * to the `integrate()` method to speed up `Eigen::Tensor` computations.
      * Method also calculates the total number of integration steps required and manages the output
-     * of the `progressBar` class.
+     * of the `ProgressBar` class.
      *
      */
     void
@@ -90,7 +90,7 @@ class Engine
     std::shared_ptr<SystemData>             m_system;
     std::shared_ptr<potentialHydrodynamics> m_potHydro;
     std::shared_ptr<rungeKutta4>            m_rk4Integrator;
-    std::shared_ptr<ProgressBar>            m_progressBar;
+    std::shared_ptr<ProgressBar>            m_ProgressBar;
 
     // logging
     std::string       m_logFile;

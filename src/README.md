@@ -57,9 +57,9 @@ Systems invariant to rigid spatial translation and rotation can also use the pri
 The Engine class assembles the simulation system and runs the time integration with the public `run()` method.
 The constructor also constructs the integrators and forces needed for the dynamics.
 
-### Class: progressBar
+### Class: ProgressBar
 
-`progressBar.hpp` modified version of [prakhar1989/progress-cpp](https://github.com/prakhar1989/progress-cpp.git) that displays simulation progress to terminal during execution.
+`ProgressBar.hpp` modified version of [prakhar1989/progress-cpp](https://github.com/prakhar1989/progress-cpp.git) that displays simulation progress to terminal during execution.
 
 ### Class: SystemData
 
