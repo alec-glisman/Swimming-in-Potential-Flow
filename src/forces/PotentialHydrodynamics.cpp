@@ -229,7 +229,7 @@ PotentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
 
         // Full distance between particles \alpha and \beta
         const Eigen::Vector3d                                 r_ij   = m_r_ab.col(k); // (1)
-        const Eigen::TensorFixedSize<double, Eigen::Sizes<3>> tens_r = TensorCast(r_ij, 3, 1);
+        const Eigen::TensorFixedSize<double, Eigen::Sizes<3>> tens_r = TensorCast(r_ij, 3);
 
         const double          r_mag_ij{m_r_mag_ab(k)};            //(1); |r| between 2 particles
         const Eigen::Matrix3d r_dyad_r = r_ij * r_ij.transpose(); // (1); Outer product of \bm{r} \bm{r}
@@ -289,7 +289,7 @@ PotentialHydrodynamics::calcTotalMass()
     m_M_total.noalias() += m_J_intrinsic;
     m_M_total.noalias() += m_M_added;
 
-    m_tens_M_total = TensorCast(m_M_total);
+    m_tens_M_total = TensorCast(m_M_total, m_7N, m_7N);
 }
 
 void
@@ -299,6 +299,7 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     // `Eigen::Tensor` contraction indices
     const Eigen::array<Eigen::IndexPair<int>, 1> contract_il_lj = {Eigen::IndexPair<int>(1, 0)}; // = A B
     const Eigen::array<Eigen::IndexPair<int>, 1> contract_il_jl = {Eigen::IndexPair<int>(1, 1)}; // = A B^T
+
     // `Eigen::Tensor` permutation indices
     const Eigen::array<int, 3> permute_ikj_ijk({0, 2, 1}); // (i, j, k) --> (i, j, k)
 
@@ -345,16 +346,19 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
 void
 PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
 {
-    // tensor contraction indices
-    const Eigen::array<Eigen::IndexPair<int>, 0> outer_product   = {}; // outer product
+    // `Eigen::Tensor` contraction indices
+    // 0th order contraction
+    const Eigen::array<Eigen::IndexPair<int>, 0> outer_product = {};
+    // 1st order contraction
+    const Eigen::array<Eigen::IndexPair<int>, 1> contract_ij_j = {Eigen::IndexPair<int>(1, 0)};
+    // 2nd order contraction
     const Eigen::array<Eigen::IndexPair<int>, 2> contract_jki_jk = {Eigen::IndexPair<int>(0, 0),
                                                                     Eigen::IndexPair<int>(1, 1)};
     const Eigen::array<Eigen::IndexPair<int>, 2> contract_ijk_jk = {Eigen::IndexPair<int>(1, 0),
                                                                     Eigen::IndexPair<int>(2, 1)};
-    const Eigen::array<Eigen::IndexPair<int>, 1> contract_ij_j   = {Eigen::IndexPair<int>(1, 0)};
 
-    // tensor index shuffling
-    const Eigen::array<int, 3> flip_first_two_indices({1, 0, 2}); // (i, j, k) --> (j, i, k)
+    // `Eigen::Tensor` permutation indices
+    const Eigen::array<int, 3> permute_ijk_jik({1, 0, 2});
 
     // get kinematic tensors from SystemData class
     Eigen::Tensor<double, 1> xi_dot  = TensorCast(m_system->velocitiesBodies(), m_7M);
@@ -374,7 +378,7 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     xi_dot_V.device(device)           = xi_dot.contract(V, outer_product);
 
     Eigen::Tensor<double, 2> V_xi_dot = Eigen::Tensor<double, 2>(m_7N, m_7M);
-    V_xi_dot.device(device)           = xi_dot_V.shuffle(flip_first_two_indices);
+    V_xi_dot.device(device)           = xi_dot_V.shuffle(permute_ijk_jik);
 
     // hydrodynamic forces arising from locater point motion (3 terms; contains locater inertia term)
     Eigen::Tensor<double, 1> inertia_loc = Eigen::Tensor<double, 1>(m_7M);

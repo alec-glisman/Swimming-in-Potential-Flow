@@ -632,15 +632,15 @@ SystemData::gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice
     /* ANCHOR: Tensor quantities that will be contracted */
     // moment arm to locater point from particle
     const Eigen::Matrix3d two_r_cross_mat = 2 * m_rbm_conn.block<3, 3>(body_id_7 + 4, particle_id_7);
-    const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_two_r_cross_mat = TensorCast(two_r_cross_mat);
+    const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_two_r_cross_mat = TensorCast(two_r_cross_mat, 3, 3);
 
     // E matrix representation of body quaternion from m_psi_conv_quat_ang
     const Eigen::Matrix4d two_E_body = m_psi_conv_quat_ang.block<4, 4>(body_id_7 + 3, body_id_7 + 3);
-    const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 4>> tens_two_E_body = TensorCast(two_E_body);
+    const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 4>> tens_two_E_body = TensorCast(two_E_body, 4, 4);
 
     // change of variable matrix element m_chi_tilde
     const Eigen::Matrix<double, 7, 3>                        n_chi_tilde = -m_chi.block<7, 3>(body_id_7, particle_id_7);
-    const Eigen::TensorFixedSize<double, Eigen::Sizes<7, 3>> tens_n_chi_tilde = TensorCast(n_chi_tilde);
+    const Eigen::TensorFixedSize<double, Eigen::Sizes<7, 3>> tens_n_chi_tilde = TensorCast(n_chi_tilde, 7, 3);
 
     /* ANCHOR: tensor contractions for left-half of gradient */
     // compute grad_r_cross{l, j, k} = - m_levi_cevita{l, j, m} chi_tilde{k, m}
@@ -667,7 +667,7 @@ SystemData::gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice
     // 4x4 "identity" tensor with added element for full-rank
     Eigen::Matrix4d I_tilde                                               = Eigen::Matrix4d::Identity(4, 4);
     I_tilde(0, 0)                                                         = m_sys_scalar_w;
-    const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 4>> tens_I_tilde = TensorCast(I_tilde);
+    const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 4>> tens_I_tilde = TensorCast(I_tilde, 4, 4);
 
     // compute angular_gradient_preshuffle{i, k, j} =  2 * Kappa{i, l, k} I_tilde{l, j}
     Eigen::TensorFixedSize<double, Eigen::Sizes<4, 4, 7>> angular_gradient_preshuffle; // (4, 4, 7)  {i, k, j}
@@ -701,7 +701,7 @@ SystemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
 
     /* ANCHOR: Compute m_zeta & m_tens_zeta */
     m_zeta.noalias() = m_psi_conv_quat_ang.transpose() * m_rbm_conn;
-    m_tens_zeta      = TensorCast(m_zeta);
+    m_tens_zeta      = TensorCast(m_zeta, 7 * m_num_bodies, 7 * m_num_particles);
 }
 
 void
@@ -715,7 +715,7 @@ SystemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
         chiMatrixElement(particle_id);
     }
 
-    m_tens_chi = TensorCast(m_chi);
+    m_tens_chi = TensorCast(m_chi, 7 * m_num_bodies, 7 * m_num_particles);
 
     /* ANCHOR : Compute m_tens_grad_zeta */
     m_tens_grad_zeta.setZero();
@@ -786,8 +786,8 @@ SystemData::convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device)
     const Eigen::array<Eigen::IndexPair<int>, 2> contract_jik_jk = {
         Eigen::IndexPair<int>(0, 0), Eigen::IndexPair<int>(2, 1)}; // {j i k}, {j k} --> {i}
 
-    const Eigen::Tensor<double, 1> xi    = TensorCast(m_velocities_bodies); // (7M x 1)
-    const Eigen::Tensor<double, 2> xi_xi = xi.contract(xi, outer_product);  // (7M x 7M)
+    const Eigen::Tensor<double, 1> xi    = TensorCast(m_velocities_bodies, 7 * m_num_bodies); // (7M x 1)
+    const Eigen::Tensor<double, 2> xi_xi = xi.contract(xi, outer_product);                    // (7M x 7M)
 
     Eigen::Tensor<double, 1> velocities_rbm_particles = Eigen::Tensor<double, 1>(7 * m_num_particles); // (7N x 1)
     velocities_rbm_particles.device(device)           = m_tens_grad_zeta.contract(xi_xi, contract_jik_jk);

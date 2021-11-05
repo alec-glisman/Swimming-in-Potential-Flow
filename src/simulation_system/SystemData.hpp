@@ -449,7 +449,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
     /// (3 x 3) 2nd order identity tensor
     const Eigen::Matrix3d m_I3 = Eigen::Matrix3d::Identity(3, 3);
     /// (3 x 3) tensor version of `m_I3`
-    const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> m_tens_I3 = TensorCast(m_I3);
+    const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> m_tens_I3 = TensorCast(m_I3, 3, 3);
 
     // general-use tensors
     /// (3 x 3 x 3) (skew-symmetric) 3rd order identity tensor
