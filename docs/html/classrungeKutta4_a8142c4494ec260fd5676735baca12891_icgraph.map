@@ -1,6 +1,0 @@
-<map id="rungeKutta4::imageBodyAcc" name="rungeKutta4::imageBodyAcc">
-<area shape="rect" id="node1" title="Replaces 2nd 1/2 of body acceleration D.o.F. with image of 1st 1/2 assuming the reflection plane is ." alt="" coords="665,13,853,39"/>
-<area shape="rect" id="node2" href="$classrungeKutta4.html#a1d0bdd2f2a30a970ae66577e1d0b6a42" title="Helper function for integrateSecondOrder()." alt="" coords="447,5,617,47"/>
-<area shape="rect" id="node3" href="$classrungeKutta4.html#a1c2b8361774957efcf5c6fa5a34f86af" title="2nd order Runge&#45;Kutta 4th order integration. Integrates known acceleration body components into veloc..." alt="" coords="204,5,399,47"/>
-<area shape="rect" id="node4" href="$classrungeKutta4.html#a1a82b9babd1713ed331e4750bb0de5bf" title="Public function to call internal numerical Runge Kutta integration functions." alt="" coords="5,13,156,39"/>
-</map>

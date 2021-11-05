@@ -5,15 +5,19 @@
 <area shape="rect" id="node6" href="$classSystemData.html#a3edab27c866d9031739a8bd3b09bac42" title="Computes the positions of all particles from given locater positions and body orientations." alt="" coords="216,136,399,177"/>
 <area shape="rect" id="node7" href="$classSystemData.html#a7da2011ba5d866e5338b14e8b04ace70" title="Computes the particle D.o.F. from the body D.o.F." alt="" coords="216,201,399,243"/>
 <area shape="rect" id="node11" href="$classSystemData.html#a301fa1815b3b68cffc789f1824e29f5e" title="Computes the gradients rigid body motion connectivity tensors and tensors associated with change of v..." alt="" coords="210,267,405,308"/>
-<area shape="rect" id="node13" href="$classSystemData.html#a30df4f73d78f6886da32559eda83595d" title="Computes the articulation (linear) positions of the particles relative to their respective locater po..." alt="" coords="197,398,417,425"/>
-<area shape="rect" id="node14" href="$classSystemData.html#ae08b2263f2981e57d0f12ba7881a083b" title="Computes the rigid body motion connectivity tensors." alt="" coords="209,332,405,373"/>
-<area shape="rect" id="node16" href="$classSystemData.html#ad1a6489951a00124901c1947381a9be8" title="Computes the Udwadia constraint matrix and vector to uphold the quaternion unitary norm for each body..." alt="" coords="214,449,401,491"/>
-<area shape="rect" id="node17" href="$classSystemData.html#a92ce50a4c8b53aa6a490153c1b09ab8a" title="Computes the articulation (linear) velocities of the particles relative to their respective locater p..." alt="" coords="196,515,419,542"/>
-<area shape="rect" id="node4" href="$helper__math_8h.html#ae4378072f9d836b0d4770a1514db2be3" title=" " alt="" coords="537,78,580,105"/>
-<area shape="rect" id="node5" href="$helper__math_8h.html#a3be05aff487ded3c05aab21d24dd6439" title=" " alt="" coords="699,78,781,105"/>
-<area shape="rect" id="node8" href="$helper__eigenTensorConversion_8hpp.html#a556d08b55a6ad7cd703b6db06194e5cf" title=" " alt="" coords="515,209,602,235"/>
-<area shape="rect" id="node10" href="$helper__eigenTensorConversion_8hpp.html#a3a32f7de3f099464192073a93b34d580" title="Convert Eigen::Matrix &#45;&#45;&gt; Eigen::Tensor." alt="" coords="514,267,603,294"/>
-<area shape="rect" id="node9" href="$helper__eigenTensorConversion_8hpp.html#a2a7eca6b17fb874869047bd0b5f11b46" title="Convert between Eigen::Tensor and Eigen::Matrix classes." alt="" coords="709,209,771,235"/>
-<area shape="rect" id="node12" href="$classSystemData.html#ae26a9488a5a2aa80082fba98c7b9d004" title="Computes the E matrix of quaternion (4&#45;vector) input." alt="" coords="485,318,632,345"/>
-<area shape="rect" id="node15" href="$classSystemData.html#a7cefde66d9e18e2517f11505dd434d0e" title="Function takes in vector in vector cross&#45;product expression: ." alt="" coords="467,369,651,395"/>
+<area shape="rect" id="node14" href="$classSystemData.html#a30df4f73d78f6886da32559eda83595d" title="Computes the articulation (linear) positions of the particles relative to their respective locater po..." alt="" coords="197,333,417,359"/>
+<area shape="rect" id="node15" href="$classSystemData.html#ae08b2263f2981e57d0f12ba7881a083b" title="Computes the rigid body motion connectivity tensors." alt="" coords="209,384,405,425"/>
+<area shape="rect" id="node20" href="$classSystemData.html#ad1a6489951a00124901c1947381a9be8" title="Computes the Udwadia constraint matrix and vector to uphold the quaternion unitary norm for each body..." alt="" coords="214,449,401,491"/>
+<area shape="rect" id="node21" href="$classSystemData.html#a92ce50a4c8b53aa6a490153c1b09ab8a" title="Computes the articulation (linear) velocities of the particles relative to their respective locater p..." alt="" coords="196,515,419,542"/>
+<area shape="rect" id="node4" href="$helper__math_8h.html#ae4378072f9d836b0d4770a1514db2be3" title=" " alt="" coords="550,71,593,98"/>
+<area shape="rect" id="node5" href="$helper__math_8h.html#a3be05aff487ded3c05aab21d24dd6439" title=" " alt="" coords="775,71,857,98"/>
+<area shape="rect" id="node8" href="$helper__eigenTensorConversion_8hpp.html#a556d08b55a6ad7cd703b6db06194e5cf" title=" " alt="" coords="528,122,615,149"/>
+<area shape="rect" id="node10" href="$helper__eigenTensorConversion_8hpp.html#a3a32f7de3f099464192073a93b34d580" title="Convert Eigen::Matrix &#45;&#45;&gt; Eigen::Tensor." alt="" coords="771,278,861,305"/>
+<area shape="rect" id="node9" href="$helper__eigenTensorConversion_8hpp.html#a2a7eca6b17fb874869047bd0b5f11b46" title="Convert between Eigen::Tensor and Eigen::Matrix classes." alt="" coords="785,122,847,149"/>
+<area shape="rect" id="node12" href="$classSystemData.html#a230548cc624444a66137b8d5ecaf5716" title="Computes \chi_{i \alpha} matrix for given particle number and body number. chi matrix represents the ..." alt="" coords="469,274,673,301"/>
+<area shape="rect" id="node13" href="$classSystemData.html#aeaaa2fb7779cd160ab4d90f6f1659aae" title="Computes \nabla_{\xi} \zeta_{i \alpha} tensor for given particle number and body number." alt="" coords="475,325,668,367"/>
+<area shape="rect" id="node16" href="$classSystemData.html#aaf73d6b07c3852c18831d8ab983b384f" title="Computes \Psi matrix for given body number. \Psi matrix represents the transformation of coordinates ..." alt="" coords="469,442,673,469"/>
+<area shape="rect" id="node18" href="$classSystemData.html#a70d2ff9a6173fcd9f30e8dc6324e8414" title="Computes \Sigma_{i \alpha} matrix for given particle number and body number. Sigma matrix represents ..." alt="" coords="467,493,676,519"/>
+<area shape="rect" id="node17" href="$classSystemData.html#ad58491f39fe352229da5494878b88911" title="Computes the E matrix of quaternion (4&#45;vector) input." alt="" coords="743,442,889,469"/>
+<area shape="rect" id="node19" href="$classSystemData.html#a7cefde66d9e18e2517f11505dd434d0e" title="Function takes in vector in vector cross&#45;product expression: ." alt="" coords="724,493,908,519"/>
 </map>

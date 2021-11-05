@@ -1,12 +1,12 @@
 <map id="src/helpers/cuda/helper_timer.h" name="src/helpers/cuda/helper_timer.h">
-<area shape="rect" id="node1" title=" " alt="" coords="251,5,411,47"/>
+<area shape="rect" id="node1" title=" " alt="" coords="252,5,409,47"/>
 <area shape="rect" id="node2" title=" " alt="" coords="155,95,213,121"/>
-<area shape="rect" id="node3" href="$exception_8h.html" title=" " alt="" coords="237,95,328,121"/>
-<area shape="rect" id="node10" title=" " alt="" coords="352,95,405,121"/>
-<area shape="rect" id="node11" title=" " alt="" coords="429,95,512,121"/>
+<area shape="rect" id="node3" href="$exception_8h.html" title=" " alt="" coords="238,95,327,121"/>
+<area shape="rect" id="node10" title=" " alt="" coords="351,95,406,121"/>
+<area shape="rect" id="node11" title=" " alt="" coords="431,95,513,121"/>
 <area shape="rect" id="node4" title=" " alt="" coords="5,169,69,196"/>
 <area shape="rect" id="node5" title=" " alt="" coords="94,169,173,196"/>
-<area shape="rect" id="node6" title=" " alt="" coords="197,169,270,196"/>
+<area shape="rect" id="node6" title=" " alt="" coords="197,169,269,196"/>
 <area shape="rect" id="node7" title=" " alt="" coords="294,169,373,196"/>
 <area shape="rect" id="node8" title=" " alt="" coords="397,169,451,196"/>
 <area shape="rect" id="node9" title=" " alt="" coords="476,169,545,196"/>

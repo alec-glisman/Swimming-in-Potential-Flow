@@ -1,6 +1,8 @@
 <map id="SystemData::rigidBodyMotionTensors" name="SystemData::rigidBodyMotionTensors">
 <area shape="rect" id="node1" title="Computes the rigid body motion connectivity tensors." alt="" coords="5,49,201,90"/>
-<area shape="rect" id="node2" href="$classSystemData.html#a7cefde66d9e18e2517f11505dd434d0e" title="Function takes in vector in vector cross&#45;product expression: ." alt="" coords="249,5,433,32"/>
-<area shape="rect" id="node3" href="$classSystemData.html#ae26a9488a5a2aa80082fba98c7b9d004" title="Computes the E matrix of quaternion (4&#45;vector) input." alt="" coords="268,56,415,83"/>
-<area shape="rect" id="node4" href="$helper__eigenTensorConversion_8hpp.html#a3a32f7de3f099464192073a93b34d580" title="Convert Eigen::Matrix &#45;&#45;&gt; Eigen::Tensor." alt="" coords="297,107,386,133"/>
+<area shape="rect" id="node2" href="$classSystemData.html#aaf73d6b07c3852c18831d8ab983b384f" title="Computes \Psi matrix for given body number. \Psi matrix represents the transformation of coordinates ..." alt="" coords="252,5,456,32"/>
+<area shape="rect" id="node4" href="$classSystemData.html#a70d2ff9a6173fcd9f30e8dc6324e8414" title="Computes \Sigma_{i \alpha} matrix for given particle number and body number. Sigma matrix represents ..." alt="" coords="249,56,459,83"/>
+<area shape="rect" id="node6" href="$helper__eigenTensorConversion_8hpp.html#a3a32f7de3f099464192073a93b34d580" title="Convert Eigen::Matrix &#45;&#45;&gt; Eigen::Tensor." alt="" coords="309,107,399,133"/>
+<area shape="rect" id="node3" href="$classSystemData.html#ad58491f39fe352229da5494878b88911" title="Computes the E matrix of quaternion (4&#45;vector) input." alt="" coords="525,5,672,32"/>
+<area shape="rect" id="node5" href="$classSystemData.html#a7cefde66d9e18e2517f11505dd434d0e" title="Function takes in vector in vector cross&#45;product expression: ." alt="" coords="507,56,691,83"/>
 </map>

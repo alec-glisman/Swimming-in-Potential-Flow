@@ -1,6 +1,0 @@
-<map id="rungeKutta4::accelerationUpdate" name="rungeKutta4::accelerationUpdate">
-<area shape="rect" id="node1" title="Helper function for integrateSecondOrder()." alt="" coords="5,49,176,90"/>
-<area shape="rect" id="node2" href="$classrungeKutta4.html#a8142c4494ec260fd5676735baca12891" title="Replaces 2nd 1/2 of body acceleration D.o.F. with image of 1st 1/2 assuming the reflection plane is ." alt="" coords="233,5,421,32"/>
-<area shape="rect" id="node3" href="$classrungeKutta4.html#a8fb1d493e6e66a276e6b447f5bc04151" title="Replaces 2nd 1/2 of body position and velocity D.o.F. with image of 1st 1/2 assuming the reflection p..." alt="" coords="224,56,431,83"/>
-<area shape="rect" id="node4" href="$classrungeKutta4.html#af8d44cd795c66d601274a8db5bf37b97" title="Calculates the body acceleration components given the constraints established by the Udwadia linear s..." alt="" coords="233,107,421,133"/>
-</map>

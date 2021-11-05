@@ -1,6 +1,0 @@
-<map id="systemData::i3" name="systemData::i3">
-<area shape="rect" id="node1" title=" " alt="" coords="661,13,772,39"/>
-<area shape="rect" id="node2" href="$classsystemData.html#a05afc9e7e7423d88def51ec43ab91a33" title=" " alt="" coords="417,5,613,47"/>
-<area shape="rect" id="node3" href="$classsystemData.html#abe08e8ef40710f40f585342d24076085" title="Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constrain..." alt="" coords="229,13,369,39"/>
-<area shape="rect" id="node4" href="$classsystemData.html#ad2ba3455704ef6cec1aac76a417e91e9" title="Function loads data from GSD file using GSDUtil class." alt="" coords="5,13,181,39"/>
-</map>

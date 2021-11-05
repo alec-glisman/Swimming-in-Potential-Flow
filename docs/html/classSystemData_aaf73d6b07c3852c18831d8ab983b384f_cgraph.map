@@ -1,0 +1,4 @@
+<map id="SystemData::psiMatrixElement" name="SystemData::psiMatrixElement">
+<area shape="rect" id="node1" title="Computes \Psi matrix for given body number. \Psi matrix represents the transformation of coordinates ..." alt="" coords="5,5,209,32"/>
+<area shape="rect" id="node2" href="$classSystemData.html#ad58491f39fe352229da5494878b88911" title="Computes the E matrix of quaternion (4&#45;vector) input." alt="" coords="257,5,404,32"/>
+</map>

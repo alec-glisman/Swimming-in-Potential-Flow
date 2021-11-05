@@ -1,5 +1,0 @@
-<map id="systemData::convertBody2ParticleOrient" name="systemData::convertBody2ParticleOrient">
-<area shape="rect" id="node1" title="Computes the orientation (unit vector) of a particle with respect to its locater point." alt="" coords="5,5,187,47"/>
-<area shape="rect" id="node2" href="$helper__math_8h.html#ae4378072f9d836b0d4770a1514db2be3" title=" " alt="" coords="235,13,277,39"/>
-<area shape="rect" id="node3" href="$helper__math_8h.html#a3be05aff487ded3c05aab21d24dd6439" title=" " alt="" coords="325,13,408,39"/>
-</map>

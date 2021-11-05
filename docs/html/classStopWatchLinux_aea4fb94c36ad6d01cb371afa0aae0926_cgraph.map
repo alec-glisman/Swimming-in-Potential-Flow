@@ -1,4 +1,0 @@
-<map id="StopWatchLinux::stop" name="StopWatchLinux::stop">
-<area shape="rect" id="node1" title="Stop time measurement." alt="" coords="5,5,156,32"/>
-<area shape="rect" id="node2" href="$classStopWatchLinux.html#a3f7b53a7d64f4ffaa243eceee6f44b83" title="Get difference between start time and current time." alt="" coords="204,5,396,32"/>
-</map>
