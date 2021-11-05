@@ -313,13 +313,13 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     m_N1.device(device) = m_grad_M_added_body_coords;
 
     // N^{(2)}
-    Eigen::Tensor<double, 3> N2_term1_unshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7N);
-    Eigen::Tensor<double, 3> N2_term1           = Eigen::Tensor<double, 3>(m_7M, m_7N, m_7M);
-    Eigen::Tensor<double, 3> N2_term2           = Eigen::Tensor<double, 3>(m_7M, m_7N, m_7M);
+    Eigen::Tensor<double, 3> N2_term1_preshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7N);
+    Eigen::Tensor<double, 3> N2_term1            = Eigen::Tensor<double, 3>(m_7M, m_7N, m_7M);
+    Eigen::Tensor<double, 3> N2_term2            = Eigen::Tensor<double, 3>(m_7M, m_7N, m_7M);
 
-    N2_term1_unshuffle.device(device) = m_system->tensGradZeta().contract(m_tens_M_total, contract_il_lj);
+    N2_term1_preshuffle.device(device) = m_system->tensGradZeta().contract(m_tens_M_total, contract_il_lj);
 
-    N2_term1.device(device) = N2_term1_unshuffle.shuffle(permute_ikj_ijk);
+    N2_term1.device(device) = N2_term1_preshuffle.shuffle(permute_ikj_ijk);
     N2_term2.device(device) = m_system->tensZeta().contract(m_N1, contract_il_lj);
 
     m_N2.device(device) = N2_term1 + N2_term2;
