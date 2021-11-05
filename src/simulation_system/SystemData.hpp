@@ -261,17 +261,48 @@ class SystemData : public std::enable_shared_from_this<SystemData>
         // clang-format on
     };
 
-    /**
-     * @brief Function takes in vector in vector cross-product expression: @f$ c = a \times b @f$
-     *
-     * @param vec Input 3-vector must be @f$ a @f$ in above equation.
-     * @param mat Matrix representation of @f$ a \times @f$ operator.
-     */
-    static inline void
-    crossProdMat(const Eigen::Vector3d& vec, Eigen::Matrix3d& mat)
+    void
+    gMatrix(const double body_id, const double particle_id, Eigen::Matrix<double, 4, 3>& g_matrix)
     {
-        mat << 0, -vec(2), vec(1), vec(2), 0, -vec(0), -vec(1), vec(0), 0;
-    };
+        // body unit quaternion
+        const Eigen::Vector4d theta_body = m_positions_bodies.segment<4>(7 * body_id);
+        // particle unit initial configuration
+        Eigen::Vector4d r_hat_init_particle = Eigen::Vector4d::Zero(4);
+        r_hat_init_particle.segment<3>(1)   = m_positions_particles_articulation_init_norm.segment<3>(3 * particle_id);
+        // 2 * || r_particle_id ||
+        const double prefactor = 2 * m_positions_particles_articulation.segment<3>(3 * particle_id).norm();
+
+        // Q matrices
+        Eigen::Matrix4d q2;
+        Eigen::Matrix4d q3;
+        Eigen::Matrix4d q4;
+
+        // clang-format off
+        q2 << 
+            theta_body(1), 0, 0, 0, 
+            0, theta_body(1), theta_body(2), theta_body(3),
+            0, theta_body(2), -theta_body(1), -theta_body(0),
+            0, theta_body(3), theta_body(0), -theta_body(1);
+
+        q3 << 
+            theta_body(2), 0, 0, 0, 
+            0, -theta_body(2), theta_body(1), theta_body(0),
+            0, theta_body(1), theta_body(2), theta_body(3),
+            0, -theta_body(0), theta_body(3), -theta_body(2);
+
+        q4 << 
+            theta_body(3), 0, 0, 0, 
+            0, -theta_body(3), -theta_body(0), theta_body(1),
+            0, theta_body(0), -theta_body(3), theta_body(2),
+            0, theta_body(1), theta_body(2), theta_body(3);
+        // clang-format on
+
+        // G matrix
+        g_matrix.col(1).noalias() = q2 * r_hat_init_particle;
+        g_matrix.col(2).noalias() = q3 * r_hat_init_particle;
+        g_matrix.col(3).noalias() = q4 * r_hat_init_particle;
+    }
+
     /* !SECTION */
 
     /* SECTION: Friend classes */
