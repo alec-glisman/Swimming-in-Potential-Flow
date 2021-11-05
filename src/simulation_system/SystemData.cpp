@@ -531,7 +531,7 @@ SystemData::psiMatrixElement(const int body_id)
     const int body_id_7{7 * body_id};
 
     // matrix E from quaterion of body k
-    Eigen::Matrix<double, 4, 4> E_body;
+    Eigen::Matrix4d E_body;
     eMatrix(m_positions_bodies.segment<4>(body_id_7 + 3), E_body);
 
     // matrix elements of Psi
