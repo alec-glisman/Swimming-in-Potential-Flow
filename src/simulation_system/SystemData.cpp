@@ -587,9 +587,9 @@ SystemData::chiMatrixElement(const int particle_id)
 
     // G matrix element
     Eigen::Matrix<double, 4, 3> g_matrix;
-    g_matrix.col(1).noalias() = q2 * r_hat_init_particle;
-    g_matrix.col(2).noalias() = q3 * r_hat_init_particle;
-    g_matrix.col(3).noalias() = q4 * r_hat_init_particle;
+    g_matrix.col(0).noalias() = q2 * r_hat_init_particle;
+    g_matrix.col(1).noalias() = q3 * r_hat_init_particle;
+    g_matrix.col(2).noalias() = q4 * r_hat_init_particle;
     g_matrix *= prefactor;
 
     /* ANCHOR: Compute S matrix element */
