@@ -105,34 +105,33 @@ systemData::initializeData()
     // tensor lengths
     const int n3{3 * m_num_particles};
     const int n4{4 * m_num_particles};
-    const int n6{6 * m_num_particles}; // FIXME: Change to n7 and adjust all side-effects
+    const int n7{7 * m_num_particles};
 
-    const int m6{6 * m_num_bodies};
     const int m7{7 * m_num_bodies};
 
     // initialize kinematic vectors
     m_orientations_particles                     = Eigen::VectorXd::Zero(n3);
     m_positions_particles_articulation_init_norm = Eigen::VectorXd::Zero(n3);
     m_positions_particles_articulation           = Eigen::VectorXd::Zero(n3);
-    m_velocities_particles_articulation          = Eigen::VectorXd::Zero(n6);
-    m_accelerations_particles_articulation       = Eigen::VectorXd::Zero(n6);
+    m_velocities_particles_articulation          = Eigen::VectorXd::Zero(n7);
+    m_accelerations_particles_articulation       = Eigen::VectorXd::Zero(n7);
 
     // initialize constraint matrices
     m_Udwadia_A = Eigen::MatrixXd::Zero(m_num_constraints, m_num_DoF + m_num_constraints);
     m_Udwadia_b = Eigen::VectorXd::Zero(m_num_constraints);
 
     // initialize rigid body motion matrices
-    m_rbm_conn          = Eigen::MatrixXd::Zero(m6, n6);
-    m_psi_conv_quat_ang = Eigen::MatrixXd::Zero(m6, m7);
-    m_zeta              = Eigen::MatrixXd::Zero(m7, n6);
-    m_tens_zeta         = Eigen::Tensor<double, 2>(m7, n6);
+    m_rbm_conn          = Eigen::MatrixXd::Zero(m7, n7);
+    m_psi_conv_quat_ang = Eigen::MatrixXd::Zero(m7, m7);
+    m_zeta              = Eigen::MatrixXd::Zero(m7, n7);
+    m_tens_zeta         = Eigen::Tensor<double, 2>(m7, n7);
     m_tens_zeta.setZero();
 
     // initialize gradient matrices
-    m_chi      = Eigen::MatrixXd::Zero(m7, n6);
-    m_tens_chi = Eigen::Tensor<double, 2>(m7, n6);
+    m_chi      = Eigen::MatrixXd::Zero(m7, n7);
+    m_tens_chi = Eigen::Tensor<double, 2>(m7, n7);
     m_tens_chi.setZero();
-    m_tens_grad_zeta = Eigen::Tensor<double, 3>(m7, n6, m7);
+    m_tens_grad_zeta = Eigen::Tensor<double, 3>(m7, n7, m7);
     m_tens_grad_zeta.setZero();
 
     // Set initial configuration orientation
@@ -203,10 +202,10 @@ systemData::checkInput()
            "Particle orientation (unit quaternions) vector has incorrect length, not 4N.");
     assert(m_positions_particles.size() == 3 * m_num_particles &&
            "Particle position vector has incorrect length, not 3N.");
-    assert(m_velocities_particles.size() == 6 * m_num_particles &&
-           "Particle velocity vector has incorrect length, not 6N.");
-    assert(m_accelerations_particles.size() == 6 * m_num_particles &&
-           "Particle acceleration vector has incorrect length, not 6N.");
+    assert(m_velocities_particles.size() == 7 * m_num_particles &&
+           "Particle velocity vector has incorrect length, not 7N.");
+    assert(m_accelerations_particles.size() == 7 * m_num_particles &&
+           "Particle acceleration vector has incorrect length, not 7N.");
 
     assert(m_positions_bodies.size() == 7 * m_num_bodies && "Body position vector has incorrect length, not 7M.");
     assert(m_velocities_bodies.size() == 7 * m_num_bodies && "Body velocity vector has incorrect length, not 7M.");
@@ -291,28 +290,31 @@ systemData::logData()
     spdlog::get(m_logName)->info("Particle articulation velocities:");
     for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
-        const int particle_id_6{6 * particle_id};
+        const int particle_id_7{7 * particle_id};
         spdlog::get(m_logName)->info(
-            "\tParticle {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}, {4:03.3f}, {5:03.3f}, {6:03.3f}]", particle_id + 1,
-            m_velocities_particles_articulation(particle_id_6), m_velocities_particles_articulation(particle_id_6 + 1),
-            m_velocities_particles_articulation(particle_id_6 + 2),
-            m_velocities_particles_articulation(particle_id_6 + 3),
-            m_velocities_particles_articulation(particle_id_6 + 4),
-            m_velocities_particles_articulation(particle_id_6 + 5));
+            "\tParticle {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}, {4:03.3f}, {5:03.3f}, {6:03.3f}, {7:03.3f}]",
+            particle_id + 1, m_velocities_particles_articulation(particle_id_7),
+            m_velocities_particles_articulation(particle_id_7 + 1),
+            m_velocities_particles_articulation(particle_id_7 + 2),
+            m_velocities_particles_articulation(particle_id_7 + 3),
+            m_velocities_particles_articulation(particle_id_7 + 4),
+            m_velocities_particles_articulation(particle_id_7 + 5),
+            m_velocities_particles_articulation(particle_id_7 + 6));
     }
 
     spdlog::get(m_logName)->info("Particle articulation accelerations:");
     for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
-        const int particle_id_6{6 * particle_id};
+        const int particle_id_7{7 * particle_id};
         spdlog::get(m_logName)->info(
-            "\tParticle {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}, {4:03.3f}, {5:03.3f}, {6:03.3f}]", particle_id + 1,
-            m_accelerations_particles_articulation(particle_id_6),
-            m_accelerations_particles_articulation(particle_id_6 + 1),
-            m_accelerations_particles_articulation(particle_id_6 + 2),
-            m_accelerations_particles_articulation(particle_id_6 + 3),
-            m_accelerations_particles_articulation(particle_id_6 + 4),
-            m_accelerations_particles_articulation(particle_id_6 + 5));
+            "\tParticle {0}: [{1:03.3f}, {2:03.3f}, {3:03.3f}, {4:03.3f}, {5:03.3f}, {6:03.3f}, {7:03.3f}]",
+            particle_id + 1, m_accelerations_particles_articulation(particle_id_7),
+            m_accelerations_particles_articulation(particle_id_7 + 1),
+            m_accelerations_particles_articulation(particle_id_7 + 2),
+            m_accelerations_particles_articulation(particle_id_7 + 3),
+            m_accelerations_particles_articulation(particle_id_7 + 4),
+            m_accelerations_particles_articulation(particle_id_7 + 5),
+            m_accelerations_particles_articulation(particle_id_7 + 6));
     }
 
     /* ANCHOR: Output body data */
@@ -428,16 +430,16 @@ systemData::velocitiesArticulation()
         }
 
         const int particle_id_3{3 * particle_id};
-        const int particle_id_6{6 * particle_id};
+        const int particle_id_7{7 * particle_id};
         const int body_id_7{7 * m_particle_group_id(particle_id)};
 
-        m_velocities_particles_articulation.segment<3>(particle_id_6).noalias() =
+        m_velocities_particles_articulation.segment<3>(particle_id_7).noalias() =
             particle_velocities(particle_id) * m_orientations_particles.segment<3>(particle_id_3);
 
         // Image system: flip x-y components, leave z unchanged
         if (particle_id >= (m_num_particles / 2))
         {
-            m_velocities_particles_articulation.segment<2>(particle_id_6) *= -1;
+            m_velocities_particles_articulation.segment<2>(particle_id_7) *= -1;
         }
     }
 }
@@ -466,16 +468,16 @@ systemData::accelerationsArticulation()
         }
 
         const int particle_id_3{3 * particle_id};
-        const int particle_id_6{6 * particle_id};
+        const int particle_id_7{7 * particle_id};
         const int body_id_7{7 * m_particle_group_id(particle_id)};
 
-        m_accelerations_particles_articulation.segment<3>(particle_id_6).noalias() =
+        m_accelerations_particles_articulation.segment<3>(particle_id_7).noalias() =
             particle_accelerations(particle_id) * m_orientations_particles.segment<3>(particle_id_3);
 
         // Image system: flip x-y components, leave z unchanged
         if (particle_id >= (m_num_particles / 2))
         {
-            m_accelerations_particles_articulation.segment<2>(particle_id_6) *= -1;
+            m_accelerations_particles_articulation.segment<2>(particle_id_7) *= -1;
         }
     }
 }
@@ -505,20 +507,20 @@ systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
     {
 
         const int particle_id_3{3 * particle_id};
-        const int particle_id_6{6 * particle_id};
-        const int body_id_6{6 * m_particle_group_id(particle_id)};
+        const int particle_id_7{7 * particle_id};
+        const int body_id_7{7 * m_particle_group_id(particle_id)};
 
         // skew-symmetric matrix representation of cross product
         Eigen::Matrix3d mat_dr_cross;
         crossProdMat(m_positions_particles_articulation.segment<3>(particle_id_3), mat_dr_cross);
 
         // rigid body motion connectivity tensor elements
-        m_rbm_conn.block<3, 3>(body_id_6, particle_id_6).noalias() = m_I3; // translation-translation couple
+        m_rbm_conn.block<3, 3>(body_id_7, particle_id_7).noalias() = m_I3; // translation-translation couple
 
         /// @FIXME: The teaching SD to swim paper had a negative sign here, but my derivations do not have that
-        m_rbm_conn.block<3, 3>(body_id_6 + 3, particle_id_6).noalias() = mat_dr_cross; // translation-rotation couple
+        m_rbm_conn.block<3, 3>(body_id_7 + 3, particle_id_7).noalias() = mat_dr_cross; // translation-rotation couple
 
-        m_rbm_conn.block<3, 3>(body_id_6 + 3, particle_id_6 + 3).noalias() = m_I3; // rotation-rotation couple
+        m_rbm_conn.block<3, 3>(body_id_7 + 3, particle_id_7 + 3).noalias() = m_I3; // rotation-rotation couple
     }
 
     /* ANCHOR: Compute m_psi_conv_quat_ang */
@@ -526,7 +528,6 @@ systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
 
     for (int body_id = 0; body_id < m_num_bodies; body_id++)
     {
-        const int body_id_6{6 * body_id};
         const int body_id_7{7 * body_id};
 
         // matrix E from quaterion of body k
@@ -534,8 +535,8 @@ systemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
         eMatrix(m_positions_bodies.segment<4>(body_id_7 + 3), E_theta_k);
 
         // matrix elements of Psi
-        m_psi_conv_quat_ang.block<3, 3>(body_id_6, body_id_7).noalias() = m_I3; // no conversion from linear components
-        m_psi_conv_quat_ang.block<3, 4>(body_id_6 + 3, body_id_7 + 3).noalias() =
+        m_psi_conv_quat_ang.block<3, 3>(body_id_7, body_id_7).noalias() = m_I3; // no conversion from linear components
+        m_psi_conv_quat_ang.block<3, 4>(body_id_7 + 3, body_id_7 + 3).noalias() =
             2 * E_theta_k; // angular-quaternion velocity couple
     }
 
@@ -553,8 +554,7 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
     for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
         const int particle_id_3{3 * particle_id};
-        const int particle_id_6{6 * particle_id};
-        const int body_id_6{6 * m_particle_group_id(particle_id)};
+        const int particle_id_7{7 * particle_id};
         const int body_id_7{7 * m_particle_group_id(particle_id)};
 
         const bool is_locater{m_particle_group_id(particle_id) == 1};
@@ -574,9 +574,9 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
         eMatrix(dr_init, g_T);
 
         // change of variables gradient tensor elements
-        m_chi.block<3, 3>(body_id_7, particle_id_6).noalias() = s_part * m_I3; // translation-translation couple
-        m_chi.block<3, 3>(body_id_7 + 4, particle_id_6).noalias() =
-            m_psi_conv_quat_ang.block<3, 4>(body_id_6 + 3, body_id_7 + 3) *
+        m_chi.block<3, 3>(body_id_7, particle_id_7).noalias() = s_part * m_I3; // translation-translation couple
+        m_chi.block<3, 3>(body_id_7 + 4, particle_id_7).noalias() =
+            m_psi_conv_quat_ang.block<3, 4>(body_id_7 + 3, body_id_7 + 3) *
             g_T.transpose(); // quaternion-rotation couple (first row is zero)
     }
 
@@ -588,8 +588,7 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
     for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
         /* ANCHOR: Tensor indices */
-        const int particle_id_6{6 * particle_id};
-        const int body_id_6{6 * m_particle_group_id(particle_id)};
+        const int particle_id_7{7 * particle_id};
         const int body_id_7{7 * m_particle_group_id(particle_id)};
 
         const bool is_locater{m_particle_group_id(particle_id) == 1};
@@ -606,20 +605,20 @@ systemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
         const Eigen::array<int, 3> permute_ikj_ijk({0, 2, 1}); // {i, k, j} --> {i, j, k}
 
         // `Eigen::Tensor` output tensor indices start location (offset) and extent
-        const Eigen::array<Eigen::Index, 3> offsets_left  = {body_id_7 + 3, particle_id_6, body_id_7};
-        const Eigen::array<Eigen::Index, 3> offsets_right = {body_id_7 + 3, particle_id_6 + 3, body_id_7};
+        const Eigen::array<Eigen::Index, 3> offsets_left  = {body_id_7 + 3, particle_id_7, body_id_7};
+        const Eigen::array<Eigen::Index, 3> offsets_right = {body_id_7 + 3, particle_id_7 + 3, body_id_7};
         const Eigen::array<Eigen::Index, 3> extents       = {4, 3, 7};
 
         // get moment arm to locater point from particle
-        const Eigen::Matrix3d two_r_cross_mat = 2 * m_rbm_conn.block<3, 3>(body_id_6 + 3, particle_id_6);
+        const Eigen::Matrix3d two_r_cross_mat = 2 * m_rbm_conn.block<3, 3>(body_id_7 + 3, particle_id_7);
         const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_two_r_cross_mat = TensorCast(two_r_cross_mat);
 
         // get E matrix representation of body quaternion from m_psi_conv_quat_ang
-        const Eigen::Matrix<double, 3, 4> two_E_body = m_psi_conv_quat_ang.block<3, 4>(body_id_6 + 3, body_id_7 + 3);
+        const Eigen::Matrix<double, 3, 4> two_E_body = m_psi_conv_quat_ang.block<3, 4>(body_id_7 + 3, body_id_7 + 3);
         const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 4>> tens_two_E_body = TensorCast(two_E_body);
 
         // get change of variable matrix element m_chi_tilde
-        const Eigen::Matrix<double, 7, 3> n_chi_tilde = -m_chi.block<7, 3>(body_id_7, particle_id_6);
+        const Eigen::Matrix<double, 7, 3> n_chi_tilde = -m_chi.block<7, 3>(body_id_7, particle_id_7);
         const Eigen::TensorFixedSize<double, Eigen::Sizes<7, 3>> tens_n_chi_tilde = TensorCast(n_chi_tilde);
 
         /* ANCHOR: tensor contractions for left-half of gradient */
@@ -712,9 +711,9 @@ systemData::convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device)
     const Eigen::Tensor<double, 1> xi    = TensorCast(m_velocities_bodies); // (7M x 1)
     const Eigen::Tensor<double, 2> xi_xi = xi.contract(xi, outer_product);  // (7M x 7M)
 
-    Eigen::Tensor<double, 1> velocities_rbm_particles = Eigen::Tensor<double, 1>(6 * m_num_particles); // (6N x 1)
+    Eigen::Tensor<double, 1> velocities_rbm_particles = Eigen::Tensor<double, 1>(7 * m_num_particles); // (7N x 1)
     velocities_rbm_particles.device(device)           = m_tens_grad_zeta.contract(xi_xi, contract_jik_jk);
 
-    m_accelerations_bodies.noalias() = MatrixCast(velocities_rbm_particles, 6 * m_num_particles, 1, device); // (6N x 1)
-    m_accelerations_bodies.noalias() += m_accelerations_particles_articulation;                              // (6N x 1)
+    m_accelerations_bodies.noalias() = MatrixCast(velocities_rbm_particles, 7 * m_num_particles, 1, device); // (7N x 1)
+    m_accelerations_bodies.noalias() += m_accelerations_particles_articulation;                              // (7N x 1)
 }
