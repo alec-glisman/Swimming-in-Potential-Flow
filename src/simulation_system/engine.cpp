@@ -27,7 +27,7 @@ Engine::Engine(std::shared_ptr<SystemData> sys)
 
     // Initialize integrator
     spdlog::get(m_logName)->info("Initializing integrator");
-    m_rk4Integrator = std::make_shared<rungeKutta4>(m_system, m_potHydro);
+    m_rk4Integrator = std::make_shared<RungeKutta4>(m_system, m_potHydro);
 
     // Initialize ProgressBar
     spdlog::get(m_logName)->info("Initializing ProgressBar");

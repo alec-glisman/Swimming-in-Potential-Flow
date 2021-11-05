@@ -39,7 +39,7 @@ Errors are of $\mathcal{O}(r^{-6})$.
 
 ## Subdirectory: integrators
 
-### Class: rungeKutta4
+### Class: RungeKutta4
 
 Numerical integration of kinematic data over one time step using the public `integrate()` method with a Runge-Kutta 4th order method.
 Modify this class for alternate system configurations and constraints.

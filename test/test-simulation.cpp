@@ -38,7 +38,7 @@ TEST_CASE("Open GSD file", "[gsd]")
     REQUIRE(return_val == 0);
 }
 
-TEST_CASE("Initialize simulation system", "[Engine][SystemData][rungeKutta4][potentialHydrodynamics][gsd][GSDUtil]")
+TEST_CASE("Initialize simulation system", "[Engine][SystemData][RungeKutta4][potentialHydrodynamics][gsd][GSDUtil]")
 {
     // close all previous loggers
     spdlog::drop_all();
@@ -62,7 +62,7 @@ TEST_CASE("Initialize simulation system", "[Engine][SystemData][rungeKutta4][pot
     REQUIRE_NOTHROW(eng = std::make_shared<Engine>(system));
 }
 
-TEST_CASE("Run simulation system", "[Engine][ProgressBar][SystemData][rungeKutta4][potentialHydrodynamics]")
+TEST_CASE("Run simulation system", "[Engine][ProgressBar][SystemData][RungeKutta4][potentialHydrodynamics]")
 {
     // close all previous loggers
     spdlog::drop_all();

@@ -2,7 +2,7 @@
 SET(LIB_NAME "integrators")
 
 SET(LIB_FILES 
-    rungeKutta4.cpp rungeKutta4.hpp)
+    RungeKutta4.cpp RungeKutta4.hpp)
 
 SET(LIB_LINKS 
     spdlog::spdlog_header_only 

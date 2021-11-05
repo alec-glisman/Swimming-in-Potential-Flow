@@ -13,7 +13,7 @@
 #include <SystemData.hpp>
 #include <potentialHydrodynamics.hpp>
 #include <ProgressBar.hpp>
-#include <rungeKutta4.hpp>
+#include <RungeKutta4.hpp>
 
 /* Include all external project dependencies */
 // Intel MKL
@@ -89,7 +89,7 @@ class Engine
     // classes
     std::shared_ptr<SystemData>             m_system;
     std::shared_ptr<potentialHydrodynamics> m_potHydro;
-    std::shared_ptr<rungeKutta4>            m_rk4Integrator;
+    std::shared_ptr<RungeKutta4>            m_rk4Integrator;
     std::shared_ptr<ProgressBar>            m_ProgressBar;
 
     // logging

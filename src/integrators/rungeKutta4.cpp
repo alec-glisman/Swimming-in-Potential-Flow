@@ -2,9 +2,9 @@
 // Created by Alec Glisman on 07/31/21
 //
 
-#include <rungeKutta4.hpp>
+#include <RungeKutta4.hpp>
 
-rungeKutta4::rungeKutta4(std::shared_ptr<SystemData> sys, std::shared_ptr<potentialHydrodynamics> hydro)
+RungeKutta4::RungeKutta4(std::shared_ptr<SystemData> sys, std::shared_ptr<potentialHydrodynamics> hydro)
 {
     // save classes
     m_system   = sys;
@@ -32,7 +32,7 @@ rungeKutta4::rungeKutta4(std::shared_ptr<SystemData> sys, std::shared_ptr<potent
     spdlog::get(m_logName)->flush();
 }
 
-rungeKutta4::~rungeKutta4()
+RungeKutta4::~RungeKutta4()
 {
     spdlog::get(m_logName)->info("Destructing Runge-Kutta 4th order");
     spdlog::get(m_logName)->flush();
@@ -40,13 +40,13 @@ rungeKutta4::~rungeKutta4()
 }
 
 void
-rungeKutta4::integrate(Eigen::ThreadPoolDevice& device)
+RungeKutta4::integrate(Eigen::ThreadPoolDevice& device)
 {
     integrateSecondOrder(device); // Udwadia-Kalaba method only gives acceleration components
 }
 
 void
-rungeKutta4::integrateSecondOrder(Eigen::ThreadPoolDevice& device)
+RungeKutta4::integrateSecondOrder(Eigen::ThreadPoolDevice& device)
 {
     /* Step 1: k1 = f( y(t_0),  t_0 ),
      * initial conditions at current step */
@@ -113,7 +113,7 @@ rungeKutta4::integrateSecondOrder(Eigen::ThreadPoolDevice& device)
 }
 
 void
-rungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::VectorXd& vel, Eigen::VectorXd& acc,
+RungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::VectorXd& vel, Eigen::VectorXd& acc,
                                 Eigen::ThreadPoolDevice& device)
 {
     // NOTE: Order of function calls must remain the same
@@ -155,7 +155,7 @@ rungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::Vec
 }
 
 void
-rungeKutta4::imageBodyPosVel(Eigen::VectorXd& pos, Eigen::VectorXd& vel)
+RungeKutta4::imageBodyPosVel(Eigen::VectorXd& pos, Eigen::VectorXd& vel)
 {
     const int num_img_bodies = m_system->numBodies() / 2;
 
@@ -187,7 +187,7 @@ rungeKutta4::imageBodyPosVel(Eigen::VectorXd& pos, Eigen::VectorXd& vel)
 }
 
 void
-rungeKutta4::imageBodyAcc(Eigen::VectorXd& acc)
+RungeKutta4::imageBodyAcc(Eigen::VectorXd& acc)
 {
     const int num_img_bodies = m_system->numBodies() / 2;
 
@@ -209,7 +209,7 @@ rungeKutta4::imageBodyAcc(Eigen::VectorXd& acc)
 }
 
 void
-rungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
+RungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
 {
     /* NOTE: Following the formalism developed in Udwadia & Kalaba (1992) Proc. R. Soc. Lond. A
      * Solve system of the form M_eff * acc = Q + Q_con

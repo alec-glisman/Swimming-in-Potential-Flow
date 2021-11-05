@@ -39,7 +39,7 @@
 class SystemData;
 
 /**
- * @class rungeKutta4
+ * @class RungeKutta4
  *
  * @brief Standard Runge-Kutta 4th order integration.
  *
@@ -50,7 +50,7 @@ class SystemData;
  * individual particle components are calculated via the rigid body motion connectivity tensors.
  *
  */
-class rungeKutta4
+class RungeKutta4
 {
   public:
     /**
@@ -59,13 +59,13 @@ class rungeKutta4
      * @param sys SystemData class to gather data from
      * @param hydro potentialHydrodynamics class to get hydrodynamic force data from
      */
-    explicit rungeKutta4(std::shared_ptr<SystemData> sys, std::shared_ptr<potentialHydrodynamics> hydro);
+    explicit RungeKutta4(std::shared_ptr<SystemData> sys, std::shared_ptr<potentialHydrodynamics> hydro);
 
     /**
      * @brief Destroy the runge Kutta4 object
      *
      */
-    ~rungeKutta4();
+    ~RungeKutta4();
 
     /**
      * @brief Public function to call internal numerical Runge Kutta integration functions.
@@ -156,7 +156,7 @@ class rungeKutta4
     /// path of logfile for spdlog to write to
     std::string m_logFile;
     /// filename of logfile for spdlog to write to
-    const std::string m_logName{"rungeKutta4"};
+    const std::string m_logName{"RungeKutta4"};
 
     // time step variables
     /// (dimensional) integrator finite time step
