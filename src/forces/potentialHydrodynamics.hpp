@@ -154,8 +154,8 @@ class potentialHydrodynamics
     int m_num_pair_inter{-1};
 
     // tensor variables
-    /// 6N length of tensor quantities
-    int m_6N{-1}; // FIXME: Change to 7N and make sure all indexing reflects this
+    /// 7N length of tensor quantities
+    int m_7N{-1}; // FIXME: Change to 7N and make sure all indexing reflects this
     /// 7M length of tensor quantities
     int m_7M{-1};
 
@@ -170,29 +170,29 @@ class potentialHydrodynamics
     Eigen::MatrixXd m_r_ab;
 
     // ANCHOR: identity Matrices
-    /// (6N x 6N) identity matrix for (3N x 3N) subset of linear elements
-    Eigen::MatrixXd m_I6N_linear;
-    /// (6N x 6N) identity matrix for (3N x 3N) subset of angular elements
-    Eigen::MatrixXd m_I6N_angular;
-    /// (6N x 6N) 1/2 identity matrix for (3N x 3N) subset of linear elements
-    Eigen::MatrixXd m_c1_2_I6N_linear;
+    /// (7N x 7N) identity matrix for (3N x 3N) subset of linear elements
+    Eigen::MatrixXd m_I7N_linear;
+    /// (7N x 7N) identity matrix for (3N x 3N) subset of angular elements
+    Eigen::MatrixXd m_I7N_angular;
+    /// (7N x 7N) 1/2 identity matrix for (3N x 3N) subset of linear elements
+    Eigen::MatrixXd m_c1_2_I7N_linear;
 
     // ANCHOR: mass matrices
-    /// (6N x 6N) added mass matrix
+    /// (7N x 7N) added mass matrix
     Eigen::MatrixXd m_M_added;
-    /// (6N x 6N) intrinsic mass matrix
+    /// (7N x 7N) intrinsic mass matrix
     Eigen::MatrixXd m_M_intrinsic;
-    /// (6N x 6N) intrinsic moment of inertia matrix (for spheres)
+    /// (7N x 7N) intrinsic moment of inertia matrix (for spheres)
     Eigen::MatrixXd m_J_intrinsic;
-    /// (6N x 6N) total mass matrix
+    /// (7N x 7N) total mass matrix
     Eigen::MatrixXd m_M_total;
 
-    /// (6N x 6N) tensor version of total mass matrix
+    /// (7N x 7N) tensor version of total mass matrix
     Eigen::Tensor<double, 2> m_tens_M_total;
-    /// (6N x 6N x 6N) gradient of total mass matrix (only added mass components) in particle coordinates
+    /// (7N x 7N x 7N) gradient of total mass matrix (only added mass components) in particle coordinates
     Eigen::Tensor<double, 3> m_grad_M_added;
 
-    /// (6N x 6N x 7M) gradient of total mass matrix (only added mass components) in body coordinates
+    /// (7N x 7N x 7M) gradient of total mass matrix (only added mass components) in body coordinates
     Eigen::Tensor<double, 3> m_grad_M_added_body_coords;
 
     // ANCHOR: Hydrodynamic forces
@@ -202,14 +202,14 @@ class potentialHydrodynamics
     Eigen::VectorXd m_F_hydroNoInertia;
 
     // ANCHOR: linear combinations of gradient of rbm and total mass matrix
-    /// (6N x 6N x 7M) @f$ \nabla_{\xi} \, \boldsymbol{M} @f$
+    /// (7N x 7N x 7M) @f$ \nabla_{\xi} \, \boldsymbol{M} @f$
     Eigen::Tensor<double, 3> m_N1;
-    /// (7M x 6N x 7M) @f$ \nabla_{\xi} \, \boldsymbol{\zeta} \, \boldsymbol{M} @f$
+    /// (7M x 7N x 7M) @f$ \nabla_{\xi} \, \boldsymbol{\zeta} \, \boldsymbol{M} @f$
     Eigen::Tensor<double, 3> m_N2;
     /// (7M x 7M x 7M) @f$ \nabla_{\xi} \, \boldsymbol{\zeta} \, \boldsymbol{M} \, \boldsymbol{\zeta}^{\mathrm{T}} @f$
     Eigen::Tensor<double, 3> m_N3;
 
-    /// (7M x 6N) @f$ \boldsymbol{\zeta} \, \boldsymbol{M} \, \boldsymbol{\zeta}^{\mathrm{T}} @f$
+    /// (7M x 7N) @f$ \boldsymbol{\zeta} \, \boldsymbol{M} \, \boldsymbol{\zeta}^{\mathrm{T}} @f$
     Eigen::Tensor<double, 2> m_M3;
     /// (7M x 7M) @f$ \boldsymbol{\zeta} \, \boldsymbol{M} @f$
     Eigen::Tensor<double, 2> m_M2;

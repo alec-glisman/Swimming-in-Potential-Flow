@@ -19,56 +19,56 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
     spdlog::get(m_logName)->info("Setting number of interactions to count: {0}", m_num_pair_inter);
 
     // tensor variables
-    m_6N = 6 * m_system->numParticles();
-    spdlog::get(m_logName)->info("Length of 6N tensor quantities: {0}", m_6N);
+    m_7N = 7 * m_system->numParticles();
+    spdlog::get(m_logName)->info("Length of 7N tensor quantities: {0}", m_7N);
     m_7M = 7 * m_system->numBodies();
     spdlog::get(m_logName)->info("Length of 7M tensor quantities: {0}", m_7M);
 
     // set identity matrices
-    m_I6N_linear  = Eigen::MatrixXd::Zero(m_6N, m_6N);
-    m_I6N_angular = Eigen::MatrixXd::Zero(m_6N, m_6N);
+    m_I7N_linear  = Eigen::MatrixXd::Zero(m_7N, m_7N);
+    m_I7N_angular = Eigen::MatrixXd::Zero(m_7N, m_7N);
 
     for (int particle_id = 0; particle_id < m_system->numParticles(); particle_id++)
     {
-        const int particle_id_6{6 * particle_id};
+        const int particle_id_7{7 * particle_id};
 
-        m_I6N_linear.block<3, 3>(particle_id_6, particle_id_6).noalias()          = Eigen::MatrixXd::Identity(3, 3);
-        m_I6N_angular.block<3, 3>(particle_id_6 + 3, particle_id_6 + 3).noalias() = Eigen::MatrixXd::Identity(3, 3);
+        m_I7N_linear.block<3, 3>(particle_id_7, particle_id_7).noalias()          = Eigen::MatrixXd::Identity(3, 3);
+        m_I7N_angular.block<3, 3>(particle_id_7 + 3, particle_id_7 + 3).noalias() = Eigen::MatrixXd::Identity(3, 3);
     }
 
-    m_c1_2_I6N_linear = m_c1_2 * m_I6N_linear;
+    m_c1_2_I7N_linear = m_c1_2 * m_I7N_linear;
 
     // Initialize mass matrices
     spdlog::get(m_logName)->info("Initializing mass matrices");
 
-    m_M_intrinsic = (m_system->particleDensity() * m_unitSphereVol) * m_I6N_linear;
+    m_M_intrinsic = (m_system->particleDensity() * m_unitSphereVol) * m_I7N_linear;
 
     m_J_intrinsic = (0.40 * m_system->particleDensity() * m_unitSphereVol) *
-                    m_I6N_angular; // intrinsic moment of inertia for spheres
+                    m_I7N_angular; // intrinsic moment of inertia for spheres
 
-    m_M_added = Eigen::MatrixXd::Zero(m_6N, m_6N);
+    m_M_added = Eigen::MatrixXd::Zero(m_7N, m_7N);
 
     m_M_total.noalias() = m_M_added;
     m_M_total.noalias() += m_M_intrinsic;
     m_M_total.noalias() += m_J_intrinsic;
 
     spdlog::get(m_logName)->info("Initializing mass tensors");
-    m_grad_M_added = Eigen::Tensor<double, 3>(m_6N, m_6N, m_6N);
+    m_grad_M_added = Eigen::Tensor<double, 3>(m_7N, m_7N, m_7N);
     m_grad_M_added.setZero();
-    m_grad_M_added_body_coords = Eigen::Tensor<double, 3>(m_6N, m_6N, m_7M);
+    m_grad_M_added_body_coords = Eigen::Tensor<double, 3>(m_7N, m_7N, m_7M);
     m_grad_M_added_body_coords.setZero();
-    m_tens_M_total = Eigen::Tensor<double, 2>(m_6N, m_6N);
+    m_tens_M_total = Eigen::Tensor<double, 2>(m_7N, m_7N);
     m_tens_M_total.setZero();
 
     spdlog::get(m_logName)->info("Initializing tensors used in hydrodynamic force calculations.");
-    m_N1 = Eigen::Tensor<double, 3>(m_6N, m_6N, m_7M);
+    m_N1 = Eigen::Tensor<double, 3>(m_7N, m_7N, m_7M);
     m_N1.setZero();
-    m_N2 = Eigen::Tensor<double, 3>(m_7M, m_6N, m_7M);
+    m_N2 = Eigen::Tensor<double, 3>(m_7M, m_7N, m_7M);
     m_N2.setZero();
     m_N3 = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
     m_N3.setZero();
 
-    m_M2 = Eigen::Tensor<double, 2>(m_7M, m_6N);
+    m_M2 = Eigen::Tensor<double, 2>(m_7M, m_7N);
     m_M2.setZero();
     m_M3 = Eigen::Tensor<double, 2>(m_7M, m_7M);
     m_M3.setZero();
@@ -173,8 +173,8 @@ potentialHydrodynamics::calcAddedMass()
     for (int k = 0; k < m_num_pair_inter; k++)
     {
         // Convert (\alpha, \beta) --> (i, j) by factor of 3
-        const int i_part{6 * m_alphaVec(k)};
-        const int j_part{6 * m_betaVec(k)};
+        const int i_part{7 * m_alphaVec(k)};
+        const int j_part{7 * m_betaVec(k)};
 
         // Full distance between particles \alpha and \beta
         const Eigen::Vector3d r_ij     = m_r_ab.col(k); // [1]
@@ -197,7 +197,7 @@ potentialHydrodynamics::calcAddedMass()
     /* Construct full added mass matrix
      * M = 1/2 I + M^{(1)}
      */
-    m_M_added.noalias() += m_c1_2_I6N_linear;                  // Add diagonal elements
+    m_M_added.noalias() += m_c1_2_I7N_linear;                  // Add diagonal elements
     m_M_added *= (m_system->fluidDensity() * m_unitSphereVol); // mass units
 }
 
@@ -219,8 +219,8 @@ potentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
     for (int k = 0; k < m_num_pair_inter; k++)
     {
         // Convert (\alpha, \beta) --> (i, j) by factor of 3
-        int i_part{6 * m_alphaVec(k)};
-        int j_part{6 * m_betaVec(k)};
+        int i_part{7 * m_alphaVec(k)};
+        int j_part{7 * m_betaVec(k)};
 
         // Full distance between particles \alpha and \beta
         const Eigen::Vector3d r_ij     = m_r_ab.col(k);           // [1]
@@ -305,9 +305,9 @@ potentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     m_N1.device(device) = m_grad_M_added_body_coords;
 
     // N^{(2)}
-    Eigen::Tensor<double, 3> N2_term1_unshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_6N);
-    Eigen::Tensor<double, 3> N2_term1           = Eigen::Tensor<double, 3>(m_7M, m_6N, m_7M);
-    Eigen::Tensor<double, 3> N2_term2           = Eigen::Tensor<double, 3>(m_7M, m_6N, m_7M);
+    Eigen::Tensor<double, 3> N2_term1_unshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7N);
+    Eigen::Tensor<double, 3> N2_term1           = Eigen::Tensor<double, 3>(m_7M, m_7N, m_7M);
+    Eigen::Tensor<double, 3> N2_term2           = Eigen::Tensor<double, 3>(m_7M, m_7N, m_7M);
 
     N2_term1_unshuffle.device(device) = m_system->tensGradZeta().contract(m_tens_M_total, contract_il_lj);
 
@@ -352,20 +352,20 @@ potentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     Eigen::Tensor<double, 1> xi_dot  = TensorCast(m_system->velocitiesBodies(), m_7M);
     Eigen::Tensor<double, 1> xi_ddot = TensorCast(m_system->accelerationsBodies(), m_7M);
 
-    Eigen::Tensor<double, 1> V     = TensorCast(m_system->velocitiesParticlesArticulation(), m_6N);
-    Eigen::Tensor<double, 1> V_dot = TensorCast(m_system->accelerationsParticlesArticulation(), m_6N);
+    Eigen::Tensor<double, 1> V     = TensorCast(m_system->velocitiesParticlesArticulation(), m_7N);
+    Eigen::Tensor<double, 1> V_dot = TensorCast(m_system->accelerationsParticlesArticulation(), m_7N);
 
     // calculate 2nd order kinematic tensors
-    Eigen::Tensor<double, 2> V_V = Eigen::Tensor<double, 2>(m_6N, m_6N);
+    Eigen::Tensor<double, 2> V_V = Eigen::Tensor<double, 2>(m_7N, m_7N);
     V_V.device(device)           = V.contract(V, empty_index_list);
 
     Eigen::Tensor<double, 2> xi_dot_xi_dot = Eigen::Tensor<double, 2>(m_7M, m_7M);
     xi_dot_xi_dot.device(device)           = xi_dot.contract(xi_dot, empty_index_list);
 
-    Eigen::Tensor<double, 2> xi_dot_V = Eigen::Tensor<double, 2>(m_7M, m_6N);
+    Eigen::Tensor<double, 2> xi_dot_V = Eigen::Tensor<double, 2>(m_7M, m_7N);
     xi_dot_V.device(device)           = xi_dot.contract(V, empty_index_list);
 
-    Eigen::Tensor<double, 2> V_xi_dot = Eigen::Tensor<double, 2>(m_6N, m_7M);
+    Eigen::Tensor<double, 2> V_xi_dot = Eigen::Tensor<double, 2>(m_7N, m_7M);
     V_xi_dot.device(device)           = xi_dot_V.shuffle(flip_first_two_indices);
 
     // hydrodynamic forces arising from locater point motion (3 terms; contains locater inertia term)
