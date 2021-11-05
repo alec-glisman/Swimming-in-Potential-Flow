@@ -181,7 +181,7 @@ PotentialHydrodynamics::calcAddedMass()
 
         // Full distance between particles \alpha and \beta
         const Eigen::Vector3d r_ij     = m_r_ab.col(k); // [1]
-        const double          r_mag_ij = m_r_mag_ab[k]; //[1]; |r| between 2 particles
+        const double          r_mag_ij = m_r_mag_ab(k); //[1]; |r| between 2 particles
 
         // M^{(1)} Matrix Element Constants:
         const double M1_c1 = -m_c3_2 / std::pow(r_mag_ij, 5); // [1]
