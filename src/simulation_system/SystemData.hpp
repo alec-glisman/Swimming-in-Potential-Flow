@@ -261,16 +261,23 @@ class SystemData : public std::enable_shared_from_this<SystemData>
         // clang-format on
     };
 
+    /**
+     * @brief Computes \chi_{i \alpha} matrix for given particle number and body number.
+     * G matrix represents
+     *
+     * @param body_id Body number (i)
+     * @param particle_id Particle number (alpha)
+     * @param chi_matrix_element Output matrix @f$ \boldsymbol{\xhi}_{i \alpha} @f$ (7 x 3)
+     */
     void
-    gMatrix(const double body_id, const double particle_id, Eigen::Matrix<double, 4, 3>& g_matrix)
+    chiMatrixElement(const double body_id, const double particle_id, Eigen::Matrix<double, 5, 3>& chi_matrix_element)
     {
+        /* ANCHOR: Compute G matrix element */
         // body unit quaternion
         const Eigen::Vector4d theta_body = m_positions_bodies.segment<4>(7 * body_id);
         // particle unit initial configuration
         Eigen::Vector4d r_hat_init_particle = Eigen::Vector4d::Zero(4);
         r_hat_init_particle.segment<3>(1)   = m_positions_particles_articulation_init_norm.segment<3>(3 * particle_id);
-        // 2 * || r_particle_id ||
-        const double prefactor = 2 * m_positions_particles_articulation.segment<3>(3 * particle_id).norm();
 
         // Q matrices
         Eigen::Matrix4d q2;
@@ -297,12 +304,28 @@ class SystemData : public std::enable_shared_from_this<SystemData>
             0, theta_body(1), theta_body(2), theta_body(3);
         // clang-format on
 
-        // G matrix
+        // 2 * || r_particle_id ||, G_matrix prefactor
+        const double prefactor{2 * m_positions_particles_articulation.segment<3>(3 * particle_id).norm()};
+
+        // G matrix element
+        Eigen::Matrix<double, 4, 3> g_matrix;
         g_matrix.col(1).noalias() = q2 * r_hat_init_particle;
         g_matrix.col(2).noalias() = q3 * r_hat_init_particle;
         g_matrix.col(3).noalias() = q4 * r_hat_init_particle;
-    }
+        g_matrix *= prefactor;
 
+        /* ANCHOR: Compute S matrix element */
+        const bool is_locater{m_particle_group_id(particle_id) == 1}; // determine if particle is locater particle
+        /// S_alpha = {-1 for non-locater particles, +1 for locater particles}
+        const int             s_part{-1 + 2 * is_locater};
+        const Eigen::Matrix3d s_matrix = s_part * m_I3;
+
+        /* ANCHOR: Compute chi matrix element */
+        chi_matrix_element.block<3, 3>(0, 0).noalias() =
+            s_matrix; // convert body (linear) position derivatives to particle linear coordinate derivatives
+        chi_matrix_element.block<4, 3>(3, 0).noalias() =
+            g_matrix; // convert body (angular) position derivatives to particle linear coordinate derivatives
+    }
     /* !SECTION */
 
     /* SECTION: Friend classes */
