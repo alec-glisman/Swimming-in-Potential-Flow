@@ -358,55 +358,56 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
                                                                     Eigen::IndexPair<int>(2, 1)};
 
     // `Eigen::Tensor` permutation indices
+    const Eigen::array<int, 3> permute_ij_ji({1, 0});
     const Eigen::array<int, 3> permute_ijk_jik({1, 0, 2});
 
     // get kinematic tensors from SystemData class
-    Eigen::Tensor<double, 1> xi_dot  = TensorCast(m_system->velocitiesBodies(), m_7M);
-    Eigen::Tensor<double, 1> xi_ddot = TensorCast(m_system->accelerationsBodies(), m_7M);
+    Eigen::Tensor<double, 1> xi_dot  = TensorCast(m_system->velocitiesBodies(), m_7M);    // (7M x 1)
+    Eigen::Tensor<double, 1> xi_ddot = TensorCast(m_system->accelerationsBodies(), m_7M); // (7M x 1)
 
-    Eigen::Tensor<double, 1> V     = TensorCast(m_system->velocitiesParticlesArticulation(), m_7N);
-    Eigen::Tensor<double, 1> V_dot = TensorCast(m_system->accelerationsParticlesArticulation(), m_7N);
+    Eigen::Tensor<double, 1> V     = TensorCast(m_system->velocitiesParticlesArticulation(), m_7N);    // (7N x 1)
+    Eigen::Tensor<double, 1> V_dot = TensorCast(m_system->accelerationsParticlesArticulation(), m_7N); // (7N x 1)
 
     // calculate 2nd order kinematic tensors
-    Eigen::Tensor<double, 2> V_V = Eigen::Tensor<double, 2>(m_7N, m_7N);
+    Eigen::Tensor<double, 2> V_V = Eigen::Tensor<double, 2>(m_7N, m_7N); // (7N x 7N)
     V_V.device(device)           = V.contract(V, outer_product);
 
-    Eigen::Tensor<double, 2> xi_dot_xi_dot = Eigen::Tensor<double, 2>(m_7M, m_7M);
+    Eigen::Tensor<double, 2> xi_dot_xi_dot = Eigen::Tensor<double, 2>(m_7M, m_7M); // (7M x 7M)
     xi_dot_xi_dot.device(device)           = xi_dot.contract(xi_dot, outer_product);
 
-    Eigen::Tensor<double, 2> xi_dot_V = Eigen::Tensor<double, 2>(m_7M, m_7N);
+    Eigen::Tensor<double, 2> xi_dot_V = Eigen::Tensor<double, 2>(m_7M, m_7N); // (7M x 7N)
     xi_dot_V.device(device)           = xi_dot.contract(V, outer_product);
 
-    Eigen::Tensor<double, 2> V_xi_dot = Eigen::Tensor<double, 2>(m_7N, m_7M);
-    V_xi_dot.device(device)           = xi_dot_V.shuffle(permute_ijk_jik);
+    Eigen::Tensor<double, 2> V_xi_dot = Eigen::Tensor<double, 2>(m_7N, m_7M); // (7N x 7M)
+    V_xi_dot.device(device)           = xi_dot_V.shuffle(permute_ij_ji);
 
     // hydrodynamic forces arising from locater point motion (3 terms; contains locater inertia term)
-    Eigen::Tensor<double, 1> inertia_loc = Eigen::Tensor<double, 1>(m_7M);
+    Eigen::Tensor<double, 1> inertia_loc = Eigen::Tensor<double, 1>(m_7M); // (7M x 1)
     inertia_loc.device(device)           = -m_M3.contract(xi_ddot, contract_ij_j);
 
-    Eigen::Tensor<double, 1> F_loc = Eigen::Tensor<double, 1>(m_7M);
+    Eigen::Tensor<double, 1> F_loc = Eigen::Tensor<double, 1>(m_7M); // (7M x 1)
     F_loc.device(device)           = inertia_loc;
     F_loc.device(device) += 0.50 * m_N3.contract(xi_dot_xi_dot, contract_jki_jk);
     F_loc.device(device) -= m_N3.contract(xi_dot_xi_dot, contract_ijk_jk);
 
     // hydrodynamic forces arising from coupling of locater and internal D.o.F. motion (2 terms)
-    Eigen::Tensor<double, 1> F_loc_int = Eigen::Tensor<double, 1>(m_7M);
+    Eigen::Tensor<double, 1> F_loc_int = Eigen::Tensor<double, 1>(m_7M); // (7M x 1)
     F_loc_int.device(device)           = m_N2.contract(xi_dot_V, contract_jki_jk);
     F_loc_int.device(device) -= m_N2.contract(V_xi_dot, contract_ijk_jk);
 
     // hydrodynamic forces arising from internal D.o.F. motion (2 terms; contains internal inertia term)
-    Eigen::Tensor<double, 1> F_int = Eigen::Tensor<double, 1>(m_7M);
+    Eigen::Tensor<double, 1> F_int = Eigen::Tensor<double, 1>(m_7M); // (7M x 1)
     F_int.device(device)           = 0.50 * m_N1.contract(V_V, contract_jki_jk);
     F_int.device(device) -= m_M2.contract(V_dot, contract_ij_j);
 
     // compute complete potential flow hydrodynamic force
-    Eigen::Tensor<double, 1> F_hydro = Eigen::Tensor<double, 1>(m_7M);
+    Eigen::Tensor<double, 1> F_hydro = Eigen::Tensor<double, 1>(m_7M); // (7M x 1)
     F_hydro.device(device)           = F_loc + F_loc_int;
     F_hydro.device(device) += F_int;
     m_F_hydro.noalias() = MatrixCast(F_hydro, m_7M, 1, device);
 
     // Compute non-inertial part of force (include internal D.o.F. inertia)
-    Eigen::Tensor<double, 1> F_hydro_no_inertia = Eigen::Tensor<double, 1>(m_7M);
+    Eigen::Tensor<double, 1> F_hydro_no_inertia = Eigen::Tensor<double, 1>(m_7M); // (7M x 1)
     F_hydro_no_inertia.device(device)           = F_hydro - inertia_loc;
     m_F_hydroNoInertia.noalias()                = MatrixCast(F_hydro_no_inertia, m_7M, 1, device);
 }
