@@ -72,21 +72,25 @@ systemData::initializeData()
 
     m_kappa.setZero();
 
-    m_kappa(1, 0, 3) = 1;
-    m_kappa(2, 1, 3) = 1;
-    m_kappa(3, 2, 3) = 1;
+    m_kappa(0, 0, 3) = 1;
+    m_kappa(1, 1, 3) = 1;
+    m_kappa(2, 2, 3) = 1;
+    m_kappa(3, 3, 3) = 1;
 
-    m_kappa(0, 0, 4) = -1;
-    m_kappa(3, 1, 4) = -1;
-    m_kappa(2, 2, 4) = 1;
+    m_kappa(0, 1, 4) = -1;
+    m_kappa(1, 0, 4) = 1;
+    m_kappa(2, 3, 4) = -1;
+    m_kappa(3, 2, 4) = 1;
 
-    m_kappa(3, 0, 5) = 1;
-    m_kappa(0, 1, 5) = -1;
-    m_kappa(1, 2, 5) = -1;
+    m_kappa(0, 2, 5) = -1;
+    m_kappa(1, 3, 5) = 1;
+    m_kappa(2, 0, 5) = 1;
+    m_kappa(3, 1, 5) = -1;
 
-    m_kappa(2, 0, 6) = -1;
-    m_kappa(1, 1, 6) = 1;
-    m_kappa(0, 2, 6) = -1;
+    m_kappa(0, 3, 6) = -1;
+    m_kappa(1, 2, 6) = -1;
+    m_kappa(2, 1, 6) = 1;
+    m_kappa(3, 0, 6) = 1;
 
     // initialize particle vectors
     spdlog::get(m_logName)->info("Setting particle group (swimmer) ids");
