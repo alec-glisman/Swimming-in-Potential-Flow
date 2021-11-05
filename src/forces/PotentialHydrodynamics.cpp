@@ -154,11 +154,11 @@ PotentialHydrodynamics::calcParticleDistances()
         m_r_ab.col(i).noalias() = m_system->positionsParticles().segment<3>(3 * m_alphaVec(i));
         m_r_ab.col(i).noalias() -= m_system->positionsParticles().segment<3>(3 * m_betaVec(i));
 
-        m_r_mag_ab[i] = m_r_ab.col(i).norm(); //[1]; |r| between 2 particles
+        m_r_mag_ab(i) = m_r_ab.col(i).norm(); //(1); |r| between 2 particles
 
 #if !defined(NDEBUG)
         spdlog::get(m_logName)->critical("Checking distance between particle pair [{0}, {1}]: {2:.3f}", m_alphaVec(i),
-                                         m_betaVec(i), m_r_mag_ab[i]);
+                                         m_betaVec(i), m_r_mag_ab(i));
         spdlog::get(m_logName)->flush();
 #endif
     }
@@ -180,15 +180,15 @@ PotentialHydrodynamics::calcAddedMass()
         const int j_part{7 * m_betaVec(k)};
 
         // Full distance between particles \alpha and \beta
-        const Eigen::Vector3d r_ij     = m_r_ab.col(k); // [1]
-        const double          r_mag_ij = m_r_mag_ab(k); //[1]; |r| between 2 particles
+        const Eigen::Vector3d r_ij     = m_r_ab.col(k); // (1)
+        const double          r_mag_ij = m_r_mag_ab(k); //(1); |r| between 2 particles
 
         // M^{(1)} Matrix Element Constants:
-        const double M1_c1 = -m_c3_2 / std::pow(r_mag_ij, 5); // [1]
-        const double M1_c2 = m_c1_2 / std::pow(r_mag_ij, 3);  // [1]
+        const double M1_c1 = -m_c3_2 / std::pow(r_mag_ij, 5); // (1)
+        const double M1_c2 = m_c1_2 / std::pow(r_mag_ij, 3);  // (1)
 
         // Full matrix elements for M^{(1)}_{ij} (NOTE: missing factor of 1/2)
-        Eigen::Matrix3d Mij = r_ij * r_ij.transpose(); //[1]; Outer product of \bm{r} \bm{r}
+        Eigen::Matrix3d Mij = r_ij * r_ij.transpose(); //(1); Outer product of \bm{r} \bm{r}
         Mij *= M1_c1;
         Mij.noalias() += M1_c2 * m_system->i3();
 
@@ -226,9 +226,9 @@ PotentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
         int j_part{7 * m_betaVec(k)};
 
         // Full distance between particles \alpha and \beta
-        const Eigen::Vector3d r_ij     = m_r_ab.col(k);           // [1]
-        const double          r_mag_ij = m_r_mag_ab[k];           //[1]; |r| between 2 particles
-        const Eigen::Matrix3d r_dyad_r = r_ij * r_ij.transpose(); // [1]; Outer product of \bm{r} \bm{r}
+        const Eigen::Vector3d r_ij     = m_r_ab.col(k);           // (1)
+        const double          r_mag_ij = m_r_mag_ab(k);           //(1); |r| between 2 particles
+        const Eigen::Matrix3d r_dyad_r = r_ij * r_ij.transpose(); // (1); Outer product of \bm{r} \bm{r}
         const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_rr = TensorCast(r_dyad_r);
 
         // Constants to use in Calculation
