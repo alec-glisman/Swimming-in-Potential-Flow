@@ -301,7 +301,7 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     m_M2.device(device) = m_system->tensZeta().contract(m_tens_M_total, contract_il_lj);
 
     m_M3.device(device) = m_M2.contract(m_system->tensZeta(), contract_li_jl);
-    m_mat_M3            = MatrixCast(m_M3, m_7M, m_7M);
+    m_mat_M3            = MatrixCast(m_M3, m_7M, m_7M, device);
 
     /* ANCHOR: Compute linear combinations of GRADIENTS of total mass matrix and zeta */
     // N^{(1)}
