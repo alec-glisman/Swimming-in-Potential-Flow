@@ -322,7 +322,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
         // clang-format on
     };
     /* !SECTION (Static methods) */
-    /* !SECTION (Private methods)
+    /* !SECTION (Private methods) */
 
     /* SECTION: Friend classes */
     friend class TestSystemData;
