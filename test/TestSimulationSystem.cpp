@@ -4,7 +4,7 @@
 //
 
 /* Include all internal project dependencies */
-#include <testSystemData.hpp>
+#include <TestSystemData.hpp>
 
 /* Include all external project dependencies */
 #define CATCH_CONFIG_CONSOLE_WIDTH 300
@@ -21,12 +21,12 @@ TEST_CASE("Test SystemData class", "[SystemData]")
 
     // simulation classes
     std::shared_ptr<SystemData>     system;
-    std::shared_ptr<testSystemData> testSystem;
+    std::shared_ptr<TestSystemData> testSystem;
 
     // Construct systenData class
     REQUIRE_NOTHROW(system = std::make_shared<SystemData>(inputDataFile, outputDir));
-    // Construct testSystemData class
-    REQUIRE_NOTHROW(testSystem = std::make_shared<testSystemData>(system));
+    // Construct TestSystemData class
+    REQUIRE_NOTHROW(testSystem = std::make_shared<TestSystemData>(system));
 
     // Return value test
     int return_val{-1};

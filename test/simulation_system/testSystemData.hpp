@@ -16,12 +16,12 @@
 #include <random> // std::uniform_real_distribution, std::default_random_engine
 
 /**
- * @class testSystemData
+ * @class TestSystemData
  *
  * @brief Friend class to test `SystemData` class
  *
  */
-class testSystemData
+class TestSystemData
 {
   public:
     // classes
@@ -33,13 +33,13 @@ class testSystemData
      *
      * @param sys SystemData class to test
      */
-    explicit testSystemData(std::shared_ptr<SystemData> sys) : m_system(sys){};
+    explicit TestSystemData(std::shared_ptr<SystemData> sys) : m_system(sys){};
 
     /**
      * @brief Destroy the test System Data object
      *
      */
-    ~testSystemData() = default;
+    ~TestSystemData() = default;
 
     /**
      * @brief Test `SystemData::crossProdMat()`

@@ -253,7 +253,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
     /* !SECTION */
 
     /* SECTION: Friend classes */
-    friend class testSystemData;
+    friend class TestSystemData;
     /* !SECTION */
 
     /* SECTION: Attributes */

@@ -2,10 +2,10 @@
 // Created by Alec Glisman on 10/20/21
 //
 
-#include <testSystemData.hpp>
+#include <TestSystemData.hpp>
 
 int
-testSystemData::testCrossProdMat()
+TestSystemData::testCrossProdMat()
 {
     int num_failed_tests{0};
 
@@ -76,7 +76,7 @@ testSystemData::testCrossProdMat()
 }
 
 int
-testSystemData::testEMatrix()
+TestSystemData::testEMatrix()
 {
     int num_failed_tests{0};
 
@@ -157,7 +157,7 @@ testSystemData::testEMatrix()
 }
 
 int
-testSystemData::testRigidBodyMotionTensors()
+TestSystemData::testRigidBodyMotionTensors()
 {
     const int num_tests{4};
     int       num_failed_tests{0};
