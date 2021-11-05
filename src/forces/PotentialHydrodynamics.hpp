@@ -209,9 +209,9 @@ class PotentialHydrodynamics
     /// (7M x 7M x 7M) @f$ \nabla_{\xi} \, \boldsymbol{\zeta} \, \boldsymbol{M} \, \boldsymbol{\zeta}^{\mathrm{T}} @f$
     Eigen::Tensor<double, 3> m_N3;
 
-    /// (7M x 7N) @f$ \boldsymbol{\zeta} \, \boldsymbol{M} \, \boldsymbol{\zeta}^{\mathrm{T}} @f$
+    /// (7M x 7M) @f$ \boldsymbol{\zeta} \, \boldsymbol{M} \, \boldsymbol{\zeta}^{\mathrm{T}} @f$
     Eigen::Tensor<double, 2> m_M3;
-    /// (7M x 7M) @f$ \boldsymbol{\zeta} \, \boldsymbol{M} @f$
+    /// (7M x 7N) @f$ \boldsymbol{\zeta} \, \boldsymbol{M} @f$
     Eigen::Tensor<double, 2> m_M2;
 
     /// (7M x 7M) `Eigen::Matrix` form of `m_M3`
