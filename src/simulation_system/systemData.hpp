@@ -371,7 +371,7 @@ class systemData : public std::enable_shared_from_this<systemData>
     // general-use tensors
     /// (3 x 3 x 3) (skew-symmetric) 3rd order identity tensor
     Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> m_levi_cevita;
-    /// (3 x 4 x 7) @f$ \nabla_{\xi_{\alpha}} \boldsymbol{E}^{T}{(\boldsymbol{\theta})} @f$
+    /// (4 x 4 x 7) @f$ \nabla_{\xi_{\alpha}} \boldsymbol{E}^{T}{(\boldsymbol{\theta})} @f$
     Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> m_kappa_tilde;
 
     /* ANCHOR: kinematic vectors */
@@ -384,9 +384,9 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     /// (3N x 1) (linear) positions of all particles
     Eigen::VectorXd m_positions_particles;
-    /// (6N x 1) (linear/angular) velocities of all particles
+    /// (7N x 1) (linear/angular) velocities of all particles
     Eigen::VectorXd m_velocities_particles;
-    /// (6N x 1) (linear/angular) accelerations of all particles
+    /// (7N x 1) (linear/angular) accelerations of all particles
     Eigen::VectorXd m_accelerations_particles;
 
     /// (3N x 1) orientations of all particles
@@ -399,30 +399,30 @@ class systemData : public std::enable_shared_from_this<systemData>
 
     /// (3N x 1) (linear) articulation positions of all particles
     Eigen::VectorXd m_positions_particles_articulation;
-    /// (6N x 1) (linear/angular) articulation velocities of all particles
+    /// (7N x 1) (linear/angular) articulation velocities of all particles
     Eigen::VectorXd m_velocities_particles_articulation;
-    /// (6N x 1) (linear/angular) articulation accelerations of all particles
+    /// (7N x 1) (linear/angular) articulation accelerations of all particles
     Eigen::VectorXd m_accelerations_particles_articulation;
 
     /* ANCHOR: rigid body motion tensors */
-    /// (6M x 6N) @f$ \boldsymbol{\Sigma} @f$ rigid body motion connectivity tensor
+    /// (7M x 7N) @f$ \boldsymbol{\Sigma} @f$ rigid body motion connectivity tensor
     Eigen::MatrixXd m_rbm_conn;
-    /// (6M x 7M) @f$ \boldsymbol{\Psi} @f$ converts linear/quaternion body velocity D.o.F. to linear/angular
+    /// (7M x 7M) @f$ \boldsymbol{\Psi} @f$ converts linear/quaternion body velocity D.o.F. to linear/angular
     /// velocity D.o.F.
     Eigen::MatrixXd m_psi_conv_quat_ang;
-    /// (7M x 6N) @f$ \boldsymbol{\zeta} @f$ converts linear/angular particle velocities to linear/quaternion body
+    /// (7M x 7N) @f$ \boldsymbol{\zeta} @f$ converts linear/angular particle velocities to linear/quaternion body
     /// velocity D.o.F.
     Eigen::MatrixXd m_zeta;
 
-    /// (7M x 6N) tensor version of `m_zeta`
+    /// (7M x 7N) tensor version of `m_zeta`
     Eigen::Tensor<double, 2> m_tens_zeta;
-    /// (7M x 6N x 7M) @f$ \nabla_{\xi} \boldsymbol{\zeta} @f$
+    /// (7M x 7N x 7M) @f$ \nabla_{\xi} \boldsymbol{\zeta} @f$
     Eigen::Tensor<double, 3> m_tens_grad_zeta;
 
-    /// (7M x 6N) @f$ \boldsymbol{\chi} @f$ converts particle position D.o.F. to body position/quaternion D.o.F.
+    /// (7M x 7N) @f$ \boldsymbol{\chi} @f$ converts particle position D.o.F. to body position/quaternion D.o.F.
     Eigen::MatrixXd m_chi;
 
-    /// (7M x 6N) tensor version of `m_chi`
+    /// (7M x 7N) tensor version of `m_chi`
     Eigen::Tensor<double, 2> m_tens_chi;
 
     /* ANCHOR: Udwadia constraint linear system */
