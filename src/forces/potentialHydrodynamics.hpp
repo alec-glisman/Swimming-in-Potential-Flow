@@ -219,7 +219,12 @@ class potentialHydrodynamics
 
     // ANCHOR: constants
     /// volume of a unit sphere
-    const double m_unitSphereVol{4.0 / 3.0 * M_PI};
+    const double m_unit_sphere_volume{4.0 / 3.0 * M_PI};
+    /// moment of inertia for a unit sphere
+    const double m_scalar_moment_inertia{0.40};
+    /// arbitrary, positive scalar to use in extending tensors from 6N to 7N (detailed in Udwadia, Schutte. J. Appl.
+    /// Mech. Jul 2010)
+    const double m_scalar_w{m_scalar_moment_inertia};
     /// = 1/2
     const double m_c1_2{0.50};
     /// = 3/2

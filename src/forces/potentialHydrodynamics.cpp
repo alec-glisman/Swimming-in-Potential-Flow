@@ -32,8 +32,11 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
     {
         const int particle_id_7{7 * particle_id};
 
-        m_I7N_linear.block<3, 3>(particle_id_7, particle_id_7).noalias()          = Eigen::MatrixXd::Identity(3, 3);
-        m_I7N_angular.block<3, 3>(particle_id_7 + 3, particle_id_7 + 3).noalias() = Eigen::MatrixXd::Identity(3, 3);
+        m_I7N_linear.block<3, 3>(particle_id_7, particle_id_7).noalias() = Eigen::MatrixXd::Identity(3, 3);
+
+        /// @todo: (1, 1) entry is the added element to the mass matrix. Verify that changing this value does not affect
+        /// the end result (Issue #6). Currently defaults to the same value as the intrinsic moment of inertia.
+        m_I7N_angular.block<4, 4>(particle_id_7 + 3, particle_id_7 + 3).noalias() = Eigen::MatrixXd::Identity(4, 4);
     }
 
     m_c1_2_I7N_linear = m_c1_2 * m_I7N_linear;
@@ -41,9 +44,9 @@ potentialHydrodynamics::potentialHydrodynamics(std::shared_ptr<systemData> sys)
     // Initialize mass matrices
     spdlog::get(m_logName)->info("Initializing mass matrices");
 
-    m_M_intrinsic = (m_system->particleDensity() * m_unitSphereVol) * m_I7N_linear;
+    m_M_intrinsic = (m_system->particleDensity() * m_unit_sphere_volume) * m_I7N_linear;
 
-    m_J_intrinsic = (0.40 * m_system->particleDensity() * m_unitSphereVol) *
+    m_J_intrinsic = (m_scalar_moment_inertia * m_system->particleDensity() * m_unit_sphere_volume) *
                     m_I7N_angular; // intrinsic moment of inertia for spheres
 
     m_M_added = Eigen::MatrixXd::Zero(m_7N, m_7N);
@@ -197,8 +200,8 @@ potentialHydrodynamics::calcAddedMass()
     /* Construct full added mass matrix
      * M = 1/2 I + M^{(1)}
      */
-    m_M_added.noalias() += m_c1_2_I7N_linear;                  // Add diagonal elements
-    m_M_added *= (m_system->fluidDensity() * m_unitSphereVol); // mass units
+    m_M_added.noalias() += m_c1_2_I7N_linear;                       // Add diagonal elements
+    m_M_added *= (m_system->fluidDensity() * m_unit_sphere_volume); // mass units
 }
 
 void
@@ -230,9 +233,9 @@ potentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
 
         // Constants to use in Calculation
         double gradM1_c1 =
-            -(m_system->fluidDensity() * m_unitSphereVol) * m_c3_2 * std::pow(r_mag_ij, -5); // mass units
+            -(m_system->fluidDensity() * m_unit_sphere_volume) * m_c3_2 * std::pow(r_mag_ij, -5); // mass units
         double gradM1_c2 =
-            (m_system->fluidDensity() * m_unitSphereVol) * m_c15_2 * std::pow(r_mag_ij, -7); // mass units
+            (m_system->fluidDensity() * m_unit_sphere_volume) * m_c15_2 * std::pow(r_mag_ij, -7); // mass units
 
         // outer products (I_{i j} r_{k}) and permutations
         const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_ij_r_k =
