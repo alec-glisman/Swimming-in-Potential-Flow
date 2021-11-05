@@ -84,6 +84,7 @@ Engine::run()
         {
             spdlog::get(m_logName)->info("Writing frame at t = {0}", m_system->t());
             m_system->gsdUtil()->writeFrame();
+            m_system->logData();
             spdlog::get(m_logName)->flush();
         }
         if (m_system->timestep() % display_step == 0)
