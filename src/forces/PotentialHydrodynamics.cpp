@@ -298,14 +298,14 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     /* ANCHOR: Indices */
     // `Eigen::Tensor` contraction indices
     const Eigen::array<Eigen::IndexPair<int>, 1> contract_il_lj = {Eigen::IndexPair<int>(1, 0)}; // = A B
-    const Eigen::array<Eigen::IndexPair<int>, 1> contract_li_jl = {Eigen::IndexPair<int>(1, 1)}; // = A B^T
+    const Eigen::array<Eigen::IndexPair<int>, 1> contract_il_jl = {Eigen::IndexPair<int>(1, 1)}; // = A B^T
     // `Eigen::Tensor` permutation indices
     const Eigen::array<int, 3> permute_ikj_ijk({0, 2, 1}); // (i, j, k) --> (i, j, k)
 
     /* ANCHOR: Compute linear combinations of total mass matrix and zeta */
     m_M2.device(device) = m_system->tensZeta().contract(m_tens_M_total, contract_il_lj);
 
-    m_M3.device(device) = m_M2.contract(m_system->tensZeta(), contract_li_jl);
+    m_M3.device(device) = m_M2.contract(m_system->tensZeta(), contract_il_jl);
     m_mat_M3            = MatrixCast(m_M3, m_7M, m_7M, device);
 
     /* ANCHOR: Compute linear combinations of GRADIENTS of total mass matrix and zeta */
@@ -331,12 +331,12 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     Eigen::Tensor<double, 3> N3_term2            = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
     Eigen::Tensor<double, 3> N3_term3            = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
 
-    N3_term1_preshuffle.device(device) = N2_term1.contract(m_system->tensZeta(), contract_li_jl);
-    N3_term2_preshuffle.device(device) = N2_term2.contract(m_system->tensZeta(), contract_li_jl);
+    N3_term1_preshuffle.device(device) = N2_term1.contract(m_system->tensZeta(), contract_il_jl);
+    N3_term2_preshuffle.device(device) = N2_term2.contract(m_system->tensZeta(), contract_il_jl);
 
     N3_term1.device(device) = N3_term1_preshuffle.shuffle(permute_ikj_ijk);
     N3_term2.device(device) = N3_term2_preshuffle.shuffle(permute_ikj_ijk);
-    N3_term3.device(device) = m_M2.contract(m_system->tensGradZeta(), contract_li_jl);
+    N3_term3.device(device) = m_M2.contract(m_system->tensGradZeta(), contract_il_jl);
 
     m_N3.device(device) = N3_term1 + N3_term2;
     m_N3.device(device) += N3_term3;
