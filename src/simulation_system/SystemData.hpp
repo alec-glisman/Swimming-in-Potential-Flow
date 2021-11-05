@@ -320,7 +320,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      * @see Udwadia, Schutte paper detailing how this is an arbitrary, positive constant and does not affect
      * results numerically, as would be expected.
      *
-     * @todo: Verify this does not affect results
+     * @todo: REVIEW: Verify this does not affect results
      */
     const double m_sys_scalar_w{1.0};
 
