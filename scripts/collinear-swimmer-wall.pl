@@ -30,7 +30,7 @@ use warnings;                      # give warnings
 # SECTION: Input variables that user must specify before running script
 
 # Compiler
-my $enableTesting  = "True";                    # Unit tests,        OPTIONS: (False) OFF, (True) ON
+my $enableTesting  = "False";                   # Unit tests,        OPTIONS: (False) OFF, (True) ON
 my $enableCoverage = "False";                   # Testing coverage,  OPTIONS: (False) OFF, (True) ON
 my $build          = "Release";                 # CMake built type,  OPTIONS: Release, Debug, Profile
 my $generator      = "Ninja";                   # CMake generator,   OPTIONS: "Unix Makefiles", "Ninja"
