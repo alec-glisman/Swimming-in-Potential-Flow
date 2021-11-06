@@ -23,18 +23,34 @@ These build (and run) the project in a range of configurations.
 
 #### Command Pallete
 
-- `^⇧P` Open command pallette (`>` command)
-- `^P` Search for files in current workspace
-- `^T` Search for symbols in current workspace (`@` command)
-- `^⇧O` Search for symbols in current file (`#` command)
+- `(⌘/^) ⇧P` Open command pallette (`>` command)
+- `(⌘/^) P` Search for files in current workspace
+- `(⌘/^) T` Search for symbols in current workspace (`@` command)
+- `(⌘/^) O` Search for symbols in current file (`#` command)
 
 #### Definition/References
 
 - `F12` Go to definition
 - `⌥F12` Peek definition
-- `⇧F12` Peek references (`⌘k` and `F12` on MacOS)
+- `(⌘k) ⇧F12` Peek references
 - `^Tab` Switch between open tabs in current editor
-- `^<number>` Swtich to editor group number (`0` is sidebar)
+- `^<number>` Swtich to editor group number (`0` is side bar)
+
+#### Panes
+
+##### Side bar
+
+- `(⌘/^) ⇧F` Search 
+- `(⌘/^) ⇧E` Explorer 
+- `(⌘/^) ⇧D` Run & Debug
+- `^⇧G` Source Control
+
+##### Bottom Bar
+
+- `(⌘/^) ⇧M` Problems
+- `^(⌘/^) U` Output
+- `^`\` Terminal
+- `(⌘/^) ⇧Y` Debug Console
 
 ### Auto-completion
 
@@ -45,11 +61,11 @@ These build (and run) the project in a range of configurations.
 
 - `F2` Change name of symbol
 - `F8` See intellisense errors
-- `^.` Show recommended actions for currently highlighted code
-- `⌥⇧ ←/→` Select blocks of code (`⌘^ ⇧ ←/→`)
-- `^⇧\` Navigate to matching bracket
-- `^⌥↓`/`^⌥↑` Add multiple cursors
-- `^\` Split editor
+- `(⌘/^) .` Show recommended actions for currently highlighted code
+- `(⌥/⌘^) ⇧ ←/→` Select blocks of code
+- `(⌘/^) ⇧\` Navigate to matching bracket
+- `(⌘/^) ↓/↑` Add multiple cursors
+- `(⌘/^)\` Split editor
 
 ### Terminal
 
