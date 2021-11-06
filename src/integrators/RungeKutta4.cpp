@@ -280,13 +280,13 @@ RungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
     Eigen::VectorXd Q_total = Q; // (7m, 1)
     Q_total.noalias() += Q_con;
     acc.noalias() = M_eff_inv * Q_total; // (7m, 1)
-
-    // debugging print statements
-    Eigen::IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
-    std::cout << "M_eff:\n" << M_eff.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "M_eff_inv:\n" << M_eff_inv.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "K:\n" << K.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "udwadiaA:\n" << m_system->udwadiaA().format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "udwadiaB:\n" << m_system->udwadiaB().format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "acc:\n" << acc.format(CleanFmt) << "\n\n" << std::endl;
 }
+
+// // debugging print statements
+// Eigen::IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
+// std::cout << "M_eff:\n" << M_eff.format(CleanFmt) << "\n\n" << std::endl;
+// std::cout << "M_eff_inv:\n" << M_eff_inv.format(CleanFmt) << "\n\n" << std::endl;
+// std::cout << "K:\n" << K.format(CleanFmt) << "\n\n" << std::endl;
+// std::cout << "udwadiaA:\n" << m_system->udwadiaA().format(CleanFmt) << "\n\n" << std::endl;
+// std::cout << "udwadiaB:\n" << m_system->udwadiaB().format(CleanFmt) << "\n\n" << std::endl;
+// std::cout << "acc:\n" << acc.format(CleanFmt) << "\n\n" << std::endl;
