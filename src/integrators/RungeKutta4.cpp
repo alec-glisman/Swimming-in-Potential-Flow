@@ -177,7 +177,7 @@ RungeKutta4::imageBodyPosVel(Eigen::VectorXd& pos, Eigen::VectorXd& vel)
         vel.segment<7>(img_body_id_7).noalias() = vel.segment<7>(real_body_id_7);
 
         vel(img_body_id_7 + 2) *= -1;
-        vel.segment<2>(img_body_id_7 + 4) *= -1;
+        vel.segment<2>(img_body_id_7 + 4) *= -1; // FIXME: Is this true for first time derivative?
     }
 }
 
@@ -196,7 +196,7 @@ RungeKutta4::imageBodyAcc(Eigen::VectorXd& acc)
         acc.segment<7>(img_body_id_7).noalias() = acc.segment<7>(real_body_id_7);
 
         acc(img_body_id_7 + 2) *= -1;
-        acc.segment<2>(img_body_id_7 + 4) *= -1;
+        acc.segment<2>(img_body_id_7 + 4) *= -1; // FIXME: Is this true for second time derivative?
     }
 }
 
@@ -273,12 +273,3 @@ RungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
     Q_total.noalias() += Q_con;
     acc.noalias() = M_eff_inv * Q_total; // (7m, 1)
 }
-
-// // debugging print statements
-// Eigen::IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
-// std::cout << "M_eff:\n" << M_eff.format(CleanFmt) << "\n\n" << std::endl;
-// std::cout << "M_eff_inv:\n" << M_eff_inv.format(CleanFmt) << "\n\n" << std::endl;
-// std::cout << "K:\n" << K.format(CleanFmt) << "\n\n" << std::endl;
-// std::cout << "udwadiaA:\n" << m_system->udwadiaA().format(CleanFmt) << "\n\n" << std::endl;
-// std::cout << "udwadiaB:\n" << m_system->udwadiaB().format(CleanFmt) << "\n\n" << std::endl;
-// std::cout << "acc:\n" << acc.format(CleanFmt) << "\n\n" << std::endl;
