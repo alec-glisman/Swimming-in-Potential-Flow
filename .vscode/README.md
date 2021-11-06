@@ -1,18 +1,18 @@
 # Directory: .vscode
 
-Files relevant for developing the project in VSCode.  
+Files relevant for developing the project in VSCode.
 
 ## Files
 
 `c_cpp_properties.json`: Provides VSCode information on where to find header files, compilers, and standards used in compiling the project.
-Current have a setup for both MacOS and Linux.  
+Current have a setup for both MacOS and Linux.
 
 `extensions.json`: List of all extensions used in development.
 This incldes both necessary extensions, such as C++ intellisense, and quality of life extensions, such as color themes.
 
 `launch.json`: Configurations for debugging files.
 
-`settings.json`: VSCode settings for this project  
+`settings.json`: VSCode settings for this project
 
 `tasks.json`: Tasks to call in VSCode.
 These build (and run) the project in a range of configurations.
@@ -40,8 +40,8 @@ These build (and run) the project in a range of configurations.
 
 ##### Side bar
 
-- `(⌘/^) ⇧F` Search 
-- `(⌘/^) ⇧E` Explorer 
+- `(⌘/^) ⇧F` Search
+- `(⌘/^) ⇧E` Explorer
 - `(⌘/^) ⇧D` Run & Debug
 - `^⇧G` Source Control
 
