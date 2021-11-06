@@ -679,7 +679,7 @@ SystemData::gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice
     const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 4>> tens_I_tilde = TensorCast(I_tilde, 4, 4);
 
     // compute angular_gradient_preshuffle{i, k, j} =  2 * Kappa{i, l, k} I_tilde{l, j}
-    Eigen::TensorFixedSize<double, Eigen::Sizes<4, 4, 7>> angular_gradient_preshuffle; // (4, 4, 7)  {i, k, j}
+    Eigen::TensorFixedSize<double, Eigen::Sizes<4, 7, 4>> angular_gradient_preshuffle; // (4, 7, 4)  {i, k, j}
     angular_gradient_preshuffle.device(device) = 2 * m_kappa.contract(tens_I_tilde, contract_ilk_lj);
     // shuffle angular_gradient
     Eigen::TensorFixedSize<double, Eigen::Sizes<4, 4, 7>> angular_gradient; // (4, 4, 7)  {i, j, k}
