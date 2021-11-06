@@ -60,6 +60,7 @@ RUN apt-get update && apt-get install -y \
 # MAKE
 RUN apt-get update && apt-get install -y \
     make \
+    ninja-build \
     cmake
 
 # C++ and libraries
