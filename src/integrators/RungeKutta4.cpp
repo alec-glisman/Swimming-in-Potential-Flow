@@ -119,7 +119,6 @@ RungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::Vec
     // NOTE: Order of function calls must remain the same
     m_system->setT(t);
 
-    // TODO: Related to Issue #3
     if (m_system->imageSystem())
     {
         imageBodyPosVel(pos, vel);
@@ -130,19 +129,18 @@ RungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::Vec
     m_system->update(device);
     m_potHydro->update(device);
 
-    // TODO: Related to Issue #3
     if (m_system->imageSystem())
     {
         // only update Udwadia system for "real" system not image dipoles
-        const int num_img_bodies{m_system->numBodies() / 2};
-        const int num_img_bodies_7{7 * num_img_bodies};
+        const int num_real_bodies{m_system->numBodies() / 2};
+        const int num_real_bodies_7{7 * num_real_bodies};
 
-        Eigen::VectorXd acc_real_body = acc.segment(0, num_img_bodies_7);
+        Eigen::VectorXd acc_real_body = acc.segment(0, num_real_bodies_7);
 
         udwadiaKalaba(acc_real_body);
 
         // update acceleration components using constraints
-        acc.segment(0, num_img_bodies_7).noalias() = acc_real_body;
+        acc.segment(0, num_real_bodies_7).noalias() = acc_real_body;
         imageBodyAcc(acc);
     }
     else
