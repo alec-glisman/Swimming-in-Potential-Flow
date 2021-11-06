@@ -184,7 +184,7 @@ RungeKutta4::imageBodyPosVel(Eigen::VectorXd& pos, Eigen::VectorXd& vel)
 void
 RungeKutta4::imageBodyAcc(Eigen::VectorXd& acc)
 {
-    const int num_img_bodies = m_system->numBodies() / 2;
+    const int num_img_bodies{m_system->numBodies() / 2};
 
     for (int img_body_id = num_img_bodies; img_body_id < m_system->numBodies(); img_body_id++)
     {
