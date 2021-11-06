@@ -624,15 +624,20 @@ SystemData::gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice
     const Eigen::array<int, 3> permute_ikj_ijk({0, 2, 1}); // {i, k, j} --> {i, j, k}
 
     // `Eigen::Tensor` output tensor indices start location (offset) and extent
-    const Eigen::array<Eigen::Index, 3> offsets_mixed   = {body_id_7 + 3, particle_id_7, body_id_7};
+    const Eigen::array<Eigen::Index, 3> offset_one_row = {1, 0, 0};
+    const Eigen::array<Eigen::Index, 3> extents_337    = {3, 3, 7};
+
+    const Eigen::array<Eigen::Index, 3> offsets_mixed = {body_id_7 + 3, particle_id_7, body_id_7};
+    const Eigen::array<Eigen::Index, 3> extents_mixed = {4, 3, 7};
+
     const Eigen::array<Eigen::Index, 3> offsets_angular = {body_id_7 + 3, particle_id_7 + 3, body_id_7};
-    const Eigen::array<Eigen::Index, 3> extents_mixed   = {4, 3, 7};
     const Eigen::array<Eigen::Index, 3> extents_angular = {4, 4, 7};
 
     /* ANCHOR: Tensor quantities that will be contracted */
     // moment arm to locater point from particle
-    const Eigen::Matrix3d two_r_cross_mat = 2 * m_rbm_conn.block<3, 3>(body_id_7 + 4, particle_id_7);
-    const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_two_r_cross_mat = TensorCast(two_r_cross_mat, 3, 3);
+    const Eigen::Matrix<double, 4, 3> two_r_tilde_cross_mat = 2 * m_rbm_conn.block<4, 3>(body_id_7 + 3, particle_id_7);
+    const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3>> tens_two_r_tilde_cross_mat =
+        TensorCast(two_r_tilde_cross_mat, 4, 3);
 
     // E matrix representation of body quaternion from m_psi_conv_quat_ang
     const Eigen::Matrix4d two_E_body = m_psi_conv_quat_ang.block<4, 4>(body_id_7 + 3, body_id_7 + 3);
@@ -646,21 +651,25 @@ SystemData::gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice
     // compute grad_r_cross{l, j, k} = - m_levi_cevita{l, j, m} chi_tilde{k, m}
     Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 7>> grad_r_cross; // (3, 3, 7)  {l, j, k}
     grad_r_cross.device(device) = m_levi_cevita.contract(tens_n_chi_tilde, contract_ljm_km);
+    // prepend row of zeros
+    Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> grad_r_cross_tilde; // (4, 3, 7)  {l, j, k}
+    grad_r_cross_tilde.setZero();
+    grad_r_cross_tilde.slice(offset_one_row, extents_337).device(device) = grad_r_cross;
 
     // compute 2E_T_grad_r{i, j, k} = 2E_{l, i} grad_r_cross{l, j, k}
-    Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> two_E_grad_r_cross; // (4, 3, 7)  {i, j, k}
-    two_E_grad_r_cross.device(device) = tens_two_E_body.contract(grad_r_cross, contract_li_ljk);
+    Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> two_E_grad_r_cross_tilde; // (4, 3, 7)  {i, j, k}
+    two_E_grad_r_cross_tilde.device(device) = tens_two_E_body.contract(grad_r_cross_tilde, contract_li_ljk);
 
     // compute 2grad_E_r_cross_{i, k, j} = Kappa{i, l, k} r_cross{l, j}
-    Eigen::TensorFixedSize<double, Eigen::Sizes<4, 7, 3>> two_grad_E_r_cross_preshuffle; // (4, 7, 3)  {i, k, j}
-    two_grad_E_r_cross_preshuffle.device(device) = m_kappa.contract(tens_two_r_cross_mat, contract_ilk_lj);
-    // shuffle two_grad_E_r_cross_preshuffle
-    Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> two_grad_E_r_cross; // (4, 3, 7)  {i, j, k}
-    two_grad_E_r_cross.device(device) = two_grad_E_r_cross_preshuffle.shuffle(permute_ikj_ijk);
+    Eigen::TensorFixedSize<double, Eigen::Sizes<4, 7, 3>> two_grad_E_r_tilde_cross_preshuffle; // (4, 7, 3)  {i, k, j}
+    two_grad_E_r_tilde_cross_preshuffle.device(device) = m_kappa.contract(tens_two_r_tilde_cross_mat, contract_ilk_lj);
+    // shuffle two_grad_E_r_tilde_cross_preshuffle
+    Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> two_grad_E_r_tilde_cross_tilde; // (4, 3, 7)  {i, j, k}
+    two_grad_E_r_tilde_cross_tilde.device(device) = two_grad_E_r_tilde_cross_preshuffle.shuffle(permute_ikj_ijk);
 
     // mixed gradient term
     Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> mixed_gradient;
-    mixed_gradient.device(device) = two_grad_E_r_cross + two_E_grad_r_cross; // (4, 3, 7)  {i, j, k}
+    mixed_gradient.device(device) = two_grad_E_r_tilde_cross_tilde + two_E_grad_r_cross_tilde; // (4, 3, 7)  {i, j, k}
     m_tens_grad_zeta.slice(offsets_mixed, extents_angular).device(device) = mixed_gradient;
 
     /* ANCHOR: tensor contractions for right-half of gradient */
