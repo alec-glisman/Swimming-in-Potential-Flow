@@ -440,11 +440,10 @@ SystemData::velocitiesArticulation()
         m_velocities_particles_articulation.segment<3>(particle_id_7).noalias() =
             particle_velocities(particle_id) * m_orientations_particles.segment<3>(particle_id_3);
 
-        // Image system: flip x-y components, leave z unchanged
-        // TODO: Related to Issue #3
+        // Image system: flip z components, leave x,y unchanged
         if (particle_id >= (m_num_particles / 2))
         {
-            m_velocities_particles_articulation.segment<2>(particle_id_7) *= -1;
+            m_velocities_particles_articulation(particle_id_7 + 2) *= -1;
         }
     }
 }
@@ -479,11 +478,10 @@ SystemData::accelerationsArticulation()
         m_accelerations_particles_articulation.segment<3>(particle_id_7).noalias() =
             particle_accelerations(particle_id) * m_orientations_particles.segment<3>(particle_id_3);
 
-        // Image system: flip x-y components, leave z unchanged
-        // TODO: Related to Issue #3
+        // Image system: flip z components, leave x,y unchanged
         if (particle_id >= (m_num_particles / 2))
         {
-            m_accelerations_particles_articulation.segment<2>(particle_id_7) *= -1;
+            m_accelerations_particles_articulation(particle_id_7 + 2) *= -1;
         }
     }
 }
