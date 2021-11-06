@@ -155,31 +155,28 @@ RungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::Vec
 void
 RungeKutta4::imageBodyPosVel(Eigen::VectorXd& pos, Eigen::VectorXd& vel)
 {
-    const int num_img_bodies = m_system->numBodies() / 2;
+    const int num_img_bodies{m_system->numBodies() / 2};
 
     for (int img_body_id = num_img_bodies; img_body_id < m_system->numBodies(); img_body_id++)
     {
-        // indices
-        const int body_id_7{7 * (img_body_id - num_img_bodies)};
+        // `Eigen::Vector` indices
+        const int real_body_id_7{7 * (img_body_id - num_img_bodies)};
         const int img_body_id_7{7 * img_body_id};
 
         /* ANCHOR: Position image system: mirror image about xy-plane (transform z --> -z) */
-        pos.segment<7>(img_body_id_7) = pos.segment<7>(body_id_7);
+        pos.segment<7>(img_body_id_7).noalias() = pos.segment<7>(real_body_id_7);
 
         // (linear components) flip z component, leave x-y unchanged
-        pos.segment<1>(img_body_id_7 + 2) *= -1;
+        pos(img_body_id_7 + 2) *= -1;
 
         // (quaternion components) flip x-y components of quaternion vector part (see note in header file: look for "C1
-        // and C2 are mirrored along the Z-axis")
+        // and C2 are mirrored along the z-axis")
         pos.segment<2>(img_body_id_7 + 4) *= -1;
 
-        /* ANCHOR: Velocity image system: invert x-y components to have image dipoles  */
-        vel.segment<7>(img_body_id_7) = vel.segment<7>(body_id_7);
+        /* ANCHOR: Velocity image system: mirror image about xy-plane (transform z --> -z)  */
+        vel.segment<7>(img_body_id_7).noalias() = vel.segment<7>(real_body_id_7);
 
-        // (linear components) flip x-y components, leave z unchanged
-        vel.segment<2>(img_body_id_7) *= -1;
-
-        // (quaternion components) same transform as positional transform
+        vel(img_body_id_7 + 2) *= -1;
         vel.segment<2>(img_body_id_7 + 4) *= -1;
     }
 }
@@ -191,17 +188,14 @@ RungeKutta4::imageBodyAcc(Eigen::VectorXd& acc)
 
     for (int img_body_id = num_img_bodies; img_body_id < m_system->numBodies(); img_body_id++)
     {
-        // indices
-        const int body_id_7{7 * (img_body_id - num_img_bodies)};
+        // `Eigen::Vector` indices
+        const int real_body_id_7{7 * (img_body_id - num_img_bodies)};
         const int img_body_id_7{7 * img_body_id};
 
-        /* ANCHOR: Acceleration image system: invert x-y components to have image dipoles  */
-        acc.segment<7>(img_body_id_7) = acc.segment<7>(body_id_7);
+        /* ANCHOR: Acceleration image system: mirror image about xy-plane (transform z --> -z)   */
+        acc.segment<7>(img_body_id_7).noalias() = acc.segment<7>(real_body_id_7);
 
-        // (linear components) flip x-y components, leave z unchanged
-        acc.segment<2>(img_body_id_7) *= -1;
-
-        // (quaternion components) same transform as positional transform
+        acc(img_body_id_7 + 2) *= -1;
         acc.segment<2>(img_body_id_7 + 4) *= -1;
     }
 }
