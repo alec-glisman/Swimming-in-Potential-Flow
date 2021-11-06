@@ -136,6 +136,7 @@ RUN rm -rf requirements
 # Copy include directory into docker image
 WORKDIR "/"
 COPY include /bodies-in-potential-flow/include
+COPY vcpkg /bodies-in-potential-flow/vcpkg
 
 # Install eigen3 (commit 8ce341caf2947e4b5ac4580c20254ae7d828b009 from git repo)
 WORKDIR "/bodies-in-potential-flow/include/Eigen"
@@ -154,6 +155,10 @@ WORKDIR "/bodies-in-potential-flow/include/Catch2"
 RUN mkdir build
 WORKDIR "/bodies-in-potential-flow/include/Catch2/build"
 RUN cmake .. && make install
+
+# vcpkg setup
+WORKDIR "/bodies-in-potential-flow/vcpkg"
+RUN ./bootstrap-vcpkg.sh -disableMetrics
 
 # Reduce image size
 WORKDIR "/bodies-in-potential-flow"
