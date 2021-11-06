@@ -66,6 +66,8 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get update && apt-get install -y \
     gcc-11 \
     g++-11 \
+    lcov \
+    gcovr \
     libboost-all-dev
 
 # Perl and package manager
