@@ -12,7 +12,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '${MAX_CPUS}'
+          cpus: '16.00'
           memory: 2048M
         reservations:
           cpus: '1.00'
