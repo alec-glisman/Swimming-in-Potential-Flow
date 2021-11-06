@@ -60,8 +60,11 @@ RUN apt-get update && apt-get install -y \
 # MAKE
 RUN apt-get update && apt-get install -y \
     make \
-    ninja-build \
     cmake
+
+# Ninja generator
+RUN apt-get update && apt-get install -y \
+    ninja-build
 
 # C++ and libraries
 RUN apt-get update && apt-get install -y \
@@ -123,6 +126,13 @@ WORKDIR "/bodies-in-potential-flow/requirements/Python"
 RUN pip3 install --upgrade pip && \
     pip3 install -r requirements.txt
 
+# vcpkg
+# RUN apt-get update && apt-get install -y \
+#     curl \
+#     zip \
+#     unzip \
+#     tar
+
 # Reduce image size
 WORKDIR "/bodies-in-potential-flow"
 RUN rm -rf requirements
@@ -136,7 +146,7 @@ RUN rm -rf requirements
 # Copy include directory into docker image
 WORKDIR "/"
 COPY include /bodies-in-potential-flow/include
-COPY vcpkg /bodies-in-potential-flow/vcpkg
+# COPY vcpkg /bodies-in-potential-flow/vcpkg
 
 # Install eigen3 (commit 8ce341caf2947e4b5ac4580c20254ae7d828b009 from git repo)
 WORKDIR "/bodies-in-potential-flow/include/Eigen"
@@ -157,8 +167,8 @@ WORKDIR "/bodies-in-potential-flow/include/Catch2/build"
 RUN cmake .. && make install
 
 # vcpkg setup
-WORKDIR "/bodies-in-potential-flow/vcpkg"
-RUN ./bootstrap-vcpkg.sh -disableMetrics
+# WORKDIR "/bodies-in-potential-flow/vcpkg"
+# RUN ./bootstrap-vcpkg.sh -disableMetrics
 
 # Reduce image size
 WORKDIR "/bodies-in-potential-flow"
