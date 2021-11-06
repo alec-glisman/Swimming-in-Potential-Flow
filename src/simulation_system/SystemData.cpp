@@ -670,7 +670,7 @@ SystemData::gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice
     // mixed gradient term
     Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> mixed_gradient;
     mixed_gradient.device(device) = two_grad_E_r_tilde_cross_tilde + two_E_grad_r_cross_tilde; // (4, 3, 7)  {i, j, k}
-    m_tens_grad_zeta.slice(offsets_mixed, extents_angular).device(device) = mixed_gradient;
+    m_tens_grad_zeta.slice(offsets_mixed, extents_mixed).device(device) = mixed_gradient;
 
     /* ANCHOR: tensor contractions for right-half of gradient */
     // 4x4 "identity" tensor with added element for full-rank
