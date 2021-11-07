@@ -750,7 +750,6 @@ SystemData::convertBody2ParticleOrient()
 
         // Get unit quaternion for body that particle_id is a member of
         const Eigen::Quaterniond particle_quat(m_positions_bodies.segment<4>(body_id_7 + 3));
-        assert(abs(particle_quat.norm() - 1.0) < 1e-12 && "Quaternion is not unitary");
 
         // Rotate particle from initial configuration using unit quaternion
         Eigen::Quaterniond orient_init;
@@ -759,7 +758,28 @@ SystemData::convertBody2ParticleOrient()
 
         const Eigen::Quaterniond orient_rot    = particle_quat * orient_init * particle_quat.inverse();
         const Eigen::Vector3d    orient_rot_3d = orient_rot.vec();
-        assert(abs(orient_rot.w()) < 1e-12 && "0th component of particle orientation vector is not zero");
+
+#if !defined(NDEBUG)
+        const double particle_quat_norm{particle_quat.norm()};
+        const double epsilon{1e-12}; // "small value" close to zero for double comparison
+
+        if (abs(orient_rot.w()) >= epsilon)
+        {
+            const std::string zeroith_comp_msg{
+                "At t = " + std::to_string(m_t) + ", 0th component of rotated particle # " +
+                std::to_string(particle_quat_norm) + " vector is " + std::to_string(orient_rot.w())};
+
+            throw std::logic_error(zeroith_comp_msg);
+        }
+        else if (abs(particle_quat_norm - 1.0) >= epsilon)
+        {
+            const std::string unit_norm_msg{"Quaternion is not unitary at t = " + std::to_string(m_t) +
+                                            ". Particle #: " + std::to_string(particle_id) +
+                                            ", Norm: " + std::to_string(particle_quat_norm)};
+
+            throw std::logic_error(unit_norm_msg);
+        }
+#endif
 
         // Output rotated orientation
         m_orientations_particles.segment<3>(particle_id_3).noalias() = orient_rot_3d;
