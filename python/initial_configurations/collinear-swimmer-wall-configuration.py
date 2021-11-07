@@ -56,7 +56,7 @@ parser.add_option("--image-system", dest="u_image_system",
 
 # Integrator parameters
 t = 0.0
-tf = 25.0
+tf = 1e-4
 num_steps_output = 10000
 
 # Material parameters
