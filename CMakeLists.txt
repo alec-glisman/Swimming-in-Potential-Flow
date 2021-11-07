@@ -197,7 +197,8 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native -O3 -mfpmath=s
 # Profile build flags
 IF(CMAKE_BUILD_TYPE STREQUAL "Profile")
 
-    ADD_COMPILE_OPTIONS(-fno-omit-frame-pointer)
+    SET(CMAKE_CXX_FLAGS_RELEASE "-O0 -funroll-loops -fopenmp -fno-omit-frame-pointer -Wno-deprecated-declarations")
+    SET(CMAKE_C_FLAGS_RELEASE "-O0 -funroll-loops -fopenmp -fno-omit-frame-pointer -Wno-deprecated-declarations")
 
 ENDIF()
 # !SECTION
