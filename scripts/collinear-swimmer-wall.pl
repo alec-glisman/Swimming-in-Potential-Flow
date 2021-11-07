@@ -32,7 +32,7 @@ use warnings;                      # give warnings
 # Compiler
 my $enableTesting  = "False";                   # Unit tests,        OPTIONS: (False) OFF, (True) ON
 my $enableCoverage = "False";                   # Testing coverage,  OPTIONS: (False) OFF, (True) ON
-my $build          = "Release";                 # CMake built type,  OPTIONS: Release, Debug, Profile
+my $build          = "Debug";                   # CMake built type,  OPTIONS: Release, Debug, Profile
 my $generator      = "Ninja";                   # CMake generator,   OPTIONS: "Unix Makefiles", "Ninja"
 my $buildDir       = "build/" . lc $build;      # Build folder path
 
