@@ -760,10 +760,16 @@ SystemData::convertBody2ParticleOrient()
         const Eigen::Vector3d    orient_rot_3d = orient_rot.vec();
 
 #if !defined(NDEBUG)
-        const double particle_quat_norm{particle_quat.norm()};
-        const double epsilon{1e-12}; // "small value" close to zero for double comparison
+        const double epsilon_zero{1e-12}; // "small value" close to zero for double comparison
+        const double epsilon_norm{1e-8};  // "small value" close to zero for double comparison
 
-        if (abs(orient_rot.w()) >= epsilon)
+        const double particle_quat_norm{particle_quat.norm()};
+        const double unit_norm_error_mag{particle_quat_norm - 1.0};
+
+        const bool zeroith_comp_cond{abs(orient_rot.w()) >= epsilon_zero};
+        const bool unit_norm_cond{abs(unit_norm_error_mag) >= epsilon_norm};
+
+        if (zeroith_comp_cond)
         {
             const std::string zeroith_comp_msg{
                 "At t = " + std::to_string(m_t) + ", 0th component of rotated particle # " +
@@ -771,11 +777,14 @@ SystemData::convertBody2ParticleOrient()
 
             throw std::logic_error(zeroith_comp_msg);
         }
-        else if (abs(particle_quat_norm - 1.0) >= epsilon)
+        else if (unit_norm_cond)
         {
+            std::ostringstream stream_error_mag;
+            stream_error_mag << unit_norm_error_mag;
+
             const std::string unit_norm_msg{"Quaternion is not unitary at t = " + std::to_string(m_t) +
                                             ". Particle #: " + std::to_string(particle_id) +
-                                            ", Norm: " + std::to_string(particle_quat_norm)};
+                                            ", Norm: " + stream_error_mag.str()};
 
             throw std::logic_error(unit_norm_msg);
         }
