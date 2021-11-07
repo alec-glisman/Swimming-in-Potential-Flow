@@ -408,6 +408,8 @@ SystemData::positionsArticulation()
 
         m_positions_particles_articulation.segment<3>(particle_id_3).noalias() =
             particle_distances(particle_id) * m_orientations_particles.segment<3>(particle_id_3);
+
+        // FIXME: There seems to be a bug here where y-components are being flipped too
     }
 }
 
