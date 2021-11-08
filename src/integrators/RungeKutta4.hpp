@@ -154,10 +154,9 @@ class RungeKutta4
      *
      * @review_swimmer: If swimmer design changes, the elements taken from M_total must change too
      *
-     * @param acc (output) body acceleration vector that will be overwritten
      */
     void
-    momForceFree(Eigen::VectorXd& acc);
+    momForceFree();
 
     // classes
     /// shared pointer reference to `SystemData` class
@@ -182,6 +181,11 @@ class RungeKutta4
     // tensor length variables
     /// = 7M
     int m_7M{-1};
+
+    /// number of bodies that are "free" (not constrained)
+    int m_body_dof{-1};
+    /// = 7 * m_body_dof
+    int m_body_dof_7{-1};
 
     // constants
     /// = 1/2
