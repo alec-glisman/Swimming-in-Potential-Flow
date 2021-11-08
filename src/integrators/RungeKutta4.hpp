@@ -146,6 +146,19 @@ class RungeKutta4
     void
     udwadiaKalaba(Eigen::VectorXd& acc);
 
+    /**
+     * @brief (linear/angular) momentum and (linear/angular) force free algorithm
+     *
+     * @details before calling this method, make sure to call articulationVel(), articulationAcc(), and
+     * rLoc() in systemData class
+     *
+     * @review_swimmer: If swimmer design changes, the elements taken from M_total must change too
+     *
+     * @param acc (output) body acceleration vector that will be overwritten
+     */
+    void
+    momForceFree(Eigen::VectorXd& acc);
+
     // classes
     /// shared pointer reference to `SystemData` class
     std::shared_ptr<SystemData> m_system;
