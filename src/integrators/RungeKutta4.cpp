@@ -285,9 +285,9 @@ RungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
 void
 RungeKutta4::momForceFree(Eigen::VectorXd& acc)
 {
-    // calculate M_tilde = Sigma * M_total * Sigma^T;  [6 x 6]
+    // calculate M_tilde = Sigma * M_total * Sigma^T;
     Eigen::MatrixXd M_tilde_hold = m_potHydro->mTotal() * rbmconn_T;
-    Eigen::MatrixXd M_tilde      = rbmconn * M_tilde_hold;
+    Eigen::MatrixXd M_tilde      = rbmconn * M_tilde_hold; // (7 x 7)
 
     /* ANCHOR: Solve for rigid body motion velocity components */
     // calculate P_script = Sigma * M_total * V_articulation;  [6 x 1]
