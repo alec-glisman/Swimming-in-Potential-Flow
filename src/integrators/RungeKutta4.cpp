@@ -308,31 +308,55 @@ RungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
 void
 RungeKutta4::momForceFree()
 {
-    for (int body_id = 0; body_id < m_body_dof; body_id++)
-    {
-        const int body_id_7{7 * body_id};
-        const int n_body{(m_system->particleTypeId().array() == body_id).count()};
-        const int n_body_7{7 * n_body};
-    }
+    /// @review_swimmer: Assumes that all bodies are collinear and in-phase with one another
+    // REVIEW: Using the old PLFT scheme that is self-contained and uses linear/angular components
+
+    const int       num_particles{3};                                                 // = Nb
+    Eigen::MatrixXd rbmconn = Eigen::MatrixXd::Zero(6, 6 * m_system->numParticles()); // (6 x 6 Nb)
+
+    // ANCHOR: Convert angular components to quaternion components
+
+    // ANCHOR: Output velocity and acceleration kinematics
+    // TODO: body components
+    // TODO: particle components
 }
 
-// // calculate M_tilde = Sigma * M_total * Sigma^T;
-// Eigen::MatrixXd             M_tilde_hold = m_potHydro->mTotal() * m_system->rbmConn().transpose();
-// Eigen::Matrix<double, 7, 7> M_tilde      = m_system->rbmConn() * M_tilde_hold;
+// /* ANCHOR: Solve for rigid body motion (rbm) tensors */
+// // initialize variables
+
+// // assemble the rigid body motion connectivity tensor (Sigma);  [6 x 3N]
+// for (int i = 0; i < m_system->numParticles(); i++)
+// {
+//     int i3{3 * i};
+
+//     Eigen::Vector3d n_dr = -m_system->positions().segment<3>(i3);
+//     n_dr.noalias() += m_RLoc;
+//     Eigen::Matrix3d n_dr_cross;
+//     crossProdMat(n_dr, n_dr_cross);
+
+//     rbmconn.block<3, 3>(0, i3).noalias() = m_I;        // translation-translation couple
+//     rbmconn.block<3, 3>(3, i3).noalias() = n_dr_cross; // translation-rotation couple
+// }
+// Eigen::MatrixXd rbmconn_T = rbmconn.transpose();
+
+// // calculate M_tilde = Sigma * M_total * Sigma^T;  [6 x 6]
+// Eigen::MatrixXd M_tilde_hold = m_potHydro->mTotal() * rbmconn_T;
+// Eigen::MatrixXd M_tilde      = rbmconn * M_tilde_hold;
 
 // /* ANCHOR: Solve for rigid body motion velocity components */
-// // calculate P_script = Sigma * M_total * V_articulation;
-// Eigen::VectorXd             P_script_hold = m_potHydro->mTotal() * m_system->velocitiesParticlesArticulation();
-// Eigen::Matrix<double, 7, 1> P_script      = m_system->rbmConn() * P_script_hold;
+// // calculate P_script = Sigma * M_total * V_articulation;  [6 x 1]
+// Eigen::VectorXd P_script_hold = m_potHydro->mTotal() * m_velArtic;
+// Eigen::VectorXd P_script      = rbmconn * P_script_hold;
 
-// // calculate U_swim = - M_tilde_inv * P_script; U_swim has translation and rotation components
-// const Eigen::Matrix<double, 7, 1> U_swim = -M_tilde.fullPivLu().solve(P_script);
+// // calculate U_swim = - M_tilde_inv * P_script; U_swim has translation and rotation
+// // components
+// m_systemParam.U_swim.noalias() = -M_tilde.fullPivLu().solve(P_script);
 
 // /* ANCHOR: Output velocity data back to m_system */
 // // calculate U = Sigma^T * U_swim + v_artic
-// Eigen::Matrix<double, 7, 1> U_out = m_system->rbmConn().transpose() * U_swim;
-// U_out.noalias() += m_system->velocitiesParticlesArticulation();
-// m_system->setVelocitiesParticles(U_out);
+// Eigen::VectorXd U_out = rbmconn_T * m_systemParam.U_swim;
+// U_out.noalias() += m_velArtic;
+// m_system->setVelocities(U_out);
 
 // // update hydrodynamic force terms for acceleration components
 // m_potHydro->updateForcesOnly();
@@ -342,10 +366,10 @@ RungeKutta4::momForceFree()
 // Eigen::Vector3d Omega_C = m_systemParam.U_swim.segment<3>(3);
 
 // Eigen::Matrix3d W = Omega_C * Omega_C.transpose();
-// W.noalias() -= Omega_C.squaredNorm() * m_system->i3();
+// W.noalias() -= Omega_C.squaredNorm() * m_I;
 
 // Eigen::Matrix3d n_v_artic_cross;
-// Eigen::VectorXd b = m_system->accelerationsParticlesArticulation();
+// Eigen::VectorXd b = m_accArtic;
 
 // for (int i = 0; i < m_system->numParticles(); i++)
 // {
@@ -355,7 +379,7 @@ RungeKutta4::momForceFree()
 //     dr.noalias() -= m_RLoc;
 //     b.segment<3>(i3).noalias() += W * dr;
 
-//     crossProdMat(-m_system->velocitiesParticlesArticulation().segment<3>(i3), n_v_artic_cross);
+//     crossProdMat(-m_velArtic.segment<3>(i3), n_v_artic_cross);
 //     b.segment<3>(i3).noalias() += n_v_artic_cross * Omega_C;
 // }
 
@@ -365,7 +389,7 @@ RungeKutta4::momForceFree()
 // // calculate F_script = Sigma * (M_total * b + gMUU)
 // Eigen::VectorXd F_script_hold = m_potHydro->mTotal() * b;
 // F_script_hold.noalias() += gMUU;
-// Eigen::VectorXd F_script = m_system->rbmConn() * F_script_hold;
+// Eigen::VectorXd F_script = rbmconn * F_script_hold;
 
 // // calculate A_swim = - M_tilde_inv * F_script; A_swim has translation and rotation
 // // components
@@ -373,11 +397,11 @@ RungeKutta4::momForceFree()
 
 // /* ANCHOR: Output acceleration data back to m_system */
 // // calculate A = Sigma^T * A_swim + b
-// Eigen::VectorXd A_out = m_system->rbmConn().transpose() * m_systemParam.A_swim;
+// Eigen::VectorXd A_out = rbmconn_T * m_systemParam.A_swim;
 // A_out.noalias() += b;
 // m_system->setAccelerations(A_out);
 
 // /* ANCHOR: Output acceleration data back to input variable */
 // acc = A_out;
-
-// TODO: output body acceleration data too
+// }
+// * /
