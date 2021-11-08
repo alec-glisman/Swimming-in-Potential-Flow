@@ -814,6 +814,11 @@ class SystemData : public std::enable_shared_from_this<SystemData>
     }
 
     /* ANCHOR: kinematic vectors */
+    const Eigen::MatrixXd&
+    rbmConn() const
+    {
+        return m_rbm_conn;
+    }
     // bodies
     const Eigen::VectorXd&
     positionsBodies() const
