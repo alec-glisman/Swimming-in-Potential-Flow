@@ -313,6 +313,8 @@ RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
     const int num_particles{3};                   // Nb
     const int num_particles_3{3 * num_particles}; // 3 * Nb
 
+    const Eigen::array<Eigen::Index, 3> extents = {3, 3, 3};
+
     /* ANCHOR: Assemble the tensor quantities */
     Eigen::Matrix<double, 3, -1> rbmconn = Eigen::MatrixXd::Zero(3, num_particles_3); // (3 x 3 Nb)
 
@@ -330,10 +332,20 @@ RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
 
         rbmconn.block<3, 3>(0, particle_id_6).noalias() = m_system->i3(); // translation-translation couple
 
-        M_eff.block<3, 3>(particle_id_6, particle_id_6).noalias() =
-            m_potHydro->mTotal().block<3, 3>(particle_id_7, particle_id_7); // translation-translation couple
+        for (int j = first_particle; j < (first_particle + num_particles); j++)
+        {
+            M_eff.block<3, 3>(particle_id_6, 6 * j).noalias() =
+                m_potHydro->mTotal().block<3, 3>(particle_id_7, 7 * j); // translation-translation couple
 
-                // TODO: Fill grad_M
+            for (int k = first_particle; k < (first_particle + num_particles); k++)
+            {
+                const Eigen::array<Eigen::Index, 3> offsets_6 = {particle_id_6, 6 * j, 6 * k};
+                const Eigen::array<Eigen::Index, 3> offsets_7 = {particle_id_7, 7 * j, 7 * k};
+
+                grad_M_eff.slice(offsets_6, extents).device(device) =
+                    m_potHydro->gradMAdded().slice(offsets_7, extents);
+            }
+        }
 
         vel_artic.segment<3>(particle_id_6).noalias() =
             m_system->velocitiesParticlesArticulation().segment<3>(particle_id_7); // linear components
