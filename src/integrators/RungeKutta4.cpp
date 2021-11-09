@@ -327,19 +327,19 @@ RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
 
     for (int particle_id = first_particle; particle_id < (first_particle + num_particles); particle_id++)
     {
-        const int particle_id_6{6 * particle_id};
+        const int particle_id_3{3 * particle_id};
         const int particle_id_7{7 * particle_id};
 
-        rbmconn.block<3, 3>(0, particle_id_6).noalias() = m_system->i3(); // translation-translation couple
+        rbmconn.block<3, 3>(0, particle_id_3).noalias() = m_system->i3(); // translation-translation couple
 
         for (int j = first_particle; j < (first_particle + num_particles); j++)
         {
-            M_eff.block<3, 3>(particle_id_6, 6 * j).noalias() =
+            M_eff.block<3, 3>(particle_id_3, 3 * j).noalias() =
                 m_potHydro->mTotal().block<3, 3>(particle_id_7, 7 * j); // translation-translation couple
 
             for (int k = first_particle; k < (first_particle + num_particles); k++)
             {
-                const Eigen::array<Eigen::Index, 3> offsets_6 = {particle_id_6, 6 * j, 6 * k};
+                const Eigen::array<Eigen::Index, 3> offsets_6 = {particle_id_3, 3 * j, 3 * k};
                 const Eigen::array<Eigen::Index, 3> offsets_7 = {particle_id_7, 7 * j, 7 * k};
 
                 grad_M_eff.slice(offsets_6, extents).device(device) =
@@ -347,10 +347,10 @@ RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
             }
         }
 
-        vel_artic.segment<3>(particle_id_6).noalias() =
+        vel_artic.segment<3>(particle_id_3).noalias() =
             m_system->velocitiesParticlesArticulation().segment<3>(particle_id_7); // linear components
 
-        acc_artic.segment<3>(particle_id_6).noalias() =
+        acc_artic.segment<3>(particle_id_3).noalias() =
             m_system->accelerationsParticlesArticulation().segment<3>(particle_id_7); // linear components
     }
 
@@ -395,10 +395,10 @@ RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
 
     for (int particle_id = first_particle; particle_id < (first_particle + num_particles); particle_id++)
     {
-        const int particle_id_6{6 * particle_id};
+        const int particle_id_3{3 * particle_id};
         const int particle_id_7{7 * particle_id};
 
-        vel_part.segment<3>(particle_id_6).noalias() =
+        vel_part.segment<3>(particle_id_3).noalias() =
             m_system->velocitiesParticles().segment<3>(particle_id_7); // linear components
     }
 
