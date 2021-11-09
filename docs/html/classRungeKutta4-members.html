@@ -104,6 +104,8 @@ $(document).ready(function(){initNavTree('classRungeKutta4.html',''); initResiza
   <tr><td class="entry"><a class="el" href="classRungeKutta4.html#a442be59b7291fd57895e5900ff9dccd8">integrate</a>(Eigen::ThreadPoolDevice &amp;device)</td><td class="entry"><a class="el" href="classRungeKutta4.html">RungeKutta4</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classRungeKutta4.html#a62b7028de266e35a88e1cd4f8e588fd5">integrateSecondOrder</a>(Eigen::ThreadPoolDevice &amp;device)</td><td class="entry"><a class="el" href="classRungeKutta4.html">RungeKutta4</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr><td class="entry"><a class="el" href="classRungeKutta4.html#aece575515484867022bdbb31efc51d5d">m_7M</a></td><td class="entry"><a class="el" href="classRungeKutta4.html">RungeKutta4</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classRungeKutta4.html#a54c47659c116900eeeedd326863c806e">m_body_dof</a></td><td class="entry"><a class="el" href="classRungeKutta4.html">RungeKutta4</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classRungeKutta4.html#ac1a8095618bb94f4393894e238879afe">m_body_dof_7</a></td><td class="entry"><a class="el" href="classRungeKutta4.html">RungeKutta4</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classRungeKutta4.html#ada6f973c1c4f3ffe1828068dbf9bb328">m_c1_2</a></td><td class="entry"><a class="el" href="classRungeKutta4.html">RungeKutta4</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr><td class="entry"><a class="el" href="classRungeKutta4.html#a9a57ca17f9753d7699ed707584d922de">m_c1_2_dt</a></td><td class="entry"><a class="el" href="classRungeKutta4.html">RungeKutta4</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classRungeKutta4.html#acd5e848badeeeaf90f2e0a3110d16895">m_c1_6</a></td><td class="entry"><a class="el" href="classRungeKutta4.html">RungeKutta4</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
@@ -113,15 +115,16 @@ $(document).ready(function(){initNavTree('classRungeKutta4.html',''); initResiza
   <tr class="even"><td class="entry"><a class="el" href="classRungeKutta4.html#a8b86c1434e64019a28d96d00f7b13b59">m_logName</a></td><td class="entry"><a class="el" href="classRungeKutta4.html">RungeKutta4</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr><td class="entry"><a class="el" href="classRungeKutta4.html#a09804a3e700013b77c9aef0067027b15">m_potHydro</a></td><td class="entry"><a class="el" href="classRungeKutta4.html">RungeKutta4</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a></td><td class="entry"><a class="el" href="classRungeKutta4.html">RungeKutta4</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classRungeKutta4.html#a301c6c8b82c9f0808159aff069aef28e">RungeKutta4</a>(std::shared_ptr&lt; SystemData &gt; sys, std::shared_ptr&lt; PotentialHydrodynamics &gt; hydro)</td><td class="entry"><a class="el" href="classRungeKutta4.html">RungeKutta4</a></td><td class="entry"><span class="mlabel">explicit</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classRungeKutta4.html#ac5d72c5cd59bfcb3a42ab2fbdf92ca0e">udwadiaKalaba</a>(Eigen::VectorXd &amp;acc)</td><td class="entry"><a class="el" href="classRungeKutta4.html">RungeKutta4</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classRungeKutta4.html#a2061bc97a56f4f8edd9b5465f1a99a02">~RungeKutta4</a>()</td><td class="entry"><a class="el" href="classRungeKutta4.html">RungeKutta4</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classRungeKutta4.html#a9f957c267fa7030c347c7d2c6b326373">momForceFree</a>(Eigen::ThreadPoolDevice &amp;device)</td><td class="entry"><a class="el" href="classRungeKutta4.html">RungeKutta4</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classRungeKutta4.html#a301c6c8b82c9f0808159aff069aef28e">RungeKutta4</a>(std::shared_ptr&lt; SystemData &gt; sys, std::shared_ptr&lt; PotentialHydrodynamics &gt; hydro)</td><td class="entry"><a class="el" href="classRungeKutta4.html">RungeKutta4</a></td><td class="entry"><span class="mlabel">explicit</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classRungeKutta4.html#ac5d72c5cd59bfcb3a42ab2fbdf92ca0e">udwadiaKalaba</a>(Eigen::VectorXd &amp;acc)</td><td class="entry"><a class="el" href="classRungeKutta4.html">RungeKutta4</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classRungeKutta4.html#a2061bc97a56f4f8edd9b5465f1a99a02">~RungeKutta4</a>()</td><td class="entry"><a class="el" href="classRungeKutta4.html">RungeKutta4</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 5 2021 13:06:47 for Bodies in Potential Flow by
+    <li class="footer">Generated on Tue Nov 9 2021 14:57:07 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

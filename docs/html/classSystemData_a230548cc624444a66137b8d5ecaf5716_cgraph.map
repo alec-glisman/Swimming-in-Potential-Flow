@@ -1,0 +1,4 @@
+<map id="SystemData::chiMatrixElement" name="SystemData::chiMatrixElement">
+<area shape="rect" id="node1" title="Computes \chi_{i \alpha} matrix for given particle number and body number. chi matrix represents the ..." alt="" coords="5,5,209,32"/>
+<area shape="rect" id="node2" href="$classSystemData.html#a7cefde66d9e18e2517f11505dd434d0e" title="Function takes in vector in vector cross&#45;product expression: ." alt="" coords="257,5,441,32"/>
+</map>

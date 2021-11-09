@@ -1,0 +1,5 @@
+<map id="plotStyling.PlotStyling.save_plot" name="plotStyling.PlotStyling.save_plot">
+<area shape="rect" id="node1" title="Saves the current plt figure as an image." alt="" coords="5,46,216,73"/>
+<area shape="rect" id="node2" href="$classplotStyling_1_1PlotStyling.html#a5a1a500ff6a749cb493c1c462f895f2d" title="Removes issue with times character in mathTex output of plots." alt="" coords="283,5,451,47"/>
+<area shape="rect" id="node3" href="$classplotStyling_1_1PlotStyling.html#af55eef9a9a971ad605299cd47e19eea9" title="Suppresses console output of function calls (used for eps no transparent background issue)" alt="" coords="264,71,471,112"/>
+</map>

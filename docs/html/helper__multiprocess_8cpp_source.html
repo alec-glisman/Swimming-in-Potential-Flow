@@ -363,7 +363,7 @@ $(document).ready(function(){initNavTree('helper__multiprocess_8cpp_source.html'
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  } control_un;</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; </div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  <span class="keyword">struct </span>cmsghdr *cmptr;</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  ssize_t n;</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  ssize_t <a class="code" href="namespacecollinear-swimmer-isolated-configuration.html#ac3f2f62bc758c89fdf26860af1ac499e">n</a>;</div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;  <span class="keywordtype">int</span> receivedfd;</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  <span class="keywordtype">char</span> dummy_buffer[1];</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  ssize_t sendResult;</div>
@@ -377,7 +377,7 @@ $(document).ready(function(){initNavTree('helper__multiprocess_8cpp_source.html'
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;  msg.msg_iov = iov;</div>
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  msg.msg_iovlen = 1;</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;  <span class="keywordflow">if</span> ((n = recvmsg(handle-&gt;socket, &amp;msg, 0)) &lt;= 0) {</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;  <span class="keywordflow">if</span> ((<a class="code" href="namespacecollinear-swimmer-isolated-configuration.html#ac3f2f62bc758c89fdf26860af1ac499e">n</a> = recvmsg(handle-&gt;socket, &amp;msg, 0)) &lt;= 0) {</div>
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    perror(<span class="stringliteral">&quot;IPC failure: Receiving data over socket failed&quot;</span>);</div>
 <div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    <span class="keywordflow">return</span> -1;</div>
 <div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;  }</div>
@@ -641,6 +641,7 @@ $(document).ready(function(){initNavTree('helper__multiprocess_8cpp_source.html'
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="ahelper__multiprocess_8h_html_a85f7c32285488f12ca8b1e0faa0527e8"><div class="ttname"><a href="helper__multiprocess_8h.html#a85f7c32285488f12ca8b1e0faa0527e8">ipcOpenSocket</a></div><div class="ttdeci">int ipcOpenSocket(ipcHandle *&amp;handle)</div></div>
+<div class="ttc" id="anamespacecollinear-swimmer-isolated-configuration_html_ac3f2f62bc758c89fdf26860af1ac499e"><div class="ttname"><a href="namespacecollinear-swimmer-isolated-configuration.html#ac3f2f62bc758c89fdf26860af1ac499e">collinear-swimmer-isolated-configuration.n</a></div><div class="ttdeci">int n</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-isolated-configuration_8py_source.html#l00067">collinear-swimmer-isolated-configuration.py:67</a></div></div>
 <div class="ttc" id="ahelper__multiprocess_8h_html_af2042d7235b516ac4ea894d65a6260ea"><div class="ttname"><a href="helper__multiprocess_8h.html#af2042d7235b516ac4ea894d65a6260ea">ipcCreateSocket</a></div><div class="ttdeci">int ipcCreateSocket(ipcHandle *&amp;handle, const char *name, const std::vector&lt; Process &gt; &amp;processes)</div></div>
 <div class="ttc" id="ahelper__multiprocess_8h_html_add8daa71fee7607cb8c939a2928467db"><div class="ttname"><a href="helper__multiprocess_8h.html#add8daa71fee7607cb8c939a2928467db">sharedMemoryInfo</a></div><div class="ttdeci">struct sharedMemoryInfo_st sharedMemoryInfo</div></div>
 <div class="ttc" id="ahelper__multiprocess_8cpp_html_a594c7d8f3a6d09ddf53617fae9df2c5b"><div class="ttname"><a href="helper__multiprocess_8cpp.html#a594c7d8f3a6d09ddf53617fae9df2c5b">spawnProcess</a></div><div class="ttdeci">int spawnProcess(Process *process, const char *app, char *const *args)</div><div class="ttdef"><b>Definition:</b> <a href="helper__multiprocess_8cpp_source.html#l00121">helper_multiprocess.cpp:121</a></div></div>
@@ -660,7 +661,7 @@ $(document).ready(function(){initNavTree('helper__multiprocess_8cpp_source.html'
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_0c26bd22f254302c4dfbaa95bf527e9d.html">helpers</a></li><li class="navelem"><a class="el" href="dir_d54f985c9a00fdf32f5208dabda08809.html">cuda</a></li><li class="navelem"><a class="el" href="helper__multiprocess_8cpp.html">helper_multiprocess.cpp</a></li>
-    <li class="footer">Generated on Fri Nov 5 2021 13:06:47 for Bodies in Potential Flow by
+    <li class="footer">Generated on Tue Nov 9 2021 14:57:07 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>
