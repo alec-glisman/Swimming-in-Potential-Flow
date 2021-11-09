@@ -121,10 +121,10 @@ def aggregate_plots(relative_path, output_dir):
 # SECTION: Analysis
 
     # relative separation between particle pairs
-    R_loc = positions[1, :, :]  # (spatial_dimension, frame_number)
-    R_loc_init = positions[1, :, 0]
+    R_loc = positions[0, :, :]  # (spatial_dimension, frame_number)
+    R_loc_init = positions[0, :, 0]
     DR_loc = R_loc - R_loc_init[:, np.newaxis]
-    R_12 = positions[0, :, :] - R_loc
+    R_12 = positions[1, :, :] - R_loc
     R_32 = positions[2, :, :] - R_loc
     # distance between particle pairs
     Dr_Loc = np.linalg.norm(DR_loc, axis=0)
@@ -132,7 +132,7 @@ def aggregate_plots(relative_path, output_dir):
     r_32 = np.linalg.norm(R_32, axis=0)
 
     # swimmer orientation
-    q_unnormalized = positions[0, :, :] - positions[2, :, :]
+    q_unnormalized = positions[1, :, :] - positions[2, :, :]
     q_norms = np.linalg.norm(q_unnormalized, axis=0)
     q = q_unnormalized
     for i in range(q.shape[1]):
@@ -145,16 +145,16 @@ def aggregate_plots(relative_path, output_dir):
     theta_ddot = np.gradient(theta_dot, time)
 
     # relative velocities between particle pairs
-    U_loc = velocities[1, :, :]
-    U_1 = velocities[0, :, :]
+    U_loc = velocities[0, :, :]
+    U_1 = velocities[1, :, :]
     U_3 = velocities[2, :, :]
     # swimmer velocity constraints
     u_12_sim = (q.T @ (U_1 - U_loc)).diagonal()
     u_32_sim = (q.T @ (U_3 - U_loc)).diagonal()
 
     # relative accelerations between particle pairs
-    A_loc = accelerations[1, :, :]
-    A_1 = accelerations[0, :, :]
+    A_loc = accelerations[0:, :]
+    A_1 = accelerations[1, :, :]
     A_3 = accelerations[2, :, :]
     # swimmer acceleration constraints
     a_12_sim = (q.T @ (A_1 - A_loc)).diagonal()

@@ -158,7 +158,7 @@ def aggregate_plots(relative_path, output_dir):
             gsd_files[i].trajectory.file.nframes - 1)
         final_t[i] = gsd_files[i].snapshot.log['integrator/t']
         dt[i] = gsd_files[i].snapshot.log['integrator/dt']
-        CoM_disp_comp[i, :] = gsd_files[i].snapshot.log['particles/double_position'][1]
+        CoM_disp_comp[i, :] = gsd_files[i].snapshot.log['particles/double_position'][0]
 
         # Data from initial frame (not 0)
         gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(1)
@@ -168,7 +168,7 @@ def aggregate_plots(relative_path, output_dir):
         U0[i] = gsd_files[i].snapshot.log['swimmer/U0']
         omega[i] = gsd_files[i].snapshot.log['swimmer/omega']
         epsilon[i] = U0[i] / R_avg[i] / omega[i]
-        CoM_disp_comp[i, :] -= gsd_files[i].snapshot.log['particles/double_position'][1]
+        CoM_disp_comp[i, :] -= gsd_files[i].snapshot.log['particles/double_position'][0]
 
         CoM_disp[i] = np.linalg.norm(CoM_disp_comp[i, :])
 
