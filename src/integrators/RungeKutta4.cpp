@@ -391,6 +391,21 @@ RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
     /* ANCHOR: Calculate acceleration components */
     m_system->update(device); // update velocity components with locater motion
 
+    Eigen::VectorXd vel_part = Eigen::VectorXd::Zero(num_particles_3); // (3 Nb x 1)
+
+    for (int particle_id = first_particle; particle_id < (first_particle + num_particles); particle_id++)
+    {
+        const int particle_id_6{6 * particle_id};
+        const int particle_id_7{7 * particle_id};
+
+        vel_part.segment<3>(particle_id_6).noalias() =
+            m_system->velocitiesParticles().segment<3>(particle_id_7); // linear components
+    }
+
+    // convert particle velocities to eigen tensor
+    Eigen::Tensor<double, 1> tens_vel_part = Eigen::Tensor<double, 1>(num_particles_3);
+    tens_vel_part.device(device)           = TensorCast(vel_part, num_particles_3);
+
     // TODO: Acceleration components
 }
 
