@@ -32,7 +32,7 @@ use warnings;                      # give warnings
 # Compiler
 my $enableTesting  = "False";                   # Unit tests,        OPTIONS: (False) OFF, (True) ON
 my $enableCoverage = "False";                   # Testing coverage,  OPTIONS: (False) OFF, (True) ON
-my $build          = "Debug";                   # CMake built type,  OPTIONS: Release, Debug, Profile
+my $build          = "Release";                 # CMake built type,  OPTIONS: Release, Debug, Profile
 my $generator      = "Ninja";                   # CMake generator,   OPTIONS: "Unix Makefiles", "Ninja"
 my $buildDir       = "build/" . lc $build;      # Build folder path
 
@@ -40,9 +40,9 @@ my $buildDir       = "build/" . lc $build;      # Build folder path
 my $simulationTag    = "collinear-swimmer-isolated";
 my $projectName      = "bodies-in-potential-flow";
 my $inputDir         = "input";
-my @inputData        = ( "varyZHeight", "varyRelDisp", "varyPhaseAngle", "varyEpsilon", "varyDt" );
+my @inputData        = ( "varyRelDisp", "varyEpsilon", "varyPhaseAngle", "varyDt"); # If using wall: "varyZHeight" 
 my $numSimulationTypes = scalar @inputData;
-my $runSimulationSimulan = 0; # NOTE: 0 only runs one simulation at a time
+my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
 
 # Python Numerical Analysis
 my $pythonGSDCreation = "python/initial_configurations/" . $simulationTag . "-configuration.py";
