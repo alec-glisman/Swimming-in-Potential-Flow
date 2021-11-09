@@ -256,6 +256,12 @@ class PotentialHydrodynamics
     {
         return m_mat_M3;
     }
+
+    const Eigen::Tensor<double, 3>&
+    gradMAdded() const
+    {
+        return m_grad_M_added;
+    }
 };
 
 #endif // BODIES_IN_POTENTIAL_FLOW_POTENTIAL_HYDRODYNAMICS_H
