@@ -416,12 +416,12 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     F_hydro_no_inertia.device(device)           = F_hydro - inertia_loc;
     m_F_hydroNoInertia.noalias()                = MatrixCast(F_hydro_no_inertia, m_7M, 1, device);
 
-    // debugging print statements
-    Eigen::IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
-    Eigen::VectorXd f1 = MatrixCast(0.50 * m_N1.contract(V_V, contract_jki_jk), m_7M, 1, device);
-    Eigen::VectorXd f2 = MatrixCast(-m_M2.contract(V_dot, contract_ij_j), m_7M, 1, device);
+    // FIXME: debugging print statements
+    // Eigen::IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
+    // Eigen::VectorXd f1 = MatrixCast(0.50 * m_N1.contract(V_V, contract_jki_jk), m_7M, 1, device);
+    // Eigen::VectorXd f2 = MatrixCast(-m_M2.contract(V_dot, contract_ij_j), m_7M, 1, device);
 
-    std::cout << "F_int:\n" << MatrixCast(F_int, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "F_int 1:\n" << f1.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "F_int 2:\n" << f2.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "F_int:\n" << MatrixCast(F_int, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "F_int 1:\n" << f1.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "F_int 2:\n" << f2.format(CleanFmt) << "\n\n" << std::endl;
 }

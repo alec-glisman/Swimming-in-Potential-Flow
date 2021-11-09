@@ -304,14 +304,14 @@ RungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
     Q_total.noalias() += Q_con;
     acc.noalias() = M_eff_inv * Q_total; // (7m, 1)
 
-    // debugging print statements
-    Eigen::IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
-    std::cout << "M_eff:\n" << M_eff.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "M_eff_inv:\n" << M_eff_inv.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "K:\n" << K.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "udwadiaA:\n" << m_system->udwadiaA().format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "udwadiaB:\n" << m_system->udwadiaB().format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "acc:\n" << acc.format(CleanFmt) << "\n\n" << std::endl;
+    // FIXME: debugging print statements
+    // Eigen::IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
+    // std::cout << "M_eff:\n" << M_eff.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "M_eff_inv:\n" << M_eff_inv.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "K:\n" << K.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "udwadiaA:\n" << m_system->udwadiaA().format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "udwadiaB:\n" << m_system->udwadiaB().format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "acc:\n" << acc.format(CleanFmt) << "\n\n" << std::endl;
 }
 
 void
@@ -452,11 +452,11 @@ RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
 
     m_system->setAccelerationsBodies(acc_body);
 
-    // debugging print statements
-    Eigen::IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
-    std::cout << "rbmconn:\n" << rbmconn.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "M_eff:\n" << M_eff.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "M_tilde:\n" << M_tilde.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "U_swim:\n" << U_swim.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "A_swim:\n" << A_swim.format(CleanFmt) << "\n\n" << std::endl;
+    // FIXME: debugging print statements
+    // Eigen::IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
+    // std::cout << "rbmconn:\n" << rbmconn.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "M_eff:\n" << M_eff.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "M_tilde:\n" << M_tilde.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "U_swim:\n" << U_swim.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "A_swim:\n" << A_swim.format(CleanFmt) << "\n\n" << std::endl;
 }
