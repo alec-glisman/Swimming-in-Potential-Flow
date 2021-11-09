@@ -51,7 +51,7 @@ RungeKutta4::RungeKutta4(std::shared_ptr<SystemData> sys, std::shared_ptr<Potent
     spdlog::get(m_logName)->critical("Setting initial conditions using PLFT-free algorithm.");
     m_system->update(single_core_device);   // update system kinematics and rbm tensors
     m_potHydro->update(single_core_device); // update hydrodynamic tensors
-    momForceFree();                         // set initial body kinematics
+    momForceFree(single_core_device);       // set initial body kinematics
 
     if (m_system->imageSystem())
     {
@@ -306,14 +306,14 @@ RungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
 }
 
 void
-RungeKutta4::momForceFree()
+RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
 {
     const int first_particle{0};
 
     const int num_particles{3};                   // Nb
     const int num_particles_3{3 * num_particles}; // 3 * Nb
 
-    // Assemble the tensor quantities
+    /* ANCHOR: Assemble the tensor quantities */
     Eigen::Matrix<double, 3, -1> rbmconn   = Eigen::MatrixXd::Zero(3, num_particles_3);               // (3 x 3 Nb)
     Eigen::MatrixXd              M_eff     = Eigen::MatrixXd::Zero(num_particles_3, num_particles_3); // (3 Nb x 3 Nb)
     Eigen::VectorXd              vel_artic = Eigen::VectorXd::Zero(num_particles_3);                  // (3 Nb x 1)
@@ -338,11 +338,12 @@ RungeKutta4::momForceFree()
 
     const Eigen::Matrix<double, -1, 3> rbmconn_T = rbmconn.transpose();
 
+    /* ANCHOR: Calculate velocity components */
     // calculate M_tilde = Sigma * M_total * Sigma^T;  (3 x 3)
     const Eigen::Matrix<double, -1, 3> M_tilde_hold = M_eff * rbmconn_T;
     const Eigen::Matrix<double, 3, 3>  M_tilde      = rbmconn * M_tilde_hold;
 
-    /* ANCHOR: Solve for rigid body motion velocity components */
+    /* STUB: Solve for rigid body motion velocity components */
     // calculate P_script = Sigma * M_total * V_articulation;  (3 x 1)
     const Eigen::Matrix<double, 3, -1> P_script_hold = M_eff * vel_artic;
     const Eigen::Matrix<double, 3, 1>  P_script      = rbmconn * P_script_hold;
@@ -368,6 +369,9 @@ RungeKutta4::momForceFree()
     }
 
     m_system->setVelocitiesBodies(vel_body);
+
+    /* ANCHOR: Calculate acceleration components */
+    m_system->update(device); // update velocity components with locater motion
 
     // TODO: Acceleration components
 }

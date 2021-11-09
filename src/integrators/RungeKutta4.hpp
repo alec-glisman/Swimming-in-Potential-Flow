@@ -158,7 +158,7 @@ class RungeKutta4
      * If swimmer design changes, the elements taken from M_total must change too
      */
     void
-    momForceFree();
+    momForceFree(Eigen::ThreadPoolDevice& device);
 
     // classes
     /// shared pointer reference to `SystemData` class
