@@ -37,7 +37,7 @@ my $generator      = "Ninja";                   # CMake generator,   OPTIONS: "U
 my $buildDir       = "build/" . lc $build;      # Build folder path
 
 # C++ Simulation
-my $simulationTag    = "collinear-swimmer-wall";
+my $simulationTag    = "collinear-swimmer-isolated";
 my $projectName      = "bodies-in-potential-flow";
 my $inputDir         = "input";
 my @inputData        = ( "varyZHeight", "varyRelDisp", "varyPhaseAngle", "varyEpsilon", "varyDt" );
@@ -45,9 +45,9 @@ my $numSimulationTypes = scalar @inputData;
 my $runSimulationSimulan = 0; # NOTE: 0 only runs one simulation at a time
 
 # Python Numerical Analysis
-my $pythonGSDCreation = "python/initial_configurations/" . "collinear-swimmer-wall-configuration.py";
-my $pythonAggregrateAnalysis   = "python/analysis/" . "collinear-swimmer-wall-aggregate-analysis.py";
-my $pythonIndividualAnalysis   = "python/analysis/" . "collinear-swimmer-wall-individual-analysis.py";
+my $pythonGSDCreation = "python/initial_configurations/" . $simulationTag . "-configuration.py";
+my $pythonAggregrateAnalysis   = "python/analysis/" . $simulationTag ."-aggregate-analysis.py";
+my $pythonIndividualAnalysis   = "python/analysis/" . $simulationTag ."-individual-analysis.py";
 
 # Host path
 my $host = `uname -n`;
