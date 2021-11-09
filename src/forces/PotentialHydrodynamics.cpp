@@ -400,8 +400,9 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     F_loc_int.device(device) -= m_N2.contract(V_xi_dot, contract_ijk_jk);
 
     // hydrodynamic forces arising from internal D.o.F. motion (2 terms; contains internal inertia term)
-    Eigen::Tensor<double, 1> F_int = Eigen::Tensor<double, 1>(m_7M); // (7M x 1)
-    F_int.device(device)           = 0.50 * m_N1.contract(V_V, contract_jki_jk);
+    // FIXME: This is generating a non-zero 7th element. WHY???
+    Eigen::Tensor<double, 1> F_int = Eigen::Tensor<double, 1>(m_7M);   // (7M x 1)
+    F_int.device(device) = 0.50 * m_N1.contract(V_V, contract_jki_jk); // REVIEW: This is the source of the problem
     F_int.device(device) -= m_M2.contract(V_dot, contract_ij_j);
 
     // compute complete potential flow hydrodynamic force
@@ -414,4 +415,13 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     Eigen::Tensor<double, 1> F_hydro_no_inertia = Eigen::Tensor<double, 1>(m_7M); // (7M x 1)
     F_hydro_no_inertia.device(device)           = F_hydro - inertia_loc;
     m_F_hydroNoInertia.noalias()                = MatrixCast(F_hydro_no_inertia, m_7M, 1, device);
+
+    // debugging print statements
+    Eigen::IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
+    Eigen::VectorXd f1 = MatrixCast(0.50 * m_N1.contract(V_V, contract_jki_jk), m_7M, 1, device);
+    Eigen::VectorXd f2 = MatrixCast(-m_M2.contract(V_dot, contract_ij_j), m_7M, 1, device);
+
+    std::cout << "F_int:\n" << MatrixCast(F_int, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
+    std::cout << "F_int 1:\n" << f1.format(CleanFmt) << "\n\n" << std::endl;
+    std::cout << "F_int 2:\n" << f2.format(CleanFmt) << "\n\n" << std::endl;
 }
