@@ -538,9 +538,14 @@ SystemData::chiMatrixElement(const int particle_id)
 
     // body unit quaternion
     const Eigen::Vector4d theta_body = m_positions_bodies.segment<4>(body_id_7);
+
     // particle unit initial configuration
     Eigen::Vector4d r_hat_init_particle = Eigen::Vector4d::Zero(4);
     r_hat_init_particle.segment<3>(1)   = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
+
+    // 2 * || r_particle_id ||, G_matrix prefactor
+    const double          prefactor{2.0 * m_positions_particles_articulation.segment<3>(particle_id_3).norm()};
+    const Eigen::Vector4d r_body_coords = prefactor * r_hat_init_particle;
 
     // Q matrices
     Eigen::Matrix4d q2;
@@ -549,32 +554,29 @@ SystemData::chiMatrixElement(const int particle_id)
 
     // clang-format off
         q2 << 
-            theta_body(1), 0, 0, 0, 
-            0, theta_body(1), theta_body(2), theta_body(3),
-            0, theta_body(2), -theta_body(1), -theta_body(0),
-            0, theta_body(3), theta_body(0), -theta_body(1);
+            theta_body(1), 0.0, 0.0, 0.0, 
+            0.0, theta_body(1), theta_body(2), theta_body(3),
+            0.0, theta_body(2), -theta_body(1), -theta_body(0),
+            0.0, theta_body(3), theta_body(0), -theta_body(1);
 
         q3 << 
-            theta_body(2), 0, 0, 0, 
-            0, -theta_body(2), theta_body(1), theta_body(0),
-            0, theta_body(1), theta_body(2), theta_body(3),
-            0, -theta_body(0), theta_body(3), -theta_body(2);
+            theta_body(2), 0.0, 0.0, 0.0, 
+            0.0, -theta_body(2), theta_body(1), theta_body(0),
+            0.0, theta_body(1), theta_body(2), theta_body(3),
+            0.0, -theta_body(0), theta_body(3), -theta_body(2);
 
         q4 << 
-            theta_body(3), 0, 0, 0, 
-            0, -theta_body(3), -theta_body(0), theta_body(1),
-            0, theta_body(0), -theta_body(3), theta_body(2),
-            0, theta_body(1), theta_body(2), theta_body(3);
+            theta_body(3), 0.0, 0.0, 0.0, 
+            0.0, -theta_body(3), -theta_body(0), theta_body(1),
+            0.0, theta_body(0), -theta_body(3), theta_body(2),
+            0.0, theta_body(1), theta_body(2), theta_body(3);
     // clang-format on
-
-    // 2 * || r_particle_id ||, G_matrix prefactor
-    const double prefactor{2 * m_positions_particles_articulation.segment<3>(particle_id_3).norm()};
 
     // G matrix element
     Eigen::Matrix<double, 4, 3> g_matrix;
-    g_matrix.col(0).noalias() = q2 * r_hat_init_particle;
-    g_matrix.col(1).noalias() = q3 * r_hat_init_particle;
-    g_matrix.col(2).noalias() = q4 * r_hat_init_particle;
+    g_matrix.col(0).noalias() = q2 * r_body_coords;
+    g_matrix.col(1).noalias() = q3 * r_body_coords;
+    g_matrix.col(2).noalias() = q4 * r_body_coords;
     g_matrix *= prefactor;
 
     /* ANCHOR: Compute S matrix element */
