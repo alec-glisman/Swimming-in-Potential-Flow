@@ -366,7 +366,7 @@ RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
     const Eigen::Matrix<double, 3, -1> P_script_hold = M_eff * vel_artic;
     const Eigen::Matrix<double, 3, 1>  P_script      = rbmconn * P_script_hold;
 
-    // calculate U_swim = - M_tilde_inv * P_script; U_swim has translation and rotation components
+    // calculate U_swim = - M_tilde_inv * P_script; U_swim has translation components
     const Eigen::Matrix<double, 3, 1> U_swim = -M_tilde.fullPivLu().solve(P_script); // linear components
     // convert U_swim to 4d vector for quaternion rotation
     Eigen::Quaterniond U_swim_4d;
@@ -402,57 +402,44 @@ RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
             m_system->velocitiesParticles().segment<3>(particle_id_7); // linear components
     }
 
-    // convert particle velocities to eigen tensor
+    // convert particle velocities to `Eigen::Tensor`
     Eigen::Tensor<double, 1> tens_vel_part = Eigen::Tensor<double, 1>(num_particles_3);
     tens_vel_part.device(device)           = TensorCast(vel_part, num_particles_3);
 
-    // TODO: Acceleration components
+    // `Eigen::Tensor` contract indices
+    const Eigen::array<Eigen::IndexPair<int>, 1> contract_ijl_l = {
+        Eigen::IndexPair<int>(2, 0)}; // {i, j, l} . {l} --> {i, j}
+
+    // calculate gradM U
+    Eigen::Tensor<double, 2> tens_gradM_U = Eigen::Tensor<double, 2>(num_particles_3, num_particles_3);
+    tens_gradM_U.device(device)           = grad_M_eff.contract(tens_vel_part, contract_ijl_l);
+    const Eigen::MatrixXd gradM_U         = MatrixCast(tens_gradM_U, num_particles_3, num_particles_3, device);
+
+    /* STUB: Solve for rigid body motion velocity components */
+    // calculate F_script = Sigma * (M_total * A_articulation + (gradM U) U);  (3 x 1)
+    const Eigen::Matrix<double, 3, -1> F_script_hold = M_eff * acc_artic + gradM_U * vel_part;
+    const Eigen::Matrix<double, 3, 1>  F_script      = rbmconn * F_script_hold;
+
+    // calculate A_swim = - M_tilde_inv * P_script; A_swim has translation components
+    const Eigen::Matrix<double, 3, 1> A_swim = -M_tilde.fullPivLu().solve(F_script); // linear components
+
+    // convert A_swim to 4d vector for quaternion rotation
+    Eigen::Quaterniond A_swim_4d;
+    A_swim_4d.w()   = 0.0;
+    A_swim_4d.vec() = A_swim;
+
+    /* ANCHOR: Output velocity data back to m_system */
+    Eigen::VectorXd acc_body = Eigen::VectorXd::Zero(m_7M);
+
+    for (int body_id = 0; body_id < (m_body_dof); body_id++)
+    {
+        const int body_id_7{7 * body_id};
+
+        const Eigen::Quaterniond theta_body(m_system->positionsBodies().segment<4>(body_id_7 + 3));
+        const Eigen::Quaterniond A_swim_rot_4d = theta_body * A_swim_4d * theta_body.inverse();
+
+        acc_body.segment<3>(body_id_7).noalias() = A_swim_rot_4d.vec();
+    }
+
+    m_system->setAccelerationsBodies(acc_body);
 }
-
-// // update hydrodynamic force terms for acceleration components
-// m_potHydro->updateForcesOnly();
-
-// /* ANCHOR: Solve for rigid body motion acceleration components */
-// // calculate b = a_artic + W * r + [v_artic ^ ]^T * Omega_C;  Omega_C = U_swim(3::5)
-// Eigen::Vector3d Omega_C = m_systemParam.U_swim.segment<3>(3);
-
-// Eigen::Matrix3d W = Omega_C * Omega_C.transpose();
-// W.noalias() -= Omega_C.squaredNorm() * m_I;
-
-// Eigen::Matrix3d n_v_artic_cross;
-// Eigen::VectorXd b = m_accArtic;
-
-// for (int i = 0; i < m_system->numParticles(); i++)
-// {
-//     int i3{3 * i};
-
-//     Eigen::Vector3d dr = m_system->positions().segment<3>(i3);
-//     dr.noalias() -= m_RLoc;
-//     b.segment<3>(i3).noalias() += W * dr;
-
-//     crossProdMat(-m_velArtic.segment<3>(i3), n_v_artic_cross);
-//     b.segment<3>(i3).noalias() += n_v_artic_cross * Omega_C;
-// }
-
-// // calculate gMUU = \nabla M_added : U jdU
-// Eigen::VectorXd gMUU = m_potHydro->t2VelGrad();
-
-// // calculate F_script = Sigma * (M_total * b + gMUU)
-// Eigen::VectorXd F_script_hold = m_potHydro->mTotal() * b;
-// F_script_hold.noalias() += gMUU;
-// Eigen::VectorXd F_script = rbmconn * F_script_hold;
-
-// // calculate A_swim = - M_tilde_inv * F_script; A_swim has translation and rotation
-// // components
-// m_systemParam.A_swim.noalias() = -M_tilde.fullPivLu().solve(F_script);
-
-// /* ANCHOR: Output acceleration data back to m_system */
-// // calculate A = Sigma^T * A_swim + b
-// Eigen::VectorXd A_out = rbmconn_T * m_systemParam.A_swim;
-// A_out.noalias() += b;
-// m_system->setAccelerations(A_out);
-
-// /* ANCHOR: Output acceleration data back to input variable */
-// acc = A_out;
-// }
-// * /
