@@ -363,7 +363,7 @@ RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
 
     /* STUB: Solve for rigid body motion velocity components */
     // calculate P_script = Sigma * M_total * V_articulation;  (3 x 1)
-    const Eigen::Matrix<double, 3, -1> P_script_hold = M_eff * vel_artic;
+    const Eigen::Matrix<double, -1, 1> P_script_hold = M_eff * vel_artic;
     const Eigen::Matrix<double, 3, 1>  P_script      = rbmconn * P_script_hold;
 
     // calculate U_swim = - M_tilde_inv * P_script; U_swim has translation components
@@ -417,7 +417,7 @@ RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
 
     /* STUB: Solve for rigid body motion velocity components */
     // calculate F_script = Sigma * (M_total * A_articulation + (gradM U) U);  (3 x 1)
-    const Eigen::Matrix<double, 3, -1> F_script_hold = M_eff * acc_artic + gradM_U * vel_part;
+    const Eigen::Matrix<double, -1, 1> F_script_hold = M_eff * acc_artic + gradM_U * vel_part;
     const Eigen::Matrix<double, 3, 1>  F_script      = rbmconn * F_script_hold;
 
     // calculate A_swim = - M_tilde_inv * P_script; A_swim has translation components
