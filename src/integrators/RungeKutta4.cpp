@@ -188,6 +188,8 @@ RungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::Vec
     {
         // update Udwadia system for all bodies
         udwadiaKalaba(acc);
+
+        // FIXME: (NEXT) Try overwriting results using PF free algorithm
     }
 
     m_system->setAccelerationsBodies(acc);
