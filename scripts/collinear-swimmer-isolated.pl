@@ -201,7 +201,6 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		# Simulation variables
 		my $dt          = 1.00e-6;
 		my $R_avg       = 4.00e+0;
-		my $Z_height    = 6.00e+0;
 		my $phase_angle = -1.57079632679e+0;
 		my $U0          = 2.00e+0;
 		my $omega       = 1.00e+0;
@@ -215,9 +214,6 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 				$R_avg = ${data[$j]};
 				$U0 = 1.00e-1;
 			}
-			case ( "varyZHeight" ) {
-				$Z_height = ${data[$j]};
-			}
 			case ( "varyPhaseAngle" ) {
 				$phase_angle = ${data[$j]};
 			}
@@ -228,7 +224,8 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		}
 
 		# Generate GSD file
-		system( "python3 " . ${pythonGSDCreation} . " --GSD-path=" . ${gsd_path} . " --dt=" . ${dt} . " --R-avg=" . ${R_avg} . " --Z-height=" . ${Z_height} . " --phase-angle=" . ${phase_angle} . " --U0=" . ${U0} . " --omega=" . ${omega} . " --image-system=1 ") and die "Unable to generate GSD file: $?, $!";
+		system( "python3 " . ${pythonGSDCreation} . " --GSD-path=" . ${gsd_path} . " --dt=" . ${dt} . " --R-avg=" . ${R_avg} . " --phase-angle=" . ${phase_angle} . " --U0=" . ${U0} . " --omega=" . ${omega}) 
+            and die "Unable to generate GSD file: $?, $!";
 
 		# Prepare for simulation
 		make_path( "${simulation_dir}/${analysisDir}" );
