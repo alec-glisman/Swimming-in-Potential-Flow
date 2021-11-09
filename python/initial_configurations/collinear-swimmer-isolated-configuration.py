@@ -3,7 +3,7 @@
 __author__ = "Alec Glisman"
 
 Example:
-    python3 python/initial_configurations/collinear-swimmer-wall-configuration.py --GSD-path=data.gsd --dt=1e-6 --R-avg=4.0 --Z-height=6.0 --phase-angle=-1.57079632679e+0 --U0=2.0 --omega=1.0 --image-system=1
+    python3 python/initial_configurations/collinear-swimmer-isolated-configuration.py --GSD-path=data.gsd --dt=1e-6 --R-avg=4.0 --phase-angle=-1.57079632679e+0 --U0=2.0 --omega=1.0
 """
 
 # SECTION: Dependencies
@@ -32,9 +32,6 @@ parser.add_option("--dt", dest="u_dt",
                   metavar="double")
 parser.add_option("--R-avg", dest="u_R_avg",
                   help="(dimensionless) average inter-particle pair separation during articulation period",
-                  metavar="double")
-parser.add_option("--Z-height", dest="u_Z_height",
-                  help="(dimensionless) Initial height of collinear swimmer above wall",
                   metavar="double")
 parser.add_option("--phase-angle", dest="u_phase_angle",
                   help="phase angle between oscillating pairs",
@@ -148,11 +145,11 @@ if __name__ == "__main__":
     gsd_path = str(options.u_gsd_path)
     dt = np.double(options.u_dt)
     R_avg = np.double(options.u_R_avg)
-    Z_height = np.double(options.u_Z_height)
     phase_angle = np.double(options.u_phase_angle)
     U0 = np.double(options.u_U0)
     omega = np.double(options.u_omega)
 
+    Z_height = np.double(0.0)
     # REVIEW: {1: image system, 0: regular system}
     image_system = int(0)
 
