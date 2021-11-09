@@ -86,6 +86,7 @@
         "NVCC",
         "ONLN",
         "pathlib",
+        "PLFT",
         "prakhar",
         "pylab",
         "pylint",
