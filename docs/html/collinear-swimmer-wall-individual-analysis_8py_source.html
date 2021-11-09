@@ -127,16 +127,16 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-individual-anal
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;parser = OptionParser()</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;parser.add_option(<span class="stringliteral">&quot;--relative-path&quot;</span>, dest=<span class="stringliteral">&quot;u_relative_path&quot;</span>,</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                  help=<span class="stringliteral">&quot;Path to parent of simulation data&quot;</span>,</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                  metavar=<span class="stringliteral">&quot;string&quot;</span>)</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;parser.add_option(<span class="stringliteral">&quot;--output-dir&quot;</span>, dest=<span class="stringliteral">&quot;u_output_dir&quot;</span>,</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                  help=<span class="stringliteral">&quot;Directory to output plots (relative to relative-path)&quot;</span>,</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-individual-analysis.html#a5e1905c6e859ab96eef3bc99d31fb84a">   33</a></span>&#160;                  help=<span class="stringliteral">&quot;Path to parent of simulation data&quot;</span>,</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-individual-analysis.html#a1201d5680f639ef928c0847856b2d8db">   34</a></span>&#160;                  metavar=<span class="stringliteral">&quot;string&quot;</span>)</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-individual-analysis.html#a5bef00edd4d3139a47edac1c9eeefa7c">   35</a></span>&#160;parser.add_option(<span class="stringliteral">&quot;--output-dir&quot;</span>, dest=<span class="stringliteral">&quot;u_output_dir&quot;</span>,</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-individual-analysis.html#a9f5dc46a8c52c534e33ba0dc589e6636">   36</a></span>&#160;                  help=<span class="stringliteral">&quot;Directory to output plots (relative to relative-path)&quot;</span>,</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                  metavar=<span class="stringliteral">&quot;string&quot;</span>)</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment"># !SECTION: (User input options)</span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">def </span>aggregate_plots(relative_path, output_dir):</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">def </span><a class="code" href="namespacecollinear-swimmer-wall-individual-analysis.html#adb47cd36e2b196a6ae844c5e69fd5d83">aggregate_plots</a>(relative_path, output_dir):</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;Script to analyze a single GSD file.</span></div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="stringliteral"></span> </div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="stringliteral">    Args:</span></div>
@@ -150,7 +150,7 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-individual-anal
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="comment"># SECTION: Parameters for function</span></div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    output_dir = relative_path + <span class="stringliteral">&quot;/&quot;</span> + output_dir + <span class="stringliteral">&quot;/&quot;</span></div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    gsd_files = []</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    epsOutput = <span class="keyword">True</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-individual-analysis.html#adb47cd36e2b196a6ae844c5e69fd5d83">   56</a></span>&#160;    epsOutput = <span class="keyword">True</span></div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    a = 1</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="comment"># REVIEW[epic=Future Features]: Move this adjustment into plotting style library</span></div>
@@ -174,7 +174,7 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-individual-anal
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <span class="keywordflow">for</span> file <span class="keywordflow">in</span> files:  <span class="comment"># Loop through all files in given directory</span></div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                <span class="keywordflow">if</span> (<span class="stringliteral">&quot;.gsd&quot;</span> <span class="keywordflow">in</span> file):</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                    <span class="keyword">with</span> open(root + <span class="stringliteral">&quot;/&quot;</span> + file) <span class="keyword">as</span> g:</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                        cur_gsd = <a class="code" href="namespaceGSDUtilPy.html">GSDUtilPy</a>(g.name, create_gsd=<span class="keyword">False</span>)</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                        cur_gsd = <a class="code" href="classGSDUtilPy_1_1GSDUtilPy.html">GSDUtilPy</a>(g.name, create_gsd=<span class="keyword">False</span>)</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                        gsd_files.append(cur_gsd)</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        assert(len(gsd_files) == 1)</div>
@@ -277,7 +277,7 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-individual-anal
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;<span class="comment"># SECTION: Plots</span></div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="comment"># PLOT: Angular displacement</span></div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    numLines = 1</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    angDisp_Plot = PlotStyling(numLines,</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    angDisp_Plot = <a class="code" href="classplotStyling_1_1PlotStyling.html">PlotStyling</a>(numLines,</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                               <span class="stringliteral">r&quot;$t/\tau$&quot;</span>, <span class="stringliteral">r&quot;$\Delta \theta / (2 \pi)$&quot;</span>,</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;                               title=<span class="keywordtype">None</span>, loglog=<span class="keyword">False</span>,</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;                               outputDir=output_dir, figName=<span class="stringliteral">&quot;angular-displacement&quot;</span>, eps=epsOutput,</div>
@@ -293,7 +293,7 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-individual-anal
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160; </div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    <span class="comment"># PLOT: Angular velocity</span></div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    numLines = 1</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    angVel_Plot = PlotStyling(numLines,</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    angVel_Plot = <a class="code" href="classplotStyling_1_1PlotStyling.html">PlotStyling</a>(numLines,</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;                              <span class="stringliteral">r&quot;$t/\tau$&quot;</span>, <span class="stringliteral">r&quot;$\Delta \dot{\theta} / (2 \pi)$&quot;</span>,</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;                              title=<span class="keywordtype">None</span>, loglog=<span class="keyword">False</span>,</div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;                              outputDir=output_dir, figName=<span class="stringliteral">&quot;angular-velocity&quot;</span>, eps=epsOutput,</div>
@@ -309,7 +309,7 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-individual-anal
 <div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160; </div>
 <div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    <span class="comment"># PLOT: Angular acceleration</span></div>
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    numLines = 1</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    angAcc_Plot = PlotStyling(numLines,</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    angAcc_Plot = <a class="code" href="classplotStyling_1_1PlotStyling.html">PlotStyling</a>(numLines,</div>
 <div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;                              <span class="stringliteral">r&quot;$t/\tau$&quot;</span>, <span class="stringliteral">r&quot;$\Delta \ddot{\theta} / (2 \pi)$&quot;</span>,</div>
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;                              title=<span class="keywordtype">None</span>, loglog=<span class="keyword">False</span>,</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;                              outputDir=output_dir, figName=<span class="stringliteral">&quot;angular-acceleration&quot;</span>, eps=epsOutput,</div>
@@ -325,7 +325,7 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-individual-anal
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160; </div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="comment"># PLOT: Locater point position</span></div>
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    numLines = 1</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    locPos_Plot = PlotStyling(numLines,</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    locPos_Plot = <a class="code" href="classplotStyling_1_1PlotStyling.html">PlotStyling</a>(numLines,</div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;                              <span class="stringliteral">r&quot;$t/\tau$&quot;</span>, <span class="stringliteral">r&quot;$\Delta \mathbf{R}_2 \cdot \mathbf{q}$&quot;</span>,</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;                              title=<span class="keywordtype">None</span>, loglog=<span class="keyword">False</span>,</div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;                              outputDir=output_dir, figName=<span class="stringliteral">&quot;loc-pos&quot;</span>, eps=epsOutput,</div>
@@ -341,7 +341,7 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-individual-anal
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160; </div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    <span class="comment"># PLOT: Relative oscillator displacement (x-axis)</span></div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    numLines = 4</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    oscDis_Plot = PlotStyling(numLines,</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    oscDis_Plot = <a class="code" href="classplotStyling_1_1PlotStyling.html">PlotStyling</a>(numLines,</div>
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;                              <span class="stringliteral">r&quot;$t/\tau$&quot;</span>, <span class="stringliteral">r&quot;$(\mathbf{r} \cdot \mathbf{q}) \omega / U_0$&quot;</span>,</div>
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;                              title=<span class="keywordtype">None</span>, loglog=<span class="keyword">False</span>,</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;                              outputDir=output_dir, figName=<span class="stringliteral">&quot;osc-disp&quot;</span>, eps=epsOutput,</div>
@@ -363,7 +363,7 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-individual-anal
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    oscDis_Plot.save_plot()</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; </div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    numLines = 2</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    oscDisErr_Plot = PlotStyling(numLines,</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    oscDisErr_Plot = <a class="code" href="classplotStyling_1_1PlotStyling.html">PlotStyling</a>(numLines,</div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;                                 <span class="stringliteral">r&quot;$t/\tau$&quot;</span>, <span class="stringliteral">r&quot;Error $(\mathbf{r} \cdot \mathbf{q}) \omega / U_0$&quot;</span>,</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;                                 title=<span class="keywordtype">None</span>, loglog=<span class="keyword">False</span>,</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;                                 outputDir=output_dir, figName=<span class="stringliteral">&quot;osc-disp-err&quot;</span>, eps=epsOutput,</div>
@@ -383,7 +383,7 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-individual-anal
 <div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160; </div>
 <div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    <span class="comment"># PLOT: Relative oscillator velocity (x-axis)</span></div>
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    numLines = 4</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    oscVel_Plot = PlotStyling(numLines,</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    oscVel_Plot = <a class="code" href="classplotStyling_1_1PlotStyling.html">PlotStyling</a>(numLines,</div>
 <div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;                              <span class="stringliteral">r&quot;$t/\tau$&quot;</span>, <span class="stringliteral">r&quot;$(\Delta \mathbf{U} / U_0) \cdot \mathbf{q}$&quot;</span>,</div>
 <div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;                              title=<span class="keywordtype">None</span>, loglog=<span class="keyword">False</span>,</div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;                              outputDir=output_dir, figName=<span class="stringliteral">&quot;osc-vel&quot;</span>, eps=epsOutput,</div>
@@ -405,7 +405,7 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-individual-anal
 <div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    oscVel_Plot.save_plot()</div>
 <div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160; </div>
 <div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    numLines = 2</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    oscVelErr_Plot = PlotStyling(numLines,</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    oscVelErr_Plot = <a class="code" href="classplotStyling_1_1PlotStyling.html">PlotStyling</a>(numLines,</div>
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;                                 <span class="stringliteral">r&quot;$t/\tau$&quot;</span>, <span class="stringliteral">r&quot;Error $(\Delta \mathbf{U} / U_0) \cdot \mathbf{q}$&quot;</span>,</div>
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;                                 title=<span class="keywordtype">None</span>, loglog=<span class="keyword">False</span>,</div>
 <div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;                                 outputDir=output_dir, figName=<span class="stringliteral">&quot;osc-vel-err&quot;</span>, eps=epsOutput,</div>
@@ -425,7 +425,7 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-individual-anal
 <div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160; </div>
 <div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    <span class="comment"># PLOT: Relative oscillator acceleration (x-axis)</span></div>
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    numLines = 4</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    oscAcc_Plot = PlotStyling(numLines,</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    oscAcc_Plot = <a class="code" href="classplotStyling_1_1PlotStyling.html">PlotStyling</a>(numLines,</div>
 <div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;                              <span class="stringliteral">r&quot;$t/\tau$&quot;</span>, <span class="stringliteral">r&quot;$(\Delta \dot{\mathbf{U}} \cdot \mathbf{q}) / (U_0 \, \omega)$&quot;</span>,</div>
 <div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;                              title=<span class="keywordtype">None</span>, loglog=<span class="keyword">False</span>,</div>
 <div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;                              outputDir=output_dir, figName=<span class="stringliteral">&quot;osc-acc&quot;</span>, eps=epsOutput,</div>
@@ -448,7 +448,7 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-individual-anal
 <div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    oscAcc_Plot.save_plot()</div>
 <div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160; </div>
 <div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    numLines = 2</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    oscAccErr_Plot = PlotStyling(numLines,</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    oscAccErr_Plot = <a class="code" href="classplotStyling_1_1PlotStyling.html">PlotStyling</a>(numLines,</div>
 <div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;                                 <span class="stringliteral">r&quot;$t/\tau$&quot;</span>, <span class="stringliteral">r&quot;Error $(\Delta \dot{\mathbf{U}} \cdot \mathbf{q}) / (U_0 \, \omega)$&quot;</span>,</div>
 <div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;                                 title=<span class="keywordtype">None</span>, loglog=<span class="keyword">False</span>,</div>
 <div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;                                 outputDir=output_dir, figName=<span class="stringliteral">&quot;osc-acc-err&quot;</span>, eps=epsOutput,</div>
@@ -498,17 +498,19 @@ $(document).ready(function(){initNavTree('collinear-swimmer-wall-individual-anal
 <div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;    output_dir = str(options.u_output_dir)</div>
 <div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160; </div>
 <div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;    <span class="comment"># generate plots</span></div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;    aggregate_plots(relative_path, output_dir)</div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160; </div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;<span class="comment"># !SECTION (For use when being called from command line)</span></div>
+<div class="line"><a name="l00404"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-individual-analysis.html#a690adbee0c6608b6c189370359c03456">  404</a></span>&#160;    <a class="code" href="namespacecollinear-swimmer-wall-individual-analysis.html#adb47cd36e2b196a6ae844c5e69fd5d83">aggregate_plots</a>(relative_path, output_dir)</div>
+<div class="line"><a name="l00405"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-individual-analysis.html#afb476cd4068651af56efdb2f752c55f9">  405</a></span>&#160; </div>
+<div class="line"><a name="l00406"></a><span class="lineno"><a class="line" href="namespacecollinear-swimmer-wall-individual-analysis.html#a67c37897799d884cb6d2a2902822d3a2">  406</a></span>&#160;<span class="comment"># !SECTION (For use when being called from command line)</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="anamespaceGSDUtilPy_html"><div class="ttname"><a href="namespaceGSDUtilPy.html">GSDUtilPy</a></div><div class="ttdef"><b>Definition:</b> <a href="GSDUtilPy_8py_source.html#l00001">GSDUtilPy.py:1</a></div></div>
+<div class="ttc" id="aclassGSDUtilPy_1_1GSDUtilPy_html"><div class="ttname"><a href="classGSDUtilPy_1_1GSDUtilPy.html">GSDUtilPy.GSDUtilPy</a></div><div class="ttdoc">Convert data from user to GSD schema and save frame to file.</div><div class="ttdef"><b>Definition:</b> <a href="GSDUtilPy_8py_source.html#l00020">GSDUtilPy.py:20</a></div></div>
+<div class="ttc" id="anamespacecollinear-swimmer-wall-individual-analysis_html_adb47cd36e2b196a6ae844c5e69fd5d83"><div class="ttname"><a href="namespacecollinear-swimmer-wall-individual-analysis.html#adb47cd36e2b196a6ae844c5e69fd5d83">collinear-swimmer-wall-individual-analysis.aggregate_plots</a></div><div class="ttdeci">def aggregate_plots(relative_path, output_dir)</div><div class="ttdoc">Script to analyze a single GSD file.</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-wall-individual-analysis_8py_source.html#l00056">collinear-swimmer-wall-individual-analysis.py:56</a></div></div>
+<div class="ttc" id="aclassplotStyling_1_1PlotStyling_html"><div class="ttname"><a href="classplotStyling_1_1PlotStyling.html">plotStyling.PlotStyling</a></div><div class="ttdoc">Creates a matplotlib.pyplot plot using input data and specifications.</div><div class="ttdef"><b>Definition:</b> <a href="plotStyling_8py_source.html#l00073">plotStyling.py:73</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_7837fde3ab9c1fb2fc5be7b717af8d79.html">python</a></li><li class="navelem"><a class="el" href="dir_a8de9000833399a5c2e24100482f9685.html">analysis</a></li><li class="navelem"><a class="el" href="collinear-swimmer-wall-individual-analysis_8py.html">collinear-swimmer-wall-individual-analysis.py</a></li>
-    <li class="footer">Generated on Fri Nov 5 2021 13:06:47 for Bodies in Potential Flow by
+    <li class="footer">Generated on Tue Nov 9 2021 14:57:07 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

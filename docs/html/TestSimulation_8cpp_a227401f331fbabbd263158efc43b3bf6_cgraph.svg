@@ -187,36 +187,36 @@
 <path fill="none" stroke="midnightblue" d="M396.24,-207.93C409.98,-206.09 425.12,-204.06 440,-202.06"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="440.8,-205.49 450.24,-200.69 439.87,-198.55 440.8,-205.49"/>
 </g>
-<!-- Node20 -->
-<g id="node20" class="node">
-<title>Node20</title>
-<g id="a_node20"><a xlink:href="classSystemData.html#a30df4f73d78f6886da32559eda83595d" target="_top" xlink:title="Computes the articulation (linear) positions of the particles relative to their respective locater po...">
-<polygon fill="none" stroke="black" points="441,-137.5 441,-156.5 606,-156.5 606,-137.5 441,-137.5"/>
-<text text-anchor="middle" x="523.5" y="-144.5" font-family="Helvetica,sans-Serif" font-size="10.00">SystemData::positionsArticulation</text>
-</a>
-</g>
-</g>
-<!-- Node7&#45;&gt;Node20 -->
-<g id="edge21" class="edge">
-<title>Node7&#45;&gt;Node20</title>
-<path fill="none" stroke="midnightblue" d="M360.07,-205.32C378.91,-194.67 410.82,-177.64 440,-167 448.15,-164.03 456.91,-161.37 465.57,-159.03"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="466.46,-162.41 475.27,-156.53 464.72,-155.63 466.46,-162.41"/>
-</g>
 <!-- Node21 -->
 <g id="node21" class="node">
 <title>Node21</title>
-<g id="a_node21"><a xlink:href="classSystemData.html#ae08b2263f2981e57d0f12ba7881a083b" target="_top" xlink:title="Computes the rigid body motion connectivity tensors.">
-<polygon fill="none" stroke="black" points="450,-88 450,-118 597,-118 597,-88 450,-88"/>
-<text text-anchor="start" x="458" y="-106" font-family="Helvetica,sans-Serif" font-size="10.00">SystemData::rigidBodyMotion</text>
-<text text-anchor="middle" x="523.5" y="-95" font-family="Helvetica,sans-Serif" font-size="10.00">Tensors</text>
+<g id="a_node21"><a xlink:href="classSystemData.html#a30df4f73d78f6886da32559eda83595d" target="_top" xlink:title="Computes the articulation (linear) positions of the particles relative to their respective locater po...">
+<polygon fill="none" stroke="black" points="441,-88.5 441,-107.5 606,-107.5 606,-88.5 441,-88.5"/>
+<text text-anchor="middle" x="523.5" y="-95.5" font-family="Helvetica,sans-Serif" font-size="10.00">SystemData::positionsArticulation</text>
 </a>
 </g>
 </g>
 <!-- Node7&#45;&gt;Node21 -->
 <g id="edge22" class="edge">
 <title>Node7&#45;&gt;Node21</title>
-<path fill="none" stroke="midnightblue" d="M351.51,-205.4C366.86,-187.58 402.29,-149.29 440,-128 443.92,-125.79 448.05,-123.75 452.3,-121.88"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="453.8,-125.05 461.74,-118.04 451.16,-118.56 453.8,-125.05"/>
+<path fill="none" stroke="midnightblue" d="M350.23,-205.28C364.42,-185.57 399.43,-140.85 440,-118 444.82,-115.29 449.99,-112.94 455.32,-110.91"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="456.69,-114.14 465.02,-107.59 454.43,-107.52 456.69,-114.14"/>
+</g>
+<!-- Node22 -->
+<g id="node22" class="node">
+<title>Node22</title>
+<g id="a_node22"><a xlink:href="classSystemData.html#ae08b2263f2981e57d0f12ba7881a083b" target="_top" xlink:title="Computes the rigid body motion connectivity tensors.">
+<polygon fill="none" stroke="black" points="450,-127 450,-157 597,-157 597,-127 450,-127"/>
+<text text-anchor="start" x="458" y="-145" font-family="Helvetica,sans-Serif" font-size="10.00">SystemData::rigidBodyMotion</text>
+<text text-anchor="middle" x="523.5" y="-134" font-family="Helvetica,sans-Serif" font-size="10.00">Tensors</text>
+</a>
+</g>
+</g>
+<!-- Node7&#45;&gt;Node22 -->
+<g id="edge23" class="edge">
+<title>Node7&#45;&gt;Node22</title>
+<path fill="none" stroke="midnightblue" d="M360.53,-205.43C379.51,-195.04 411.3,-178.39 440,-167 445.84,-164.68 451.99,-162.45 458.18,-160.34"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="459.51,-163.59 467.91,-157.13 457.32,-156.94 459.51,-163.59"/>
 </g>
 <!-- Node26 -->
 <g id="node26" class="node">
@@ -229,7 +229,7 @@
 </g>
 </g>
 <!-- Node7&#45;&gt;Node26 -->
-<g id="edge28" class="edge">
+<g id="edge29" class="edge">
 <title>Node7&#45;&gt;Node26</title>
 <path fill="none" stroke="midnightblue" d="M347.57,-205.45C358.61,-180.67 391.6,-113.84 440,-79 442.67,-77.08 445.49,-75.3 448.42,-73.66"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="450.1,-76.73 457.47,-69.12 446.96,-70.47 450.1,-76.73"/>
@@ -244,7 +244,7 @@
 </g>
 </g>
 <!-- Node7&#45;&gt;Node27 -->
-<g id="edge29" class="edge">
+<g id="edge30" class="edge">
 <title>Node7&#45;&gt;Node27</title>
 <path fill="none" stroke="midnightblue" d="M345.47,-205.47C352.38,-174.62 378.46,-76.69 440,-29 442.34,-27.19 444.83,-25.54 447.42,-24.04"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="449.15,-27.09 456.58,-19.53 446.06,-20.81 449.15,-27.09"/>
@@ -253,185 +253,191 @@
 <g id="node10" class="node">
 <title>Node10</title>
 <g id="a_node10"><a xlink:href="helper__math_8h.html#ae4378072f9d836b0d4770a1514db2be3" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="black" points="705.5,-333.5 705.5,-352.5 737.5,-352.5 737.5,-333.5 705.5,-333.5"/>
-<text text-anchor="middle" x="721.5" y="-340.5" font-family="Helvetica,sans-Serif" font-size="10.00">abs</text>
+<polygon fill="none" stroke="black" points="705.5,-334.5 705.5,-353.5 737.5,-353.5 737.5,-334.5 705.5,-334.5"/>
+<text text-anchor="middle" x="721.5" y="-341.5" font-family="Helvetica,sans-Serif" font-size="10.00">abs</text>
 </a>
 </g>
 </g>
 <!-- Node9&#45;&gt;Node10 -->
 <g id="edge9" class="edge">
 <title>Node9&#45;&gt;Node10</title>
-<path fill="none" stroke="midnightblue" d="M592.23,-339.73C627.86,-340.64 669.41,-341.7 695.34,-342.36"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="695.34,-345.86 705.43,-342.62 695.52,-338.86 695.34,-345.86"/>
+<path fill="none" stroke="midnightblue" d="M592.23,-340.07C627.86,-341.16 669.41,-342.44 695.34,-343.23"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="695.33,-346.73 705.43,-343.54 695.54,-339.73 695.33,-346.73"/>
 </g>
 <!-- Node11 -->
 <g id="node11" class="node">
 <title>Node11</title>
 <g id="a_node11"><a xlink:href="helper__math_8h.html#a3be05aff487ded3c05aab21d24dd6439" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="black" points="874,-333.5 874,-352.5 936,-352.5 936,-333.5 874,-333.5"/>
-<text text-anchor="middle" x="905" y="-340.5" font-family="Helvetica,sans-Serif" font-size="10.00">make_int2</text>
+<polygon fill="none" stroke="black" points="874,-334.5 874,-353.5 936,-353.5 936,-334.5 874,-334.5"/>
+<text text-anchor="middle" x="905" y="-341.5" font-family="Helvetica,sans-Serif" font-size="10.00">make_int2</text>
 </a>
 </g>
 </g>
 <!-- Node10&#45;&gt;Node11 -->
 <g id="edge10" class="edge">
 <title>Node10&#45;&gt;Node11</title>
-<path fill="none" stroke="midnightblue" d="M737.66,-343C765.11,-343 823.89,-343 863.69,-343"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="863.87,-346.5 873.87,-343 863.87,-339.5 863.87,-346.5"/>
+<path fill="none" stroke="midnightblue" d="M737.66,-344C765.11,-344 823.89,-344 863.69,-344"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="863.87,-347.5 873.87,-344 863.87,-340.5 863.87,-347.5"/>
 </g>
 <!-- Node14 -->
 <g id="node14" class="node">
 <title>Node14</title>
 <g id="a_node14"><a xlink:href="helper__eigenTensorConversion_8hpp.html#a556d08b55a6ad7cd703b6db06194e5cf" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="black" points="689,-295.5 689,-314.5 754,-314.5 754,-295.5 689,-295.5"/>
-<text text-anchor="middle" x="721.5" y="-302.5" font-family="Helvetica,sans-Serif" font-size="10.00">MatrixCast</text>
+<polygon fill="none" stroke="black" points="689,-296.5 689,-315.5 754,-315.5 754,-296.5 689,-296.5"/>
+<text text-anchor="middle" x="721.5" y="-303.5" font-family="Helvetica,sans-Serif" font-size="10.00">MatrixCast</text>
 </a>
 </g>
 </g>
 <!-- Node13&#45;&gt;Node14 -->
 <g id="edge13" class="edge">
 <title>Node13&#45;&gt;Node14</title>
-<path fill="none" stroke="midnightblue" d="M577.64,-255.04C587.47,-258.12 597.6,-261.5 607,-265 623.41,-271.11 626.61,-274.84 643,-281 654.64,-285.37 667.47,-289.58 679.28,-293.22"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="678.33,-296.59 688.92,-296.14 680.36,-289.89 678.33,-296.59"/>
+<path fill="none" stroke="midnightblue" d="M578.14,-255C587.83,-258.07 597.78,-261.45 607,-265 623.51,-271.36 626.51,-275.59 643,-282 654.59,-286.51 667.4,-290.76 679.22,-294.4"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="678.27,-297.77 688.86,-297.3 680.29,-291.06 678.27,-297.77"/>
 </g>
 <!-- Node16 -->
 <g id="node16" class="node">
 <title>Node16</title>
 <g id="a_node16"><a xlink:href="helper__eigenTensorConversion_8hpp.html#a3a32f7de3f099464192073a93b34d580" target="_top" xlink:title="Convert Eigen::Matrix &#45;&#45;&gt; Eigen::Tensor.">
-<polygon fill="none" stroke="black" points="871.5,-178.5 871.5,-197.5 938.5,-197.5 938.5,-178.5 871.5,-178.5"/>
-<text text-anchor="middle" x="905" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">TensorCast</text>
+<polygon fill="none" stroke="black" points="871.5,-198.5 871.5,-217.5 938.5,-217.5 938.5,-198.5 871.5,-198.5"/>
+<text text-anchor="middle" x="905" y="-205.5" font-family="Helvetica,sans-Serif" font-size="10.00">TensorCast</text>
 </a>
 </g>
 </g>
 <!-- Node13&#45;&gt;Node16 -->
 <g id="edge15" class="edge">
 <title>Node13&#45;&gt;Node16</title>
-<path fill="none" stroke="midnightblue" d="M592.01,-242.16C648.22,-242.63 730.07,-240.21 800,-226 825.74,-220.77 853.63,-210.29 874.04,-201.67"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="875.63,-204.79 883.42,-197.61 872.85,-198.37 875.63,-204.79"/>
+<path fill="none" stroke="midnightblue" d="M592.05,-238.84C647.94,-237.33 729.32,-233.88 800,-226 820.28,-223.74 842.6,-220.04 861.35,-216.58"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="862.18,-219.98 871.36,-214.69 860.88,-213.1 862.18,-219.98"/>
 </g>
 <!-- Node15 -->
 <g id="node15" class="node">
 <title>Node15</title>
 <g id="a_node15"><a xlink:href="helper__eigenTensorConversion_8hpp.html#a2a7eca6b17fb874869047bd0b5f11b46" target="_top" xlink:title="Convert between Eigen::Tensor and Eigen::Matrix classes.">
-<polygon fill="none" stroke="black" points="881.5,-295.5 881.5,-314.5 928.5,-314.5 928.5,-295.5 881.5,-295.5"/>
-<text text-anchor="middle" x="905" y="-302.5" font-family="Helvetica,sans-Serif" font-size="10.00">asEval</text>
+<polygon fill="none" stroke="black" points="881.5,-296.5 881.5,-315.5 928.5,-315.5 928.5,-296.5 881.5,-296.5"/>
+<text text-anchor="middle" x="905" y="-303.5" font-family="Helvetica,sans-Serif" font-size="10.00">asEval</text>
 </a>
 </g>
 </g>
 <!-- Node14&#45;&gt;Node15 -->
 <g id="edge14" class="edge">
 <title>Node14&#45;&gt;Node15</title>
-<path fill="none" stroke="midnightblue" d="M754.11,-305C786.92,-305 838,-305 871.23,-305"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="871.35,-308.5 881.35,-305 871.35,-301.5 871.35,-308.5"/>
+<path fill="none" stroke="midnightblue" d="M754.11,-306C786.92,-306 838,-306 871.23,-306"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="871.35,-309.5 881.35,-306 871.35,-302.5 871.35,-309.5"/>
 </g>
 <!-- Node17&#45;&gt;Node16 -->
-<g id="edge20" class="edge">
+<g id="edge21" class="edge">
 <title>Node17&#45;&gt;Node16</title>
-<path fill="none" stroke="midnightblue" d="M596.66,-204.44C611.91,-206.76 627.94,-208.8 643,-210 712.56,-215.54 730.6,-217.26 800,-210 820.54,-207.85 842.99,-203.38 861.76,-199.02"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="862.58,-202.43 871.49,-196.7 860.95,-195.62 862.58,-202.43"/>
+<path fill="none" stroke="midnightblue" d="M596.64,-205.15C611.89,-207.59 627.93,-209.74 643,-211 712.53,-216.83 730.23,-212.01 800,-211 820.12,-210.71 842.41,-210.1 861.19,-209.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="861.34,-213.01 871.22,-209.19 861.11,-206.01 861.34,-213.01"/>
 </g>
 <!-- Node18 -->
 <g id="node18" class="node">
 <title>Node18</title>
 <g id="a_node18"><a xlink:href="classSystemData.html#a230548cc624444a66137b8d5ecaf5716" target="_top" xlink:title="Computes \chi_{i \alpha} matrix for given particle number and body number. chi matrix represents the ...">
-<polygon fill="none" stroke="black" points="645,-181.5 645,-200.5 798,-200.5 798,-181.5 645,-181.5"/>
-<text text-anchor="middle" x="721.5" y="-188.5" font-family="Helvetica,sans-Serif" font-size="10.00">SystemData::chiMatrixElement</text>
+<polygon fill="none" stroke="black" points="645,-94.5 645,-113.5 798,-113.5 798,-94.5 645,-94.5"/>
+<text text-anchor="middle" x="721.5" y="-101.5" font-family="Helvetica,sans-Serif" font-size="10.00">SystemData::chiMatrixElement</text>
 </a>
 </g>
 </g>
 <!-- Node17&#45;&gt;Node18 -->
 <g id="edge17" class="edge">
 <title>Node17&#45;&gt;Node18</title>
-<path fill="none" stroke="midnightblue" d="M596.65,-191C609.05,-191 622.05,-191 634.77,-191"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="634.89,-194.5 644.89,-191 634.89,-187.5 634.89,-194.5"/>
+<path fill="none" stroke="midnightblue" d="M582.32,-175.97C590.71,-173.28 599.15,-170.27 607,-167 639.54,-153.44 674.7,-132.92 697.12,-119.02"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="699.01,-121.96 705.62,-113.68 695.29,-116.03 699.01,-121.96"/>
+</g>
+<!-- Node20 -->
+<g id="node20" class="node">
+<title>Node20</title>
+<g id="a_node20"><a xlink:href="classSystemData.html#aeaaa2fb7779cd160ab4d90f6f1659aae" target="_top" xlink:title="Computes \nabla_{\xi} \zeta_{i \alpha} tensor for given particle number and body number.">
+<polygon fill="none" stroke="black" points="649,-171 649,-201 794,-201 794,-171 649,-171"/>
+<text text-anchor="start" x="657" y="-189" font-family="Helvetica,sans-Serif" font-size="10.00">SystemData::gradZetaTensor</text>
+<text text-anchor="middle" x="721.5" y="-178" font-family="Helvetica,sans-Serif" font-size="10.00">Element</text>
+</a>
+</g>
+</g>
+<!-- Node17&#45;&gt;Node20 -->
+<g id="edge19" class="edge">
+<title>Node17&#45;&gt;Node20</title>
+<path fill="none" stroke="midnightblue" d="M596.65,-189.16C610.35,-188.81 624.78,-188.44 638.75,-188.09"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="638.92,-191.58 648.83,-187.83 638.75,-184.58 638.92,-191.58"/>
 </g>
 <!-- Node19 -->
 <g id="node19" class="node">
 <title>Node19</title>
-<g id="a_node19"><a xlink:href="classSystemData.html#aeaaa2fb7779cd160ab4d90f6f1659aae" target="_top" xlink:title="Computes \nabla_{\xi} \zeta_{i \alpha} tensor for given particle number and body number.">
-<polygon fill="none" stroke="black" points="649,-132 649,-162 794,-162 794,-132 649,-132"/>
-<text text-anchor="start" x="657" y="-150" font-family="Helvetica,sans-Serif" font-size="10.00">SystemData::gradZetaTensor</text>
-<text text-anchor="middle" x="721.5" y="-139" font-family="Helvetica,sans-Serif" font-size="10.00">Element</text>
+<g id="a_node19"><a xlink:href="classSystemData.html#a7cefde66d9e18e2517f11505dd434d0e" target="_top" xlink:title="Function takes in vector in vector cross&#45;product expression: .">
+<polygon fill="none" stroke="black" points="836,-75.5 836,-94.5 974,-94.5 974,-75.5 836,-75.5"/>
+<text text-anchor="middle" x="905" y="-82.5" font-family="Helvetica,sans-Serif" font-size="10.00">SystemData::crossProdMat</text>
 </a>
 </g>
 </g>
-<!-- Node17&#45;&gt;Node19 -->
+<!-- Node18&#45;&gt;Node19 -->
 <g id="edge18" class="edge">
-<title>Node17&#45;&gt;Node19</title>
-<path fill="none" stroke="midnightblue" d="M591.4,-175.98C608.18,-172.21 626.32,-168.14 643.55,-164.28"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="644.57,-167.63 653.57,-162.03 643.04,-160.8 644.57,-167.63"/>
+<title>Node18&#45;&gt;Node19</title>
+<path fill="none" stroke="midnightblue" d="M798.16,-96.08C807.27,-95.13 816.6,-94.15 825.75,-93.19"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="826.41,-96.64 835.99,-92.12 825.68,-89.68 826.41,-96.64"/>
 </g>
-<!-- Node19&#45;&gt;Node16 -->
-<g id="edge19" class="edge">
-<title>Node19&#45;&gt;Node16</title>
-<path fill="none" stroke="midnightblue" d="M789.05,-162.03C813.16,-167.48 839.72,-173.48 861.24,-178.34"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="860.52,-181.77 871.05,-180.56 862.06,-174.94 860.52,-181.77"/>
+<!-- Node20&#45;&gt;Node16 -->
+<g id="edge20" class="edge">
+<title>Node20&#45;&gt;Node16</title>
+<path fill="none" stroke="midnightblue" d="M794.23,-194.69C816.85,-197.44 841.11,-200.38 861.06,-202.8"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="860.72,-206.28 871.07,-204.01 861.56,-199.33 860.72,-206.28"/>
 </g>
-<!-- Node21&#45;&gt;Node16 -->
-<g id="edge27" class="edge">
-<title>Node21&#45;&gt;Node16</title>
-<path fill="none" stroke="midnightblue" d="M597.1,-98.86C653.74,-97.85 733.67,-101.35 800,-123 832.44,-133.59 865.03,-156.4 884.86,-171.98"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="882.8,-174.81 892.79,-178.35 887.19,-169.36 882.8,-174.81"/>
-</g>
-<!-- Node22 -->
-<g id="node22" class="node">
-<title>Node22</title>
-<g id="a_node22"><a xlink:href="classSystemData.html#aaf73d6b07c3852c18831d8ab983b384f" target="_top" xlink:title="Computes \Psi matrix for given body number. \Psi matrix represents the transformation of coordinates ...">
-<polygon fill="none" stroke="black" points="645,-55.5 645,-74.5 798,-74.5 798,-55.5 645,-55.5"/>
-<text text-anchor="middle" x="721.5" y="-62.5" font-family="Helvetica,sans-Serif" font-size="10.00">SystemData::psiMatrixElement</text>
-</a>
-</g>
-</g>
-<!-- Node21&#45;&gt;Node22 -->
-<g id="edge23" class="edge">
-<title>Node21&#45;&gt;Node22</title>
-<path fill="none" stroke="midnightblue" d="M597.2,-88.9C618.36,-84.8 641.21,-80.37 661.41,-76.46"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="662.26,-79.86 671.41,-74.52 660.93,-72.98 662.26,-79.86"/>
-</g>
-<!-- Node24 -->
-<g id="node24" class="node">
-<title>Node24</title>
-<g id="a_node24"><a xlink:href="classSystemData.html#a70d2ff9a6173fcd9f30e8dc6324e8414" target="_top" xlink:title="Computes \Sigma_{i \alpha} matrix for given particle number and body number. Sigma matrix represents ...">
-<polygon fill="none" stroke="black" points="643,-17.5 643,-36.5 800,-36.5 800,-17.5 643,-17.5"/>
-<text text-anchor="middle" x="721.5" y="-24.5" font-family="Helvetica,sans-Serif" font-size="10.00">SystemData::rbmMatrixElement</text>
-</a>
-</g>
-</g>
-<!-- Node21&#45;&gt;Node24 -->
-<g id="edge25" class="edge">
-<title>Node21&#45;&gt;Node24</title>
-<path fill="none" stroke="midnightblue" d="M585.24,-87.92C592.77,-85.09 600.21,-81.8 607,-78 625.68,-67.54 624.05,-55.95 643,-46 647.48,-43.65 652.27,-41.58 657.18,-39.76"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="658.35,-43.06 666.72,-36.56 656.12,-36.42 658.35,-43.06"/>
+<!-- Node22&#45;&gt;Node16 -->
+<g id="edge28" class="edge">
+<title>Node22&#45;&gt;Node16</title>
+<path fill="none" stroke="midnightblue" d="M597.21,-140.53C653.38,-141 732.65,-145.2 800,-162 827.95,-168.97 857.82,-182.94 878.34,-193.66"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="876.88,-196.85 887.35,-198.47 880.18,-190.67 876.88,-196.85"/>
 </g>
 <!-- Node23 -->
 <g id="node23" class="node">
 <title>Node23</title>
-<g id="a_node23"><a xlink:href="classSystemData.html#ad58491f39fe352229da5494878b88911" target="_top" xlink:title="Computes the E matrix of quaternion (4&#45;vector) input.">
-<polygon fill="none" stroke="black" points="850,-55.5 850,-74.5 960,-74.5 960,-55.5 850,-55.5"/>
-<text text-anchor="middle" x="905" y="-62.5" font-family="Helvetica,sans-Serif" font-size="10.00">SystemData::eMatrix</text>
+<g id="a_node23"><a xlink:href="classSystemData.html#aaf73d6b07c3852c18831d8ab983b384f" target="_top" xlink:title="Computes \Psi matrix for given body number. \Psi matrix represents the transformation of coordinates ...">
+<polygon fill="none" stroke="black" points="645,-18.5 645,-37.5 798,-37.5 798,-18.5 645,-18.5"/>
+<text text-anchor="middle" x="721.5" y="-25.5" font-family="Helvetica,sans-Serif" font-size="10.00">SystemData::psiMatrixElement</text>
 </a>
 </g>
 </g>
 <!-- Node22&#45;&gt;Node23 -->
 <g id="edge24" class="edge">
 <title>Node22&#45;&gt;Node23</title>
-<path fill="none" stroke="midnightblue" d="M798.16,-65C811.96,-65 826.23,-65 839.66,-65"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="839.74,-68.5 849.74,-65 839.74,-61.5 839.74,-68.5"/>
+<path fill="none" stroke="midnightblue" d="M591.77,-126.83C597.23,-124.08 602.4,-120.83 607,-117 633.87,-94.6 615.54,-68.67 643,-47 645.29,-45.19 647.74,-43.55 650.29,-42.06"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="651.92,-45.16 659.32,-37.57 648.8,-38.89 651.92,-45.16"/>
 </g>
 <!-- Node25 -->
 <g id="node25" class="node">
 <title>Node25</title>
-<g id="a_node25"><a xlink:href="classSystemData.html#a7cefde66d9e18e2517f11505dd434d0e" target="_top" xlink:title="Function takes in vector in vector cross&#45;product expression: .">
-<polygon fill="none" stroke="black" points="836,-17.5 836,-36.5 974,-36.5 974,-17.5 836,-17.5"/>
-<text text-anchor="middle" x="905" y="-24.5" font-family="Helvetica,sans-Serif" font-size="10.00">SystemData::crossProdMat</text>
+<g id="a_node25"><a xlink:href="classSystemData.html#a70d2ff9a6173fcd9f30e8dc6324e8414" target="_top" xlink:title="Computes \Sigma_{i \alpha} matrix for given particle number and body number. Sigma matrix represents ...">
+<polygon fill="none" stroke="black" points="643,-56.5 643,-75.5 800,-75.5 800,-56.5 643,-56.5"/>
+<text text-anchor="middle" x="721.5" y="-63.5" font-family="Helvetica,sans-Serif" font-size="10.00">SystemData::rbmMatrixElement</text>
 </a>
 </g>
 </g>
-<!-- Node24&#45;&gt;Node25 -->
+<!-- Node22&#45;&gt;Node25 -->
 <g id="edge26" class="edge">
-<title>Node24&#45;&gt;Node25</title>
-<path fill="none" stroke="midnightblue" d="M800.26,-27C808.68,-27 817.24,-27 825.66,-27"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="825.84,-30.5 835.84,-27 825.84,-23.5 825.84,-30.5"/>
+<title>Node22&#45;&gt;Node25</title>
+<path fill="none" stroke="midnightblue" d="M585.24,-126.92C592.77,-124.09 600.21,-120.8 607,-117 625.68,-106.54 624.05,-94.95 643,-85 647.48,-82.65 652.27,-80.58 657.18,-78.76"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="658.35,-82.06 666.72,-75.56 656.12,-75.42 658.35,-82.06"/>
+</g>
+<!-- Node24 -->
+<g id="node24" class="node">
+<title>Node24</title>
+<g id="a_node24"><a xlink:href="classSystemData.html#ad58491f39fe352229da5494878b88911" target="_top" xlink:title="Computes the E matrix of quaternion (4&#45;vector) input.">
+<polygon fill="none" stroke="black" points="850,-18.5 850,-37.5 960,-37.5 960,-18.5 850,-18.5"/>
+<text text-anchor="middle" x="905" y="-25.5" font-family="Helvetica,sans-Serif" font-size="10.00">SystemData::eMatrix</text>
+</a>
+</g>
+</g>
+<!-- Node23&#45;&gt;Node24 -->
+<g id="edge25" class="edge">
+<title>Node23&#45;&gt;Node24</title>
+<path fill="none" stroke="midnightblue" d="M798.16,-28C811.96,-28 826.23,-28 839.66,-28"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="839.74,-31.5 849.74,-28 839.74,-24.5 839.74,-31.5"/>
+</g>
+<!-- Node25&#45;&gt;Node19 -->
+<g id="edge27" class="edge">
+<title>Node25&#45;&gt;Node19</title>
+<path fill="none" stroke="midnightblue" d="M800.26,-74.14C808.68,-75.02 817.24,-75.92 825.66,-76.8"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="825.53,-80.3 835.84,-77.86 826.26,-73.34 825.53,-80.3"/>
 </g>
 </g>
 </svg>

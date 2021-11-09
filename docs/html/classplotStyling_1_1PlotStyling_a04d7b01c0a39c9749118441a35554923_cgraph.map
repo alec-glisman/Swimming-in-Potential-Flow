@@ -1,0 +1,4 @@
+<map id="plotStyling.PlotStyling.curve" name="plotStyling.PlotStyling.curve">
+<area shape="rect" id="node1" title="Draws a curve from input data on the current plt figure." alt="" coords="5,13,192,39"/>
+<area shape="rect" id="node2" href="$classplotStyling_1_1PlotStyling.html#a5a1a500ff6a749cb493c1c462f895f2d" title="Removes issue with times character in mathTex output of plots." alt="" coords="240,5,408,47"/>
+</map>

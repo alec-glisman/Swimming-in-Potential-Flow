@@ -1,5 +1,7 @@
 var annotated =
 [
+    [ "GSDUtilPy", "namespaceGSDUtilPy.html", "namespaceGSDUtilPy" ],
+    [ "plotStyling", "namespaceplotStyling.html", "namespaceplotStyling" ],
     [ "Engine", "classEngine.html", "classEngine" ],
     [ "GSDUtil", "classGSDUtil.html", "classGSDUtil" ],
     [ "PotentialHydrodynamics", "classPotentialHydrodynamics.html", "classPotentialHydrodynamics" ],
