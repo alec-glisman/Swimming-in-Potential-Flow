@@ -384,107 +384,92 @@ SystemData::update(Eigen::ThreadPoolDevice& device)
 void
 SystemData::positionsArticulation()
 {
-    double t_dimensional{m_tau * m_t};
 
     // articulation acceleration magnitudes
+    const double t_dimensional{m_tau * m_t};
     const double r1_mag = m_sys_spec_R_avg + (m_sys_spec_U0 / m_sys_spec_omega) * sin(m_sys_spec_omega * t_dimensional);
     const double r3_mag = m_sys_spec_R_avg - (m_sys_spec_U0 / m_sys_spec_omega) *
                                                  sin(m_sys_spec_omega * t_dimensional + m_sys_spec_phase_shift);
 
-    Eigen::VectorXd particle_distances(m_num_particles);
-    particle_distances << 0.0, r1_mag, r3_mag; // , 0.0, r1_mag, r3_mag;
-
+    int particle_id{0};
     m_positions_particles_articulation.setZero();
 
-    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
+    for (int body_id = 0; body_id < m_num_bodies; body_id++)
     {
-        if (m_particle_type_id(particle_id) == 1)
-        {
-            continue; // continue to next loop as all elements are zero
-        }
-
-        const int particle_id_3{3 * particle_id};
-        const int body_id_7{7 * m_particle_group_id(particle_id)};
-
-        m_positions_particles_articulation.segment<3>(particle_id_3).noalias() =
-            particle_distances(particle_id) * m_orientations_particles.segment<3>(particle_id_3);
-
         // FIXME: There seems to be a bug here where y-components are being flipped too
+
+        m_positions_particles_articulation.segment<3>(3 * (particle_id + 1)).noalias() =
+            r1_mag * m_orientations_particles.segment<3>(3 * (particle_id + 1));
+
+        m_positions_particles_articulation.segment<3>(3 * (particle_id + 2)).noalias() =
+            r3_mag * m_orientations_particles.segment<3>(3 * (particle_id + 2));
+
+        particle_id += 3;
     }
 }
 
 void
 SystemData::velocitiesArticulation()
 {
-    double t_dimensional{m_tau * m_t};
 
     // articulation velocity magnitudes
+    const double t_dimensional{m_tau * m_t};
     const double v1_mag = m_sys_spec_U0 * cos(m_sys_spec_omega * t_dimensional);
     const double v3_mag = -m_sys_spec_U0 * cos(m_sys_spec_omega * t_dimensional + m_sys_spec_phase_shift);
 
-    Eigen::VectorXd particle_velocities(m_num_particles);
-    particle_velocities << 0.0, v1_mag, v3_mag; // , 0.0, v1_mag, v3_mag;
-
     // Zero and then calculate  m_velocities_particles_articulation
+    int particle_id{0};
     m_velocities_particles_articulation.setZero();
 
-    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
+    for (int body_id = 0; body_id < m_num_bodies; body_id++)
     {
-        if (m_particle_type_id(particle_id) == 1)
-        {
-            continue; // continue to next loop as all elements are zero
-        }
+        m_velocities_particles_articulation.segment<3>(7 * (particle_id + 1)).noalias() =
+            v1_mag * m_orientations_particles.segment<3>(3 * (particle_id + 1));
 
-        const int particle_id_3{3 * particle_id};
-        const int particle_id_7{7 * particle_id};
-        const int body_id_7{7 * m_particle_group_id(particle_id)};
-
-        m_velocities_particles_articulation.segment<3>(particle_id_7).noalias() =
-            particle_velocities(particle_id) * m_orientations_particles.segment<3>(particle_id_3);
+        m_velocities_particles_articulation.segment<3>(7 * (particle_id + 2)).noalias() =
+            v3_mag * m_orientations_particles.segment<3>(3 * (particle_id + 2));
 
         // Image system: flip z components, leave x,y unchanged
         if (particle_id >= (m_num_particles / 2))
         {
-            m_velocities_particles_articulation(particle_id_7 + 2) *= -1;
+            m_velocities_particles_articulation(7 * (particle_id + 1) + 2) *= -1;
+            m_velocities_particles_articulation(7 * (particle_id + 2) + 2) *= -1;
         }
+
+        particle_id += 3;
     }
 }
 
 void
 SystemData::accelerationsArticulation()
 {
-    double t_dimensional{m_tau * m_t};
 
     // articulation acceleration magnitudes
+    const double t_dimensional{m_tau * m_t};
     const double a1_mag = -m_sys_spec_U0 * m_sys_spec_omega * sin(m_sys_spec_omega * t_dimensional);
     const double a3_mag =
         m_sys_spec_U0 * m_sys_spec_omega * sin(m_sys_spec_omega * t_dimensional + m_sys_spec_phase_shift);
 
-    Eigen::VectorXd particle_accelerations(m_num_particles);
-    particle_accelerations << 0.0, a1_mag, a3_mag; // , 0.0, a1_mag, a3_mag;
-
-    // Zero and then calculate m_accelerations_particles_articulation
+    // Zero and then calculate  m_accelerations_particles_articulation
+    int particle_id{0};
     m_accelerations_particles_articulation.setZero();
 
-    for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
+    for (int body_id = 0; body_id < m_num_bodies; body_id++)
     {
-        if (m_particle_type_id(particle_id) == 1)
-        {
-            continue; // continue to next loop as all elements are zero
-        }
+        m_accelerations_particles_articulation.segment<3>(7 * (particle_id + 1)).noalias() =
+            a1_mag * m_orientations_particles.segment<3>(3 * (particle_id + 1));
 
-        const int particle_id_3{3 * particle_id};
-        const int particle_id_7{7 * particle_id};
-        const int body_id_7{7 * m_particle_group_id(particle_id)};
-
-        m_accelerations_particles_articulation.segment<3>(particle_id_7).noalias() =
-            particle_accelerations(particle_id) * m_orientations_particles.segment<3>(particle_id_3);
+        m_accelerations_particles_articulation.segment<3>(7 * (particle_id + 2)).noalias() =
+            a3_mag * m_orientations_particles.segment<3>(3 * (particle_id + 2));
 
         // Image system: flip z components, leave x,y unchanged
         if (particle_id >= (m_num_particles / 2))
         {
-            m_accelerations_particles_articulation(particle_id_7 + 2) *= -1;
+            m_accelerations_particles_articulation(7 * (particle_id + 1) + 2) *= -1;
+            m_accelerations_particles_articulation(7 * (particle_id + 2) + 2) *= -1;
         }
+
+        particle_id += 3;
     }
 }
 
