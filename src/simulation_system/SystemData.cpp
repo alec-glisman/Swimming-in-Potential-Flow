@@ -528,7 +528,8 @@ SystemData::psiMatrixElement(const int body_id)
 void
 SystemData::chiMatrixElement(const int particle_id)
 {
-    /* ANCHOR: Compute G matrix element */
+    // FIXME: Refactor entire function
+
     // body number
     const int  body_id_7{7 * m_particle_group_id(particle_id)};
     const bool is_locater{m_particle_group_id(particle_id) == 1}; // determine if particle is locater particle
@@ -536,48 +537,28 @@ SystemData::chiMatrixElement(const int particle_id)
     const int particle_id_3{3 * particle_id};
     const int particle_id_7{7 * particle_id};
 
+    /* ANCHOR: Compute G matrix element */
     // body unit quaternion
-    const Eigen::Vector4d theta_body = m_positions_bodies.segment<4>(body_id_7);
+    const Eigen::Quaterniond theta_body(m_positions_bodies.segment<4>(body_id_7));
 
     // particle unit initial configuration
-    Eigen::Vector4d r_hat_init_particle = Eigen::Vector4d::Zero(4);
-    r_hat_init_particle.segment<3>(1)   = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
-
-    // 2 * || r_particle_id ||, G_matrix prefactor
+    const Eigen::Vector3d r_hat_init_particle = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
+    // Scaling prefactor: 2 * || r_particle_id ||
     const double          prefactor{2.0 * m_positions_particles_articulation.segment<3>(particle_id_3).norm()};
-    const Eigen::Vector4d r_body_coords = prefactor * r_hat_init_particle;
+    const Eigen::Vector3d r_body_coords = prefactor * r_hat_init_particle;
 
-    // Q matrices
-    Eigen::Matrix4d q2;
-    Eigen::Matrix4d q3;
-    Eigen::Matrix4d q4;
+    // skew-symmetric matrix representation of cross product
+    Eigen::Matrix3d mat_r_body_coords_cross;
+    crossProdMat(r_body_coords, mat_r_body_coords_cross);
 
-    // clang-format off
-        q2 << 
-            theta_body(1), 0.0, 0.0, 0.0, 
-            0.0, theta_body(1), theta_body(2), theta_body(3),
-            0.0, theta_body(2), -theta_body(1), -theta_body(0),
-            0.0, theta_body(3), theta_body(0), -theta_body(1);
-
-        q3 << 
-            theta_body(2), 0.0, 0.0, 0.0, 
-            0.0, -theta_body(2), theta_body(1), theta_body(0),
-            0.0, theta_body(1), theta_body(2), theta_body(3),
-            0.0, -theta_body(0), theta_body(3), -theta_body(2);
-
-        q4 << 
-            theta_body(3), 0.0, 0.0, 0.0, 
-            0.0, -theta_body(3), -theta_body(0), theta_body(1),
-            0.0, theta_body(0), -theta_body(3), theta_body(2),
-            0.0, theta_body(1), theta_body(2), theta_body(3);
-    // clang-format on
+    // outer product r v
+    const Eigen::Matrix3d rv = r_body_coords * theta_body.vec().transpose();
 
     // G matrix element
-    Eigen::Matrix<double, 4, 3> g_matrix;
-    g_matrix.col(0).noalias() = q2 * r_body_coords;
-    g_matrix.col(1).noalias() = q3 * r_body_coords;
-    g_matrix.col(2).noalias() = q4 * r_body_coords;
-    g_matrix *= prefactor;
+    Eigen::Matrix3d g_matrix = -theta_body.w() * mat_r_body_coords_cross;
+    g_matrix.noalias() += rv;
+    g_matrix.noalias() -= rv.transpose();
+    g_matrix.noalias() += rv.trace() * m_I3;
 
     /* ANCHOR: Compute S matrix element */
     /// S_alpha = {-1 for non-locater particles, +1 for locater particles}
@@ -587,7 +568,7 @@ SystemData::chiMatrixElement(const int particle_id)
     /* ANCHOR: Compute chi matrix element */
     m_chi.block<3, 3>(body_id_7, particle_id_7).noalias() =
         s_matrix; // convert body (linear) position derivatives to particle linear coordinate derivatives
-    m_chi.block<4, 3>(body_id_7 + 3, particle_id_7).noalias() =
+    m_chi.block<3, 3>(body_id_7 + 4, particle_id_7).noalias() =
         g_matrix; // convert body (quaternion) position derivatives to particle linear coordinate derivatives
 }
 
