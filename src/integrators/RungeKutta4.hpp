@@ -150,10 +150,12 @@ class RungeKutta4
      * @brief (linear/angular) momentum and (linear/angular) force free algorithm
      *
      * @details before calling this method, make sure to call articulationVel(), articulationAcc(), and
-     * rLoc() in systemData class
+     * rLoc() in systemData class.
+     * REVIEW: Only looking at linear components of momentum and force (ignoring the angular and consequently,
+     * quaternion components). This is assuming that the initial rotational velocity and acceleration are zero!
      *
-     * @review_swimmer: If swimmer design changes, the elements taken from M_total must change too
-     *
+     * @review_swimmer: Assumes that all bodies are collinear and in-phase with one another,
+     * If swimmer design changes, the elements taken from M_total must change too
      */
     void
     momForceFree();
