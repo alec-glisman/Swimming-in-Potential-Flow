@@ -18,6 +18,18 @@ SET(EXE_LINKS
     )
 
 # Copy data input files for unit tests
+# STUB: COlliner swimmer isolated system
+CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/../test/input/collinear_swimmer_isolated/initial_frame_dt1e-2.gsd"
+    "${CMAKE_CURRENT_BINARY_DIR}/input/collinear_swimmer_isolated/initial_frame_dt1e-2.gsd"
+    COPYONLY
+    )
+
+CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/../test/input/collinear_swimmer_isolated/initial_frame_dt1e-6.gsd"
+    "${CMAKE_CURRENT_BINARY_DIR}/input/collinear_swimmer_isolated/initial_frame_dt1e-6.gsd"
+    COPYONLY
+    )
+
+    # STUB: Collinear swimmer wall system
 CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/../test/input/collinear_swimmer_wall/initial_frame_dt1e-6_Z-height6.gsd"
     "${CMAKE_CURRENT_BINARY_DIR}/input/collinear_swimmer_wall/initial_frame_dt1e-6_Z-height6.gsd"
     COPYONLY
@@ -27,7 +39,6 @@ CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/../test/input/collinear_swimmer_wall
     "${CMAKE_CURRENT_BINARY_DIR}/input/collinear_swimmer_wall/initial_frame_dt1e-1_Z-height6.gsd"
     COPYONLY
     )
-
 
 # Include source directories in header search paths (-I flag)
 INCLUDE_DIRECTORIES(../src/data_io)
