@@ -771,7 +771,7 @@ SystemData::convertBody2ParticleOrient()
 
             const std::string unit_norm_msg{"Quaternion is not unitary at t = " + std::to_string(m_t) +
                                             ". Particle #: " + std::to_string(particle_id) +
-                                            ", Norm: " + stream_error_mag.str()};
+                                            ", Norm - 1: " + stream_error_mag.str()};
 
             throw std::logic_error(unit_norm_msg);
         }
