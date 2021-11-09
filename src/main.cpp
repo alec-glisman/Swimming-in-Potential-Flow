@@ -8,6 +8,9 @@
 
 /* Include all external project dependencies */
 // STL
+#include <algorithm>
+#include <iostream>
+#include <iterator>
 #include <memory> // for std::unique_ptr and std::shared_ptr
 #include <string> // std::string
 
@@ -23,17 +26,24 @@ main(const int argc, const char* argv[])
      *      argv[2]: output directory to write data
      */
 
-    // Check input is of correct length
-    if (argc < 3)
+    // Get input files
+    std::string inputDataFile, outputDir;
+    
+    if (argc == 1)
+    {
+        std::cout << "WARNING: Using default simulation I/O";
+        inputDataFile = "test/input/collinear_swimmer_isolated/initial_frame_dt1e-2.gsd";
+        outputDir = "temp/output";
+    }
+    else if (argc == 3)
+    {
+        inputDataFile = argv[1];
+        outputDir     = argv[2];
+    }
+    else
     {
         throw std::runtime_error("ERROR: incorrect number of arguments!!! [executable][input data][output directory]");
     }
-
-    // Get input files
-    std::string inputDataFile, outputDir;
-
-    inputDataFile = argv[1];
-    outputDir     = argv[2];
     /* !SECTION */
 
     /* SECTION: Set-up and run simulation */
