@@ -102,7 +102,7 @@
             "preLaunchTask": "Debug: build",
             "program": "${workspaceFolder}/build/debug/src/bodies-in-potential-flow",
             "args": [
-                "${workspaceFolder}/test/input/collinear_swimmer_wall/initial_frame_dt1e-6_Z-height6.gsd",
+                "${workspaceFolder}/test/input/collinear_swimmer_isolated/initial_frame_dt1e-6.gsd",
                 "${workspaceFolder}/temp/output"
             ],
             "stopAtEntry": false,
