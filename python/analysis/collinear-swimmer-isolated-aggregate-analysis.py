@@ -3,7 +3,7 @@
 __author__ = "Alec Glisman"
 
 Example:
-    python3 python/analysis/collinear-swimmer-wall-aggregate-analysis.py --relative-path=temp/output --output-dir=temp/output/figures
+    python3 python/analysis/collinear-swimmer-isolated-aggregate-analysis.py --relative-path=temp/output --output-dir=temp/output/figures
 """
 
 # SECTION: Depdencendies
@@ -98,7 +98,7 @@ def aggregate_plots(relative_path, output_dir):
         output_dir (str): path to output of numerical analysis
 
     Example:
-        python3 python/analysis/collinear-swimmer-wall-individual-analysis.py --relative-path=temp/output --output-dir=temp/output/figures
+        python3 python/analysis/collinear-swimmer-individual-analysis.py --relative-path=temp/output --output-dir=temp/output/figures
     """
 
     # SECTION: Parameters for function
@@ -206,14 +206,16 @@ def aggregate_plots(relative_path, output_dir):
         R_avg_srt = R_avg[idx]
 
         # PLOT: net displacement of swimmer vs. distance between spheres
-        numLines = 1
+        numLines = 2
         CoM_Plot = PlotStyling(numLines,
                                r"$\mathrm{R}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
                                title=None, loglog=False,
-                               outputDir=output_dir, figName="collinear-swimmer-wall-CoM_x-disp", eps=epsOutput,
+                               outputDir=output_dir, figName="collinear-swimmer-CoM_x-disp", eps=epsOutput,
                                continuousColors=False)
         # Show numerical data points
         CoM_Plot.make_plot()
+        CoM_Plot.curve(np.abs(xAnalyticalRng),
+                       dZAnalyticalDist, zorder=1, label="Leading Order")
         CoM_Plot.scatter_dashed(R_avg_srt[R_avg_srt <= 6.0], CoM_disp_srt[R_avg_srt <= 6.0],
                                 zorder=1, label="Simulation")
         # Add legend
@@ -230,14 +232,30 @@ def aggregate_plots(relative_path, output_dir):
         CoM_PlotLL = PlotStyling(numLines,
                                  r"$\mathrm{R}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
                                  title=None, loglog=True,
-                                 outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-loglog", eps=epsOutput,
+                                 outputDir=output_dir, figName="collinear-swimmer-CoM-disp-loglog", eps=epsOutput,
                                  continuousColors=False)
         CoM_PlotLL.make_plot()
+        CoM_PlotLL.curve(np.abs(xAnalyticalRng), np.abs(
+            dZAnalyticalDist), zorder=1, label="Leading Order")
         CoM_PlotLL.scatter_dashed(R_avg_srt, np.abs(
             CoM_disp_srt), zorder=2, label="Simulation")
         CoM_PlotLL.legend(title=r"$\epsilon \leq$" + "{}".format(
             fmt(np.max(epsilon))), loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
         CoM_PlotLL.save_plot()
+
+        # PLOT: Relative error of displacement with relDisp
+        numLines = 1
+        relDisErr = relErr(dZ_leadingOrder(phaseShift[0], U0[0], omega[0], a, R_avg),
+                           CoM_disp)
+        CoMDispErr_Plot = PlotStyling(numLines,
+                                      r"$\mathrm{R}_0 / a $", r"Relative Error",
+                                      title=None, loglog=True,
+                                      outputDir=output_dir, figName="collinear-swimmer-CoM_x-disp-error", eps=epsOutput,
+                                      continuousColors=False)
+        CoMDispErr_Plot.make_plot()
+        CoMDispErr_Plot.scatter(
+            R_avg, relDisErr, zorder=1, label="Relative Error")
+        CoMDispErr_Plot.save_plot()
 
     if (len(np.unique(dt)) > 1):
 
@@ -250,7 +268,7 @@ def aggregate_plots(relative_path, output_dir):
         CoM_Plot = PlotStyling(numLines,
                                r"$\Delta t / \tau$", r"$\Delta \mathrm{R}_{2} / a$",
                                title=None, loglog=False,
-                               outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-dtVary", eps=epsOutput,
+                               outputDir=output_dir, figName="collinear-swimmer-CoM-disp-dtVary", eps=epsOutput,
                                continuousColors=False)
         # Show numerical data points
         CoM_Plot.make_plot()
@@ -270,7 +288,7 @@ def aggregate_plots(relative_path, output_dir):
         CoM_PlotLL = PlotStyling(numLines,
                                  r"$\Delta t / \tau$", r"$\Delta \mathrm{R}_{2} / a$",
                                  title=None, loglog=True,
-                                 outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-loglog-dtVary", eps=epsOutput,
+                                 outputDir=output_dir, figName="collinear-swimmer-CoM-disp-loglog-dtVary", eps=epsOutput,
                                  continuousColors=False)
         CoM_PlotLL.make_plot()
         CoM_PlotLL.scatter_dashed(dt_srt, np.abs(
@@ -284,7 +302,7 @@ def aggregate_plots(relative_path, output_dir):
         CoM_PlotLL = PlotStyling(numLines,
                                  r"$\Delta t / \tau$", r"Relative Error $\Delta \mathrm{R}_{2}$",
                                  title=None, loglog=True,
-                                 outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-loglog-dtVary-diffFromLast", eps=epsOutput,
+                                 outputDir=output_dir, figName="collinear-swimmer-CoM-disp-loglog-dtVary-diffFromLast", eps=epsOutput,
                                  continuousColors=False)
         CoM_PlotLL.make_plot()
         CoM_PlotLL.scatter_dashed(dt_srt, np.abs(
@@ -304,7 +322,7 @@ def aggregate_plots(relative_path, output_dir):
         CoM_Plot = PlotStyling(numLines,
                                r"$\mathrm{Z}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
                                title=None, loglog=False,
-                               outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-height", eps=epsOutput,
+                               outputDir=output_dir, figName="collinear-swimmer-CoM-disp-height", eps=epsOutput,
                                continuousColors=False)
         # Show numerical data points
         CoM_Plot.make_plot()
@@ -324,7 +342,7 @@ def aggregate_plots(relative_path, output_dir):
         CoM_PlotLL = PlotStyling(numLines,
                                  r"$\mathrm{Z}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
                                  title=None, loglog=True,
-                                 outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-height-loglog", eps=epsOutput,
+                                 outputDir=output_dir, figName="collinear-swimmer-CoM-disp-height-loglog", eps=epsOutput,
                                  continuousColors=False)
         CoM_PlotLL.make_plot()
         CoM_PlotLL.scatter_dashed(Z_height_srt, np.abs(
@@ -340,13 +358,15 @@ def aggregate_plots(relative_path, output_dir):
         phaseShift_srt = phaseShift[idx]
 
         # PLOT: net displacement of swimmer vs phase Shift
-        numLines = 1
+        numLines = 2
         phaseShift_Plot = PlotStyling(numLines,
                                       r"Phase Shift, $\delta$", r"$\Delta \mathrm{R}_{2} / a$",
                                       title=None, loglog=False,
-                                      outputDir=output_dir, figName="collinear-swimmer-wall-phaseShift", eps=epsOutput,
+                                      outputDir=output_dir, figName="collinear-swimmer-phaseShift", eps=epsOutput,
                                       continuousColors=False)
         phaseShift_Plot.make_plot()
+        phaseShift_Plot.curve(
+            deltaAnalyticalRng, dZAnalyticaldelt, zorder=1, label="Leading Order")
         phaseShift_Plot.scatter_dashed(
             phaseShift_srt, CoM_disp_srt, zorder=2, label="Simulation")
         phaseShift_Plot.legend(title=r"$\epsilon \leq$" + "{}".format(
@@ -354,13 +374,27 @@ def aggregate_plots(relative_path, output_dir):
         phaseShift_Plot.set_yaxis_scientific()
         phaseShift_Plot.save_plot()
 
+        # PLOT: Relative error of displacement with delta
+        relPhErr = relErr(dZ_leadingOrder(phaseShift, U0[0], omega[0], a, R_avg[0]),
+                          CoM_disp_srt)
+        numLines = 1
+        phaseShiftErr_Plot = PlotStyling(numLines,
+                                         r"Phase Shift, $\delta$", r"Relative Error",
+                                         title=None, loglog=True,
+                                         outputDir=output_dir, figName="collinear-swimmer-phaseShift-error", eps=epsOutput,
+                                         continuousColors=False)
+        phaseShiftErr_Plot.make_plot()
+        phaseShiftErr_Plot.scatter(
+            phaseShift, relPhErr, zorder=1, label="Relative Error")
+        phaseShiftErr_Plot.save_plot()
+
     if (len(np.unique(epsilon)) > 1):
         # PLOT: net displacement of swimmer vs epsilon
         numLines = 2
         eps_Plot = PlotStyling(numLines,
                                r"$\epsilon = \frac{\mathrm{U}_0 / \omega}{\mathrm{R}_0}$", r"$\Delta \mathrm{R}_{2} / a$",
                                title=None, loglog=False,
-                               outputDir=output_dir, figName="collinear-swimmer-wall-eps-scaling-CoM-disp", eps=epsOutput,
+                               outputDir=output_dir, figName="collinear-swimmer-eps-scaling-CoM-disp", eps=epsOutput,
                                continuousColors=False)
         eps_Plot.make_plot()
         eps_Plot.curve(epsAnalyticalRng, dZAnalyticaleps,
@@ -375,7 +409,7 @@ def aggregate_plots(relative_path, output_dir):
         epsLL_Plot = PlotStyling(numLines,
                                  r"$\epsilon = \frac{\mathrm{U}_0 / \omega}{\mathrm{R}_0}$", r"$\Delta \mathrm{R}_{2} / a$",
                                  title=None, loglog=True,
-                                 outputDir=output_dir, figName="collinear-swimmer-wall-eps-scaling-CoM-disp-loglog", eps=epsOutput,
+                                 outputDir=output_dir, figName="collinear-swimmer-eps-scaling-CoM-disp-loglog", eps=epsOutput,
                                  continuousColors=False)
         epsLL_Plot.make_plot()
         epsLL_Plot.curve(epsAnalyticalRng, dZAnalyticaleps,
