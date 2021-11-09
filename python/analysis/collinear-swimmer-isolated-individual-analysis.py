@@ -53,7 +53,7 @@ def aggregate_plots(relative_path, output_dir):
     # SECTION: Parameters for function
     output_dir = relative_path + "/" + output_dir + "/"
     gsd_files = []
-    epsOutput = True
+    epsOutput = False
     a = 1
 
     # REVIEW[epic=Future Features]: Move this adjustment into plotting style library
