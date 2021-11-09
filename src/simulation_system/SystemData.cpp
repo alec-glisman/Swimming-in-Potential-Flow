@@ -392,7 +392,7 @@ SystemData::positionsArticulation()
                                                  sin(m_sys_spec_omega * t_dimensional + m_sys_spec_phase_shift);
 
     Eigen::VectorXd particle_distances(m_num_particles);
-    particle_distances << 0.0, r1_mag, r3_mag, 0.0, r1_mag, r3_mag;
+    particle_distances << 0.0, r1_mag, r3_mag; // , 0.0, r1_mag, r3_mag;
 
     m_positions_particles_articulation.setZero();
 
@@ -423,7 +423,7 @@ SystemData::velocitiesArticulation()
     const double v3_mag = -m_sys_spec_U0 * cos(m_sys_spec_omega * t_dimensional + m_sys_spec_phase_shift);
 
     Eigen::VectorXd particle_velocities(m_num_particles);
-    particle_velocities << 0.0, v1_mag, v3_mag, 0.0, v1_mag, v3_mag;
+    particle_velocities << 0.0, v1_mag, v3_mag; // , 0.0, v1_mag, v3_mag;
 
     // Zero and then calculate  m_velocities_particles_articulation
     m_velocities_particles_articulation.setZero();
@@ -461,7 +461,7 @@ SystemData::accelerationsArticulation()
         m_sys_spec_U0 * m_sys_spec_omega * sin(m_sys_spec_omega * t_dimensional + m_sys_spec_phase_shift);
 
     Eigen::VectorXd particle_accelerations(m_num_particles);
-    particle_accelerations << 0.0, a1_mag, a3_mag, 0.0, a1_mag, a3_mag;
+    particle_accelerations << 0.0, a1_mag, a3_mag; // , 0.0, a1_mag, a3_mag;
 
     // Zero and then calculate m_accelerations_particles_articulation
     m_accelerations_particles_articulation.setZero();
