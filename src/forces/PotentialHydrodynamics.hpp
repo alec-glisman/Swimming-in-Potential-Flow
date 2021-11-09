@@ -217,6 +217,17 @@ class PotentialHydrodynamics
     /// (7M x 7M) `Eigen::Matrix` form of `m_M3`
     Eigen::MatrixXd m_mat_M3;
 
+    // ANCHOR: N sub-terms
+    Eigen::Tensor<double, 3> N2_term1_preshuffle;
+    Eigen::Tensor<double, 3> N2_term1;
+    Eigen::Tensor<double, 3> N2_term2;
+
+    Eigen::Tensor<double, 3> N3_term1_preshuffle;
+    Eigen::Tensor<double, 3> N3_term2_preshuffle;
+    Eigen::Tensor<double, 3> N3_term1;
+    Eigen::Tensor<double, 3> N3_term2;
+    Eigen::Tensor<double, 3> N3_term3;
+
     // ANCHOR: constants
     /// volume of a unit sphere
     const double m_unit_sphere_volume{4.0 / 3.0 * M_PI};

@@ -77,6 +77,26 @@ PotentialHydrodynamics::PotentialHydrodynamics(std::shared_ptr<SystemData> sys)
     m_M3.setZero();
     m_mat_M3 = Eigen::MatrixXd::Zero(m_7M, m_7M);
 
+    // N^{(2)}
+    N2_term1_preshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7N);
+    N2_term1_preshuffle.setZero();
+    N2_term1 = Eigen::Tensor<double, 3>(m_7M, m_7N, m_7M);
+    N2_term1.setZero();
+    N2_term2 = Eigen::Tensor<double, 3>(m_7M, m_7N, m_7M);
+    N2_term2.setZero();
+
+    // N^{(3)}
+    N3_term1_preshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
+    N3_term3.setZero();
+    N3_term2_preshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
+    N3_term2_preshuffle.setZero();
+    N3_term1 = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
+    N3_term1.setZero();
+    N3_term2 = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
+    N3_term2.setZero();
+    N3_term3 = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
+    N3_term3.setZero();
+
     // Assign particle pair information
     spdlog::get(m_logName)->info("Initializing particle pair information vectors");
     m_alphaVec = Eigen::VectorXi::Zero(m_num_pair_inter);
@@ -314,24 +334,15 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     m_N1.device(device) = m_grad_M_added_body_coords;
 
     // N^{(2)}
-    Eigen::Tensor<double, 3> N2_term1_preshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7N);
-    Eigen::Tensor<double, 3> N2_term1            = Eigen::Tensor<double, 3>(m_7M, m_7N, m_7M);
-    Eigen::Tensor<double, 3> N2_term2            = Eigen::Tensor<double, 3>(m_7M, m_7N, m_7M);
-
     N2_term1_preshuffle.device(device) = m_system->tensGradZeta().contract(m_tens_M_total, contract_il_lj);
 
     N2_term1.device(device) = N2_term1_preshuffle.shuffle(permute_ikj_ijk);
     N2_term2.device(device) = m_system->tensZeta().contract(m_N1, contract_il_lj);
 
-    m_N2.device(device) = N2_term1 + N2_term2;
+    m_N2.device(device) = N2_term1;
+    m_N2.device(device) += N2_term2;
 
     // N^{(3)}
-    Eigen::Tensor<double, 3> N3_term1_preshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
-    Eigen::Tensor<double, 3> N3_term2_preshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
-    Eigen::Tensor<double, 3> N3_term1            = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
-    Eigen::Tensor<double, 3> N3_term2            = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
-    Eigen::Tensor<double, 3> N3_term3            = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
-
     N3_term1_preshuffle.device(device) = N2_term1.contract(m_system->tensZeta(), contract_il_jl);
     N3_term2_preshuffle.device(device) = N2_term2.contract(m_system->tensZeta(), contract_il_jl);
 
@@ -339,7 +350,8 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     N3_term2.device(device) = N3_term2_preshuffle.shuffle(permute_ikj_ijk);
     N3_term3.device(device) = m_M2.contract(m_system->tensGradZeta(), contract_il_jl);
 
-    m_N3.device(device) = N3_term1 + N3_term2;
+    m_N3.device(device) = N3_term1;
+    m_N3.device(device) += N3_term2;
     m_N3.device(device) += N3_term3;
 }
 
