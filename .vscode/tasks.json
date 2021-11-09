@@ -5,7 +5,10 @@
             "label": "Debug: config",
             "type": "shell",
             "options": {
-                "cwd": "${workspaceFolder}"
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "CLICOLOR_FORCE": "0"
+                },
             },
             "command": "cmake",
             "args": [
@@ -26,7 +29,10 @@
             "label": "Debug: build",
             "type": "shell",
             "options": {
-                "cwd": "${workspaceFolder}"
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "CLICOLOR_FORCE": "0"
+                },
             },
             "command": "cmake",
             "args": [
@@ -46,7 +52,10 @@
             "label": "Debug: run",
             "type": "shell",
             "options": {
-                "cwd": "${workspaceFolder}"
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "CLICOLOR_FORCE": "0"
+                },
             },
             "command": "build/debug/src/./bodies-in-potential-flow",
             "args": [
@@ -63,7 +72,10 @@
             "label": "Debug: test",
             "type": "shell",
             "options": {
-                "cwd": "${workspaceFolder}/build/debug"
+                "cwd": "${workspaceFolder}/build/debug",
+                "env": {
+                    "CLICOLOR_FORCE": "0"
+                },
             },
             "command": "make test",
             "dependsOn": "Debug: build",
@@ -75,7 +87,10 @@
             "label": "Debug: coverage",
             "type": "shell",
             "options": {
-                "cwd": "${workspaceFolder}/build/debug"
+                "cwd": "${workspaceFolder}/build/debug",
+                "env": {
+                    "CLICOLOR_FORCE": "0"
+                },
             },
             "command": "make coverage",
             "group": {
@@ -91,7 +106,10 @@
             "label": "Release: config",
             "type": "shell",
             "options": {
-                "cwd": "${workspaceFolder}"
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "CLICOLOR_FORCE": "0"
+                },
             },
             "command": "cmake",
             "args": [
@@ -112,7 +130,10 @@
             "label": "Release: build",
             "type": "shell",
             "options": {
-                "cwd": "${workspaceFolder}"
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "CLICOLOR_FORCE": "0"
+                },
             },
             "command": "cmake",
             "args": [
@@ -128,7 +149,10 @@
             "label": "Release: run",
             "type": "shell",
             "options": {
-                "cwd": "${workspaceFolder}"
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "CLICOLOR_FORCE": "0"
+                },
             },
             "command": "build/release/src/./bodies-in-potential-flow",
             "args": [
@@ -145,7 +169,10 @@
             "label": "Profile: config",
             "type": "shell",
             "options": {
-                "cwd": "${workspaceFolder}"
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "CLICOLOR_FORCE": "0"
+                },
             },
             "command": "cmake",
             "args": [
@@ -166,7 +193,10 @@
             "label": "Profile: build",
             "type": "shell",
             "options": {
-                "cwd": "${workspaceFolder}"
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "CLICOLOR_FORCE": "0"
+                },
             },
             "command": "cmake",
             "args": [
@@ -182,7 +212,10 @@
             "label": "Profile: run",
             "type": "shell",
             "options": {
-                "cwd": "${workspaceFolder}"
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "CLICOLOR_FORCE": "0"
+                },
             },
             "command": "build/profile/src/./bodies-in-potential-flow",
             "args": [
