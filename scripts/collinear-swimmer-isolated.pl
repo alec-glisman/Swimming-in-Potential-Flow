@@ -37,10 +37,10 @@ my $generator      = "Ninja";                   # CMake generator,   OPTIONS: "U
 my $buildDir       = "build/" . lc $build;      # Build folder path
 
 # C++ Simulation
-my $simulationTag    = "collinear-swimmer-wall";
+my $simulationTag    = "collinear-swimmer-isolated";
 my $projectName      = "bodies-in-potential-flow";
 my $inputDir         = "input";
-my @inputData        = ( "varyZHeight", "varyRelDisp", "varyPhaseAngle", "varyEpsilon", "varyDt" );
+my @inputData        = ( "varyRelDisp", "varyEpsilon", "varyPhaseAngle", "varyDt"); # If using wall: "varyZHeight" 
 my $numSimulationTypes = scalar @inputData;
 my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
 
