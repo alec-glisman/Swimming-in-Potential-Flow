@@ -32,7 +32,7 @@ main(const int argc, const char* argv[])
     if (argc == 1)
     {
         std::cout << "WARNING: Using default simulation I/O";
-        inputDataFile = "test/input/collinear_swimmer_isolated/initial_frame_dt1e-2.gsd";
+        inputDataFile = "test/input/collinear_swimmer_isolated/initial_frame_dt1e-6.gsd";
         outputDir = "temp/output";
     }
     else if (argc == 3)
