@@ -40,7 +40,10 @@
             "name": "default",
             "displayName": "Default Build",
             "description": "Build default debug configuration",
-            "configurePreset": "default"
+            "configurePreset": "default",
+            "environment": {
+                "CLICOLOR_FORCE": "0"
+            }
         }
     ],
     "testPresets": [
