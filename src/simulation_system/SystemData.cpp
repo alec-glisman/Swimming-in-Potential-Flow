@@ -555,8 +555,6 @@ SystemData::psiMatrixElement(const int body_id)
 void
 SystemData::chiMatrixElement(const int particle_id)
 {
-    // FIXME: Refactor entire function
-
     // body number
     const int  body_id_7{7 * m_particle_group_id(particle_id)};
     const bool is_locater{m_particle_type_id(particle_id) == 1}; // determine if particle is locater particle
