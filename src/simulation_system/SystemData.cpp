@@ -634,7 +634,7 @@ SystemData::gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice
     /* ANCHOR: Tensor quantities that will be contracted */
     // moment arm to locater point from particle
     Eigen::Matrix<double, 4, 3> two_r_tilde_cross_mat = 2 * m_rbm_conn.block<4, 3>(body_id_7 + 3, particle_id_7);
-    two_r_tilde_cross_mat.row(0).noalias()            = Eigen::RowVector3d::Zero(3, 1);
+    two_r_tilde_cross_mat.row(0).noalias()            = Eigen::Vector3d::Zero();
     const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3>> tens_two_r_tilde_cross_mat =
         TensorCast(two_r_tilde_cross_mat, 4, 3);
 
