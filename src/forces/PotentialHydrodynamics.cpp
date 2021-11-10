@@ -352,20 +352,26 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     std::cout << "PotentialHydrodynamics::calcBodyTensors(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
     std::cout << "t: " << m_system->t() << "\n\n" << std::endl;
 
-    const Eigen::array<Eigen::Index, 3> offsets = {0, 0, 4};
-    const Eigen::array<Eigen::Index, 3> extents = {m_7M, m_7N, 1};
+    const Eigen::array<Eigen::Index, 3> offsets_dim5_grad = {0, 0, 4};
+    const Eigen::array<Eigen::Index, 3> extents_2D        = {m_7M, m_7N, 1};
+    const Eigen::array<Eigen::Index, 3> extents_1D        = {1, m_7N, 1};
 
     std::cout << "N2_{j k 5} term 1:\n"
-              << MatrixCast(N2_term1_preshuffle.shuffle(permute_ikj_ijk).slice(offsets, extents), m_7M, m_7N, device)
+              << MatrixCast(N2_term1_preshuffle.shuffle(permute_ikj_ijk).slice(offsets_dim5_grad, extents_2D), m_7M,
+                            m_7N, device)
                      .format(CleanFmt)
               << "\n\n"
               << std::endl;
 
     std::cout << "N2_{j k 5} term 2:\n"
-              << MatrixCast((m_system->tensZeta().contract(m_N1, contract_il_lj)).slice(offsets, extents), m_7M, m_7N,
-                            device)
+              << MatrixCast((m_system->tensZeta().contract(m_N1, contract_il_lj)).slice(offsets_dim5_grad, extents_2D),
+                            m_7M, m_7N, device)
                      .format(CleanFmt)
               << "\n\n"
+              << std::endl;
+
+    std::cout << "grad_5 M_{l 1}:\n"
+              << MatrixCast(m_N1.slice(offsets_dim5_grad, extents_1D), 1, m_7N, device).format(CleanFmt) << "\n\n"
               << std::endl;
 #endif
 }
@@ -450,19 +456,19 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
               << std::endl; // FIXME: F_loc_int(5) is non-zero at t=5e-7
     std::cout << "F_loc:\n" << MatrixCast(F_loc, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
 
-    std::cout << "F_loc_int 1:\n"
-              << MatrixCast(m_N2.contract(xi_dot_V, contract_jki_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
-              << std::endl;
+    // std::cout << "F_loc_int 1:\n"
+    //           << MatrixCast(m_N2.contract(xi_dot_V, contract_jki_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
+    //           << std::endl;
     // std::cout << "F_loc_int 2:\n"
     //           << MatrixCast(-m_N2.contract(V_xi_dot, contract_ijk_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
     //           << std::endl;
 
-    const Eigen::array<Eigen::Index, 3> offsets = {0, 0, 4};
-    const Eigen::array<Eigen::Index, 3> extents = {m_7M, m_7N, 1};
+    // const Eigen::array<Eigen::Index, 3> offsets = {0, 0, 4};
+    // const Eigen::array<Eigen::Index, 3> extents = {m_7M, m_7N, 1};
 
-    std::cout << "N2_{j k 5}:\n"
-              << MatrixCast(m_N2.slice(offsets, extents), m_7M, m_7N, device).format(CleanFmt) << "\n\n"
-              << std::endl;
+    // std::cout << "N2_{j k 5}:\n"
+    //           << MatrixCast(m_N2.slice(offsets, extents), m_7M, m_7N, device).format(CleanFmt) << "\n\n"
+    //           << std::endl;
     // std::cout << "M:\n" << m_M_total.format(CleanFmt) << "\n\n" << std::endl;
     // std::cout << "M2:\n" << MatrixCast(m_M2, m_7M, m_7N, device).format(CleanFmt) << "\n\n" << std::endl;
     // std::cout << "M3:\n" << MatrixCast(m_M3, m_7M, m_7M, device).format(CleanFmt) << "\n\n" << std::endl;
