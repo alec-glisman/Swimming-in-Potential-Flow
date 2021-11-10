@@ -585,7 +585,7 @@ SystemData::chiMatrixElement(const int particle_id)
     Eigen::Matrix3d g_matrix = -theta_body.w() * mat_r_body_coords_cross;
     g_matrix.noalias() += rv;
     g_matrix.noalias() -= rv.transpose();
-    g_matrix.noalias() += rv.trace() * m_I3;
+    g_matrix.noalias() += r_body_coords.dot(theta_body.vec()) * m_I3;
 
     /* ANCHOR: Compute S matrix element */
     /// S_alpha = {-1 for non-locater particles, +1 for locater particles}
