@@ -458,9 +458,16 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
 
     std::cout << "F_int 1:\n"
               << MatrixCast(0.50 * m_N1.contract(V_V, contract_jki_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
-              << std::endl;
+              << std::endl; // FIXME: non-zero 5th element
     std::cout << "F_int 2:\n"
               << MatrixCast(-m_M2.contract(V_dot, contract_ij_j), m_7M, 1, device).format(CleanFmt) << "\n\n"
+              << std::endl;
+
+    const Eigen::array<Eigen::Index, 3> offsets = {0, 0, 4};
+    const Eigen::array<Eigen::Index, 3> extents = {m_7N, m_7N, 1};
+
+    std::cout << "N1_{j k 5}:\n"
+              << MatrixCast(m_N1.slice(offsets, extents), m_7N, m_7N, device).format(CleanFmt) << "\n\n"
               << std::endl;
 
     // std::cout << "F_loc_int 1:\n"
@@ -469,9 +476,6 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     // std::cout << "F_loc_int 2:\n"
     //           << MatrixCast(-m_N2.contract(V_xi_dot, contract_ijk_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
     //           << std::endl;
-
-    // const Eigen::array<Eigen::Index, 3> offsets = {0, 0, 4};
-    // const Eigen::array<Eigen::Index, 3> extents = {m_7M, m_7N, 1};
 
     // std::cout << "N2_{j k 5}:\n"
     //           << MatrixCast(m_N2.slice(offsets, extents), m_7M, m_7N, device).format(CleanFmt) << "\n\n"
