@@ -382,7 +382,7 @@ SystemData::update(Eigen::ThreadPoolDevice& device)
 
     // FIXME: debugging print statements
 #if !defined(NDEBUG)
-    Eigen::IOFormat CleanFmt(16, 0, ", ", "\n", "[", "]");
+    Eigen::IOFormat CleanFmt(8, 0, ", ", "\n", "[", "]");
     std::cout << "SystemData::update(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
     std::cout << "t: " << t() << "\n\n" << std::endl;
 
