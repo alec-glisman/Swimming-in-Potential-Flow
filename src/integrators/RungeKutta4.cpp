@@ -307,6 +307,7 @@ RungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
     acc.noalias() = M_eff_inv * Q_total; // (7m, 1)
 
     // FIXME: debugging print statements
+#if !defined(NDEBUG)
     Eigen::IOFormat CleanFmt(16, 0, ", ", "\n", "[", "]");
     std::cout << "RungeKutta4::udwadiaKalaba(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
     std::cout << "t: " << m_system->t() << "\n\n" << std::endl;
@@ -320,6 +321,7 @@ RungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
     std::cout << "acc:\n"
               << acc.format(CleanFmt) << "\n\n"
               << std::endl; // FIXME: Developes non-zero acc(4) at t=5e-7 (RK4 step 2)
+#endif
 }
 
 void

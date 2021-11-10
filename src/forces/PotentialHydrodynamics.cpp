@@ -396,7 +396,8 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
 
     // hydrodynamic forces arising from coupling of locater and internal D.o.F. motion (2 terms)
     Eigen::Tensor<double, 1> F_loc_int = Eigen::Tensor<double, 1>(m_7M); // (7M x 1)
-    F_loc_int.device(device)           = m_N2.contract(xi_dot_V, contract_jki_jk);
+    F_loc_int.device(device) =
+        m_N2.contract(xi_dot_V, contract_jki_jk); // FIXME: developing nozero components (5), where is this coming from?
     F_loc_int.device(device) -= m_N2.contract(V_xi_dot, contract_ijk_jk);
 
     // hydrodynamic forces arising from internal D.o.F. motion (2 terms; contains internal inertia term)
@@ -420,6 +421,21 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     std::cout << "PotentialHydrodynamics::calcHydroForces(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
     std::cout << "t: " << m_system->t() << "\n\n" << std::endl;
     std::cout << "F_int:\n" << MatrixCast(F_int, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "F_loc_int:\n" << MatrixCast(F_loc_int, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
+    std::cout << "F_loc_int:\n"
+              << MatrixCast(F_loc_int, m_7M, 1, device).format(CleanFmt) << "\n\n"
+              << std::endl; // FIXME: F_loc_int(5) is non-zero at t=5e-7
+
+    std::cout << "F_loc_int 1:\n"
+              << MatrixCast(m_N2.contract(xi_dot_V, contract_jki_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
+              << std::endl;
+
+    std::cout << "V:\n"
+              << m_system->velocitiesParticlesArticulation().format(CleanFmt) << "\n\n"
+              << std::endl; // FIXME: develops nonzero component
+    std::cout << "xi_dot:\n" << MatrixCast(xi_dot, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
+
+    std::cout << "F_loc_int 2:\n"
+              << MatrixCast(-m_N2.contract(V_xi_dot, contract_ijk_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
+              << std::endl;
     std::cout << "F_loc:\n" << MatrixCast(F_loc, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
 }
