@@ -585,6 +585,11 @@ SystemData::chiMatrixElement(const int particle_id)
     g_matrix.noalias() -= rv.transpose();
     g_matrix.noalias() += r_body_coords.dot(theta_body.vec()) * m_I3;
 
+    if (is_locater)
+    {
+        g_matrix.setZero();
+    }
+
     /* ANCHOR: Compute S matrix element */
     /// S_alpha = {-1 for non-locater particles, +1 for locater particles}
     const int             s_part{-1 + 2 * is_locater};
