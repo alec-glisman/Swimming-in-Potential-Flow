@@ -384,27 +384,27 @@ SystemData::update(Eigen::ThreadPoolDevice& device)
 #if !defined(NDEBUG)
     Eigen::IOFormat CleanFmt(8, 0, ", ", "\n", "[", "]");
     std::cout << "SystemData::update(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
-    std::cout << "t: " << t() << "\n\n" << std::endl;
+    std::cout << "t: " << m_t << "\n\n" << std::endl;
 
-    std::cout << "positions particles articulation:\n"
-              << m_positions_particles_articulation.format(CleanFmt) << "\n\n"
-              << std::endl;
-    std::cout << "positions particles:\n" << m_positions_particles.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "positions particles articulation:\n"
+    //           << m_positions_particles_articulation.format(CleanFmt) << "\n\n"
+    //           << std::endl;
+    // std::cout << "positions particles:\n" << m_positions_particles.format(CleanFmt) << "\n\n" << std::endl;
 
-    std::cout << "velocities particles articulation:\n"
-              << m_velocities_particles_articulation.format(CleanFmt) << "\n\n"
-              << std::endl;
-    std::cout << "velocities particles:\n" << m_velocities_particles.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "velocities particles articulation:\n"
+    //           << m_velocities_particles_articulation.format(CleanFmt) << "\n\n"
+    //           << std::endl;
+    // std::cout << "velocities particles:\n" << m_velocities_particles.format(CleanFmt) << "\n\n" << std::endl;
 
-    std::cout << "accelerations particles articulation:\n"
-              << m_accelerations_particles_articulation.format(CleanFmt) << "\n\n"
-              << std::endl;
-    std::cout << "accelerations particles:\n" << m_accelerations_particles.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "accelerations particles articulation:\n"
+    //           << m_accelerations_particles_articulation.format(CleanFmt) << "\n\n"
+    //           << std::endl;
+    // std::cout << "accelerations particles:\n" << m_accelerations_particles.format(CleanFmt) << "\n\n" << std::endl;
 
-    std::cout << "rbm_conn:\n" << m_rbm_conn.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "psi:\n" << m_psi_conv_quat_ang.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "zeta:\n" << m_zeta.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "chi:\n" << m_chi.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "rbm_conn:\n" << m_rbm_conn.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "psi:\n" << m_psi_conv_quat_ang.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "zeta:\n" << m_zeta.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "chi:\n" << m_chi.format(CleanFmt) << "\n\n" << std::endl;
 #endif
 }
 
