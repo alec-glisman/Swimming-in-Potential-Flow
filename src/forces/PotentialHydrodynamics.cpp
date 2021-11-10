@@ -450,11 +450,18 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     Eigen::IOFormat CleanFmt(8, 0, ", ", "\n", "[", "]");
     std::cout << "PotentialHydrodynamics::calcHydroForces(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
     std::cout << "t: " << m_system->t() << "\n\n" << std::endl;
-    std::cout << "F_int:\n" << MatrixCast(F_int, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "F_loc_int:\n"
-              << MatrixCast(F_loc_int, m_7M, 1, device).format(CleanFmt) << "\n\n"
-              << std::endl; // FIXME: F_loc_int(5) is non-zero at t=5e-7
+    std::cout << "F_int:\n"
+              << MatrixCast(F_int, m_7M, 1, device).format(CleanFmt) << "\n\n"
+              << std::endl; // FIXME: F_int(5) is non-zero at t=0
+    std::cout << "F_loc_int:\n" << MatrixCast(F_loc_int, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
     std::cout << "F_loc:\n" << MatrixCast(F_loc, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
+
+    std::cout << "F_int 1:\n"
+              << MatrixCast(0.50 * m_N1.contract(V_V, contract_jki_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
+              << std::endl;
+    std::cout << "F_int 2:\n"
+              << MatrixCast(-m_M2.contract(V_dot, contract_ij_j), m_7M, 1, device).format(CleanFmt) << "\n\n"
+              << std::endl;
 
     // std::cout << "F_loc_int 1:\n"
     //           << MatrixCast(m_N2.contract(xi_dot_V, contract_jki_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
