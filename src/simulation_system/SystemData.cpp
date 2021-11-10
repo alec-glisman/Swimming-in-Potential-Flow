@@ -564,7 +564,7 @@ SystemData::chiMatrixElement(const int particle_id)
 
     /* ANCHOR: Compute G matrix element */
     // body unit quaternion
-    const Eigen::Quaterniond theta_body(m_positions_bodies.segment<4>(body_id_7));
+    const Eigen::Quaterniond theta_body(m_positions_bodies.segment<4>(body_id_7 + 3));
 
     // particle unit initial configuration
     const Eigen::Vector3d r_hat_init_particle = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
