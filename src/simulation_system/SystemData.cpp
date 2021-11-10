@@ -132,8 +132,8 @@ SystemData::initializeData()
     m_tens_zeta.setZero();
 
     // initialize gradient matrices
-    m_chi      = Eigen::MatrixXd::Zero(m7, n7);
-    m_tens_chi = Eigen::Tensor<double, 2>(m7, n7);
+    m_chi      = Eigen::MatrixXd::Zero(m7, n3);
+    m_tens_chi = Eigen::Tensor<double, 2>(m7, n3);
     m_tens_chi.setZero();
     m_tens_grad_zeta = Eigen::Tensor<double, 3>(m7, n7, m7);
     m_tens_grad_zeta.setZero();
@@ -560,7 +560,6 @@ SystemData::chiMatrixElement(const int particle_id)
     const bool is_locater{m_particle_type_id(particle_id) == 1}; // determine if particle is locater particle
     // particle number
     const int particle_id_3{3 * particle_id};
-    const int particle_id_7{7 * particle_id};
 
     // unit quaternion basis directions
     const Eigen::Quaterniond q_i(0, 1, 0, 0);
@@ -578,24 +577,24 @@ SystemData::chiMatrixElement(const int particle_id)
     const Eigen::Vector3d r_body_coords = prefactor * r_hat_init_particle;
 
     Eigen::Quaterniond r_body_quat;
-    r_body_quat.w() = 0.0;
+    r_body_quat.w()   = 0.0;
     r_body_quat.vec() = r_body_coords;
 
     // quaternion product: r_body * theta
-    const Eigen::Quaterniond r_theta = r_body_quat * theta_body;
+    const Eigen::Quaterniond r_theta   = r_body_quat * theta_body;
     const Eigen::Quaterniond r_theta_i = r_theta * q_i;
     const Eigen::Quaterniond r_theta_j = r_theta * q_j;
     const Eigen::Quaterniond r_theta_k = r_theta * q_k;
 
     // G_tilde matrix element
-    Eigen::Matrix4d g_tilde_matrix = Eigen::Matrix4d::Zero(4, 4);
+    Eigen::Matrix4d g_tilde_matrix             = Eigen::Matrix4d::Zero(4, 4);
     g_tilde_matrix.block<3, 1>(1, 0).noalias() = r_theta.vec();
-    g_tilde_matrix.block<3, 1>(1, 1).noalias() = - r_theta_i.vec();
-    g_tilde_matrix.block<3, 1>(1, 2).noalias() = - r_theta_j.vec();
-    g_tilde_matrix.block<3, 1>(1, 3).noalias() = - r_theta_k.vec();
+    g_tilde_matrix.block<3, 1>(1, 1).noalias() = -r_theta_i.vec();
+    g_tilde_matrix.block<3, 1>(1, 2).noalias() = -r_theta_j.vec();
+    g_tilde_matrix.block<3, 1>(1, 3).noalias() = -r_theta_k.vec();
 
     // G matrix element
-    Eigen::Matrix<double, 4, 3> g_matrix = g_tilde_matrix.block<4,3>(0,1);
+    Eigen::Matrix<double, 4, 3> g_matrix = g_tilde_matrix.block<4, 3>(0, 1);
 
     /* ANCHOR: Compute S matrix element */
     /// S_alpha = {-1 for non-locater particles, +1 for locater particles}
@@ -603,9 +602,9 @@ SystemData::chiMatrixElement(const int particle_id)
     const Eigen::Matrix3d s_matrix = s_part * m_I3;
 
     /* ANCHOR: Compute chi matrix element */
-    m_chi.block<3, 3>(body_id_7, particle_id_7).noalias() =
+    m_chi.block<3, 3>(body_id_7, particle_id_3).noalias() =
         s_matrix; // convert body (linear) position derivatives to particle linear coordinate derivatives
-    m_chi.block<4, 3>(body_id_7 + 3, particle_id_7).noalias() =
+    m_chi.block<4, 3>(body_id_7 + 3, particle_id_3).noalias() =
         g_matrix; // convert body (quaternion) position derivatives to particle linear coordinate derivatives
 }
 

@@ -192,7 +192,7 @@ class PotentialHydrodynamics
 
     /// (7N x 7N) tensor version of total mass matrix
     Eigen::Tensor<double, 2> m_tens_M_total;
-    /// (7N x 7N x 7N) gradient of total mass matrix (only added mass components) in particle coordinates
+    /// (7N x 7N x 3N) gradient of total mass matrix (only added mass components) in particle coordinates
     Eigen::Tensor<double, 3> m_grad_M_added;
 
     /// (7N x 7N x 7M) gradient of total mass matrix (only added mass components) in body coordinates

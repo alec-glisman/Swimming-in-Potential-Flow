@@ -56,7 +56,7 @@ PotentialHydrodynamics::PotentialHydrodynamics(std::shared_ptr<SystemData> sys)
     m_M_total.noalias() += m_J_intrinsic;
 
     spdlog::get(m_logName)->info("Initializing mass tensors");
-    m_grad_M_added = Eigen::Tensor<double, 3>(m_7N, m_7N, m_7N);
+    m_grad_M_added = Eigen::Tensor<double, 3>(m_7N, m_7N, 3 * m_system->numParticles());
     m_grad_M_added.setZero();
     m_grad_M_added_body_coords = Eigen::Tensor<double, 3>(m_7N, m_7N, m_7M);
     m_grad_M_added_body_coords.setZero();
@@ -196,8 +196,8 @@ PotentialHydrodynamics::calcAddedMass()
     for (int k = 0; k < m_num_pair_inter; k++)
     {
         // Convert (\alpha, \beta) --> (i, j) by factor of 3
-        const int i_part{7 * m_alphaVec(k)};
-        const int j_part{7 * m_betaVec(k)};
+        const int i_7{7 * m_alphaVec(k)};
+        const int j_7{7 * m_betaVec(k)};
 
         // Full distance between particles \alpha and \beta
         const Eigen::Vector3d r_ij = m_r_ab.col(k);    // (1)
@@ -213,8 +213,8 @@ PotentialHydrodynamics::calcAddedMass()
         Mij.noalias() += M1_c2 * m_system->i3();
 
         // Output added mass element (symmetry of mass matrix)
-        m_M_added.block<3, 3>(i_part, j_part).noalias() = Mij;
-        m_M_added.block<3, 3>(j_part, i_part).noalias() = Mij;
+        m_M_added.block<3, 3>(i_7, j_7).noalias() = Mij;
+        m_M_added.block<3, 3>(j_7, i_7).noalias() = Mij;
     }
 
     /* Construct full added mass matrix
@@ -244,8 +244,11 @@ PotentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
     for (int k = 0; k < m_num_pair_inter; k++)
     {
         // Convert (\alpha, \beta) --> (i, j) by factor of 3
-        int i_part{7 * m_alphaVec(k)};
-        int j_part{7 * m_betaVec(k)};
+        const int i_3{3 * m_alphaVec(k)};
+        const int j_3{3 * m_betaVec(k)};
+
+        const int i_7{7 * m_alphaVec(k)};
+        const int j_7{7 * m_betaVec(k)};
 
         // Full distance between particles \alpha and \beta
         const Eigen::Vector3d                                 r_ij   = m_r_ab.col(k); // (1)
@@ -278,10 +281,10 @@ PotentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
         Mij_i.device(device) += gradM1_c2 * tens_rr.contract(tens_r, outer_product);
 
         // indices to start at
-        const Eigen::array<Eigen::Index, 3> offsets_ij_i = {i_part, j_part, i_part};
-        const Eigen::array<Eigen::Index, 3> offsets_ij_j = {i_part, j_part, j_part};
-        const Eigen::array<Eigen::Index, 3> offsets_ji_i = {j_part, i_part, i_part};
-        const Eigen::array<Eigen::Index, 3> offsets_ji_j = {j_part, i_part, j_part};
+        const Eigen::array<Eigen::Index, 3> offsets_ij_i = {i_7, j_7, i_3};
+        const Eigen::array<Eigen::Index, 3> offsets_ij_j = {i_7, j_7, j_3};
+        const Eigen::array<Eigen::Index, 3> offsets_ji_i = {j_7, i_7, i_3};
+        const Eigen::array<Eigen::Index, 3> offsets_ji_j = {j_7, i_7, j_3};
         // length of data to access
         const Eigen::array<Eigen::Index, 3> extents = {3, 3, 3};
 
@@ -435,7 +438,7 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
               << std::endl;
 
     const Eigen::array<Eigen::Index, 3> offsets_5 = {0, 0, 4};
-    const Eigen::array<Eigen::Index, 3> extents = {m_7N, m_7N, 1};
+    const Eigen::array<Eigen::Index, 3> extents   = {m_7N, m_7N, 1};
 
     std::cout << "N1_{j k 5}:\n"
               << MatrixCast(m_N1.slice(offsets_5, extents), m_7N, m_7N, device).format(CleanFmt) << "\n\n"
@@ -445,7 +448,7 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     std::cout << "N1_{j k 6}:\n"
               << MatrixCast(m_N1.slice(offsets_6, extents), m_7N, m_7N, device).format(CleanFmt) << "\n\n"
               << std::endl;
-    
+
     const Eigen::array<Eigen::Index, 3> offsets_7 = {0, 0, 6};
     std::cout << "N1_{j k 7}:\n"
               << MatrixCast(m_N1.slice(offsets_7, extents), m_7N, m_7N, device).format(CleanFmt) << "\n\n"
