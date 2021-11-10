@@ -400,9 +400,8 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     F_loc_int.device(device) -= m_N2.contract(V_xi_dot, contract_ijk_jk);
 
     // hydrodynamic forces arising from internal D.o.F. motion (2 terms; contains internal inertia term)
-    // FIXME: This is generating a non-zero 7th element. WHY???
-    Eigen::Tensor<double, 1> F_int = Eigen::Tensor<double, 1>(m_7M);   // (7M x 1)
-    F_int.device(device) = 0.50 * m_N1.contract(V_V, contract_jki_jk); // REVIEW: This is the source of the problem
+    Eigen::Tensor<double, 1> F_int = Eigen::Tensor<double, 1>(m_7M); // (7M x 1)
+    F_int.device(device)           = 0.50 * m_N1.contract(V_V, contract_jki_jk);
     F_int.device(device) -= m_M2.contract(V_dot, contract_ij_j);
 
     // compute complete potential flow hydrodynamic force
