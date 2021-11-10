@@ -345,6 +345,29 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
 
     m_N3.device(device) = N3_term1_preshuffle.shuffle(permute_ikj_ijk);
     m_N3.device(device) += m_M2.contract(m_system->tensGradZeta(), contract_il_jl);
+
+    // FIXME: debugging print statements
+#if !defined(NDEBUG)
+    Eigen::IOFormat CleanFmt(8, 0, ", ", "\n", "[", "]");
+    std::cout << "PotentialHydrodynamics::calcBodyTensors(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
+    std::cout << "t: " << m_system->t() << "\n\n" << std::endl;
+
+    const Eigen::array<Eigen::Index, 3> offsets = {0, 0, 4};
+    const Eigen::array<Eigen::Index, 3> extents = {m_7M, m_7N, 1};
+
+    std::cout << "N2_{j k 5} term 1:\n"
+              << MatrixCast(N2_term1_preshuffle.shuffle(permute_ikj_ijk).slice(offsets, extents), m_7M, m_7N, device)
+                     .format(CleanFmt)
+              << "\n\n"
+              << std::endl;
+
+    std::cout << "N2_{j k 5} term 2:\n"
+              << MatrixCast((m_system->tensZeta().contract(m_N1, contract_il_lj)).slice(offsets, extents), m_7M, m_7N,
+                            device)
+                     .format(CleanFmt)
+              << "\n\n"
+              << std::endl;
+#endif
 }
 
 void
@@ -417,6 +440,7 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     m_F_hydroNoInertia.noalias()                = MatrixCast(F_hydro_no_inertia, m_7M, 1, device);
 
     // FIXME: debugging print statements
+#if !defined(NDEBUG)
     Eigen::IOFormat CleanFmt(8, 0, ", ", "\n", "[", "]");
     std::cout << "PotentialHydrodynamics::calcHydroForces(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
     std::cout << "t: " << m_system->t() << "\n\n" << std::endl;
@@ -442,4 +466,5 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     // std::cout << "M:\n" << m_M_total.format(CleanFmt) << "\n\n" << std::endl;
     // std::cout << "M2:\n" << MatrixCast(m_M2, m_7M, m_7N, device).format(CleanFmt) << "\n\n" << std::endl;
     // std::cout << "M3:\n" << MatrixCast(m_M3, m_7M, m_7M, device).format(CleanFmt) << "\n\n" << std::endl;
+#endif
 }
