@@ -35,8 +35,8 @@ PotentialHydrodynamics::PotentialHydrodynamics(std::shared_ptr<SystemData> sys)
         m_I7N_linear.block<3, 3>(particle_id_7, particle_id_7).noalias() = Eigen::MatrixXd::Identity(3, 3);
 
         /// @todo: (1, 1) entry is the added element to the mass matrix. Verify that changing this value does not affect
-        /// the end result (Issue #6). Currently defaults to zero.
-        m_I7N_angular.block<3, 3>(particle_id_7 + 4, particle_id_7 + 4).noalias() = Eigen::MatrixXd::Identity(3, 3);
+        /// the end result (Issue #6). Currently defaults to 1.
+        m_I7N_angular.block<4, 4>(particle_id_7 + 3, particle_id_7 + 3).noalias() = Eigen::MatrixXd::Identity(4, 4);
     }
 
     m_c1_2_I7N_linear = m_c1_2 * m_I7N_linear;
