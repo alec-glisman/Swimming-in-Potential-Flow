@@ -643,7 +643,15 @@ SystemData::gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice
     /* ANCHOR: tensor contractions for left-half of gradient */
     // compute grad_r_cross{l, j, k} = - m_levi_cevita{l, j, m} chi_tilde{k, m}
     Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 7>> grad_r_cross; // (3, 3, 7)  {l, j, k}
-    grad_r_cross.device(device) = m_levi_cevita.contract(tens_n_chi_tilde, contract_ljm_km);
+    if (is_locater)
+    {
+        grad_r_cross.setZero();
+    }
+    else
+    {
+        grad_r_cross.device(device) = m_levi_cevita.contract(tens_n_chi_tilde, contract_ljm_km);
+    }
+
     // prepend row of zeros
     Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> grad_r_cross_tilde; // (4, 3, 7)  {l, j, k}
     grad_r_cross_tilde.setZero();
