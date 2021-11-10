@@ -89,7 +89,7 @@ RungeKutta4::integrate(Eigen::ThreadPoolDevice& device)
 void
 RungeKutta4::integrateSecondOrder(Eigen::ThreadPoolDevice& device)
 {
-    /* Step 1: k1 = f( y(t_0),  t_0 ),
+    /* Step 1: k1 = f( y(t_0),  t_0 )
      * initial conditions at current step */
     const double    t1{m_system->t()};
     Eigen::VectorXd v1 = m_system->velocitiesBodies();
