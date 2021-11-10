@@ -559,7 +559,7 @@ SystemData::chiMatrixElement(const int particle_id)
 
     // body number
     const int  body_id_7{7 * m_particle_group_id(particle_id)};
-    const bool is_locater{m_particle_group_id(particle_id) == 1}; // determine if particle is locater particle
+    const bool is_locater{m_particle_type_id(particle_id) == 1}; // determine if particle is locater particle
     // particle number
     const int particle_id_3{3 * particle_id};
     const int particle_id_7{7 * particle_id};
@@ -605,7 +605,7 @@ SystemData::gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice
     /* ANCHOR: Tensor indices */
     const int  particle_id_7{7 * particle_id};
     const int  body_id_7{7 * m_particle_group_id(particle_id)};
-    const bool is_locater{m_particle_group_id(particle_id) == 1};
+    const bool is_locater{m_particle_type_id(particle_id) == 1};
 
     // `Eigen::Tensor` contract indices
     const Eigen::array<Eigen::IndexPair<int>, 1> contract_ilk_lj = {
