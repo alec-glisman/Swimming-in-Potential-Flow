@@ -40,6 +40,9 @@
 #include <string>    // std::string
 #include <thread>    // std::thread::hardware_concurrency(); number of physical cores
 
+// FIXME: Remove
+#include <iostream>
+
 /* Forward declarations */
 class GSDUtil;
 /* !SECTION (Header) */
