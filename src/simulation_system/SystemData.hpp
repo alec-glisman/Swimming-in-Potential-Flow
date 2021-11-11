@@ -54,6 +54,8 @@ class GSDUtil;
  * Note that after construction, `initializeData()` must be called to properly load
  * data from a GSD file.
  *
+ * @see For a visualization of unit quaternion rotation: https://quaternions.online/
+ *
  */
 class SystemData : public std::enable_shared_from_this<SystemData>
 {
@@ -316,6 +318,10 @@ class SystemData : public std::enable_shared_from_this<SystemData>
 
     /**
      * @brief Computes the E matrix of quaternion (4-vector) input
+     *
+     * @see Eq. (2) of
+     * Udwadia, Firdaus E., and Aaron D. Schutte. "An alternative derivation of the
+     * quaternion equations of motion for rigid-body rotational dynamics." (2010)
      *
      * @param theta Input 4-vector (unit quaternion)
      * @param E_body Output matrix representation
