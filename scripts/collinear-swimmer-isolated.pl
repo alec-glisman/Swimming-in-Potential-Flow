@@ -212,7 +212,6 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 			}
 			case ( "varyRelDisp" ) {
 				$R_avg = ${data[$j]};
-				$U0 = 1.00e-1;
 			}
 			case ( "varyPhaseAngle" ) {
 				$phase_angle = ${data[$j]};
