@@ -477,8 +477,10 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     // FIXME: debugging print statements
 #if !defined(NDEBUG)
     Eigen::IOFormat CleanFmt(8, 0, ", ", "\n", "[", "]");
+
     std::cout << "PotentialHydrodynamics::calcHydroForces(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
-    std::cout << "t: " << m_system->t() << "\n\n" << std::endl;
+    // std::cout << "t: " << m_system->t() << "\n\n" << std::endl;
+
     std::cout << "F_int:\n"
               << MatrixCast(F_int, m_7M, 1, device).format(CleanFmt) << "\n\n"
               << std::endl; // FIXME: F_int(5) is non-zero at t=0
@@ -492,8 +494,8 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     //           << MatrixCast(-m_M2.contract(V_dot, contract_ij_j), m_7M, 1, device).format(CleanFmt) << "\n\n"
     //           << std::endl;
 
-    const Eigen::array<Eigen::Index, 3> offsets_5 = {0, 0, 4};
-    const Eigen::array<Eigen::Index, 3> extents   = {m_7M, m_7N, 1};
+    // const Eigen::array<Eigen::Index, 3> offsets_5 = {0, 0, 4};
+    // const Eigen::array<Eigen::Index, 3> extents   = {m_7M, m_7N, 1};
 
     // std::cout << "N1_{j k 5}:\n"
     //           << MatrixCast(m_N1.slice(offsets_5, extents), m_7N, m_7N, device).format(CleanFmt) << "\n\n"
@@ -512,9 +514,30 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     std::cout << "F_loc_int 1:\n"
               << MatrixCast(m_N2.contract(xi_dot_V, contract_jki_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
               << std::endl;
+
     // std::cout << "F_loc_int 2:\n"
     //           << MatrixCast(-m_N2.contract(V_xi_dot, contract_ijk_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
     //           << std::endl;
+
+    const Eigen::array<Eigen::Index, 3> offset_115                = {0, 0, 4};
+    const Eigen::array<Eigen::Index, 3> extents_grad_rbm_conn_col = {1, m_7N, 1};
+
+    std::cout << "grad_{5} rbm_conn{1, l}:\n"
+              << MatrixCast(m_system->tensGradRbmConn().slice(offset_115, extents_grad_rbm_conn_col), 1, m_7N, device)
+                     .format(CleanFmt)
+              << "\n\n"
+              << std::endl;
+
+    std::cout << "rbm_conn{1, l}:\n" << m_system->rbmConn().row(0).format(CleanFmt) << "\n\n" << std::endl;
+
+    const Eigen::array<Eigen::Index, 3> extents_grad_m = {m_7N, m_7N, 1};
+
+    Eigen::MatrixXd grad5_M =
+        MatrixCast(m_grad_M_added_body_coords.slice(offset_115, extents_grad_m), m_7N, m_7N, device);
+
+    std::cout << "grad_{5} M{l, 8} trans:\n" << grad5_M.col(7).transpose().format(CleanFmt) << "\n\n" << std::endl;
+
+    std::cout << "grad_{5} M{l, 15} trans:\n" << grad5_M.col(14).transpose().format(CleanFmt) << "\n\n" << std::endl;
 
     // std::cout << "M:\n" << m_M_total.format(CleanFmt) << "\n\n" << std::endl;
     // std::cout << "M2:\n" << MatrixCast(m_M2, m_7M, m_7N, device).format(CleanFmt) << "\n\n" << std::endl;
