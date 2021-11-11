@@ -592,7 +592,7 @@ SystemData::chiMatrixElement(const int particle_id)
 
     Eigen::Quaterniond r_body_quat;
     r_body_quat.w()   = 0.0;
-    r_body_quat.vec() = prefactor * r_hat_init_particle;
+    r_body_quat.vec() = r_hat_init_particle;
 
     // quaternion product: r_body * theta
     const Eigen::Quaterniond r_theta   = r_body_quat * theta_body;
@@ -600,11 +600,14 @@ SystemData::chiMatrixElement(const int particle_id)
     const Eigen::Quaterniond r_theta_j = r_theta * q_j;
     const Eigen::Quaterniond r_theta_k = r_theta * q_k;
 
+    // FIXME: Should I put conjugate explicitly?
+
     // G matrix element
     Eigen::Matrix3d g_matrix;
     g_matrix.col(0).noalias() = -r_theta_i.vec();
     g_matrix.col(1).noalias() = -r_theta_j.vec();
     g_matrix.col(2).noalias() = -r_theta_k.vec();
+    g_matrix *= prefactor;
 
     /* ANCHOR: Compute chi matrix element */
     m_chi.block<3, 3>(body_id_7, particle_id_3).noalias() =
