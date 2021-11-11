@@ -35,13 +35,11 @@
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
 // STL
-#include <memory>    // for std::unique_ptr and std::shared_ptr
+#include <iostream>  // std::cout; std::endl;
+#include <memory>    // for std::unique_ptr; std::shared_ptr
 #include <stdexcept> // std::errors
 #include <string>    // std::string
 #include <thread>    // std::thread::hardware_concurrency(); number of physical cores
-
-// FIXME: Remove
-#include <iostream>
 
 /* Forward declarations */
 class GSDUtil;
@@ -113,8 +111,6 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      * @brief Normalizes all body coordinate quaternions.
      *
      * @details Modifies `m_positions_bodies`
-     *
-     * @fixme: Is this still valid and not ruining results?
      *
      */
     void
