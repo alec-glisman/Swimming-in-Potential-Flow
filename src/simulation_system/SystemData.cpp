@@ -577,9 +577,9 @@ SystemData::chiMatrixElement(const int particle_id)
     const bool is_locater{m_particle_type_id(particle_id) == 1}; // determine if particle is locater particle
 
     // unit quaternion basis directions
-    const Eigen::Quaterniond q_i(0, 1, 0, 0);
-    const Eigen::Quaterniond q_j(0, 0, 1, 0);
-    const Eigen::Quaterniond q_k(0, 0, 0, 1);
+    const Eigen::Quaterniond q_i(0.0, 1.0, 0.0, 0.0);
+    const Eigen::Quaterniond q_j(0.0, 0.0, 1.0, 0.0);
+    const Eigen::Quaterniond q_k(0.0, 0.0, 0.0, 1.0);
 
     /* ANCHOR: Compute G matrix element */
     // body unit quaternion
