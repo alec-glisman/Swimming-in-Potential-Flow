@@ -573,12 +573,11 @@ SystemData::chiMatrixElement(const int particle_id)
     // particle unit initial configuration
     const Eigen::Vector3d r_hat_init_particle = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
     // Scaling prefactor: 2 * || r_particle_id ||
-    const double          prefactor{2.0 * m_positions_particles_articulation.segment<3>(particle_id_3).norm()};
-    const Eigen::Vector3d r_body_coords = prefactor * r_hat_init_particle;
+    const double prefactor{2.0 * m_positions_particles_articulation.segment<3>(particle_id_3).norm()};
 
     Eigen::Quaterniond r_body_quat;
     r_body_quat.w()   = 0.0;
-    r_body_quat.vec() = r_body_coords;
+    r_body_quat.vec() = prefactor * r_hat_init_particle;
 
     // quaternion product: r_body * theta
     const Eigen::Quaterniond r_theta   = r_body_quat * theta_body;
@@ -586,25 +585,16 @@ SystemData::chiMatrixElement(const int particle_id)
     const Eigen::Quaterniond r_theta_j = r_theta * q_j;
     const Eigen::Quaterniond r_theta_k = r_theta * q_k;
 
-    // G_tilde matrix element
-    Eigen::Matrix4d g_tilde_matrix             = Eigen::Matrix4d::Zero(4, 4);
-    g_tilde_matrix.block<3, 1>(1, 0).noalias() = r_theta.vec();
-    g_tilde_matrix.block<3, 1>(1, 1).noalias() = -r_theta_i.vec();
-    g_tilde_matrix.block<3, 1>(1, 2).noalias() = -r_theta_j.vec();
-    g_tilde_matrix.block<3, 1>(1, 3).noalias() = -r_theta_k.vec();
-
     // G matrix element
-    Eigen::Matrix<double, 4, 3> g_matrix = g_tilde_matrix.block<4, 3>(0, 1);
-
-    /* ANCHOR: Compute S matrix element */
-    /// S_alpha = {-1 for non-locater particles, +1 for locater particles}
-    const int             s_part{-1 + 2 * is_locater};
-    const Eigen::Matrix3d s_matrix = s_part * m_I3;
+    Eigen::Matrix3d g_matrix;
+    g_matrix.col(0).noalias() = -r_theta_i.vec();
+    g_matrix.col(1).noalias() = -r_theta_j.vec();
+    g_matrix.col(2).noalias() = -r_theta_k.vec();
 
     /* ANCHOR: Compute chi matrix element */
     m_chi.block<3, 3>(body_id_7, particle_id_3).noalias() =
-        s_matrix; // convert body (linear) position derivatives to particle linear coordinate derivatives
-    m_chi.block<4, 3>(body_id_7 + 3, particle_id_3).noalias() =
+        m_I3; // convert body (linear) position derivatives to particle linear coordinate derivatives
+    m_chi.block<3, 3>(body_id_7 + 4, particle_id_3).noalias() =
         g_matrix; // convert body (quaternion) position derivatives to particle linear coordinate derivatives
 }
 
@@ -640,7 +630,7 @@ SystemData::gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice
 
     /* ANCHOR: Tensor quantities that will be contracted */
     // moment arm to locater point from particle
-    Eigen::Matrix<double, 4, 3> two_r_tilde_cross_mat = 2 * m_rbm_conn.block<4, 3>(body_id_7 + 3, particle_id_7);
+    Eigen::Matrix<double, 4, 3> two_r_tilde_cross_mat = 2.0 * m_rbm_conn.block<4, 3>(body_id_7 + 3, particle_id_7);
     two_r_tilde_cross_mat.row(0).noalias()            = Eigen::Vector3d::Zero();
     const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3>> tens_two_r_tilde_cross_mat =
         TensorCast(two_r_tilde_cross_mat, 4, 3);
@@ -694,7 +684,7 @@ SystemData::gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice
 
     // compute angular_gradient_preshuffle{i, k, j} =  2 * Kappa{i, l, k} I_tilde{l, j}
     Eigen::TensorFixedSize<double, Eigen::Sizes<4, 7, 4>> angular_gradient_preshuffle; // (4, 7, 4)  {i, k, j}
-    angular_gradient_preshuffle.device(device) = 2 * m_kappa.contract(tens_I_tilde, contract_ilk_lj);
+    angular_gradient_preshuffle.device(device) = 2.0 * m_kappa.contract(tens_I_tilde, contract_ilk_lj);
     // shuffle angular_gradient
     Eigen::TensorFixedSize<double, Eigen::Sizes<4, 4, 7>> angular_gradient; // (4, 4, 7)  {i, j, k}
     angular_gradient.device(device) = angular_gradient_preshuffle.shuffle(permute_ikj_ijk);
