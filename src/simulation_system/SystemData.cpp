@@ -585,22 +585,19 @@ SystemData::chiMatrixElement(const int particle_id)
     // body unit quaternion
     const Eigen::Quaterniond theta_body(m_positions_bodies.segment<4>(body_id_7 + 3));
 
-    // particle unit initial configuration
+    // particle initial configuration unit quaternion
     const Eigen::Vector3d r_hat_init_particle = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
-    // Scaling prefactor: 2 * || r_particle_id ||
-    const double prefactor{2.0 * m_positions_particles_articulation.segment<3>(particle_id_3).norm()};
-
-    Eigen::Quaterniond r_body_quat;
-    r_body_quat.w()   = 0.0;
-    r_body_quat.vec() = r_hat_init_particle;
+    const Eigen::Quaterniond r_body_quat(0.0, r_hat_init_particle(0), r_hat_init_particle(1), r_hat_init_particle(2));
 
     // quaternion product: r_body * theta
-    const Eigen::Quaterniond r_theta   = r_body_quat * theta_body;
+    const Eigen::Quaterniond r_theta = r_body_quat * theta_body;
+    // quaternion product: r_theta * (unit quaternion basis directions)
     const Eigen::Quaterniond r_theta_i = r_theta * q_i;
     const Eigen::Quaterniond r_theta_j = r_theta * q_j;
     const Eigen::Quaterniond r_theta_k = r_theta * q_k;
 
-    // FIXME: Should I put conjugate explicitly?
+    // Scaling prefactor: 2 * || r_particle_id ||
+    const double prefactor{2.0 * m_positions_particles_articulation.segment<3>(particle_id_3).norm()};
 
     // G matrix element
     Eigen::Matrix3d g_matrix;
