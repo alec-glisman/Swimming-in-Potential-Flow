@@ -545,9 +545,13 @@ SystemData::udwadiaLinearSystem()
     for (int body_id = 0; body_id < m_num_constraints; body_id++)
     {
         const int body_id_7{7 * body_id};
+        const int quat_start{body_id_7 + 3};
 
-        m_Udwadia_A.block<1, 4>(body_id, body_id_7 + 3).noalias() = m_positions_bodies.segment<4>(body_id_7 + 3);
-        m_Udwadia_b(body_id) = -m_velocities_bodies.segment<4>(body_id_7 + 3).squaredNorm();
+        const Eigen::Vector4d quat = m_positions_bodies.segment<4>(quat_start);
+        const double          d_quat_norm_sqr{m_velocities_bodies.segment<4>(quat_start).squaredNorm()};
+
+        m_Udwadia_A.row(body_id).segment<4>(quat_start) = quat;
+        m_Udwadia_b(body_id)                            = -d_quat_norm_sqr;
     }
 }
 
@@ -797,6 +801,8 @@ SystemData::convertBody2ParticleOrient()
         m_orientations_particles.segment<3>(particle_id_3).noalias() = orient_rot_3d;
 
 #if !defined(NDEBUG)
+        Eigen::IOFormat CleanFmt(16, 0, ", ", "\n", "[", "]");
+
         const double epsilon_zero{1e-12}; // "small value" close to zero for double comparison
         const double epsilon_norm{1e-8};  // "small value" close to zero for double comparison
 
@@ -819,9 +825,11 @@ SystemData::convertBody2ParticleOrient()
             std::ostringstream stream_error_mag;
             stream_error_mag << unit_norm_error_mag;
 
-            const std::string unit_norm_msg{"Quaternion is not unitary at t = " + std::to_string(m_t) +
-                                            ". Particle #: " + std::to_string(particle_id) +
-                                            ", Norm - 1: " + stream_error_mag.str()};
+            const std::string unit_norm_msg{
+                "Quaternion is not unitary at t = " + std::to_string(m_t) +
+                ".\n\tParticle #: " + std::to_string(particle_id) + ",\n\tNorm - 1: " + stream_error_mag.str() +
+                ",\n\ttheta_body: " + std::to_string(theta_body.w()) + ", " + std::to_string(theta_body.x()) + ", " +
+                std::to_string(theta_body.y()) + ", " + std::to_string(theta_body.z()) + };
 
             throw std::logic_error(unit_norm_msg);
         }
