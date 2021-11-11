@@ -572,9 +572,8 @@ SystemData::rbmMatrixElement(const int particle_id)
 void
 SystemData::chiMatrixElement(const int particle_id)
 {
-    const int  particle_id_3{3 * particle_id};                   // particle number
-    const int  body_id_7{7 * m_particle_group_id(particle_id)};  // body number
-    const bool is_locater{m_particle_type_id(particle_id) == 1}; // determine if particle is locater particle
+    const int particle_id_3{3 * particle_id};                  // particle number
+    const int body_id_7{7 * m_particle_group_id(particle_id)}; // body number
 
     // unit quaternion basis directions
     const Eigen::Quaterniond q_i(0.0, 1.0, 0.0, 0.0);
@@ -583,7 +582,8 @@ SystemData::chiMatrixElement(const int particle_id)
 
     /* ANCHOR: Compute G matrix element */
     // body unit quaternion
-    const Eigen::Quaterniond theta_body(m_positions_bodies.segment<4>(body_id_7 + 3));
+    const Eigen::Vector4d    theta = m_positions_bodies.segment<4>(body_id_7 + 3);
+    const Eigen::Quaterniond theta_body(theta(0), theta(1), theta(2), theta(3));
 
     // particle initial configuration unit quaternion
     const Eigen::Vector3d r_hat_init_particle = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
@@ -601,6 +601,7 @@ SystemData::chiMatrixElement(const int particle_id)
 
     // G matrix element
     Eigen::Matrix<double, 4, 3> g_matrix;
+    g_matrix.setZero();
     g_matrix.row(0).noalias() = r_theta.vec();
     g_matrix.row(1).noalias() = -r_theta_i.vec();
     g_matrix.row(2).noalias() = -r_theta_j.vec();
@@ -619,6 +620,15 @@ SystemData::chiMatrixElement(const int particle_id)
 
     std::cout << "SystemData::chiMatrixElement(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
     std::cout << "G matrix for particle " << particle_id << ":\n" << g_matrix.format(CleanFmt) << "\n\n" << std::endl;
+
+    std::cout << "theta_body.w(): " << theta_body.w()
+              << ", theta_body.vec(): " << theta_body.vec().transpose().format(CleanFmt) << "\n\n"
+              << std::endl;
+
+    std::cout << "r_theta.w(): " << r_theta.w() << ", r_theta.vec(): " << r_theta.vec().transpose().format(CleanFmt)
+              << "\n\n"
+              << std::endl;
+
 #endif
 }
 
