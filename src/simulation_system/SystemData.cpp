@@ -780,6 +780,9 @@ SystemData::convertBody2ParticleOrient()
         const Eigen::Quaterniond orient_rot    = theta_body * r_body_quat * theta_body.inverse();
         const Eigen::Vector3d    orient_rot_3d = orient_rot.vec();
 
+        // Output rotated orientation
+        m_orientations_particles.segment<3>(particle_id_3).noalias() = orient_rot_3d;
+
 #if !defined(NDEBUG)
         const double epsilon_zero{1e-12}; // "small value" close to zero for double comparison
         const double epsilon_norm{1e-8};  // "small value" close to zero for double comparison
@@ -810,9 +813,6 @@ SystemData::convertBody2ParticleOrient()
             throw std::logic_error(unit_norm_msg);
         }
 #endif
-
-        // Output rotated orientation
-        m_orientations_particles.segment<3>(particle_id_3).noalias() = orient_rot_3d;
     }
 }
 
@@ -825,7 +825,6 @@ SystemData::convertBody2ParticlePos()
         const int body_id_7{7 * m_particle_group_id(particle_id)};
 
         m_positions_particles.segment<3>(particle_id_3).noalias() = m_positions_bodies.segment<3>(body_id_7);
-
         m_positions_particles.segment<3>(particle_id_3).noalias() +=
             m_positions_particles_articulation.segment<3>(particle_id_3);
     }
@@ -850,9 +849,9 @@ SystemData::convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device)
 
     Eigen::Tensor<double, 1> velocities_rbm_particles = Eigen::Tensor<double, 1>(7 * m_num_particles); // (7N x 1)
     velocities_rbm_particles.device(device)           = m_tens_grad_rbm_conn.contract(xi_xi, contract_jik_jk);
+    const Eigen::VectorXd mat_vel_rbm_particles = MatrixCast(velocities_rbm_particles, 7 * m_num_particles, 1, device);
 
-    m_accelerations_particles.noalias() =
-        MatrixCast(velocities_rbm_particles, 7 * m_num_particles, 1, device);               // (7N x 1)
+    m_accelerations_particles.noalias() = mat_vel_rbm_particles;                            // (7N x 1)
     m_accelerations_particles.noalias() += m_rbm_conn.transpose() * m_accelerations_bodies; // (7N x 1)
     m_accelerations_particles.noalias() += m_accelerations_particles_articulation;          // (7N x 1)
 }
