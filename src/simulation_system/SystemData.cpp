@@ -518,29 +518,35 @@ SystemData::rbmMatrixElement(const int particle_id)
     const int particle_id_7{7 * particle_id};
     const int body_id_7{7 * m_particle_group_id(particle_id)};
 
-    // skew-symmetric matrix representation of cross product
+    // \[r_\alpha ^\]: skew-symmetric matrix representation of cross product
     Eigen::Matrix3d mat_dr_cross;
     crossProdMat(m_positions_particles_articulation.segment<3>(particle_id_3), mat_dr_cross);
+    // preprend row of zeros
+    Eigen::Matrix<double, 4, 3> mat_dr_cross_43;
+    mat_dr_cross_43.setZero();
+    mat_dr_cross_43.block<3, 3>(1, 0).noalias() = mat_dr_cross;
+
+    // E_{(i)}: matrix representation of left quaternion composition
+    Eigen::Matrix4d E_body;
+    eMatrix(m_positions_bodies.segment<4>(body_id_7 + 3), E_body);
+    const Eigen::Matrix4d two_E_T = 2.0 * E_body.transpose();
 
     // rigid body motion connectivity tensor elements
     m_rbm_conn.block<3, 3>(body_id_7, particle_id_7).noalias() = m_I3; // translation-translation couple
 
     /// @FIXME: The teaching SD to swim paper had a negative sign here, but my derivations do not have that
-    m_rbm_conn.block<3, 3>(body_id_7 + 4, particle_id_7).noalias() = mat_dr_cross; // translation-rotation couple
+    m_rbm_conn.block<4, 3>(body_id_7 + 3, particle_id_7).noalias() =
+        two_E_T * mat_dr_cross_43; // translation-quaternion couple
 
-    m_rbm_conn(body_id_7 + 3, particle_id_7 + 3) = m_sys_scalar_w; // scalar constant to make resulting matrix full-rank
-
-    m_rbm_conn.block<3, 3>(body_id_7 + 4, particle_id_7 + 4).noalias() = m_I3; // rotation-rotation couple
+    m_rbm_conn.block<4, 4>(body_id_7 + 3, particle_id_7 + 3).noalias() = two_E_T; // quaternion-quaternion couple
 }
 
 void
 SystemData::chiMatrixElement(const int particle_id)
 {
-    // body number
-    const int  body_id_7{7 * m_particle_group_id(particle_id)};
+    const int  particle_id_3{3 * particle_id};                   // particle number
+    const int  body_id_7{7 * m_particle_group_id(particle_id)};  // body number
     const bool is_locater{m_particle_type_id(particle_id) == 1}; // determine if particle is locater particle
-    // particle number
-    const int particle_id_3{3 * particle_id};
 
     // unit quaternion basis directions
     const Eigen::Quaterniond q_i(0, 1, 0, 0);
