@@ -167,7 +167,7 @@ def aggregate_plots(relative_path, output_dir):
         phaseShift[i] = gsd_files[i].snapshot.log['swimmer/phase_shift']
         U0[i] = gsd_files[i].snapshot.log['swimmer/U0']
         omega[i] = gsd_files[i].snapshot.log['swimmer/omega']
-        epsilon[i] = U0[i] / R_avg[i] / omega[i]
+        epsilon[i] = abs(U0[i] / R_avg[i] / omega[i])
         CoM_disp_comp[i, :] -= gsd_files[i].snapshot.log['particles/double_position'][0]
 
         CoM_disp[i] = np.linalg.norm(CoM_disp_comp[i, :])
