@@ -119,7 +119,6 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      */
     void
     normalizeQuaternions();
-
     /* !SECTION (Public methods) */
 
     /* SECTION: Private methods */
