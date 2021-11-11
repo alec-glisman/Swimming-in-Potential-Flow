@@ -162,6 +162,8 @@ PotentialHydrodynamics::update(Eigen::ThreadPoolDevice& device)
     calcBodyTensors(device);
 
     calcHydroForces(device);
+
+    calcHydroEnergy(device);
 }
 
 void
@@ -545,4 +547,9 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     // std::cout << "M2:\n" << MatrixCast(m_M2, m_7M, m_7N, device).format(CleanFmt) << "\n\n" << std::endl;
     // std::cout << "M3:\n" << MatrixCast(m_M3, m_7M, m_7M, device).format(CleanFmt) << "\n\n" << std::endl;
 #endif
+}
+
+void
+PotentialHydrodynamics::calcHydroEnergy(Eigen::ThreadPoolDevice& device)
+{
 }

@@ -71,6 +71,7 @@ class PotentialHydrodynamics
      * (3) `calcTotalMass()`.
      * (4) `calcBodyTensors()`.
      * (5) `calcHydroForces()`.
+     * (6) `calcHydroEnergy()`
      *
      * @param device device (CPU thread-pool or GPU) used to speed up tensor calculations
      *
@@ -141,6 +142,17 @@ class PotentialHydrodynamics
      */
     void
     calcHydroForces(Eigen::ThreadPoolDevice& device);
+
+    /**
+     * @brief Calculates and sets energetic components in `SystemData` class
+     *
+     * @details Must call `calcBodyTensors()` before.
+     *
+     * @param device device (CPU thread-pool or GPU) used to speed up tensor calculations
+     *
+     */
+    void
+    calcHydroEnergy(Eigen::ThreadPoolDevice& device);
 
     // classes
     /// shared pointer reference to SystemData class
