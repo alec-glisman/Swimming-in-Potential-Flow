@@ -386,21 +386,20 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     const Eigen::array<Eigen::Index, 3> extents_zeta = {1, m_7N};
     const Eigen::array<Eigen::Index, 3> offsets_zeta = {0, 0};
 
-    std::cout << "zeta_{1 l} Trans:\n"
-              << MatrixCast(m_system->tensZeta().slice(offsets_zeta, extents_zeta), 1, m_7N, device)
-                     .transpose()
-                     .format(CleanFmt)
+    std::cout << "zeta_{1 l}:\n"
+              << MatrixCast(m_system->tensZeta().slice(offsets_zeta, extents_zeta), 1, m_7N, device).format(CleanFmt)
               << "\n\n"
               << std::endl;
 
     const Eigen::array<Eigen::Index, 3> offsets_grad5_col8  = {0, 7, 4};
     const Eigen::array<Eigen::Index, 3> offsets_grad5_col15 = {0, 14, 4};
+    const Eigen::array<Eigen::Index, 3> extents_grad_M      = {m_7N, 1, 1};
 
     std::cout << "grad_5 M_{l 8}:\n"
-              << MatrixCast(m_N1.slice(offsets_grad5_col8, extents_1D), 1, m_7N, device).format(CleanFmt) << "\n\n"
+              << MatrixCast(m_N1.slice(offsets_grad5_col8, extents_grad_M), m_7N, 1, device).format(CleanFmt) << "\n\n"
               << std::endl;
     std::cout << "grad_5 M_{l 15}:\n"
-              << MatrixCast(m_N1.slice(offsets_grad5_col15, extents_1D), 1, m_7N, device).format(CleanFmt) << "\n\n"
+              << MatrixCast(m_N1.slice(offsets_grad5_col15, extents_grad_M), m_7N, 1, device).format(CleanFmt) << "\n\n"
               << std::endl;
 #endif
 }
