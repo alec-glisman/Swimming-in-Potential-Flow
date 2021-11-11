@@ -150,9 +150,10 @@ SystemData::initializeData()
         const int particle_id_3{3 * particle_id};
         const int body_id_7{7 * m_particle_group_id(particle_id)};
 
-        /// @todo: also load data from frame0 of GSD for initial positions so that simulations can continue from
-        /// previous GSD
-        /// @todo: add a check that the first frame's unit quaternions are all identity quaternions (1, 0, 0, 0)^T
+        /// @todo: (future) also load data from frame0 of GSD for initial positions so that simulations can continue
+        /// from previous GSD
+        /// @todo: (future) add a check that the first frame's unit quaternions are all identity quaternions (1, 0, 0,
+        /// 0)^T
         const Eigen::Vector3d disp =
             m_positions_particles.segment<3>(particle_id_3) - m_positions_bodies.segment<3>(body_id_7);
 
@@ -578,7 +579,8 @@ SystemData::rbmMatrixElement(const int particle_id)
     // rigid body motion connectivity tensor elements
     m_rbm_conn.block<3, 3>(body_id_7, particle_id_7).noalias() = m_I3; // translation-translation couple
 
-    /// @FIXME: The teaching SD to swim paper had a negative sign here, but my derivations do not have that
+    /// @FIXME: (check literature) The teaching SD to swim paper had a negative sign here, but my derivations do not
+    /// have that
     m_rbm_conn.block<4, 3>(body_id_7 + 3, particle_id_7).noalias() =
         two_E_T * mat_dr_cross_43; // translation-quaternion couple
 

@@ -131,8 +131,8 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      * attribute `m_GSD_parsed` to true to give some check that the system has been properly initialized. The `Engine`
      * class also checks that this boolean has been set.
      *
-     * @todo Find a better way to handle passing of `this` to `GSDUtil` so that this can be done in `SystemData`
-     * constructor.
+     * @todo (future) Find a better way to handle passing of `this` to `GSDUtil` so that this can be done in
+     * `SystemData` constructor.
      */
     void
     parseGSD();

@@ -191,9 +191,6 @@ RungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::Vec
     }
 
     m_system->setAccelerationsBodies(acc);
-
-    // FIXME: (NEXT) Try overwriting results using PF free algorithm
-    // momForceFree(device);
 }
 
 void
@@ -317,7 +314,7 @@ RungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
     // std::cout << "K:\n" << K.format(CleanFmt) << "\n\n" << std::endl;
     // std::cout << "Q:\n"
     //           << Q.format(CleanFmt) << "\n\n"
-    //           << std::endl; // FIXME: Developes non-zero Q(4) at t=5e-7 (RK4 step 2)
+    //           << std::endl;
     // std::cout << "Q_con:\n" << Q_con.format(CleanFmt) << "\n\n" << std::endl;
     // std::cout << "acc:\n"
     //           << acc.format(CleanFmt) << "\n\n"

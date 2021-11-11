@@ -138,7 +138,7 @@ IF(APPLE)
     
 ELSE()  # Use CUDA when not on MacOS
     SET(LANGS CXX C)
-    # SET(LANGS CXX CUDA)  # TODO: Add cuda back later (removed for GitHub actions)
+    # SET(LANGS CXX CUDA)  # TODO: (future) Add cuda back later (removed for GitHub actions)
 
 ENDIF()
 
