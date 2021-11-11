@@ -587,7 +587,7 @@ SystemData::chiMatrixElement(const int particle_id)
 
 void
 SystemData::gradRbmConnTensorElement(const int particle_id, Eigen::ThreadPoolDevice& device)
-{
+{ // FIXME
     /* ANCHOR: Tensor indices */
     const int  particle_id_3{3 * particle_id};
     const int  particle_id_7{7 * particle_id};
@@ -817,5 +817,6 @@ SystemData::convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device)
     velocities_rbm_particles.device(device)           = m_tens_grad_rbm_conn.contract(xi_xi, contract_jik_jk);
 
     m_accelerations_bodies.noalias() = MatrixCast(velocities_rbm_particles, 7 * m_num_particles, 1, device); // (7N x 1)
+    m_velocities_particles.noalias() += m_rbm_conn.transpose() * m_accelerations_bodies;                     // (7N x 1)
     m_accelerations_bodies.noalias() += m_accelerations_particles_articulation;                              // (7N x 1)
 }
