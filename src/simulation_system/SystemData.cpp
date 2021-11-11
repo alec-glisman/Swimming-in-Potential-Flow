@@ -125,18 +125,16 @@ SystemData::initializeData()
     m_Udwadia_b = Eigen::VectorXd::Zero(m_num_constraints);
 
     // initialize rigid body motion matrices
-    m_rbm_conn          = Eigen::MatrixXd::Zero(m7, n7);
-    m_psi_conv_quat_ang = Eigen::MatrixXd::Zero(m7, m7);
-    m_zeta              = Eigen::MatrixXd::Zero(m7, n7);
-    m_tens_zeta         = Eigen::Tensor<double, 2>(m7, n7);
-    m_tens_zeta.setZero();
+    m_rbm_conn      = Eigen::MatrixXd::Zero(m7, n7);
+    m_tens_rbm_conn = Eigen::Tensor<double, 2>(m7, n7);
+    m_tens_rbm_conn.setZero();
 
     // initialize gradient matrices
     m_chi      = Eigen::MatrixXd::Zero(m7, n3);
     m_tens_chi = Eigen::Tensor<double, 2>(m7, n3);
     m_tens_chi.setZero();
-    m_tens_grad_zeta = Eigen::Tensor<double, 3>(m7, n7, m7);
-    m_tens_grad_zeta.setZero();
+    m_tens_grad_rbm_conn = Eigen::Tensor<double, 3>(m7, n7, m7);
+    m_tens_grad_rbm_conn.setZero();
 
     // Set initial configuration orientation
     spdlog::get(m_logName)->info("Setting initial configuration orientation");
@@ -402,8 +400,6 @@ SystemData::update(Eigen::ThreadPoolDevice& device)
     // std::cout << "accelerations particles:\n" << m_accelerations_particles.format(CleanFmt) << "\n\n" << std::endl;
 
     // std::cout << "rbm_conn:\n" << m_rbm_conn.format(CleanFmt) << "\n\n" << std::endl;
-    // std::cout << "psi:\n" << m_psi_conv_quat_ang.format(CleanFmt) << "\n\n" << std::endl;
-    // std::cout << "zeta:\n" << m_zeta.format(CleanFmt) << "\n\n" << std::endl;
     std::cout << "chi:\n" << m_chi.format(CleanFmt) << "\n\n" << std::endl;
 #endif
 }
@@ -538,21 +534,6 @@ SystemData::rbmMatrixElement(const int particle_id)
 }
 
 void
-SystemData::psiMatrixElement(const int body_id)
-{
-    const int body_id_7{7 * body_id};
-
-    // matrix E from quaterion of body k
-    Eigen::Matrix4d E_body;
-    eMatrix(m_positions_bodies.segment<4>(body_id_7 + 3), E_body);
-
-    // matrix elements of Psi
-    m_psi_conv_quat_ang.block<3, 3>(body_id_7, body_id_7).noalias() = m_I3; // no conversion from linear components
-    m_psi_conv_quat_ang.block<4, 4>(body_id_7 + 3, body_id_7 + 3).noalias() =
-        2 * E_body; // angular-quaternion velocity couple
-}
-
-void
 SystemData::chiMatrixElement(const int particle_id)
 {
     // body number
@@ -599,7 +580,7 @@ SystemData::chiMatrixElement(const int particle_id)
 }
 
 void
-SystemData::gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice& device)
+SystemData::gradRbmConnTensorElement(const int particle_id, Eigen::ThreadPoolDevice& device)
 {
     /* ANCHOR: Tensor indices */
     const int  particle_id_3{3 * particle_id};
@@ -630,13 +611,18 @@ SystemData::gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice
 
     /* ANCHOR: Tensor quantities that will be contracted */
     // moment arm to locater point from particle
-    Eigen::Matrix<double, 4, 3> two_r_tilde_cross_mat = 2.0 * m_rbm_conn.block<4, 3>(body_id_7 + 3, particle_id_7);
-    two_r_tilde_cross_mat.row(0).noalias()            = Eigen::Vector3d::Zero();
+    Eigen::Matrix3d mat_dr_cross;
+    crossProdMat(m_positions_particles_articulation.segment<3>(particle_id_3), mat_dr_cross);
+    // preprend row of zeros
+    Eigen::Matrix<double, 4, 3> two_r_tilde_cross_mat;
+    two_r_tilde_cross_mat.setZero();
+    two_r_tilde_cross_mat.block<3, 3>(1, 0).noalias() = 2.0 * mat_dr_cross;
+
     const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3>> tens_two_r_tilde_cross_mat =
         TensorCast(two_r_tilde_cross_mat, 4, 3);
 
     // E matrix representation of body quaternion from m_psi_conv_quat_ang
-    const Eigen::Matrix4d two_E_body = m_psi_conv_quat_ang.block<4, 4>(body_id_7 + 3, body_id_7 + 3);
+    const Eigen::Matrix4d two_E_body = m_rbm_conn.block<4, 4>(body_id_7 + 3, particle_id_7 + 3);
     const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 4>> tens_two_E_body = TensorCast(two_E_body, 4, 4);
 
     // change of variable matrix element m_chi_tilde
@@ -674,7 +660,7 @@ SystemData::gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice
     // mixed gradient term
     Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> mixed_gradient;
     mixed_gradient.device(device) = two_grad_E_r_tilde_cross_tilde + two_E_grad_r_cross_tilde; // (4, 3, 7)  {i, j, k}
-    m_tens_grad_zeta.slice(offsets_mixed, extents_mixed).device(device) = mixed_gradient;
+    m_tens_grad_rbm_conn.slice(offsets_mixed, extents_mixed).device(device) = mixed_gradient;
 
     /* ANCHOR: tensor contractions for right-half of gradient */
     // 4x4 "identity" tensor with added element for full-rank
@@ -690,7 +676,7 @@ SystemData::gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice
     angular_gradient.device(device) = angular_gradient_preshuffle.shuffle(permute_ikj_ijk);
 
     // angular gradient term
-    m_tens_grad_zeta.slice(offsets_angular, extents_angular).device(device) = angular_gradient;
+    m_tens_grad_rbm_conn.slice(offsets_angular, extents_angular).device(device) = angular_gradient;
 }
 
 void
@@ -704,17 +690,7 @@ SystemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
         rbmMatrixElement(particle_id);
     }
 
-    /* ANCHOR: Compute m_psi_conv_quat_ang */
-    m_psi_conv_quat_ang.setZero();
-
-    for (int body_id = 0; body_id < m_num_bodies; body_id++)
-    {
-        psiMatrixElement(body_id);
-    }
-
-    /* ANCHOR: Compute m_zeta & m_tens_zeta */
-    m_zeta.noalias() = m_psi_conv_quat_ang.transpose() * m_rbm_conn;
-    m_tens_zeta      = TensorCast(m_zeta, 7 * m_num_bodies, 7 * m_num_particles);
+    m_tens_rbm_conn = TensorCast(m_rbm_conn, 7 * m_num_bodies, 7 * m_num_particles);
 }
 
 void
@@ -730,12 +706,12 @@ SystemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
 
     m_tens_chi = TensorCast(m_chi, 7 * m_num_bodies, 3 * m_num_particles);
 
-    /* ANCHOR : Compute m_tens_grad_zeta */
-    m_tens_grad_zeta.setZero();
+    /* ANCHOR : Compute m_tens_grad_rbm_conn */
+    m_tens_grad_rbm_conn.setZero();
 
     for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
-        gradZetaTensorElement(particle_id, device);
+        gradRbmConnTensorElement(particle_id, device);
     }
 }
 
@@ -818,7 +794,7 @@ void
 SystemData::convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device)
 {
     /* ANCHOR: Convert velocity D.o.F. */
-    m_velocities_particles.noalias() = m_zeta.transpose() * m_velocities_bodies;
+    m_velocities_particles.noalias() = m_rbm_conn.transpose() * m_velocities_bodies;
     m_velocities_particles.noalias() += m_velocities_particles_articulation;
 
     /* ANCHOR: Convert acceleration D.o.F. */
@@ -832,7 +808,7 @@ SystemData::convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device)
     const Eigen::Tensor<double, 2> xi_xi = xi.contract(xi, outer_product);                    // (7M x 7M)
 
     Eigen::Tensor<double, 1> velocities_rbm_particles = Eigen::Tensor<double, 1>(7 * m_num_particles); // (7N x 1)
-    velocities_rbm_particles.device(device)           = m_tens_grad_zeta.contract(xi_xi, contract_jik_jk);
+    velocities_rbm_particles.device(device)           = m_tens_grad_rbm_conn.contract(xi_xi, contract_jik_jk);
 
     m_accelerations_bodies.noalias() = MatrixCast(velocities_rbm_particles, 7 * m_num_particles, 1, device); // (7N x 1)
     m_accelerations_bodies.noalias() += m_accelerations_particles_articulation;                              // (7N x 1)

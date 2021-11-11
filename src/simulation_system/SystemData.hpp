@@ -228,9 +228,9 @@ class SystemData : public std::enable_shared_from_this<SystemData>
     chiMatrixElement(const int particle_id);
 
     /**
-     * @brief Computes \nabla_{\xi} \zeta_{i \alpha} tensor for given particle number and body number.
+     * @brief Computes \nabla_{\xi} \Sigma_{i \alpha} tensor for given particle number and body number.
      *
-     * @details Modifies `m_tens_grad_zeta`
+     * @details Modifies `m_tens_grad_rbm_conn`
      * Some variables must be pre-computed:
      *     `m_rbm_conn`
      *     `m_psi_conv_quat_ang`
@@ -239,7 +239,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      * @param particle_id Particle number (alpha, i is body number)
      */
     void
-    gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice& device);
+    gradRbmConnTensorElement(const int particle_id, Eigen::ThreadPoolDevice& device);
 
     /**
      * @brief Computes the rigid body motion connectivity tensors.
@@ -500,17 +500,12 @@ class SystemData : public std::enable_shared_from_this<SystemData>
     /* ANCHOR: rigid body motion tensors */
     /// (7M x 7N) @f$ \boldsymbol{\Sigma} @f$ rigid body motion connectivity tensor
     Eigen::MatrixXd m_rbm_conn;
-    /// (7M x 7M) @f$ \boldsymbol{\Psi} @f$ converts linear/quaternion body velocity D.o.F. to linear/angular
-    /// velocity D.o.F.
-    Eigen::MatrixXd m_psi_conv_quat_ang;
-    /// (7M x 7N) @f$ \boldsymbol{\zeta} @f$ converts linear/angular particle velocities to linear/quaternion body
-    /// velocity D.o.F.
-    Eigen::MatrixXd m_zeta;
 
-    /// (7M x 7N) tensor version of `m_zeta`
-    Eigen::Tensor<double, 2> m_tens_zeta;
-    /// (7M x 7N x 7M) @f$ \nabla_{\xi} \boldsymbol{\zeta} @f$
-    Eigen::Tensor<double, 3> m_tens_grad_zeta;
+    /// (7M x 7N) tensor version of `m_rbm_conn`
+    Eigen::Tensor<double, 2> m_tens_rbm_conn;
+
+    /// (7M x 7N x 7M) @f$ \nabla_{\xi} \boldsymbol{\sigma} @f$
+    Eigen::Tensor<double, 3> m_tens_grad_rbm_conn;
 
     /// (7M x 7N) @f$ \boldsymbol{\chi} @f$ converts particle position D.o.F. to body position/quaternion D.o.F.
     Eigen::MatrixXd m_chi;
@@ -934,15 +929,15 @@ class SystemData : public std::enable_shared_from_this<SystemData>
 
     /* ANCHOR: rigid body motion tensors */
     const Eigen::Tensor<double, 2>&
-    tensZeta() const
+    tensRbmConn() const
     {
-        return m_tens_zeta;
+        return m_tens_rbm_conn;
     }
 
     const Eigen::Tensor<double, 3>&
-    tensGradZeta() const
+    tensGradRbmConn() const
     {
-        return m_tens_grad_zeta;
+        return m_tens_grad_rbm_conn;
     }
 
     const Eigen::Tensor<double, 2>&

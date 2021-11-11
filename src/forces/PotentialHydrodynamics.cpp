@@ -327,9 +327,9 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     const Eigen::array<int, 3> permute_ikj_ijk({0, 2, 1}); // (i, j, k) --> (i, j, k)
 
     /* ANCHOR: Compute linear combinations of total mass matrix and zeta */
-    m_M2.device(device) = m_system->tensZeta().contract(m_tens_M_total, contract_il_lj);
+    m_M2.device(device) = m_system->tensRbmConn().contract(m_tens_M_total, contract_il_lj);
 
-    m_M3.device(device) = m_M2.contract(m_system->tensZeta(), contract_il_jl);
+    m_M3.device(device) = m_M2.contract(m_system->tensRbmConn(), contract_il_jl);
     m_mat_M3            = MatrixCast(m_M3, m_7M, m_7M, device);
 
     /* ANCHOR: Compute linear combinations of GRADIENTS of total mass matrix and zeta */
@@ -337,17 +337,17 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     m_N1.device(device) = m_grad_M_added_body_coords;
 
     // N^{(2)}
-    N2_term1_preshuffle.device(device) = m_system->tensGradZeta().contract(m_tens_M_total, contract_il_lj);
+    N2_term1_preshuffle.device(device) = m_system->tensGradRbmConn().contract(m_tens_M_total, contract_il_lj);
 
     m_N2.device(device) = N2_term1_preshuffle.shuffle(permute_ikj_ijk);
-    m_N2.device(device) += m_system->tensZeta().contract(m_N1, contract_il_lj);
+    m_N2.device(device) += m_system->tensRbmConn().contract(m_N1, contract_il_lj);
 
     // N^{(3)}
-    N3_term1_preshuffle.device(device) = N2_term1.contract(m_system->tensZeta(), contract_il_jl);
-    N3_term1_preshuffle.device(device) += N2_term2.contract(m_system->tensZeta(), contract_il_jl);
+    N3_term1_preshuffle.device(device) = N2_term1.contract(m_system->tensRbmConn(), contract_il_jl);
+    N3_term1_preshuffle.device(device) += N2_term2.contract(m_system->tensRbmConn(), contract_il_jl);
 
     m_N3.device(device) = N3_term1_preshuffle.shuffle(permute_ikj_ijk);
-    m_N3.device(device) += m_M2.contract(m_system->tensGradZeta(), contract_il_jl);
+    m_N3.device(device) += m_M2.contract(m_system->tensGradRbmConn(), contract_il_jl);
 
     // FIXME: debugging print statements
 #if !defined(NDEBUG)
@@ -377,8 +377,9 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
               << std::endl;
 
     std::cout << "N2_{j k 5} term 2:\n"
-              << MatrixCast((m_system->tensZeta().contract(m_N1, contract_il_lj)).slice(offsets_dim5_grad, extents_2D),
-                            m_7M, m_7N, device)
+              << MatrixCast(
+                     (m_system->tensRbmConn().contract(m_N1, contract_il_lj)).slice(offsets_dim5_grad, extents_2D),
+                     m_7M, m_7N, device)
                      .format(CleanFmt)
               << "\n\n"
               << std::endl;
@@ -387,7 +388,7 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     const Eigen::array<Eigen::Index, 3> offsets_zeta = {0, 0};
 
     std::cout << "zeta_{1 l}:\n"
-              << MatrixCast(m_system->tensZeta().slice(offsets_zeta, extents_zeta), 1, m_7N, device).format(CleanFmt)
+              << MatrixCast(m_system->tensRbmConn().slice(offsets_zeta, extents_zeta), 1, m_7N, device).format(CleanFmt)
               << "\n\n"
               << std::endl;
 
