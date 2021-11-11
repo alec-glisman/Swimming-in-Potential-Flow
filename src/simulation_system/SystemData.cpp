@@ -462,17 +462,23 @@ SystemData::velocitiesArticulation()
 
     for (int body_id = 0; body_id < m_num_bodies; body_id++)
     {
-        m_velocities_particles_articulation.segment<3>(7 * (particle_id + 1)).noalias() =
-            v1_mag * m_orientations_particles.segment<3>(3 * (particle_id + 1));
+        const int constrained1_3{3 * (particle_id + 1)};
+        const int constrained1_7{7 * (particle_id + 1)};
 
-        m_velocities_particles_articulation.segment<3>(7 * (particle_id + 2)).noalias() =
-            v3_mag * m_orientations_particles.segment<3>(3 * (particle_id + 2));
+        const int constrained2_3{3 * (particle_id + 2)};
+        const int constrained2_7{7 * (particle_id + 2)};
+
+        m_velocities_particles_articulation.segment<3>(constrained1_7).noalias() =
+            v1_mag * m_orientations_particles.segment<3>(constrained1_3);
+
+        m_velocities_particles_articulation.segment<3>(constrained2_7).noalias() =
+            v3_mag * m_orientations_particles.segment<3>(constrained2_3);
 
         // Image system: flip z components, leave x,y unchanged
         if (particle_id >= (m_num_particles / 2))
         {
-            m_velocities_particles_articulation(7 * (particle_id + 1) + 2) *= -1;
-            m_velocities_particles_articulation(7 * (particle_id + 2) + 2) *= -1;
+            m_velocities_particles_articulation(constrained1_7 + 2) *= -1;
+            m_velocities_particles_articulation(constrained2_7 + 2) *= -1;
         }
 
         particle_id += 3;
@@ -495,17 +501,23 @@ SystemData::accelerationsArticulation()
 
     for (int body_id = 0; body_id < m_num_bodies; body_id++)
     {
-        m_accelerations_particles_articulation.segment<3>(7 * (particle_id + 1)).noalias() =
-            a1_mag * m_orientations_particles.segment<3>(3 * (particle_id + 1));
+        const int constrained1_3{3 * (particle_id + 1)};
+        const int constrained1_7{7 * (particle_id + 1)};
 
-        m_accelerations_particles_articulation.segment<3>(7 * (particle_id + 2)).noalias() =
-            a3_mag * m_orientations_particles.segment<3>(3 * (particle_id + 2));
+        const int constrained2_3{3 * (particle_id + 2)};
+        const int constrained2_7{7 * (particle_id + 2)};
+
+        m_accelerations_particles_articulation.segment<3>(constrained1_7).noalias() =
+            a1_mag * m_orientations_particles.segment<3>(constrained1_3);
+
+        m_accelerations_particles_articulation.segment<3>(constrained2_7).noalias() =
+            a3_mag * m_orientations_particles.segment<3>(constrained2_3);
 
         // Image system: flip z components, leave x,y unchanged
         if (particle_id >= (m_num_particles / 2))
         {
-            m_accelerations_particles_articulation(7 * (particle_id + 1) + 2) *= -1;
-            m_accelerations_particles_articulation(7 * (particle_id + 2) + 2) *= -1;
+            m_accelerations_particles_articulation(constrained1_7 + 2) *= -1;
+            m_accelerations_particles_articulation(constrained2_7 + 2) *= -1;
         }
 
         particle_id += 3;
