@@ -40,7 +40,7 @@ my $buildDir       = "build/" . lc $build;      # Build folder path
 my $simulationTag    = "collinear-swimmer-isolated";
 my $projectName      = "bodies-in-potential-flow";
 my $inputDir         = "input";
-my @inputData        = ( "varyRelDisp", "varyEpsilon", "varyPhaseAngle", "varyDt"); # If using wall: "varyZHeight" 
+my @inputData        = ( "varyRelDisp", "varyEpsilon", "varyPhaseAngle", "varyDt"); # If using wall: "varyZHeight"
 my $numSimulationTypes = scalar @inputData;
 my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
 
@@ -199,7 +199,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		my $gsd_path = ${simulation_dir} . "/" . "data.gsd";
 
 		# Simulation variables
-		my $dt          = 1.00e-5;
+		my $dt          = 1.00e-6;
 		my $R_avg       = 4.00e+0;
 		my $phase_angle = -1.57079632679e+0;
 		my $U0          = 2.00e+0;
@@ -224,8 +224,8 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		}
 
 		# Generate GSD file
-		system( "python3 " . ${pythonGSDCreation} . " --GSD-path=" . ${gsd_path} . " --dt=" . ${dt} . " --R-avg=" . ${R_avg} . " --phase-angle=" . ${phase_angle} . " --U0=" . ${U0} . " --omega=" . ${omega}) 
-            and die "Unable to generate GSD file: $?, $!";
+		system( "python3 " . ${pythonGSDCreation} . " --GSD-path=" . ${gsd_path} . " --dt=" . ${dt} . " --R-avg=" . ${R_avg} . " --phase-angle=" . ${phase_angle} . " --U0=" . ${U0} . " --omega=" . ${omega})
+		  and die "Unable to generate GSD file: $?, $!";
 
 		# Prepare for simulation
 		make_path( "${simulation_dir}/${analysisDir}" );
