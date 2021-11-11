@@ -612,6 +612,14 @@ SystemData::chiMatrixElement(const int particle_id)
         m_I3; // convert body (linear) position derivatives to particle linear coordinate derivatives
     m_chi.block<4, 3>(body_id_7 + 3, particle_id_3).noalias() =
         g_matrix; // convert body (quaternion) position derivatives to particle linear coordinate derivatives
+
+    // FIXME: debugging print statements
+#if !defined(NDEBUG)
+    Eigen::IOFormat CleanFmt(8, 0, ", ", "\n", "[", "]");
+
+    std::cout << "SystemData::chiMatrixElement(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
+    std::cout << "G matrix for particle " << particle_id << ":\n" << g_matrix.format(CleanFmt) << "\n\n" << std::endl;
+#endif
 }
 
 void
