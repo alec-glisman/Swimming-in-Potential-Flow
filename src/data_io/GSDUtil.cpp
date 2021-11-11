@@ -529,6 +529,24 @@ GSDUtil::writeParameters()
     return_val  = gsd_write_chunk(m_system->handle().get(), "log/integrator/t", GSD_TYPE_DOUBLE, 1, 1, 0, (void*)&time);
     m_system->setReturnVal(return_val);
     checkGSDReturn();
+
+    spdlog::get(m_logName)->info("GSD writing log/hydrodynamics/E_internal");
+    double e_int = m_system->eHydroInt();
+    return_val   = gsd_write_chunk(m_system->handle().get(), "log/hydrodynamics/E_internal", GSD_TYPE_DOUBLE, 1, 1, 0,
+                                 (void*)&e_int);
+    m_system->setReturnVal(return_val);
+
+    spdlog::get(m_logName)->info("GSD writing log/hydrodynamics/E_locater_internal");
+    double e_loc_int = m_system->eHydroLocInt();
+    return_val = gsd_write_chunk(m_system->handle().get(), "log/hydrodynamics/E_locater_internal", GSD_TYPE_DOUBLE, 1,
+                                 1, 0, (void*)&e_loc_int);
+    m_system->setReturnVal(return_val);
+
+    spdlog::get(m_logName)->info("GSD writing log/hydrodynamics/E_locater");
+    double e_loc = m_system->eHydroLoc();
+    return_val   = gsd_write_chunk(m_system->handle().get(), "log/hydrodynamics/E_locater", GSD_TYPE_DOUBLE, 1, 1, 0,
+                                 (void*)&e_loc);
+    m_system->setReturnVal(return_val);
 }
 
 void
