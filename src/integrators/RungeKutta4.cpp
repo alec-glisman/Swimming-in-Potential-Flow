@@ -187,13 +187,13 @@ RungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::Vec
     else
     {
         // update Udwadia system for all bodies
-        // udwadiaKalaba(acc);
+        udwadiaKalaba(acc);
     }
 
-    // m_system->setAccelerationsBodies(acc);
+    m_system->setAccelerationsBodies(acc);
 
     // FIXME: (NEXT) Try overwriting results using PF free algorithm
-    momForceFree(device);
+    // momForceFree(device);
 }
 
 void
