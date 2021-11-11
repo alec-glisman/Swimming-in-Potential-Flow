@@ -804,7 +804,7 @@ SystemData::convertBody2ParticleOrient()
         Eigen::IOFormat CleanFmt(16, 0, ", ", "\n", "[", "]");
 
         const double epsilon_zero{1e-12}; // "small value" close to zero for double comparison
-        const double epsilon_norm{1e-8};  // "small value" close to zero for double comparison
+        const double epsilon_norm{1e-6};  // "small value" close to zero for double comparison
 
         const double particle_quat_norm{theta_body.norm()};
         const double unit_norm_error_mag{particle_quat_norm - 1.0};
@@ -829,7 +829,7 @@ SystemData::convertBody2ParticleOrient()
                 "Quaternion is not unitary at t = " + std::to_string(m_t) +
                 ".\n\tParticle #: " + std::to_string(particle_id) + ",\n\tNorm - 1: " + stream_error_mag.str() +
                 ",\n\ttheta_body: " + std::to_string(theta_body.w()) + ", " + std::to_string(theta_body.x()) + ", " +
-                std::to_string(theta_body.y()) + ", " + std::to_string(theta_body.z()) + };
+                std::to_string(theta_body.y()) + ", " + std::to_string(theta_body.z())};
 
             throw std::logic_error(unit_norm_msg);
         }
