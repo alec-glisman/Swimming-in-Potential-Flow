@@ -187,12 +187,13 @@ RungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::Vec
     else
     {
         // update Udwadia system for all bodies
-        udwadiaKalaba(acc);
-
-        // FIXME: (NEXT) Try overwriting results using PF free algorithm
+        // udwadiaKalaba(acc);
     }
 
-    m_system->setAccelerationsBodies(acc);
+    // m_system->setAccelerationsBodies(acc);
+
+    // FIXME: (NEXT) Try overwriting results using PF free algorithm
+    momForceFree(device);
 }
 
 void
@@ -327,42 +328,43 @@ RungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
 void
 RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
 {
-    const int first_particle{0};
-
     const int num_particles{3};                   // Nb
     const int num_particles_3{3 * num_particles}; // 3 * Nb
 
-    const Eigen::array<Eigen::Index, 3> extents = {3, 3, 3};
+    const Eigen::array<Eigen::Index, 3> extents_333 = {3, 3, 3};
 
     /* ANCHOR: Assemble the tensor quantities */
     Eigen::Matrix<double, 3, -1> rbmconn = Eigen::MatrixXd::Zero(3, num_particles_3); // (3 x 3 Nb)
+    Eigen::Matrix3d              Id      = Eigen::MatrixXd::Identity(3, 3);
 
-    Eigen::MatrixXd          M_eff = Eigen::MatrixXd::Zero(num_particles_3, num_particles_3); // (3 Nb x 3 Nb)
+    Eigen::MatrixXd M_eff = Eigen::MatrixXd::Zero(num_particles_3, num_particles_3); // (3 Nb x 3 Nb)
+
     Eigen::Tensor<double, 3> grad_M_eff =
         Eigen::Tensor<double, 3>(num_particles_3, num_particles_3, num_particles_3); // (3 Nb x 3 Nb x 3 Nb)
+    grad_M_eff.setZero();
 
     Eigen::VectorXd vel_artic = Eigen::VectorXd::Zero(num_particles_3); // (3 Nb x 1)
     Eigen::VectorXd acc_artic = Eigen::VectorXd::Zero(num_particles_3); // (3 Nb x 1)
 
-    for (int particle_id = first_particle; particle_id < (first_particle + num_particles); particle_id++)
+    for (int particle_id = 0; particle_id < num_particles; particle_id++)
     {
         const int particle_id_3{3 * particle_id};
         const int particle_id_7{7 * particle_id};
 
-        rbmconn.block<3, 3>(0, particle_id_3).noalias() = m_system->i3(); // translation-translation couple
+        rbmconn.block<3, 3>(0, particle_id_3).noalias() = Id; // translation-translation couple
 
-        for (int j = first_particle; j < (first_particle + num_particles); j++)
+        for (int j = 0; j < num_particles; j++)
         {
             M_eff.block<3, 3>(particle_id_3, 3 * j).noalias() =
                 m_potHydro->mTotal().block<3, 3>(particle_id_7, 7 * j); // translation-translation couple
 
-            for (int k = first_particle; k < (first_particle + num_particles); k++)
+            for (int k = 0; k < (0 + num_particles); k++)
             {
-                const Eigen::array<Eigen::Index, 3> offsets_6   = {particle_id_3, 3 * j, 3 * k};
+                const Eigen::array<Eigen::Index, 3> offsets_3   = {particle_id_3, 3 * j, 3 * k};
                 const Eigen::array<Eigen::Index, 3> offsets_773 = {particle_id_7, 7 * j, 3 * k};
 
-                grad_M_eff.slice(offsets_6, extents).device(device) =
-                    m_potHydro->gradMAdded().slice(offsets_773, extents);
+                grad_M_eff.slice(offsets_3, extents_333).device(device) =
+                    m_potHydro->gradMAdded().slice(offsets_773, extents_333);
             }
         }
 
@@ -378,19 +380,17 @@ RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
     /* ANCHOR: Calculate velocity components */
     // calculate M_tilde = Sigma * M_total * Sigma^T;  (3 x 3)
     const Eigen::Matrix<double, -1, 3> M_tilde_hold = M_eff * rbmconn_T;
-    const Eigen::Matrix<double, 3, 3>  M_tilde      = rbmconn * M_tilde_hold;
+    const Eigen::Matrix3d              M_tilde      = rbmconn * M_tilde_hold;
 
     /* STUB: Solve for rigid body motion velocity components */
     // calculate P_script = Sigma * M_total * V_articulation;  (3 x 1)
-    const Eigen::Matrix<double, -1, 1> P_script_hold = M_eff * vel_artic;
-    const Eigen::Matrix<double, 3, 1>  P_script      = rbmconn * P_script_hold;
+    const Eigen::VectorXd P_script_hold = M_eff * vel_artic;
+    const Eigen::Vector3d P_script      = rbmconn * P_script_hold;
 
     // calculate U_swim = - M_tilde_inv * P_script; U_swim has translation components
-    const Eigen::Matrix<double, 3, 1> U_swim = -M_tilde.fullPivLu().solve(P_script); // linear components
+    const Eigen::Vector3d U_swim = -M_tilde.fullPivLu().solve(P_script); // linear components
     // convert U_swim to 4d vector for quaternion rotation
-    Eigen::Quaterniond U_swim_4d;
-    U_swim_4d.w()   = 0.0;
-    U_swim_4d.vec() = U_swim;
+    const Eigen::Quaterniond U_swim_4d(0.0, U_swim(0), U_swim(1), U_swim(2));
 
     /* ANCHOR: Output velocity data back to m_system */
     Eigen::VectorXd vel_body = Eigen::VectorXd::Zero(m_7M);
@@ -399,10 +399,14 @@ RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
     {
         const int body_id_7{7 * body_id};
 
-        const Eigen::Quaterniond theta_body(m_system->positionsBodies().segment<4>(body_id_7 + 3));
-        const Eigen::Quaterniond U_swim_rot_4d = theta_body * U_swim_4d * theta_body.inverse();
+        // body unit quaternion
+        const Eigen::Vector4d    theta = m_system->positionsBodies().segment<4>(body_id_7 + 3);
+        const Eigen::Quaterniond theta_body(theta(0), theta(1), theta(2), theta(3));
 
-        vel_body.segment<3>(body_id_7).noalias() = U_swim_rot_4d.vec();
+        const Eigen::Quaterniond U_swim_rot_4d = theta_body * U_swim_4d * theta_body.inverse();
+        const Eigen::Vector3d    U_swim_rot_3d = U_swim_rot_4d.vec();
+
+        vel_body.segment<3>(body_id_7).noalias() = U_swim_rot_3d;
     }
 
     m_system->setVelocitiesBodies(vel_body);
@@ -412,7 +416,7 @@ RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
 
     Eigen::VectorXd vel_part = Eigen::VectorXd::Zero(num_particles_3); // (3 Nb x 1)
 
-    for (int particle_id = first_particle; particle_id < (first_particle + num_particles); particle_id++)
+    for (int particle_id = 0; particle_id < (0 + num_particles); particle_id++)
     {
         const int particle_id_3{3 * particle_id};
         const int particle_id_7{7 * particle_id};
@@ -436,16 +440,15 @@ RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
 
     /* STUB: Solve for rigid body motion velocity components */
     // calculate F_script = Sigma * (M_total * A_articulation + (gradM U) U);  (3 x 1)
-    const Eigen::Matrix<double, -1, 1> F_script_hold = M_eff * acc_artic + gradM_U * vel_part;
-    const Eigen::Matrix<double, 3, 1>  F_script      = rbmconn * F_script_hold;
+    Eigen::VectorXd F_script_hold = M_eff * acc_artic;
+    F_script_hold.noalias() += gradM_U * vel_part;
+    const Eigen::Vector3d F_script = rbmconn * F_script_hold;
 
     // calculate A_swim = - M_tilde_inv * P_script; A_swim has translation components
-    const Eigen::Matrix<double, 3, 1> A_swim = -M_tilde.fullPivLu().solve(F_script); // linear components
+    const Eigen::Vector3d A_swim = -M_tilde.fullPivLu().solve(F_script); // linear components
 
     // convert A_swim to 4d vector for quaternion rotation
-    Eigen::Quaterniond A_swim_4d;
-    A_swim_4d.w()   = 0.0;
-    A_swim_4d.vec() = A_swim;
+    Eigen::Quaterniond A_swim_4d(0.0, A_swim(0), A_swim(1), A_swim(2));
 
     /* ANCHOR: Output velocity data back to m_system */
     Eigen::VectorXd acc_body = Eigen::VectorXd::Zero(m_7M);
@@ -454,10 +457,14 @@ RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
     {
         const int body_id_7{7 * body_id};
 
-        const Eigen::Quaterniond theta_body(m_system->positionsBodies().segment<4>(body_id_7 + 3));
-        const Eigen::Quaterniond A_swim_rot_4d = theta_body * A_swim_4d * theta_body.inverse();
+        // body unit quaternion
+        const Eigen::Vector4d    theta = m_system->positionsBodies().segment<4>(body_id_7 + 3);
+        const Eigen::Quaterniond theta_body(theta(0), theta(1), theta(2), theta(3));
 
-        acc_body.segment<3>(body_id_7).noalias() = A_swim_rot_4d.vec();
+        const Eigen::Quaterniond A_swim_rot_4d = theta_body * A_swim_4d * theta_body.inverse();
+        const Eigen::Vector3d    A_swim_rot_3d = A_swim_rot_4d.vec();
+
+        acc_body.segment<3>(body_id_7).noalias() = A_swim_rot_3d;
     }
 
     m_system->setAccelerationsBodies(acc_body);
