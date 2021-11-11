@@ -82,6 +82,9 @@ Engine::run()
         // Output data
         if ((m_system->timestep() % write_step == 0) || (m_system->t() >= m_system->tf()))
         {
+            spdlog::get(m_logName)->info("Normalizing quaternions at t = {0}", m_system->t());
+            m_system->normalizeQuaternions();
+
             spdlog::get(m_logName)->info("Writing frame at t = {0}", m_system->t());
             m_system->gsdUtil()->writeFrame();
             m_system->logData();

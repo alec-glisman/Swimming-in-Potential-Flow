@@ -419,6 +419,19 @@ SystemData::update(Eigen::ThreadPoolDevice& device)
 }
 
 void
+SystemData::normalizeQuaternions()
+{
+    for (int body_id = 0; body_id < m_num_bodies; body_id++)
+    {
+        const int body_id_7{7 * body_id};
+
+        const double quaternion_norm{m_positions_bodies.segment<4>(body_id_7 + 3).norm()};
+
+        m_positions_bodies.segment<4>(body_id_7 + 3) /= quaternion_norm;
+    }
+}
+
+void
 SystemData::positionsArticulation()
 {
 
