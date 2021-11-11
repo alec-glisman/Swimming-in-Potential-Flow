@@ -214,10 +214,11 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      * coordinates to (linear) particle relative configuration position coordinates.
      *
      * @details Modifies `m_chi`
-     * 
-     * @see For Wikipedia typeset version of rotated position w.r.t. body quaternion: https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Differentiation_with_respect_to_the_rotation_quaternion
-     * 
-     * @see For detailed derivation: Lee, Byung-Uk (1991), "Differentiation with Quaternions, Appendix B", 
+     *
+     * @see For Wikipedia typeset version of rotated position w.r.t. body quaternion:
+     * https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Differentiation_with_respect_to_the_rotation_quaternion
+     *
+     * @see For detailed derivation: Lee, Byung-Uk (1991), "Differentiation with Quaternions, Appendix B",
      * Ph. D. Thesis, Stereo Matching of Skull Landmarks, Stanford University: 57–58
      * http://home.ewha.ac.kr/~bulee/quaternion.pdf
      *
