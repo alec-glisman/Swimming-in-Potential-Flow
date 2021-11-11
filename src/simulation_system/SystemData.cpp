@@ -384,6 +384,10 @@ SystemData::update(Eigen::ThreadPoolDevice& device)
     // std::cout << "SystemData::update(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
     // std::cout << "t: " << m_t << "\n\n" << std::endl;
 
+    // std::cout << "positions particles articulation init norm:\n"
+    //           << m_positions_particles_articulation_init_norm.format(CleanFmt) << "\n\n"
+    //           << std::endl;
+
     // std::cout << "positions particles articulation:\n"
     //           << m_positions_particles_articulation.format(CleanFmt) << "\n\n"
     //           << std::endl;
@@ -430,12 +434,14 @@ SystemData::positionsArticulation()
     for (int body_id = 0; body_id < m_num_bodies; body_id++)
     {
         // FIXME: There seems to be a bug here where y-components are being flipped too
+        const int constrained1_3{3 * (particle_id + 1)};
+        const int constrained2_3{3 * (particle_id + 2)};
 
-        m_positions_particles_articulation.segment<3>(3 * (particle_id + 1)).noalias() =
-            r1_mag * m_orientations_particles.segment<3>(3 * (particle_id + 1));
+        m_positions_particles_articulation.segment<3>(constrained1_3).noalias() =
+            r1_mag * m_orientations_particles.segment<3>(constrained1_3);
 
-        m_positions_particles_articulation.segment<3>(3 * (particle_id + 2)).noalias() =
-            r3_mag * m_orientations_particles.segment<3>(3 * (particle_id + 2));
+        m_positions_particles_articulation.segment<3>(constrained2_3).noalias() =
+            r3_mag * m_orientations_particles.segment<3>(constrained2_3);
 
         particle_id += 3;
     }
@@ -787,8 +793,10 @@ SystemData::convertBody2ParticlePos()
         const int particle_id_3{3 * particle_id};
         const int body_id_7{7 * m_particle_group_id(particle_id)};
 
-        m_positions_particles.segment<3>(particle_id_3).noalias() =
-            m_positions_bodies.segment<3>(body_id_7) + m_positions_particles_articulation.segment<3>(particle_id_3);
+        m_positions_particles.segment<3>(particle_id_3).noalias() = m_positions_bodies.segment<3>(body_id_7);
+
+        m_positions_particles.segment<3>(particle_id_3).noalias() +=
+            m_positions_particles_articulation.segment<3>(particle_id_3);
     }
 }
 
