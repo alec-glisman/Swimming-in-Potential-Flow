@@ -220,7 +220,7 @@ RungeKutta4::imageBodyPosVel(Eigen::VectorXd& pos, Eigen::VectorXd& vel)
         vel.segment<7>(img_body_id_7).noalias() = vel.segment<7>(real_body_id_7);
 
         vel(img_body_id_7 + 2) *= -1;
-        vel.segment<2>(img_body_id_7 + 4) *= -1; // FIXME: Is this true for first time derivative?
+        vel.segment<2>(img_body_id_7 + 4) *= -1;
     }
 }
 
@@ -239,7 +239,7 @@ RungeKutta4::imageBodyAcc(Eigen::VectorXd& acc)
         acc.segment<7>(img_body_id_7).noalias() = acc.segment<7>(real_body_id_7);
 
         acc(img_body_id_7 + 2) *= -1;
-        acc.segment<2>(img_body_id_7 + 4) *= -1; // FIXME: Is this true for second time derivative?
+        acc.segment<2>(img_body_id_7 + 4) *= -1;
     }
 }
 
@@ -309,18 +309,18 @@ RungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
     // FIXME: debugging print statements
 #if !defined(NDEBUG)
     Eigen::IOFormat CleanFmt(16, 0, ", ", "\n", "[", "]");
-    std::cout << "RungeKutta4::udwadiaKalaba(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
+    // std::cout << "RungeKutta4::udwadiaKalaba(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
     // std::cout << "t: " << m_system->t() << "\n\n" << std::endl;
     // std::cout << "M_eff:\n" << M_eff.format(CleanFmt) << "\n\n" << std::endl;
     // std::cout << "M_eff_inv:\n" << M_eff_inv.format(CleanFmt) << "\n\n" << std::endl;
     // std::cout << "K:\n" << K.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "Q:\n"
-              << Q.format(CleanFmt) << "\n\n"
-              << std::endl; // FIXME: Developes non-zero Q(4) at t=5e-7 (RK4 step 2)
-    std::cout << "Q_con:\n" << Q_con.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "acc:\n"
-              << acc.format(CleanFmt) << "\n\n"
-              << std::endl; // FIXME: Developes non-zero acc(4) at t=5e-7 (RK4 step 2)
+    // std::cout << "Q:\n"
+    //           << Q.format(CleanFmt) << "\n\n"
+    //           << std::endl; // FIXME: Developes non-zero Q(4) at t=5e-7 (RK4 step 2)
+    // std::cout << "Q_con:\n" << Q_con.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "acc:\n"
+    //           << acc.format(CleanFmt) << "\n\n"
+    //           << std::endl;
 #endif
 }
 

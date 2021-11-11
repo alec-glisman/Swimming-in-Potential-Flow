@@ -414,7 +414,7 @@ SystemData::update(Eigen::ThreadPoolDevice& device)
     // std::cout << "accelerations particles:\n" << m_accelerations_particles.format(CleanFmt) << "\n\n" << std::endl;
 
     // std::cout << "rbm_conn:\n" << m_rbm_conn.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "chi:\n" << m_chi.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "chi:\n" << m_chi.format(CleanFmt) << "\n\n" << std::endl;
 #endif
 }
 
@@ -433,7 +433,6 @@ SystemData::positionsArticulation()
 
     for (int body_id = 0; body_id < m_num_bodies; body_id++)
     {
-        // FIXME: There seems to be a bug here where y-components are being flipped too
         const int constrained1_3{3 * (particle_id + 1)};
         const int constrained2_3{3 * (particle_id + 2)};
 
@@ -618,16 +617,17 @@ SystemData::chiMatrixElement(const int particle_id)
 #if !defined(NDEBUG)
     Eigen::IOFormat CleanFmt(8, 0, ", ", "\n", "[", "]");
 
-    std::cout << "SystemData::chiMatrixElement(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
-    std::cout << "G matrix for particle " << particle_id << ":\n" << g_matrix.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "SystemData::chiMatrixElement(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
+    // std::cout << "G matrix for particle " << particle_id << ":\n" << g_matrix.format(CleanFmt) << "\n\n" <<
+    // std::endl;
 
-    std::cout << "theta_body.w(): " << theta_body.w()
-              << ", theta_body.vec(): " << theta_body.vec().transpose().format(CleanFmt) << "\n\n"
-              << std::endl;
+    // std::cout << "theta_body.w(): " << theta_body.w()
+    //           << ", theta_body.vec(): " << theta_body.vec().transpose().format(CleanFmt) << "\n\n"
+    //           << std::endl;
 
-    std::cout << "r_theta.w(): " << r_theta.w() << ", r_theta.vec(): " << r_theta.vec().transpose().format(CleanFmt)
-              << "\n\n"
-              << std::endl;
+    // std::cout << "r_theta.w(): " << r_theta.w() << ", r_theta.vec(): " << r_theta.vec().transpose().format(CleanFmt)
+    //           << "\n\n"
+    //           << std::endl;
 
 #endif
 }

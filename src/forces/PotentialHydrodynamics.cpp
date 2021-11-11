@@ -352,7 +352,7 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     // FIXME: debugging print statements
 #if !defined(NDEBUG)
     Eigen::IOFormat CleanFmt(8, 0, ", ", "\n", "[", "]");
-    std::cout << "PotentialHydrodynamics::calcBodyTensors(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
+    // std::cout << "PotentialHydrodynamics::calcBodyTensors(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
 
     const Eigen::array<Eigen::Index, 3> offsets_dim5_grad = {0, 0, 4};
     const Eigen::array<Eigen::Index, 3> extents_2D        = {m_7M, m_7N, 1};
@@ -396,12 +396,14 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     const Eigen::array<Eigen::Index, 3> offsets_grad5_col15 = {0, 14, 4};
     const Eigen::array<Eigen::Index, 3> extents_grad_M      = {m_7N, 1, 1};
 
-    std::cout << "grad_5 M_{l 8}:\n"
-              << MatrixCast(m_N1.slice(offsets_grad5_col8, extents_grad_M), m_7N, 1, device).format(CleanFmt) << "\n\n"
-              << std::endl;
-    std::cout << "grad_5 M_{l 15}:\n"
-              << MatrixCast(m_N1.slice(offsets_grad5_col15, extents_grad_M), m_7N, 1, device).format(CleanFmt) << "\n\n"
-              << std::endl;
+    // std::cout << "grad_5 M_{l 8}:\n"
+    //           << MatrixCast(m_N1.slice(offsets_grad5_col8, extents_grad_M), m_7N, 1, device).format(CleanFmt) <<
+    //           "\n\n"
+    //           << std::endl;
+    // std::cout << "grad_5 M_{l 15}:\n"
+    //           << MatrixCast(m_N1.slice(offsets_grad5_col15, extents_grad_M), m_7N, 1, device).format(CleanFmt) <<
+    //           "\n\n"
+    //           << std::endl;
 #endif
 }
 
@@ -454,8 +456,7 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
 
     // hydrodynamic forces arising from coupling of locater and internal D.o.F. motion (2 terms)
     Eigen::Tensor<double, 1> F_loc_int = Eigen::Tensor<double, 1>(m_7M); // (7M x 1)
-    F_loc_int.device(device) =
-        m_N2.contract(xi_dot_V, contract_jki_jk); // FIXME: developing nozero components (5), where is this coming from?
+    F_loc_int.device(device)           = m_N2.contract(xi_dot_V, contract_jki_jk);
     F_loc_int.device(device) -= m_N2.contract(V_xi_dot, contract_ijk_jk);
 
     // hydrodynamic forces arising from internal D.o.F. motion (2 terms; contains internal inertia term)
@@ -478,18 +479,18 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
 #if !defined(NDEBUG)
     Eigen::IOFormat CleanFmt(8, 0, ", ", "\n", "[", "]");
 
-    std::cout << "PotentialHydrodynamics::calcHydroForces(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
+    // std::cout << "PotentialHydrodynamics::calcHydroForces(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
     // std::cout << "t: " << m_system->t() << "\n\n" << std::endl;
 
-    std::cout << "F_int:\n"
-              << MatrixCast(F_int, m_7M, 1, device).format(CleanFmt) << "\n\n"
-              << std::endl; // FIXME: F_int(5) is non-zero at t=0
-    std::cout << "F_loc_int:\n" << MatrixCast(F_loc_int, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "F_loc:\n" << MatrixCast(F_loc, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "F_int:\n"
+    //           << MatrixCast(F_int, m_7M, 1, device).format(CleanFmt) << "\n\n"
+    //           << std::endl;
+    // std::cout << "F_loc_int:\n" << MatrixCast(F_loc_int, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "F_loc:\n" << MatrixCast(F_loc, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
 
     // std::cout << "F_int 1:\n"
     //           << MatrixCast(0.50 * m_N1.contract(V_V, contract_jki_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
-    //           << std::endl; // FIXME: non-zero 5th element
+    //           << std::endl;
     // std::cout << "F_int 2:\n"
     //           << MatrixCast(-m_M2.contract(V_dot, contract_ij_j), m_7M, 1, device).format(CleanFmt) << "\n\n"
     //           << std::endl;
