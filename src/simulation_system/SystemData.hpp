@@ -108,6 +108,18 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      */
     void
     update(Eigen::ThreadPoolDevice& device);
+
+    /**
+     * @brief Normalizes all body coordinate quaternions.
+     *
+     * @details Modifies `m_positions_bodies`
+     *
+     * @fixme: Is this still valid and not ruining results?
+     *
+     */
+    void
+    normalizeQuaternions();
+
     /* !SECTION (Public methods) */
 
     /* SECTION: Private methods */
