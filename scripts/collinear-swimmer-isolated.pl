@@ -187,7 +187,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 	my $simulationIter = 1;
 
 	# Loop through the number of simulations of each type
-	for (my $j = 0; $j < $numSimulations; $j += 3 ){
+	for (my $j = 0; $j < $numSimulations; $j += 1 ){
 
 		# Print the number of simulation runs
 		my $jj = $j + 1;
