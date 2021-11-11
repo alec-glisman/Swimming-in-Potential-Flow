@@ -457,6 +457,11 @@ class SystemData : public std::enable_shared_from_this<SystemData>
     /// how many simulation steps to output to GSD
     int m_num_steps_output{-1};
 
+    /* ANCHOR: energetic parameters */
+    double m_E_hydro_loc{0.0};
+    double m_E_hydro_loc_int{0.0};
+    double m_E_hydro_int{0.0};
+
     /* ANCHOR: Tensors set in constructor */
     // "identity" tensors
     /// (3 x 3) 2nd order identity tensor
@@ -819,6 +824,40 @@ class SystemData : public std::enable_shared_from_this<SystemData>
     setNumStepsOutput(int num_steps_output)
     {
         m_num_steps_output = num_steps_output;
+    }
+
+    /* ANCHOR: energetic parameters */
+    double
+    eHydroLoc() const
+    {
+        return m_E_hydro_loc;
+    }
+    void
+    setEHydroLoc(double E_hydro_loc)
+    {
+        m_E_hydro_loc = E_hydro_loc;
+    }
+
+    double
+    eHydroLocInt() const
+    {
+        return m_E_hydro_loc_int;
+    }
+    void
+    setEHydroLocInt(double E_hydro_loc_int)
+    {
+        m_E_hydro_loc_int = E_hydro_loc_int;
+    }
+
+    double
+    eHydroInt() const
+    {
+        return m_E_hydro_int;
+    }
+    void
+    setEHydroInt(double E_hydro_int)
+    {
+        m_E_hydro_int = E_hydro_int;
     }
 
     /* ANCHOR: kinematic vectors */
