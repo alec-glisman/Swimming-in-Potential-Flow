@@ -769,22 +769,24 @@ SystemData::convertBody2ParticleOrient()
         const int particle_id_3{3 * particle_id};
         const int body_id_7{7 * m_particle_group_id(particle_id)};
 
-        // Get unit quaternion for body that particle_id is a member of
-        const Eigen::Quaterniond particle_quat(m_positions_bodies.segment<4>(body_id_7 + 3));
+        // body unit quaternion
+        const Eigen::Vector4d    theta = m_positions_bodies.segment<4>(body_id_7 + 3);
+        const Eigen::Quaterniond theta_body(theta(0), theta(1), theta(2), theta(3));
 
-        // Rotate particle from initial configuration using unit quaternion
-        Eigen::Quaterniond orient_init;
-        orient_init.w()   = 0.0;
-        orient_init.vec() = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
+        // particle initial configuration unit quaternion
+        const Eigen::Vector3d r_hat_init_particle =
+            m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
+        const Eigen::Quaterniond r_body_quat(0.0, r_hat_init_particle(0), r_hat_init_particle(1),
+                                             r_hat_init_particle(2));
 
-        const Eigen::Quaterniond orient_rot    = particle_quat * orient_init * particle_quat.inverse();
+        const Eigen::Quaterniond orient_rot    = theta_body * r_body_quat * theta_body.inverse();
         const Eigen::Vector3d    orient_rot_3d = orient_rot.vec();
 
 #if !defined(NDEBUG)
         const double epsilon_zero{1e-12}; // "small value" close to zero for double comparison
         const double epsilon_norm{1e-8};  // "small value" close to zero for double comparison
 
-        const double particle_quat_norm{particle_quat.norm()};
+        const double particle_quat_norm{theta_body.norm()};
         const double unit_norm_error_mag{particle_quat_norm - 1.0};
 
         const bool zeroith_comp_cond{abs(orient_rot.w()) >= epsilon_zero};
