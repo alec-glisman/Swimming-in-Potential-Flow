@@ -586,8 +586,8 @@ SystemData::chiMatrixElement(const int particle_id)
     const Eigen::Quaterniond theta_body(theta(0), theta(1), theta(2), theta(3));
 
     // particle initial configuration unit quaternion
-    const Eigen::Vector3d r_hat_init_particle = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
-    const Eigen::Quaterniond r_body_quat(0.0, r_hat_init_particle(0), r_hat_init_particle(1), r_hat_init_particle(2));
+    const Eigen::Vector3d    r_hat_init = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
+    const Eigen::Quaterniond r_body_quat(0.0, r_hat_init(0), r_hat_init(1), r_hat_init(2));
 
     // quaternion product: r_body * theta
     const Eigen::Quaterniond r_theta = r_body_quat * theta_body;
@@ -774,10 +774,8 @@ SystemData::convertBody2ParticleOrient()
         const Eigen::Quaterniond theta_body(theta(0), theta(1), theta(2), theta(3));
 
         // particle initial configuration unit quaternion
-        const Eigen::Vector3d r_hat_init_particle =
-            m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
-        const Eigen::Quaterniond r_body_quat(0.0, r_hat_init_particle(0), r_hat_init_particle(1),
-                                             r_hat_init_particle(2));
+        const Eigen::Vector3d    r_hat_init = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
+        const Eigen::Quaterniond r_body_quat(0.0, r_hat_init(0), r_hat_init(1), r_hat_init(2));
 
         const Eigen::Quaterniond orient_rot    = theta_body * r_body_quat * theta_body.inverse();
         const Eigen::Vector3d    orient_rot_3d = orient_rot.vec();
