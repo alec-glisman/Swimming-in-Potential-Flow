@@ -612,6 +612,7 @@ void
 SystemData::gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice& device)
 {
     /* ANCHOR: Tensor indices */
+    const int  particle_id_3{3 * particle_id};
     const int  particle_id_7{7 * particle_id};
     const int  body_id_7{7 * m_particle_group_id(particle_id)};
     const bool is_locater{m_particle_type_id(particle_id) == 1};
@@ -649,7 +650,7 @@ SystemData::gradZetaTensorElement(const int particle_id, Eigen::ThreadPoolDevice
     const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 4>> tens_two_E_body = TensorCast(two_E_body, 4, 4);
 
     // change of variable matrix element m_chi_tilde
-    const Eigen::Matrix<double, 7, 3>                        n_chi_tilde = -m_chi.block<7, 3>(body_id_7, particle_id_7);
+    const Eigen::Matrix<double, 7, 3>                        n_chi_tilde = -m_chi.block<7, 3>(body_id_7, particle_id_3);
     const Eigen::TensorFixedSize<double, Eigen::Sizes<7, 3>> tens_n_chi_tilde = TensorCast(n_chi_tilde, 7, 3);
 
     /* ANCHOR: tensor contractions for left-half of gradient */
@@ -737,7 +738,7 @@ SystemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
         chiMatrixElement(particle_id);
     }
 
-    m_tens_chi = TensorCast(m_chi, 7 * m_num_bodies, 7 * m_num_particles);
+    m_tens_chi = TensorCast(m_chi, 7 * m_num_bodies, 3 * m_num_particles);
 
     /* ANCHOR : Compute m_tens_grad_zeta */
     m_tens_grad_zeta.setZero();

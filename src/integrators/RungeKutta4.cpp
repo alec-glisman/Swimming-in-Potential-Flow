@@ -358,11 +358,11 @@ RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
 
             for (int k = first_particle; k < (first_particle + num_particles); k++)
             {
-                const Eigen::array<Eigen::Index, 3> offsets_6 = {particle_id_3, 3 * j, 3 * k};
-                const Eigen::array<Eigen::Index, 3> offsets_7 = {particle_id_7, 7 * j, 7 * k};
+                const Eigen::array<Eigen::Index, 3> offsets_6   = {particle_id_3, 3 * j, 3 * k};
+                const Eigen::array<Eigen::Index, 3> offsets_773 = {particle_id_7, 7 * j, 3 * k};
 
                 grad_M_eff.slice(offsets_6, extents).device(device) =
-                    m_potHydro->gradMAdded().slice(offsets_7, extents);
+                    m_potHydro->gradMAdded().slice(offsets_773, extents);
             }
         }
 
