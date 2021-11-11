@@ -414,7 +414,7 @@ SystemData::update(Eigen::ThreadPoolDevice& device)
     // std::cout << "accelerations particles:\n" << m_accelerations_particles.format(CleanFmt) << "\n\n" << std::endl;
 
     // std::cout << "rbm_conn:\n" << m_rbm_conn.format(CleanFmt) << "\n\n" << std::endl;
-    // std::cout << "chi:\n" << m_chi.format(CleanFmt) << "\n\n" << std::endl;
+    std::cout << "chi:\n" << m_chi.format(CleanFmt) << "\n\n" << std::endl;
 #endif
 }
 
@@ -600,16 +600,17 @@ SystemData::chiMatrixElement(const int particle_id)
     const double prefactor{2.0 * m_positions_particles_articulation.segment<3>(particle_id_3).norm()};
 
     // G matrix element
-    Eigen::Matrix3d g_matrix;
-    g_matrix.col(0).noalias() = -r_theta_i.vec();
-    g_matrix.col(1).noalias() = -r_theta_j.vec();
-    g_matrix.col(2).noalias() = -r_theta_k.vec();
+    Eigen::Matrix<double, 4, 3> g_matrix;
+    g_matrix.row(0).noalias() = r_theta.vec();
+    g_matrix.row(1).noalias() = -r_theta_i.vec();
+    g_matrix.row(2).noalias() = -r_theta_j.vec();
+    g_matrix.row(3).noalias() = -r_theta_k.vec();
     g_matrix *= prefactor;
 
     /* ANCHOR: Compute chi matrix element */
     m_chi.block<3, 3>(body_id_7, particle_id_3).noalias() =
         m_I3; // convert body (linear) position derivatives to particle linear coordinate derivatives
-    m_chi.block<3, 3>(body_id_7 + 4, particle_id_3).noalias() =
+    m_chi.block<4, 3>(body_id_7 + 3, particle_id_3).noalias() =
         g_matrix; // convert body (quaternion) position derivatives to particle linear coordinate derivatives
 }
 
