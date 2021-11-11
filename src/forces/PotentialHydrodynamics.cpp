@@ -552,4 +552,22 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
 void
 PotentialHydrodynamics::calcHydroEnergy(Eigen::ThreadPoolDevice& device)
 {
+    // convert `Eigen::Tensor` --> `Eigen::Matrix`
+    const Eigen::MatrixXd m3 = MatrixCast(m_M3, m_7M, m_7M, device);
+    const Eigen::MatrixXd m2 = MatrixCast(m_M2, m_7M, m_7N, device);
+
+    // matrix vector reduction
+    const Eigen::VectorXd m3_xi_dot = m3 * m_system->velocitiesBodies();
+    const Eigen::VectorXd m2_v      = m2 * m_system->velocitiesParticlesArticulation();
+    const Eigen::VectorXd m_v       = m_M_total * m_system->velocitiesParticlesArticulation();
+
+    // contractions to produce energies
+    const double e_loc{0.50 * m_system->velocitiesBodies().dot(m3_xi_dot)};
+    const double e_loc_int{m_system->velocitiesBodies().dot(m2_v)};
+    const double e_int{0.50 * m_system->velocitiesParticlesArticulation().dot(m_v)};
+
+    // output energies
+    m_system->setEHydroLoc(e_loc);
+    m_system->setEHydroLocInt(e_loc_int);
+    m_system->setEHydroInt(e_int);
 }
