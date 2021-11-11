@@ -353,7 +353,6 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
 #if !defined(NDEBUG)
     Eigen::IOFormat CleanFmt(8, 0, ", ", "\n", "[", "]");
     std::cout << "PotentialHydrodynamics::calcBodyTensors(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
-    std::cout << "t: " << m_system->t() << "\n\n" << std::endl;
 
     const Eigen::array<Eigen::Index, 3> offsets_dim5_grad = {0, 0, 4};
     const Eigen::array<Eigen::Index, 3> extents_2D        = {m_7M, m_7N, 1};
@@ -364,33 +363,34 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
         const Eigen::array<Eigen::Index, 3> extents = {m_7N, m_7N, 1};
         const Eigen::array<Eigen::Index, 3> offsets = {0, 0, i};
 
-        std::cout << "grad M body coords {j k " << i << "}:\n"
-                  << MatrixCast(m_N1.slice(offsets, extents), m_7N, m_7N, device).format(CleanFmt) << "\n\n"
-                  << std::endl;
+        // std::cout << "grad M body coords {j k " << i << "}:\n"
+        //           << MatrixCast(m_N1.slice(offsets, extents), m_7N, m_7N, device).format(CleanFmt) << "\n\n"
+        //           << std::endl;
     }
 
-    std::cout << "N2_{j k 5} term 1:\n"
-              << MatrixCast(N2_term1_preshuffle.shuffle(permute_ikj_ijk).slice(offsets_dim5_grad, extents_2D), m_7M,
-                            m_7N, device)
-                     .format(CleanFmt)
-              << "\n\n"
-              << std::endl;
+    // std::cout << "N2_{j k 5} term 1:\n"
+    //           << MatrixCast(N2_term1_preshuffle.shuffle(permute_ikj_ijk).slice(offsets_dim5_grad, extents_2D), m_7M,
+    //                         m_7N, device)
+    //                  .format(CleanFmt)
+    //           << "\n\n"
+    //           << std::endl;
 
-    std::cout << "N2_{j k 5} term 2:\n"
-              << MatrixCast(
-                     (m_system->tensRbmConn().contract(m_N1, contract_il_lj)).slice(offsets_dim5_grad, extents_2D),
-                     m_7M, m_7N, device)
-                     .format(CleanFmt)
-              << "\n\n"
-              << std::endl;
+    // std::cout << "N2_{j k 5} term 2:\n"
+    //           << MatrixCast(
+    //                  (m_system->tensRbmConn().contract(m_N1, contract_il_lj)).slice(offsets_dim5_grad, extents_2D),
+    //                  m_7M, m_7N, device)
+    //                  .format(CleanFmt)
+    //           << "\n\n"
+    //           << std::endl;
 
     const Eigen::array<Eigen::Index, 3> extents_zeta = {1, m_7N};
     const Eigen::array<Eigen::Index, 3> offsets_zeta = {0, 0};
 
-    std::cout << "zeta_{1 l}:\n"
-              << MatrixCast(m_system->tensRbmConn().slice(offsets_zeta, extents_zeta), 1, m_7N, device).format(CleanFmt)
-              << "\n\n"
-              << std::endl;
+    // std::cout << "zeta_{1 l}:\n"
+    //           << MatrixCast(m_system->tensRbmConn().slice(offsets_zeta, extents_zeta), 1, m_7N,
+    //           device).format(CleanFmt)
+    //           << "\n\n"
+    //           << std::endl;
 
     const Eigen::array<Eigen::Index, 3> offsets_grad5_col8  = {0, 7, 4};
     const Eigen::array<Eigen::Index, 3> offsets_grad5_col15 = {0, 14, 4};

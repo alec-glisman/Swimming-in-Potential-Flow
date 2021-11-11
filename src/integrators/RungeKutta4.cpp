@@ -310,7 +310,7 @@ RungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
 #if !defined(NDEBUG)
     Eigen::IOFormat CleanFmt(16, 0, ", ", "\n", "[", "]");
     std::cout << "RungeKutta4::udwadiaKalaba(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
-    std::cout << "t: " << m_system->t() << "\n\n" << std::endl;
+    // std::cout << "t: " << m_system->t() << "\n\n" << std::endl;
     // std::cout << "M_eff:\n" << M_eff.format(CleanFmt) << "\n\n" << std::endl;
     // std::cout << "M_eff_inv:\n" << M_eff_inv.format(CleanFmt) << "\n\n" << std::endl;
     // std::cout << "K:\n" << K.format(CleanFmt) << "\n\n" << std::endl;

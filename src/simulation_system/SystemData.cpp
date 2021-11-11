@@ -381,13 +381,23 @@ SystemData::update(Eigen::ThreadPoolDevice& device)
     // FIXME: debugging print statements
 #if !defined(NDEBUG)
     Eigen::IOFormat CleanFmt(16, 0, ", ", "\n", "[", "]");
-    std::cout << "SystemData::update(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
-    std::cout << "t: " << m_t << "\n\n" << std::endl;
+    // std::cout << "SystemData::update(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
+    // std::cout << "t: " << m_t << "\n\n" << std::endl;
 
-    std::cout << "positions particles articulation:\n"
-              << m_positions_particles_articulation.format(CleanFmt) << "\n\n"
-              << std::endl;
-    std::cout << "positions particles:\n" << m_positions_particles.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "positions particles articulation:\n"
+    //           << m_positions_particles_articulation.format(CleanFmt) << "\n\n"
+    //           << std::endl;
+    // std::cout << "positions particles:\n" << m_positions_particles.format(CleanFmt) << "\n\n" << std::endl;
+
+    // std::cout << "velocities particles:\n" << m_velocities_particles.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "velocities particles articulation:\n"
+    //           << m_velocities_particles_articulation.format(CleanFmt) << "\n\n"
+    //           << std::endl;
+
+    // std::cout << "accelerations particles:\n" << m_accelerations_particles.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "accelerations particles articulation:\n"
+    //           << m_accelerations_particles_articulation.format(CleanFmt) << "\n\n"
+    //           << std::endl;
 
     // std::cout << "velocities particles articulation:\n"
     //           << m_velocities_particles_articulation.format(CleanFmt) << "\n\n"
@@ -400,7 +410,7 @@ SystemData::update(Eigen::ThreadPoolDevice& device)
     // std::cout << "accelerations particles:\n" << m_accelerations_particles.format(CleanFmt) << "\n\n" << std::endl;
 
     // std::cout << "rbm_conn:\n" << m_rbm_conn.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "chi:\n" << m_chi.format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "chi:\n" << m_chi.format(CleanFmt) << "\n\n" << std::endl;
 #endif
 }
 
@@ -802,7 +812,8 @@ SystemData::convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device)
     Eigen::Tensor<double, 1> velocities_rbm_particles = Eigen::Tensor<double, 1>(7 * m_num_particles); // (7N x 1)
     velocities_rbm_particles.device(device)           = m_tens_grad_rbm_conn.contract(xi_xi, contract_jik_jk);
 
-    m_accelerations_particles.noalias() = MatrixCast(velocities_rbm_particles, 7 * m_num_particles, 1, device); // (7N x 1)
-    m_accelerations_particles.noalias() += m_rbm_conn.transpose() * m_accelerations_bodies;                     // (7N x 1)
-    m_accelerations_particles.noalias() += m_accelerations_particles_articulation; // (7N x 1)
+    m_accelerations_particles.noalias() =
+        MatrixCast(velocities_rbm_particles, 7 * m_num_particles, 1, device);               // (7N x 1)
+    m_accelerations_particles.noalias() += m_rbm_conn.transpose() * m_accelerations_bodies; // (7N x 1)
+    m_accelerations_particles.noalias() += m_accelerations_particles_articulation;          // (7N x 1)
 }
