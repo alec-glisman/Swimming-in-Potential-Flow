@@ -606,9 +606,11 @@ SystemData::gradRbmConnTensorElement(const int particle_id, Eigen::ThreadPoolDev
     const Eigen::array<int, 3> permute_ikj_ijk({0, 2, 1}); // {i, k, j} --> {i, j, k}
 
     // `Eigen::Tensor` output tensor indices start location (offset) and extent
-    const Eigen::array<Eigen::Index, 3> offset_grad_Rc_r_cross    = {1, 0, 0};
-    const Eigen::array<Eigen::Index, 3> offset_grad_theta_r_cross = {1, 0, 3};
-    const Eigen::array<Eigen::Index, 3> extents_337               = {3, 3, 7};
+    const Eigen::array<Eigen::Index, 3> offset_grad_Rc_r_cross  = {1, 0, 0};
+    const Eigen::array<Eigen::Index, 3> extents_grad_Rc_r_cross = {3, 3, 3};
+
+    const Eigen::array<Eigen::Index, 3> offset_grad_theta_r_cross  = {1, 0, 3};
+    const Eigen::array<Eigen::Index, 3> extents_grad_theta_r_cross = {3, 3, 4};
 
     const Eigen::array<Eigen::Index, 3> offsets_mixed = {body_id_7 + 3, particle_id_7, body_id_7};
     const Eigen::array<Eigen::Index, 3> extents_mixed = {4, 3, 7};
@@ -633,8 +635,8 @@ SystemData::gradRbmConnTensorElement(const int particle_id, Eigen::ThreadPoolDev
     const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 4>> tens_two_ET_body = TensorCast(two_ET_body, 4, 4);
 
     // G_{(i) a}: Jacobian matrix from particle positions to body quaternion
-    const Eigen::Matrix3d g_ia = m_chi.block<3, 3>(body_id_7 + 4, particle_id_3);                // (3, 3)
-    const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_g_ia = TensorCast(g_ia, 3, 3); // (3, 3)
+    const Eigen::Matrix<double, 4, 3> g_ia = m_chi.block<4, 3>(body_id_7 + 3, particle_id_3);    // (4, 3)
+    const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3>> tens_g_ia = TensorCast(g_ia, 4, 3); // (4, 3)
 
     /* ANCHOR: tensor contractions for left-half of gradient */
     // compute grad_r_cross{l, j, k}
@@ -643,9 +645,9 @@ SystemData::gradRbmConnTensorElement(const int particle_id, Eigen::ThreadPoolDev
 
     if (!is_locater)
     {
-        grad_r_cross.slice(offset_grad_Rc_r_cross, extents_337).device(device) =
+        grad_r_cross.slice(offset_grad_Rc_r_cross, extents_grad_Rc_r_cross).device(device) =
             m_levi_cevita; // body locater point gradient
-        grad_r_cross.slice(offset_grad_theta_r_cross, extents_337).device(device) =
+        grad_r_cross.slice(offset_grad_theta_r_cross, extents_grad_theta_r_cross).device(device) =
             -m_levi_cevita.contract(tens_g_ia, contract_ljm_km); // body unit quaternion gradient
     }
 
@@ -800,7 +802,7 @@ SystemData::convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device)
     Eigen::Tensor<double, 1> velocities_rbm_particles = Eigen::Tensor<double, 1>(7 * m_num_particles); // (7N x 1)
     velocities_rbm_particles.device(device)           = m_tens_grad_rbm_conn.contract(xi_xi, contract_jik_jk);
 
-    m_accelerations_bodies.noalias() = MatrixCast(velocities_rbm_particles, 7 * m_num_particles, 1, device); // (7N x 1)
-    m_velocities_particles.noalias() += m_rbm_conn.transpose() * m_accelerations_bodies;                     // (7N x 1)
-    m_accelerations_bodies.noalias() += m_accelerations_particles_articulation;                              // (7N x 1)
+    m_accelerations_particles.noalias() = MatrixCast(velocities_rbm_particles, 7 * m_num_particles, 1, device); // (7N x 1)
+    m_accelerations_particles.noalias() += m_rbm_conn.transpose() * m_accelerations_bodies;                     // (7N x 1)
+    m_accelerations_particles.noalias() += m_accelerations_particles_articulation; // (7N x 1)
 }
