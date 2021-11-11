@@ -503,10 +503,10 @@ class SystemData : public std::enable_shared_from_this<SystemData>
     /// (7M x 7N x 7M) @f$ \nabla_{\xi} \boldsymbol{\sigma} @f$
     Eigen::Tensor<double, 3> m_tens_grad_rbm_conn;
 
-    /// (7M x 7N) @f$ \boldsymbol{\chi} @f$ converts particle position D.o.F. to body position/quaternion D.o.F.
+    /// (7M x 3N) @f$ \boldsymbol{\chi} @f$ converts particle position D.o.F. to body position/quaternion D.o.F.
     Eigen::MatrixXd m_chi;
 
-    /// (7M x 7N) tensor version of `m_chi`
+    /// (7M x 3N) tensor version of `m_chi`
     Eigen::Tensor<double, 2> m_tens_chi;
 
     /* ANCHOR: Udwadia constraint linear system */
