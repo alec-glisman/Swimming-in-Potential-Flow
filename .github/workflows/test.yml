@@ -3,9 +3,8 @@ on: [push, pull_request]
 
 jobs:
   run:
-    name: Build, Test, and Code Coverage
     runs-on: ubuntu-20.04
-    continue-on-error: true
+    continue-on-error: false
 
     env:
       CLICOLOR_FORCE: "0"
