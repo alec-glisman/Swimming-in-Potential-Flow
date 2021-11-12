@@ -560,13 +560,16 @@ PotentialHydrodynamics::calcHydroEnergy(Eigen::ThreadPoolDevice& device)
     const Eigen::VectorXd m3_xi_dot = m3 * m_system->velocitiesBodies();
     const Eigen::VectorXd m2_v      = m2 * m_system->velocitiesParticlesArticulation();
     const Eigen::VectorXd m_v       = m_M_total * m_system->velocitiesParticlesArticulation();
-    const Eigen::VectorXd m_vel     = m_M_total * m_system->velocitiesParticles();
+    const Eigen::VectorXd m_vel     = m_M_added * m_system->velocitiesParticles();
 
     // contractions to produce energies
     const double e_loc{0.50 * m_system->velocitiesBodies().dot(m3_xi_dot)};
     const double e_loc_int{m_system->velocitiesBodies().dot(m2_v)};
     const double e_int{0.50 * m_system->velocitiesParticlesArticulation().dot(m_v)};
-    const double e_simple{0.50 * m_system->velocitiesParticles().dot(m_vel)};
+
+    double e_simple = 0.50 * m_system->velocitiesParticles().dot(m_vel);
+    e_simple += (0.50 * m_system->particleDensity() * m_unit_sphere_volume) *
+                m_system->velocitiesParticles().dot(m_system->velocitiesParticles());
 
     // output energies
     m_system->setEHydroLoc(e_loc);
