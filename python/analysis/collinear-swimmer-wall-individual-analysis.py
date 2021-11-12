@@ -109,6 +109,7 @@ def aggregate_plots(relative_path, output_dir):
     E_locater = np.zeros_like(time, dtype=np.float64)
     E_locater_internal = np.zeros_like(time, dtype=np.float64)
     E_internal = np.zeros_like(time, dtype=np.float64)
+    E_simple = np.zeros_like(time, dtype=np.float64)
 
    # Loop over all snapshots in GSD (skipping header with incorrect kinematics)
     for i in range(1, nframes-1):
@@ -124,6 +125,7 @@ def aggregate_plots(relative_path, output_dir):
         E_locater_internal[i -
                            1] = current_snapshot.log['hydrodynamics/E_locater_internal']
         E_internal[i-1] = current_snapshot.log['hydrodynamics/E_internal']
+        E_simple[i-1] = current_snapshot.log['hydrodynamics/E_simple']
 
 # !SECTION (Load data)
 
@@ -193,7 +195,7 @@ def aggregate_plots(relative_path, output_dir):
 
 # SECTION: Plots
     # PLOT: Energy dynamics
-    numLines = 4
+    numLines = 5
     energy_Plot = PlotStyling(numLines,
                               r"$t/\tau$", r"$E / E_{0}$",
                               title=None, loglog=False,
@@ -203,11 +205,13 @@ def aggregate_plots(relative_path, output_dir):
     energy_Plot.make_plot()
     energy_Plot.curve(time, E_internal / E0, zorder=0,
                       label=r"$E_{\mathrm{int}}$")
-    energy_Plot.curve(time, E_locater_internal / E0, zorder=0,
+    energy_Plot.curve(time, E_locater_internal / E0, zorder=1,
                       label=r"$E_{\mathrm{loc-int}}$")
-    energy_Plot.curve(time, E_locater / E0, zorder=0,
+    energy_Plot.curve(time, E_locater / E0, zorder=2,
                       label=r"$E_{\mathrm{loc}}$")
-    energy_Plot.curve(time, E_total / E0, zorder=0, label=r"$E$")
+    energy_Plot.curve(time, E_simple / E0, zorder=3,
+                      label=r"$E_{\mathrm{s}}$")
+    energy_Plot.curve(time, E_total / E0, zorder=4, label=r"$E$")
     energy_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
         fmt(np.max(Z_height))),
         loc='best', ncol=1, bbox_to_anchor=(0.05, 0.05, 0.9, 0.9))
@@ -423,6 +427,7 @@ def aggregate_plots(relative_path, output_dir):
         print(f"Delta theta = {theta[-1]}", file=f)
 
         print("Energy:", file=f)
+        print(f"E_simple/E0 = {E_simple / E0}", file=f)
         print(f"E_total/E0 = {E_total / E0}", file=f)
 
 # !SECTION (Output data)

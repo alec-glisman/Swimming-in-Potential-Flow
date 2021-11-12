@@ -461,6 +461,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
     double m_E_hydro_loc{0.0};
     double m_E_hydro_loc_int{0.0};
     double m_E_hydro_int{0.0};
+    double m_E_hydro_simple{0.0};
 
     /* ANCHOR: Tensors set in constructor */
     // "identity" tensors
@@ -858,6 +859,17 @@ class SystemData : public std::enable_shared_from_this<SystemData>
     setEHydroInt(double E_hydro_int)
     {
         m_E_hydro_int = E_hydro_int;
+    }
+
+    double
+    eHydroSimple() const
+    {
+        return m_E_hydro_simple;
+    }
+    void
+    setEHydroSimple(double E_hydro_simple)
+    {
+        m_E_hydro_simple = E_hydro_simple;
     }
 
     /* ANCHOR: kinematic vectors */

@@ -111,6 +111,7 @@ class GSDUtilPy:
 
         self.snapshot.log['parameters/image_system'] = image_system
 
+        self.snapshot.log['hydrodynamics/E_simple'] = zero
         self.snapshot.log['hydrodynamics/E_locater'] = zero
         self.snapshot.log['hydrodynamics/E_locater_internal'] = zero
         self.snapshot.log['hydrodynamics/E_internal'] = zero
