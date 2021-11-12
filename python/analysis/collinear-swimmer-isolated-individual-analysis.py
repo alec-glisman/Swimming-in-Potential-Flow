@@ -204,18 +204,17 @@ def aggregate_plots(relative_path, output_dir):
                               continuousColors=False)
     # Show numerical data points
     energy_Plot.make_plot()
-    energy_Plot.curve(time, E_internal / E0, zorder=0,
+    energy_Plot.curve(time, E_simple / E0, dashed_curve=True, thin_curve=True,
+                      zorder=4, label=r"$E_{\mathrm{s}}$")
+    energy_Plot.curve(time, E_total / E0, zorder=3, label=r"$E_{\mathrm{t}}$")
+    energy_Plot.curve(time, E_internal / E0, zorder=2,
                       label=r"$E_{\mathrm{int}}$")
     energy_Plot.curve(time, E_locater_internal / E0, zorder=1,
                       label=r"$E_{\mathrm{loc-int}}$")
-    energy_Plot.curve(time, E_locater / E0, zorder=2,
+    energy_Plot.curve(time, E_locater / E0, zorder=0,
                       label=r"$E_{\mathrm{loc}}$")
-    energy_Plot.curve(time, E_simple / E0, zorder=3,
-                      label=r"$E_{\mathrm{s}}$")
-    energy_Plot.curve(time, E_total / E0, zorder=4, label=r"$E$")
-    energy_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
-        fmt(np.max(Z_height))),
-        loc='best', ncol=1, bbox_to_anchor=(0.05, 0.05, 0.9, 0.9))
+    energy_Plot.legend(title=None,
+                       loc='best', ncol=1, bbox_to_anchor=(0.02, 0.02, 0.96, 0.96))
     energy_Plot.save_plot()
 
     # PLOT: Angular displacement
