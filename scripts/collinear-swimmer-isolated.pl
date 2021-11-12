@@ -42,7 +42,7 @@ my $projectName      = "bodies-in-potential-flow";
 my $inputDir         = "input";
 my @inputData        = ( "varyRelDisp", "varyEpsilon", "varyPhaseAngle", "varyDt"); # If using wall: "varyZHeight"
 my $numSimulationTypes = scalar @inputData;
-my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
+my $runSimulationSimulan = 0; # NOTE: 0 only runs one simulation at a time
 
 # Python Numerical Analysis
 my $pythonGSDCreation = "python/initial_configurations/" . $simulationTag . "-configuration.py";
