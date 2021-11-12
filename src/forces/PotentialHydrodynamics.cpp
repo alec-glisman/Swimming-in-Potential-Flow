@@ -28,15 +28,17 @@ PotentialHydrodynamics::PotentialHydrodynamics(std::shared_ptr<SystemData> sys)
     m_I7N_linear  = Eigen::MatrixXd::Zero(m_7N, m_7N);
     m_I7N_angular = Eigen::MatrixXd::Zero(m_7N, m_7N);
 
+    const Eigen::Matrix3d i3       = Eigen::Matrix3d::Identity(3, 3);
+    Eigen::Matrix4d       i4_tilde = Eigen::Matrix4d::Identity(4, 4);
+    i4_tilde(0, 0)                 = m_scalar_w;
+
     for (int particle_id = 0; particle_id < m_system->numParticles(); particle_id++)
     {
         const int particle_id_7{7 * particle_id};
 
-        m_I7N_linear.block<3, 3>(particle_id_7, particle_id_7).noalias() = Eigen::MatrixXd::Identity(3, 3);
+        m_I7N_linear.block<3, 3>(particle_id_7, particle_id_7).noalias() = i3;
 
-        /// @todo: (1, 1) entry is the added element to the mass matrix. Verify that changing this value does not affect
-        /// the end result (Issue #6). Currently defaults to 1.
-        m_I7N_angular.block<4, 4>(particle_id_7 + 3, particle_id_7 + 3).noalias() = Eigen::MatrixXd::Identity(4, 4);
+        m_I7N_angular.block<4, 4>(particle_id_7 + 3, particle_id_7 + 3).noalias() = i4_tilde;
     }
 
     m_c1_2_I7N_linear = m_c1_2 * m_I7N_linear;
@@ -356,19 +358,19 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     Eigen::IOFormat CleanFmt(8, 0, ", ", "\n", "[", "]");
     // std::cout << "PotentialHydrodynamics::calcBodyTensors(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
 
-    const Eigen::array<Eigen::Index, 3> offsets_dim5_grad = {0, 0, 4};
-    const Eigen::array<Eigen::Index, 3> extents_2D        = {m_7M, m_7N, 1};
-    const Eigen::array<Eigen::Index, 3> extents_1D        = {1, m_7N, 1};
+    // const Eigen::array<Eigen::Index, 3> offsets_dim5_grad = {0, 0, 4};
+    // const Eigen::array<Eigen::Index, 3> extents_2D        = {m_7M, m_7N, 1};
+    // const Eigen::array<Eigen::Index, 3> extents_1D        = {1, m_7N, 1};
 
-    for (int i = 0; i < 7; i++)
-    {
-        const Eigen::array<Eigen::Index, 3> extents = {m_7N, m_7N, 1};
-        const Eigen::array<Eigen::Index, 3> offsets = {0, 0, i};
+    // for (int i = 0; i < 7; i++)
+    // {
+    // const Eigen::array<Eigen::Index, 3> extents = {m_7N, m_7N, 1};
+    // const Eigen::array<Eigen::Index, 3> offsets = {0, 0, i};
 
-        // std::cout << "grad M body coords {j k " << i << "}:\n"
-        //           << MatrixCast(m_N1.slice(offsets, extents), m_7N, m_7N, device).format(CleanFmt) << "\n\n"
-        //           << std::endl;
-    }
+    // std::cout << "grad M body coords {j k " << i << "}:\n"
+    //           << MatrixCast(m_N1.slice(offsets, extents), m_7N, m_7N, device).format(CleanFmt) << "\n\n"
+    //           << std::endl;
+    // }
 
     // std::cout << "N2_{j k 5} term 1:\n"
     //           << MatrixCast(N2_term1_preshuffle.shuffle(permute_ikj_ijk).slice(offsets_dim5_grad, extents_2D), m_7M,
@@ -385,8 +387,8 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     //           << "\n\n"
     //           << std::endl;
 
-    const Eigen::array<Eigen::Index, 3> extents_zeta = {1, m_7N};
-    const Eigen::array<Eigen::Index, 3> offsets_zeta = {0, 0};
+    // const Eigen::array<Eigen::Index, 3> extents_zeta = {1, m_7N};
+    // const Eigen::array<Eigen::Index, 3> offsets_zeta = {0, 0};
 
     // std::cout << "zeta_{1 l}:\n"
     //           << MatrixCast(m_system->tensRbmConn().slice(offsets_zeta, extents_zeta), 1, m_7N,
@@ -394,9 +396,9 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     //           << "\n\n"
     //           << std::endl;
 
-    const Eigen::array<Eigen::Index, 3> offsets_grad5_col8  = {0, 7, 4};
-    const Eigen::array<Eigen::Index, 3> offsets_grad5_col15 = {0, 14, 4};
-    const Eigen::array<Eigen::Index, 3> extents_grad_M      = {m_7N, 1, 1};
+    // const Eigen::array<Eigen::Index, 3> offsets_grad5_col8  = {0, 7, 4};
+    // const Eigen::array<Eigen::Index, 3> offsets_grad5_col15 = {0, 14, 4};
+    // const Eigen::array<Eigen::Index, 3> extents_grad_M      = {m_7N, 1, 1};
 
     // std::cout << "grad_5 M_{l 8}:\n"
     //           << MatrixCast(m_N1.slice(offsets_grad5_col8, extents_grad_M), m_7N, 1, device).format(CleanFmt) <<
