@@ -42,7 +42,7 @@ my $projectName      = "bodies-in-potential-flow";
 my $inputDir         = "input";
 my @inputData        = ( "varyRelDisp", "varyEpsilon", "varyPhaseAngle", "varyDt"); # If using wall: "varyZHeight"
 my $numSimulationTypes = scalar @inputData;
-my $runSimulationSimulan = 0; # NOTE: 0 only runs one simulation at a time
+my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
 
 # Python Numerical Analysis
 my $pythonGSDCreation = "python/initial_configurations/" . $simulationTag . "-configuration.py";
@@ -63,7 +63,7 @@ my $numThreads = 0;
 if ((index($host, "MacBook-Pro") != -1) or (index($host, "mbp") != -1)) {
 	$numThreads = 4;
 } elsif ((index($host, "alec-glisman-PC-Ubuntu") != -1) or (index($host, "alec-glisman-PC-Windows") != -1)) {
-	$numThreads  = 6;
+	$numThreads  = 4;
 } elsif ((index($host, "stokes") != -1 )) {
 	$numThreads  = 6;
 } elsif ((index($host, "shear") != -1 ) or ( index($host, "s") != -1 )) {
