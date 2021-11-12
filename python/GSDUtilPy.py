@@ -94,6 +94,8 @@ class GSDUtilPy:
 
         image_system = np.array([image_system], dtype=np.int32)
 
+        zero = np.array([0.0], dtype=np.double)
+
         # Save data
         self.snapshot.log['integrator/dt'] = dt
         self.snapshot.log['integrator/t'] = t
@@ -108,6 +110,10 @@ class GSDUtilPy:
         self.snapshot.log['wca/sigma'] = wca_sigma
 
         self.snapshot.log['parameters/image_system'] = image_system
+
+        self.snapshot.log['hydrodynamics/E_locater'] = zero
+        self.snapshot.log['hydrodynamics/E_locater_internal'] = zero
+        self.snapshot.log['hydrodynamics/E_internal'] = zero
 
     def setParticleParameters(self, N, types=None, typeid=None, diameter=None):
         """Sets the data saved in the particle section of GSD schema.
