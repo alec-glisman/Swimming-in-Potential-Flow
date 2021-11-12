@@ -63,7 +63,7 @@ my $numThreads = 0;
 if ((index($host, "MacBook-Pro") != -1) or (index($host, "mbp") != -1)) {
 	$numThreads = 4;
 } elsif ((index($host, "alec-glisman-PC-Ubuntu") != -1) or (index($host, "alec-glisman-PC-Windows") != -1)) {
-	$numThreads  = 8;
+	$numThreads  = 6;
 } elsif ((index($host, "stokes") != -1 )) {
 	$numThreads  = 6;
 } elsif ((index($host, "shear") != -1 ) or ( index($host, "s") != -1 )) {
