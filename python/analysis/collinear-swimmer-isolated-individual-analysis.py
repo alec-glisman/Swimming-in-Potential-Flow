@@ -87,8 +87,8 @@ def aggregate_plots(relative_path, output_dir):
         raise IOError(
             f"Failure to load data. Not exactly 1 file found in relPath {relative_path}")
 
-    # Data from initial frame (not 0)
-    gsd_file.snapshot = gsd_file.trajectory.read_frame(1)
+    # Data from initial frame
+    gsd_file.snapshot = gsd_file.trajectory.read_frame(0)
     N_particles = gsd_file.snapshot.particles.N
     nframes = gsd_file.trajectory.file.nframes
     R_avg = gsd_file.snapshot.log['swimmer/R_avg']
@@ -97,23 +97,34 @@ def aggregate_plots(relative_path, output_dir):
     U0 = gsd_file.snapshot.log['swimmer/U0']
     omega = gsd_file.snapshot.log['swimmer/omega']
     tau = gsd_file.snapshot.log['integrator/tau']
-    epsilon = U0 / R_avg / omega
+    epsilon = abs(U0 / R_avg / omega)
 
     # Initialize temporal data
     time = np.zeros((nframes - 2), dtype=np.float64)
+
     positions = np.zeros((N_particles, 3, nframes - 2), dtype=np.float64)
     velocities = np.zeros_like(positions, dtype=np.float64)
     accelerations = np.zeros_like(positions, dtype=np.float64)
+
+    E_locater = np.zeros_like(time, dtype=np.float64)
+    E_locater_internal = np.zeros_like(time, dtype=np.float64)
+    E_internal = np.zeros_like(time, dtype=np.float64)
 
     # Loop over all snapshots in GSD (skipping header with incorrect kinematics)
     for i in range(1, nframes-1):
         current_snapshot = gsd_file.trajectory.read_frame(i)
 
         time[i-1] = current_snapshot.log['integrator/t']
+
         positions[:, :, i-1] = current_snapshot.log['particles/double_position']
         velocities[:, :, i-1] = current_snapshot.log['particles/double_velocity']
         accelerations[:, :, i -
                       1] = current_snapshot.log['particles/double_moment_inertia']
+
+        E_locater[i-1] = current_snapshot.log['hydrodynamics/E_locater']
+        E_locater_internal[i -
+                           1] = current_snapshot.log['hydrodynamics/E_locater_internal']
+        E_internal[i-1] = current_snapshot.log['hydrodynamics/E_internal']
 
 # !SECTION (Load data)
 
@@ -174,10 +185,35 @@ def aggregate_plots(relative_path, output_dir):
     a_12_con_mag = - char_acc * np.sin(omega * tau * time)
     a_32_con_mag = - char_acc * np.sin(omega * tau * time + phaseShift)
 
+    # Energetics
+    E_total = E_locater + E_locater_internal + E_internal
+    E0 = E_total[0]
+
 # !SECTION (Analysis)
 
 
 # SECTION: Plots
+    # PLOT: Energy dynamics
+    numLines = 4
+    energy_Plot = PlotStyling(numLines,
+                              r"$t/\tau$", r"$E / E_{0}$",
+                              title=None, loglog=False,
+                              outputDir=output_dir, figName="energy", eps=epsOutput,
+                              continuousColors=False)
+    # Show numerical data points
+    energy_Plot.make_plot()
+    energy_Plot.curve(time, E_internal / E0, zorder=0,
+                      label=r"$E_{\mathrm{int}}$")
+    energy_Plot.curve(time, E_locater_internal / E0, zorder=0,
+                      label=r"$E_{\mathrm{loc-int}}$")
+    energy_Plot.curve(time, E_locater / E0, zorder=0,
+                      label=r"$E_{\mathrm{loc}}$")
+    energy_Plot.curve(time, E_total / E0, zorder=0, label=r"$E$")
+    energy_Plot.legend(title=r"$Z_0/a =$" + "{}".format(
+        fmt(np.max(Z_height))),
+        loc='best', ncol=1, bbox_to_anchor=(0.05, 0.05, 0.9, 0.9))
+    energy_Plot.save_plot()
+
     # PLOT: Angular displacement
     numLines = 1
     angDisp_Plot = PlotStyling(numLines,
@@ -386,6 +422,9 @@ def aggregate_plots(relative_path, output_dir):
         print("Final frame:", file=f)
         print(f"cos(Delta theta) = {cos_theta[-1]}", file=f)
         print(f"Delta theta = {theta[-1]}", file=f)
+
+        print("Energy:", file=f)
+        print(f"E_total/E0 = {E_total / E0}", file=f)
 
 # !SECTION (Output data)
 
