@@ -343,8 +343,11 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     // N^{(2)}
     N2_term1_preshuffle.device(device) = m_system->tensGradRbmConn().contract(m_tens_M_total, contract_il_lj);
 
-    m_N2.device(device) = N2_term1_preshuffle.shuffle(permute_ikj_ijk);
-    m_N2.device(device) += m_system->tensRbmConn().contract(m_N1, contract_il_lj);
+    N2_term1.device(device) = N2_term1_preshuffle.shuffle(permute_ikj_ijk);
+    N2_term2.device(device) = m_system->tensRbmConn().contract(m_N1, contract_il_lj);
+
+    m_N2.device(device) = N2_term1;
+    m_N2.device(device) += N2_term2;
 
     // N^{(3)}
     N3_term1_preshuffle.device(device) = N2_term1.contract(m_system->tensRbmConn(), contract_il_jl);
