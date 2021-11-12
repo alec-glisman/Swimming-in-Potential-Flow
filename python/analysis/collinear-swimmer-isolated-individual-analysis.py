@@ -430,6 +430,7 @@ def aggregate_plots(relative_path, output_dir):
         print("Energy:", file=f)
         print(f"E_simple/E0 = {E_simple / E0}", file=f)
         print(f"E_total/E0 = {E_total / E0}", file=f)
+        print(f"(E_simple - E_total)/E0 = {(E_simple - E_total) / E0}", file=f)
 
 # !SECTION (Output data)
 
