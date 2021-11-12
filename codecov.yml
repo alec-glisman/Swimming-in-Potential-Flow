@@ -26,7 +26,8 @@ ignore:
   - "test/**"
   - "vcpkg/**"
   - "vcpkg_installed/**"
-  - "src/data_io/gsd.c"
+  - "**/src/data_io/gsd.c"
+  - "code/src/data_io/gsd.c"
 
 # Pull request comments:
 # ----------------------
