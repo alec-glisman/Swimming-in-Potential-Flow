@@ -22,7 +22,7 @@
 TEST_CASE("Open GSD file", "[gsd]")
 {
     // I/O Parameters
-    std::string inputDataFile = "test/input/collinear_swimmer_isolated/initial_frame_dt1e-2.gsd";
+    std::string inputDataFile = "input/collinear_swimmer_isolated/initial_frame_dt1e-2.gsd";
 
     // GSD loading parameters
     std::shared_ptr<gsd_handle> handle{new gsd_handle};
@@ -45,7 +45,7 @@ TEST_CASE("Initialize collinear swimmer isolated simulation system",
     spdlog::drop_all();
 
     // I/O Parameters
-    std::string inputDataFile = "test/input/collinear_swimmer_isolated/initial_frame_dt1e-2.gsd";
+    std::string inputDataFile = "input/collinear_swimmer_isolated/initial_frame_dt1e-2.gsd";
     std::string outputDir     = "output-collinear-isolated-SystemData-init";
 
     // simulation classes
@@ -70,7 +70,7 @@ TEST_CASE("Run collinear swimmer isolated simulation system",
     spdlog::drop_all();
 
     // I/O Parameters
-    std::string inputDataFile = "test/input/collinear_swimmer_isolated/initial_frame_dt1e-2.gsd";
+    std::string inputDataFile = "input/collinear_swimmer_isolated/initial_frame_dt1e-2.gsd";
     std::string outputDir     = "output-collinear-isolated-Engine-run";
 
     // simulation classes
