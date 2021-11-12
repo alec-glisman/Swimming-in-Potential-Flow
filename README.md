@@ -6,10 +6,11 @@
 **Authors:** [Alec Glisman](https://github.com/alec-glisman)  
 **GitHub actions:**
 [![Code Linting](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/code-linting.yml/badge.svg)](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/code-linting.yml)
-[![Build](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml/badge.svg)](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml)  
+[![Build & Test](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml/badge.svg)](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml)  
 **Third-party services:**
 [![CodeFactor](https://www.codefactor.io/repository/github/alec-glisman/bodies-in-potential-flow/badge?s=20f98d924642ab5cf3e3379e8ac68ff4a01876b2)](https://www.codefactor.io/repository/github/alec-glisman/bodies-in-potential-flow)
 [![codecov](https://codecov.io/gh/alec-glisman/bodies-in-potential-flow/branch/master/graph/badge.svg?token=3IUPDIX1D1)](https://codecov.io/gh/alec-glisman/bodies-in-potential-flow)
+[![wakatime](https://wakatime.com/badge/user/0415a834-884a-4442-8748-eadcc49ca5e1/project/2b7bc4c2-2d8b-4e45-994c-5519e7cbab7b.svg) (v2 development and above)](https://wakatime.com/badge/user/0415a834-884a-4442-8748-eadcc49ca5e1/project/2b7bc4c2-2d8b-4e45-994c-5519e7cbab7b)
 
 ## Code documentation
 
