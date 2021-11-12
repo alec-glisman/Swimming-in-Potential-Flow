@@ -22,7 +22,7 @@
 TEST_CASE("Open GSD file", "[gsd]")
 {
     // I/O Parameters
-    std::string inputDataFile = "input/collinear_swimmer_wall/initial_frame_dt1e-1_Z-height6.gsd";
+    std::string inputDataFile = "test/input/collinear_swimmer_isolated/initial_frame_dt1e-2.gsd";
 
     // GSD loading parameters
     std::shared_ptr<gsd_handle> handle{new gsd_handle};
@@ -38,14 +38,15 @@ TEST_CASE("Open GSD file", "[gsd]")
     REQUIRE(return_val == 0);
 }
 
-TEST_CASE("Initialize simulation system", "[Engine][SystemData][RungeKutta4][PotentialHydrodynamics][gsd][GSDUtil]")
+TEST_CASE("Initialize collinear swimmer isolated simulation system",
+          "[Collinear-Isolated][Engine][SystemData][RungeKutta4][PotentialHydrodynamics][gsd][GSDUtil]")
 {
     // close all previous loggers
     spdlog::drop_all();
 
     // I/O Parameters
-    std::string inputDataFile = "input/collinear_swimmer_wall/initial_frame_dt1e-1_Z-height6.gsd";
-    std::string outputDir     = "output-SystemData-init";
+    std::string inputDataFile = "test/input/collinear_swimmer_isolated/initial_frame_dt1e-2.gsd";
+    std::string outputDir     = "output-collinear-isolated-SystemData-init";
 
     // simulation classes
     std::shared_ptr<SystemData> system;
@@ -62,14 +63,63 @@ TEST_CASE("Initialize simulation system", "[Engine][SystemData][RungeKutta4][Pot
     REQUIRE_NOTHROW(eng = std::make_shared<Engine>(system));
 }
 
-TEST_CASE("Run simulation system", "[Engine][ProgressBar][SystemData][RungeKutta4][PotentialHydrodynamics]")
+TEST_CASE("Run collinear swimmer isolated simulation system",
+          "[Collinear-Isolated][Engine][ProgressBar][SystemData][RungeKutta4][PotentialHydrodynamics]")
+{
+    // close all previous loggers
+    spdlog::drop_all();
+
+    // I/O Parameters
+    std::string inputDataFile = "test/input/collinear_swimmer_isolated/initial_frame_dt1e-2.gsd";
+    std::string outputDir     = "output-collinear-isolated-Engine-run";
+
+    // simulation classes
+    std::shared_ptr<SystemData> system;
+    std::shared_ptr<Engine>     eng;
+
+    // Construct and initialize simulation classes
+    REQUIRE_NOTHROW(system = std::make_shared<SystemData>(inputDataFile, outputDir));
+    REQUIRE_NOTHROW(system->initializeData());
+    REQUIRE_NOTHROW(eng = std::make_shared<Engine>(system));
+
+    // Verify simulation can run without error
+    REQUIRE_NOTHROW(eng->run());
+}
+
+TEST_CASE("Initialize collinear swimmer wall simulation system",
+          "[Collinear-Wall][Engine][SystemData][RungeKutta4][PotentialHydrodynamics][gsd][GSDUtil]")
 {
     // close all previous loggers
     spdlog::drop_all();
 
     // I/O Parameters
     std::string inputDataFile = "input/collinear_swimmer_wall/initial_frame_dt1e-1_Z-height6.gsd";
-    std::string outputDir     = "output-Engine-run";
+    std::string outputDir     = "output-collinear-wall-SystemData-init";
+
+    // simulation classes
+    std::shared_ptr<SystemData> system;
+    std::shared_ptr<Engine>     eng;
+
+    // Construct and initialize simulationSystem class
+    REQUIRE_NOTHROW(system = std::make_shared<SystemData>(inputDataFile, outputDir));
+    REQUIRE_NOTHROW(system->initializeData());
+
+    // Verify data was correctly parsed from GSD to simulation
+    REQUIRE(system->gSDParsed());
+
+    // Construct simulation Engine
+    REQUIRE_NOTHROW(eng = std::make_shared<Engine>(system));
+}
+
+TEST_CASE("Run collinear swimmer wall simulation system",
+          "[Collinear-Wall][Engine][ProgressBar][SystemData][RungeKutta4][PotentialHydrodynamics]")
+{
+    // close all previous loggers
+    spdlog::drop_all();
+
+    // I/O Parameters
+    std::string inputDataFile = "input/collinear_swimmer_wall/initial_frame_dt1e-1_Z-height6.gsd";
+    std::string outputDir     = "output-collinear-wall-Engine-run";
 
     // simulation classes
     std::shared_ptr<SystemData> system;
