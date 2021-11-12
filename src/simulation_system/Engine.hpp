@@ -10,10 +10,10 @@
 #endif
 
 /* Include all internal project dependencies */
-#include <SystemData.hpp>
 #include <PotentialHydrodynamics.hpp>
 #include <ProgressBar.hpp>
 #include <RungeKutta4.hpp>
+#include <SystemData.hpp>
 
 /* Include all external project dependencies */
 // Intel MKL
@@ -97,8 +97,10 @@ class Engine
     const std::string m_logName{"Engine"};
 
     // eigen parallelization parameters
-    /// number of physical CPU cores to use in tensor calculations
-    const int m_num_physical_cores = std::thread::hardware_concurrency();
+    // number of physical CPU cores on host device
+    const int m_num_physical_cores{std::thread::hardware_concurrency()};
+    /// @todo: number of physical CPU cores to use in tensor calculations
+    const int m_simulation_cores{std::ceil(m_num_physical_cores / 4)};
 
     // ProgressBar output
     /// Percentage of simulation progress at which to output a GSD frame

@@ -64,10 +64,8 @@ Engine::run()
     spdlog::get(m_logName)->info("Display step: {0}", display_step);
 
     // create eigen3 thread-pool and device
-    ///< number of threads in pool for eigen calculations (set to number of physical cores on machine)
-    Eigen::ThreadPool thread_pool = Eigen::ThreadPool(m_num_physical_cores);
-    ///< thread pool device with access to all threads
-    Eigen::ThreadPoolDevice all_cores_device(&thread_pool, m_num_physical_cores);
+    Eigen::ThreadPool       thread_pool = Eigen::ThreadPool(m_simulation_cores);
+    Eigen::ThreadPoolDevice all_cores_device(&thread_pool, m_simulation_cores);
 
     while (m_system->timestep() < tot_step)
     {
