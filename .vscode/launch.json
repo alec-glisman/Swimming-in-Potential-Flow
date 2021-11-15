@@ -28,7 +28,7 @@
             "program": "${workspaceFolder}/python/analysis/collinear-swimmer-internal-dynamics-individual-analysis.py",
             "console": "integratedTerminal",
             "args": [
-                "--relative-path=${workspaceFolder}/2021-11-15.10-35-59_collinear-swimmer-internal-dynamics_varyZHeight/sim_1",
+                "--relative-path=${workspaceFolder}/temp/2021-11-15.10-35-59_collinear-swimmer-internal-dynamics_varyZHeight/sim_1",
                 "--output-dir=figures"
             ]
         },
