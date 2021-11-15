@@ -161,7 +161,7 @@ def aggregate_plots(relative_path, output_dir):
         CoM_disp_comp[i, :] = gsd_files[i].snapshot.log['particles/double_position'][0]
 
         # Data from initial frame
-        gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(0)
+        gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(1)
         R_avg[i] = gsd_files[i].snapshot.log['swimmer/R_avg']
         Z_height[i] = gsd_files[i].snapshot.log['swimmer/Z_height']
         phaseShift[i] = gsd_files[i].snapshot.log['swimmer/phase_shift']

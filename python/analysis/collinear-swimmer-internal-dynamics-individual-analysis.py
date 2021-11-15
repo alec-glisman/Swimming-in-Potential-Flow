@@ -85,7 +85,7 @@ def aggregate_plots(relative_path, output_dir):
             f"Failure to load data. Not exactly 1 file found in relPath {relative_path}")
 
     # Data from initial frame
-    gsd_file.snapshot = gsd_file.trajectory.read_frame(0)
+    gsd_file.snapshot = gsd_file.trajectory.read_frame(1)
     N_particles = gsd_file.snapshot.particles.N
     nframes = gsd_file.trajectory.file.nframes
     R_avg = gsd_file.snapshot.log['swimmer/R_avg']
