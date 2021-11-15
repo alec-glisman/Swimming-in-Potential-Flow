@@ -30,17 +30,17 @@ use warnings;                      # give warnings
 # SECTION: Input variables that user must specify before running script
 
 # Compiler
-my $enableTesting  = "True";                    # Unit tests,        OPTIONS: (False) OFF, (True) ON
+my $enableTesting  = "False";                   # Unit tests,        OPTIONS: (False) OFF, (True) ON
 my $enableCoverage = "False";                   # Testing coverage,  OPTIONS: (False) OFF, (True) ON
 my $build          = "Release";                 # CMake built type,  OPTIONS: Release, Debug, Profile
 my $generator      = "Ninja";                   # CMake generator,   OPTIONS: "Unix Makefiles", "Ninja"
 my $buildDir       = "build/" . lc $build;      # Build folder path
 
 # C++ Simulation
-my $simulationTag    = "collinear-swimmer-isolated";
+my $simulationTag    = "collinear-swimmer-internal-dynamics";
 my $projectName      = "bodies-in-potential-flow";
 my $inputDir         = "input";
-my @inputData        = ( "varyRelDisp", "varyEpsilon", "varyPhaseAngle", "varyDt"); # If using wall: "varyZHeight"
+my @inputData        = ( "varyZHeight", "varyRelDisp", "varyPhaseAngle", "varyEpsilon", "varyDt" );
 my $numSimulationTypes = scalar @inputData;
 my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
 
@@ -201,9 +201,12 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		# Simulation variables
 		my $dt          = 1.00e-6;
 		my $R_avg       = 4.00e+0;
+		my $Z_height    = 6.00e+0;
 		my $phase_angle = -1.57079632679e+0;
 		my $U0          = 1.00e-2;
 		my $omega       = 1.00e+0;
+        my $number_bodies = 1;
+        my $image_system = 0; # REVIEW OPTIONS: {0; false, 1; true}
 
 		# Modify default preferences for each simulation run
 		switch($inputData[$i]) {
@@ -212,6 +215,9 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 			}
 			case ( "varyRelDisp" ) {
 				$R_avg = ${data[$j]};
+			}
+			case ( "varyZHeight" ) {
+				$Z_height = ${data[$j]};
 			}
 			case ( "varyPhaseAngle" ) {
 				$phase_angle = ${data[$j]};
@@ -223,8 +229,8 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		}
 
 		# Generate GSD file
-		system( "python3 " . ${pythonGSDCreation} . " --GSD-path=" . ${gsd_path} . " --dt=" . ${dt} . " --R-avg=" . ${R_avg} . " --phase-angle=" . ${phase_angle} . " --U0=" . ${U0} . " --omega=" . ${omega})
-		  and die "Unable to generate GSD file: $?, $!";
+		system( "python3 " . ${pythonGSDCreation} . " --GSD-path=" . ${gsd_path} . " --dt=" . ${dt} . " --R-avg=" . ${R_avg} . " --Z-height=" . ${Z_height} . " --phase-angle=" . ${phase_angle} . " --U0=" . ${U0} . " --omega=" . ${omega} . " --number-bodies=" . ${number_bodies} ." --image-system=" .${image_system}) 
+            and die "Unable to generate GSD file: $?, $!";
 
 		# Prepare for simulation
 		make_path( "${simulation_dir}/${analysisDir}" );
@@ -253,7 +259,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 	}
 
 	# NOTE: Pause for all simulations to finish
-	sleep(180);
+	sleep(100);
 
 	# !SECTION
 
