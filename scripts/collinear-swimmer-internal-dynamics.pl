@@ -201,7 +201,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		# Simulation variables
 		my $dt          = 1.00e-6;
         my $ti          = 0.00e+0;
-        my $tf          = 1.00e+0
+        my $tf          = 1.00e+0;
 
 		my $R_avg       = 4.00e+0;
 		my $Z_height    = 6.00e+0;
