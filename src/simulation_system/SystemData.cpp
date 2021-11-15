@@ -140,24 +140,24 @@ SystemData::initializeData()
     spdlog::get(m_logName)->info("Setting initial configuration orientation");
     m_positions_particles_articulation_init_norm.setZero();
 
+    /// @review_swimmer: change initial orientations
     for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
-        if (m_particle_type_id(particle_id) == 1)
+        const int particle_id_3{3 * particle_id};
+
+        double orient_dir{0.0};
+
+        if (particle_id % 3 == 1)
         {
-            continue; // continue to next loop as all elements are zero
+            orient_dir = 1.0; // +x placement
+        }
+        else if (particle_id % 3 == 2)
+        {
+            orient_dir = -1.0; // -x placement
         }
 
-        const int particle_id_3{3 * particle_id};
-        const int body_id_7{7 * m_particle_group_id(particle_id)};
-
-        /// @todo: (future) also load data from frame0 of GSD for initial positions so that simulations can continue
-        /// from previous GSD
-        /// @todo: (future) add a check that the first frame's unit quaternions are all identity quaternions (1, 0, 0,
-        /// 0)^T
-        const Eigen::Vector3d disp =
-            m_positions_particles.segment<3>(particle_id_3) - m_positions_bodies.segment<3>(body_id_7);
-
-        m_positions_particles_articulation_init_norm.segment<3>(particle_id_3).noalias() = disp.normalized();
+        m_positions_particles_articulation_init_norm(particle_id_3) =
+            orient_dir; // REVIEW: All of body coordinate in +x-axis, quaternion rotates
 
         spdlog::get(m_logName)->info("Particle {0} initial orientation: [{1:03.14f}, {2:03.14f}, {3:03.14f}]",
                                      particle_id + 1, m_positions_particles_articulation_init_norm(particle_id_3),
@@ -175,6 +175,7 @@ SystemData::initializeData()
 
     // output data
     logData();
+    m_gsdUtil->writeFrame();
 
     spdlog::get(m_logName)->info("Initialization complete");
     spdlog::get(m_logName)->flush();
