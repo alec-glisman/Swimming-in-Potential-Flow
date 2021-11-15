@@ -3,7 +3,7 @@
 __author__ = "Alec Glisman"
 
 Example:
-    python3 python/analysis/collinear-swimmer-wall-individual-analysis.py --relative-path=temp/output --output-dir=temp/output/figures
+    python3 python/analysis/collinear-swimmer-wall-internal-dynamics.py --relative-path=temp/output --output-dir=temp/output/figures
 """
 
 # SECTION: Depdencendies
@@ -45,9 +45,6 @@ def aggregate_plots(relative_path, output_dir):
     Args:
         relative_path (str): path to GSD files to load
         output_dir (str): path to output of numerical analysis
-
-    Example:
-        python3 python/analysis/collinear-swimmer-wall-individual-analysis.py --relative-path=temp/output --output-dir=temp/output/figures
     """
 
     # SECTION: Parameters for function

@@ -3,7 +3,7 @@
 __author__ = "Alec Glisman"
 
 Example:
-    python3 python/analysis/collinear-swimmer-wall-aggregate-analysis.py --relative-path=temp/output --output-dir=temp/output/figures
+    python3 python/analysis/collinear-swimmer-internal-dynamics-aggregate-analysis.py --relative-path=temp/output --output-dir=temp/output/figures
 """
 
 # SECTION: Depdencendies
@@ -98,7 +98,7 @@ def aggregate_plots(relative_path, output_dir):
         output_dir (str): path to output of numerical analysis
 
     Example:
-        python3 python/analysis/collinear-swimmer-wall-individual-analysis.py --relative-path=temp/output --output-dir=temp/output/figures
+        python3 python/analysis/collinear-swimmer-individual-analysis.py --relative-path=temp/output --output-dir=temp/output/figures
     """
 
     # SECTION: Parameters for function
@@ -167,7 +167,7 @@ def aggregate_plots(relative_path, output_dir):
         phaseShift[i] = gsd_files[i].snapshot.log['swimmer/phase_shift']
         U0[i] = gsd_files[i].snapshot.log['swimmer/U0']
         omega[i] = gsd_files[i].snapshot.log['swimmer/omega']
-        epsilon[i] = U0[i] / R_avg[i] / omega[i]
+        epsilon[i] = abs(U0[i] / R_avg[i] / omega[i])
         CoM_disp_comp[i, :] -= gsd_files[i].snapshot.log['particles/double_position'][0]
 
         CoM_disp[i] = np.linalg.norm(CoM_disp_comp[i, :])
@@ -176,6 +176,23 @@ def aggregate_plots(relative_path, output_dir):
 
 
 # SECTION: Analysis
+
+    # Calculate leading order net motion over one period of articulation (for varying distance between spheres)
+    xAnalyticalRng = np.array(np.linspace(
+        2.0, 40.0, num=1000), dtype=np.double)
+    dZAnalyticalDist = dZ_leadingOrder(
+        phaseShift[0], U0[0], omega[0], a, xAnalyticalRng)
+    # Calculate leading order net motion over one period of articulation (for varying phase Shift)
+    deltaAnalyticalRng = np.array(np.linspace(
+        0, 2 * np.pi, num=1000), dtype=np.double)
+    dZAnalyticaldelt = dZ_leadingOrder(
+        deltaAnalyticalRng, U0[0], omega[0], a, R_avg[0])
+    # Calculate leading order net motion (for varying epsilon)
+    epsAnalyticalRng = np.array(np.linspace(
+        0, np.max(epsilon), num=1000), dtype=np.double)
+    dZAnalyticaleps = dZ_leadingOrder(
+        phaseShift[0], epsAnalyticalRng * omega[0] * R_avg[0], omega[0], a, R_avg[0])
+
 
 # !SECTION (Analysis)
 
@@ -189,14 +206,16 @@ def aggregate_plots(relative_path, output_dir):
         R_avg_srt = R_avg[idx]
 
         # PLOT: net displacement of swimmer vs. distance between spheres
-        numLines = 1
+        numLines = 2
         CoM_Plot = PlotStyling(numLines,
                                r"$\mathrm{R}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
                                title=None, loglog=False,
-                               outputDir=output_dir, figName="collinear-swimmer-wall-CoM_x-disp", eps=epsOutput,
+                               outputDir=output_dir, figName="collinear-swimmer-CoM_x-disp", eps=epsOutput,
                                continuousColors=False)
         # Show numerical data points
         CoM_Plot.make_plot()
+        CoM_Plot.curve(np.abs(xAnalyticalRng),
+                       dZAnalyticalDist, zorder=1, label="Leading Order")
         CoM_Plot.scatter_dashed(R_avg_srt[R_avg_srt <= 6.0], CoM_disp_srt[R_avg_srt <= 6.0],
                                 zorder=1, label="Simulation")
         # Add legend
@@ -213,14 +232,30 @@ def aggregate_plots(relative_path, output_dir):
         CoM_PlotLL = PlotStyling(numLines,
                                  r"$\mathrm{R}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
                                  title=None, loglog=True,
-                                 outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-loglog", eps=epsOutput,
+                                 outputDir=output_dir, figName="collinear-swimmer-CoM-disp-loglog", eps=epsOutput,
                                  continuousColors=False)
         CoM_PlotLL.make_plot()
+        CoM_PlotLL.curve(np.abs(xAnalyticalRng), np.abs(
+            dZAnalyticalDist), zorder=1, label="Leading Order")
         CoM_PlotLL.scatter_dashed(R_avg_srt, np.abs(
             CoM_disp_srt), zorder=2, label="Simulation")
         CoM_PlotLL.legend(title=r"$\epsilon \leq$" + "{}".format(
             fmt(np.max(epsilon))), loc='best', bbox_to_anchor=(0.01, 0.01, 0.98, 0.98))
         CoM_PlotLL.save_plot()
+
+        # PLOT: Relative error of displacement with relDisp
+        numLines = 1
+        relDisErr = relErr(dZ_leadingOrder(phaseShift[0], U0[0], omega[0], a, R_avg),
+                           CoM_disp)
+        CoMDispErr_Plot = PlotStyling(numLines,
+                                      r"$\mathrm{R}_0 / a $", r"Relative Error",
+                                      title=None, loglog=True,
+                                      outputDir=output_dir, figName="collinear-swimmer-CoM_x-disp-error", eps=epsOutput,
+                                      continuousColors=False)
+        CoMDispErr_Plot.make_plot()
+        CoMDispErr_Plot.scatter(
+            R_avg, relDisErr, zorder=1, label="Relative Error")
+        CoMDispErr_Plot.save_plot()
 
     if (len(np.unique(dt)) > 1):
 
@@ -233,7 +268,7 @@ def aggregate_plots(relative_path, output_dir):
         CoM_Plot = PlotStyling(numLines,
                                r"$\Delta t / \tau$", r"$\Delta \mathrm{R}_{2} / a$",
                                title=None, loglog=False,
-                               outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-dtVary", eps=epsOutput,
+                               outputDir=output_dir, figName="collinear-swimmer-CoM-disp-dtVary", eps=epsOutput,
                                continuousColors=False)
         # Show numerical data points
         CoM_Plot.make_plot()
@@ -253,7 +288,7 @@ def aggregate_plots(relative_path, output_dir):
         CoM_PlotLL = PlotStyling(numLines,
                                  r"$\Delta t / \tau$", r"$\Delta \mathrm{R}_{2} / a$",
                                  title=None, loglog=True,
-                                 outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-loglog-dtVary", eps=epsOutput,
+                                 outputDir=output_dir, figName="collinear-swimmer-CoM-disp-loglog-dtVary", eps=epsOutput,
                                  continuousColors=False)
         CoM_PlotLL.make_plot()
         CoM_PlotLL.scatter_dashed(dt_srt, np.abs(
@@ -267,7 +302,7 @@ def aggregate_plots(relative_path, output_dir):
         CoM_PlotLL = PlotStyling(numLines,
                                  r"$\Delta t / \tau$", r"Relative Error $\Delta \mathrm{R}_{2}$",
                                  title=None, loglog=True,
-                                 outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-loglog-dtVary-diffFromLast", eps=epsOutput,
+                                 outputDir=output_dir, figName="collinear-swimmer-CoM-disp-loglog-dtVary-diffFromLast", eps=epsOutput,
                                  continuousColors=False)
         CoM_PlotLL.make_plot()
         CoM_PlotLL.scatter_dashed(dt_srt, np.abs(
@@ -287,7 +322,7 @@ def aggregate_plots(relative_path, output_dir):
         CoM_Plot = PlotStyling(numLines,
                                r"$\mathrm{Z}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
                                title=None, loglog=False,
-                               outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-height", eps=epsOutput,
+                               outputDir=output_dir, figName="collinear-swimmer-CoM-disp-height", eps=epsOutput,
                                continuousColors=False)
         # Show numerical data points
         CoM_Plot.make_plot()
@@ -307,7 +342,7 @@ def aggregate_plots(relative_path, output_dir):
         CoM_PlotLL = PlotStyling(numLines,
                                  r"$\mathrm{Z}_0 / a $", r"$\Delta \mathrm{R}_{2} / a$",
                                  title=None, loglog=True,
-                                 outputDir=output_dir, figName="collinear-swimmer-wall-CoM-disp-height-loglog", eps=epsOutput,
+                                 outputDir=output_dir, figName="collinear-swimmer-CoM-disp-height-loglog", eps=epsOutput,
                                  continuousColors=False)
         CoM_PlotLL.make_plot()
         CoM_PlotLL.scatter_dashed(Z_height_srt, np.abs(
@@ -323,13 +358,15 @@ def aggregate_plots(relative_path, output_dir):
         phaseShift_srt = phaseShift[idx]
 
         # PLOT: net displacement of swimmer vs phase Shift
-        numLines = 1
+        numLines = 2
         phaseShift_Plot = PlotStyling(numLines,
                                       r"Phase Shift, $\delta$", r"$\Delta \mathrm{R}_{2} / a$",
                                       title=None, loglog=False,
-                                      outputDir=output_dir, figName="collinear-swimmer-wall-phaseShift", eps=epsOutput,
+                                      outputDir=output_dir, figName="collinear-swimmer-phaseShift", eps=epsOutput,
                                       continuousColors=False)
         phaseShift_Plot.make_plot()
+        phaseShift_Plot.curve(
+            deltaAnalyticalRng, dZAnalyticaldelt, zorder=1, label="Leading Order")
         phaseShift_Plot.scatter_dashed(
             phaseShift_srt, CoM_disp_srt, zorder=2, label="Simulation")
         phaseShift_Plot.legend(title=r"$\epsilon \leq$" + "{}".format(
@@ -337,28 +374,46 @@ def aggregate_plots(relative_path, output_dir):
         phaseShift_Plot.set_yaxis_scientific()
         phaseShift_Plot.save_plot()
 
+        # PLOT: Relative error of displacement with delta
+        relPhErr = relErr(dZ_leadingOrder(phaseShift, U0[0], omega[0], a, R_avg[0]),
+                          CoM_disp_srt)
+        numLines = 1
+        phaseShiftErr_Plot = PlotStyling(numLines,
+                                         r"Phase Shift, $\delta$", r"Relative Error",
+                                         title=None, loglog=True,
+                                         outputDir=output_dir, figName="collinear-swimmer-phaseShift-error", eps=epsOutput,
+                                         continuousColors=False)
+        phaseShiftErr_Plot.make_plot()
+        phaseShiftErr_Plot.scatter(
+            phaseShift, relPhErr, zorder=1, label="Relative Error")
+        phaseShiftErr_Plot.save_plot()
+
     if (len(np.unique(epsilon)) > 1):
         # PLOT: net displacement of swimmer vs epsilon
-        numLines = 1
+        numLines = 2
         eps_Plot = PlotStyling(numLines,
                                r"$\epsilon = \frac{\mathrm{U}_0 / \omega}{\mathrm{R}_0}$", r"$\Delta \mathrm{R}_{2} / a$",
                                title=None, loglog=False,
-                               outputDir=output_dir, figName="collinear-swimmer-wall-eps-scaling-CoM-disp", eps=epsOutput,
+                               outputDir=output_dir, figName="collinear-swimmer-eps-scaling-CoM-disp", eps=epsOutput,
                                continuousColors=False)
         eps_Plot.make_plot()
+        eps_Plot.curve(epsAnalyticalRng, dZAnalyticaleps,
+                       zorder=1, label="Leading Order")
         eps_Plot.scatter(epsilon, CoM_disp,
                          zorder=2, label="Simulation")
         eps_Plot.legend(loc='best', bbox_to_anchor=(0.05, 0.05, 0.5, 0.9))
         eps_Plot.save_plot()
 
         # PLOT: log-log net displacement of swimmer vs epsilon
-        numLines = 1
+        numLines = 2
         epsLL_Plot = PlotStyling(numLines,
                                  r"$\epsilon = \frac{\mathrm{U}_0 / \omega}{\mathrm{R}_0}$", r"$\Delta \mathrm{R}_{2} / a$",
                                  title=None, loglog=True,
-                                 outputDir=output_dir, figName="collinear-swimmer-wall-eps-scaling-CoM-disp-loglog", eps=epsOutput,
+                                 outputDir=output_dir, figName="collinear-swimmer-eps-scaling-CoM-disp-loglog", eps=epsOutput,
                                  continuousColors=False)
         epsLL_Plot.make_plot()
+        epsLL_Plot.curve(epsAnalyticalRng, dZAnalyticaleps,
+                         zorder=1, label="Leading Order")
         epsLL_Plot.scatter(epsilon, CoM_disp,
                            zorder=2, label="Simulation")
         epsLL_Plot.legend(
