@@ -250,8 +250,6 @@ class PotentialHydrodynamics
     const double m_scalar_moment_inertia{0.40};
     /// REVIEW: arbitrary, positive scalar to use in extending tensors from 6N to 7N (detailed in Udwadia, Schutte. J.
     /// Appl. Mech. Jul 2010)
-    /// @todo: (1, 1) entry is the added element to the mass matrix. Verify that changing this value does not affect
-    /// the end result (Issue #6). Currently defaults to 1.
     const double m_scalar_w{1.00};
     /// = 1/2
     const double m_c1_2{0.50};
