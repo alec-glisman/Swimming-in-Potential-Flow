@@ -106,7 +106,7 @@ def aggregate_plots(relative_path, output_dir):
     output_dir = relative_path + "/" + output_dir + "/"
     gsd_files = []
     epsOutput = False
-    a = 1
+    a = 1.0
 
     # REVIEW[epic=Future Features]: Move this adjustment into plotting style library
     # Correctly get scientific notation in text elements
