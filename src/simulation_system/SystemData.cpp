@@ -383,45 +383,6 @@ SystemData::update(Eigen::ThreadPoolDevice& device)
 
     // NOTE: Udwadia linear system calculated 5th
     udwadiaLinearSystem();
-
-    // FIXME: debugging print statements
-#if !defined(NDEBUG)
-    Eigen::IOFormat CleanFmt(16, 0, ", ", "\n", "[", "]");
-    // std::cout << "SystemData::update(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
-    // std::cout << "t: " << m_t << "\n\n" << std::endl;
-
-    // std::cout << "positions particles articulation init norm:\n"
-    //           << m_positions_particles_articulation_init_norm.format(CleanFmt) << "\n\n"
-    //           << std::endl;
-
-    // std::cout << "positions particles articulation:\n"
-    //           << m_positions_particles_articulation.format(CleanFmt) << "\n\n"
-    //           << std::endl;
-    // std::cout << "positions particles:\n" << m_positions_particles.format(CleanFmt) << "\n\n" << std::endl;
-
-    // std::cout << "velocities particles:\n" << m_velocities_particles.format(CleanFmt) << "\n\n" << std::endl;
-    // std::cout << "velocities particles articulation:\n"
-    //           << m_velocities_particles_articulation.format(CleanFmt) << "\n\n"
-    //           << std::endl;
-
-    // std::cout << "accelerations particles:\n" << m_accelerations_particles.format(CleanFmt) << "\n\n" << std::endl;
-    // std::cout << "accelerations particles articulation:\n"
-    //           << m_accelerations_particles_articulation.format(CleanFmt) << "\n\n"
-    //           << std::endl;
-
-    // std::cout << "velocities particles articulation:\n"
-    //           << m_velocities_particles_articulation.format(CleanFmt) << "\n\n"
-    //           << std::endl;
-    // std::cout << "velocities particles:\n" << m_velocities_particles.format(CleanFmt) << "\n\n" << std::endl;
-
-    // std::cout << "accelerations particles articulation:\n"
-    //           << m_accelerations_particles_articulation.format(CleanFmt) << "\n\n"
-    //           << std::endl;
-    // std::cout << "accelerations particles:\n" << m_accelerations_particles.format(CleanFmt) << "\n\n" << std::endl;
-
-    // std::cout << "rbm_conn:\n" << m_rbm_conn.format(CleanFmt) << "\n\n" << std::endl;
-    // std::cout << "chi:\n" << m_chi.format(CleanFmt) << "\n\n" << std::endl;
-#endif
 }
 
 void
@@ -636,24 +597,6 @@ SystemData::chiMatrixElement(const int particle_id)
         m_I3; // convert body (linear) position derivatives to particle linear coordinate derivatives
     m_chi.block<4, 3>(body_id_7 + 3, particle_id_3).noalias() =
         g_matrix; // convert body (quaternion) position derivatives to particle linear coordinate derivatives
-
-    // FIXME: debugging print statements
-#if !defined(NDEBUG)
-    Eigen::IOFormat CleanFmt(8, 0, ", ", "\n", "[", "]");
-
-    // std::cout << "SystemData::chiMatrixElement(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
-    // std::cout << "G matrix for particle " << particle_id << ":\n" << g_matrix.format(CleanFmt) << "\n\n" <<
-    // std::endl;
-
-    // std::cout << "theta_body.w(): " << theta_body.w()
-    //           << ", theta_body.vec(): " << theta_body.vec().transpose().format(CleanFmt) << "\n\n"
-    //           << std::endl;
-
-    // std::cout << "r_theta.w(): " << r_theta.w() << ", r_theta.vec(): " << r_theta.vec().transpose().format(CleanFmt)
-    //           << "\n\n"
-    //           << std::endl;
-
-#endif
 }
 
 void

@@ -32,9 +32,6 @@
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
 
-// FIXME: Remove
-#include <iostream>
-
 /* Forward declarations */
 class SystemData;
 
@@ -231,17 +228,15 @@ class PotentialHydrodynamics
 
     /// (7M x 7M) `Eigen::Matrix` form of `m_M3`
     Eigen::MatrixXd m_mat_M3;
+    /// (7M x 7N) `Eigen::Matrix` form of `m_M2`
+    Eigen::MatrixXd m_mat_M2;
 
     // ANCHOR: N sub-terms
-    Eigen::Tensor<double, 3> N2_term1_preshuffle;
-    Eigen::Tensor<double, 3> N2_term1;
-    Eigen::Tensor<double, 3> N2_term2;
+    Eigen::Tensor<double, 3> m_N2_term1_preshuffle;
+    Eigen::Tensor<double, 3> m_N2_term1;
+    Eigen::Tensor<double, 3> m_N2_term2;
 
-    Eigen::Tensor<double, 3> N3_term1_preshuffle;
-    Eigen::Tensor<double, 3> N3_term2_preshuffle;
-    Eigen::Tensor<double, 3> N3_term1;
-    Eigen::Tensor<double, 3> N3_term2;
-    Eigen::Tensor<double, 3> N3_term3;
+    Eigen::Tensor<double, 3> m_N3_terms12_preshuffle;
 
     // ANCHOR: constants
     /// volume of a unit sphere

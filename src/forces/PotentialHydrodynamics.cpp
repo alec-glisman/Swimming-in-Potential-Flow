@@ -75,29 +75,23 @@ PotentialHydrodynamics::PotentialHydrodynamics(std::shared_ptr<SystemData> sys)
 
     m_M2 = Eigen::Tensor<double, 2>(m_7M, m_7N);
     m_M2.setZero();
+    m_mat_M2 = Eigen::MatrixXd::Zero(m_7M, m_7N);
+
     m_M3 = Eigen::Tensor<double, 2>(m_7M, m_7M);
     m_M3.setZero();
     m_mat_M3 = Eigen::MatrixXd::Zero(m_7M, m_7M);
 
     // N^{(2)}
-    N2_term1_preshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7N);
-    N2_term1_preshuffle.setZero();
-    N2_term1 = Eigen::Tensor<double, 3>(m_7M, m_7N, m_7M);
-    N2_term1.setZero();
-    N2_term2 = Eigen::Tensor<double, 3>(m_7M, m_7N, m_7M);
-    N2_term2.setZero();
+    m_N2_term1_preshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7N);
+    m_N2_term1_preshuffle.setZero();
+    m_N2_term1 = Eigen::Tensor<double, 3>(m_7M, m_7N, m_7M);
+    m_N2_term1.setZero();
+    m_N2_term2 = Eigen::Tensor<double, 3>(m_7M, m_7N, m_7M);
+    m_N2_term2.setZero();
 
     // N^{(3)}
-    N3_term1_preshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
-    N3_term3.setZero();
-    N3_term2_preshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
-    N3_term2_preshuffle.setZero();
-    N3_term1 = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
-    N3_term1.setZero();
-    N3_term2 = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
-    N3_term2.setZero();
-    N3_term3 = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
-    N3_term3.setZero();
+    m_N3_terms12_preshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
+    m_N3_terms12_preshuffle.setZero();
 
     // Assign particle pair information
     spdlog::get(m_logName)->info("Initializing particle pair information vectors");
@@ -332,6 +326,7 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
 
     /* ANCHOR: Compute linear combinations of total mass matrix and zeta */
     m_M2.device(device) = m_system->tensRbmConn().contract(m_tens_M_total, contract_il_lj);
+    m_mat_M2            = MatrixCast(m_M2, m_7M, m_7N, device);
 
     m_M3.device(device) = m_M2.contract(m_system->tensRbmConn(), contract_il_jl);
     m_mat_M3            = MatrixCast(m_M3, m_7M, m_7M, device);
@@ -341,77 +336,20 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     m_N1.device(device) = m_grad_M_added_body_coords;
 
     // N^{(2)}
-    N2_term1_preshuffle.device(device) = m_system->tensGradRbmConn().contract(m_tens_M_total, contract_il_lj);
+    m_N2_term1_preshuffle.device(device) = m_system->tensGradRbmConn().contract(m_tens_M_total, contract_il_lj);
 
-    N2_term1.device(device) = N2_term1_preshuffle.shuffle(permute_ikj_ijk);
-    N2_term2.device(device) = m_system->tensRbmConn().contract(m_N1, contract_il_lj);
+    m_N2_term1.device(device) = m_N2_term1_preshuffle.shuffle(permute_ikj_ijk);
+    m_N2_term2.device(device) = m_system->tensRbmConn().contract(m_N1, contract_il_lj);
 
-    m_N2.device(device) = N2_term1;
-    m_N2.device(device) += N2_term2;
+    m_N2.device(device) = m_N2_term1;
+    m_N2.device(device) += m_N2_term2;
 
     // N^{(3)}
-    N3_term1_preshuffle.device(device) = N2_term1.contract(m_system->tensRbmConn(), contract_il_jl);
-    N3_term1_preshuffle.device(device) += N2_term2.contract(m_system->tensRbmConn(), contract_il_jl);
+    m_N3_terms12_preshuffle.device(device) = m_N2_term1.contract(m_system->tensRbmConn(), contract_il_jl);
+    m_N3_terms12_preshuffle.device(device) += m_N2_term2.contract(m_system->tensRbmConn(), contract_il_jl);
 
-    m_N3.device(device) = N3_term1_preshuffle.shuffle(permute_ikj_ijk);
+    m_N3.device(device) = m_N3_terms12_preshuffle.shuffle(permute_ikj_ijk);
     m_N3.device(device) += m_M2.contract(m_system->tensGradRbmConn(), contract_il_jl);
-
-    // FIXME: debugging print statements
-#if !defined(NDEBUG)
-    Eigen::IOFormat CleanFmt(8, 0, ", ", "\n", "[", "]");
-    // std::cout << "PotentialHydrodynamics::calcBodyTensors(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
-
-    // const Eigen::array<Eigen::Index, 3> offsets_dim5_grad = {0, 0, 4};
-    // const Eigen::array<Eigen::Index, 3> extents_2D        = {m_7M, m_7N, 1};
-    // const Eigen::array<Eigen::Index, 3> extents_1D        = {1, m_7N, 1};
-
-    // for (int i = 0; i < 7; i++)
-    // {
-    // const Eigen::array<Eigen::Index, 3> extents = {m_7N, m_7N, 1};
-    // const Eigen::array<Eigen::Index, 3> offsets = {0, 0, i};
-
-    // std::cout << "grad M body coords {j k " << i << "}:\n"
-    //           << MatrixCast(m_N1.slice(offsets, extents), m_7N, m_7N, device).format(CleanFmt) << "\n\n"
-    //           << std::endl;
-    // }
-
-    // std::cout << "N2_{j k 5} term 1:\n"
-    //           << MatrixCast(N2_term1_preshuffle.shuffle(permute_ikj_ijk).slice(offsets_dim5_grad, extents_2D), m_7M,
-    //                         m_7N, device)
-    //                  .format(CleanFmt)
-    //           << "\n\n"
-    //           << std::endl;
-
-    // std::cout << "N2_{j k 5} term 2:\n"
-    //           << MatrixCast(
-    //                  (m_system->tensRbmConn().contract(m_N1, contract_il_lj)).slice(offsets_dim5_grad, extents_2D),
-    //                  m_7M, m_7N, device)
-    //                  .format(CleanFmt)
-    //           << "\n\n"
-    //           << std::endl;
-
-    // const Eigen::array<Eigen::Index, 3> extents_zeta = {1, m_7N};
-    // const Eigen::array<Eigen::Index, 3> offsets_zeta = {0, 0};
-
-    // std::cout << "zeta_{1 l}:\n"
-    //           << MatrixCast(m_system->tensRbmConn().slice(offsets_zeta, extents_zeta), 1, m_7N,
-    //           device).format(CleanFmt)
-    //           << "\n\n"
-    //           << std::endl;
-
-    // const Eigen::array<Eigen::Index, 3> offsets_grad5_col8  = {0, 7, 4};
-    // const Eigen::array<Eigen::Index, 3> offsets_grad5_col15 = {0, 14, 4};
-    // const Eigen::array<Eigen::Index, 3> extents_grad_M      = {m_7N, 1, 1};
-
-    // std::cout << "grad_5 M_{l 8}:\n"
-    //           << MatrixCast(m_N1.slice(offsets_grad5_col8, extents_grad_M), m_7N, 1, device).format(CleanFmt) <<
-    //           "\n\n"
-    //           << std::endl;
-    // std::cout << "grad_5 M_{l 15}:\n"
-    //           << MatrixCast(m_N1.slice(offsets_grad5_col15, extents_grad_M), m_7N, 1, device).format(CleanFmt) <<
-    //           "\n\n"
-    //           << std::endl;
-#endif
 }
 
 void
@@ -481,89 +419,14 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
     Eigen::Tensor<double, 1> F_hydro_no_inertia = Eigen::Tensor<double, 1>(m_7M); // (7M x 1)
     F_hydro_no_inertia.device(device)           = F_hydro - inertia_loc;
     m_F_hydroNoInertia.noalias()                = MatrixCast(F_hydro_no_inertia, m_7M, 1, device);
-
-    // FIXME: debugging print statements
-#if !defined(NDEBUG)
-    Eigen::IOFormat CleanFmt(8, 0, ", ", "\n", "[", "]");
-
-    // std::cout << "PotentialHydrodynamics::calcHydroForces(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
-    // std::cout << "t: " << m_system->t() << "\n\n" << std::endl;
-
-    // std::cout << "F_int:\n"
-    //           << MatrixCast(F_int, m_7M, 1, device).format(CleanFmt) << "\n\n"
-    //           << std::endl;
-    // std::cout << "F_loc_int:\n" << MatrixCast(F_loc_int, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
-    // std::cout << "F_loc:\n" << MatrixCast(F_loc, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
-
-    // std::cout << "F_int 1:\n"
-    //           << MatrixCast(0.50 * m_N1.contract(V_V, contract_jki_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
-    //           << std::endl;
-    // std::cout << "F_int 2:\n"
-    //           << MatrixCast(-m_M2.contract(V_dot, contract_ij_j), m_7M, 1, device).format(CleanFmt) << "\n\n"
-    //           << std::endl;
-
-    // const Eigen::array<Eigen::Index, 3> offsets_5 = {0, 0, 4};
-    // const Eigen::array<Eigen::Index, 3> extents   = {m_7M, m_7N, 1};
-
-    // std::cout << "N1_{j k 5}:\n"
-    //           << MatrixCast(m_N1.slice(offsets_5, extents), m_7N, m_7N, device).format(CleanFmt) << "\n\n"
-    //           << std::endl;
-
-    // const Eigen::array<Eigen::Index, 3> offsets_6 = {0, 0, 5};
-    // std::cout << "N1_{j k 6}:\n"
-    //           << MatrixCast(m_N1.slice(offsets_6, extents), m_7N, m_7N, device).format(CleanFmt) << "\n\n"
-    //           << std::endl;
-
-    // const Eigen::array<Eigen::Index, 3> offsets_7 = {0, 0, 6};
-    // std::cout << "N1_{j k 7}:\n"
-    //           << MatrixCast(m_N1.slice(offsets_7, extents), m_7N, m_7N, device).format(CleanFmt) << "\n\n"
-    //           << std::endl;
-
-    // std::cout << "F_loc_int 1:\n"
-    //           << MatrixCast(m_N2.contract(xi_dot_V, contract_jki_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
-    //           << std::endl;
-
-    // std::cout << "F_loc_int 2:\n"
-    //           << MatrixCast(-m_N2.contract(V_xi_dot, contract_ijk_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
-    //           << std::endl;
-
-    const Eigen::array<Eigen::Index, 3> offset_115                = {0, 0, 4};
-    const Eigen::array<Eigen::Index, 3> extents_grad_rbm_conn_col = {1, m_7N, 1};
-
-    // std::cout << "grad_{5} rbm_conn{1, l}:\n"
-    //           << MatrixCast(m_system->tensGradRbmConn().slice(offset_115, extents_grad_rbm_conn_col), 1, m_7N,
-    //           device)
-    //                  .format(CleanFmt)
-    //           << "\n\n"
-    //           << std::endl;
-
-    // std::cout << "rbm_conn{1, l}:\n" << m_system->rbmConn().row(0).format(CleanFmt) << "\n\n" << std::endl;
-
-    const Eigen::array<Eigen::Index, 3> extents_grad_m = {m_7N, m_7N, 1};
-
-    // Eigen::MatrixXd grad5_M =
-    //     MatrixCast(m_grad_M_added_body_coords.slice(offset_115, extents_grad_m), m_7N, m_7N, device);
-
-    // std::cout << "grad_{5} M{l, 8} trans:\n" << grad5_M.col(7).transpose().format(CleanFmt) << "\n\n" << std::endl;
-
-    // std::cout << "grad_{5} M{l, 15} trans:\n" << grad5_M.col(14).transpose().format(CleanFmt) << "\n\n" << std::endl;
-
-    // std::cout << "M:\n" << m_M_total.format(CleanFmt) << "\n\n" << std::endl;
-    // std::cout << "M2:\n" << MatrixCast(m_M2, m_7M, m_7N, device).format(CleanFmt) << "\n\n" << std::endl;
-    // std::cout << "M3:\n" << MatrixCast(m_M3, m_7M, m_7M, device).format(CleanFmt) << "\n\n" << std::endl;
-#endif
 }
 
 void
 PotentialHydrodynamics::calcHydroEnergy(Eigen::ThreadPoolDevice& device)
 {
-    // convert `Eigen::Tensor` --> `Eigen::Matrix`
-    const Eigen::MatrixXd m3 = MatrixCast(m_M3, m_7M, m_7M, device);
-    const Eigen::MatrixXd m2 = MatrixCast(m_M2, m_7M, m_7N, device);
-
     // matrix vector reduction
-    const Eigen::VectorXd m3_xi_dot = m3 * m_system->velocitiesBodies();
-    const Eigen::VectorXd m2_v      = m2 * m_system->velocitiesParticlesArticulation();
+    const Eigen::VectorXd m3_xi_dot = m_mat_M3 * m_system->velocitiesBodies();
+    const Eigen::VectorXd m2_v      = m_mat_M2 * m_system->velocitiesParticlesArticulation();
     const Eigen::VectorXd m_v       = m_M_total * m_system->velocitiesParticlesArticulation();
     const Eigen::VectorXd m_vel     = m_M_added * m_system->velocitiesParticles();
 
