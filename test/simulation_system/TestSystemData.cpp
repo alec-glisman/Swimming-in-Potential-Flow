@@ -84,74 +84,78 @@ TestSystemData::testEMatrix()
     std::default_random_engine             re;
     double                                 a_random_double = unif(re);
 
-    // // test 1: quaternion with first component unity
-    // Eigen::Vector4d qw;
-    // qw << 1.0, 0.0, 0.0, 0.0;
-    // Eigen::Matrix<double, 3, 4> E_qw;
-    // E_qw << -qw(1), qw(0), -qw(3), qw(2), -qw(2), qw(3), qw(0), -qw(1), -qw(3), -qw(2), qw(1), qw(0);
+    // test 1: quaternion with first component unity
+    Eigen::Vector4d qw;
+    qw << 1.0, 0.0, 0.0, 0.0;
+    Eigen::Matrix4d E_qw;
+    E_qw << qw(0), qw(1), qw(2), qw(3), -qw(1), qw(0), qw(3), -qw(2), -qw(2), -qw(3), qw(0), qw(1), -qw(3), qw(2),
+        -qw(1), qw(0);
 
-    // Eigen::Matrix<double, 4, 4> test_E_qw;
-    // m_system->eMatrix(qw, test_E_qw);
-    // num_failed_tests += !(test_E_qw.isApprox(E_qw));
+    Eigen::Matrix<double, 4, 4> test_E_qw;
+    m_system->eMatrix(qw, test_E_qw);
+    num_failed_tests += !(test_E_qw.isApprox(E_qw));
 
-    // // test 2: quaternion with first second unity
-    // Eigen::Vector4d qx;
-    // qx << 0.0, 1.0, 0.0, 0.0;
-    // Eigen::Matrix<double, 3, 4> E_qx;
-    // E_qx << -qx(1), qx(0), -qx(3), qx(2), -qx(2), qx(3), qx(0), -qx(1), -qx(3), -qx(2), qx(1), qx(0);
+    // test 2: quaternion with first second unity
+    Eigen::Vector4d qx;
+    qx << 0.0, 1.0, 0.0, 0.0;
+    Eigen::Matrix4d E_qx;
+    E_qx << qx(0), qx(1), qx(2), qx(3), -qx(1), qx(0), qx(3), -qx(2), -qx(2), -qx(3), qx(0), qx(1), -qx(3), qx(2),
+        -qx(1), qx(0);
 
-    // Eigen::Matrix<double, 4, 4> test_E_qx;
-    // m_system->eMatrix(qx, test_E_qx);
-    // num_failed_tests += !(test_E_qx.isApprox(E_qx));
+    Eigen::Matrix<double, 4, 4> test_E_qx;
+    m_system->eMatrix(qx, test_E_qx);
+    num_failed_tests += !(test_E_qx.isApprox(E_qx));
 
-    // // test 3: quaternion with third component unity
-    // Eigen::Vector4d qy;
-    // qy << 0.0, 0.0, 1.0, 0.0;
-    // Eigen::Matrix<double, 3, 4> E_qy;
-    // E_qy << -qy(1), qy(0), -qy(3), qy(2), -qy(2), qy(3), qy(0), -qy(1), -qy(3), -qy(2), qy(1), qy(0);
+    // test 3: quaternion with third component unity
+    Eigen::Vector4d qy;
+    qy << 0.0, 0.0, 1.0, 0.0;
+    Eigen::Matrix4d E_qy;
+    E_qy << qy(0), qy(1), qy(2), qy(3), -qy(1), qy(0), qy(3), -qy(2), -qy(2), -qy(3), qy(0), qy(1), -qy(3), qy(2),
+        -qy(1), qy(0);
+    Eigen::Matrix<double, 4, 4> test_E_qy;
+    m_system->eMatrix(qy, test_E_qy);
+    num_failed_tests += !(test_E_qy.isApprox(E_qy));
 
-    // Eigen::Matrix<double, 4, 4> test_E_qy;
-    // m_system->eMatrix(qy, test_E_qy);
-    // num_failed_tests += !(test_E_qy.isApprox(E_qy));
+    // test 4: quaternion with fourth component unity
+    Eigen::Vector4d qz;
+    qz << 0.0, 0.0, 0.0, 1.0;
+    Eigen::Matrix4d E_qz;
+    E_qz << qz(0), qz(1), qz(2), qz(3), -qz(1), qz(0), qz(3), -qz(2), -qz(2), -qz(3), qz(0), qz(1), -qz(3), qz(2),
+        -qz(1), qz(0);
 
-    // // test 4: quaternion with fourth component unity
-    // Eigen::Vector4d qz;
-    // qz << 0.0, 0.0, 0.0, 1.0;
-    // Eigen::Matrix<double, 3, 4> E_qz;
-    // E_qz << -qz(1), qz(0), -qz(3), qz(2), -qz(2), qz(3), qz(0), -qz(1), -qz(3), -qz(2), qz(1), qz(0);
+    Eigen::Matrix<double, 4, 4> test_E_qz;
+    m_system->eMatrix(qz, test_E_qz);
+    num_failed_tests += !(test_E_qz.isApprox(E_qz));
 
-    // Eigen::Matrix<double, 4, 4> test_E_qz;
-    // m_system->eMatrix(qz, test_E_qz);
-    // num_failed_tests += !(test_E_qz.isApprox(E_qz));
+    // test 5: quaternion with all zero components
+    Eigen::Vector4d q0;
+    q0 << 0.0, 0.0, 0.0, 0.0;
+    Eigen::Matrix4d E_q0;
+    E_q0 << q0(0), q0(1), q0(2), q0(3), -q0(1), q0(0), q0(3), -q0(2), -q0(2), -q0(3), q0(0), q0(1), -q0(3), q0(2),
+        -q0(1), q0(0);
 
-    // // test 5: quaternion with all zero components
-    // Eigen::Vector4d q0;
-    // q0 << 0.0, 0.0, 0.0, 0.0;
-    // Eigen::Matrix<double, 3, 4> E_q0;
-    // E_q0 << -q0(1), q0(0), -q0(3), q0(2), -q0(2), q0(3), q0(0), -q0(1), -q0(3), -q0(2), q0(1), q0(0);
+    Eigen::Matrix<double, 4, 4> test_E_q0;
+    m_system->eMatrix(q0, test_E_q0);
+    num_failed_tests += !(test_E_q0.isApprox(E_q0));
 
-    // Eigen::Matrix<double, 4, 4> test_E_q0;
-    // m_system->eMatrix(q0, test_E_q0);
-    // num_failed_tests += !(test_E_q0.isApprox(E_q0));
+    // test 6: linear combinations of basis vectors (triplicate)
+    Eigen::Vector4d q = unif(re) * q + unif(re) * qx + unif(re) * qy + unif(re) * qz;
+    Eigen::Matrix4d E_q;
+    E_q << q(0), q(1), q(2), q(3), -q(1), q(0), q(3), -q(2), -q(2), -q(3), q(0), q(1), -q(3), q(2), -q(1), q(0);
 
-    // // test 6: linear combinations of basis vectors (triplicate)
-    // Eigen::Vector4d             q = unif(re) * q + unif(re) * qx + unif(re) * qy + unif(re) * qz;
-    // Eigen::Matrix<double, 4, 4> E_q;
-    // E_q << -q(1), q(0), -q(3), q(2), -q(2), q(3), q(0), -q(1), -q(3), -q(2), q(1), q(0);
+    Eigen::Matrix4d test_E_q;
+    m_system->eMatrix(q, test_E_q);
+    num_failed_tests += !(test_E_q.isApprox(E_q));
 
-    // Eigen::Matrix<double, 4, 4> test_E_q;
-    // m_system->eMatrix(q, test_E_q);
-    // num_failed_tests += !(test_E_q.isApprox(E_q));
+    q = unif(re) * q + unif(re) * qx + unif(re) * qy + unif(re) * qz;
+    E_q << q(0), q(1), q(2), q(3), -q(1), q(0), q(3), -q(2), -q(2), -q(3), q(0), q(1), -q(3), q(2), -q(1), q(0);
+    m_system->eMatrix(q, test_E_q);
+    num_failed_tests += !(test_E_q.isApprox(E_q));
 
-    // q = unif(re) * q + unif(re) * qx + unif(re) * qy + unif(re) * qz;
-    // E_q << -q(1), q(0), -q(3), q(2), -q(2), q(3), q(0), -q(1), -q(3), -q(2), q(1), q(0);
-    // m_system->eMatrix(q, test_E_q);
-    // num_failed_tests += !(test_E_q.isApprox(E_q));
-
-    // q = unif(re) * q + unif(re) * qx + unif(re) * qy + unif(re) * qz;
-    // E_q << -q(1), q(0), -q(3), q(2), -q(2), q(3), q(0), -q(1), -q(3), -q(2), q(1), q(0);
-    // m_system->eMatrix(q, test_E_q);
-    // num_failed_tests += !(test_E_q.isApprox(E_q));
+    q = unif(re) * q + unif(re) * qx + unif(re) * qy + unif(re) * qz;
+    E_q << q(0), q(1), q(2), q(3), -q(1), q(0), q(3), -q(2), -q(2), -q(3), q(0), q(1), -q(3), q(2), -q(1), q(0);
+    m_system->eMatrix(q, test_E_q);
+    num_failed_tests += !(test_E_q.isApprox(E_q));
 
     return num_failed_tests;
 }
