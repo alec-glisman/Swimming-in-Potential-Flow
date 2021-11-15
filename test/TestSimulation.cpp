@@ -38,7 +38,7 @@ TEST_CASE("Open GSD file", "[gsd]")
     REQUIRE(return_val == 0);
 }
 
-TEST_CASE("Initialize collinear swimmer isolated simulation system",
+TEST_CASE("Collinear swimmer isolated: initialize system",
           "[Collinear-Isolated][Engine][SystemData][RungeKutta4][PotentialHydrodynamics][gsd][GSDUtil]")
 {
     // close all previous loggers
@@ -63,7 +63,7 @@ TEST_CASE("Initialize collinear swimmer isolated simulation system",
     REQUIRE_NOTHROW(eng = std::make_shared<Engine>(system));
 }
 
-TEST_CASE("Run collinear swimmer isolated simulation system",
+TEST_CASE("Collinear swimmer isolated: run engine",
           "[Collinear-Isolated][Engine][ProgressBar][SystemData][RungeKutta4][PotentialHydrodynamics]")
 {
     // close all previous loggers
@@ -86,7 +86,7 @@ TEST_CASE("Run collinear swimmer isolated simulation system",
     REQUIRE_NOTHROW(eng->run());
 }
 
-TEST_CASE("Initialize collinear swimmer wall simulation system",
+TEST_CASE("Collinear swimmer wall: initialize system",
           "[Collinear-Wall][Engine][SystemData][RungeKutta4][PotentialHydrodynamics][gsd][GSDUtil]")
 {
     // close all previous loggers
@@ -111,7 +111,7 @@ TEST_CASE("Initialize collinear swimmer wall simulation system",
     REQUIRE_NOTHROW(eng = std::make_shared<Engine>(system));
 }
 
-TEST_CASE("Run collinear swimmer wall simulation system",
+TEST_CASE("Collinear swimmer wall: run engine",
           "[Collinear-Wall][Engine][ProgressBar][SystemData][RungeKutta4][PotentialHydrodynamics]")
 {
     // close all previous loggers
