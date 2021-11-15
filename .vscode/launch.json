@@ -6,7 +6,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: collinear-swimmer-configuration",
+            "name": "Python: configuration",
             "cwd": "${workspaceFolder}",
             "type": "python",
             "request": "launch",
@@ -21,26 +21,26 @@
             ]
         },
         {
-            "name": "Python: collinear-swimmer-aggregrate-analysis",
+            "name": "Python: individual analysis",
             "cwd": "${workspaceFolder}",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/python/analysis/collinear-swimmer-wall-aggregate-analysis.py",
+            "program": "${workspaceFolder}/python/analysis/collinear-swimmer-internal-dynamics-individual-analysis.py",
             "console": "integratedTerminal",
             "args": [
-                "--relative-path=${workspaceFolder}/data/2021-08-23.17-05-55_collinear-swimmer-wall_varyRelDisp",
+                "--relative-path=${workspaceFolder}/2021-11-15.10-35-59_collinear-swimmer-internal-dynamics_varyZHeight/sim_1",
                 "--output-dir=figures"
             ]
         },
         {
-            "name": "Python: collinear-swimmer-individual-analysis",
+            "name": "Python: aggregate analysis",
             "cwd": "${workspaceFolder}",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/python/analysis/collinear-swimmer-wall-individual-analysis.py",
+            "program": "${workspaceFolder}/python/analysis/collinear-swimmer-internal-dynamics-aggregate-analysis.py",
             "console": "integratedTerminal",
             "args": [
-                "--relative-path=${workspaceFolder}/temp_2021-08-30.12-25-21_collinear-swimmer-wall_varyDt/sim_1",
+                "--relative-path=${workspaceFolder}/data/2021-08-23.17-05-55_collinear-swimmer-wall_varyRelDisp",
                 "--output-dir=figures"
             ]
         },
