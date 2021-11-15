@@ -210,8 +210,8 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		my $U0          = 1.00e-2;
 		my $omega       = 1.00e+0;
 
-		my $number_bodies = 1;
-		my $image_system = 0; # REVIEW OPTIONS: {0; false, 1; true}
+		my $number_bodies = 2;
+		my $image_system = 1; # REVIEW OPTIONS: {0; false, 1; true}
 
 		# Modify default preferences for each simulation run
 		switch($inputData[$i]) {
