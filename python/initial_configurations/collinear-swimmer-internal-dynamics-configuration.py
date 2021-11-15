@@ -177,7 +177,7 @@ def setInitialConditions(gsd_class,
                 pos[Ni + j] = [0.0, 0.0, Z_height]
 
             # "Image" particles in image system
-            elif ((i < (M/2)) and (image_system == 1)):
+            elif ((i >= (M/2)) and (image_system == 1)):
 
                 pos[Ni + j] = [0.0, 0.0, -Z_height]
 
