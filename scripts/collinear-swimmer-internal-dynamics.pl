@@ -199,7 +199,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		my $gsd_path = ${simulation_dir} . "/" . "data.gsd";
 
 		# Simulation variables
-		my $dt          = 1.00e-4;
+		my $dt          = 1.00e-6;
 		my $ti          = 0.00e+0;
 		my $tf          = 1.00e+0;
 
