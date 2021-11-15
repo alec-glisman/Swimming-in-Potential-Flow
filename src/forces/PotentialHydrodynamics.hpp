@@ -66,7 +66,7 @@ class PotentialHydrodynamics
      * (1) `calcParticleDistances()`.
      * (2) `calcAddedMass()`, `calcAddedMassGrad()`.
      * (3) `calcTotalMass()`.
-     * (4) `calcBodyTensors()`.
+     * (4) `calcBodyMass()`.
      * (5) `calcHydroForces()`.
      * (6) `calcHydroEnergy()`
      *
@@ -118,7 +118,7 @@ class PotentialHydrodynamics
     calcAddedMassGrad(Eigen::ThreadPoolDevice& device);
 
     /**
-     * @brief Calculates \{`m_N1`, `m_N2`, `m_N3`, `m_M3`, and `m_M2`\}
+     * @brief Calculates \{`m_M2`, `m_M3`\}
      *
      * @details Must call `calcTotalMass()` and assumes `SystemData` rigid body motion tensors are up to date.
      *
@@ -126,12 +126,23 @@ class PotentialHydrodynamics
      *
      */
     void
-    calcBodyTensors(Eigen::ThreadPoolDevice& device);
+    calcBodyMass(Eigen::ThreadPoolDevice& device);
+
+    /**
+     * @brief Calculates \{`m_N1`, `m_N2`, `m_N3`\}
+     *
+     * @details Must call `calcTotalMass()` and assumes `SystemData` rigid body motion tensors are up to date.
+     *
+     * @param device device (CPU thread-pool or GPU) used to speed up tensor calculations
+     *
+     */
+    void
+    calcBodyMassGrad(Eigen::ThreadPoolDevice& device);
 
     /**
      * @brief Calculates `m_F_hydro` and `m_F_hydroNoInertia`
      *
-     * @details Must call `calcBodyTensors()` before.
+     * @details Must call `calcBodyMass()` and `calcBodyMassGrad()` before.
      * Kinematics specified in `SystemData` class.
      *
      * @param device device (CPU thread-pool or GPU) used to speed up tensor calculations
@@ -143,7 +154,7 @@ class PotentialHydrodynamics
     /**
      * @brief Calculates and sets energetic components in `SystemData` class
      *
-     * @details Must call `calcBodyTensors()` before.
+     * @details Must call `calcBodyMass()` and `calcBodyMassGrad()` before.
      *
      * @param device device (CPU thread-pool or GPU) used to speed up tensor calculations
      *
@@ -233,9 +244,6 @@ class PotentialHydrodynamics
 
     // ANCHOR: N sub-terms
     Eigen::Tensor<double, 3> m_N2_term1_preshuffle;
-    Eigen::Tensor<double, 3> m_N2_term1;
-    Eigen::Tensor<double, 3> m_N2_term2;
-
     Eigen::Tensor<double, 3> m_N3_terms12_preshuffle;
 
     // ANCHOR: constants

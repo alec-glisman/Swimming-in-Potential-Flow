@@ -530,12 +530,12 @@ SystemData::rbmMatrixElement(const int particle_id)
     const int body_id_7{7 * m_particle_group_id(particle_id)};
 
     // \[r_\alpha ^\]: skew-symmetric matrix representation of cross product
-    Eigen::Matrix3d mat_dr_cross;
-    crossProdMat(m_positions_particles_articulation.segment<3>(particle_id_3), mat_dr_cross);
+    Eigen::Matrix3d mat_two_dr_cross;
+    crossProdMat(m_positions_particles_articulation.segment<3>(particle_id_3), mat_two_dr_cross);
     // preprend row of zeros
     Eigen::Matrix<double, 4, 3> mat_dr_cross_43;
     mat_dr_cross_43.setZero();
-    mat_dr_cross_43.block<3, 3>(1, 0).noalias() = mat_dr_cross;
+    mat_dr_cross_43.block<3, 3>(1, 0).noalias() = mat_two_dr_cross;
 
     // E_{(i)}: matrix representation of left quaternion composition
     Eigen::Matrix4d E_body;
@@ -559,6 +559,9 @@ SystemData::chiMatrixElement(const int particle_id)
     const int particle_id_3{3 * particle_id};                  // particle number
     const int body_id_7{7 * m_particle_group_id(particle_id)}; // body number
 
+    // Scaling prefactor: 2 * || r_particle_id ||
+    const double prefactor{2.0 * m_positions_particles_articulation.segment<3>(particle_id_3).norm()};
+
     // unit quaternion basis directions
     const Eigen::Quaterniond q_i(0.0, 1.0, 0.0, 0.0);
     const Eigen::Quaterniond q_j(0.0, 0.0, 1.0, 0.0);
@@ -566,12 +569,13 @@ SystemData::chiMatrixElement(const int particle_id)
 
     /* ANCHOR: Compute G matrix element */
     // body unit quaternion
-    const Eigen::Vector4d    theta = m_positions_bodies.segment<4>(body_id_7 + 3);
-    const Eigen::Quaterniond theta_body(theta(0), theta(1), theta(2), theta(3));
+    const Eigen::Quaterniond theta_body(m_positions_bodies(body_id_7 + 3), m_positions_bodies(body_id_7 + 4),
+                                        m_positions_bodies(body_id_7 + 5), m_positions_bodies(body_id_7 + 6));
 
     // particle initial configuration unit quaternion
-    const Eigen::Vector3d    r_hat_init = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
-    const Eigen::Quaterniond r_body_quat(0.0, r_hat_init(0), r_hat_init(1), r_hat_init(2));
+    const Eigen::Quaterniond r_body_quat(0.0, prefactor * m_positions_particles_articulation_init_norm(particle_id_3),
+                                         prefactor * m_positions_particles_articulation_init_norm(particle_id_3 + 1),
+                                         prefactor * m_positions_particles_articulation_init_norm(particle_id_3 + 2));
 
     // quaternion product: r_body * theta
     const Eigen::Quaterniond r_theta = r_body_quat * theta_body;
@@ -580,17 +584,12 @@ SystemData::chiMatrixElement(const int particle_id)
     const Eigen::Quaterniond r_theta_j = r_theta * q_j;
     const Eigen::Quaterniond r_theta_k = r_theta * q_k;
 
-    // Scaling prefactor: 2 * || r_particle_id ||
-    const double prefactor{2.0 * m_positions_particles_articulation.segment<3>(particle_id_3).norm()};
-
     // G matrix element
-    Eigen::Matrix<double, 4, 3> g_matrix;
-    g_matrix.setZero();
-    g_matrix.row(0).noalias() = r_theta.vec();
-    g_matrix.row(1).noalias() = -r_theta_i.vec();
-    g_matrix.row(2).noalias() = -r_theta_j.vec();
-    g_matrix.row(3).noalias() = -r_theta_k.vec();
-    g_matrix *= prefactor;
+    Eigen::Matrix<double, 4, 3> g_matrix = Eigen::Matrix<double, 4, 3>::Zero(4, 3);
+    g_matrix.row(0).noalias()            = r_theta.vec();
+    g_matrix.row(1).noalias()            = -r_theta_i.vec();
+    g_matrix.row(2).noalias()            = -r_theta_j.vec();
+    g_matrix.row(3).noalias()            = -r_theta_k.vec();
 
     /* ANCHOR: Compute chi matrix element */
     m_chi.block<3, 3>(body_id_7, particle_id_3).noalias() =
@@ -634,23 +633,22 @@ SystemData::gradRbmConnTensorElement(const int particle_id, Eigen::ThreadPoolDev
 
     /* ANCHOR: Tensor quantities that will be contracted */
     // moment arm to locater point from particle
-    Eigen::Matrix3d mat_dr_cross;
-    crossProdMat(m_positions_particles_articulation.segment<3>(particle_id_3), mat_dr_cross);
+    Eigen::Matrix3d mat_two_dr_cross;
+    crossProdMat(2.0 * m_positions_particles_articulation.segment<3>(particle_id_3), mat_two_dr_cross);
     // preprend row of zeros
-    Eigen::Matrix<double, 4, 3> two_r_tilde_cross_mat;
-    two_r_tilde_cross_mat.setZero();
-    two_r_tilde_cross_mat.block<3, 3>(1, 0).noalias() = 2.0 * mat_dr_cross;
+    Eigen::Matrix<double, 4, 3> two_r_tilde_cross_mat = Eigen::MatrixXd::Zero(4, 3);
+    two_r_tilde_cross_mat.block<3, 3>(1, 0).noalias() = mat_two_dr_cross;
 
     const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3>> tens_two_r_tilde_cross_mat =
         TensorCast(two_r_tilde_cross_mat, 4, 3);
 
     // E_{(i)}: matrix representation of body quaternion from m_rbm_conn
-    const Eigen::Matrix4d two_ET_body = m_rbm_conn.block<4, 4>(body_id_7 + 3, particle_id_7 + 3);
-    const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 4>> tens_two_ET_body = TensorCast(two_ET_body, 4, 4);
+    const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 4>> tens_two_ET_body =
+        TensorCast(m_rbm_conn.block<4, 4>(body_id_7 + 3, particle_id_7 + 3), 4, 4);
 
     // G_{(i) a}: Jacobian matrix from particle positions to body quaternion
-    const Eigen::Matrix<double, 4, 3> g_ia = m_chi.block<4, 3>(body_id_7 + 3, particle_id_3);    // (4, 3)
-    const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3>> tens_g_ia = TensorCast(g_ia, 4, 3); // (4, 3)
+    const Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3>> tens_g_ia =
+        TensorCast(m_chi.block<4, 3>(body_id_7 + 3, particle_id_3), 4, 3); // (4, 3)
 
     /* ANCHOR: tensor contractions for left-half of gradient */
     // compute grad_r_cross{l, j, k}
@@ -677,8 +675,9 @@ SystemData::gradRbmConnTensorElement(const int particle_id, Eigen::ThreadPoolDev
     two_grad_ET_r_cross_tilde.device(device) = two_grad_ET_r_cross_preshuffle.shuffle(permute_ikj_ijk);
 
     // mixed gradient term
-    Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> mixed_gradient;
-    mixed_gradient.device(device) = two_grad_ET_r_cross_tilde + two_ET_grad_r_cross; // (4, 3, 7)  {i, j, k}
+    Eigen::TensorFixedSize<double, Eigen::Sizes<4, 3, 7>> mixed_gradient; // (4, 3, 7)  {i, j, k}
+    mixed_gradient.device(device) = two_grad_ET_r_cross_tilde;
+    mixed_gradient.device(device) += two_ET_grad_r_cross;
     m_tens_grad_rbm_conn.slice(offsets_mixed, extents_mixed).device(device) = mixed_gradient;
 
     /* ANCHOR: tensor contractions for quaternion-quaternion of gradient term */

@@ -84,10 +84,6 @@ PotentialHydrodynamics::PotentialHydrodynamics(std::shared_ptr<SystemData> sys)
     // N^{(2)}
     m_N2_term1_preshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7N);
     m_N2_term1_preshuffle.setZero();
-    m_N2_term1 = Eigen::Tensor<double, 3>(m_7M, m_7N, m_7M);
-    m_N2_term1.setZero();
-    m_N2_term2 = Eigen::Tensor<double, 3>(m_7M, m_7N, m_7M);
-    m_N2_term2.setZero();
 
     // N^{(3)}
     m_N3_terms12_preshuffle = Eigen::Tensor<double, 3>(m_7M, m_7M, m_7M);
@@ -155,7 +151,8 @@ PotentialHydrodynamics::update(Eigen::ThreadPoolDevice& device)
 
     calcTotalMass();
 
-    calcBodyTensors(device);
+    calcBodyMass(device);
+    calcBodyMassGrad(device);
 
     calcHydroForces(device);
 
@@ -241,50 +238,44 @@ PotentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
 
     for (int k = 0; k < m_num_pair_inter; k++)
     {
-        // Convert (\alpha, \beta) --> (i, j) by factor of 3
         const int i_3{3 * m_alphaVec(k)};
         const int j_3{3 * m_betaVec(k)};
 
         const int i_7{7 * m_alphaVec(k)};
         const int j_7{7 * m_betaVec(k)};
 
-        // Full distance between particles \alpha and \beta
-        const Eigen::Vector3d                                 r_ij   = m_r_ab.col(k); // (1)
-        const Eigen::TensorFixedSize<double, Eigen::Sizes<3>> tens_r = TensorCast(r_ij, 3);
-
-        const double          r_mag_ij{m_r_mag_ab(k)};            //(1); |r| between 2 particles
-        const Eigen::Matrix3d r_dyad_r = r_ij * r_ij.transpose(); // (1); Outer product of \bm{r} \bm{r}
-        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> tens_rr = TensorCast(r_dyad_r, 3, 3);
-
-        // Constants to use in Calculation
-        double gradM1_c1{-(m_system->fluidDensity() * m_unit_sphere_volume) * m_c3_2 *
-                         std::pow(r_mag_ij, -5)}; // mass units
-        double gradM1_c2{(m_system->fluidDensity() * m_unit_sphere_volume) * m_c15_2 *
-                         std::pow(r_mag_ij, -7)}; // mass units
-
-        // outer products (I_{i j} r_{k}) and permutations
-        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_ij_r_k;
-        delta_ij_r_k.device(device) = gradM1_c1 * m_system->tensI3().contract(tens_r, outer_product);
-        // shuffle all dimensions to the right by 1: (i, j, k) --> (k, i, j), (2, 0, 1)
-        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_jk_r_i;
-        delta_jk_r_i.device(device) = delta_ij_r_k.shuffle(permute_ijk_kij);
-        // shuffle all dimensions to the left by 1: (i, j, k) --> (k, i, j), (1, 2, 0)
-        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_ki_r_j;
-        delta_ki_r_j.device(device) = delta_ij_r_k.shuffle(permute_ijk_jki);
-
-        // full matrix element for M_{i j, i}
-        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> Mij_i;
-        Mij_i.device(device) = delta_ij_r_k + delta_jk_r_i;
-        Mij_i.device(device) += delta_ki_r_j;
-        Mij_i.device(device) += gradM1_c2 * tens_rr.contract(tens_r, outer_product);
-
-        // indices to start at
         const Eigen::array<Eigen::Index, 3> offsets_ij_i = {i_7, j_7, i_3};
         const Eigen::array<Eigen::Index, 3> offsets_ij_j = {i_7, j_7, j_3};
         const Eigen::array<Eigen::Index, 3> offsets_ji_i = {j_7, i_7, i_3};
         const Eigen::array<Eigen::Index, 3> offsets_ji_j = {j_7, i_7, j_3};
-        // length of data to access
+
         const Eigen::array<Eigen::Index, 3> extents = {3, 3, 3};
+
+        // Full distance between particles \alpha and \beta
+        const Eigen::Vector3d                                 r_ij   = m_r_ab.col(k); // (1)
+        const Eigen::TensorFixedSize<double, Eigen::Sizes<3>> tens_r = TensorCast(r_ij, 3);
+        const double                                          r_mag_ij{m_r_mag_ab(k)}; //(1); |r| between 2 particles
+
+        const double gradM1_c1{-(m_system->fluidDensity() * m_unit_sphere_volume) * m_c3_2 *
+                               std::pow(r_mag_ij, -5)}; // mass units
+        const double gradM1_c2{(m_system->fluidDensity() * m_unit_sphere_volume) * m_c15_2 *
+                               std::pow(r_mag_ij, -7)}; // mass units
+
+        const Eigen::Matrix3d r_dyad_r = r_ij * r_ij.transpose(); // (1); Outer product of \bm{r} \bm{r}
+        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> c2_tens_rr = gradM1_c2 * TensorCast(r_dyad_r, 3, 3);
+
+        // outer products (I_{i j} r_{k}) and permutations
+        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_ij_r_k;
+        delta_ij_r_k.device(device) = gradM1_c1 * m_system->tensI3().contract(tens_r, outer_product);
+
+        // full matrix element for M_{i j, i}
+        Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> Mij_i;
+        Mij_i.device(device) = delta_ij_r_k;
+        // shuffle all dimensions to the right by 1: (i, j, k) --> (k, i, j), (2, 0, 1)
+        Mij_i.device(device) += delta_ij_r_k.shuffle(permute_ijk_kij);
+        // shuffle all dimensions to the left by 1: (i, j, k) --> (k, i, j), (1, 2, 0)
+        Mij_i.device(device) += delta_ij_r_k.shuffle(permute_ijk_jki);
+        Mij_i.device(device) += c2_tens_rr.contract(tens_r, outer_product);
 
         // M_{ij, i}: Matrix Element (Anti-Symmetric upon exchange of derivative, Symmetric upon
         // exchange of first two indices)
@@ -314,15 +305,11 @@ PotentialHydrodynamics::calcTotalMass()
 }
 
 void
-PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
+PotentialHydrodynamics::calcBodyMass(Eigen::ThreadPoolDevice& device)
 {
-    /* ANCHOR: Indices */
     // `Eigen::Tensor` contraction indices
     const Eigen::array<Eigen::IndexPair<int>, 1> contract_il_lj = {Eigen::IndexPair<int>(1, 0)}; // = A B
     const Eigen::array<Eigen::IndexPair<int>, 1> contract_il_jl = {Eigen::IndexPair<int>(1, 1)}; // = A B^T
-
-    // `Eigen::Tensor` permutation indices
-    const Eigen::array<int, 3> permute_ikj_ijk({0, 2, 1}); // (i, j, k) --> (i, j, k)
 
     /* ANCHOR: Compute linear combinations of total mass matrix and zeta */
     m_M2.device(device) = m_system->tensRbmConn().contract(m_tens_M_total, contract_il_lj);
@@ -330,6 +317,17 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
 
     m_M3.device(device) = m_M2.contract(m_system->tensRbmConn(), contract_il_jl);
     m_mat_M3            = MatrixCast(m_M3, m_7M, m_7M, device);
+}
+
+void
+PotentialHydrodynamics::calcBodyMassGrad(Eigen::ThreadPoolDevice& device)
+{
+    // `Eigen::Tensor` contraction indices
+    const Eigen::array<Eigen::IndexPair<int>, 1> contract_il_lj = {Eigen::IndexPair<int>(1, 0)}; // = A B
+    const Eigen::array<Eigen::IndexPair<int>, 1> contract_il_jl = {Eigen::IndexPair<int>(1, 1)}; // = A B^T
+
+    // `Eigen::Tensor` permutation indices
+    const Eigen::array<int, 3> permute_ikj_ijk({0, 2, 1}); // (i, j, k) --> (i, j, k)
 
     /* ANCHOR: Compute linear combinations of GRADIENTS of total mass matrix and zeta */
     // N^{(1)}
@@ -338,15 +336,11 @@ PotentialHydrodynamics::calcBodyTensors(Eigen::ThreadPoolDevice& device)
     // N^{(2)}
     m_N2_term1_preshuffle.device(device) = m_system->tensGradRbmConn().contract(m_tens_M_total, contract_il_lj);
 
-    m_N2_term1.device(device) = m_N2_term1_preshuffle.shuffle(permute_ikj_ijk);
-    m_N2_term2.device(device) = m_system->tensRbmConn().contract(m_N1, contract_il_lj);
-
-    m_N2.device(device) = m_N2_term1;
-    m_N2.device(device) += m_N2_term2;
+    m_N2.device(device) = m_N2_term1_preshuffle.shuffle(permute_ikj_ijk);
+    m_N2.device(device) += m_system->tensRbmConn().contract(m_N1, contract_il_lj);
 
     // N^{(3)}
-    m_N3_terms12_preshuffle.device(device) = m_N2_term1.contract(m_system->tensRbmConn(), contract_il_jl);
-    m_N3_terms12_preshuffle.device(device) += m_N2_term2.contract(m_system->tensRbmConn(), contract_il_jl);
+    m_N3_terms12_preshuffle.device(device) = m_N2.contract(m_system->tensRbmConn(), contract_il_jl);
 
     m_N3.device(device) = m_N3_terms12_preshuffle.shuffle(permute_ikj_ijk);
     m_N3.device(device) += m_M2.contract(m_system->tensGradRbmConn(), contract_il_jl);
