@@ -153,15 +153,18 @@ def aggregate_plots(relative_path, output_dir):
 
     for i in range(len(gsd_files)):
 
+        # frames
+        frame_i = 0
+        frame_f = gsd_files[i].trajectory.file.nframes - 1
+
         # Data from final frame
-        gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(
-            gsd_files[i].trajectory.file.nframes - 1)
+        gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(frame_f)
         final_t[i] = gsd_files[i].snapshot.log['integrator/t']
         dt[i] = gsd_files[i].snapshot.log['integrator/dt']
         CoM_disp_comp[i, :] = gsd_files[i].snapshot.log['particles/double_position'][0]
 
         # Data from initial frame
-        gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(1)
+        gsd_files[i].snapshot = gsd_files[i].trajectory.read_frame(frame_i)
         R_avg[i] = gsd_files[i].snapshot.log['swimmer/R_avg']
         Z_height[i] = gsd_files[i].snapshot.log['swimmer/Z_height']
         phaseShift[i] = gsd_files[i].snapshot.log['swimmer/phase_shift']
