@@ -36,6 +36,12 @@ Engine::Engine(std::shared_ptr<SystemData> sys)
     unsigned int barWidth = 70;
     m_ProgressBar         = std::make_shared<ProgressBar>(static_cast<unsigned int>(num_step), barWidth);
 
+    // Write frame
+    if (m_system->gsdUtil()->frame() == 0)
+    {
+        m_system->gsdUtil()->writeFrame(); // write initial conditions
+    }
+
     spdlog::get(m_logName)->info("Constructor complete");
     spdlog::get(m_logName)->flush();
 }

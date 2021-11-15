@@ -175,7 +175,6 @@ SystemData::initializeData()
 
     // output data
     logData();
-    m_gsdUtil->writeFrame();
 
     spdlog::get(m_logName)->info("Initialization complete");
     spdlog::get(m_logName)->flush();
