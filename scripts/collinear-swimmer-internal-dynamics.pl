@@ -200,11 +200,16 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 
 		# Simulation variables
 		my $dt          = 1.00e-6;
+        my $ti          = 0.00e+0;
+        my $tf          = 1.00e+0
+
 		my $R_avg       = 4.00e+0;
 		my $Z_height    = 6.00e+0;
+
 		my $phase_angle = -1.57079632679e+0;
 		my $U0          = 1.00e-2;
 		my $omega       = 1.00e+0;
+
         my $number_bodies = 1;
         my $image_system = 0; # REVIEW OPTIONS: {0; false, 1; true}
 
@@ -229,7 +234,12 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		}
 
 		# Generate GSD file
-		system( "python3 " . ${pythonGSDCreation} . " --GSD-path=" . ${gsd_path} . " --dt=" . ${dt} . " --R-avg=" . ${R_avg} . " --Z-height=" . ${Z_height} . " --phase-angle=" . ${phase_angle} . " --U0=" . ${U0} . " --omega=" . ${omega} . " --number-bodies=" . ${number_bodies} ." --image-system=" .${image_system}) 
+		system( "python3 " . ${pythonGSDCreation} 
+                . " --GSD-path=" . ${gsd_path} 
+                . " --dt=" . ${dt} . " --ti=" . ${ti}  . " --tf=" . ${tf}  
+                . " --R-avg=" . ${R_avg} . " --Z-height=" . ${Z_height} 
+                . " --phase-angle=" . ${phase_angle} . " --U0=" . ${U0} . " --omega=" . ${omega} 
+                . " --number-bodies=" . ${number_bodies} ." --image-system=" .${image_system}) 
             and die "Unable to generate GSD file: $?, $!";
 
 		# Prepare for simulation
