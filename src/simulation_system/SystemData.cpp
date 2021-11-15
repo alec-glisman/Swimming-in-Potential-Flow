@@ -240,6 +240,39 @@ SystemData::logData()
     spdlog::get(m_logName)->info("Starting logdata()");
     spdlog::get(m_logName)->info("time: {0}", m_t);
 
+    /* ANCHOR: Output body data */
+    spdlog::get(m_logName)->info("Body positions:");
+    for (int body_id = 0; body_id < m_num_bodies; body_id++)
+    {
+        const int body_id_7{7 * body_id};
+        spdlog::get(m_logName)->info(
+            "\tBody {0}: [{1:03.14f}, {2:03.14f}, {3:03.14f}, {4:03.14f}, {5:03.14f}, {6:03.14f}, {7:03.14f}]",
+            body_id + 1, m_positions_bodies(body_id_7), m_positions_bodies(body_id_7 + 1),
+            m_positions_bodies(body_id_7 + 2), m_positions_bodies(body_id_7 + 3), m_positions_bodies(body_id_7 + 4),
+            m_positions_bodies(body_id_7 + 5), m_positions_bodies(body_id_7 + 6));
+    }
+    spdlog::get(m_logName)->info("Body velocities:");
+    for (int body_id = 0; body_id < m_num_bodies; body_id++)
+    {
+        const int body_id_7{7 * body_id};
+        spdlog::get(m_logName)->info(
+            "\tBody {0}: [{1:03.14f}, {2:03.14f}, {3:03.14f}, {4:03.14f}, {5:03.14f}, {6:03.14f}, {7:03.14f}]",
+            body_id + 1, m_velocities_bodies(body_id_7), m_velocities_bodies(body_id_7 + 1),
+            m_velocities_bodies(body_id_7 + 2), m_velocities_bodies(body_id_7 + 3), m_velocities_bodies(body_id_7 + 4),
+            m_velocities_bodies(body_id_7 + 5), m_velocities_bodies(body_id_7 + 6));
+    }
+    spdlog::get(m_logName)->info("Body accelerations:");
+    for (int body_id = 0; body_id < m_num_bodies; body_id++)
+    {
+        const int body_id_7{7 * body_id};
+        spdlog::get(m_logName)->info(
+            "\tBody {0}: [{1:03.14f}, {2:03.14f}, {3:03.14f}, {4:03.14f}, {5:03.14f}, {6:03.14f}, {7:03.14f}]",
+            body_id + 1, m_accelerations_bodies(body_id_7), m_accelerations_bodies(body_id_7 + 1),
+            m_accelerations_bodies(body_id_7 + 2), m_accelerations_bodies(body_id_7 + 3),
+            m_accelerations_bodies(body_id_7 + 4), m_accelerations_bodies(body_id_7 + 5),
+            m_accelerations_bodies(body_id_7 + 6));
+    }
+
     /* ANCHOR: Output particle data */
     spdlog::get(m_logName)->info("Particle orientations:");
     for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
@@ -263,20 +296,25 @@ SystemData::logData()
     spdlog::get(m_logName)->info("Particle velocities:");
     for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
-        const int particle_id_3{3 * particle_id};
-        spdlog::get(m_logName)->info("\tParticle {0}: [{1:03.14f}, {2:03.14f}, {3:03.14f}]", particle_id + 1,
-                                     m_velocities_particles(particle_id_3), m_velocities_particles(particle_id_3 + 1),
-                                     m_velocities_particles(particle_id_3 + 2));
+        const int particle_id_7{7 * particle_id};
+        spdlog::get(m_logName)->info(
+            "\tParticle {0}: [{1:03.14f}, {2:03.14f}, {3:03.14f}]", particle_id + 1,
+            m_velocities_particles(particle_id_7), m_velocities_particles(particle_id_7 + 1),
+            m_velocities_particles(particle_id_7 + 2), m_velocities_particles(particle_id_7 + 3),
+            m_velocities_particles(particle_id_7 + 4), m_velocities_particles(particle_id_7 + 5),
+            m_velocities_particles(particle_id_7 + 6));
     }
 
     spdlog::get(m_logName)->info("Particle accelerations:");
     for (int particle_id = 0; particle_id < m_num_particles; particle_id++)
     {
-        const int particle_id_3{3 * particle_id};
-        spdlog::get(m_logName)->info("\tParticle {0}: [{1:03.14f}, {2:03.14f}, {3:03.14f}]", particle_id + 1,
-                                     m_accelerations_particles(particle_id_3),
-                                     m_accelerations_particles(particle_id_3 + 1),
-                                     m_accelerations_particles(particle_id_3 + 2));
+        const int particle_id_7{7 * particle_id};
+        spdlog::get(m_logName)->info(
+            "\tParticle {0}: [{1:03.14f}, {2:03.14f}, {3:03.14f}]", particle_id + 1,
+            m_accelerations_particles(particle_id_7), m_accelerations_particles(particle_id_7 + 1),
+            m_accelerations_particles(particle_id_7 + 2), m_accelerations_particles(particle_id_7 + 3),
+            m_accelerations_particles(particle_id_7 + 4), m_accelerations_particles(particle_id_7 + 5),
+            m_accelerations_particles(particle_id_7 + 6));
     }
 
     /* ANCHOR: Output particle *articulation* data */
@@ -318,39 +356,6 @@ SystemData::logData()
             m_accelerations_particles_articulation(particle_id_7 + 4),
             m_accelerations_particles_articulation(particle_id_7 + 5),
             m_accelerations_particles_articulation(particle_id_7 + 6));
-    }
-
-    /* ANCHOR: Output body data */
-    spdlog::get(m_logName)->info("Body positions:");
-    for (int body_id = 0; body_id < m_num_bodies; body_id++)
-    {
-        const int body_id_7{7 * body_id};
-        spdlog::get(m_logName)->info(
-            "\tBody {0}: [{1:03.14f}, {2:03.14f}, {3:03.14f}, {4:03.14f}, {5:03.14f}, {6:03.14f}, {7:03.14f}]",
-            body_id + 1, m_positions_bodies(body_id_7), m_positions_bodies(body_id_7 + 1),
-            m_positions_bodies(body_id_7 + 2), m_positions_bodies(body_id_7 + 3), m_positions_bodies(body_id_7 + 4),
-            m_positions_bodies(body_id_7 + 5), m_positions_bodies(body_id_7 + 6));
-    }
-    spdlog::get(m_logName)->info("Body velocities:");
-    for (int body_id = 0; body_id < m_num_bodies; body_id++)
-    {
-        const int body_id_7{7 * body_id};
-        spdlog::get(m_logName)->info(
-            "\tBody {0}: [{1:03.14f}, {2:03.14f}, {3:03.14f}, {4:03.14f}, {5:03.14f}, {6:03.14f}, {7:03.14f}]",
-            body_id + 1, m_velocities_bodies(body_id_7), m_velocities_bodies(body_id_7 + 1),
-            m_velocities_bodies(body_id_7 + 2), m_velocities_bodies(body_id_7 + 3), m_velocities_bodies(body_id_7 + 4),
-            m_velocities_bodies(body_id_7 + 5), m_velocities_bodies(body_id_7 + 6));
-    }
-    spdlog::get(m_logName)->info("Body accelerations:");
-    for (int body_id = 0; body_id < m_num_bodies; body_id++)
-    {
-        const int body_id_7{7 * body_id};
-        spdlog::get(m_logName)->info(
-            "\tBody {0}: [{1:03.14f}, {2:03.14f}, {3:03.14f}, {4:03.14f}, {5:03.14f}, {6:03.14f}, {7:03.14f}]",
-            body_id + 1, m_accelerations_bodies(body_id_7), m_accelerations_bodies(body_id_7 + 1),
-            m_accelerations_bodies(body_id_7 + 2), m_accelerations_bodies(body_id_7 + 3),
-            m_accelerations_bodies(body_id_7 + 4), m_accelerations_bodies(body_id_7 + 5),
-            m_accelerations_bodies(body_id_7 + 6));
     }
 
     spdlog::get(m_logName)->info("Ending logdata()");
