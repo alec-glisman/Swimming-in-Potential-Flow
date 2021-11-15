@@ -140,7 +140,7 @@ def initializeGSD(gsd_path,
 
 
 def setInitialConditions(gsd_class,
-                         N, num_particles_per_body,
+                         N, M, num_particles_per_body,
                          Z_height,
                          image_system):
     """Set initial kinematics of GSD file
@@ -148,6 +148,7 @@ def setInitialConditions(gsd_class,
     Args:
         gsd_class (GSD_class): GSD helper class
         N (int): number of particles to simulate
+        M (int): number of bodies to simulate
         num_particles_per_body (int): number of particles per body
         Z_height (double): z-axis height of bodies
         image_system (int): Integer boolean deciding if simulation is an image system
@@ -166,7 +167,7 @@ def setInitialConditions(gsd_class,
 
     for i in range(M):
 
-        Ni = 3 * M
+        Ni = 3 * i
 
         for j in range(num_particles_per_body):
 
@@ -182,6 +183,7 @@ def setInitialConditions(gsd_class,
 
             # All particles in non-image system
             else:
+
                 pos[Ni + j] = [0.0, 0.0, Z_height]
 
     vel = np.zeros_like(pos, dtype=np.double)  # Calculated in C++ simulation
@@ -281,7 +283,7 @@ if __name__ == "__main__":
                               image_system)
 
     setInitialConditions(gsd_class,
-                         N, num_particles_per_body,
+                         N, M, num_particles_per_body,
                          Z_height,
                          image_system)
 
