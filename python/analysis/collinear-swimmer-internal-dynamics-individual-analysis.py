@@ -162,7 +162,7 @@ def aggregate_plots(relative_path, output_dir):
     u_32_sim = (q.T @ (U_3 - U_loc)).diagonal()
 
     # relative accelerations between particle pairs
-    A_loc = accelerations[0:, :]
+    A_loc = accelerations[0, :, :]
     A_1 = accelerations[1, :, :]
     A_3 = accelerations[2, :, :]
     # swimmer acceleration constraints
