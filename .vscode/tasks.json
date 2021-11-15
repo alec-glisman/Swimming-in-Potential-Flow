@@ -182,7 +182,7 @@
                 "build/profile",
                 "-DCMAKE_BUILD_TYPE=Profile",
                 "-DENABLE_TESTING=True",
-                "-DENABLE_COVERAGE=True",
+                "-DENABLE_COVERAGE=False",
                 "-DCMAKE_EXPORT_COMPILE_COMMANDS=True"
             ],
             "problemMatcher": [
