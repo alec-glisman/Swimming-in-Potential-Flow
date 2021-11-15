@@ -21,13 +21,10 @@ coverage:
 # which folders/files to ignore
 ignore:
   - "**/build/**"
-  - "build/**"
-  - "code/test/**"
-  - "test/**"
-  - "vcpkg/**"
-  - "vcpkg_installed/**"
   - "**/src/data_io/gsd.c"
-  - "code/src/data_io/gsd.c"
+  - "**/src/main.cpp"
+  - "**/test/**"
+  - "**/vcpkg/**"
 
 # Pull request comments:
 # ----------------------
