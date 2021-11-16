@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('RungeKutta4_8cpp_source.html',''); ini
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    spdlog::get(<a class="code" href="classRungeKutta4.html#a8b86c1434e64019a28d96d00f7b13b59">m_logName</a>)-&gt;critical(<span class="stringliteral">&quot;Setting initial conditions using PLFT-free algorithm.&quot;</span>);</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;update(single_core_device);   <span class="comment">// update system kinematics and rbm tensors</span></div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="classRungeKutta4.html#a09804a3e700013b77c9aef0067027b15">m_potHydro</a>-&gt;update(single_core_device); <span class="comment">// update hydrodynamic tensors</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="classRungeKutta4.html#a9f957c267fa7030c347c7d2c6b326373">momForceFree</a>(single_core_device);       <span class="comment">// set initial body kinematics</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="classRungeKutta4.html#acca3997f41542bb0536436fbb64e4b40">momForceFree</a>(single_core_device);       <span class="comment">// set initial body kinematics</span></div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;imageSystem())</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    {</div>
@@ -178,22 +178,22 @@ $(document).ready(function(){initNavTree('RungeKutta4_8cpp_source.html',''); ini
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;}</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="classRungeKutta4.html#a442be59b7291fd57895e5900ff9dccd8">   84</a></span>&#160;<a class="code" href="classRungeKutta4.html#a442be59b7291fd57895e5900ff9dccd8">RungeKutta4::integrate</a>(Eigen::ThreadPoolDevice&amp; device)</div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="classRungeKutta4.html#a4826f7efe1f1bbff3918b53c18a8106e">   84</a></span>&#160;<a class="code" href="classRungeKutta4.html#a4826f7efe1f1bbff3918b53c18a8106e">RungeKutta4::integrate</a>(<span class="keyword">const</span> Eigen::ThreadPoolDevice&amp; device)</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;{</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <a class="code" href="classRungeKutta4.html#a62b7028de266e35a88e1cd4f8e588fd5">integrateSecondOrder</a>(device); <span class="comment">// Udwadia-Kalaba method only gives acceleration components</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <a class="code" href="classRungeKutta4.html#a3b7310147342b4a454c6e94dc430a835">integrateSecondOrder</a>(device); <span class="comment">// Udwadia-Kalaba method only gives acceleration components</span></div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="classRungeKutta4.html#a62b7028de266e35a88e1cd4f8e588fd5">   90</a></span>&#160;<a class="code" href="classRungeKutta4.html#a62b7028de266e35a88e1cd4f8e588fd5">RungeKutta4::integrateSecondOrder</a>(Eigen::ThreadPoolDevice&amp; device)</div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="classRungeKutta4.html#a3b7310147342b4a454c6e94dc430a835">   90</a></span>&#160;<a class="code" href="classRungeKutta4.html#a3b7310147342b4a454c6e94dc430a835">RungeKutta4::integrateSecondOrder</a>(<span class="keyword">const</span> Eigen::ThreadPoolDevice&amp; device)</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;{</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="comment">/* Step 1: k1 = f( y(t_0),  t_0 ),</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="comment">/* Step 1: k1 = f( y(t_0),  t_0 )</span></div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment">     * initial conditions at current step */</span></div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">double</span>    t1{<a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;t()};</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    Eigen::VectorXd v1 = <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;velocitiesBodies();</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    Eigen::VectorXd x1 = <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;positionsBodies();</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    Eigen::VectorXd a1 = Eigen::VectorXd::Zero(<a class="code" href="classRungeKutta4.html#aece575515484867022bdbb31efc51d5d">m_7M</a>);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <a class="code" href="classRungeKutta4.html#aaa9be7a023f272032338d223d900c4c5">accelerationUpdate</a>(t1, x1, v1, a1, device);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <a class="code" href="classRungeKutta4.html#acf4bede4af47cdeb464e05fe7f5d1683">accelerationUpdate</a>(t1, x1, v1, a1, device);</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="comment">/* Step 2: k2 = f( y(t_0) + k1 * dt/2,  t_0 + dt/2 )</span></div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="comment">     * time rate-of-change k1 evaluated halfway through time step (midpoint) */</span></div>
@@ -204,7 +204,7 @@ $(document).ready(function(){initNavTree('RungeKutta4_8cpp_source.html',''); ini
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    x2.noalias() += <a class="code" href="classRungeKutta4.html#a9a57ca17f9753d7699ed707584d922de">m_c1_2_dt</a> * v2;</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    Eigen::VectorXd a2 = Eigen::VectorXd::Zero(<a class="code" href="classRungeKutta4.html#aece575515484867022bdbb31efc51d5d">m_7M</a>);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <a class="code" href="classRungeKutta4.html#aaa9be7a023f272032338d223d900c4c5">accelerationUpdate</a>(t2, x2, v2, a2, device);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <a class="code" href="classRungeKutta4.html#acf4bede4af47cdeb464e05fe7f5d1683">accelerationUpdate</a>(t2, x2, v2, a2, device);</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="comment">/* Step 3: k3 = f( y(t_0) + k2 * dt/2,  t_0 + dt/2 )</span></div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="comment">     * time rate-of-change k2 evaluated halfway through time step (midpoint) */</span></div>
@@ -215,7 +215,7 @@ $(document).ready(function(){initNavTree('RungeKutta4_8cpp_source.html',''); ini
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    x3.noalias() += <a class="code" href="classRungeKutta4.html#a9a57ca17f9753d7699ed707584d922de">m_c1_2_dt</a> * v3;</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    Eigen::VectorXd a3 = Eigen::VectorXd::Zero(<a class="code" href="classRungeKutta4.html#aece575515484867022bdbb31efc51d5d">m_7M</a>);</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <a class="code" href="classRungeKutta4.html#aaa9be7a023f272032338d223d900c4c5">accelerationUpdate</a>(t3, x3, v3, a3, device);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <a class="code" href="classRungeKutta4.html#acf4bede4af47cdeb464e05fe7f5d1683">accelerationUpdate</a>(t3, x3, v3, a3, device);</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="comment">/* Step 4: k4 = f( y(t_0) + k3 * dt,  t_0 + dt )</span></div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="comment">     * time rate-of-change k3 evaluated at end of step (endpoint) */</span></div>
@@ -226,7 +226,7 @@ $(document).ready(function(){initNavTree('RungeKutta4_8cpp_source.html',''); ini
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    x4.noalias() += <a class="code" href="classRungeKutta4.html#a3bf8d09edc922a2334145dd51de93384">m_dt</a> * v4;</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    Eigen::VectorXd a4 = Eigen::VectorXd::Zero(<a class="code" href="classRungeKutta4.html#aece575515484867022bdbb31efc51d5d">m_7M</a>);</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <a class="code" href="classRungeKutta4.html#aaa9be7a023f272032338d223d900c4c5">accelerationUpdate</a>(t4, x4, v4, a4, device);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <a class="code" href="classRungeKutta4.html#acf4bede4af47cdeb464e05fe7f5d1683">accelerationUpdate</a>(t4, x4, v4, a4, device);</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="comment">/* ANCHOR: Calculate kinematics at end of time step */</span></div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    Eigen::VectorXd v_out = a1;</div>
@@ -244,18 +244,18 @@ $(document).ready(function(){initNavTree('RungeKutta4_8cpp_source.html',''); ini
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    x_out.noalias() += x1;</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160; </div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    Eigen::VectorXd a_out = Eigen::VectorXd::Zero(<a class="code" href="classRungeKutta4.html#aece575515484867022bdbb31efc51d5d">m_7M</a>);</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <a class="code" href="classRungeKutta4.html#aaa9be7a023f272032338d223d900c4c5">accelerationUpdate</a>(t4, x_out, v_out, a_out, device);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <a class="code" href="classRungeKutta4.html#acf4bede4af47cdeb464e05fe7f5d1683">accelerationUpdate</a>(t4, x_out, v_out, a_out, device);</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160; </div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="comment">// reset system time to t1 as `Engine` class manages updating system time at end of each step</span></div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;setT(t1);</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;}</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00157"></a><span class="lineno"><a class="line" href="classRungeKutta4.html#aaa9be7a023f272032338d223d900c4c5">  157</a></span>&#160;<a class="code" href="classRungeKutta4.html#aaa9be7a023f272032338d223d900c4c5">RungeKutta4::accelerationUpdate</a>(<span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code" href="namespacecollinear-swimmer-isolated-configuration.html#a834bc10d24ee5137914fd2bb520c39a7">t</a>, Eigen::VectorXd&amp; pos, Eigen::VectorXd&amp; vel, Eigen::VectorXd&amp; acc,</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;                                Eigen::ThreadPoolDevice&amp; device)</div>
+<div class="line"><a name="l00157"></a><span class="lineno"><a class="line" href="classRungeKutta4.html#acf4bede4af47cdeb464e05fe7f5d1683">  157</a></span>&#160;<a class="code" href="classRungeKutta4.html#acf4bede4af47cdeb464e05fe7f5d1683">RungeKutta4::accelerationUpdate</a>(<span class="keyword">const</span> <span class="keywordtype">double</span> t, Eigen::VectorXd&amp; pos, Eigen::VectorXd&amp; vel, Eigen::VectorXd&amp; acc,</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;                                <span class="keyword">const</span> Eigen::ThreadPoolDevice&amp; device)</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;{</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="comment">// NOTE: Order of function calls must remain the same</span></div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;setT(<a class="code" href="namespacecollinear-swimmer-isolated-configuration.html#a834bc10d24ee5137914fd2bb520c39a7">t</a>);</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;setT(t);</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; </div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;imageSystem())</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    {</div>
@@ -315,7 +315,7 @@ $(document).ready(function(){initNavTree('RungeKutta4_8cpp_source.html',''); ini
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        vel.segment&lt;7&gt;(img_body_id_7).noalias() = vel.segment&lt;7&gt;(real_body_id_7);</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160; </div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;        vel(img_body_id_7 + 2) *= -1;</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        vel.segment&lt;2&gt;(img_body_id_7 + 4) *= -1; <span class="comment">// FIXME: Is this true for first time derivative?</span></div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        vel.segment&lt;2&gt;(img_body_id_7 + 4) *= -1;</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    }</div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;}</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160; </div>
@@ -334,7 +334,7 @@ $(document).ready(function(){initNavTree('RungeKutta4_8cpp_source.html',''); ini
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        acc.segment&lt;7&gt;(img_body_id_7).noalias() = acc.segment&lt;7&gt;(real_body_id_7);</div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160; </div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;        acc(img_body_id_7 + 2) *= -1;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;        acc.segment&lt;2&gt;(img_body_id_7 + 4) *= -1; <span class="comment">// FIXME: Is this true for second time derivative?</span></div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;        acc.segment&lt;2&gt;(img_body_id_7 + 4) *= -1;</div>
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    }</div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;}</div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160; </div>
@@ -400,187 +400,175 @@ $(document).ready(function(){initNavTree('RungeKutta4_8cpp_source.html',''); ini
 <div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    Eigen::VectorXd Q_total = Q; <span class="comment">// (7m, 1)</span></div>
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    Q_total.noalias() += Q_con;</div>
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    acc.noalias() = M_eff_inv * Q_total; <span class="comment">// (7m, 1)</span></div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160; </div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    <span class="comment">// debugging print statements</span></div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    Eigen::IOFormat CleanFmt(4, 0, <span class="stringliteral">&quot;, &quot;</span>, <span class="stringliteral">&quot;\n&quot;</span>, <span class="stringliteral">&quot;[&quot;</span>, <span class="stringliteral">&quot;]&quot;</span>);</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;M_eff:\n&quot;</span> &lt;&lt; M_eff.format(CleanFmt) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;M_eff_inv:\n&quot;</span> &lt;&lt; M_eff_inv.format(CleanFmt) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;K:\n&quot;</span> &lt;&lt; K.format(CleanFmt) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;udwadiaA:\n&quot;</span> &lt;&lt; <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;udwadiaA().format(CleanFmt) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;udwadiaB:\n&quot;</span> &lt;&lt; <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;udwadiaB().format(CleanFmt) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;acc:\n&quot;</span> &lt;&lt; acc.format(CleanFmt) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;}</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00318"></a><span class="lineno"><a class="line" href="classRungeKutta4.html#a9f957c267fa7030c347c7d2c6b326373">  318</a></span>&#160;<a class="code" href="classRungeKutta4.html#a9f957c267fa7030c347c7d2c6b326373">RungeKutta4::momForceFree</a>(Eigen::ThreadPoolDevice&amp; device)</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;{</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> first_particle{0};</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;}</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160; </div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00309"></a><span class="lineno"><a class="line" href="classRungeKutta4.html#acca3997f41542bb0536436fbb64e4b40">  309</a></span>&#160;<a class="code" href="classRungeKutta4.html#acca3997f41542bb0536436fbb64e4b40">RungeKutta4::momForceFree</a>(<span class="keyword">const</span> Eigen::ThreadPoolDevice&amp; device)</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;{</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> num_particles{3};                   <span class="comment">// Nb</span></div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> num_particles_3{3 * num_particles}; <span class="comment">// 3 * Nb</span></div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160; </div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    <span class="keyword">const</span> Eigen::array&lt;Eigen::Index, 3&gt; extents_333 = {3, 3, 3};</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160; </div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <span class="comment">/* ANCHOR: Assemble the tensor quantities */</span></div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    Eigen::Matrix&lt;double, 3, -1&gt; rbmconn = Eigen::MatrixXd::Zero(3, num_particles_3); <span class="comment">// (3 x 3 Nb)</span></div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    Eigen::Matrix3d              Id      = Eigen::MatrixXd::Identity(3, 3);</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160; </div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    Eigen::MatrixXd M_eff = Eigen::MatrixXd::Zero(num_particles_3, num_particles_3); <span class="comment">// (3 Nb x 3 Nb)</span></div>
 <div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160; </div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> num_particles{3};                   <span class="comment">// Nb</span></div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> num_particles_3{3 * num_particles}; <span class="comment">// 3 * Nb</span></div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160; </div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    <span class="keyword">const</span> Eigen::array&lt;Eigen::Index, 3&gt; extents = {3, 3, 3};</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160; </div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <span class="comment">/* ANCHOR: Assemble the tensor quantities */</span></div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    Eigen::Matrix&lt;double, 3, -1&gt; rbmconn = Eigen::MatrixXd::Zero(3, num_particles_3); <span class="comment">// (3 x 3 Nb)</span></div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160; </div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    Eigen::MatrixXd          M_eff = Eigen::MatrixXd::Zero(num_particles_3, num_particles_3); <span class="comment">// (3 Nb x 3 Nb)</span></div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    Eigen::Tensor&lt;double, 3&gt; grad_M_eff =</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;        Eigen::Tensor&lt;double, 3&gt;(num_particles_3, num_particles_3, num_particles_3); <span class="comment">// (3 Nb x 3 Nb x 3 Nb)</span></div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    Eigen::Tensor&lt;double, 3&gt; grad_M_eff =</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;        Eigen::Tensor&lt;double, 3&gt;(num_particles_3, num_particles_3, num_particles_3); <span class="comment">// (3 Nb x 3 Nb x 3 Nb)</span></div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    grad_M_eff.setZero();</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160; </div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    Eigen::VectorXd vel_artic = Eigen::VectorXd::Zero(num_particles_3); <span class="comment">// (3 Nb x 1)</span></div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    Eigen::VectorXd acc_artic = Eigen::VectorXd::Zero(num_particles_3); <span class="comment">// (3 Nb x 1)</span></div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160; </div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> particle_id = 0; particle_id &lt; num_particles; particle_id++)</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    {</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> particle_id_3{3 * particle_id};</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> particle_id_7{7 * particle_id};</div>
 <div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160; </div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    Eigen::VectorXd vel_artic = Eigen::VectorXd::Zero(num_particles_3); <span class="comment">// (3 Nb x 1)</span></div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    Eigen::VectorXd acc_artic = Eigen::VectorXd::Zero(num_particles_3); <span class="comment">// (3 Nb x 1)</span></div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160; </div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> particle_id = first_particle; particle_id &lt; (first_particle + num_particles); particle_id++)</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    {</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> particle_id_3{3 * particle_id};</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> particle_id_7{7 * particle_id};</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160; </div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;        rbmconn.block&lt;3, 3&gt;(0, particle_id_3).noalias() = <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;i3(); <span class="comment">// translation-translation couple</span></div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160; </div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = first_particle; j &lt; (first_particle + num_particles); j++)</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;        {</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;            M_eff.block&lt;3, 3&gt;(particle_id_3, 3 * j).noalias() =</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;                <a class="code" href="classRungeKutta4.html#a09804a3e700013b77c9aef0067027b15">m_potHydro</a>-&gt;mTotal().block&lt;3, 3&gt;(particle_id_7, 7 * j); <span class="comment">// translation-translation couple</span></div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160; </div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k = first_particle; k &lt; (first_particle + num_particles); k++)</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;            {</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;                <span class="keyword">const</span> Eigen::array&lt;Eigen::Index, 3&gt; offsets_6 = {particle_id_3, 3 * j, 3 * k};</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;                <span class="keyword">const</span> Eigen::array&lt;Eigen::Index, 3&gt; offsets_7 = {particle_id_7, 7 * j, 7 * k};</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;        rbmconn.block&lt;3, 3&gt;(0, particle_id_3).noalias() = Id; <span class="comment">// translation-translation couple</span></div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160; </div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; num_particles; j++)</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;        {</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;            M_eff.block&lt;3, 3&gt;(particle_id_3, 3 * j).noalias() =</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;                <a class="code" href="classRungeKutta4.html#a09804a3e700013b77c9aef0067027b15">m_potHydro</a>-&gt;mTotal().block&lt;3, 3&gt;(particle_id_7, 7 * j); <span class="comment">// translation-translation couple</span></div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160; </div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k = 0; k &lt; (0 + num_particles); k++)</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;            {</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;                <span class="keyword">const</span> Eigen::array&lt;Eigen::Index, 3&gt; offsets_3   = {particle_id_3, 3 * j, 3 * k};</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;                <span class="keyword">const</span> Eigen::array&lt;Eigen::Index, 3&gt; offsets_773 = {particle_id_7, 7 * j, 3 * k};</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160; </div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;                grad_M_eff.slice(offsets_3, extents_333).device(device) =</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;                    <a class="code" href="classRungeKutta4.html#a09804a3e700013b77c9aef0067027b15">m_potHydro</a>-&gt;gradMAdded().slice(offsets_773, extents_333);</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;            }</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;        }</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160; </div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;        vel_artic.segment&lt;3&gt;(particle_id_3).noalias() =</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;            <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;velocitiesParticlesArticulation().segment&lt;3&gt;(particle_id_7); <span class="comment">// linear components</span></div>
 <div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160; </div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;                grad_M_eff.slice(offsets_6, extents).device(device) =</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;                    <a class="code" href="classRungeKutta4.html#a09804a3e700013b77c9aef0067027b15">m_potHydro</a>-&gt;gradMAdded().slice(offsets_7, extents);</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;            }</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;        }</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160; </div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;        vel_artic.segment&lt;3&gt;(particle_id_3).noalias() =</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;            <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;velocitiesParticlesArticulation().segment&lt;3&gt;(particle_id_7); <span class="comment">// linear components</span></div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160; </div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;        acc_artic.segment&lt;3&gt;(particle_id_3).noalias() =</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;            <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;accelerationsParticlesArticulation().segment&lt;3&gt;(particle_id_7); <span class="comment">// linear components</span></div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    }</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160; </div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    <span class="keyword">const</span> Eigen::Matrix&lt;double, -1, 3&gt; rbmconn_T = rbmconn.transpose();</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160; </div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    <span class="comment">/* ANCHOR: Calculate velocity components */</span></div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    <span class="comment">// calculate M_tilde = Sigma * M_total * Sigma^T;  (3 x 3)</span></div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    <span class="keyword">const</span> Eigen::Matrix&lt;double, -1, 3&gt; M_tilde_hold = M_eff * rbmconn_T;</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    <span class="keyword">const</span> Eigen::Matrix&lt;double, 3, 3&gt;  M_tilde      = rbmconn * M_tilde_hold;</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160; </div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="comment">/* STUB: Solve for rigid body motion velocity components */</span></div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    <span class="comment">// calculate P_script = Sigma * M_total * V_articulation;  (3 x 1)</span></div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    <span class="keyword">const</span> Eigen::Matrix&lt;double, -1, 1&gt; P_script_hold = M_eff * vel_artic;</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <span class="keyword">const</span> Eigen::Matrix&lt;double, 3, 1&gt;  P_script      = rbmconn * P_script_hold;</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;        acc_artic.segment&lt;3&gt;(particle_id_3).noalias() =</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;            <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;accelerationsParticlesArticulation().segment&lt;3&gt;(particle_id_7); <span class="comment">// linear components</span></div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    }</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160; </div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    <span class="keyword">const</span> Eigen::Matrix&lt;double, -1, 3&gt; rbmconn_T = rbmconn.transpose();</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160; </div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    <span class="comment">/* ANCHOR: Calculate velocity components */</span></div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    <span class="comment">// calculate M_tilde = Sigma * M_total * Sigma^T;  (3 x 3)</span></div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <span class="keyword">const</span> Eigen::Matrix&lt;double, -1, 3&gt; M_tilde_hold = M_eff * rbmconn_T;</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <span class="keyword">const</span> Eigen::Matrix3d              M_tilde      = rbmconn * M_tilde_hold;</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160; </div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    <span class="comment">/* STUB: Solve for rigid body motion velocity components */</span></div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    <span class="comment">// calculate P_script = Sigma * M_total * V_articulation;  (3 x 1)</span></div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    <span class="keyword">const</span> Eigen::VectorXd P_script_hold = M_eff * vel_artic;</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    <span class="keyword">const</span> Eigen::Vector3d P_script      = rbmconn * P_script_hold;</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160; </div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    <span class="comment">// calculate U_swim = - M_tilde_inv * P_script; U_swim has translation components</span></div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    <span class="keyword">const</span> Eigen::Vector3d U_swim = -M_tilde.fullPivLu().solve(P_script); <span class="comment">// linear components</span></div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    <span class="comment">// convert U_swim to 4d vector for quaternion rotation</span></div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="keyword">const</span> Eigen::Quaterniond U_swim_4d(0.0, U_swim(0), U_swim(1), U_swim(2));</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160; </div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    <span class="comment">/* ANCHOR: Output velocity data back to m_system */</span></div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    Eigen::VectorXd vel_body = Eigen::VectorXd::Zero(<a class="code" href="classRungeKutta4.html#aece575515484867022bdbb31efc51d5d">m_7M</a>);</div>
 <div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160; </div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    <span class="comment">// calculate U_swim = - M_tilde_inv * P_script; U_swim has translation components</span></div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    <span class="keyword">const</span> Eigen::Matrix&lt;double, 3, 1&gt; U_swim = -M_tilde.fullPivLu().solve(P_script); <span class="comment">// linear components</span></div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;    <span class="comment">// convert U_swim to 4d vector for quaternion rotation</span></div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    Eigen::Quaterniond U_swim_4d;</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    U_swim_4d.w()   = 0.0;</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    U_swim_4d.vec() = U_swim;</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160; </div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    <span class="comment">/* ANCHOR: Output velocity data back to m_system */</span></div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;    Eigen::VectorXd vel_body = Eigen::VectorXd::Zero(<a class="code" href="classRungeKutta4.html#aece575515484867022bdbb31efc51d5d">m_7M</a>);</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160; </div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> body_id = 0; body_id &lt; (<a class="code" href="classRungeKutta4.html#a54c47659c116900eeeedd326863c806e">m_body_dof</a>); body_id++)</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    {</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> body_id_7{7 * body_id};</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> body_id = 0; body_id &lt; (<a class="code" href="classRungeKutta4.html#a54c47659c116900eeeedd326863c806e">m_body_dof</a>); body_id++)</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    {</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> body_id_7{7 * body_id};</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160; </div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;        <span class="comment">// body unit quaternion</span></div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;        <span class="keyword">const</span> Eigen::Vector4d    theta = <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;positionsBodies().segment&lt;4&gt;(body_id_7 + 3);</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;        <span class="keyword">const</span> Eigen::Quaterniond theta_body(theta(0), theta(1), theta(2), theta(3));</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160; </div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;        <span class="keyword">const</span> Eigen::Quaterniond U_swim_rot_4d = theta_body * U_swim_4d * theta_body.inverse();</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;        <span class="keyword">const</span> Eigen::Vector3d    U_swim_rot_3d = U_swim_rot_4d.vec();</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160; </div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;        vel_body.segment&lt;3&gt;(body_id_7).noalias() = U_swim_rot_3d;</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;    }</div>
 <div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160; </div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;        <span class="keyword">const</span> Eigen::Quaterniond theta_body(<a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;positionsBodies().segment&lt;4&gt;(body_id_7 + 3));</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;        <span class="keyword">const</span> Eigen::Quaterniond U_swim_rot_4d = theta_body * U_swim_4d * theta_body.inverse();</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160; </div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;        vel_body.segment&lt;3&gt;(body_id_7).noalias() = U_swim_rot_4d.vec();</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;    }</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160; </div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;    <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;setVelocitiesBodies(vel_body);</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160; </div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    <span class="comment">/* ANCHOR: Calculate acceleration components */</span></div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;    <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;update(device); <span class="comment">// update velocity components with locater motion</span></div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160; </div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;    Eigen::VectorXd vel_part = Eigen::VectorXd::Zero(num_particles_3); <span class="comment">// (3 Nb x 1)</span></div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160; </div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> particle_id = first_particle; particle_id &lt; (first_particle + num_particles); particle_id++)</div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;    {</div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> particle_id_3{3 * particle_id};</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> particle_id_7{7 * particle_id};</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160; </div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;        vel_part.segment&lt;3&gt;(particle_id_3).noalias() =</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;            <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;velocitiesParticles().segment&lt;3&gt;(particle_id_7); <span class="comment">// linear components</span></div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    }</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160; </div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    <span class="comment">// convert particle velocities to `Eigen::Tensor`</span></div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;    Eigen::Tensor&lt;double, 1&gt; tens_vel_part = Eigen::Tensor&lt;double, 1&gt;(num_particles_3);</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;    tens_vel_part.device(device)           = <a class="code" href="helper__eigenTensorConversion_8hpp.html#a3a32f7de3f099464192073a93b34d580">TensorCast</a>(vel_part, num_particles_3);</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160; </div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;    <span class="comment">// `Eigen::Tensor` contract indices</span></div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;    <span class="keyword">const</span> Eigen::array&lt;Eigen::IndexPair&lt;int&gt;, 1&gt; contract_ijl_l = {</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;        Eigen::IndexPair&lt;int&gt;(2, 0)}; <span class="comment">// {i, j, l} . {l} --&gt; {i, j}</span></div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160; </div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;    <span class="comment">// calculate gradM U</span></div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    Eigen::Tensor&lt;double, 2&gt; tens_gradM_U = Eigen::Tensor&lt;double, 2&gt;(num_particles_3, num_particles_3);</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;    tens_gradM_U.device(device)           = grad_M_eff.contract(tens_vel_part, contract_ijl_l);</div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;    <span class="keyword">const</span> Eigen::MatrixXd gradM_U         = <a class="code" href="helper__eigenTensorConversion_8hpp.html#a556d08b55a6ad7cd703b6db06194e5cf">MatrixCast</a>(tens_gradM_U, num_particles_3, num_particles_3, device);</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;setVelocitiesBodies(vel_body);</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160; </div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    <span class="comment">/* ANCHOR: Calculate acceleration components */</span></div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;update(device); <span class="comment">// update velocity components with locater motion</span></div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160; </div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;    Eigen::VectorXd vel_part = Eigen::VectorXd::Zero(num_particles_3); <span class="comment">// (3 Nb x 1)</span></div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160; </div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> particle_id = 0; particle_id &lt; (0 + num_particles); particle_id++)</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    {</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> particle_id_3{3 * particle_id};</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> particle_id_7{7 * particle_id};</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160; </div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;        vel_part.segment&lt;3&gt;(particle_id_3).noalias() =</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;            <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;velocitiesParticles().segment&lt;3&gt;(particle_id_7); <span class="comment">// linear components</span></div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;    }</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160; </div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    <span class="comment">// convert particle velocities to `Eigen::Tensor`</span></div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;    Eigen::Tensor&lt;double, 1&gt; tens_vel_part = Eigen::Tensor&lt;double, 1&gt;(num_particles_3);</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;    tens_vel_part.device(device)           = <a class="code" href="helper__eigenTensorConversion_8hpp.html#a3a32f7de3f099464192073a93b34d580">TensorCast</a>(vel_part, num_particles_3);</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160; </div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    <span class="comment">// `Eigen::Tensor` contract indices</span></div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    <span class="keyword">const</span> Eigen::array&lt;Eigen::IndexPair&lt;int&gt;, 1&gt; contract_ijl_l = {</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;        Eigen::IndexPair&lt;int&gt;(2, 0)}; <span class="comment">// {i, j, l} . {l} --&gt; {i, j}</span></div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160; </div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;    <span class="comment">// calculate gradM U</span></div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;    Eigen::Tensor&lt;double, 2&gt; tens_gradM_U = Eigen::Tensor&lt;double, 2&gt;(num_particles_3, num_particles_3);</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;    tens_gradM_U.device(device)           = grad_M_eff.contract(tens_vel_part, contract_ijl_l);</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;    <span class="keyword">const</span> Eigen::MatrixXd gradM_U         = <a class="code" href="helper__eigenTensorConversion_8hpp.html#a556d08b55a6ad7cd703b6db06194e5cf">MatrixCast</a>(tens_gradM_U, num_particles_3, num_particles_3, device);</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160; </div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;    <span class="comment">/* STUB: Solve for rigid body motion velocity components */</span></div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;    <span class="comment">// calculate F_script = Sigma * (M_total * A_articulation + (gradM U) U);  (3 x 1)</span></div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    Eigen::VectorXd F_script_hold = M_eff * acc_artic;</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;    F_script_hold.noalias() += gradM_U * vel_part;</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;    <span class="keyword">const</span> Eigen::Vector3d F_script = rbmconn * F_script_hold;</div>
 <div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160; </div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;    <span class="comment">/* STUB: Solve for rigid body motion velocity components */</span></div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;    <span class="comment">// calculate F_script = Sigma * (M_total * A_articulation + (gradM U) U);  (3 x 1)</span></div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;    <span class="keyword">const</span> Eigen::Matrix&lt;double, -1, 1&gt; F_script_hold = M_eff * acc_artic + gradM_U * vel_part;</div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;    <span class="keyword">const</span> Eigen::Matrix&lt;double, 3, 1&gt;  F_script      = rbmconn * F_script_hold;</div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160; </div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;    <span class="comment">// calculate A_swim = - M_tilde_inv * P_script; A_swim has translation components</span></div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;    <span class="keyword">const</span> Eigen::Matrix&lt;double, 3, 1&gt; A_swim = -M_tilde.fullPivLu().solve(F_script); <span class="comment">// linear components</span></div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160; </div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;    <span class="comment">// convert A_swim to 4d vector for quaternion rotation</span></div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;    Eigen::Quaterniond A_swim_4d;</div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;    A_swim_4d.w()   = 0.0;</div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;    A_swim_4d.vec() = A_swim;</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;    <span class="comment">// calculate A_swim = - M_tilde_inv * P_script; A_swim has translation components</span></div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;    <span class="keyword">const</span> Eigen::Vector3d A_swim = -M_tilde.fullPivLu().solve(F_script); <span class="comment">// linear components</span></div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160; </div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;    <span class="comment">// convert A_swim to 4d vector for quaternion rotation</span></div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;    Eigen::Quaterniond A_swim_4d(0.0, A_swim(0), A_swim(1), A_swim(2));</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160; </div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;    <span class="comment">/* ANCHOR: Output velocity data back to m_system */</span></div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;    Eigen::VectorXd acc_body = Eigen::VectorXd::Zero(<a class="code" href="classRungeKutta4.html#aece575515484867022bdbb31efc51d5d">m_7M</a>);</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160; </div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> body_id = 0; body_id &lt; (<a class="code" href="classRungeKutta4.html#a54c47659c116900eeeedd326863c806e">m_body_dof</a>); body_id++)</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;    {</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> body_id_7{7 * body_id};</div>
 <div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160; </div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;    <span class="comment">/* ANCHOR: Output velocity data back to m_system */</span></div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;    Eigen::VectorXd acc_body = Eigen::VectorXd::Zero(<a class="code" href="classRungeKutta4.html#aece575515484867022bdbb31efc51d5d">m_7M</a>);</div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160; </div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> body_id = 0; body_id &lt; (<a class="code" href="classRungeKutta4.html#a54c47659c116900eeeedd326863c806e">m_body_dof</a>); body_id++)</div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;    {</div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> body_id_7{7 * body_id};</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;        <span class="comment">// body unit quaternion</span></div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;        <span class="keyword">const</span> Eigen::Vector4d    theta = <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;positionsBodies().segment&lt;4&gt;(body_id_7 + 3);</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;        <span class="keyword">const</span> Eigen::Quaterniond theta_body(theta(0), theta(1), theta(2), theta(3));</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160; </div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;        <span class="keyword">const</span> Eigen::Quaterniond A_swim_rot_4d = theta_body * A_swim_4d * theta_body.inverse();</div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;        <span class="keyword">const</span> Eigen::Vector3d    A_swim_rot_3d = A_swim_rot_4d.vec();</div>
 <div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160; </div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;        <span class="keyword">const</span> Eigen::Quaterniond theta_body(<a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;positionsBodies().segment&lt;4&gt;(body_id_7 + 3));</div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;        <span class="keyword">const</span> Eigen::Quaterniond A_swim_rot_4d = theta_body * A_swim_4d * theta_body.inverse();</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;        acc_body.segment&lt;3&gt;(body_id_7).noalias() = A_swim_rot_3d;</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;    }</div>
 <div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160; </div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;        acc_body.segment&lt;3&gt;(body_id_7).noalias() = A_swim_rot_4d.vec();</div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;    }</div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160; </div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;setAccelerationsBodies(acc_body);</div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160; </div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;    <span class="comment">// debugging print statements</span></div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;    Eigen::IOFormat CleanFmt(4, 0, <span class="stringliteral">&quot;, &quot;</span>, <span class="stringliteral">&quot;\n&quot;</span>, <span class="stringliteral">&quot;[&quot;</span>, <span class="stringliteral">&quot;]&quot;</span>);</div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;rbmconn:\n&quot;</span> &lt;&lt; rbmconn.format(CleanFmt) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;M_eff:\n&quot;</span> &lt;&lt; M_eff.format(CleanFmt) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;M_tilde:\n&quot;</span> &lt;&lt; M_tilde.format(CleanFmt) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;U_swim:\n&quot;</span> &lt;&lt; U_swim.format(CleanFmt) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;A_swim:\n&quot;</span> &lt;&lt; A_swim.format(CleanFmt) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;}</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    <a class="code" href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">m_system</a>-&gt;setAccelerationsBodies(acc_body);</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="aclassRungeKutta4_html_a3bf8d09edc922a2334145dd51de93384"><div class="ttname"><a href="classRungeKutta4.html#a3bf8d09edc922a2334145dd51de93384">RungeKutta4::m_dt</a></div><div class="ttdeci">double m_dt</div><div class="ttdoc">(dimensional) integrator finite time step</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8hpp_source.html#l00177">RungeKutta4.hpp:177</a></div></div>
-<div class="ttc" id="ahelper__eigenTensorConversion_8hpp_html_a556d08b55a6ad7cd703b6db06194e5cf"><div class="ttname"><a href="helper__eigenTensorConversion_8hpp.html#a556d08b55a6ad7cd703b6db06194e5cf">MatrixCast</a></div><div class="ttdeci">auto MatrixCast(const Eigen::TensorBase&lt; T, Eigen::ReadOnlyAccessors &gt; &amp;expr, const sizeType rows, const sizeType cols, const Device &amp;device=Device())</div><div class="ttdef"><b>Definition:</b> <a href="helper__eigenTensorConversion_8hpp_source.html#l00070">helper_eigenTensorConversion.hpp:70</a></div></div>
+<div class="ttc" id="ahelper__eigenTensorConversion_8hpp_html_a556d08b55a6ad7cd703b6db06194e5cf"><div class="ttname"><a href="helper__eigenTensorConversion_8hpp.html#a556d08b55a6ad7cd703b6db06194e5cf">MatrixCast</a></div><div class="ttdeci">auto MatrixCast(const Eigen::TensorBase&lt; T, Eigen::ReadOnlyAccessors &gt; &amp;expr, const sizeType rows, const sizeType cols, const Device &amp;device=Device())</div><div class="ttdef"><b>Definition:</b> <a href="helper__eigenTensorConversion_8hpp_source.html#l00120">helper_eigenTensorConversion.hpp:120</a></div></div>
 <div class="ttc" id="aclassRungeKutta4_html_abc1cc48fea62c46948a51ca2b2000590"><div class="ttname"><a href="classRungeKutta4.html#abc1cc48fea62c46948a51ca2b2000590">RungeKutta4::imageBodyPosVel</a></div><div class="ttdeci">void imageBodyPosVel(Eigen::VectorXd &amp;pos, Eigen::VectorXd &amp;vel)</div><div class="ttdoc">Replaces 2nd 1/2 of body position and velocity D.o.F. with image of 1st 1/2 assuming the reflection p...</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8cpp_source.html#l00197">RungeKutta4.cpp:197</a></div></div>
-<div class="ttc" id="ahelper__eigenTensorConversion_8hpp_html_a3a32f7de3f099464192073a93b34d580"><div class="ttname"><a href="helper__eigenTensorConversion_8hpp.html#a3a32f7de3f099464192073a93b34d580">TensorCast</a></div><div class="ttdeci">Eigen::Tensor&lt; typename Derived::Scalar, rank &gt; TensorCast(const Eigen::EigenBase&lt; Derived &gt; &amp;matrix, const std::array&lt; T, rank &gt; &amp;dims)</div><div class="ttdoc">Convert Eigen::Matrix --&gt; Eigen::Tensor.</div><div class="ttdef"><b>Definition:</b> <a href="helper__eigenTensorConversion_8hpp_source.html#l00125">helper_eigenTensorConversion.hpp:125</a></div></div>
+<div class="ttc" id="ahelper__eigenTensorConversion_8hpp_html_a3a32f7de3f099464192073a93b34d580"><div class="ttname"><a href="helper__eigenTensorConversion_8hpp.html#a3a32f7de3f099464192073a93b34d580">TensorCast</a></div><div class="ttdeci">Eigen::Tensor&lt; typename Derived::Scalar, rank &gt; TensorCast(const Eigen::EigenBase&lt; Derived &gt; &amp;matrix, const std::array&lt; T, rank &gt; &amp;dims)</div><div class="ttdoc">Convert Eigen::Matrix --&gt; Eigen::Tensor.</div><div class="ttdef"><b>Definition:</b> <a href="helper__eigenTensorConversion_8hpp_source.html#l00177">helper_eigenTensorConversion.hpp:177</a></div></div>
 <div class="ttc" id="aclassRungeKutta4_html_a0d5a894049797b90958195bd83a0722c"><div class="ttname"><a href="classRungeKutta4.html#a0d5a894049797b90958195bd83a0722c">RungeKutta4::m_system</a></div><div class="ttdeci">std::shared_ptr&lt; SystemData &gt; m_system</div><div class="ttdoc">shared pointer reference to SystemData class</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8hpp_source.html#l00165">RungeKutta4.hpp:165</a></div></div>
 <div class="ttc" id="aclassRungeKutta4_html_a9a57ca17f9753d7699ed707584d922de"><div class="ttname"><a href="classRungeKutta4.html#a9a57ca17f9753d7699ed707584d922de">RungeKutta4::m_c1_2_dt</a></div><div class="ttdeci">double m_c1_2_dt</div><div class="ttdoc">(dimensional) 1/2 integrator finite time step</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8hpp_source.html#l00179">RungeKutta4.hpp:179</a></div></div>
-<div class="ttc" id="aclassRungeKutta4_html_a9f957c267fa7030c347c7d2c6b326373"><div class="ttname"><a href="classRungeKutta4.html#a9f957c267fa7030c347c7d2c6b326373">RungeKutta4::momForceFree</a></div><div class="ttdeci">void momForceFree(Eigen::ThreadPoolDevice &amp;device)</div><div class="ttdoc">(linear/angular) momentum and (linear/angular) force free algorithm</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8cpp_source.html#l00318">RungeKutta4.cpp:318</a></div></div>
-<div class="ttc" id="anamespacecollinear-swimmer-isolated-configuration_html_a834bc10d24ee5137914fd2bb520c39a7"><div class="ttname"><a href="namespacecollinear-swimmer-isolated-configuration.html#a834bc10d24ee5137914fd2bb520c39a7">collinear-swimmer-isolated-configuration.t</a></div><div class="ttdeci">float t</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-isolated-configuration_8py_source.html#l00054">collinear-swimmer-isolated-configuration.py:54</a></div></div>
+<div class="ttc" id="aclassRungeKutta4_html_acf4bede4af47cdeb464e05fe7f5d1683"><div class="ttname"><a href="classRungeKutta4.html#acf4bede4af47cdeb464e05fe7f5d1683">RungeKutta4::accelerationUpdate</a></div><div class="ttdeci">void accelerationUpdate(const double t, Eigen::VectorXd &amp;pos, Eigen::VectorXd &amp;vel, Eigen::VectorXd &amp;acc, const Eigen::ThreadPoolDevice &amp;device)</div><div class="ttdoc">Helper function for integrateSecondOrder().</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8cpp_source.html#l00157">RungeKutta4.cpp:157</a></div></div>
 <div class="ttc" id="aclassRungeKutta4_html_acecda2b48d584fc2a3708d3ce4b68363"><div class="ttname"><a href="classRungeKutta4.html#acecda2b48d584fc2a3708d3ce4b68363">RungeKutta4::m_c1_6_dt</a></div><div class="ttdeci">double m_c1_6_dt</div><div class="ttdoc">(dimensional) 1/6 integrator finite time step</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8hpp_source.html#l00181">RungeKutta4.hpp:181</a></div></div>
+<div class="ttc" id="aclassRungeKutta4_html_acca3997f41542bb0536436fbb64e4b40"><div class="ttname"><a href="classRungeKutta4.html#acca3997f41542bb0536436fbb64e4b40">RungeKutta4::momForceFree</a></div><div class="ttdeci">void momForceFree(const Eigen::ThreadPoolDevice &amp;device)</div><div class="ttdoc">(linear/angular) momentum and (linear/angular) force free algorithm</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8cpp_source.html#l00309">RungeKutta4.cpp:309</a></div></div>
 <div class="ttc" id="aRungeKutta4_8hpp_html"><div class="ttname"><a href="RungeKutta4_8hpp.html">RungeKutta4.hpp</a></div></div>
 <div class="ttc" id="aclassRungeKutta4_html_ada6f973c1c4f3ffe1828068dbf9bb328"><div class="ttname"><a href="classRungeKutta4.html#ada6f973c1c4f3ffe1828068dbf9bb328">RungeKutta4::m_c1_2</a></div><div class="ttdeci">const double m_c1_2</div><div class="ttdoc">= 1/2</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8hpp_source.html#l00194">RungeKutta4.hpp:194</a></div></div>
-<div class="ttc" id="aclassRungeKutta4_html_a442be59b7291fd57895e5900ff9dccd8"><div class="ttname"><a href="classRungeKutta4.html#a442be59b7291fd57895e5900ff9dccd8">RungeKutta4::integrate</a></div><div class="ttdeci">void integrate(Eigen::ThreadPoolDevice &amp;device)</div><div class="ttdoc">Public function to call internal numerical Runge Kutta integration functions.</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8cpp_source.html#l00084">RungeKutta4.cpp:84</a></div></div>
 <div class="ttc" id="aclassRungeKutta4_html_ac5d72c5cd59bfcb3a42ab2fbdf92ca0e"><div class="ttname"><a href="classRungeKutta4.html#ac5d72c5cd59bfcb3a42ab2fbdf92ca0e">RungeKutta4::udwadiaKalaba</a></div><div class="ttdeci">void udwadiaKalaba(Eigen::VectorXd &amp;acc)</div><div class="ttdoc">Calculates the body acceleration components given the constraints established by the Udwadia linear s...</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8cpp_source.html#l00245">RungeKutta4.cpp:245</a></div></div>
 <div class="ttc" id="aclassRungeKutta4_html_ab9114988acc174a2e92361148f511f8e"><div class="ttname"><a href="classRungeKutta4.html#ab9114988acc174a2e92361148f511f8e">RungeKutta4::m_logFile</a></div><div class="ttdeci">std::string m_logFile</div><div class="ttdoc">path of logfile for spdlog to write to</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8hpp_source.html#l00171">RungeKutta4.hpp:171</a></div></div>
 <div class="ttc" id="aclassRungeKutta4_html_a54c47659c116900eeeedd326863c806e"><div class="ttname"><a href="classRungeKutta4.html#a54c47659c116900eeeedd326863c806e">RungeKutta4::m_body_dof</a></div><div class="ttdeci">int m_body_dof</div><div class="ttdoc">number of bodies that are &quot;free&quot; (not constrained)</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8hpp_source.html#l00188">RungeKutta4.hpp:188</a></div></div>
-<div class="ttc" id="aclassRungeKutta4_html_a62b7028de266e35a88e1cd4f8e588fd5"><div class="ttname"><a href="classRungeKutta4.html#a62b7028de266e35a88e1cd4f8e588fd5">RungeKutta4::integrateSecondOrder</a></div><div class="ttdeci">void integrateSecondOrder(Eigen::ThreadPoolDevice &amp;device)</div><div class="ttdoc">2nd order Runge-Kutta 4th order integration. Integrates known acceleration body components into veloc...</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8cpp_source.html#l00090">RungeKutta4.cpp:90</a></div></div>
 <div class="ttc" id="aclassRungeKutta4_html_a09804a3e700013b77c9aef0067027b15"><div class="ttname"><a href="classRungeKutta4.html#a09804a3e700013b77c9aef0067027b15">RungeKutta4::m_potHydro</a></div><div class="ttdeci">std::shared_ptr&lt; PotentialHydrodynamics &gt; m_potHydro</div><div class="ttdoc">shared pointer reference to PotentialHydrodynamics class</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8hpp_source.html#l00167">RungeKutta4.hpp:167</a></div></div>
-<div class="ttc" id="aclassRungeKutta4_html_aaa9be7a023f272032338d223d900c4c5"><div class="ttname"><a href="classRungeKutta4.html#aaa9be7a023f272032338d223d900c4c5">RungeKutta4::accelerationUpdate</a></div><div class="ttdeci">void accelerationUpdate(const double t, Eigen::VectorXd &amp;pos, Eigen::VectorXd &amp;vel, Eigen::VectorXd &amp;acc, Eigen::ThreadPoolDevice &amp;device)</div><div class="ttdoc">Helper function for integrateSecondOrder().</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8cpp_source.html#l00157">RungeKutta4.cpp:157</a></div></div>
 <div class="ttc" id="aclassRungeKutta4_html_a946b31500f95a6cf64ac2a758e88db73"><div class="ttname"><a href="classRungeKutta4.html#a946b31500f95a6cf64ac2a758e88db73">RungeKutta4::imageBodyAcc</a></div><div class="ttdeci">void imageBodyAcc(Eigen::VectorXd &amp;acc)</div><div class="ttdoc">Replaces 2nd 1/2 of body acceleration D.o.F. with image of 1st 1/2 assuming the reflection plane is .</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8cpp_source.html#l00226">RungeKutta4.cpp:226</a></div></div>
 <div class="ttc" id="aclassRungeKutta4_html_a301c6c8b82c9f0808159aff069aef28e"><div class="ttname"><a href="classRungeKutta4.html#a301c6c8b82c9f0808159aff069aef28e">RungeKutta4::RungeKutta4</a></div><div class="ttdeci">RungeKutta4(std::shared_ptr&lt; SystemData &gt; sys, std::shared_ptr&lt; PotentialHydrodynamics &gt; hydro)</div><div class="ttdoc">Construct a new runge Kutta4 object.</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8cpp_source.html#l00007">RungeKutta4.cpp:7</a></div></div>
+<div class="ttc" id="aclassRungeKutta4_html_a3b7310147342b4a454c6e94dc430a835"><div class="ttname"><a href="classRungeKutta4.html#a3b7310147342b4a454c6e94dc430a835">RungeKutta4::integrateSecondOrder</a></div><div class="ttdeci">void integrateSecondOrder(const Eigen::ThreadPoolDevice &amp;device)</div><div class="ttdoc">2nd order Runge-Kutta 4th order integration. Integrates known acceleration body components into veloc...</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8cpp_source.html#l00090">RungeKutta4.cpp:90</a></div></div>
 <div class="ttc" id="aclassRungeKutta4_html_a8b86c1434e64019a28d96d00f7b13b59"><div class="ttname"><a href="classRungeKutta4.html#a8b86c1434e64019a28d96d00f7b13b59">RungeKutta4::m_logName</a></div><div class="ttdeci">const std::string m_logName</div><div class="ttdoc">filename of logfile for spdlog to write to</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8hpp_source.html#l00173">RungeKutta4.hpp:173</a></div></div>
 <div class="ttc" id="aclassRungeKutta4_html_ac1a8095618bb94f4393894e238879afe"><div class="ttname"><a href="classRungeKutta4.html#ac1a8095618bb94f4393894e238879afe">RungeKutta4::m_body_dof_7</a></div><div class="ttdeci">int m_body_dof_7</div><div class="ttdoc">= 7 * m_body_dof</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8hpp_source.html#l00190">RungeKutta4.hpp:190</a></div></div>
+<div class="ttc" id="aclassRungeKutta4_html_a4826f7efe1f1bbff3918b53c18a8106e"><div class="ttname"><a href="classRungeKutta4.html#a4826f7efe1f1bbff3918b53c18a8106e">RungeKutta4::integrate</a></div><div class="ttdeci">void integrate(const Eigen::ThreadPoolDevice &amp;device)</div><div class="ttdoc">Public function to call internal numerical Runge Kutta integration functions.</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8cpp_source.html#l00084">RungeKutta4.cpp:84</a></div></div>
 <div class="ttc" id="aclassRungeKutta4_html_acd5e848badeeeaf90f2e0a3110d16895"><div class="ttname"><a href="classRungeKutta4.html#acd5e848badeeeaf90f2e0a3110d16895">RungeKutta4::m_c1_6</a></div><div class="ttdeci">const double m_c1_6</div><div class="ttdoc">= 1/6</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8hpp_source.html#l00196">RungeKutta4.hpp:196</a></div></div>
 <div class="ttc" id="aclassRungeKutta4_html_a2061bc97a56f4f8edd9b5465f1a99a02"><div class="ttname"><a href="classRungeKutta4.html#a2061bc97a56f4f8edd9b5465f1a99a02">RungeKutta4::~RungeKutta4</a></div><div class="ttdeci">~RungeKutta4()</div><div class="ttdoc">Destroy the runge Kutta4 object.</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8cpp_source.html#l00076">RungeKutta4.cpp:76</a></div></div>
 <div class="ttc" id="aclassRungeKutta4_html_aece575515484867022bdbb31efc51d5d"><div class="ttname"><a href="classRungeKutta4.html#aece575515484867022bdbb31efc51d5d">RungeKutta4::m_7M</a></div><div class="ttdeci">int m_7M</div><div class="ttdoc">= 7M</div><div class="ttdef"><b>Definition:</b> <a href="RungeKutta4_8hpp_source.html#l00185">RungeKutta4.hpp:185</a></div></div>
@@ -588,7 +576,7 @@ $(document).ready(function(){initNavTree('RungeKutta4_8cpp_source.html',''); ini
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_05f662742734ae5b4756600b03cf1828.html">integrators</a></li><li class="navelem"><a class="el" href="RungeKutta4_8cpp.html">RungeKutta4.cpp</a></li>
-    <li class="footer">Generated on Tue Nov 9 2021 14:57:07 for Bodies in Potential Flow by
+    <li class="footer">Generated on Mon Nov 15 2021 17:32:10 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

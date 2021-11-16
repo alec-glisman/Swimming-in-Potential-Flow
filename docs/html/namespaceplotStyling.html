@@ -91,155 +91,17 @@ $(document).ready(function(){initNavTree('namespaceplotStyling.html',''); initRe
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">plotStyling Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classplotStyling_1_1Multiple.html">Multiple</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class for LaTeX formatting.  <a href="classplotStyling_1_1Multiple.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classplotStyling_1_1PlotStyling.html">PlotStyling</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <code>matplotlib.pyplot</code> plot using input data and specifications.  <a href="classplotStyling_1_1PlotStyling.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a3b2ba8616eda02341c67ce92b602edfa"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceplotStyling.html#a3b2ba8616eda02341c67ce92b602edfa">multiple_formatter</a> (denominator=2, number=np.pi, latex=r'\pi')</td></tr>
-<tr class="memdesc:a3b2ba8616eda02341c67ce92b602edfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get LaTeX in axis labels of plots.  <a href="namespaceplotStyling.html#a3b2ba8616eda02341c67ce92b602edfa">More...</a><br /></td></tr>
-<tr class="separator:a3b2ba8616eda02341c67ce92b602edfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a3b2ba8616eda02341c67ce92b602edfa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3b2ba8616eda02341c67ce92b602edfa">&#9670;&nbsp;</a></span>multiple_formatter()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def plotStyling.multiple_formatter </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>denominator</em> = <code>2</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>number</em> = <code>np.pi</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>latex</em> = <code>r'\pi'</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get LaTeX in axis labels of plots. </p>
-<dl class="section user"><dt>References</dt><dd><a href="https://stackoverflow.com/a/53586826/13215572">https://stackoverflow.com/a/53586826/13215572</a></dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">denominator</td><td>[description]. Defaults to 2. </td></tr>
-    <tr><td class="paramname">number</td><td>Value to set axis (tick) scaling. Defaults to np.pi. </td></tr>
-    <tr><td class="paramname">latex</td><td>LaTeX value to display. Defaults to pi. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="plotStyling_8py_source.html#l00674">674</a> of file <a class="el" href="plotStyling_8py_source.html">plotStyling.py</a>.</p>
-<div class="fragment"><div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;    <span class="keyword">def </span>gcd(a, b):</div>
-<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;        <span class="stringliteral">&quot;&quot;&quot;Calculates the greatest common denominator between inputs a and b</span></div>
-<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;<span class="stringliteral">        Args:</span></div>
-<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;<span class="stringliteral">            a (int): input 1 for gcd</span></div>
-<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;<span class="stringliteral">            b (int): input 2 for gcd</span></div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;<span class="stringliteral">        Returns:</span></div>
-<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;<span class="stringliteral">            int: gcd of two inputs</span></div>
-<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;<span class="stringliteral">        &quot;&quot;&quot;</span></div>
-<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160; </div>
-<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;        <span class="keywordflow">while</span> b:</div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;            a, b = b, a % b</div>
-<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160; </div>
-<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;        <span class="keywordflow">return</span> a</div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160; </div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;    <span class="keyword">def </span>_multiple_formatter(x, pos):</div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;        <span class="stringliteral">&quot;&quot;&quot;Converts LaTeX input to parseable form for matplotlib pyplot</span></div>
-<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;<span class="stringliteral">        Args:</span></div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;<span class="stringliteral">            x (str): Not sure</span></div>
-<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;<span class="stringliteral">            pos (str): Note sure</span></div>
-<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;<span class="stringliteral">        Returns:</span></div>
-<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;<span class="stringliteral">            str: LaTeX formatted</span></div>
-<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;<span class="stringliteral">        &quot;&quot;&quot;</span></div>
-<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160; </div>
-<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;        den = denominator</div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;        num = np.int(np.rint(den*x/number))</div>
-<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;        com = gcd(num, den)</div>
-<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;        (num, den) = (int(num/com), int(den/com))</div>
-<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160; </div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;        <span class="keywordflow">if</span> den == 1:</div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160; </div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;            <span class="keywordflow">if</span> num == 0:</div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;                <span class="keywordflow">return</span> <span class="stringliteral">r&#39;$0$&#39;</span></div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160; </div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;            <span class="keywordflow">if</span> num == 1:</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;                <span class="keywordflow">return</span> <span class="stringliteral">r&#39;$%s$&#39;</span> % latex</div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160; </div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;            <span class="keywordflow">elif</span> num == -1:</div>
-<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;                <span class="keywordflow">return</span> <span class="stringliteral">r&#39;$-%s$&#39;</span> % latex</div>
-<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160; </div>
-<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;            <span class="keywordflow">else</span>:</div>
-<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;                <span class="keywordflow">return</span> <span class="stringliteral">r&#39;$%s%s$&#39;</span> % (num, latex)</div>
-<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;        <span class="keywordflow">else</span>:</div>
-<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160; </div>
-<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;            <span class="keywordflow">if</span> num == 1:</div>
-<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;                <span class="keywordflow">return</span> <span class="stringliteral">r&#39;$\frac{%s}{%s}$&#39;</span> % (latex, den)</div>
-<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160; </div>
-<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;            <span class="keywordflow">elif</span> num == -1:</div>
-<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;                <span class="keywordflow">return</span> <span class="stringliteral">r&#39;$\frac{-%s}{%s}$&#39;</span> % (latex, den)</div>
-<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160; </div>
-<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;            <span class="keywordflow">else</span>:</div>
-<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;                <span class="keywordflow">return</span> <span class="stringliteral">r&#39;$\frac{%s%s}{%s}$&#39;</span> % (num, latex, den)</div>
-<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160; </div>
-<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;    <span class="keywordflow">return</span> _multiple_formatter</div>
-<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160; </div>
-<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160; </div>
-<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;<span class="keyword">class </span>Multiple:</div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;Helper class for LaTeX formatting.</span></div>
-<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;<span class="stringliteral">    References: </span></div>
-<span class="stringliteral"></div><!-- fragment -->
-<p class="reference">Referenced by <a class="el" href="plotStyling_8py_source.html#l00753">plotStyling.Multiple.formatter()</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="namespaceplotStyling_a3b2ba8616eda02341c67ce92b602edfa_icgraph.svg" width="379" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
-</div>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceplotStyling.html">plotStyling</a></li>
-    <li class="footer">Generated on Tue Nov 9 2021 14:57:07 for Bodies in Potential Flow by
+    <li class="footer">Generated on Mon Nov 15 2021 17:32:11 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

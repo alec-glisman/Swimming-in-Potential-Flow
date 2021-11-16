@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['ax_969',['ax',['../classplotStyling_1_1PlotStyling.html#ac14b6abd25ff6e8d932c52d36062a05e',1,'plotStyling::PlotStyling']]],
-  ['axis_5flabel_5fsize_970',['axis_label_size',['../classplotStyling_1_1PlotStyling.html#a83d2b08f38901cbbe91285a3c65e55e8',1,'plotStyling::PlotStyling']]]
+  ['bar_5fwidth_845',['bar_width',['../classProgressBar.html#a3583da529fd511edfbf2a2295a3317a2',1,'ProgressBar']]]
 ];

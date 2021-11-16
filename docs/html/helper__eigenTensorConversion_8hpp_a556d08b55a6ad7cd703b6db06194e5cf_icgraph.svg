@@ -20,10 +20,10 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classPotentialHydrodynamics.html#ac598599337f804bdb7ca664c99467d6a" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="classPotentialHydrodynamics.html#a3195035f26bdbd013fa2825903e7de2e" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="465.5,-137 465.5,-167 588.5,-167 588.5,-137 465.5,-137"/>
 <text text-anchor="start" x="473.5" y="-155" font-family="Helvetica,sans-Serif" font-size="10.00">PotentialHydrodynamics</text>
-<text text-anchor="middle" x="527" y="-144" font-family="Helvetica,sans-Serif" font-size="10.00">::calcBodyTensors</text>
+<text text-anchor="middle" x="527" y="-144" font-family="Helvetica,sans-Serif" font-size="10.00">::calcBodyMass</text>
 </a>
 </g>
 </g>
@@ -36,7 +36,7 @@
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
-<g id="a_node5"><a xlink:href="classPotentialHydrodynamics.html#a281e3e793371c6fb032d0b4871b06160" target="_top" xlink:title="Calculates m_F_hydro and m_F_hydroNoInertia">
+<g id="a_node5"><a xlink:href="classPotentialHydrodynamics.html#a1f22d16e1aa9f675611d2394d76cd595" target="_top" xlink:title="Calculates m_F_hydro and m_F_hydroNoInertia">
 <polygon fill="none" stroke="black" points="465.5,-88 465.5,-118 588.5,-118 588.5,-88 465.5,-88"/>
 <text text-anchor="start" x="473.5" y="-106" font-family="Helvetica,sans-Serif" font-size="10.00">PotentialHydrodynamics</text>
 <text text-anchor="middle" x="527" y="-95" font-family="Helvetica,sans-Serif" font-size="10.00">::calcHydroForces</text>
@@ -52,7 +52,7 @@
 <!-- Node6 -->
 <g id="node6" class="node">
 <title>Node6</title>
-<g id="a_node6"><a xlink:href="classSystemData.html#a7da2011ba5d866e5338b14e8b04ace70" target="_top" xlink:title="Computes the particle D.o.F. from the body D.o.F.">
+<g id="a_node6"><a xlink:href="classSystemData.html#aa3a9fae706cf141ed66c05736656fdba" target="_top" xlink:title="Computes the particle D.o.F. from the body D.o.F.">
 <polygon fill="none" stroke="black" points="458.5,-39 458.5,-69 595.5,-69 595.5,-39 458.5,-39"/>
 <text text-anchor="start" x="466.5" y="-57" font-family="Helvetica,sans-Serif" font-size="10.00">SystemData::convertBody2</text>
 <text text-anchor="middle" x="527" y="-46" font-family="Helvetica,sans-Serif" font-size="10.00">ParticleVelAcc</text>
@@ -68,7 +68,7 @@
 <!-- Node10 -->
 <g id="node10" class="node">
 <title>Node10</title>
-<g id="a_node10"><a xlink:href="classRungeKutta4.html#a9f957c267fa7030c347c7d2c6b326373" target="_top" xlink:title="(linear/angular) momentum and (linear/angular) force free algorithm">
+<g id="a_node10"><a xlink:href="classRungeKutta4.html#acca3997f41542bb0536436fbb64e4b40" target="_top" xlink:title="(linear/angular) momentum and (linear/angular) force free algorithm">
 <polygon fill="none" stroke="black" points="454,-0.5 454,-19.5 600,-19.5 600,-0.5 454,-0.5"/>
 <text text-anchor="middle" x="527" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">RungeKutta4::momForceFree</text>
 </a>
@@ -83,7 +83,7 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="classPotentialHydrodynamics.html#a929a5cd3ab1afe2e78fc2a18a16c423d" target="_top" xlink:title="Updates all hydrodynamic quantities at current configuration (data from SystemData)">
+<g id="a_node3"><a xlink:href="classPotentialHydrodynamics.html#af46b6fe2ab386a26a3e0b6c1fee527cb" target="_top" xlink:title="Updates all hydrodynamic quantities at current configuration (data from SystemData)">
 <polygon fill="none" stroke="black" points="288,-112 288,-142 411,-142 411,-112 288,-112"/>
 <text text-anchor="start" x="296" y="-130" font-family="Helvetica,sans-Serif" font-size="10.00">PotentialHydrodynamics</text>
 <text text-anchor="middle" x="349.5" y="-119" font-family="Helvetica,sans-Serif" font-size="10.00">::update</text>
@@ -121,7 +121,7 @@
 <!-- Node7 -->
 <g id="node7" class="node">
 <title>Node7</title>
-<g id="a_node7"><a xlink:href="classSystemData.html#aa1dc8988cbb137f2667af95ca52a709c" target="_top" xlink:title="Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constrain...">
+<g id="a_node7"><a xlink:href="classSystemData.html#a96d6dfb7bdb78d98fbbdac1f421c838c" target="_top" xlink:title="Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constrain...">
 <polygon fill="none" stroke="black" points="296,-44.5 296,-63.5 403,-63.5 403,-44.5 296,-44.5"/>
 <text text-anchor="middle" x="349.5" y="-51.5" font-family="Helvetica,sans-Serif" font-size="10.00">SystemData::update</text>
 </a>
@@ -151,7 +151,7 @@
 <!-- Node9 -->
 <g id="node9" class="node">
 <title>Node9</title>
-<g id="a_node9"><a xlink:href="TestSimulation_8cpp.html#a227401f331fbabbd263158efc43b3bf6" target="_top" xlink:title=" ">
+<g id="a_node9"><a xlink:href="TestSimulation_8cpp.html#a7537b8ac7073aed4bf8255b43bbbf1f9" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="0,-44.5 0,-63.5 75,-63.5 75,-44.5 0,-44.5"/>
 <text text-anchor="middle" x="37.5" y="-51.5" font-family="Helvetica,sans-Serif" font-size="10.00">TEST_CASE</text>
 </a>

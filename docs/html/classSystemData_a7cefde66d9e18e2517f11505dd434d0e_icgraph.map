@@ -1,10 +1,10 @@
 <map id="SystemData::crossProdMat" name="SystemData::crossProdMat">
-<area shape="rect" id="node1" title="Function takes in vector in vector cross&#45;product expression: ." alt="" coords="1072,46,1256,73"/>
-<area shape="rect" id="node2" href="$classSystemData.html#a230548cc624444a66137b8d5ecaf5716" title="Computes \chi_{i \alpha} matrix for given particle number and body number. chi matrix represents the ..." alt="" coords="817,17,1021,43"/>
-<area shape="rect" id="node7" href="$classSystemData.html#a70d2ff9a6173fcd9f30e8dc6324e8414" title="Computes \Sigma_{i \alpha} matrix for given particle number and body number. Sigma matrix represents ..." alt="" coords="815,71,1024,98"/>
-<area shape="rect" id="node3" href="$classSystemData.html#a301fa1815b3b68cffc789f1824e29f5e" title="Computes the gradients rigid body motion connectivity tensors and tensors associated with change of v..." alt="" coords="571,5,766,47"/>
-<area shape="rect" id="node4" href="$classSystemData.html#aa1dc8988cbb137f2667af95ca52a709c" title="Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constrain..." alt="" coords="380,46,523,73"/>
+<area shape="rect" id="node1" title="Function takes in vector in vector cross&#45;product expression: ." alt="" coords="1089,46,1273,73"/>
+<area shape="rect" id="node2" href="$classSystemData.html#a95b4afa16b44bb89aac9e8ef9e64845b" title="Computes \nabla_{\xi} \Sigma_{i \alpha} tensor for given particle number and body number." alt="" coords="815,8,1041,49"/>
+<area shape="rect" id="node7" href="$classSystemData.html#a70d2ff9a6173fcd9f30e8dc6324e8414" title="Computes \Sigma_{i \alpha} matrix for given particle number and body number. Sigma matrix represents ..." alt="" coords="823,75,1033,102"/>
+<area shape="rect" id="node3" href="$classSystemData.html#a0aa3296e765575ba6397b5f71bf892a8" title="Computes the gradients rigid body motion connectivity tensors and tensors associated with change of v..." alt="" coords="571,5,766,47"/>
+<area shape="rect" id="node4" href="$classSystemData.html#a96d6dfb7bdb78d98fbbdac1f421c838c" title="Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constrain..." alt="" coords="380,46,523,73"/>
 <area shape="rect" id="node5" href="$classSystemData.html#ac3a796dc8bf1fa82ea6dec33e548924f" title="Function loads data from GSD file using GSDUtil class." alt="" coords="153,46,332,73"/>
-<area shape="rect" id="node6" href="$TestSimulation_8cpp.html#a227401f331fbabbd263158efc43b3bf6" title=" " alt="" coords="5,46,105,73"/>
-<area shape="rect" id="node8" href="$classSystemData.html#ae08b2263f2981e57d0f12ba7881a083b" title="Computes the rigid body motion connectivity tensors." alt="" coords="571,71,767,112"/>
+<area shape="rect" id="node6" href="$TestSimulation_8cpp.html#a7537b8ac7073aed4bf8255b43bbbf1f9" title=" " alt="" coords="5,46,105,73"/>
+<area shape="rect" id="node8" href="$classSystemData.html#a48585dcdee2612bc4ee815bb599c1679" title="Computes the rigid body motion connectivity tensors." alt="" coords="571,71,767,112"/>
 </map>

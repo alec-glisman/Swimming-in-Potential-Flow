@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ipchandle_1162',['ipcHandle',['../helper__multiprocess_8h.html#a8ae553a283c4fd3170de6eebec33dced',1,'helper_multiprocess.h']]]
+  ['evaluator_959',['Evaluator',['../classselfCleaningEvaluator.html#addc3271c46b0d7e3f3b8104c210bad3c',1,'selfCleaningEvaluator']]]
 ];

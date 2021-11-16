@@ -98,26 +98,28 @@ $(document).ready(function(){initNavTree('review.html',''); initResizable(); });
 <div class="textblock"><dl class="reflist">
 <dt>Member <a class="el" href="classGSDUtil.html#a278d1db9ece12bdc1268780313d83daf">GSDUtil::readSystemSpecifics</a>  ()</dt>
 <dd><a class="anchor" id="_review000001"></a> change variables loaded based on variables needed in <code><a class="el" href="classSystemData.html" title="Class contains all data structures relevant to the simulation framework. Note that after construction...">SystemData</a></code> for specific systems.  </dd>
-<dt>Member <a class="el" href="classRungeKutta4.html#a9f957c267fa7030c347c7d2c6b326373">RungeKutta4::momForceFree</a>  (Eigen::ThreadPoolDevice &amp;device)</dt>
+<dt>Member <a class="el" href="classRungeKutta4.html#acca3997f41542bb0536436fbb64e4b40">RungeKutta4::momForceFree</a>  (const Eigen::ThreadPoolDevice &amp;device)</dt>
 <dd><a class="anchor" id="_review000002"></a>: Assumes that all bodies are collinear and in-phase with one another, If swimmer design changes, the elements taken from M_total must change too  </dd>
 <dt>Member <a class="el" href="classSystemData.html#a188c38c8448ed32d3cf697b6f07b9d6a">SystemData::accelerationsArticulation</a>  ()</dt>
-<dd><a class="anchor" id="_review000005"></a> Change assignment of <code>m_accelerations_particles_articulation</code> for different systems  </dd>
+<dd><a class="anchor" id="_review000006"></a> Change assignment of <code>m_accelerations_particles_articulation</code> for different systems  </dd>
+<dt>Member <a class="el" href="classSystemData.html#ac3a796dc8bf1fa82ea6dec33e548924f">SystemData::initializeData</a>  ()</dt>
+<dd><a class="anchor" id="_review000003"></a>: change initial orientations  </dd>
 <dt>Member <a class="el" href="classSystemData.html#a20866751b5320b808a3eb1290d48715e">SystemData::m_image_system</a>  </dt>
-<dd><a class="anchor" id="_review000007"></a> change if not using image-system constraints  </dd>
+<dd><a class="anchor" id="_review000008"></a> change if not using image-system constraints  </dd>
 <dt>Member <a class="el" href="classSystemData.html#ac1b8961811acfcc2794e235b9bf9d84f">SystemData::m_sys_spec_omega</a>  </dt>
-<dd><a class="anchor" id="_review000009"></a> Change parameters stored for different systems </dd>
-<dt>Member <a class="el" href="classSystemData.html#a7264785cb07234f42b5de78e083a89b6">SystemData::m_sys_spec_phase_shift</a>  </dt>
 <dd><a class="anchor" id="_review000010"></a> Change parameters stored for different systems </dd>
-<dt>Member <a class="el" href="classSystemData.html#a5d90c7b9dd01e366ba590e84765ba4ba">SystemData::m_sys_spec_R_avg</a>  </dt>
+<dt>Member <a class="el" href="classSystemData.html#a7264785cb07234f42b5de78e083a89b6">SystemData::m_sys_spec_phase_shift</a>  </dt>
 <dd><a class="anchor" id="_review000011"></a> Change parameters stored for different systems </dd>
+<dt>Member <a class="el" href="classSystemData.html#a5d90c7b9dd01e366ba590e84765ba4ba">SystemData::m_sys_spec_R_avg</a>  </dt>
+<dd><a class="anchor" id="_review000012"></a> Change parameters stored for different systems </dd>
 <dt>Member <a class="el" href="classSystemData.html#a80d469b49225104f4a97c4cbb85ce1c8">SystemData::m_sys_spec_U0</a>  </dt>
-<dd><a class="anchor" id="_review000008"></a> Change parameters stored for different systems </dd>
+<dd><a class="anchor" id="_review000009"></a> Change parameters stored for different systems </dd>
 <dt>Member <a class="el" href="classSystemData.html#a30df4f73d78f6886da32559eda83595d">SystemData::positionsArticulation</a>  ()</dt>
-<dd><a class="anchor" id="_review000003"></a> Change assignment of <code>m_positions_particles_articulation</code> for  </dd>
+<dd><a class="anchor" id="_review000004"></a> Change assignment of <code>m_positions_particles_articulation</code> for  </dd>
 <dt>Member <a class="el" href="classSystemData.html#ad1a6489951a00124901c1947381a9be8">SystemData::udwadiaLinearSystem</a>  ()</dt>
-<dd><a class="anchor" id="_review000006"></a> Change assignment of <code>m_Udwadia_A</code> and <code>m_Udwadia_B</code> for different systems. </dd>
+<dd><a class="anchor" id="_review000007"></a> Change assignment of <code>m_Udwadia_A</code> and <code>m_Udwadia_B</code> for different systems. </dd>
 <dt>Member <a class="el" href="classSystemData.html#a92ce50a4c8b53aa6a490153c1b09ab8a">SystemData::velocitiesArticulation</a>  ()</dt>
-<dd><a class="anchor" id="_review000004"></a> Change assignment of <code>m_velocities_particles_articulation</code> for </dd>
+<dd><a class="anchor" id="_review000005"></a> Change assignment of <code>m_velocities_particles_articulation</code> for </dd>
 </dl>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
@@ -125,7 +127,7 @@ $(document).ready(function(){initNavTree('review.html',''); initResizable(); });
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 9 2021 14:57:07 for Bodies in Potential Flow by
+    <li class="footer">Generated on Mon Nov 15 2021 17:32:11 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>
