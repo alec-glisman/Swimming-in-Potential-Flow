@@ -197,11 +197,11 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native -O3 -mfpmath=s
 # Profile build flags
 IF(CMAKE_BUILD_TYPE STREQUAL "Profile")
 
-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0 -fno-omit-frame-pointer")
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -fno-omit-frame-pointer")
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 -fno-omit-frame-pointer")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -fno-omit-frame-pointer")
 
-    SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-omit-frame-pointer -march=native -mfpmath=sse -funroll-loops -Wno-deprecated-declarations")
-    SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fno-omit-frame-pointer -march=native -mfpmath=sse -funroll-loops -Wno-deprecated-declarations")
+    SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -g -fno-omit-frame-pointer -march=native -mfpmath=sse -funroll-loops -Wno-deprecated-declarations")
+    SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -g -fno-omit-frame-pointer -march=native -mfpmath=sse -funroll-loops -Wno-deprecated-declarations")
 
 ENDIF()
 # !SECTION
