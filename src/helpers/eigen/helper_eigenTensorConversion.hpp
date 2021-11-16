@@ -33,6 +33,8 @@ template <typename T> using VectorType = Eigen::Matrix<T, Eigen::Dynamic, 1>;
 /**
  * @brief Convert between Eigen::Tensor and Eigen::Matrix classes
  *
+ * @see https://stackoverflow.com/questions/48795789/eigen-unsupported-tensor-to-eigen-matrix
+ *
  * @note example useage:
  *
  *     Eigen::Tensor<double, 4> my_rank4(2, 2, 2, 2);
@@ -49,19 +51,67 @@ template <typename T> using VectorType = Eigen::Matrix<T, Eigen::Dynamic, 1>;
  *
  */
 
-// Evaluates tensor expressions if needed
+template <typename Derived, typename Device = Eigen::DefaultDevice> class selfCleaningEvaluator
+{
+  private:
+    using Evaluator = Eigen::TensorEvaluator<const Eigen::TensorForcedEvalOp<const Derived>, Device>;
+    Evaluator m_eval;
+
+  public:
+    selfCleaningEvaluator(const Evaluator& eval) : m_eval(eval)
+    {
+    }
+    selfCleaningEvaluator(const Eigen::TensorBase<Derived, Eigen::ReadOnlyAccessors>& expr,
+                          const Device&                                               device = Device())
+        : m_eval(Evaluator(expr.eval(), device))
+    {
+        m_eval.evalSubExprsIfNeeded(nullptr);
+    }
+
+    ~selfCleaningEvaluator()
+    {
+        // This whole point of this object is to call cleanup automatically on destruct.
+        // If there are pending operations to evaluate, m_eval will allocate a buffer to hold a result,
+        // which needs to be deallocated.
+        m_eval.cleanup();
+    }
+
+    constexpr auto
+    rank()
+    {
+        using DimType = typename decltype(m_eval)::Dimensions::Base;
+        return DimType{}.size(); // Because Derived::Dimensions is sometimes wrong
+    }
+    const Evaluator*
+    operator->() const
+    {
+        return &m_eval;
+    }
+    Evaluator*
+    operator->()
+    {
+        return &m_eval;
+    }
+    constexpr auto
+    map()
+    {
+        // We inspect m_eval to get the type, rank and dimensions, because it has the resulting tensor,
+        // whereas Derived is the tensor type _before_ whatever operation is pending (if any).
+        using DimType       = typename decltype(m_eval)::Dimensions::Base;
+        constexpr auto rank = DimType{}.size();
+        using Scalar        = typename Eigen::internal::remove_const<typename decltype(m_eval)::Scalar>::type;
+        return Eigen::TensorMap<Eigen::Tensor<Scalar, rank>>(m_eval.data(), m_eval.dimensions());
+    }
+};
+
+// Evaluates expressions if needed
 template <typename T, typename Device = Eigen::DefaultDevice>
 auto
 asEval(const Eigen::TensorBase<T, Eigen::ReadOnlyAccessors>&
-                     expr,             // An Eigen::TensorBase object (Tensor, TensorMap, TensorExpr... )
-       const Device& device = Device() // Override to evaluate on another device, e.g. thread pool or gpu.
-)
-{
-    using Evaluator                         = Eigen::TensorEvaluator<const Eigen::TensorForcedEvalOp<const T>, Device>;
-    Eigen::TensorForcedEvalOp<const T> eval = expr.eval();
-    Evaluator                          tensor(eval, device);
-    tensor.evalSubExprsIfNeeded(nullptr);
-    return tensor;
+                     expr, // An Eigen::TensorBase object (Tensor, TensorMap, TensorExpr... )
+       const Device& device = Device())
+{ // Override to evaluate on another device, e.g. thread pool or gpu.
+    return selfCleaningEvaluator(expr, device);
 }
 
 // Converts any Eigen::Tensor (or expression) to an Eigen::Matrix with shape rows/cols
@@ -70,20 +120,22 @@ auto
 MatrixCast(const Eigen::TensorBase<T, Eigen::ReadOnlyAccessors>& expr, const sizeType rows, const sizeType cols,
            const Device& device = Device())
 {
-    auto tensor  = asEval(expr, device);
-    using Scalar = typename Eigen::internal::remove_const<typename decltype(tensor)::Scalar>::type;
-    return static_cast<MatrixType<Scalar>>(Eigen::Map<const MatrixType<Scalar>>(tensor.data(), rows, cols));
+    auto tensor    = asEval(expr, device);
+    auto tensorMap = tensor.map();
+    using Scalar   = typename decltype(tensorMap)::Scalar;
+    return static_cast<MatrixType<Scalar>>(Eigen::Map<const MatrixType<Scalar>>(tensorMap.data(), rows, cols));
 }
 
-// Converts any Eigen::Tensor (or expression) to an Eigen::Vector with the same size
+// Converts any Eigen::Tensor (or expression) to an Eigen::Matrix with shape rows/cols
 template <typename T, typename Device = Eigen::DefaultDevice>
 auto
 VectorCast(const Eigen::TensorBase<T, Eigen::ReadOnlyAccessors>& expr, const Device& device = Device())
 {
-    auto tensor  = asEval(expr, device);
-    auto size    = Eigen::internal::array_prod(tensor.dimensions());
-    using Scalar = typename Eigen::internal::remove_const<typename decltype(tensor)::Scalar>::type;
-    return static_cast<VectorType<Scalar>>(Eigen::Map<const VectorType<Scalar>>(tensor.data(), size));
+    auto tensor    = asEval(expr, device);
+    auto tensorMap = tensor.map();
+    auto size      = Eigen::internal::array_prod(tensorMap.dimensions());
+    using Scalar   = typename decltype(tensorMap)::Scalar;
+    return static_cast<VectorType<Scalar>>(Eigen::Map<const VectorType<Scalar>>(tensorMap.data(), size));
 }
 
 // View an existing Eigen::Tensor as an Eigen::Map<Eigen::Matrix>
