@@ -55,20 +55,22 @@ RungeKutta4::RungeKutta4(std::shared_ptr<SystemData> sys, std::shared_ptr<Potent
 
     if (internal_dyn_off)
     {
-        spdlog::get(m_logName)->warn("Overwriting U0 = 1.0 temporarily");
-        m_system->setSysSpecU0(1.0);
+        spdlog::get(m_logName)->warn("Setting initial conditions using constant as internal dynamics off");
+        Eigen::VectorXd vel_body = m_system->velocitiesBodies();
+        const double    vel_init_mag{2.12375471e-05}; // from isolated swimmer with R_avg = 6.0
+
+        for (int body_id = 0; body_id < m_system->numBodies(); body_id++)
+        {
+            // todo: Rotate vel mag by unit quaternion
+        }
+
+        m_system->setVelocitiesBodies(vel_body);
     }
 
     spdlog::get(m_logName)->critical("Updating SystemData and PotentialHydrodynamics classes for initial conditions.");
     m_system->update(single_core_device);   // update system kinematics and rbm tensors
     m_potHydro->update(single_core_device); // update hydrodynamic tensors
     momForceFree(single_core_device);       // set initial body kinematics
-
-    if (internal_dyn_off)
-    {
-        spdlog::get(m_logName)->warn("Restoring U0 = 0.0");
-        m_system->setSysSpecU0(0.0);
-    }
 
     if (m_system->imageSystem())
     {
