@@ -252,17 +252,19 @@ PotentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
         const Eigen::array<Eigen::Index, 3> extents = {3, 3, 3};
 
         // Full distance between particles \alpha and \beta
-        const Eigen::Vector3d                                 r_ij   = m_r_ab.col(k); // (1)
-        const Eigen::TensorFixedSize<double, Eigen::Sizes<3>> tens_r = TensorCast(r_ij, 3);
-        const double                                          r_mag_ij{m_r_mag_ab(k)}; //(1); |r| between 2 particles
+        const Eigen::Vector3d                           r_ij = m_r_ab.col(k); // (1)
+        Eigen::TensorFixedSize<double, Eigen::Sizes<3>> tens_r;
+        tens_r.setValues({r_ij(0), r_ij(1), r_ij(2)});
+
+        const double r_mag_ij{m_r_mag_ab(k)}; //(1); |r| between 2 particles
 
         const double gradM1_c1{-(m_system->fluidDensity() * m_unit_sphere_volume) * m_c3_2 *
                                std::pow(r_mag_ij, -5)}; // mass units
         const double gradM1_c2{(m_system->fluidDensity() * m_unit_sphere_volume) * m_c15_2 *
                                std::pow(r_mag_ij, -7)}; // mass units
 
-        const Eigen::Matrix3d r_dyad_r = r_ij * r_ij.transpose(); // (1); Outer product of \bm{r} \bm{r}
-        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> c2_tens_rr = gradM1_c2 * TensorCast(r_dyad_r, 3, 3);
+        const Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3>> c2_tens_rr =
+            gradM1_c2 * tens_r.contract(tens_r, outer_product);
 
         // outer products (I_{i j} r_{k}) and permutations
         Eigen::TensorFixedSize<double, Eigen::Sizes<3, 3, 3>> delta_ij_r_k;
