@@ -47,11 +47,28 @@ RungeKutta4::RungeKutta4(std::shared_ptr<SystemData> sys, std::shared_ptr<Potent
     spdlog::get(m_logName)->info("body_dof: {0}", m_body_dof);
     spdlog::get(m_logName)->info("body_dof_7: {0}", m_body_dof_7);
 
-    // for initial conditions of all locater points, use the PLFT-free algorithm
-    spdlog::get(m_logName)->critical("Setting initial conditions using PLFT-free algorithm.");
+    // for initial conditions of all locater points, use the PF-free algorithm
+    spdlog::get(m_logName)->critical("Setting initial conditions using PF-free algorithm.");
+
+    /// @review_swimmer: internal dynamics turned off
+    const bool internal_dyn_off{abs(m_system->sysSpecU0()) < 1e-12};
+
+    if (internal_dyn_off)
+    {
+        spdlog::get(m_logName)->warn("Overwriting U0 = 1.0 temporarily");
+        m_system->setSysSpecU0(1.0);
+    }
+
+    spdlog::get(m_logName)->critical("Updating SystemData and PotentialHydrodynamics classes for initial conditions.");
     m_system->update(single_core_device);   // update system kinematics and rbm tensors
     m_potHydro->update(single_core_device); // update hydrodynamic tensors
     momForceFree(single_core_device);       // set initial body kinematics
+
+    if (internal_dyn_off)
+    {
+        spdlog::get(m_logName)->warn("Restoring U0 = 0.0");
+        m_system->setSysSpecU0(0.0);
+    }
 
     if (m_system->imageSystem())
     {
