@@ -74,7 +74,7 @@ class PotentialHydrodynamics
      *
      */
     void
-    update(Eigen::ThreadPoolDevice& device);
+    update(const Eigen::ThreadPoolDevice& device);
 
   private:
     /**
@@ -115,7 +115,7 @@ class PotentialHydrodynamics
      *
      */
     void
-    calcAddedMassGrad(Eigen::ThreadPoolDevice& device);
+    calcAddedMassGrad(const Eigen::ThreadPoolDevice& device);
 
     /**
      * @brief Calculates \{`m_M2`, `m_M3`\}
@@ -126,7 +126,7 @@ class PotentialHydrodynamics
      *
      */
     void
-    calcBodyMass(Eigen::ThreadPoolDevice& device);
+    calcBodyMass(const Eigen::ThreadPoolDevice& device);
 
     /**
      * @brief Calculates \{`m_N1`, `m_N2`, `m_N3`\}
@@ -137,7 +137,7 @@ class PotentialHydrodynamics
      *
      */
     void
-    calcBodyMassGrad(Eigen::ThreadPoolDevice& device);
+    calcBodyMassGrad(const Eigen::ThreadPoolDevice& device);
 
     /**
      * @brief Calculates `m_F_hydro` and `m_F_hydroNoInertia`
@@ -149,7 +149,7 @@ class PotentialHydrodynamics
      *
      */
     void
-    calcHydroForces(Eigen::ThreadPoolDevice& device);
+    calcHydroForces(const Eigen::ThreadPoolDevice& device);
 
     /**
      * @brief Calculates and sets energetic components in `SystemData` class
@@ -160,7 +160,7 @@ class PotentialHydrodynamics
      *
      */
     void
-    calcHydroEnergy(Eigen::ThreadPoolDevice& device);
+    calcHydroEnergy(const Eigen::ThreadPoolDevice& device);
 
     // classes
     /// shared pointer reference to SystemData class

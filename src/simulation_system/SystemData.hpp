@@ -105,7 +105,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
      */
     void
-    update(Eigen::ThreadPoolDevice& device);
+    update(const Eigen::ThreadPoolDevice& device);
 
     /**
      * @brief Normalizes all body coordinate quaternions.
@@ -248,7 +248,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      * @param particle_id Particle number (alpha, i is body number)
      */
     void
-    gradRbmConnTensorElement(const int particle_id, Eigen::ThreadPoolDevice& device);
+    gradRbmConnTensorElement(const int particle_id, const Eigen::ThreadPoolDevice& device);
 
     /**
      * @brief Computes the rigid body motion connectivity tensors.
@@ -264,7 +264,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
      */
     void
-    rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device);
+    rigidBodyMotionTensors(const Eigen::ThreadPoolDevice& device);
 
     /**
      * @brief Computes the gradients rigid body motion connectivity tensors and tensors associated with change
@@ -276,7 +276,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
      */
     void
-    gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device);
+    gradientChangeOfVariableTensors(const Eigen::ThreadPoolDevice& device);
     /* !SECTION (Rigid body motion) */
 
     /* SECTION: Convert between body and particle degrees of freedom */
@@ -302,7 +302,7 @@ class SystemData : public std::enable_shared_from_this<SystemData>
      * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
      */
     void
-    convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device);
+    convertBody2ParticleVelAcc(const Eigen::ThreadPoolDevice& device);
     /* !SECTION (Convert between body and particle degrees of freedom) */
 
     /* SECTION: Static methods */

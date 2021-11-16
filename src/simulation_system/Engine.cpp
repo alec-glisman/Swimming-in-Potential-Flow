@@ -109,7 +109,7 @@ Engine::run()
 }
 
 void
-Engine::integrate(Eigen::ThreadPoolDevice& device)
+Engine::integrate(const Eigen::ThreadPoolDevice& device)
 {
     m_rk4Integrator->integrate(device);
 }

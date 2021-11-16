@@ -84,7 +84,7 @@ class Engine
      * @param device device (CPU thread-pool or GPU) used to speed up tensor calculations
      */
     void
-    integrate(Eigen::ThreadPoolDevice& device);
+    integrate(const Eigen::ThreadPoolDevice& device);
 
     // classes
     std::shared_ptr<SystemData>             m_system;

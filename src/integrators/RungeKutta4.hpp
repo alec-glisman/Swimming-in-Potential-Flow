@@ -73,7 +73,7 @@ class RungeKutta4
      * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
      */
     void
-    integrate(Eigen::ThreadPoolDevice& device);
+    integrate(const Eigen::ThreadPoolDevice& device);
 
   private:
     /**
@@ -88,7 +88,7 @@ class RungeKutta4
      * @param device `Eigen::ThreadPoolDevice` to use for `Eigen::Tensor` computations
      */
     void
-    integrateSecondOrder(Eigen::ThreadPoolDevice& device);
+    integrateSecondOrder(const Eigen::ThreadPoolDevice& device);
 
     /**
      * @brief Helper function for `integrateSecondOrder()`.
@@ -104,7 +104,7 @@ class RungeKutta4
      */
     void
     accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::VectorXd& vel, Eigen::VectorXd& acc,
-                       Eigen::ThreadPoolDevice& device);
+                       const Eigen::ThreadPoolDevice& device);
 
     /**
      * @brief Replaces 2nd 1/2 of body position and velocity D.o.F. with image of 1st 1/2 assuming the reflection plane
@@ -158,7 +158,7 @@ class RungeKutta4
      * If swimmer design changes, the elements taken from M_total must change too
      */
     void
-    momForceFree(Eigen::ThreadPoolDevice& device);
+    momForceFree(const Eigen::ThreadPoolDevice& device);
 
     // classes
     /// shared pointer reference to `SystemData` class

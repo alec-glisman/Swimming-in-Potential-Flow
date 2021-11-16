@@ -142,7 +142,7 @@ PotentialHydrodynamics::~PotentialHydrodynamics()
 }
 
 void
-PotentialHydrodynamics::update(Eigen::ThreadPoolDevice& device)
+PotentialHydrodynamics::update(const Eigen::ThreadPoolDevice& device)
 {
     calcParticleDistances();
 
@@ -220,7 +220,7 @@ PotentialHydrodynamics::calcAddedMass()
 }
 
 void
-PotentialHydrodynamics::calcAddedMassGrad(Eigen::ThreadPoolDevice& device)
+PotentialHydrodynamics::calcAddedMassGrad(const Eigen::ThreadPoolDevice& device)
 {
     // `Eigen::Tensor` contraction indices
     const Eigen::array<Eigen::IndexPair<int>, 1>  contract_ijl_kl = {Eigen::IndexPair<int>(2, 1)};
@@ -307,7 +307,7 @@ PotentialHydrodynamics::calcTotalMass()
 }
 
 void
-PotentialHydrodynamics::calcBodyMass(Eigen::ThreadPoolDevice& device)
+PotentialHydrodynamics::calcBodyMass(const Eigen::ThreadPoolDevice& device)
 {
     // `Eigen::Tensor` contraction indices
     const Eigen::array<Eigen::IndexPair<int>, 1> contract_il_lj = {Eigen::IndexPair<int>(1, 0)}; // = A B
@@ -322,7 +322,7 @@ PotentialHydrodynamics::calcBodyMass(Eigen::ThreadPoolDevice& device)
 }
 
 void
-PotentialHydrodynamics::calcBodyMassGrad(Eigen::ThreadPoolDevice& device)
+PotentialHydrodynamics::calcBodyMassGrad(const Eigen::ThreadPoolDevice& device)
 {
     // `Eigen::Tensor` contraction indices
     const Eigen::array<Eigen::IndexPair<int>, 1> contract_il_lj = {Eigen::IndexPair<int>(1, 0)}; // = A B
@@ -349,7 +349,7 @@ PotentialHydrodynamics::calcBodyMassGrad(Eigen::ThreadPoolDevice& device)
 }
 
 void
-PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
+PotentialHydrodynamics::calcHydroForces(const Eigen::ThreadPoolDevice& device)
 {
     // `Eigen::Tensor` contraction indices
     // 0th order contraction
@@ -418,7 +418,7 @@ PotentialHydrodynamics::calcHydroForces(Eigen::ThreadPoolDevice& device)
 }
 
 void
-PotentialHydrodynamics::calcHydroEnergy(Eigen::ThreadPoolDevice& device)
+PotentialHydrodynamics::calcHydroEnergy(const Eigen::ThreadPoolDevice& device)
 {
     // matrix vector reduction
     const Eigen::VectorXd m3_xi_dot = m_mat_M3 * m_system->velocitiesBodies();

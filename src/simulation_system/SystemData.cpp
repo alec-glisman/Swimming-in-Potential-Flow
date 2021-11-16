@@ -363,7 +363,7 @@ SystemData::logData()
 }
 
 void
-SystemData::update(Eigen::ThreadPoolDevice& device)
+SystemData::update(const Eigen::ThreadPoolDevice& device)
 {
     // NOTE: Internal particle orientation D.o.F. calculated 1st
     convertBody2ParticleOrient();
@@ -599,7 +599,7 @@ SystemData::chiMatrixElement(const int particle_id)
 }
 
 void
-SystemData::gradRbmConnTensorElement(const int particle_id, Eigen::ThreadPoolDevice& device)
+SystemData::gradRbmConnTensorElement(const int particle_id, const Eigen::ThreadPoolDevice& device)
 {
     /* ANCHOR: Tensor indices */
     const int  particle_id_3{3 * particle_id};
@@ -685,7 +685,7 @@ SystemData::gradRbmConnTensorElement(const int particle_id, Eigen::ThreadPoolDev
 }
 
 void
-SystemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
+SystemData::rigidBodyMotionTensors(const Eigen::ThreadPoolDevice& device)
 {
     /* ANCHOR: Compute m_rbm_conn */
     m_rbm_conn.setZero();
@@ -699,7 +699,7 @@ SystemData::rigidBodyMotionTensors(Eigen::ThreadPoolDevice& device)
 }
 
 void
-SystemData::gradientChangeOfVariableTensors(Eigen::ThreadPoolDevice& device)
+SystemData::gradientChangeOfVariableTensors(const Eigen::ThreadPoolDevice& device)
 {
     /* ANCHOR: Compute m_chi and m_tens_chi */
     m_chi.setZero();
@@ -801,7 +801,7 @@ SystemData::convertBody2ParticlePos()
 }
 
 void
-SystemData::convertBody2ParticleVelAcc(Eigen::ThreadPoolDevice& device)
+SystemData::convertBody2ParticleVelAcc(const Eigen::ThreadPoolDevice& device)
 {
     /* ANCHOR: Convert velocity D.o.F. */
     m_velocities_particles.noalias() = m_rbm_conn.transpose() * m_velocities_bodies;

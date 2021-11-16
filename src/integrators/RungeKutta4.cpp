@@ -81,13 +81,13 @@ RungeKutta4::~RungeKutta4()
 }
 
 void
-RungeKutta4::integrate(Eigen::ThreadPoolDevice& device)
+RungeKutta4::integrate(const Eigen::ThreadPoolDevice& device)
 {
     integrateSecondOrder(device); // Udwadia-Kalaba method only gives acceleration components
 }
 
 void
-RungeKutta4::integrateSecondOrder(Eigen::ThreadPoolDevice& device)
+RungeKutta4::integrateSecondOrder(const Eigen::ThreadPoolDevice& device)
 {
     /* Step 1: k1 = f( y(t_0),  t_0 )
      * initial conditions at current step */
@@ -155,7 +155,7 @@ RungeKutta4::integrateSecondOrder(Eigen::ThreadPoolDevice& device)
 
 void
 RungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::VectorXd& vel, Eigen::VectorXd& acc,
-                                Eigen::ThreadPoolDevice& device)
+                                const Eigen::ThreadPoolDevice& device)
 {
     // NOTE: Order of function calls must remain the same
     m_system->setT(t);
@@ -306,7 +306,7 @@ RungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
 }
 
 void
-RungeKutta4::momForceFree(Eigen::ThreadPoolDevice& device)
+RungeKutta4::momForceFree(const Eigen::ThreadPoolDevice& device)
 {
     const int num_particles{3};                   // Nb
     const int num_particles_3{3 * num_particles}; // 3 * Nb
