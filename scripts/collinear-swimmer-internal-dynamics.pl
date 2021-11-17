@@ -264,7 +264,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 	}
 
 	# NOTE: Pause for all simulations to finish
-	sleep(100);
+	sleep(30);
 
 	# !SECTION
 
