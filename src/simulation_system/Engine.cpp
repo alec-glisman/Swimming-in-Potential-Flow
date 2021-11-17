@@ -39,8 +39,10 @@ Engine::Engine(std::shared_ptr<SystemData> sys)
     // Write frame
     if (m_system->gsdUtil()->frame() == 0)
     {
+        spdlog::get(m_logName)->info("Writing frame at t = {0}", m_system->t());
         m_system->gsdUtil()->writeFrame(); // write initial conditions
     }
+    spdlog::get(m_logName)->info("Logging SystemData at t = {0}", m_system->t());
     m_system->logData();
 
     spdlog::get(m_logName)->critical("Constructor complete");
@@ -92,6 +94,7 @@ Engine::run()
 
             spdlog::get(m_logName)->info("Writing frame at t = {0}", m_system->t());
             m_system->gsdUtil()->writeFrame();
+            spdlog::get(m_logName)->info("Logging SystemData at t = {0}", m_system->t());
             m_system->logData();
             spdlog::get(m_logName)->flush();
         }
