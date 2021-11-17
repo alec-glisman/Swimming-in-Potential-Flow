@@ -19,13 +19,13 @@ SystemData::SystemData(std::string inputGSDFile, std::string outputDir)
     int m_num_physical_cores = std::thread::hardware_concurrency();
     Eigen::setNbThreads(m_num_physical_cores); // for Eigen OpenMP parallelization
 
-    spdlog::get(m_logName)->info("Constructor complete");
+    spdlog::get(m_logName)->critical("Constructor complete");
     spdlog::get(m_logName)->flush();
 }
 
 SystemData::~SystemData()
 {
-    spdlog::get(m_logName)->info("SystemData destructor called");
+    spdlog::get(m_logName)->critical("SystemData destructor called");
     gsd_close(m_handle.get());
     spdlog::get(m_logName)->flush();
     spdlog::drop(m_logName);
@@ -34,7 +34,7 @@ SystemData::~SystemData()
 void
 SystemData::initializeData()
 {
-    spdlog::get(m_logName)->info("Running initializeData()");
+    spdlog::get(m_logName)->critical("Running initializeData()");
 
     // load and check data from GSD
     parseGSD();
@@ -176,7 +176,7 @@ SystemData::initializeData()
     // output data
     logData();
 
-    spdlog::get(m_logName)->info("Initialization complete");
+    spdlog::get(m_logName)->critical("Initialization complete");
     spdlog::get(m_logName)->flush();
 }
 

@@ -108,13 +108,13 @@ RungeKutta4::RungeKutta4(std::shared_ptr<SystemData> sys, std::shared_ptr<Potent
         m_system->setAccelerationsBodies(body_acc);
     }
 
-    spdlog::get(m_logName)->info("Constructor complete");
+    spdlog::get(m_logName)->critical("Constructor complete");
     spdlog::get(m_logName)->flush();
 }
 
 RungeKutta4::~RungeKutta4()
 {
-    spdlog::get(m_logName)->info("Destructing Runge-Kutta 4th order");
+    spdlog::get(m_logName)->critical("Destructing Runge-Kutta 4th order");
     spdlog::get(m_logName)->flush();
     spdlog::drop(m_logName);
 }
@@ -487,4 +487,5 @@ RungeKutta4::momForceFree(const Eigen::ThreadPoolDevice& device)
     }
 
     m_system->setAccelerationsBodies(acc_body);
+    m_system->update(device); // update acceleration components with locater motion
 }

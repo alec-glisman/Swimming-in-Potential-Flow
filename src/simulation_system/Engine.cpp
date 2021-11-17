@@ -42,13 +42,13 @@ Engine::Engine(std::shared_ptr<SystemData> sys)
         m_system->gsdUtil()->writeFrame(); // write initial conditions
     }
 
-    spdlog::get(m_logName)->info("Constructor complete");
+    spdlog::get(m_logName)->critical("Constructor complete");
     spdlog::get(m_logName)->flush();
 }
 
 Engine::~Engine()
 {
-    spdlog::get(m_logName)->info("Destructing Engine");
+    spdlog::get(m_logName)->critical("Destructing Engine");
     spdlog::get(m_logName)->flush();
     spdlog::drop(m_logName);
 }
