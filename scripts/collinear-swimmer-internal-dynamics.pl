@@ -201,17 +201,17 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		# Simulation variables
 		my $dt          = 1.00e-5;
 		my $ti          = 0.00e+0;
-		my $tf          = 5.00e+0;
+		my $tf          = 1.00e+0;
 
 		my $R_avg       = 4.00e+0;
 		my $Z_height    = 6.00e+0;
 
 		my $phase_angle = -1.57079632679e+0;
-		my $U0          = 0.00e-2;
+		my $U0          = 1.00e-2;
 		my $omega       = 1.00e+0;
 
-		my $number_bodies = 2;
-		my $image_system = 1; # REVIEW OPTIONS: {0; false, 1; true}
+		my $number_bodies = 1;
+		my $image_system = 0; # REVIEW OPTIONS: {0; false, 1; true}
 
 		# Modify default preferences for each simulation run
 		switch($inputData[$i]) {
