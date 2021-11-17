@@ -171,7 +171,12 @@ def aggregate_plots(relative_path, output_dir):
 
     # characteristic scales
     char_time = 1.0 / omega
-    char_vel = U0
+
+    if (abs(U0) < 1e-12):
+        char_vel = 1.0
+    else:
+        char_vel = U0
+
     char_len = char_vel * char_time
     char_acc = char_vel / char_time
 

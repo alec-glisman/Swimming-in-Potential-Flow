@@ -47,8 +47,27 @@ RungeKutta4::RungeKutta4(std::shared_ptr<SystemData> sys, std::shared_ptr<Potent
     spdlog::get(m_logName)->info("body_dof: {0}", m_body_dof);
     spdlog::get(m_logName)->info("body_dof_7: {0}", m_body_dof_7);
 
-    // for initial conditions of all locater points, use the PLFT-free algorithm
-    spdlog::get(m_logName)->critical("Setting initial conditions using PLFT-free algorithm.");
+    // for initial conditions of all locater points, use the PF-free algorithm
+    spdlog::get(m_logName)->critical("Setting initial conditions using PF-free algorithm.");
+
+    /// @review_swimmer: internal dynamics turned off
+    const bool internal_dyn_off{abs(m_system->sysSpecU0()) < 1e-12};
+
+    if (internal_dyn_off)
+    {
+        spdlog::get(m_logName)->warn("Setting initial conditions using constant as internal dynamics off");
+        Eigen::VectorXd vel_body = m_system->velocitiesBodies();
+        const double    vel_init_mag{2.12375471e-05}; // from isolated swimmer with R_avg = 6.0
+
+        for (int body_id = 0; body_id < m_system->numBodies(); body_id++)
+        {
+            // todo: Rotate vel mag by unit quaternion
+        }
+
+        m_system->setVelocitiesBodies(vel_body);
+    }
+
+    spdlog::get(m_logName)->critical("Updating SystemData and PotentialHydrodynamics classes for initial conditions.");
     m_system->update(single_core_device);   // update system kinematics and rbm tensors
     m_potHydro->update(single_core_device); // update hydrodynamic tensors
     momForceFree(single_core_device);       // set initial body kinematics
