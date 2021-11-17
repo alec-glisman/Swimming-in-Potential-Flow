@@ -3,6 +3,7 @@
 *data
 data/**
 temp*
+jupyter_notebooks/**
 
 # Simulation data input
 *.in
