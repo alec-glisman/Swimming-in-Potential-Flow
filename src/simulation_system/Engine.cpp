@@ -12,7 +12,7 @@ Engine::Engine(std::shared_ptr<SystemData> sys)
     // Initialize logger
     m_logFile   = m_system->outputDir() + "/logs/" + m_logName + "-log.txt";
     auto logger = spdlog::basic_logger_mt(m_logName, m_logFile);
-    spdlog::get(m_logName)->info("Initializing Engine");
+    spdlog::get(m_logName)->critical("Initializing Engine");
 
     // validate system loaded GSD data
     spdlog::get(m_logName)->info("Checking input SystemData class loaded GSD data: {0}", m_system->gSDParsed());
@@ -41,6 +41,7 @@ Engine::Engine(std::shared_ptr<SystemData> sys)
     {
         m_system->gsdUtil()->writeFrame(); // write initial conditions
     }
+    m_system->logData();
 
     spdlog::get(m_logName)->critical("Constructor complete");
     spdlog::get(m_logName)->flush();
