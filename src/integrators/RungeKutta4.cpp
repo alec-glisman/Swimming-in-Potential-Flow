@@ -56,12 +56,28 @@ RungeKutta4::RungeKutta4(std::shared_ptr<SystemData> sys, std::shared_ptr<Potent
     if (internal_dyn_off)
     {
         spdlog::get(m_logName)->warn("Setting initial conditions using constant as internal dynamics off");
-        Eigen::VectorXd vel_body = m_system->velocitiesBodies();
-        const double    vel_init_mag{6.475607209817711e-06}; // from isolated swimmer with R_avg = 4.0
+        Eigen::VectorXd          vel_body = m_system->velocitiesBodies();
+        const double             vel_init_mag{6.475607209817711e-06}; // from isolated swimmer with R_avg = 4.0
+        const Eigen::Quaterniond quat_vel_body(0.0, vel_init_mag, 0.0, 0.0);
 
         for (int body_id = 0; body_id < m_system->numBodies(); body_id++)
         {
-            // todo: Rotate vel mag by unit quaternion
+            const int body_id_7{7 * body_id};
+
+            const Eigen::Quaterniond quat_body(
+                m_system->positionsBodies()(body_id_7 + 3), m_system->positionsBodies()(body_id_7 + 4),
+                m_system->positionsBodies()(body_id_7 + 5), m_system->positionsBodies()(body_id_7 + 6));
+
+            const Eigen::Quaterniond rot_quat_vel_body = quat_body * quat_vel_body * quat_body.inverse();
+
+            // rotate vel mag by unit quaternion
+            vel_body.segment<3>(body_id_7).noalias() = rot_quat_body.vec();
+
+            // account for image system
+            if ((m_system->imageSystem()) && (body_id >= m_system->numBodies() / 2))
+            {
+                vel_body(body_id_7 + 2) *= -1.0;
+            }
         }
 
         m_system->setVelocitiesBodies(vel_body);
