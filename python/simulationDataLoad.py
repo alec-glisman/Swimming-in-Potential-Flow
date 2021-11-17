@@ -50,7 +50,7 @@ def find_compressed_data(relative_path_base_dir, sim_parameters_varied):
 
             if (len(matched) == 0):
                 warnings.warn(
-                    f"Failure to find data. No data path found in parameter: {p}, relative path: {r}")
+                    f"\nFailure to find data.No data path found in parameter: {p},\nrelative path: {r}\nfile paths: {file_paths}\nregex_str{regex_str}")
 
             desired_file_paths.append(matched)
 
