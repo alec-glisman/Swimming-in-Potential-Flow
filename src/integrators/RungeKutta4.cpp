@@ -71,7 +71,7 @@ RungeKutta4::RungeKutta4(std::shared_ptr<SystemData> sys, std::shared_ptr<Potent
             const Eigen::Quaterniond rot_quat_vel_body = quat_body * quat_vel_body * quat_body.inverse();
 
             // rotate vel mag by unit quaternion
-            vel_body.segment<3>(body_id_7).noalias() = rot_quat_body.vec();
+            vel_body.segment<3>(body_id_7).noalias() = rot_quat_vel_body.vec();
 
             // account for image system
             if ((m_system->imageSystem()) && (body_id >= m_system->numBodies() / 2))
@@ -86,7 +86,11 @@ RungeKutta4::RungeKutta4(std::shared_ptr<SystemData> sys, std::shared_ptr<Potent
     spdlog::get(m_logName)->critical("Updating SystemData and PotentialHydrodynamics classes for initial conditions.");
     m_system->update(single_core_device);   // update system kinematics and rbm tensors
     m_potHydro->update(single_core_device); // update hydrodynamic tensors
-    momForceFree(single_core_device);       // set initial body kinematics
+
+    if (!internal_dyn_off)
+    {
+        momForceFree(single_core_device); // set initial body kinematics
+    }
 
     if (m_system->imageSystem())
     {
