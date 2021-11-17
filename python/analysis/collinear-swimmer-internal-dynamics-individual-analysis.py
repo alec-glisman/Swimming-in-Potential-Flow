@@ -84,8 +84,12 @@ def aggregate_plots(relative_path, output_dir):
         raise IOError(
             f"Failure to load data. Not exactly 1 file found in relPath {relative_path}")
 
+    # Key frames
+    frame_i = 1  # initial frame
+    frame_f = gsd_file.trajectory.file.nframes - 1
+
     # Data from initial frame
-    gsd_file.snapshot = gsd_file.trajectory.read_frame(1)
+    gsd_file.snapshot = gsd_file.trajectory.read_frame(frame_i)
     N_particles = gsd_file.snapshot.particles.N
     nframes = gsd_file.trajectory.file.nframes
     R_avg = gsd_file.snapshot.log['swimmer/R_avg']
@@ -94,7 +98,7 @@ def aggregate_plots(relative_path, output_dir):
     U0 = gsd_file.snapshot.log['swimmer/U0']
     omega = gsd_file.snapshot.log['swimmer/omega']
     tau = gsd_file.snapshot.log['integrator/tau']
-    epsilon = U0 / R_avg / omega
+    epsilon = abs(U0 / R_avg / omega)
 
     # Initialize temporal data
     time = np.zeros((nframes - 2), dtype=np.float64)
@@ -109,7 +113,7 @@ def aggregate_plots(relative_path, output_dir):
     E_simple = np.zeros_like(time, dtype=np.float64)
 
    # Loop over all snapshots in GSD (skipping header with incorrect kinematics)
-    for i in range(1, nframes-1):
+    for i in range(1, frame_f):
         current_snapshot = gsd_file.trajectory.read_frame(i)
 
         time[i-1] = current_snapshot.log['integrator/t']

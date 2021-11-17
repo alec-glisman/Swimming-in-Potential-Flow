@@ -154,7 +154,7 @@ def aggregate_plots(relative_path, output_dir):
     for i in range(len(gsd_files)):
 
         # frames
-        frame_i = 0
+        frame_i = 1
         frame_f = gsd_files[i].trajectory.file.nframes - 1
 
         # Data from final frame
