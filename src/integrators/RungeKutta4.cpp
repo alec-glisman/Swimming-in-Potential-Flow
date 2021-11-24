@@ -226,8 +226,10 @@ RungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::Vec
     else
     {
         // update Udwadia system for all bodies
-        udwadiaKalaba(acc);
+        // udwadiaKalaba(acc);
     }
+
+    momForceFree(device);
 
     m_system->setAccelerationsBodies(acc);
 }
