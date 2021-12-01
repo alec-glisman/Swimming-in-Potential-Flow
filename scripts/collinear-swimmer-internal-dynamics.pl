@@ -40,7 +40,7 @@ my $buildDir       = "build/" . lc $build;      # Build folder path
 my $simulationTag    = "collinear-swimmer-internal-dynamics";
 my $projectName      = "bodies-in-potential-flow";
 my $inputDir         = "input";
-my @inputData        = ( "varyEpsilon", "varyZHeight", "varyRelDisp", "varyPhaseAngle", "varyDt" );
+my @inputData        = ( "varyZHeight",  "varyRelDisp", "varyEpsilon", "varyPhaseAngle", "varyDt" );
 my $numSimulationTypes = scalar @inputData;
 my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
 
@@ -199,7 +199,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		my $gsd_path = ${simulation_dir} . "/" . "data.gsd";
 
 		# Simulation variables
-		my $dt          = 1.00e-6;
+		my $dt          = 1.00e-4;
 		my $ti          = 0.00e+0;
 		my $tf          = 1.00e+0;
 
@@ -207,11 +207,11 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		my $Z_height    = 6.00e+0;
 
 		my $phase_angle = -1.57079632679e+0;
-		my $U0          = 1.00e-2;
+		my $U0          = 0.00e-0;
 		my $omega       = 1.00e+0;
 
-		my $number_bodies = 1;
-		my $image_system = 0; # REVIEW OPTIONS: {0; false, 1; true}
+		my $number_bodies = 2;
+		my $image_system = 1; # REVIEW OPTIONS: {0; false, 1; true}
 
 		# Modify default preferences for each simulation run
 		switch($inputData[$i]) {

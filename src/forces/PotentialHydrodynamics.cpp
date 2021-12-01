@@ -407,14 +407,16 @@ PotentialHydrodynamics::calcHydroForces(const Eigen::ThreadPoolDevice& device)
 
     // compute complete potential flow hydrodynamic force
     Eigen::Tensor<double, 1> F_hydro = Eigen::Tensor<double, 1>(m_7M); // (7M x 1)
-    F_hydro.device(device)           = F_loc + F_loc_int;
+    F_hydro.device(device)           = F_loc;
+    F_hydro.device(device) += F_loc_int;
     F_hydro.device(device) += F_int;
     m_F_hydro.noalias() = MatrixCast(F_hydro, m_7M, 1, device);
 
     // Compute non-inertial part of force (include internal D.o.F. inertia)
     Eigen::Tensor<double, 1> F_hydro_no_inertia = Eigen::Tensor<double, 1>(m_7M); // (7M x 1)
-    F_hydro_no_inertia.device(device)           = F_hydro - inertia_loc;
-    m_F_hydroNoInertia.noalias()                = MatrixCast(F_hydro_no_inertia, m_7M, 1, device);
+    F_hydro_no_inertia.device(device)           = F_hydro;
+    F_hydro_no_inertia.device(device) -= inertia_loc;
+    m_F_hydroNoInertia.noalias() = MatrixCast(F_hydro_no_inertia, m_7M, 1, device);
 }
 
 void
