@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['z_5fheight_1161',['Z_height',['../namespacecollinear-swimmer-isolated-configuration.html#a28fc892bce95ccae44f0cbb4bc6fa9e8',1,'collinear-swimmer-isolated-configuration.Z_height()'],['../namespacecollinear-swimmer-wall-configuration.html#abdcc35bf3f774c58ddcfca18dc8f4ff3',1,'collinear-swimmer-wall-configuration.Z_height()']]]
+  ['z_5fheight_1186',['Z_height',['../namespacecollinear-swimmer-internal-dynamics-configuration.html#a467800419d486c96e16de1eb6cb7f7e8',1,'collinear-swimmer-internal-dynamics-configuration']]]
 ];

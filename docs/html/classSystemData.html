@@ -112,14 +112,12 @@ $(document).ready(function(){initNavTree('classSystemData.html',''); initResizab
 <div class="dynheader">
 Inheritance diagram for SystemData:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData__inherit__graph.svg" width="246" height="2707"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData__inherit__graph.svg" width="246" height="2707"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Collaboration diagram for SystemData:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData__coll__graph.svg" width="722" height="3612"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData__coll__graph.svg" width="722" height="3612"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -621,7 +619,7 @@ Friends</h2></td></tr>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordtype">int</span> m_num_physical_cores = std::thread::hardware_concurrency();</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    Eigen::setNbThreads(m_num_physical_cores); <span class="comment">// for Eigen OpenMP parallelization</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    spdlog::get(<a class="code" href="classSystemData.html#a9e1f7c36b20a813e04fa9a64ee24c5b8">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Constructor complete&quot;</span>);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    spdlog::get(<a class="code" href="classSystemData.html#a9e1f7c36b20a813e04fa9a64ee24c5b8">m_logName</a>)-&gt;critical(<span class="stringliteral">&quot;Constructor complete&quot;</span>);</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    spdlog::get(<a class="code" href="classSystemData.html#a9e1f7c36b20a813e04fa9a64ee24c5b8">m_logName</a>)-&gt;flush();</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;}</div>
 </div><!-- fragment -->
@@ -648,7 +646,7 @@ Friends</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="SystemData_8cpp_source.html#l00026">26</a> of file <a class="el" href="SystemData_8cpp_source.html">SystemData.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;{</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    spdlog::get(<a class="code" href="classSystemData.html#a9e1f7c36b20a813e04fa9a64ee24c5b8">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;SystemData destructor called&quot;</span>);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    spdlog::get(<a class="code" href="classSystemData.html#a9e1f7c36b20a813e04fa9a64ee24c5b8">m_logName</a>)-&gt;critical(<span class="stringliteral">&quot;SystemData destructor called&quot;</span>);</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="gsd_8c.html#a08b4f76e3e19eda194def8c0c4b2b7a3">gsd_close</a>(<a class="code" href="classSystemData.html#aae607898eaf58eb949c3ba518be5f0ca">m_handle</a>.get());</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    spdlog::get(<a class="code" href="classSystemData.html#a9e1f7c36b20a813e04fa9a64ee24c5b8">m_logName</a>)-&gt;flush();</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    spdlog::drop(<a class="code" href="classSystemData.html#a9e1f7c36b20a813e04fa9a64ee24c5b8">m_logName</a>);</div>
@@ -681,11 +679,11 @@ Here is the call graph for this function:</div>
 
 <p>Function loads data from GSD file using <code><a class="el" href="classGSDUtil.html" title="Wrapper class for gsd.h to load data from input GSD file into SystemData class.">GSDUtil</a></code> class. </p>
 <p>Must be called after class construction before data can properly be integrated using the <code><a class="el" href="classEngine.html" title="Manages the time integration of the simulation system as well as when to output data to GSD.">Engine</a></code> class. </p>
-<dl class="review"><dt><b><a class="el" href="review.html#_review000003">Review:</a></b></dt><dd>: change initial orientations </dd></dl>
+<dl class="review"><dt><b><a class="el" href="review.html#_review000004">Review:</a></b></dt><dd>: change initial orientations </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SystemData_8cpp_source.html#l00035">35</a> of file <a class="el" href="SystemData_8cpp_source.html">SystemData.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    spdlog::get(<a class="code" href="classSystemData.html#a9e1f7c36b20a813e04fa9a64ee24c5b8">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Running initializeData()&quot;</span>);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    spdlog::get(<a class="code" href="classSystemData.html#a9e1f7c36b20a813e04fa9a64ee24c5b8">m_logName</a>)-&gt;critical(<span class="stringliteral">&quot;Running initializeData()&quot;</span>);</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="comment">// load and check data from GSD</span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="classSystemData.html#aa2eb6d7a8870f81a9f4e6484c1f8751c">parseGSD</a>();</div>
@@ -826,7 +824,7 @@ Here is the call graph for this function:</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <span class="comment">// output data</span></div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <a class="code" href="classSystemData.html#a58d7292b7fd9035265eca81d0f088a27">logData</a>();</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    spdlog::get(<a class="code" href="classSystemData.html#a9e1f7c36b20a813e04fa9a64ee24c5b8">m_logName</a>)-&gt;info(<span class="stringliteral">&quot;Initialization complete&quot;</span>);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    spdlog::get(<a class="code" href="classSystemData.html#a9e1f7c36b20a813e04fa9a64ee24c5b8">m_logName</a>)-&gt;critical(<span class="stringliteral">&quot;Initialization complete&quot;</span>);</div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    spdlog::get(<a class="code" href="classSystemData.html#a9e1f7c36b20a813e04fa9a64ee24c5b8">m_logName</a>)-&gt;flush();</div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;}</div>
 </div><!-- fragment -->
@@ -836,14 +834,12 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_ac3a796dc8bf1fa82ea6dec33e548924f_cgraph.svg" width="1179" height="715"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_ac3a796dc8bf1fa82ea6dec33e548924f_cgraph.svg" width="1179" height="715"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_ac3a796dc8bf1fa82ea6dec33e548924f_icgraph.svg" width="338" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_ac3a796dc8bf1fa82ea6dec33e548924f_icgraph.svg" width="338" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -999,8 +995,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a58d7292b7fd9035265eca81d0f088a27_icgraph.svg" width="534" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a58d7292b7fd9035265eca81d0f088a27_icgraph.svg" width="534" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1058,14 +1053,12 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a96d6dfb7bdb78d98fbbdac1f421c838c_cgraph.svg" width="931" height="548"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a96d6dfb7bdb78d98fbbdac1f421c838c_cgraph.svg" width="931" height="548"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a96d6dfb7bdb78d98fbbdac1f421c838c_icgraph.svg" width="528" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a96d6dfb7bdb78d98fbbdac1f421c838c_icgraph.svg" width="528" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1157,8 +1150,7 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_aa2eb6d7a8870f81a9f4e6484c1f8751c_icgraph.svg" width="550" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_aa2eb6d7a8870f81a9f4e6484c1f8751c_icgraph.svg" width="550" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1231,8 +1223,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a534384a0e92c8a0ffbcec636afbdf65e_icgraph.svg" width="764" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a534384a0e92c8a0ffbcec636afbdf65e_icgraph.svg" width="764" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1261,7 +1252,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Computes the articulation (linear) positions of the particles relative to their respective locater points. </p>
-<dl class="review"><dt><b><a class="el" href="review.html#_review000004">Review:</a></b></dt><dd>Change assignment of <code>m_positions_particles_articulation</code> for </dd></dl>
+<dl class="review"><dt><b><a class="el" href="review.html#_review000005">Review:</a></b></dt><dd>Change assignment of <code>m_positions_particles_articulation</code> for </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SystemData_8cpp_source.html#l00402">402</a> of file <a class="el" href="SystemData_8cpp_source.html">SystemData.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;{</div>
@@ -1296,8 +1287,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a30df4f73d78f6886da32559eda83595d_icgraph.svg" width="796" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a30df4f73d78f6886da32559eda83595d_icgraph.svg" width="796" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1326,7 +1316,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Computes the articulation (linear) velocities of the particles relative to their respective locater points. </p>
-<dl class="review"><dt><b><a class="el" href="review.html#_review000005">Review:</a></b></dt><dd>Change assignment of <code>m_velocities_particles_articulation</code> for </dd></dl>
+<dl class="review"><dt><b><a class="el" href="review.html#_review000006">Review:</a></b></dt><dd>Change assignment of <code>m_velocities_particles_articulation</code> for </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SystemData_8cpp_source.html#l00430">430</a> of file <a class="el" href="SystemData_8cpp_source.html">SystemData.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;{</div>
@@ -1371,8 +1361,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a92ce50a4c8b53aa6a490153c1b09ab8a_icgraph.svg" width="799" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a92ce50a4c8b53aa6a490153c1b09ab8a_icgraph.svg" width="799" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1401,7 +1390,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Computes the articulation (linear) accelerations of the particles relative to their respective locater points. </p>
-<dl class="review"><dt><b><a class="el" href="review.html#_review000006">Review:</a></b></dt><dd>Change assignment of <code>m_accelerations_particles_articulation</code> for different systems </dd></dl>
+<dl class="review"><dt><b><a class="el" href="review.html#_review000007">Review:</a></b></dt><dd>Change assignment of <code>m_accelerations_particles_articulation</code> for different systems </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SystemData_8cpp_source.html#l00468">468</a> of file <a class="el" href="SystemData_8cpp_source.html">SystemData.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;{</div>
@@ -1447,8 +1436,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a188c38c8448ed32d3cf697b6f07b9d6a_icgraph.svg" width="756" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a188c38c8448ed32d3cf697b6f07b9d6a_icgraph.svg" width="756" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1477,7 +1465,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Computes the Udwadia constraint matrix and vector to uphold the quaternion unitary norm for each body. </p>
-<dl class="review"><dt><b><a class="el" href="review.html#_review000007">Review:</a></b></dt><dd>Change assignment of <code>m_Udwadia_A</code> and <code>m_Udwadia_B</code> for different systems.</dd></dl>
+<dl class="review"><dt><b><a class="el" href="review.html#_review000008">Review:</a></b></dt><dd>Change assignment of <code>m_Udwadia_A</code> and <code>m_Udwadia_B</code> for different systems.</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><b>Original paper on constrained Lagrangian dynamics:</b> Udwadia, Firdaus E., and Robert E. Kalaba. "A new
 perspective on constrained motion." Proceedings of the Royal Society of London. Series A: Mathematical and Physical Sciences 439.1906 (1992): 407-410.</dd>
 <dd>
@@ -1508,8 +1496,7 @@ alternative derivation of the quaternion equations of motion for rigid-body rota
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_ad1a6489951a00124901c1947381a9be8_icgraph.svg" width="763" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_ad1a6489951a00124901c1947381a9be8_icgraph.svg" width="763" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1582,14 +1569,12 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a70d2ff9a6173fcd9f30e8dc6324e8414_cgraph.svg" width="452" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a70d2ff9a6173fcd9f30e8dc6324e8414_cgraph.svg" width="452" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a70d2ff9a6173fcd9f30e8dc6324e8414_icgraph.svg" width="1030" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a70d2ff9a6173fcd9f30e8dc6324e8414_icgraph.svg" width="1030" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1715,8 +1700,7 @@ For detailed derivation: Lee, Byung-Uk (1991), "Differentiation with Quaternions
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a230548cc624444a66137b8d5ecaf5716_icgraph.svg" width="1023" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a230548cc624444a66137b8d5ecaf5716_icgraph.svg" width="1023" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1855,14 +1839,12 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a95b4afa16b44bb89aac9e8ef9e64845b_cgraph.svg" width="470" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a95b4afa16b44bb89aac9e8ef9e64845b_cgraph.svg" width="470" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a95b4afa16b44bb89aac9e8ef9e64845b_icgraph.svg" width="1046" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a95b4afa16b44bb89aac9e8ef9e64845b_icgraph.svg" width="1046" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1921,14 +1903,12 @@ Stokesian Dynamics. Or teaching Stokesian Dynamics to swim." Physics of Fluids 2
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a48585dcdee2612bc4ee815bb599c1679_cgraph.svg" width="696" height="114"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a48585dcdee2612bc4ee815bb599c1679_cgraph.svg" width="696" height="114"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a48585dcdee2612bc4ee815bb599c1679_icgraph.svg" width="772" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a48585dcdee2612bc4ee815bb599c1679_icgraph.svg" width="772" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -1993,14 +1973,12 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a0aa3296e765575ba6397b5f71bf892a8_cgraph.svg" width="712" height="151"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a0aa3296e765575ba6397b5f71bf892a8_cgraph.svg" width="712" height="151"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a0aa3296e765575ba6397b5f71bf892a8_icgraph.svg" width="771" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a0aa3296e765575ba6397b5f71bf892a8_icgraph.svg" width="771" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -2106,8 +2084,7 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a000a3e77f12b4c1bc9678e9ede202f83_icgraph.svg" width="759" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a000a3e77f12b4c1bc9678e9ede202f83_icgraph.svg" width="759" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -2156,8 +2133,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a3edab27c866d9031739a8bd3b09bac42_icgraph.svg" width="759" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a3edab27c866d9031739a8bd3b09bac42_icgraph.svg" width="759" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -2226,14 +2202,12 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_aa3a9fae706cf141ed66c05736656fdba_cgraph.svg" width="442" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_aa3a9fae706cf141ed66c05736656fdba_cgraph.svg" width="442" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_aa3a9fae706cf141ed66c05736656fdba_icgraph.svg" width="759" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_aa3a9fae706cf141ed66c05736656fdba_icgraph.svg" width="759" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -2295,8 +2269,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a7cefde66d9e18e2517f11505dd434d0e_icgraph.svg" width="1279" height="118"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a7cefde66d9e18e2517f11505dd434d0e_icgraph.svg" width="1279" height="118"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -2361,8 +2334,7 @@ quaternion equations of motion for rigid-body rotational dynamics." (2010)</dd><
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_ad58491f39fe352229da5494878b88911_icgraph.svg" width="1224" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_ad58491f39fe352229da5494878b88911_icgraph.svg" width="1224" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -2425,10 +2397,10 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="SystemData_8hpp_source.html#l00543">543</a> of file <a class="el" href="SystemData_8hpp_source.html">SystemData.hpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;    {</div>
-<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;        <a class="code" href="classSystemData.html#a20866751b5320b808a3eb1290d48715e">m_image_system</a> = image_system;</div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;        <a class="code" href="classSystemData.html#a20866751b5320b808a3eb1290d48715e">m_image_system</a> = <a class="code" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#ad49826761cef3f9a6fd3e896475b37a1">image_system</a>;</div>
 <div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="SystemData_8hpp_source.html#l00358">m_image_system</a>.</p>
+<p class="reference">References <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00271">collinear-swimmer-internal-dynamics-configuration::image_system</a>, and <a class="el" href="SystemData_8hpp_source.html#l00358">m_image_system</a>.</p>
 
 </div>
 </div>
@@ -2769,8 +2741,7 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a9f8ee537e1989aec9c82f3e5b69c3de7_icgraph.svg" width="330" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSystemData_a9f8ee537e1989aec9c82f3e5b69c3de7_icgraph.svg" width="330" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -3158,10 +3129,10 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="SystemData_8hpp_source.html#l00671">671</a> of file <a class="el" href="SystemData_8hpp_source.html">SystemData.hpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;    {</div>
-<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;        <a class="code" href="classSystemData.html#a197ff86a1aac1f01cd3f132fa88634b8">m_fluid_density</a> = fluid_density;</div>
+<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;        <a class="code" href="classSystemData.html#a197ff86a1aac1f01cd3f132fa88634b8">m_fluid_density</a> = <a class="code" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a69e6c9554548d7b83c2a63b0600a0a7a">fluid_density</a>;</div>
 <div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="SystemData_8hpp_source.html#l00422">m_fluid_density</a>.</p>
+<p class="reference">References <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00076">collinear-swimmer-internal-dynamics-configuration::fluid_density</a>, and <a class="el" href="SystemData_8hpp_source.html#l00422">m_fluid_density</a>.</p>
 
 </div>
 </div>
@@ -3223,10 +3194,10 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="SystemData_8hpp_source.html#l00682">682</a> of file <a class="el" href="SystemData_8hpp_source.html">SystemData.hpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;    {</div>
-<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;        <a class="code" href="classSystemData.html#a0feac8a040bba267cfc3eb912a1ef152">m_particle_density</a> = particle_density;</div>
+<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;        <a class="code" href="classSystemData.html#a0feac8a040bba267cfc3eb912a1ef152">m_particle_density</a> = <a class="code" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#aa7937b2670b1e095c983e3c5b3a0e069">particle_density</a>;</div>
 <div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="SystemData_8hpp_source.html#l00424">m_particle_density</a>.</p>
+<p class="reference">References <a class="el" href="SystemData_8hpp_source.html#l00424">m_particle_density</a>, and <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00077">collinear-swimmer-internal-dynamics-configuration::particle_density</a>.</p>
 
 </div>
 </div>
@@ -3288,10 +3259,10 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="SystemData_8hpp_source.html#l00694">694</a> of file <a class="el" href="SystemData_8hpp_source.html">SystemData.hpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;    {</div>
-<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;        <a class="code" href="classSystemData.html#a7f1c0913a4ad2cbae0a1903d05ff7a6e">m_wca_epsilon</a> = wca_epsilon;</div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;        <a class="code" href="classSystemData.html#a7f1c0913a4ad2cbae0a1903d05ff7a6e">m_wca_epsilon</a> = <a class="code" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a1bf9d6864360c7f088c0d5154039d4bc">wca_epsilon</a>;</div>
 <div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="SystemData_8hpp_source.html#l00428">m_wca_epsilon</a>.</p>
+<p class="reference">References <a class="el" href="SystemData_8hpp_source.html#l00428">m_wca_epsilon</a>, and <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00080">collinear-swimmer-internal-dynamics-configuration::wca_epsilon</a>.</p>
 
 </div>
 </div>
@@ -3353,10 +3324,10 @@ Here is the caller graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="SystemData_8hpp_source.html#l00705">705</a> of file <a class="el" href="SystemData_8hpp_source.html">SystemData.hpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;    {</div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;        <a class="code" href="classSystemData.html#a7440e51155f745654a524ccc5a49a289">m_wca_sigma</a> = wca_sigma;</div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;        <a class="code" href="classSystemData.html#a7440e51155f745654a524ccc5a49a289">m_wca_sigma</a> = <a class="code" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a0369087de34e80b438a58688a17c2b7d">wca_sigma</a>;</div>
 <div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="SystemData_8hpp_source.html#l00430">m_wca_sigma</a>.</p>
+<p class="reference">References <a class="el" href="SystemData_8hpp_source.html#l00430">m_wca_sigma</a>, and <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00081">collinear-swimmer-internal-dynamics-configuration::wca_sigma</a>.</p>
 
 </div>
 </div>
@@ -4094,10 +4065,10 @@ Here is the call graph for this function:</div>
 
 <p class="definition">Definition at line <a class="el" href="SystemData_8hpp_source.html#l00825">825</a> of file <a class="el" href="SystemData_8hpp_source.html">SystemData.hpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;    {</div>
-<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;        <a class="code" href="classSystemData.html#a39eab3caf2193a14bcb96accdd452d03">m_num_steps_output</a> = num_steps_output;</div>
+<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;        <a class="code" href="classSystemData.html#a39eab3caf2193a14bcb96accdd452d03">m_num_steps_output</a> = <a class="code" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a5e0557c34ba4cd03c04dadece5980363">num_steps_output</a>;</div>
 <div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;    }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="SystemData_8hpp_source.html#l00458">m_num_steps_output</a>.</p>
+<p class="reference">References <a class="el" href="SystemData_8hpp_source.html#l00458">m_num_steps_output</a>, and <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00073">collinear-swimmer-internal-dynamics-configuration::num_steps_output</a>.</p>
 
 </div>
 </div>
@@ -5182,7 +5153,7 @@ Here is the call graph for this function:</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>If the simulation system is constrained to be that of an image (neglect second 1/2 of DoF) </p><dl class="review"><dt><b><a class="el" href="review.html#_review000008">Review:</a></b></dt><dd>change if not using image-system constraints </dd></dl>
+<p>If the simulation system is constrained to be that of an image (neglect second 1/2 of DoF) </p><dl class="review"><dt><b><a class="el" href="review.html#_review000009">Review:</a></b></dt><dd>change if not using image-system constraints </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SystemData_8hpp_source.html#l00358">358</a> of file <a class="el" href="SystemData_8hpp_source.html">SystemData.hpp</a>.</p>
 
@@ -5455,7 +5426,7 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Swimming kinematic constraint velocity amplitude of kinematic constraint between particle pairs. </p>
-<dl class="review"><dt><b><a class="el" href="review.html#_review000009">Review:</a></b></dt><dd>Change parameters stored for different systems</dd></dl>
+<dl class="review"><dt><b><a class="el" href="review.html#_review000010">Review:</a></b></dt><dd>Change parameters stored for different systems</dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SystemData_8hpp_source.html#l00389">389</a> of file <a class="el" href="SystemData_8hpp_source.html">SystemData.hpp</a>.</p>
 
@@ -5484,7 +5455,7 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Swimming kinematic constraint oscillation frequency. </p>
-<dl class="review"><dt><b><a class="el" href="review.html#_review000010">Review:</a></b></dt><dd>Change parameters stored for different systems</dd></dl>
+<dl class="review"><dt><b><a class="el" href="review.html#_review000011">Review:</a></b></dt><dd>Change parameters stored for different systems</dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SystemData_8hpp_source.html#l00396">396</a> of file <a class="el" href="SystemData_8hpp_source.html">SystemData.hpp</a>.</p>
 
@@ -5513,7 +5484,7 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Swimming kinematic constraint phase shift (in radians between oscillators) </p>
-<dl class="review"><dt><b><a class="el" href="review.html#_review000011">Review:</a></b></dt><dd>Change parameters stored for different systems</dd></dl>
+<dl class="review"><dt><b><a class="el" href="review.html#_review000012">Review:</a></b></dt><dd>Change parameters stored for different systems</dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SystemData_8hpp_source.html#l00403">403</a> of file <a class="el" href="SystemData_8hpp_source.html">SystemData.hpp</a>.</p>
 
@@ -5542,7 +5513,7 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Swimming kinematic constraint time-average spatial separation between a particle pair during oscillation. </p>
-<dl class="review"><dt><b><a class="el" href="review.html#_review000012">Review:</a></b></dt><dd>Change parameters stored for different systems</dd></dl>
+<dl class="review"><dt><b><a class="el" href="review.html#_review000013">Review:</a></b></dt><dd>Change parameters stored for different systems</dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="SystemData_8hpp_source.html#l00410">410</a> of file <a class="el" href="SystemData_8hpp_source.html">SystemData.hpp</a>.</p>
 
@@ -6823,7 +6794,9 @@ Here is the call graph for this function:</div>
 <div class="ttc" id="aclassSystemData_html_ac1b8961811acfcc2794e235b9bf9d84f"><div class="ttname"><a href="classSystemData.html#ac1b8961811acfcc2794e235b9bf9d84f">SystemData::m_sys_spec_omega</a></div><div class="ttdeci">double m_sys_spec_omega</div><div class="ttdoc">Swimming kinematic constraint oscillation frequency.</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8hpp_source.html#l00396">SystemData.hpp:396</a></div></div>
 <div class="ttc" id="aclassSystemData_html_a534384a0e92c8a0ffbcec636afbdf65e"><div class="ttname"><a href="classSystemData.html#a534384a0e92c8a0ffbcec636afbdf65e">SystemData::checkInput</a></div><div class="ttdeci">void checkInput()</div><div class="ttdoc">Various assertions to check data loaded from GSD is at least physical.</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8cpp_source.html#l00200">SystemData.cpp:200</a></div></div>
 <div class="ttc" id="aclassSystemData_html_a39eab3caf2193a14bcb96accdd452d03"><div class="ttname"><a href="classSystemData.html#a39eab3caf2193a14bcb96accdd452d03">SystemData::m_num_steps_output</a></div><div class="ttdeci">int m_num_steps_output</div><div class="ttdoc">how many simulation steps to output to GSD</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8hpp_source.html#l00458">SystemData.hpp:458</a></div></div>
+<div class="ttc" id="anamespacecollinear-swimmer-internal-dynamics-configuration_html_a1bf9d6864360c7f088c0d5154039d4bc"><div class="ttname"><a href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a1bf9d6864360c7f088c0d5154039d4bc">collinear-swimmer-internal-dynamics-configuration.wca_epsilon</a></div><div class="ttdeci">float wca_epsilon</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00080">collinear-swimmer-internal-dynamics-configuration.py:80</a></div></div>
 <div class="ttc" id="aclassSystemData_html_abfa627b2da67c94f143bcd576b36bc73"><div class="ttname"><a href="classSystemData.html#abfa627b2da67c94f143bcd576b36bc73">SystemData::m_particle_type_id</a></div><div class="ttdeci">Eigen::VectorXi m_particle_type_id</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8hpp_source.html#l00416">SystemData.hpp:416</a></div></div>
+<div class="ttc" id="anamespacecollinear-swimmer-internal-dynamics-configuration_html_ad49826761cef3f9a6fd3e896475b37a1"><div class="ttname"><a href="namespacecollinear-swimmer-internal-dynamics-configuration.html#ad49826761cef3f9a6fd3e896475b37a1">collinear-swimmer-internal-dynamics-configuration.image_system</a></div><div class="ttdeci">image_system</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00271">collinear-swimmer-internal-dynamics-configuration.py:271</a></div></div>
 <div class="ttc" id="aclassSystemData_html_a5c8fc3237a2633307ddfae701dcf381e"><div class="ttname"><a href="classSystemData.html#a5c8fc3237a2633307ddfae701dcf381e">SystemData::m_rbm_conn</a></div><div class="ttdeci">Eigen::MatrixXd m_rbm_conn</div><div class="ttdoc">(7M x 7N)  rigid body motion connectivity tensor</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8hpp_source.html#l00511">SystemData.hpp:511</a></div></div>
 <div class="ttc" id="aclassSystemData_html_a48585dcdee2612bc4ee815bb599c1679"><div class="ttname"><a href="classSystemData.html#a48585dcdee2612bc4ee815bb599c1679">SystemData::rigidBodyMotionTensors</a></div><div class="ttdeci">void rigidBodyMotionTensors(const Eigen::ThreadPoolDevice &amp;device)</div><div class="ttdoc">Computes the rigid body motion connectivity tensors.</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8cpp_source.html#l00688">SystemData.cpp:688</a></div></div>
 <div class="ttc" id="aclassSystemData_html_ae7a11336b509d504a83db605fff0e169"><div class="ttname"><a href="classSystemData.html#ae7a11336b509d504a83db605fff0e169">SystemData::m_accelerations_particles</a></div><div class="ttdeci">Eigen::VectorXd m_accelerations_particles</div><div class="ttdoc">(7N x 1) (linear/angular) accelerations of all particles</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8hpp_source.html#l00492">SystemData.hpp:492</a></div></div>
@@ -6835,6 +6808,7 @@ Here is the call graph for this function:</div>
 <div class="ttc" id="aclassSystemData_html_a7440e51155f745654a524ccc5a49a289"><div class="ttname"><a href="classSystemData.html#a7440e51155f745654a524ccc5a49a289">SystemData::m_wca_sigma</a></div><div class="ttdeci">double m_wca_sigma</div><div class="ttdoc">WCA length scale .</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8hpp_source.html#l00430">SystemData.hpp:430</a></div></div>
 <div class="ttc" id="aclassSystemData_html_a75b657730f621e10d17dd2f8d90bdf30"><div class="ttname"><a href="classSystemData.html#a75b657730f621e10d17dd2f8d90bdf30">SystemData::m_levi_cevita</a></div><div class="ttdeci">Eigen::TensorFixedSize&lt; double, Eigen::Sizes&lt; 3, 3, 3 &gt; &gt; m_levi_cevita</div><div class="ttdoc">(3 x 3 x 3) (skew-symmetric) 3rd order identity tensor</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8hpp_source.html#l00475">SystemData.hpp:475</a></div></div>
 <div class="ttc" id="aclassSystemData_html_ab5cae3becced6065a062fc1e2802a192"><div class="ttname"><a href="classSystemData.html#ab5cae3becced6065a062fc1e2802a192">SystemData::m_particle_group_id</a></div><div class="ttdeci">Eigen::VectorXi m_particle_group_id</div><div class="ttdoc">(N x 1) Group assembly (swimmer) number that each particle belongs to</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8hpp_source.html#l00418">SystemData.hpp:418</a></div></div>
+<div class="ttc" id="anamespacecollinear-swimmer-internal-dynamics-configuration_html_a69e6c9554548d7b83c2a63b0600a0a7a"><div class="ttname"><a href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a69e6c9554548d7b83c2a63b0600a0a7a">collinear-swimmer-internal-dynamics-configuration.fluid_density</a></div><div class="ttdeci">float fluid_density</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00076">collinear-swimmer-internal-dynamics-configuration.py:76</a></div></div>
 <div class="ttc" id="aclassSystemData_html_a308b39ef8365455d49d0f8c11d3ac863"><div class="ttname"><a href="classSystemData.html#a308b39ef8365455d49d0f8c11d3ac863">SystemData::m_quaternions_particles</a></div><div class="ttdeci">Eigen::VectorXd m_quaternions_particles</div><div class="ttdoc">(4N x 1) quaternions of all particles</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8hpp_source.html#l00497">SystemData.hpp:497</a></div></div>
 <div class="ttc" id="aclassSystemData_html_a188c38c8448ed32d3cf697b6f07b9d6a"><div class="ttname"><a href="classSystemData.html#a188c38c8448ed32d3cf697b6f07b9d6a">SystemData::accelerationsArticulation</a></div><div class="ttdeci">void accelerationsArticulation()</div><div class="ttdoc">Computes the articulation (linear) accelerations of the particles relative to their respective locate...</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8cpp_source.html#l00468">SystemData.cpp:468</a></div></div>
 <div class="ttc" id="aclassSystemData_html_a8d148b51ac360774576570643a276a9d"><div class="ttname"><a href="classSystemData.html#a8d148b51ac360774576570643a276a9d">SystemData::m_return_bool</a></div><div class="ttdeci">bool m_return_bool</div><div class="ttdoc">defaults to successful parse GSD flag</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8hpp_source.html#l00378">SystemData.hpp:378</a></div></div>
@@ -6871,8 +6845,11 @@ Here is the call graph for this function:</div>
 <div class="ttc" id="aclassSystemData_html_ace7ab993cef2e6608251c2d0accd3425"><div class="ttname"><a href="classSystemData.html#ace7ab993cef2e6608251c2d0accd3425">SystemData::inputGSDFile</a></div><div class="ttdeci">std::string inputGSDFile() const</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8hpp_source.html#l00550">SystemData.hpp:550</a></div></div>
 <div class="ttc" id="aclassSystemData_html_a92ce50a4c8b53aa6a490153c1b09ab8a"><div class="ttname"><a href="classSystemData.html#a92ce50a4c8b53aa6a490153c1b09ab8a">SystemData::velocitiesArticulation</a></div><div class="ttdeci">void velocitiesArticulation()</div><div class="ttdoc">Computes the articulation (linear) velocities of the particles relative to their respective locater p...</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8cpp_source.html#l00430">SystemData.cpp:430</a></div></div>
 <div class="ttc" id="aclassSystemData_html_aae607898eaf58eb949c3ba518be5f0ca"><div class="ttname"><a href="classSystemData.html#aae607898eaf58eb949c3ba518be5f0ca">SystemData::m_handle</a></div><div class="ttdeci">std::shared_ptr&lt; gsd_handle &gt; m_handle</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8hpp_source.html#l00374">SystemData.hpp:374</a></div></div>
+<div class="ttc" id="anamespacecollinear-swimmer-internal-dynamics-configuration_html_a5e0557c34ba4cd03c04dadece5980363"><div class="ttname"><a href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a5e0557c34ba4cd03c04dadece5980363">collinear-swimmer-internal-dynamics-configuration.num_steps_output</a></div><div class="ttdeci">int num_steps_output</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00073">collinear-swimmer-internal-dynamics-configuration.py:73</a></div></div>
+<div class="ttc" id="anamespacecollinear-swimmer-internal-dynamics-configuration_html_a0369087de34e80b438a58688a17c2b7d"><div class="ttname"><a href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a0369087de34e80b438a58688a17c2b7d">collinear-swimmer-internal-dynamics-configuration.wca_sigma</a></div><div class="ttdeci">float wca_sigma</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00081">collinear-swimmer-internal-dynamics-configuration.py:81</a></div></div>
 <div class="ttc" id="aclassSystemData_html_a53f0197ff58e2ff7cca9e69a1f3cd7ba"><div class="ttname"><a href="classSystemData.html#a53f0197ff58e2ff7cca9e69a1f3cd7ba">SystemData::m_positions_bodies</a></div><div class="ttdeci">Eigen::VectorXd m_positions_bodies</div><div class="ttdoc">(7M x 1) both linear and quaternion D.o.F. of body locaters</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8hpp_source.html#l00481">SystemData.hpp:481</a></div></div>
 <div class="ttc" id="aclassSystemData_html_a197ff86a1aac1f01cd3f132fa88634b8"><div class="ttname"><a href="classSystemData.html#a197ff86a1aac1f01cd3f132fa88634b8">SystemData::m_fluid_density</a></div><div class="ttdeci">double m_fluid_density</div><div class="ttdoc">mass density of fluid</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8hpp_source.html#l00422">SystemData.hpp:422</a></div></div>
+<div class="ttc" id="anamespacecollinear-swimmer-internal-dynamics-configuration_html_aa7937b2670b1e095c983e3c5b3a0e069"><div class="ttname"><a href="namespacecollinear-swimmer-internal-dynamics-configuration.html#aa7937b2670b1e095c983e3c5b3a0e069">collinear-swimmer-internal-dynamics-configuration.particle_density</a></div><div class="ttdeci">float particle_density</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00077">collinear-swimmer-internal-dynamics-configuration.py:77</a></div></div>
 <div class="ttc" id="aclassSystemData_html_a92f86c53fbb7b9619c6dea5cfa71e6df"><div class="ttname"><a href="classSystemData.html#a92f86c53fbb7b9619c6dea5cfa71e6df">SystemData::m_positions_particles_articulation</a></div><div class="ttdeci">Eigen::VectorXd m_positions_particles_articulation</div><div class="ttdoc">(3N x 1) (linear) articulation positions of all particles</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8hpp_source.html#l00503">SystemData.hpp:503</a></div></div>
 <div class="ttc" id="aclassSystemData_html_a0aa3296e765575ba6397b5f71bf892a8"><div class="ttname"><a href="classSystemData.html#a0aa3296e765575ba6397b5f71bf892a8">SystemData::gradientChangeOfVariableTensors</a></div><div class="ttdeci">void gradientChangeOfVariableTensors(const Eigen::ThreadPoolDevice &amp;device)</div><div class="ttdoc">Computes the gradients rigid body motion connectivity tensors and tensors associated with change of v...</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8cpp_source.html#l00702">SystemData.cpp:702</a></div></div>
 <div class="ttc" id="aclassSystemData_html_a32d471f783e3cf388a8b2c82b4eaf7f0"><div class="ttname"><a href="classSystemData.html#a32d471f783e3cf388a8b2c82b4eaf7f0">SystemData::m_timestep</a></div><div class="ttdeci">int m_timestep</div><div class="ttdoc">current simulation timestep (iteration)</div><div class="ttdef"><b>Definition:</b> <a href="SystemData_8hpp_source.html#l00456">SystemData.hpp:456</a></div></div>
@@ -6898,7 +6875,7 @@ Here is the call graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="classSystemData.html">SystemData</a></li>
-    <li class="footer">Generated on Mon Nov 15 2021 17:32:11 for Bodies in Potential Flow by
+    <li class="footer">Generated on Wed Dec 1 2021 15:15:38 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

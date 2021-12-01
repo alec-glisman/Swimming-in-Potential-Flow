@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['selfcleaningevaluator_516',['selfCleaningEvaluator',['../classselfCleaningEvaluator.html',1,'']]],
-  ['systemdata_517',['SystemData',['../classSystemData.html',1,'']]]
+  ['rungekutta4_629',['RungeKutta4',['../classRungeKutta4.html',1,'']]]
 ];

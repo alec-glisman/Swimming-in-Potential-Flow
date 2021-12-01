@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['max_1014',['MAX',['../helper__cuda_8h.html#afa99ec4acc4ecb2dc3c2d05da15d0e3f',1,'helper_cuda.h']]]
+  ['max_1242',['MAX',['../helper__cuda_8h.html#afa99ec4acc4ecb2dc3c2d05da15d0e3f',1,'helper_cuda.h']]]
 ];

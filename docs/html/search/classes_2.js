@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['potentialhydrodynamics_513',['PotentialHydrodynamics',['../classPotentialHydrodynamics.html',1,'']]],
-  ['progressbar_514',['ProgressBar',['../classProgressBar.html',1,'']]]
+  ['multiple_625',['Multiple',['../classplotStyling_1_1Multiple.html',1,'plotStyling']]]
 ];

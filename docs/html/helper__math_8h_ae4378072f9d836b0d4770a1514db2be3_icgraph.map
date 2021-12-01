@@ -1,8 +1,11 @@
 <map id="abs" name="abs">
-<area shape="rect" id="node1" title=" " alt="" coords="801,35,844,61"/>
-<area shape="rect" id="node2" href="$helper__math_8h.html#afe553b3ddd067e12861af3967b19f1cd" title=" " alt="" coords="641,5,683,32"/>
-<area shape="rect" id="node3" href="$classSystemData.html#a000a3e77f12b4c1bc9678e9ede202f83" title="Computes the orientation (unit vector) of a particle with respect to its locater point." alt="" coords="571,57,753,98"/>
-<area shape="rect" id="node4" href="$classSystemData.html#a96d6dfb7bdb78d98fbbdac1f421c838c" title="Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constrain..." alt="" coords="380,64,523,91"/>
-<area shape="rect" id="node5" href="$classSystemData.html#ac3a796dc8bf1fa82ea6dec33e548924f" title="Function loads data from GSD file using GSDUtil class." alt="" coords="153,64,332,91"/>
-<area shape="rect" id="node6" href="$TestSimulation_8cpp.html#a7537b8ac7073aed4bf8255b43bbbf1f9" title=" " alt="" coords="5,64,105,91"/>
+<area shape="rect" id="node1" title=" " alt="" coords="909,129,952,156"/>
+<area shape="rect" id="node2" href="$helper__math_8h.html#afe553b3ddd067e12861af3967b19f1cd" title=" " alt="" coords="695,5,737,32"/>
+<area shape="rect" id="node3" href="$namespacecollinear-swimmer-internal-dynamics-individual-analysis.html#a85816fbd52c1d1e26f47e73fce3a238d" title="Script to analyze a single GSD file." alt="" coords="572,57,860,98"/>
+<area shape="rect" id="node4" href="$namespacecollinear-swimmer-internal-dynamics-aggregate-analysis.html#a95d6a2c618aa100dd70824ac5edce4bf" title="Analyze a single GSD file." alt="" coords="571,122,861,163"/>
+<area shape="rect" id="node5" href="$classSystemData.html#a000a3e77f12b4c1bc9678e9ede202f83" title="Computes the orientation (unit vector) of a particle with respect to its locater point." alt="" coords="625,187,807,229"/>
+<area shape="rect" id="node9" href="$classRungeKutta4.html#a301c6c8b82c9f0808159aff069aef28e" title="Construct a new runge Kutta4 object." alt="" coords="625,253,807,280"/>
+<area shape="rect" id="node6" href="$classSystemData.html#a96d6dfb7bdb78d98fbbdac1f421c838c" title="Updates all relevant rigid body motion tensors, respective gradients, and kinematic/Udwadia constrain..." alt="" coords="380,195,523,221"/>
+<area shape="rect" id="node7" href="$classSystemData.html#ac3a796dc8bf1fa82ea6dec33e548924f" title="Function loads data from GSD file using GSDUtil class." alt="" coords="153,195,332,221"/>
+<area shape="rect" id="node8" href="$TestSimulation_8cpp.html#a7537b8ac7073aed4bf8255b43bbbf1f9" title=" " alt="" coords="5,195,105,221"/>
 </map>

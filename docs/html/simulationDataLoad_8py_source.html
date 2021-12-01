@@ -114,13 +114,13 @@ $(document).ready(function(){initNavTree('simulationDataLoad_8py_source.html',''
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">import</span> pandas <span class="keyword">as</span> pd                <span class="comment"># Data structures</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"># Global options for external dependencies</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;np.set_printoptions(threshold=sys.maxsize, precision=16)</div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="namespacesimulationDataLoad.html#aff82eb6dbd1b64882915a24cacbb3dc7">   20</a></span>&#160;np.set_printoptions(threshold=sys.maxsize, precision=16)</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment"># Internal Dependencies</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">from</span> GSDUtilPy <span class="keyword">import</span> GSDUtilPy  <span class="comment"># noqa: E402</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">def </span>find_compressed_data(relative_path_base_dir, sim_parameters_varied):</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">def </span><a class="code" href="namespacesimulationDataLoad.html#a95311b311258be707b05eead2f52571e">find_compressed_data</a>(relative_path_base_dir, sim_parameters_varied):</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;Locates compressed data files and returns paths as list of strings.</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="stringliteral"></span> </div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="stringliteral">    Args:</span></div>
@@ -129,7 +129,7 @@ $(document).ready(function(){initNavTree('simulationDataLoad_8py_source.html',''
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="stringliteral"></span> </div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="stringliteral">    Returns:</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="stringliteral">        list: List of strings that give compressed filepaths found and matched.</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="namespacesimulationDataLoad.html#a95311b311258be707b05eead2f52571e">   35</a></span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    data_path = []</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
@@ -147,7 +147,7 @@ $(document).ready(function(){initNavTree('simulationDataLoad_8py_source.html',''
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            <span class="keywordflow">if</span> (len(matched) == 0):</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                warnings.warn(</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                    f<span class="stringliteral">&quot;Failure to find data. No data path found in parameter: {p}, relative path: {r}&quot;</span>)</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                    f<span class="stringliteral">&quot;\nFailure to find data.No data path found in parameter: {p},\nrelative path: {r}\nfile paths: {file_paths}\nregex_str{regex_str}&quot;</span>)</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            desired_file_paths.append(matched)</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
@@ -159,7 +159,7 @@ $(document).ready(function(){initNavTree('simulationDataLoad_8py_source.html',''
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordflow">return</span> data_path</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">def </span>load_compressed_data(tar_data_path):</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">def </span><a class="code" href="namespacesimulationDataLoad.html#a7923bc96a25c1889b0bcf68199d58284">load_compressed_data</a>(tar_data_path):</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;untar and load data using GSDUtilPy class</span></div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="stringliteral"></span> </div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="stringliteral">    Args:</span></div>
@@ -171,7 +171,7 @@ $(document).ready(function(){initNavTree('simulationDataLoad_8py_source.html',''
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="stringliteral"></span> </div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="stringliteral">    Returns:</span></div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="stringliteral">        list: List of GSDUtilPy classes that have GSD data parsed</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="namespacesimulationDataLoad.html#a7923bc96a25c1889b0bcf68199d58284">   77</a></span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="comment"># get filename without extension</span></div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    filename = Path(tar_data_path)</div>
@@ -198,7 +198,7 @@ $(document).ready(function(){initNavTree('simulationDataLoad_8py_source.html',''
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            <span class="keywordflow">for</span> file <span class="keywordflow">in</span> files:  <span class="comment"># Loop through all files in given directory</span></div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;                <span class="keywordflow">if</span> (<span class="stringliteral">&quot;.gsd&quot;</span> <span class="keywordflow">in</span> file):</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;                    <span class="keyword">with</span> open(root + <span class="stringliteral">&quot;/&quot;</span> + file) <span class="keyword">as</span> g:</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;                        cur_gsd = <a class="code" href="namespaceGSDUtilPy.html">GSDUtilPy</a>(g.name, create_gsd=<span class="keyword">False</span>)</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;                        cur_gsd = <a class="code" href="classGSDUtilPy_1_1GSDUtilPy.html">GSDUtilPy</a>(g.name, create_gsd=<span class="keyword">False</span>)</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                        gsd_files.append(cur_gsd)</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        assert(len(gsd_files) &gt; 0)</div>
@@ -214,7 +214,7 @@ $(document).ready(function(){initNavTree('simulationDataLoad_8py_source.html',''
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordflow">return</span> gsd_files</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="keyword">def </span>parse_loaded_data(gsd_files):</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="keyword">def </span><a class="code" href="namespacesimulationDataLoad.html#aa150368134a2e30b231c87aeeb6c6eda">parse_loaded_data</a>(gsd_files):</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;Parses input GSD files and outputs to pandas DataFrame</span></div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="stringliteral"></span> </div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="stringliteral">    Args:</span></div>
@@ -226,7 +226,7 @@ $(document).ready(function(){initNavTree('simulationDataLoad_8py_source.html',''
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="stringliteral"></span> </div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="stringliteral">    Returns:</span></div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="stringliteral">        pd.DataFrame: DataFrame containing all data parsed from input gsd_files</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno"><a class="line" href="namespacesimulationDataLoad.html#aa150368134a2e30b231c87aeeb6c6eda">  132</a></span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="comment"># NOTE: Assuming each GSD has same number of frames and particles</span></div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    nframes = gsd_files[0].trajectory.file.nframes</div>
@@ -378,7 +378,7 @@ $(document).ready(function(){initNavTree('simulationDataLoad_8py_source.html',''
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    <span class="keywordflow">return</span> df</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
 <div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160; </div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="keyword">def </span>gsd_df(relative_path_base_dir, sim_parameters_varied):</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="keyword">def </span><a class="code" href="namespacesimulationDataLoad.html#ae3187c41888f046bcc6417834e68e241">gsd_df</a>(relative_path_base_dir, sim_parameters_varied):</div>
 <div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;Wrapper function that combines previous function into single call that can do all data parsing and loading.</span></div>
 <div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;<span class="stringliteral"></span> </div>
 <div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;<span class="stringliteral">    Args:</span></div>
@@ -390,12 +390,12 @@ $(document).ready(function(){initNavTree('simulationDataLoad_8py_source.html',''
 <div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;<span class="stringliteral"></span> </div>
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<span class="stringliteral">    Returns:</span></div>
 <div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;<span class="stringliteral">        pd.DataFrame: DataFrame containing all data parsed from input.</span></div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00296"></a><span class="lineno"><a class="line" href="namespacesimulationDataLoad.html#ae3187c41888f046bcc6417834e68e241">  296</a></span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
 <div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160; </div>
 <div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    data_df = []</div>
 <div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160; </div>
 <div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    <span class="comment"># Find path to relevant compressed data</span></div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    comp_data_path = find_compressed_data(</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    comp_data_path = <a class="code" href="namespacesimulationDataLoad.html#a95311b311258be707b05eead2f52571e">find_compressed_data</a>(</div>
 <div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        relative_path_base_dir, sim_parameters_varied)</div>
 <div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160; </div>
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(len(comp_data_path)):  <span class="comment"># loop over data source directories</span></div>
@@ -405,7 +405,7 @@ $(document).ready(function(){initNavTree('simulationDataLoad_8py_source.html',''
 <div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;        <span class="keywordflow">for</span> j <span class="keywordflow">in</span> range(len(comp_data_path[i])):  <span class="comment"># loop over parameters varied</span></div>
 <div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160; </div>
 <div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;            <span class="comment"># Load GSD files from compressed data</span></div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;            gsd_current = load_compressed_data(comp_data_path[i][j])</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;            gsd_current = <a class="code" href="namespacesimulationDataLoad.html#a7923bc96a25c1889b0bcf68199d58284">load_compressed_data</a>(comp_data_path[i][j])</div>
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160; </div>
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;            <span class="comment"># Parse GSD files</span></div>
 <div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;            <span class="keywordflow">if</span> (len(gsd_current) &gt; 0):</div>
@@ -417,7 +417,7 @@ $(document).ready(function(){initNavTree('simulationDataLoad_8py_source.html',''
 <div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160; </div>
 <div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        <span class="comment"># Parse GSD files</span></div>
 <div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;        <span class="keywordflow">try</span>:</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;            data_df.append(parse_loaded_data(data_source_gsd_files))</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;            data_df.append(<a class="code" href="namespacesimulationDataLoad.html#aa150368134a2e30b231c87aeeb6c6eda">parse_loaded_data</a>(data_source_gsd_files))</div>
 <div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160; </div>
 <div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;        <span class="keywordflow">except</span>:</div>
 <div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;            <span class="keywordflow">raise</span> RuntimeError(f<span class="stringliteral">&quot;Failed on iteration {i}&quot;</span>)</div>
@@ -427,12 +427,16 @@ $(document).ready(function(){initNavTree('simulationDataLoad_8py_source.html',''
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    <span class="keywordflow">return</span> all_data_df</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="anamespaceGSDUtilPy_html"><div class="ttname"><a href="namespaceGSDUtilPy.html">GSDUtilPy</a></div><div class="ttdef"><b>Definition:</b> <a href="GSDUtilPy_8py_source.html#l00001">GSDUtilPy.py:1</a></div></div>
+<div class="ttc" id="aclassGSDUtilPy_1_1GSDUtilPy_html"><div class="ttname"><a href="classGSDUtilPy_1_1GSDUtilPy.html">GSDUtilPy.GSDUtilPy</a></div><div class="ttdoc">Convert data from user to GSD schema and save frame to file.</div><div class="ttdef"><b>Definition:</b> <a href="GSDUtilPy_8py_source.html#l00020">GSDUtilPy.py:20</a></div></div>
+<div class="ttc" id="anamespacesimulationDataLoad_html_ae3187c41888f046bcc6417834e68e241"><div class="ttname"><a href="namespacesimulationDataLoad.html#ae3187c41888f046bcc6417834e68e241">simulationDataLoad.gsd_df</a></div><div class="ttdeci">def gsd_df(relative_path_base_dir, sim_parameters_varied)</div><div class="ttdoc">Wrapper function that combines previous function into single call that can do all data parsing and lo...</div><div class="ttdef"><b>Definition:</b> <a href="simulationDataLoad_8py_source.html#l00296">simulationDataLoad.py:296</a></div></div>
+<div class="ttc" id="anamespacesimulationDataLoad_html_a7923bc96a25c1889b0bcf68199d58284"><div class="ttname"><a href="namespacesimulationDataLoad.html#a7923bc96a25c1889b0bcf68199d58284">simulationDataLoad.load_compressed_data</a></div><div class="ttdeci">def load_compressed_data(tar_data_path)</div><div class="ttdoc">untar and load data using GSDUtilPy class</div><div class="ttdef"><b>Definition:</b> <a href="simulationDataLoad_8py_source.html#l00077">simulationDataLoad.py:77</a></div></div>
+<div class="ttc" id="anamespacesimulationDataLoad_html_a95311b311258be707b05eead2f52571e"><div class="ttname"><a href="namespacesimulationDataLoad.html#a95311b311258be707b05eead2f52571e">simulationDataLoad.find_compressed_data</a></div><div class="ttdeci">def find_compressed_data(relative_path_base_dir, sim_parameters_varied)</div><div class="ttdoc">Locates compressed data files and returns paths as list of strings.</div><div class="ttdef"><b>Definition:</b> <a href="simulationDataLoad_8py_source.html#l00035">simulationDataLoad.py:35</a></div></div>
+<div class="ttc" id="anamespacesimulationDataLoad_html_aa150368134a2e30b231c87aeeb6c6eda"><div class="ttname"><a href="namespacesimulationDataLoad.html#aa150368134a2e30b231c87aeeb6c6eda">simulationDataLoad.parse_loaded_data</a></div><div class="ttdeci">def parse_loaded_data(gsd_files)</div><div class="ttdoc">Parses input GSD files and outputs to pandas DataFrame.</div><div class="ttdef"><b>Definition:</b> <a href="simulationDataLoad_8py_source.html#l00132">simulationDataLoad.py:132</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_7837fde3ab9c1fb2fc5be7b717af8d79.html">python</a></li><li class="navelem"><a class="el" href="simulationDataLoad_8py.html">simulationDataLoad.py</a></li>
-    <li class="footer">Generated on Mon Nov 15 2021 17:32:10 for Bodies in Potential Flow by
+    <li class="footer">Generated on Wed Dec 1 2021 15:15:37 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

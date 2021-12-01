@@ -91,17 +91,984 @@ $(document).ready(function(){initNavTree('namespacecollinear-swimmer-internal-dy
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">collinear-swimmer-internal-dynamics-configuration Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a9508a1681c5a293b08324cc834bd3580"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a9508a1681c5a293b08324cc834bd3580">initializeGSD</a> (<a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#aa437a0d484b5090261e76d1bd4097a28">gsd_path</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#aefa59be77c96ddc49af6f8d8ee7e514c">N</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a15339281163e8718f0200fb2adfec38f">M</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a818621a78c2f9f2d5ad31e2a2b62d1e6">dt</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a00affdb8d33e01ee592a870089264a0a">ti</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a14d47d1f20522121d7fc8616a2ca7d29">tf</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#acc2aa6532175aa4f5b0b3d663781117a">tau</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a5e0557c34ba4cd03c04dadece5980363">num_steps_output</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a69e6c9554548d7b83c2a63b0600a0a7a">fluid_density</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#aa7937b2670b1e095c983e3c5b3a0e069">particle_density</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a1bf9d6864360c7f088c0d5154039d4bc">wca_epsilon</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a0369087de34e80b438a58688a17c2b7d">wca_sigma</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#ad49826761cef3f9a6fd3e896475b37a1">image_system</a>)</td></tr>
+<tr class="memdesc:a9508a1681c5a293b08324cc834bd3580"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create GSD, set log parameters, set particle parameters.  <a href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a9508a1681c5a293b08324cc834bd3580">More...</a><br /></td></tr>
+<tr class="separator:a9508a1681c5a293b08324cc834bd3580"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66bf70df658f841a2167402cb835e7a7"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a66bf70df658f841a2167402cb835e7a7">setInitialConditions</a> (<a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a7f6ae5928780bbcc67b6be23755f7352">gsd_class</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#aefa59be77c96ddc49af6f8d8ee7e514c">N</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a15339281163e8718f0200fb2adfec38f">M</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a53bfbff33817f704d33d85cf40f044e4">num_particles_per_body</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a467800419d486c96e16de1eb6cb7f7e8">Z_height</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#ad49826761cef3f9a6fd3e896475b37a1">image_system</a>)</td></tr>
+<tr class="memdesc:a66bf70df658f841a2167402cb835e7a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set initial kinematics of GSD file.  <a href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a66bf70df658f841a2167402cb835e7a7">More...</a><br /></td></tr>
+<tr class="separator:a66bf70df658f841a2167402cb835e7a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99c39804757ca551f82a849ac41430da"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a99c39804757ca551f82a849ac41430da">setSystemData</a> (<a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a7f6ae5928780bbcc67b6be23755f7352">gsd_class</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a15339281163e8718f0200fb2adfec38f">M</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a05970d0ee525980fd0c05208d1b2b282">R_avg</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a467800419d486c96e16de1eb6cb7f7e8">Z_height</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a151cd771405a8a85b973975029efd8ba">U0</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a60bb96a4991475c4ee6c337bc50d6c0d">omega</a>, <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#acbedd39782fc75a2bfdc5ead20fef273">phase_angle</a>)</td></tr>
+<tr class="memdesc:a99c39804757ca551f82a849ac41430da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set system-specific parameters to GSD class.  <a href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a99c39804757ca551f82a849ac41430da">More...</a><br /></td></tr>
+<tr class="separator:a99c39804757ca551f82a849ac41430da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af58411b3e2d4c10a3a8b9615b3a1f34e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#af58411b3e2d4c10a3a8b9615b3a1f34e">saveGSDFrame</a> (<a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a7f6ae5928780bbcc67b6be23755f7352">gsd_class</a>)</td></tr>
+<tr class="memdesc:af58411b3e2d4c10a3a8b9615b3a1f34e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save GSD frame to file.  <a href="namespacecollinear-swimmer-internal-dynamics-configuration.html#af58411b3e2d4c10a3a8b9615b3a1f34e">More...</a><br /></td></tr>
+<tr class="separator:af58411b3e2d4c10a3a8b9615b3a1f34e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a094816de93cbf39f7b0d84dd10a52ece"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a094816de93cbf39f7b0d84dd10a52ece">parser</a> = OptionParser()</td></tr>
+<tr class="separator:a094816de93cbf39f7b0d84dd10a52ece"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae46f49c03d1b37aed0de35d3326acf06"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#ae46f49c03d1b37aed0de35d3326acf06">dest</a></td></tr>
+<tr class="separator:ae46f49c03d1b37aed0de35d3326acf06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1f6e39744e4c6b03f2ecdf23b835ec3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#ab1f6e39744e4c6b03f2ecdf23b835ec3">help</a></td></tr>
+<tr class="separator:ab1f6e39744e4c6b03f2ecdf23b835ec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf84fbc7c0cd3c134e9c5f228f029b0b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#acf84fbc7c0cd3c134e9c5f228f029b0b">metavar</a></td></tr>
+<tr class="separator:acf84fbc7c0cd3c134e9c5f228f029b0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e0557c34ba4cd03c04dadece5980363"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a5e0557c34ba4cd03c04dadece5980363">num_steps_output</a> = 1000</td></tr>
+<tr class="separator:a5e0557c34ba4cd03c04dadece5980363"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69e6c9554548d7b83c2a63b0600a0a7a"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a69e6c9554548d7b83c2a63b0600a0a7a">fluid_density</a> = 1.0</td></tr>
+<tr class="separator:a69e6c9554548d7b83c2a63b0600a0a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7937b2670b1e095c983e3c5b3a0e069"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#aa7937b2670b1e095c983e3c5b3a0e069">particle_density</a> = 1.0</td></tr>
+<tr class="separator:aa7937b2670b1e095c983e3c5b3a0e069"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bf9d6864360c7f088c0d5154039d4bc"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a1bf9d6864360c7f088c0d5154039d4bc">wca_epsilon</a> = 0.0</td></tr>
+<tr class="separator:a1bf9d6864360c7f088c0d5154039d4bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0369087de34e80b438a58688a17c2b7d"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a0369087de34e80b438a58688a17c2b7d">wca_sigma</a> = 0.0</td></tr>
+<tr class="separator:a0369087de34e80b438a58688a17c2b7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53bfbff33817f704d33d85cf40f044e4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a53bfbff33817f704d33d85cf40f044e4">num_particles_per_body</a> = 3</td></tr>
+<tr class="separator:a53bfbff33817f704d33d85cf40f044e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae67d9c20851834c952024f3ab2a931e1"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#ae67d9c20851834c952024f3ab2a931e1">types</a> = ['constrained', 'locater']</td></tr>
+<tr class="separator:ae67d9c20851834c952024f3ab2a931e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17fc3910ea1caf07e0da84e901a4243d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a17fc3910ea1caf07e0da84e901a4243d">options</a></td></tr>
+<tr class="separator:a17fc3910ea1caf07e0da84e901a4243d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b2914d9e55cd0288957a686ade7c143"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a1b2914d9e55cd0288957a686ade7c143">remainder</a></td></tr>
+<tr class="separator:a1b2914d9e55cd0288957a686ade7c143"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa437a0d484b5090261e76d1bd4097a28"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#aa437a0d484b5090261e76d1bd4097a28">gsd_path</a> = str(options.u_gsd_path)</td></tr>
+<tr class="separator:aa437a0d484b5090261e76d1bd4097a28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a818621a78c2f9f2d5ad31e2a2b62d1e6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a818621a78c2f9f2d5ad31e2a2b62d1e6">dt</a> = np.double(options.u_dt)</td></tr>
+<tr class="separator:a818621a78c2f9f2d5ad31e2a2b62d1e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00affdb8d33e01ee592a870089264a0a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a00affdb8d33e01ee592a870089264a0a">ti</a> = np.double(options.u_ti)</td></tr>
+<tr class="separator:a00affdb8d33e01ee592a870089264a0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14d47d1f20522121d7fc8616a2ca7d29"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a14d47d1f20522121d7fc8616a2ca7d29">tf</a> = np.double(options.u_tf)</td></tr>
+<tr class="separator:a14d47d1f20522121d7fc8616a2ca7d29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05970d0ee525980fd0c05208d1b2b282"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a05970d0ee525980fd0c05208d1b2b282">R_avg</a> = np.double(options.u_R_avg)</td></tr>
+<tr class="separator:a05970d0ee525980fd0c05208d1b2b282"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a467800419d486c96e16de1eb6cb7f7e8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a467800419d486c96e16de1eb6cb7f7e8">Z_height</a> = np.double(options.u_Z_height)</td></tr>
+<tr class="separator:a467800419d486c96e16de1eb6cb7f7e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbedd39782fc75a2bfdc5ead20fef273"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#acbedd39782fc75a2bfdc5ead20fef273">phase_angle</a> = np.double(options.u_phase_angle)</td></tr>
+<tr class="separator:acbedd39782fc75a2bfdc5ead20fef273"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a151cd771405a8a85b973975029efd8ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a151cd771405a8a85b973975029efd8ba">U0</a> = np.double(options.u_U0)</td></tr>
+<tr class="separator:a151cd771405a8a85b973975029efd8ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60bb96a4991475c4ee6c337bc50d6c0d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a60bb96a4991475c4ee6c337bc50d6c0d">omega</a> = np.double(options.u_omega)</td></tr>
+<tr class="separator:a60bb96a4991475c4ee6c337bc50d6c0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad49826761cef3f9a6fd3e896475b37a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#ad49826761cef3f9a6fd3e896475b37a1">image_system</a> = int(options.u_image_system)</td></tr>
+<tr class="separator:ad49826761cef3f9a6fd3e896475b37a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15339281163e8718f0200fb2adfec38f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a15339281163e8718f0200fb2adfec38f">M</a> = int(options.u_number_bodies)</td></tr>
+<tr class="separator:a15339281163e8718f0200fb2adfec38f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefa59be77c96ddc49af6f8d8ee7e514c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#aefa59be77c96ddc49af6f8d8ee7e514c">N</a> = <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a53bfbff33817f704d33d85cf40f044e4">num_particles_per_body</a> * <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a15339281163e8718f0200fb2adfec38f">M</a></td></tr>
+<tr class="separator:aefa59be77c96ddc49af6f8d8ee7e514c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc2aa6532175aa4f5b0b3d663781117a"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#acc2aa6532175aa4f5b0b3d663781117a">tau</a> = (2.0 * np.pi) / <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a60bb96a4991475c4ee6c337bc50d6c0d">omega</a></td></tr>
+<tr class="separator:acc2aa6532175aa4f5b0b3d663781117a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c7dbef064ba3968ecb7135d6b45018b"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a2c7dbef064ba3968ecb7135d6b45018b">epsilon</a> = (<a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a151cd771405a8a85b973975029efd8ba">U0</a> / <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a60bb96a4991475c4ee6c337bc50d6c0d">omega</a>) / <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a05970d0ee525980fd0c05208d1b2b282">R_avg</a></td></tr>
+<tr class="separator:a2c7dbef064ba3968ecb7135d6b45018b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f6ae5928780bbcc67b6be23755f7352"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a7f6ae5928780bbcc67b6be23755f7352">gsd_class</a></td></tr>
+<tr class="separator:a7f6ae5928780bbcc67b6be23755f7352"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a9508a1681c5a293b08324cc834bd3580"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9508a1681c5a293b08324cc834bd3580">&#9670;&nbsp;</a></span>initializeGSD()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def collinear-swimmer-internal-dynamics-configuration.initializeGSD </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>gsd_path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>N</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>M</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>dt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>ti</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tau</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>num_steps_output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fluid_density</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>particle_density</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>wca_epsilon</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>wca_sigma</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>image_system</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create GSD, set log parameters, set particle parameters. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">gsd_path</td><td>path to GSD file to create </td></tr>
+    <tr><td class="paramname">N</td><td>number of particles to simulate </td></tr>
+    <tr><td class="paramname">M</td><td>number of bodies to simulate </td></tr>
+    <tr><td class="paramname">num_particles_per_body</td><td>number of particles per body </td></tr>
+    <tr><td class="paramname">dt</td><td>integrator finite delta-t </td></tr>
+    <tr><td class="paramname">ti</td><td>integrator initial time </td></tr>
+    <tr><td class="paramname">tf</td><td>integrator final time </td></tr>
+    <tr><td class="paramname">tau</td><td>characteristic simulation time </td></tr>
+    <tr><td class="paramname">num_steps_output</td><td>number of frames to write to GSD during simulation </td></tr>
+    <tr><td class="paramname">fluid_density</td><td>fluid mass density </td></tr>
+    <tr><td class="paramname">particle_density</td><td>particle mass density </td></tr>
+    <tr><td class="paramname">wca_epsilon</td><td>WCA potential energy scale </td></tr>
+    <tr><td class="paramname">wca_sigma</td><td>WCA potential length scale </td></tr>
+    <tr><td class="paramname">image_system</td><td>Integer boolean deciding if simulation is an image system</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd>
+<dd>
+GSD_class GSD helper class </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00113">113</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+<div class="fragment"><div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        image_system (int): Integer boolean deciding <span class="keywordflow">if</span> simulation <span class="keywordflow">is</span> an image system</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    Returns:</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        GSD_class: GSD helper <span class="keyword">class</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="stringliteral">    # Set particle type-ids</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="stringliteral">    typeid = [None] * N</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="stringliteral">    for i in range(M):</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="stringliteral">        typeid[3 * i] = 1</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="stringliteral">        typeid[3 * i + 1] = 0</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="stringliteral">        typeid[3 * i + 2] = 0</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="stringliteral">    # Convert typeid to type required by GSD schema</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="stringliteral">    typeid = np.array(typeid, dtype=np.uint32)</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="stringliteral">    # Create GSD</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="stringliteral">    gsd_class = GSDUtilPy(gsd_path, create_gsd=True)</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="stringliteral">    # Set GSD log parameters</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="stringliteral">    gsd_class.setLogParameters(dt, ti, tf, tau,</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="stringliteral">                               num_steps_output,</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="stringliteral">                               fluid_density, particle_density,</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="stringliteral">                               wca_epsilon, wca_sigma,</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="stringliteral">                               image_system)</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="stringliteral">    # Set GSD particle parameters</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="stringliteral">    gsd_class.setParticleParameters(N, types=types, typeid=typeid)</span></div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="stringliteral">    return gsd_class</span></div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="stringliteral">def setInitialConditions(gsd_class,</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="stringliteral">                         N, M, num_particles_per_body,</span></div>
+<span class="stringliteral"></div><!-- fragment -->
+</div>
+</div>
+<a id="a66bf70df658f841a2167402cb835e7a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66bf70df658f841a2167402cb835e7a7">&#9670;&nbsp;</a></span>setInitialConditions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def collinear-swimmer-internal-dynamics-configuration.setInitialConditions </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>gsd_class</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>N</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>M</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>num_particles_per_body</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>Z_height</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>image_system</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set initial kinematics of GSD file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">gsd_class</td><td>GSD helper class </td></tr>
+    <tr><td class="paramname">N</td><td>number of particles to simulate </td></tr>
+    <tr><td class="paramname">M</td><td>number of bodies to simulate </td></tr>
+    <tr><td class="paramname">num_particles_per_body</td><td>number of particles per body </td></tr>
+    <tr><td class="paramname">Z_height</td><td>z-axis height of bodies </td></tr>
+    <tr><td class="paramname">image_system</td><td>Integer boolean deciding if simulation is an image system </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00154">154</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+<div class="fragment"><div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        image_system (int): Integer boolean deciding <span class="keywordflow">if</span> simulation <span class="keywordflow">is</span> an image system</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="stringliteral">    # orientation</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="stringliteral">    quat = np.zeros((N, 4), dtype=np.double)</span></div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="stringliteral">    no_rotation_quat = np.array([1.0, 0.0, 0.0, 0.0], dtype=np.double)</span></div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="stringliteral">    for i in range(N):</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="stringliteral">        quat[i] = no_rotation_quat</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="stringliteral">    # position (only need to specify locater position, articulation calculated in C++ simulation)</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="stringliteral">    pos = np.zeros((N, 3), dtype=np.double)</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="stringliteral">    for i in range(M):</span></div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="stringliteral">        Ni = 3 * i</span></div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="stringliteral">        for j in range(num_particles_per_body):</span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="stringliteral">            # &quot;Real&quot; particles in image system</span></div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;<span class="stringliteral">            if ((i &lt; (M/2)) and (image_system == 1)):</span></div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;<span class="stringliteral">                pos[Ni + j] = [0.0, 0.0, Z_height]</span></div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;<span class="stringliteral">            # &quot;Image&quot; particles in image system</span></div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;<span class="stringliteral">            elif ((i &gt;= (M/2)) and (image_system == 1)):</span></div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="stringliteral">                pos[Ni + j] = [0.0, 0.0, -Z_height]</span></div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;<span class="stringliteral">            # All particles in non-image system</span></div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="stringliteral">            else:</span></div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="stringliteral">                pos[Ni + j] = [0.0, 0.0, Z_height]</span></div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="stringliteral">    vel = np.zeros_like(pos, dtype=np.double)  # Calculated in C++ simulation</span></div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="stringliteral">    acc = np.zeros_like(pos, dtype=np.double)  # Calculated in C++ simulation</span></div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="stringliteral">    # output data</span></div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="stringliteral">    gsd_class.setKinematics(quat, pos, vel, acc)</span></div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="stringliteral">def setSystemData(gsd_class,</span></div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="stringliteral">                  M,</span></div>
+<span class="stringliteral"></div><!-- fragment -->
+</div>
+</div>
+<a id="a99c39804757ca551f82a849ac41430da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99c39804757ca551f82a849ac41430da">&#9670;&nbsp;</a></span>setSystemData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def collinear-swimmer-internal-dynamics-configuration.setSystemData </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>gsd_class</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>M</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>R_avg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>Z_height</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>U0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>omega</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>phase_angle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set system-specific parameters to GSD class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">gsd_class</td><td>GSD helper class </td></tr>
+    <tr><td class="paramname">M</td><td>number of bodies to simulate </td></tr>
+    <tr><td class="paramname">R_avg</td><td>average spacing between particle pairs over course of simulation </td></tr>
+    <tr><td class="paramname">Z_height</td><td>z-axis height of body initially </td></tr>
+    <tr><td class="paramname">U0</td><td>internal oscillation amplitude of body </td></tr>
+    <tr><td class="paramname">omega</td><td>internal oscillation frequency of body </td></tr>
+    <tr><td class="paramname">phase_angle</td><td>internal oscillation phase angle between particle pairs </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00210">210</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+<div class="fragment"><div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        phase_angle (double): internal oscillation phase angle between particle pairs</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;<span class="stringliteral">    # get snapshot</span></div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="stringliteral">    snapshot = gsd_class.snapshot</span></div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<span class="stringliteral">    # convert data to GSD expected type</span></div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;<span class="stringliteral">    l_R_avg = np.array([R_avg], dtype=np.double)</span></div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;<span class="stringliteral">    l_Z_height = np.array([Z_height], dtype=np.double)</span></div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="stringliteral">    l_U0 = np.array([U0], dtype=np.double)</span></div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<span class="stringliteral">    l_omega = np.array([omega], dtype=np.double)</span></div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="stringliteral">    l_phase_angle = np.array([phase_angle], dtype=np.double)</span></div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="stringliteral">    l_U_swim = np.zeros(6 * M, dtype=np.double)</span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="stringliteral">    l_A_swim = np.zeros(6 * M, dtype=np.double)</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="stringliteral">    # output data</span></div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="stringliteral">    snapshot.log[&#39;swimmer/R_avg&#39;] = l_R_avg</span></div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="stringliteral">    snapshot.log[&#39;swimmer/Z_height&#39;] = l_Z_height</span></div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;<span class="stringliteral">    snapshot.log[&#39;swimmer/U0&#39;] = l_U0</span></div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="stringliteral">    snapshot.log[&#39;swimmer/omega&#39;] = l_omega</span></div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="stringliteral">    snapshot.log[&#39;swimmer/phase_shift&#39;] = l_phase_angle</span></div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="stringliteral">    snapshot.log[&#39;swimmer/U_swim&#39;] = l_U_swim</span></div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="stringliteral">    snapshot.log[&#39;swimmer/A_swim&#39;] = l_A_swim</span></div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="stringliteral">def saveGSDFrame(gsd_class):</span></div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span>Save GSD frame to file</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af58411b3e2d4c10a3a8b9615b3a1f34e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af58411b3e2d4c10a3a8b9615b3a1f34e">&#9670;&nbsp;</a></span>saveGSDFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def collinear-swimmer-internal-dynamics-configuration.saveGSDFrame </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>gsd_class</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Save GSD frame to file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">gsd_class</td><td>GSD helper class </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00242">242</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+<div class="fragment"><div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    gsd_class.saveSnapshot()</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160; </div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="comment"># !SECTION: (GSD Creation)</span></div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160; </div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160; </div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="comment"># SECTION: For use when being called from command line</span></div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160; </div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;Main method</span></div>
+<span class="stringliteral"></div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a094816de93cbf39f7b0d84dd10a52ece"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a094816de93cbf39f7b0d84dd10a52ece">&#9670;&nbsp;</a></span>parser</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">collinear-swimmer-internal-dynamics-configuration.parser = OptionParser()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00028">28</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+</div>
+</div>
+<a id="ae46f49c03d1b37aed0de35d3326acf06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae46f49c03d1b37aed0de35d3326acf06">&#9670;&nbsp;</a></span>dest</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">collinear-swimmer-internal-dynamics-configuration.dest</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00029">29</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+</div>
+</div>
+<a id="ab1f6e39744e4c6b03f2ecdf23b835ec3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1f6e39744e4c6b03f2ecdf23b835ec3">&#9670;&nbsp;</a></span>help</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">collinear-swimmer-internal-dynamics-configuration.help</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00030">30</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+</div>
+</div>
+<a id="acf84fbc7c0cd3c134e9c5f228f029b0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf84fbc7c0cd3c134e9c5f228f029b0b">&#9670;&nbsp;</a></span>metavar</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">collinear-swimmer-internal-dynamics-configuration.metavar</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00031">31</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+</div>
+</div>
+<a id="a5e0557c34ba4cd03c04dadece5980363"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e0557c34ba4cd03c04dadece5980363">&#9670;&nbsp;</a></span>num_steps_output</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int collinear-swimmer-internal-dynamics-configuration.num_steps_output = 1000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00073">73</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00175">GSDUtil.readParameters()</a>, and <a class="el" href="SystemData_8hpp_source.html#l00825">SystemData.setNumStepsOutput()</a>.</p>
+
+</div>
+</div>
+<a id="a69e6c9554548d7b83c2a63b0600a0a7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69e6c9554548d7b83c2a63b0600a0a7a">&#9670;&nbsp;</a></span>fluid_density</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float collinear-swimmer-internal-dynamics-configuration.fluid_density = 1.0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00076">76</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00175">GSDUtil.readParameters()</a>, and <a class="el" href="SystemData_8hpp_source.html#l00671">SystemData.setFluidDensity()</a>.</p>
+
+</div>
+</div>
+<a id="aa7937b2670b1e095c983e3c5b3a0e069"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7937b2670b1e095c983e3c5b3a0e069">&#9670;&nbsp;</a></span>particle_density</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float collinear-swimmer-internal-dynamics-configuration.particle_density = 1.0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00077">77</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00175">GSDUtil.readParameters()</a>, and <a class="el" href="SystemData_8hpp_source.html#l00682">SystemData.setParticleDensity()</a>.</p>
+
+</div>
+</div>
+<a id="a1bf9d6864360c7f088c0d5154039d4bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1bf9d6864360c7f088c0d5154039d4bc">&#9670;&nbsp;</a></span>wca_epsilon</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float collinear-swimmer-internal-dynamics-configuration.wca_epsilon = 0.0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00080">80</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00175">GSDUtil.readParameters()</a>, and <a class="el" href="SystemData_8hpp_source.html#l00694">SystemData.setWcaEpsilon()</a>.</p>
+
+</div>
+</div>
+<a id="a0369087de34e80b438a58688a17c2b7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0369087de34e80b438a58688a17c2b7d">&#9670;&nbsp;</a></span>wca_sigma</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float collinear-swimmer-internal-dynamics-configuration.wca_sigma = 0.0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00081">81</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00175">GSDUtil.readParameters()</a>, and <a class="el" href="SystemData_8hpp_source.html#l00705">SystemData.setWcaSigma()</a>.</p>
+
+</div>
+</div>
+<a id="a53bfbff33817f704d33d85cf40f044e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53bfbff33817f704d33d85cf40f044e4">&#9670;&nbsp;</a></span>num_particles_per_body</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int collinear-swimmer-internal-dynamics-configuration.num_particles_per_body = 3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00084">84</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+</div>
+</div>
+<a id="ae67d9c20851834c952024f3ab2a931e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae67d9c20851834c952024f3ab2a931e1">&#9670;&nbsp;</a></span>types</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">list collinear-swimmer-internal-dynamics-configuration.types = ['constrained', 'locater']</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00085">85</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00175">GSDUtil.readParameters()</a>.</p>
+
+</div>
+</div>
+<a id="a17fc3910ea1caf07e0da84e901a4243d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17fc3910ea1caf07e0da84e901a4243d">&#9670;&nbsp;</a></span>options</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">collinear-swimmer-internal-dynamics-configuration.options</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00256">256</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+</div>
+</div>
+<a id="a1b2914d9e55cd0288957a686ade7c143"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b2914d9e55cd0288957a686ade7c143">&#9670;&nbsp;</a></span>remainder</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">collinear-swimmer-internal-dynamics-configuration.remainder</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00256">256</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+</div>
+</div>
+<a id="aa437a0d484b5090261e76d1bd4097a28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa437a0d484b5090261e76d1bd4097a28">&#9670;&nbsp;</a></span>gsd_path</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">collinear-swimmer-internal-dynamics-configuration.gsd_path = str(options.u_gsd_path)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00258">258</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+</div>
+</div>
+<a id="a818621a78c2f9f2d5ad31e2a2b62d1e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a818621a78c2f9f2d5ad31e2a2b62d1e6">&#9670;&nbsp;</a></span>dt</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">collinear-swimmer-internal-dynamics-configuration.dt = np.double(options.u_dt)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00260">260</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00175">GSDUtil.readParameters()</a>, and <a class="el" href="GSDUtil_8cpp_source.html#l00518">GSDUtil.writeParameters()</a>.</p>
+
+</div>
+</div>
+<a id="a00affdb8d33e01ee592a870089264a0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00affdb8d33e01ee592a870089264a0a">&#9670;&nbsp;</a></span>ti</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">collinear-swimmer-internal-dynamics-configuration.ti = np.double(options.u_ti)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00261">261</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+</div>
+</div>
+<a id="a14d47d1f20522121d7fc8616a2ca7d29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14d47d1f20522121d7fc8616a2ca7d29">&#9670;&nbsp;</a></span>tf</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">collinear-swimmer-internal-dynamics-configuration.tf = np.double(options.u_tf)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00262">262</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00175">GSDUtil.readParameters()</a>.</p>
+
+</div>
+</div>
+<a id="a05970d0ee525980fd0c05208d1b2b282"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05970d0ee525980fd0c05208d1b2b282">&#9670;&nbsp;</a></span>R_avg</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">collinear-swimmer-internal-dynamics-configuration.R_avg = np.double(options.u_R_avg)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00264">264</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00426">GSDUtil.readSystemSpecifics()</a>.</p>
+
+</div>
+</div>
+<a id="a467800419d486c96e16de1eb6cb7f7e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a467800419d486c96e16de1eb6cb7f7e8">&#9670;&nbsp;</a></span>Z_height</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">collinear-swimmer-internal-dynamics-configuration.Z_height = np.double(options.u_Z_height)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00265">265</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+</div>
+</div>
+<a id="acbedd39782fc75a2bfdc5ead20fef273"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbedd39782fc75a2bfdc5ead20fef273">&#9670;&nbsp;</a></span>phase_angle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">collinear-swimmer-internal-dynamics-configuration.phase_angle = np.double(options.u_phase_angle)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00266">266</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+</div>
+</div>
+<a id="a151cd771405a8a85b973975029efd8ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a151cd771405a8a85b973975029efd8ba">&#9670;&nbsp;</a></span>U0</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">collinear-swimmer-internal-dynamics-configuration.U0 = np.double(options.u_U0)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00267">267</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00426">GSDUtil.readSystemSpecifics()</a>.</p>
+
+</div>
+</div>
+<a id="a60bb96a4991475c4ee6c337bc50d6c0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60bb96a4991475c4ee6c337bc50d6c0d">&#9670;&nbsp;</a></span>omega</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">collinear-swimmer-internal-dynamics-configuration.omega = np.double(options.u_omega)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00268">268</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00426">GSDUtil.readSystemSpecifics()</a>.</p>
+
+</div>
+</div>
+<a id="ad49826761cef3f9a6fd3e896475b37a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad49826761cef3f9a6fd3e896475b37a1">&#9670;&nbsp;</a></span>image_system</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">collinear-swimmer-internal-dynamics-configuration.image_system = int(options.u_image_system)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00271">271</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00175">GSDUtil.readParameters()</a>, and <a class="el" href="SystemData_8hpp_source.html#l00543">SystemData.setImageSystem()</a>.</p>
+
+</div>
+</div>
+<a id="a15339281163e8718f0200fb2adfec38f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15339281163e8718f0200fb2adfec38f">&#9670;&nbsp;</a></span>M</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">collinear-swimmer-internal-dynamics-configuration.M = int(options.u_number_bodies)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00273">273</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="gsd_8c_source.html#l01916">gsd_write_chunk()</a>, and <a class="el" href="GSDUtil_8cpp_source.html#l00175">GSDUtil.readParameters()</a>.</p>
+
+</div>
+</div>
+<a id="aefa59be77c96ddc49af6f8d8ee7e514c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefa59be77c96ddc49af6f8d8ee7e514c">&#9670;&nbsp;</a></span>N</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int collinear-swimmer-internal-dynamics-configuration.N = <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a53bfbff33817f704d33d85cf40f044e4">num_particles_per_body</a> * <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a15339281163e8718f0200fb2adfec38f">M</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00274">274</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="gsd_8c_source.html#l01916">gsd_write_chunk()</a>, <a class="el" href="GSDUtil_8cpp_source.html#l00138">GSDUtil.readHeader()</a>, <a class="el" href="GSDUtil_8cpp_source.html#l00491">GSDUtil.writeHeader()</a>, and <a class="el" href="GSDUtil_8cpp_source.html#l00563">GSDUtil.writeParticles()</a>.</p>
+
+</div>
+</div>
+<a id="acc2aa6532175aa4f5b0b3d663781117a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc2aa6532175aa4f5b0b3d663781117a">&#9670;&nbsp;</a></span>tau</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple collinear-swimmer-internal-dynamics-configuration.tau = (2.0 * np.pi) / <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a60bb96a4991475c4ee6c337bc50d6c0d">omega</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00276">276</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="GSDUtil_8cpp_source.html#l00175">GSDUtil.readParameters()</a>.</p>
+
+</div>
+</div>
+<a id="a2c7dbef064ba3968ecb7135d6b45018b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c7dbef064ba3968ecb7135d6b45018b">&#9670;&nbsp;</a></span>epsilon</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple collinear-swimmer-internal-dynamics-configuration.epsilon = (<a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a151cd771405a8a85b973975029efd8ba">U0</a> / <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a60bb96a4991475c4ee6c337bc50d6c0d">omega</a>) / <a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a05970d0ee525980fd0c05208d1b2b282">R_avg</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00277">277</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+</div>
+</div>
+<a id="a7f6ae5928780bbcc67b6be23755f7352"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f6ae5928780bbcc67b6be23755f7352">&#9670;&nbsp;</a></span>gsd_class</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def collinear-swimmer-internal-dynamics-configuration.gsd_class</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;=  <a class="code" href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a9508a1681c5a293b08324cc834bd3580">initializeGSD</a>(gsd_path,</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                              N, M,</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;                              dt, ti, tf, tau,</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;                              num_steps_output,</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;                              fluid_density, particle_density,</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;                              wca_epsilon, wca_sigma,</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;                              image_system)</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00279">279</a> of file <a class="el" href="collinear-swimmer-internal-dynamics-configuration_8py_source.html">collinear-swimmer-internal-dynamics-configuration.py</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
+<div class="ttc" id="anamespacecollinear-swimmer-internal-dynamics-configuration_html_a9508a1681c5a293b08324cc834bd3580"><div class="ttname"><a href="namespacecollinear-swimmer-internal-dynamics-configuration.html#a9508a1681c5a293b08324cc834bd3580">collinear-swimmer-internal-dynamics-configuration.initializeGSD</a></div><div class="ttdeci">def initializeGSD(gsd_path, N, M, dt, ti, tf, tau, num_steps_output, fluid_density, particle_density, wca_epsilon, wca_sigma, image_system)</div><div class="ttdoc">Create GSD, set log parameters, set particle parameters.</div><div class="ttdef"><b>Definition:</b> <a href="collinear-swimmer-internal-dynamics-configuration_8py_source.html#l00113">collinear-swimmer-internal-dynamics-configuration.py:113</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacecollinear-swimmer-internal-dynamics-configuration.html">collinear-swimmer-internal-dynamics-configuration</a></li>
-    <li class="footer">Generated on Mon Nov 15 2021 17:32:11 for Bodies in Potential Flow by
+    <li class="footer">Generated on Wed Dec 1 2021 15:15:38 for Bodies in Potential Flow by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>
