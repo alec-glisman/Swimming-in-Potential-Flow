@@ -40,7 +40,7 @@ my $buildDir       = "build/" . lc $build;      # Build folder path
 my $simulationTag    = "collinear-swimmer-internal-dynamics";
 my $projectName      = "bodies-in-potential-flow";
 my $inputDir         = "input";
-my @inputData        = ( "varyZHeight",  "varyRelDisp", "varyEpsilon", "varyPhaseAngle", "varyDt" );
+my @inputData        = ( "varyVarEpsilon"  "varyZHeight",  "varyRelDisp", "varyEpsilon", "varyPhaseAngle", "varyDt" );
 my $numSimulationTypes = scalar @inputData;
 my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
 
@@ -199,19 +199,19 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		my $gsd_path = ${simulation_dir} . "/" . "data.gsd";
 
 		# Simulation variables
-		my $dt          = 1.00e+2;
+		my $dt          = 1.00e-6;
 		my $ti          = 0.00e+0;
-		my $tf          = 1.00e+8;
+		my $tf          = 1.00e+1;
 
-		my $R_avg       = 4.00e+0;
-		my $Z_height    = 6.00e+0;
+		my $R_avg       = 10.00e+0;
+		my $Z_height    = 0.00e+0;
 
 		my $phase_angle = -1.57079632679e+0;
-		my $U0          = 0.00e-0;
+		my $U0          = 1.00e-3;
 		my $omega       = 1.00e+0;
 
-		my $number_bodies = 2;
-		my $image_system = 1; # REVIEW OPTIONS: {0; false, 1; true}
+		my $number_bodies = 1;
+		my $image_system = 0; # REVIEW OPTIONS: {0; false, 1; true}
 
 		# Modify default preferences for each simulation run
 		switch($inputData[$i]) {
@@ -231,6 +231,15 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 				my $epsilon = ${data[$j]};
 				$U0 = $epsilon * $R_avg * $omega
 			}
+            case ( "varyVarEpsilon" ) {  # Golestanian (2004, PRE) Swimmer analog
+                # continuous equivalent collinear swimmer
+                my $varEpsilon = ${data[$j]};
+                $U0 = $varEpsilon * $defaultOmegaCon * 0.50;
+
+                # Recalculate relDispEqbm so that max separation (D) is 10.0
+                my $D = 10.0;
+                $R_avg = $D - ( 0.50 * $varEpsilon );
+            }
 		}
 
 		# Generate GSD file
