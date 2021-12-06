@@ -40,7 +40,7 @@ my $buildDir       = "build/" . lc $build;      # Build folder path
 my $simulationTag    = "collinear-swimmer-internal-dynamics";
 my $projectName      = "bodies-in-potential-flow";
 my $inputDir         = "input";
-my @inputData        = ( "varyVarEpsilon"  "varyZHeight",  "varyRelDisp", "varyEpsilon", "varyPhaseAngle", "varyDt" );
+my @inputData        = ( "varyVarEpsilon",  "varyZHeight",  "varyRelDisp", "varyEpsilon", "varyPhaseAngle", "varyDt" );
 my $numSimulationTypes = scalar @inputData;
 my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
 
@@ -234,7 +234,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
             case ( "varyVarEpsilon" ) {  # Golestanian (2004, PRE) Swimmer analog
                 # continuous equivalent collinear swimmer
                 my $varEpsilon = ${data[$j]};
-                $U0 = $varEpsilon * $defaultOmegaCon * 0.50;
+                $U0 = $varEpsilon * $omega * 0.50;
 
                 # Recalculate relDispEqbm so that max separation (D) is 10.0
                 my $D = 10.0;
