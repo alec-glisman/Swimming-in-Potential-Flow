@@ -2,10 +2,10 @@ name: Language Linting
 on: [push, pull_request]
 
 jobs:
-  run:
+  language_lint:
     runs-on: ubuntu-20.04
+
     steps:
-    
       - name: Fetch actions (v2)
         uses: actions/checkout@v2
         with:

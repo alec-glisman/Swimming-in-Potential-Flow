@@ -2,8 +2,9 @@ name: Code Linting
 on: [push, pull_request]
 
 jobs:
-  run:
+  code_super_lint:
     runs-on: ubuntu-20.04
+
     steps:
       - name: Fetch actions (v2)
         uses: actions/checkout@v2
@@ -13,6 +14,7 @@ jobs:
       - name: Super-Linter
         uses: github/super-linter@v4.8.1
         env:
-          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_JSCPD: false # leading to issues with LaTeX figure captions
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
