@@ -40,7 +40,7 @@ my $buildDir       = "build/" . lc $build;      # Build folder path
 my $simulationTag    = "collinear-swimmer-internal-dynamics";
 my $projectName      = "bodies-in-potential-flow";
 my $inputDir         = "input";
-my @inputData        = (  "varyEpsilon",  "varyRelDisp", "varyVarEpsilon", "varyZHeight", "varyPhaseAngle", "varyDt" );
+my @inputData        = ( "varyVarEpsilon", "varyEpsilon",  "varyRelDisp", "varyZHeight", "varyPhaseAngle", "varyDt" );
 my $numSimulationTypes = scalar @inputData;
 my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
 
