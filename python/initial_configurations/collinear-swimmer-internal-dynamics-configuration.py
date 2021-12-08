@@ -30,30 +30,30 @@ parser.add_option("--GSD-path", dest="u_gsd_path",
 
 parser.add_option("--dt", dest="u_dt",
                   help="(dimensionless) time-step for numerical integration",
-                  metavar="double")
+                  metavar="float32")
 
 parser.add_option("--ti", dest="u_ti",
                   help="(dimensionless) initial integration time",
-                  metavar="double")
+                  metavar="float32")
 parser.add_option("--tf", dest="u_tf",
                   help="(dimensionless) final integration time",
-                  metavar="double")
+                  metavar="float32")
 
 parser.add_option("--R-avg", dest="u_R_avg",
                   help="(dimensionless) average inter-particle pair separation during articulation period",
-                  metavar="double")
+                  metavar="float32")
 parser.add_option("--Z-height", dest="u_Z_height",
                   help="(dimensionless) Initial height of collinear swimmer above wall",
-                  metavar="double")
+                  metavar="float32")
 parser.add_option("--phase-angle", dest="u_phase_angle",
                   help="phase angle between oscillating pairs",
-                  metavar="double")
+                  metavar="float32")
 parser.add_option("--U0", dest="u_U0",
                   help="velocity oscillation amplitude",
-                  metavar="double")
+                  metavar="float32")
 parser.add_option("--omega", dest="u_omega",
                   help="velocity oscillation frequency",
-                  metavar="double")
+                  metavar="float32")
 
 parser.add_option("--number-bodies", dest="u_number_bodies",
                   help="number of bodies to simulate",
@@ -101,15 +101,15 @@ def initializeGSD(gsd_path,
         N (int): number of particles to simulate
         M (int): number of bodies to simulate
         num_particles_per_body (int): number of particles per body
-        dt (double): integrator finite delta-t
-        ti (double): integrator initial time
-        tf (double): integrator final time
-        tau (double): characteristic simulation time
+        dt (float32): integrator finite delta-t
+        ti (float32): integrator initial time
+        tf (float32): integrator final time
+        tau (float32): characteristic simulation time
         num_steps_output (int): number of frames to write to GSD during simulation
-        fluid_density (double): fluid mass density
-        particle_density (double): particle mass density
-        wca_epsilon (double): WCA potential energy scale
-        wca_sigma (double): WCA potential length scale
+        fluid_density (float32): fluid mass density
+        particle_density (float32): particle mass density
+        wca_epsilon (float32): WCA potential energy scale
+        wca_sigma (float32): WCA potential length scale
         image_system (int): Integer boolean deciding if simulation is an image system
 
     Returns:
@@ -150,20 +150,20 @@ def setInitialConditions(gsd_class,
         N (int): number of particles to simulate
         M (int): number of bodies to simulate
         num_particles_per_body (int): number of particles per body
-        Z_height (double): z-axis height of bodies
+        Z_height (float32): z-axis height of bodies
         image_system (int): Integer boolean deciding if simulation is an image system
     """
 
     # orientation
-    quat = np.zeros((N, 4), dtype=np.double)
-    no_rotation_quat = np.array([1.0, 0.0, 0.0, 0.0], dtype=np.double)
+    quat = np.zeros((N, 4), dtype=np.float32)
+    no_rotation_quat = np.array([1.0, 0.0, 0.0, 0.0], dtype=np.float32)
 
     for i in range(N):
 
         quat[i] = no_rotation_quat
 
     # position (only need to specify locater position, articulation calculated in C++ simulation)
-    pos = np.zeros((N, 3), dtype=np.double)
+    pos = np.zeros((N, 3), dtype=np.float32)
 
     for i in range(M):
 
@@ -186,9 +186,9 @@ def setInitialConditions(gsd_class,
 
                 pos[Ni + j] = [0.0, 0.0, Z_height]
 
-    vel = np.zeros_like(pos, dtype=np.double)  # Calculated in C++ simulation
+    vel = np.zeros_like(pos, dtype=np.float32)  # Calculated in C++ simulation
 
-    acc = np.zeros_like(pos, dtype=np.double)  # Calculated in C++ simulation
+    acc = np.zeros_like(pos, dtype=np.float32)  # Calculated in C++ simulation
 
     # output data
     gsd_class.setKinematics(quat, pos, vel, acc)
@@ -203,24 +203,24 @@ def setSystemData(gsd_class,
     Args:
         gsd_class (GSD_class): GSD helper class
         M (int): number of bodies to simulate
-        R_avg (double): average spacing between particle pairs over course of simulation
-        Z_height (double): z-axis height of body initially
-        U0 (double): internal oscillation amplitude of body
-        omega (double): internal oscillation frequency of body
-        phase_angle (double): internal oscillation phase angle between particle pairs
+        R_avg (float32): average spacing between particle pairs over course of simulation
+        Z_height (float32): z-axis height of body initially
+        U0 (float32): internal oscillation amplitude of body
+        omega (float32): internal oscillation frequency of body
+        phase_angle (float32): internal oscillation phase angle between particle pairs
     """
 
     # get snapshot
     snapshot = gsd_class.snapshot
 
     # convert data to GSD expected type
-    l_R_avg = np.array([R_avg], dtype=np.double)
-    l_Z_height = np.array([Z_height], dtype=np.double)
-    l_U0 = np.array([U0], dtype=np.double)
-    l_omega = np.array([omega], dtype=np.double)
-    l_phase_angle = np.array([phase_angle], dtype=np.double)
-    l_U_swim = np.zeros(6 * M, dtype=np.double)
-    l_A_swim = np.zeros(6 * M, dtype=np.double)
+    l_R_avg = np.array([R_avg], dtype=np.float32)
+    l_Z_height = np.array([Z_height], dtype=np.float32)
+    l_U0 = np.array([U0], dtype=np.float32)
+    l_omega = np.array([omega], dtype=np.float32)
+    l_phase_angle = np.array([phase_angle], dtype=np.float32)
+    l_U_swim = np.zeros(6 * M, dtype=np.float32)
+    l_A_swim = np.zeros(6 * M, dtype=np.float32)
 
     # output data
     snapshot.log['swimmer/R_avg'] = l_R_avg
@@ -255,15 +255,15 @@ if __name__ == "__main__":
 
     gsd_path = str(options.u_gsd_path)
 
-    dt = np.double(options.u_dt)
-    ti = np.double(options.u_ti)
-    tf = np.double(options.u_tf)
+    dt = np.float32(options.u_dt)
+    ti = np.float32(options.u_ti)
+    tf = np.float32(options.u_tf)
 
-    R_avg = np.double(options.u_R_avg)
-    Z_height = np.double(options.u_Z_height)
-    phase_angle = np.double(options.u_phase_angle)
-    U0 = np.double(options.u_U0)
-    omega = np.double(options.u_omega)
+    R_avg = np.float32(options.u_R_avg)
+    Z_height = np.float32(options.u_Z_height)
+    phase_angle = np.float32(options.u_phase_angle)
+    U0 = np.float32(options.u_U0)
+    omega = np.float32(options.u_omega)
 
     # REVIEW: {1: image system, 0: regular system}
     image_system = int(options.u_image_system)
