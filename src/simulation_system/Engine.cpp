@@ -116,7 +116,7 @@ Engine::run()
     spdlog::get(m_logName)->info("Ending Engine run");
     spdlog::get(m_logName)->info("Writing frame at t = {0}", m_system->t());
     m_system->gsdUtil()->writeFrame();
-    m_ProgressBar->display();
+    m_ProgressBar->done();
     spdlog::get(m_logName)->flush();
 }
 
