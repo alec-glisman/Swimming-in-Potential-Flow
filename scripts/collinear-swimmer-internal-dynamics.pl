@@ -49,7 +49,7 @@ my $numberBodies         = 1; # integer number of bodies to simulate
 my $boolImageSystem      = 0; # if system has an image (wall) along z=0 plane
 my $boolInternalDynamics = 1; # if swimmer has internal dynamics (0: no, 1: yes)
 
-my $dt          = 1.00e-6;		
+my $dt          = 1.00e-5;
 my $ti          = 0.00e+0;
 my $tf          = 1.00e+0;
 
@@ -209,18 +209,18 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		my $gsd_path = ${simulation_dir} . "/" . "data.gsd";
 
 		# Simulation variables
-        my $R_avg       = 6.00e+0;
+		my $R_avg       = 6.00e+0;
 		my $Z_height    = 1.00e+1;
 
 		my $phase_angle = -1.57079632679e+0;
 		my $U0          = 2.00e-2;
 		my $omega       = 1.00e+0;
 
-        my $orientation = 0;
+		my $orientation = 0;
 
-        if (!$boolInternalDynamics){
-            $U0 = 0.00e+0;
-        }
+		if (!$boolInternalDynamics){
+			$U0 = 0.00e+0;
+		}
 
 		# Modify default preferences for each simulation run
 		switch($inputData[$i]) {
@@ -240,15 +240,15 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 				my $epsilon = ${data[$j]};
 				$U0 = $epsilon * $R_avg * $omega
 			}
-            case ( "varyVarEpsilon" ) {  # Golestanian (2004, PRE) Swimmer analog
-                # continuous equivalent collinear swimmer
-                my $varEpsilon = ${data[$j]};
-                $U0 = $varEpsilon * $omega * 0.50;
+			case ( "varyVarEpsilon" ) {  # Golestanian (2004, PRE) Swimmer analog
+				 # continuous equivalent collinear swimmer
+				my $varEpsilon = ${data[$j]};
+				$U0 = $varEpsilon * $omega * 0.50;
 
-                # Recalculate relDispEqbm so that max separation (D) is 10.0
-                my $D = 10.0;
-                $R_avg = $D - ( 0.50 * $varEpsilon );
-            }
+				# Recalculate relDispEqbm so that max separation (D) is 10.0
+				my $D = 10.0;
+				$R_avg = $D - ( 0.50 * $varEpsilon );
+			}
 		}
 
 		# Generate GSD file
