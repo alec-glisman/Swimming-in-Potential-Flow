@@ -73,7 +73,7 @@ parser.add_option("--orientation", dest="u_orientation",
 # SECTION: Parameters
 
 # Integrator parameters
-num_steps_output = 1000
+num_steps_output = 10000
 
 # Material parameters
 fluid_density = 1.0
