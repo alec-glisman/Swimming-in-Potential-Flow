@@ -210,8 +210,8 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		# Simulation variables
 		my $dt          = 1.00e-6;
 		
-        my $R_avg       = 10.00e+0;
-		my $Z_height    = 0.00e+0;
+        my $R_avg       = 6.00e+0;
+		my $Z_height    = 1.00e+1;
 
 		my $phase_angle = -1.57079632679e+0;
 		my $U0          = 1.00e-3;
