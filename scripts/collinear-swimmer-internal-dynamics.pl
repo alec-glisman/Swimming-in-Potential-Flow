@@ -49,7 +49,7 @@ my $numberBodies         = 1; # integer number of bodies to simulate
 my $boolImageSystem      = 0; # if system has an image (wall) along z=0 plane
 my $boolInternalDynamics = 1; # if swimmer has internal dynamics (0: no, 1: yes)
 
-my $dt          = 1.00e-4;
+my $dt          = 1.00e-3;
 my $ti          = 0.00e+0;
 my $tf          = 1.00e+0;
 
