@@ -40,14 +40,23 @@ my $buildDir       = "build/" . lc $build;      # Build folder path
 my $simulationTag    = "collinear-swimmer-internal-dynamics";
 my $projectName      = "bodies-in-potential-flow";
 my $inputDir         = "input";
-my @inputData        = ( "varyVarEpsilon", "varyEpsilon",  "varyRelDisp", "varyZHeight", "varyPhaseAngle", "varyDt" );
-my $numSimulationTypes = scalar @inputData;
 my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
+my @inputData        = ( "varyZHeight", "varyEpsilon" );  # other options: [ "varyRelDisp",  "varyPhaseAngle",  "varyVarEpsilon", "varyDt" ]
+my $numSimulationTypes = scalar @inputData;
+
+# Simulation parameters
+my $boolInternalDynamics = 1; # if swimmer has internal dynamics (0: no, 1: yes)
+my $boolImageSystem      = 0; # if system has an image (wall) along z=0 plane
+my $numberBodies         = 1; # integer number of bodies to simulate
+
+my $ti          = 0.00e+0;
+my $tf          = 1.00e+0;
 
 # Python Numerical Analysis
 my $pythonGSDCreation = "python/initial_configurations/" . $simulationTag . "-configuration.py";
 my $pythonAggregrateAnalysis   = "python/analysis/" . $simulationTag ."-aggregate-analysis.py";
 my $pythonIndividualAnalysis   = "python/analysis/" . $simulationTag ."-individual-analysis.py";
+
 
 # Host path
 my $host = `uname -n`;
@@ -200,18 +209,19 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 
 		# Simulation variables
 		my $dt          = 1.00e-6;
-		my $ti          = 0.00e+0;
-		my $tf          = 1.00e+0;
-
-		my $R_avg       = 10.00e+0;
+		
+        my $R_avg       = 10.00e+0;
 		my $Z_height    = 0.00e+0;
 
 		my $phase_angle = -1.57079632679e+0;
 		my $U0          = 1.00e-3;
 		my $omega       = 1.00e+0;
 
-		my $number_bodies = 1;
-		my $image_system = 0; # REVIEW OPTIONS: {0; false, 1; true}
+        my $orientation = 0;
+
+        if (!$boolInternalDynamics){
+            $U0 = 0.00e+0;
+        }
 
 		# Modify default preferences for each simulation run
 		switch($inputData[$i]) {
@@ -243,7 +253,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		}
 
 		# Generate GSD file
-		system( "python3 " . ${pythonGSDCreation}. " --GSD-path=" . ${gsd_path}. " --dt=" . ${dt} . " --ti=" . ${ti}  . " --tf=" . ${tf}. " --R-avg=" . ${R_avg} . " --Z-height=" . ${Z_height}. " --phase-angle=" . ${phase_angle} . " --U0=" . ${U0} . " --omega=" . ${omega}. " --number-bodies=" . ${number_bodies} ." --image-system=" .${image_system})
+		system( "python3 " . ${pythonGSDCreation}. " --GSD-path=" . ${gsd_path}. " --dt=" . ${dt} . " --ti=" . ${ti}  . " --tf=" . ${tf}. " --R-avg=" . ${R_avg} . " --Z-height=" . ${Z_height}. " --phase-angle=" . ${phase_angle} . " --U0=" . ${U0} . " --omega=" . ${omega}. " --number-bodies=" . ${numberBodies} ." --image-system=" . ${boolImageSystem} . " --orientation=" . ${orientation})
 		  and die "Unable to generate GSD file: $?, $!";
 
 		# Prepare for simulation
