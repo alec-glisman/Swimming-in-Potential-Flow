@@ -41,13 +41,13 @@ my $simulationTag    = "collinear-swimmer-internal-dynamics";
 my $projectName      = "bodies-in-potential-flow";
 my $inputDir         = "input";
 my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
-my @inputData        = ( "varyZHeight", "varyEpsilon" );  # other options: [ "varyRelDisp",  "varyPhaseAngle",  "varyVarEpsilon" ]
+my @inputData        = ( "varyRelDisp", "varyZHeight", "varyEpsilon" );  # other options: [ "varyPhaseAngle",  "varyVarEpsilon" ]
 my $numSimulationTypes = scalar @inputData;
 
 # Simulation parameters
-my $boolInternalDynamics = 1; # if swimmer has internal dynamics (0: no, 1: yes)
-my $boolImageSystem      = 0; # if system has an image (wall) along z=0 plane
 my $numberBodies         = 1; # integer number of bodies to simulate
+my $boolImageSystem      = 0; # if system has an image (wall) along z=0 plane
+my $boolInternalDynamics = 1; # if swimmer has internal dynamics (0: no, 1: yes)
 
 my $dt          = 1.00e-6;		
 my $ti          = 0.00e+0;
