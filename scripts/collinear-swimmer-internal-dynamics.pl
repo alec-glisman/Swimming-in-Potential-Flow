@@ -213,7 +213,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		my $Z_height    = 1.00e+1;
 
 		my $phase_angle = -1.57079632679e+0;
-		my $U0          = 2.00e-2;
+		my $U0          = 4.00e-1;
 		my $omega       = 1.00e+0;
 
 		my $orientation = 0;
