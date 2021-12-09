@@ -41,7 +41,7 @@ my $simulationTag    = "collinear-swimmer-internal-dynamics";
 my $projectName      = "bodies-in-potential-flow";
 my $inputDir         = "input";
 my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
-my @inputData        = ( "varyDt", "varyRelDisp", "varyZHeight", "varyEpsilon" );  # other options: [ "varyPhaseAngle",  "varyVarEpsilon" ]
+my @inputData        = ( "varyRelDisp", "varyZHeight", "varyEpsilon" );  # other options: [ "varyDt", "varyPhaseAngle",  "varyVarEpsilon" ]
 my $numSimulationTypes = scalar @inputData;
 
 # Simulation parameters
