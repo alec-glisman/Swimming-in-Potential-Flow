@@ -161,21 +161,25 @@ def setInitialConditions(gsd_class,
     """
 
     # rotation tensor
-    quat = np.zeros((N, 4), dtype=np.float32)
+    quat = np.zeros((N, 4), dtype=np.float64)
+
     # rotate 0 radians
-    no_rotation_quat = np.array([1.0, 0.0, 0.0, 0.0], dtype=np.float32)
+    no_rotation_quat = np.array([1.0, 0.0, 0.0, 0.0], dtype=np.float64)
     # rotate -(3 \pi) / 2 radians about y-axis (0, 1 ,0): results in +x --> -z axis rotation
-    rot_x_to_nz = (1.0 / np.sqrt(2.0, dtype=np.float32)) * \
-        np.array([-1.0, 0.0, 1.0, 0.0], dtype=np.float32)
+    rot_x_to_nz = (1.0 / np.sqrt(2.0, dtype=np.float64)) * \
+        np.array([-1.0, 0.0, 1.0, 0.0], dtype=np.float64)
 
     # pick quaternion to use
     quat_used = no_rotation_quat
 
     if (orientation == 1):
-        quat_used_img = rot_x_to_nz
+        quat_used = rot_x_to_nz
 
+    quat_used_img = quat_used
     # accounts for +z --> -z axis inversion for image system
     quat_used_img[1:3] *= -1.0
+    # quat_used_img[1] = -1.0 * quat_used[1]
+    # quat_used_img[2] = -1.0 * quat_used[2]
 
     for i in range(N):
 
@@ -186,7 +190,7 @@ def setInitialConditions(gsd_class,
             quat[i] = quat_used
 
     # position (only need to specify locater position, articulation calculated in C++ simulation)
-    pos = np.zeros((N, 3), dtype=np.float32)
+    pos = np.zeros((N, 3), dtype=np.float64)
 
     for i in range(M):
 
@@ -206,8 +210,8 @@ def setInitialConditions(gsd_class,
             else:
                 pos[Ni + j] = [0.0, 0.0, Z_height]
 
-    vel = np.zeros_like(pos, dtype=np.float32)  # Calculated in C++ simulation
-    acc = np.zeros_like(pos, dtype=np.float32)  # Calculated in C++ simulation
+    vel = np.zeros_like(pos, dtype=np.float64)  # Calculated in C++ simulation
+    acc = np.zeros_like(pos, dtype=np.float64)  # Calculated in C++ simulation
 
     # output data
     gsd_class.setKinematics(quat, pos, vel, acc)
@@ -233,13 +237,13 @@ def setSystemData(gsd_class,
     snapshot = gsd_class.snapshot
 
     # convert data to GSD expected type
-    l_R_avg = np.array([R_avg], dtype=np.float32)
-    l_Z_height = np.array([Z_height], dtype=np.float32)
-    l_U0 = np.array([U0], dtype=np.float32)
-    l_omega = np.array([omega], dtype=np.float32)
-    l_phase_angle = np.array([phase_angle], dtype=np.float32)
-    l_U_swim = np.zeros(6 * M, dtype=np.float32)
-    l_A_swim = np.zeros(6 * M, dtype=np.float32)
+    l_R_avg = np.array([R_avg], dtype=np.float64)
+    l_Z_height = np.array([Z_height], dtype=np.float64)
+    l_U0 = np.array([U0], dtype=np.float64)
+    l_omega = np.array([omega], dtype=np.float64)
+    l_phase_angle = np.array([phase_angle], dtype=np.float64)
+    l_U_swim = np.zeros(6 * M, dtype=np.float64)
+    l_A_swim = np.zeros(6 * M, dtype=np.float64)
 
     # output data
     snapshot.log['swimmer/R_avg'] = l_R_avg
@@ -274,15 +278,15 @@ if __name__ == "__main__":
 
     gsd_path = str(options.u_gsd_path)
 
-    dt = np.float32(options.u_dt)
-    ti = np.float32(options.u_ti)
-    tf = np.float32(options.u_tf)
+    dt = np.float64(options.u_dt)
+    ti = np.float64(options.u_ti)
+    tf = np.float64(options.u_tf)
 
-    R_avg = np.float32(options.u_R_avg)
-    Z_height = np.float32(options.u_Z_height)
-    phase_angle = np.float32(options.u_phase_angle)
-    U0 = np.float32(options.u_U0)
-    omega = np.float32(options.u_omega)
+    R_avg = np.float64(options.u_R_avg)
+    Z_height = np.float64(options.u_Z_height)
+    phase_angle = np.float64(options.u_phase_angle)
+    U0 = np.float64(options.u_U0)
+    omega = np.float64(options.u_omega)
 
     image_system = int(options.u_image_system)
     orientation_init = int(options.u_orientation)
