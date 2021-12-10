@@ -50,7 +50,7 @@ my $boolImageSystem      = 1; # if system has an image (wall) along z=0 plane
 my $boolInternalDynamics = 1; # if swimmer has internal dynamics (0: no, 1: yes)
 
 my $ti          = 0.00e+0;
-my $tf          = 1.00e+2;
+my $tf          = 1.00e+3;
 
 # Python Numerical Analysis
 my $pythonGSDCreation = "python/initial_configurations/" . $simulationTag . "-configuration.py";
@@ -72,7 +72,7 @@ my $numThreads = 0;
 if ((index($host, "MacBook-Pro") != -1) or (index($host, "mbp") != -1)) {
 	$numThreads = 12;
 } elsif ((index($host, "alec-glisman-PC-Ubuntu") != -1) or (index($host, "alec-glisman-PC-Windows") != -1)) {
-	$numThreads  = 16;
+	$numThreads  = 8;
 } elsif ((index($host, "stokes") != -1 )) {
 	$numThreads  = 6;
 } elsif ((index($host, "shear") != -1 ) or ( index($host, "s") != -1 )) {
