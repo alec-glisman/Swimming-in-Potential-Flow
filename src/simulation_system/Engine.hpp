@@ -103,8 +103,8 @@ class Engine
     const int m_simulation_cores{static_cast<int>(std::ceil(m_num_physical_cores / 2.0))};
 
     // ProgressBar output
-    /// Percentage of simulation progress at which to output a GSD frame
-    const double m_outputPercentile{0.01};
+    /// Percentage of simulation progress at which to update ProgressBar
+    const double m_outputPercentile{0.001};
 };
 
 #endif // BODIES_IN_POTENTIAL_FLOW_ENGINE_H
