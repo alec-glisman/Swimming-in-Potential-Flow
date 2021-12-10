@@ -108,8 +108,7 @@ Engine::run()
     }
     catch (const std::runtime_error& e)
     {
-        std::cerr << e.what() << '\n';
-        std::cerr << "Shutting down simulation." << '\n';
+        std::cerr << '\n' << e.what() << " at t = " << m_system->t() << ". Stopping simulation." << '\n';
     }
 
     // Final data writing and shut down
