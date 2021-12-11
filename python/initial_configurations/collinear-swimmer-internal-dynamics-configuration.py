@@ -3,7 +3,7 @@
 __author__ = "Alec Glisman"
 
 Example:
-    python3 python/initial_configurations/collinear-swimmer-internal-dynamics-configuration.py --GSD-path=data.gsd --dt=1e-6 --ti=0.0 --tf=1.0  --R-avg=4.0 --Z-height=6.0 --phase-angle=-1.57079632679e+0 --U0=0.00 --omega=1.0  --number-bodies=2 --image-system=1
+    python3 python/initial_configurations/collinear-swimmer-internal-dynamics-configuration.py --GSD-path=temp/data.gsd --dt=1e-05 --ti=0 --tf=1 --R-avg=3.5 --Z-height=2.10e+0 --phase-angle=-1.57079632679 --U0=1.4 --omega=1 --number-bodies=1 --image-system=0 --orientation=1
 """
 
 # SECTION: Dependencies
@@ -73,7 +73,7 @@ parser.add_option("--orientation", dest="u_orientation",
 # SECTION: Parameters
 
 # Integrator parameters
-num_steps_output = 1000
+num_steps_output = 10000
 
 # Material parameters
 fluid_density = 1.0
@@ -166,28 +166,18 @@ def setInitialConditions(gsd_class,
     # rotate 0 radians
     no_rotation_quat = np.array([1.0, 0.0, 0.0, 0.0], dtype=np.float64)
     # rotate -(3 \pi) / 2 radians about y-axis (0, 1 ,0): results in +x --> -z axis rotation
-    rot_x_to_nz = (1.0 / np.sqrt(2.0, dtype=np.float64)) * \
-        np.array([-1.0, 0.0, 1.0, 0.0], dtype=np.float64)
+    rot_x_to_nz = np.array([-1.0, 0.0, 1.0, 0.0],
+                           dtype=np.float64) / np.sqrt(2.0, dtype=np.float64)
 
     # pick quaternion to use
-    quat_used = no_rotation_quat
+    quat_used = np.copy(no_rotation_quat)
 
     if (orientation == 1):
-        quat_used = rot_x_to_nz
+        quat_used = np.copy(rot_x_to_nz)
 
-    quat_used_img = quat_used
+    quat_used_img = np.copy(quat_used)
     # accounts for +z --> -z axis inversion for image system
     quat_used_img[1:3] *= -1.0
-    # quat_used_img[1] = -1.0 * quat_used[1]
-    # quat_used_img[2] = -1.0 * quat_used[2]
-
-    for i in range(N):
-
-        if ((image_system == 1) and (i >= (N / 2))):  # image system bodies
-            quat[i] = quat_used_img
-
-        else:  # real system bodies
-            quat[i] = quat_used
 
     # position (only need to specify locater position, articulation calculated in C++ simulation)
     pos = np.zeros((N, 3), dtype=np.float64)
@@ -200,15 +190,18 @@ def setInitialConditions(gsd_class,
 
             # "Real" particles in image system
             if ((i < (M/2)) and (image_system == 1)):
-                pos[Ni + j] = [0.0, 0.0, Z_height]
+                pos[Ni + j] = np.copy([0.0, 0.0, Z_height])
+                quat[Ni + j] = np.copy(quat_used)
 
             # "Image" particles in image system
             elif ((i >= (M/2)) and (image_system == 1)):
-                pos[Ni + j] = [0.0, 0.0, -Z_height]
+                pos[Ni + j] = np.copy([0.0, 0.0, -Z_height])
+                quat[Ni + j] = np.copy(quat_used_img)
 
             # All particles in non-image system
             else:
-                pos[Ni + j] = [0.0, 0.0, Z_height]
+                pos[Ni + j] = np.copy([0.0, 0.0, Z_height])
+                quat[Ni + j] = np.copy(quat_used)
 
     vel = np.zeros_like(pos, dtype=np.float64)  # Calculated in C++ simulation
     acc = np.zeros_like(pos, dtype=np.float64)  # Calculated in C++ simulation
