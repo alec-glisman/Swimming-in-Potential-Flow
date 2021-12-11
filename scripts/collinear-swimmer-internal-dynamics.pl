@@ -252,7 +252,9 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		}
 
 		# Generate GSD file
-		system( "python3 " . ${pythonGSDCreation}. " --GSD-path=" . ${gsd_path}. " --dt=" . ${dt} . " --ti=" . ${ti}  . " --tf=" . ${tf}. " --R-avg=" . ${R_avg} . " --Z-height=" . ${Z_height}. " --phase-angle=" . ${phase_angle} . " --U0=" . ${U0} . " --omega=" . ${omega}. " --number-bodies=" . ${numberBodies} ." --image-system=" . ${boolImageSystem} . " --orientation=" . ${orientation})
+		my $pythonConfigCommand = "python3 ${pythonGSDCreation} --GSD-path=${gsd_path} --dt=${dt} --ti=${ti} --tf=${tf} --R-avg=${R_avg} --Z-height=${Z_height} --phase-angle=${phase_angle} --U0=${U0} --omega=${omega} --number-bodies=${numberBodies} --image-system=${boolImageSystem} --orientation=${orientation}";
+
+		system( "${pythonConfigCommand}" )
 		  and die "Unable to generate GSD file: $?, $!";
 
 		# Prepare for simulation
