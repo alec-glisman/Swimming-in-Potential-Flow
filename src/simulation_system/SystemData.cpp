@@ -454,7 +454,7 @@ SystemData::velocitiesArticulation()
             v3_mag * m_orientations_particles.segment<3>(constrained2_3);
 
         // Image system: flip z components, leave x,y unchanged
-        if (particle_id >= (m_num_particles / 2))
+        if ((particle_id >= (m_num_particles / 2)) && (m_image_system))
         {
             m_velocities_particles_articulation(constrained1_7 + 2) *= -1;
             m_velocities_particles_articulation(constrained2_7 + 2) *= -1;
@@ -493,7 +493,7 @@ SystemData::accelerationsArticulation()
             a3_mag * m_orientations_particles.segment<3>(constrained2_3);
 
         // Image system: flip z components, leave x,y unchanged
-        if (particle_id >= (m_num_particles / 2))
+        if ((particle_id >= (m_num_particles / 2)) && (m_image_system))
         {
             m_accelerations_particles_articulation(constrained1_7 + 2) *= -1;
             m_accelerations_particles_articulation(constrained2_7 + 2) *= -1;
