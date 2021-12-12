@@ -448,12 +448,6 @@ PotentialHydrodynamics::calcHydroForces(const Eigen::ThreadPoolDevice& device)
 
     std::cout << "N2(2,2,3): " << m_N2(2, 2, 3) << std::endl;
     std::cout << "N2(2,2,5): " << m_N2(2, 2, 5) << std::endl;
-
-    std::cout << "Sigma:\n" << m_system->rbmConn().format(CleanFmt) << "\n\n" << std::endl;
-
-    std::cout << "M:\n" << m_M_total.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "M2:\n" << MatrixCast(m_M2, m_7M, m_7N, device).format(CleanFmt) << "\n\n" << std::endl;
-    // std::cout << "M3:\n" << MatrixCast(m_M3, m_7M, m_7M, device).format(CleanFmt) << "\n\n" << std::endl;
 #endif
 }
 
