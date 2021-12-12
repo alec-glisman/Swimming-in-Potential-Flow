@@ -156,7 +156,7 @@ SystemData::initializeData()
             orient_dir = -1.0; // -x placement
         }
 
-        m_positions_particles_articulation_init_norm(particle_id_3) =
+        m_positions_particles_articulation_init_norm(particle_id_3 + 2) =
             orient_dir; /// @review_swimmer: All of body coordinate in -z-axis, quaternion rotates
 
         spdlog::get(m_logName)->info("Particle {0} initial orientation: [{1:03.14f}, {2:03.14f}, {3:03.14f}]",

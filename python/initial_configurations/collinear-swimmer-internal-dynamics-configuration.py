@@ -3,7 +3,7 @@
 __author__ = "Alec Glisman"
 
 Example:
-    python3 python/initial_configurations/collinear-swimmer-internal-dynamics-configuration.py --GSD-path=data.gsd --dt=1e-05 --ti=0 --tf=1 --R-avg=3.5 --Z-height=2.10e+0 --phase-angle=-1.57079632679 --U0=1.4 --omega=1 --number-bodies=1 --image-system=0 --orientation=1
+    python3 python/initial_configurations/collinear-swimmer-internal-dynamics-configuration.py --GSD-path=data.gsd --dt=1e-05 --ti=0 --tf=1 --R-avg=3.5 --Z-height=2.10e+0 --phase-angle=-1.57079632679 --U0=1.4 --omega=1 --number-bodies=1 --image-system=0
 """
 
 # SECTION: Dependencies
@@ -61,11 +61,6 @@ parser.add_option("--number-bodies", dest="u_number_bodies",
 parser.add_option("--image-system", dest="u_image_system",
                   help="Is the system under consideration an image system about z-axis? (1: true, 0: false)",
                   metavar="int")
-
-parser.add_option("--orientation", dest="u_orientation",
-                  help="How are bodies initially oriented? (0: +x-axis orientation, 1: -z-axis orientation: 2: +y-axis orientation)",
-                  metavar="int")
-
 
 # !SECTION (Parse user input options)
 
@@ -147,7 +142,7 @@ def initializeGSD(gsd_path,
 def setInitialConditions(gsd_class,
                          N, M, num_particles_per_body,
                          Z_height,
-                         image_system, orientation):
+                         image_system):
     """Set initial kinematics of GSD file
 
     Args:
@@ -157,7 +152,6 @@ def setInitialConditions(gsd_class,
         num_particles_per_body (int): number of particles per body
         Z_height (float32): z-axis height of bodies
         image_system (int): Integer boolean deciding if simulation is an image system
-        orientation (int): Integer giving initial orientation of bodies (see parser input for more detail)
     """
 
     # rotation tensor
@@ -176,12 +170,6 @@ def setInitialConditions(gsd_class,
 
     # pick quaternion to use
     quat_used = np.copy(no_rotation_quat)
-
-    if (orientation == 1):
-        quat_used = np.copy(rot_x_to_nz)
-
-    elif (orientation == 2):
-        quat_used = np.copy(rot_x_to_y)
 
     quat_used_img = np.copy(quat_used)
     # accounts for +z --> -z axis inversion for image system
@@ -290,7 +278,6 @@ if __name__ == "__main__":
     omega = np.float64(options.u_omega)
 
     image_system = int(options.u_image_system)
-    orientation_init = int(options.u_orientation)
 
     M = int(options.u_number_bodies)
     N = num_particles_per_body * M
@@ -309,7 +296,7 @@ if __name__ == "__main__":
     setInitialConditions(gsd_class,
                          N, M, num_particles_per_body,
                          Z_height,
-                         image_system, orientation_init)
+                         image_system)
 
     setSystemData(gsd_class,
                   M,

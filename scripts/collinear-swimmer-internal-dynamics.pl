@@ -48,7 +48,6 @@ my $numSimulationTypes = scalar @inputData;
 my $numberBodies         = 1; # integer number of bodies to simulate
 my $boolImageSystem      = 0; # if system has an image (wall) along z=0 plane
 my $boolInternalDynamics = 1; # if swimmer has internal dynamics (0: no, 1: yes)
-my $orientation          = 1; # (0: initially +x, 1: initially -z, 2: initially +y)
 
 my $ti          = 0.00e+0;
 my $tf          = 1.00e+0;
@@ -252,7 +251,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		}
 
 		# Generate GSD file
-		my $pythonConfigCommand = "python3 ${pythonGSDCreation} --GSD-path=${gsd_path} --dt=${dt} --ti=${ti} --tf=${tf} --R-avg=${R_avg} --Z-height=${Z_height} --phase-angle=${phase_angle} --U0=${U0} --omega=${omega} --number-bodies=${numberBodies} --image-system=${boolImageSystem} --orientation=${orientation}";
+		my $pythonConfigCommand = "python3 ${pythonGSDCreation} --GSD-path=${gsd_path} --dt=${dt} --ti=${ti} --tf=${tf} --R-avg=${R_avg} --Z-height=${Z_height} --phase-angle=${phase_angle} --U0=${U0} --omega=${omega} --number-bodies=${numberBodies} --image-system=${boolImageSystem}";
 
 		system( "${pythonConfigCommand}" )
 		  and die "Unable to generate GSD file: $?, $!";
