@@ -171,7 +171,7 @@ def setInitialConditions(gsd_class,
                            dtype=np.float64) / np.sqrt(2.0, dtype=np.float64)
 
     # rotate \pi / 2 radians about z-axis (0, 0, 1): results in +x --> +y axis rotation
-    rot_x_to_y = np.array([1.0, 0.0, 1.0, 0.0],
+    rot_x_to_y = np.array([1.0, 0.0, 0.0, 1.0],
                           dtype=np.float64) / np.sqrt(2.0, dtype=np.float64)
 
     # pick quaternion to use
