@@ -157,7 +157,7 @@ SystemData::initializeData()
         }
 
         m_positions_particles_articulation_init_norm(particle_id_3) =
-            orient_dir; // REVIEW: All of body coordinate in +x-axis, quaternion rotates
+            orient_dir; /// @review_swimmer: All of body coordinate in -z-axis, quaternion rotates
 
         spdlog::get(m_logName)->info("Particle {0} initial orientation: [{1:03.14f}, {2:03.14f}, {3:03.14f}]",
                                      particle_id + 1, m_positions_particles_articulation_init_norm(particle_id_3),
@@ -573,7 +573,9 @@ SystemData::chiMatrixElement(const int particle_id)
                                         m_positions_bodies(body_id_7 + 5), m_positions_bodies(body_id_7 + 6));
 
     // particle initial configuration unit quaternion
-    const Eigen::Quaterniond r_body_quat(0.0, 1.0, 0.0, 0.0);
+    const Eigen::Vector3d    r_hat_init = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
+    const Eigen::Quaterniond r_body_quat(0.0, prefactor * r_hat_init(0), prefactor * r_hat_init(1),
+                                         prefactor * r_hat_init(2));
 
     // quaternion product: r_body * theta
     const Eigen::Quaterniond r_theta = r_body_quat * theta_body;
@@ -593,7 +595,7 @@ SystemData::chiMatrixElement(const int particle_id)
     m_chi.block<3, 3>(body_id_7, particle_id_3).noalias() =
         m_I3; // convert body (linear) position derivatives to particle linear coordinate derivatives
     m_chi.block<4, 3>(body_id_7 + 3, particle_id_3).noalias() =
-        prefactor * g_matrix; // convert body (quaternion) position derivatives to particle linear coordinate derivatives
+        g_matrix; // convert body (quaternion) position derivatives to particle linear coordinate derivatives
 }
 
 void
