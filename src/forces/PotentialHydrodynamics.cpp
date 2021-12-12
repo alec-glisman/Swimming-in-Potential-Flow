@@ -445,11 +445,12 @@ PotentialHydrodynamics::calcHydroForces(const Eigen::ThreadPoolDevice& device)
     std::cout << "F_loc_int 1:\n"
               << MatrixCast(-m_N2.contract(V_xi_dot, contract_ijk_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
               << std::endl;
-    // const Eigen::array<Eigen::Index, 3> offsets_5 = {0, 0, 4};
-    // const Eigen::array<Eigen::Index, 3> extents   = {m_7M, m_7N, 1};
 
-    // std::cout << "N1_{j k 5}:\n"
-    //           << MatrixCast(m_N1.slice(offsets_5, extents), m_7N, m_7N, device).format(CleanFmt) << "\n\n"
+    std::cout << "N2(2,2,3):\n" << m_N2(2, 2, 3) << std::endl;
+    std::cout << "N2(2,2,5):\n" << m_N2(2, 2, 5) << std::endl;
+
+    // std::cout << "N2{j k 5}:\n"
+    //           << MatrixCast(m_N1.slice(offsets_grad5, extents), m_7M, m_7N, device).format(CleanFmt) << "\n\n"
     //           << std::endl;
 
     // const Eigen::array<Eigen::Index, 3> offsets_6 = {0, 0, 5};
@@ -493,7 +494,7 @@ PotentialHydrodynamics::calcHydroForces(const Eigen::ThreadPoolDevice& device)
 
     std::cout << "M:\n" << m_M_total.format(CleanFmt) << "\n\n" << std::endl;
     std::cout << "M2:\n" << MatrixCast(m_M2, m_7M, m_7N, device).format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "M3:\n" << MatrixCast(m_M3, m_7M, m_7M, device).format(CleanFmt) << "\n\n" << std::endl;
+    // std::cout << "M3:\n" << MatrixCast(m_M3, m_7M, m_7M, device).format(CleanFmt) << "\n\n" << std::endl;
 #endif
 }
 
