@@ -530,12 +530,12 @@ SystemData::rbmMatrixElement(const int particle_id)
     const int body_id_7{7 * m_particle_group_id(particle_id)};
 
     // \[r_\alpha ^\]: skew-symmetric matrix representation of cross product
-    Eigen::Matrix3d mat_two_dr_cross;
-    crossProdMat(m_positions_particles_articulation.segment<3>(particle_id_3), mat_two_dr_cross);
+    Eigen::Matrix3d mat_dr_cross;
+    crossProdMat(m_positions_particles_articulation.segment<3>(particle_id_3), mat_dr_cross);
     // preprend row of zeros
     Eigen::Matrix<double, 4, 3> mat_dr_cross_43;
     mat_dr_cross_43.setZero();
-    mat_dr_cross_43.block<3, 3>(1, 0).noalias() = mat_two_dr_cross;
+    mat_dr_cross_43.block<3, 3>(1, 0).noalias() = mat_dr_cross;
 
     // E_{(i)}: matrix representation of left quaternion composition
     Eigen::Matrix4d E_body;
