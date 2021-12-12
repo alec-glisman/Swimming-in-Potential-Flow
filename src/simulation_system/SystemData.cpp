@@ -573,7 +573,7 @@ SystemData::chiMatrixElement(const int particle_id)
                                         m_positions_bodies(body_id_7 + 5), m_positions_bodies(body_id_7 + 6));
 
     // particle initial configuration unit quaternion
-    const Eigen::Quaterniond r_body_quat(0.0, prefactor, 0.0, 0.0);
+    const Eigen::Quaterniond r_body_quat(0.0, 1.0, 0.0, 0.0);
 
     // quaternion product: r_body * theta
     const Eigen::Quaterniond r_theta = r_body_quat * theta_body;
@@ -593,7 +593,7 @@ SystemData::chiMatrixElement(const int particle_id)
     m_chi.block<3, 3>(body_id_7, particle_id_3).noalias() =
         m_I3; // convert body (linear) position derivatives to particle linear coordinate derivatives
     m_chi.block<4, 3>(body_id_7 + 3, particle_id_3).noalias() =
-        g_matrix; // convert body (quaternion) position derivatives to particle linear coordinate derivatives
+        prefactor * g_matrix; // convert body (quaternion) position derivatives to particle linear coordinate derivatives
 }
 
 void
