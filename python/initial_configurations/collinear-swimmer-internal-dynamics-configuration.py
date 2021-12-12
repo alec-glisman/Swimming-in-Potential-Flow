@@ -63,7 +63,7 @@ parser.add_option("--image-system", dest="u_image_system",
                   metavar="int")
 
 parser.add_option("--orientation", dest="u_orientation",
-                  help="How are bodies initially oriented? (0: +x-axis orientation, 1: -z-axis orientation)",
+                  help="How are bodies initially oriented? (0: +x-axis orientation, 1: -z-axis orientation: 2: +y-axis orientation)",
                   metavar="int")
 
 
@@ -73,7 +73,7 @@ parser.add_option("--orientation", dest="u_orientation",
 # SECTION: Parameters
 
 # Integrator parameters
-num_steps_output = 10000
+num_steps_output = 100
 
 # Material parameters
 fluid_density = 1.0
@@ -165,15 +165,23 @@ def setInitialConditions(gsd_class,
 
     # rotate 0 radians
     no_rotation_quat = np.array([1.0, 0.0, 0.0, 0.0], dtype=np.float64)
+
     # rotate -(3 \pi) / 2 radians about y-axis (0, 1 ,0): results in +x --> -z axis rotation
     rot_x_to_nz = np.array([-1.0, 0.0, 1.0, 0.0],
                            dtype=np.float64) / np.sqrt(2.0, dtype=np.float64)
+
+    # rotate \pi / 2 radians about z-axis (0, 0, 1): results in +x --> +y axis rotation
+    rot_x_to_y = np.array([1.0, 0.0, 1.0, 0.0],
+                          dtype=np.float64) / np.sqrt(2.0, dtype=np.float64)
 
     # pick quaternion to use
     quat_used = np.copy(no_rotation_quat)
 
     if (orientation == 1):
         quat_used = np.copy(rot_x_to_nz)
+
+    elif (orientation == 2):
+        quat_used = np.copy(rot_x_to_y)
 
     quat_used_img = np.copy(quat_used)
     # accounts for +z --> -z axis inversion for image system
