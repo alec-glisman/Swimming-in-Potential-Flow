@@ -430,13 +430,21 @@ PotentialHydrodynamics::calcHydroForces(const Eigen::ThreadPoolDevice& device)
     std::cout << "F_loc_int:\n" << MatrixCast(F_loc_int, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
     std::cout << "F_loc:\n" << MatrixCast(F_loc, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
 
-    // std::cout << "F_int 1:\n"
-    //           << MatrixCast(0.50 * m_N1.contract(V_V, contract_jki_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
-    //           << std::endl;
-    // std::cout << "F_int 2:\n"
-    //           << MatrixCast(-m_M2.contract(V_dot, contract_ij_j), m_7M, 1, device).format(CleanFmt) << "\n\n"
-    //           << std::endl;
+    std::cout << "F_loc 0:\n" << MatrixCast(inertia_loc, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
+    std::cout << "F_loc 1:\n"
+              << MatrixCast(0.50 * m_N3.contract(xi_dot_xi_dot, contract_jki_jk), m_7M, 1, device).format(CleanFmt)
+              << "\n\n"
+              << std::endl;
+    std::cout << "F_loc 2:\n"
+              << MatrixCast(-m_N3.contract(xi_dot_xi_dot, contract_ijk_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
+              << std::endl;
 
+    std::cout << "F_loc_int 0:\n"
+              << MatrixCast(m_N2.contract(xi_dot_V, contract_jki_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
+              << std::endl;
+    std::cout << "F_loc_int 1:\n"
+              << MatrixCast(-m_N2.contract(V_xi_dot, contract_ijk_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
+              << std::endl;
     // const Eigen::array<Eigen::Index, 3> offsets_5 = {0, 0, 4};
     // const Eigen::array<Eigen::Index, 3> extents   = {m_7M, m_7N, 1};
 
@@ -483,9 +491,9 @@ PotentialHydrodynamics::calcHydroForces(const Eigen::ThreadPoolDevice& device)
 
     // std::cout << "grad_{5} M{l, 15} trans:\n" << grad5_M.col(14).transpose().format(CleanFmt) << "\n\n" << std::endl;
 
-    // std::cout << "M:\n" << m_M_total.format(CleanFmt) << "\n\n" << std::endl;
-    // std::cout << "M2:\n" << MatrixCast(m_M2, m_7M, m_7N, device).format(CleanFmt) << "\n\n" << std::endl;
-    // std::cout << "M3:\n" << MatrixCast(m_M3, m_7M, m_7M, device).format(CleanFmt) << "\n\n" << std::endl;
+    std::cout << "M:\n" << m_M_total.format(CleanFmt) << "\n\n" << std::endl;
+    std::cout << "M2:\n" << MatrixCast(m_M2, m_7M, m_7N, device).format(CleanFmt) << "\n\n" << std::endl;
+    std::cout << "M3:\n" << MatrixCast(m_M3, m_7M, m_7M, device).format(CleanFmt) << "\n\n" << std::endl;
 #endif
 }
 
