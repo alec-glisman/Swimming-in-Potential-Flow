@@ -348,16 +348,13 @@ RungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
     Eigen::IOFormat CleanFmt(16, 0, ", ", "\n", "[", "]");
     std::cout << "RungeKutta4::udwadiaKalaba(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
     std::cout << "t: " << m_system->t() << "\n\n" << std::endl;
-    // std::cout << "M_eff:\n" << M_eff.format(CleanFmt) << "\n\n" << std::endl;
-    // std::cout << "M_eff_inv:\n" << M_eff_inv.format(CleanFmt) << "\n\n" << std::endl;
-    // std::cout << "K:\n" << K.format(CleanFmt) << "\n\n" << std::endl;
     std::cout << "Q:\n"
               << Q.format(CleanFmt) << "\n\n"
-              << std::endl; // FIXME: Developes non-zero Q(4) at t=5e-7 (RK4 step 2)
+              << std::endl; 
     std::cout << "Q_con:\n" << Q_con.format(CleanFmt) << "\n\n" << std::endl;
     std::cout << "acc:\n"
               << acc.format(CleanFmt) << "\n\n"
-              << std::endl; // FIXME: Developes non-zero acc(4) at t=5e-7 (RK4 step 2)
+              << std::endl;
 #endif
 }
 
