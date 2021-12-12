@@ -573,9 +573,7 @@ SystemData::chiMatrixElement(const int particle_id)
                                         m_positions_bodies(body_id_7 + 5), m_positions_bodies(body_id_7 + 6));
 
     // particle initial configuration unit quaternion
-    const Eigen::Quaterniond r_body_quat(0.0, prefactor * m_positions_particles_articulation_init_norm(particle_id_3),
-                                         prefactor * m_positions_particles_articulation_init_norm(particle_id_3 + 1),
-                                         prefactor * m_positions_particles_articulation_init_norm(particle_id_3 + 2));
+    const Eigen::Quaterniond r_body_quat(0.0, prefactor, 0.0, 0.0);
 
     // quaternion product: r_body * theta
     const Eigen::Quaterniond r_theta = r_body_quat * theta_body;
