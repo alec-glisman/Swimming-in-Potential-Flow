@@ -68,7 +68,7 @@ parser.add_option("--image-system", dest="u_image_system",
 # SECTION: Parameters
 
 # Integrator parameters
-num_steps_output = 100
+num_steps_output = 10000
 
 # Material parameters
 fluid_density = 1.0
