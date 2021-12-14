@@ -342,20 +342,6 @@ RungeKutta4::udwadiaKalaba(Eigen::VectorXd& acc)
     Eigen::VectorXd Q_total = Q; // (7m, 1)
     Q_total.noalias() += Q_con;
     acc.noalias() = M_eff_inv * Q_total; // (7m, 1)
-
-    // FIXME: debugging print statements
-#if !defined(NDEBUG)
-    Eigen::IOFormat CleanFmt(16, 0, ", ", "\n", "[", "]");
-    std::cout << "RungeKutta4::udwadiaKalaba(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
-    std::cout << "t: " << m_system->t() << "\n\n" << std::endl;
-    std::cout << "Q:\n"
-              << Q.format(CleanFmt) << "\n\n"
-              << std::endl; 
-    std::cout << "Q_con:\n" << Q_con.format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "acc:\n"
-              << acc.format(CleanFmt) << "\n\n"
-              << std::endl;
-#endif
 }
 
 void
@@ -422,6 +408,8 @@ RungeKutta4::momForceFree(const Eigen::ThreadPoolDevice& device)
 
     // calculate U_swim = - M_tilde_inv * P_script; U_swim has translation components
     const Eigen::Vector3d U_swim = -M_tilde.fullPivLu().solve(P_script); // linear components
+    // convert U_swim to 4d vector for quaternion rotation
+    const Eigen::Quaterniond U_swim_4d(0.0, U_swim(0), U_swim(1), U_swim(2));
 
     /* ANCHOR: Output velocity data back to m_system */
     Eigen::VectorXd vel_body = Eigen::VectorXd::Zero(m_7M);
@@ -430,7 +418,14 @@ RungeKutta4::momForceFree(const Eigen::ThreadPoolDevice& device)
     {
         const int body_id_7{7 * body_id};
 
-        vel_body.segment<3>(body_id_7).noalias() = U_swim;
+        // body unit quaternion
+        const Eigen::Vector4d    theta = m_system->positionsBodies().segment<4>(body_id_7 + 3);
+        const Eigen::Quaterniond theta_body(theta(0), theta(1), theta(2), theta(3));
+
+        const Eigen::Quaterniond U_swim_rot_4d = theta_body * U_swim_4d * theta_body.inverse();
+        const Eigen::Vector3d    U_swim_rot_3d = U_swim_rot_4d.vec();
+
+        vel_body.segment<3>(body_id_7).noalias() = U_swim_rot_3d;
     }
 
     m_system->setVelocitiesBodies(vel_body);
@@ -471,6 +466,9 @@ RungeKutta4::momForceFree(const Eigen::ThreadPoolDevice& device)
     // calculate A_swim = - M_tilde_inv * P_script; A_swim has translation components
     const Eigen::Vector3d A_swim = -M_tilde.fullPivLu().solve(F_script); // linear components
 
+    // convert A_swim to 4d vector for quaternion rotation
+    Eigen::Quaterniond A_swim_4d(0.0, A_swim(0), A_swim(1), A_swim(2));
+
     /* ANCHOR: Output velocity data back to m_system */
     Eigen::VectorXd acc_body = Eigen::VectorXd::Zero(m_7M);
 
@@ -478,7 +476,14 @@ RungeKutta4::momForceFree(const Eigen::ThreadPoolDevice& device)
     {
         const int body_id_7{7 * body_id};
 
-        acc_body.segment<3>(body_id_7).noalias() = A_swim;
+        // body unit quaternion
+        const Eigen::Vector4d    theta = m_system->positionsBodies().segment<4>(body_id_7 + 3);
+        const Eigen::Quaterniond theta_body(theta(0), theta(1), theta(2), theta(3));
+
+        const Eigen::Quaterniond A_swim_rot_4d = theta_body * A_swim_4d * theta_body.inverse();
+        const Eigen::Vector3d    A_swim_rot_3d = A_swim_rot_4d.vec();
+
+        acc_body.segment<3>(body_id_7).noalias() = A_swim_rot_3d;
     }
 
     m_system->setAccelerationsBodies(acc_body);

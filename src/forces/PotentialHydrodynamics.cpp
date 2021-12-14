@@ -417,38 +417,6 @@ PotentialHydrodynamics::calcHydroForces(const Eigen::ThreadPoolDevice& device)
     F_hydro_no_inertia.device(device)           = F_hydro;
     F_hydro_no_inertia.device(device) -= inertia_loc;
     m_F_hydroNoInertia.noalias() = MatrixCast(F_hydro_no_inertia, m_7M, 1, device);
-
-    // FIXME: debugging print statements
-#if !defined(NDEBUG)
-    Eigen::IOFormat CleanFmt(8, 0, ", ", "\n", "[", "]");
-
-    std::cout << "PotentialHydrodynamics::calcHydroForces(): STARTING PRINT OF DEBUG STATEMENTS" << std::endl;
-    std::cout << "t: " << m_system->t() << "\n\n" << std::endl;
-
-    // print 3 different force terms
-    std::cout << "F_int:\n" << MatrixCast(F_int, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "F_loc_int:\n" << MatrixCast(F_loc_int, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "F_loc:\n" << MatrixCast(F_loc, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
-
-    std::cout << "F_loc 0:\n" << MatrixCast(inertia_loc, m_7M, 1, device).format(CleanFmt) << "\n\n" << std::endl;
-    std::cout << "F_loc 1:\n"
-              << MatrixCast(0.50 * m_N3.contract(xi_dot_xi_dot, contract_jki_jk), m_7M, 1, device).format(CleanFmt)
-              << "\n\n"
-              << std::endl;
-    std::cout << "F_loc 2:\n"
-              << MatrixCast(-m_N3.contract(xi_dot_xi_dot, contract_ijk_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
-              << std::endl;
-
-    std::cout << "F_loc_int 0:\n"
-              << MatrixCast(m_N2.contract(xi_dot_V, contract_jki_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
-              << std::endl;
-    std::cout << "F_loc_int 1:\n"
-              << MatrixCast(-m_N2.contract(V_xi_dot, contract_ijk_jk), m_7M, 1, device).format(CleanFmt) << "\n\n"
-              << std::endl;
-
-    std::cout << "N2(2,2,3): " << m_N2(2, 2, 3) << std::endl;
-    std::cout << "N2(2,2,5): " << m_N2(2, 2, 5) << std::endl;
-#endif
 }
 
 void
