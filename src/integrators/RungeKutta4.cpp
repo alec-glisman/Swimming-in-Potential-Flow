@@ -215,7 +215,7 @@ RungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::Vec
         udwadiaKalaba(acc_real_body);
 
         // update acceleration components using constraints
-        acc.segment(0, m_body_dof_7).noalias() = acc_real_body;
+        acc.segment(0, m_body_dof_7) = acc_real_body;
         imageBodyAcc(acc);
     }
     else
