@@ -241,7 +241,7 @@ IF(${MKL_FOUND} AND ${TBB_FOUND})
 
 ELSEIF(${MKL_FOUND})
     
-    ADD_COMPILE_OPTIONS(-lpthread -m64 -lmkl_intel_lp64 -lmkl_core -lm -ldl)
+    ADD_COMPILE_OPTIONS(-m64 -lmkl_intel_lp64 -lmkl_core -lm -ldl)
 
 ENDIF()
 
