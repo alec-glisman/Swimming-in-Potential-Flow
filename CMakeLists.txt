@@ -75,6 +75,7 @@ ELSEIF("$ENV{USER}" STREQUAL "alec")  # Build on Brady group servers
     
     INCLUDE_DIRECTORIES("/home/alec/local-new/intel/compilers_and_libraries/linux/mkl/include")
     INCLUDE_DIRECTORIES("/home/alec/local-new/intel/compilers_and_libraries/linux")
+    INCLUDE_DIRECTORIES("/lib/x86_64-linux-gnu")
     INCLUDE_DIRECTORIES("/usr/lib/x86_64-linux-gnu")
     
     SET(CMAKE_C_COMPILER /usr/bin/gcc-11 CACHE PATH "")
