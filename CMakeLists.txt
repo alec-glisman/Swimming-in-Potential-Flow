@@ -208,6 +208,14 @@ ENDIF()
 # SECTION: External libraries
 MESSAGE("")
 
+# Logging library
+MESSAGE( "${BoldMagenta}" "External Dependency: spdlog" "${ColourReset}" )
+FIND_PACKAGE(Spdlog 1.9.1 REQUIRED)
+MESSAGE( STATUS "${Cyan}" "Found: ${SPDLOG_FOUND}" )
+MESSAGE( STATUS "${Cyan}" "Include Dir: ${SPDLOG_INCLUDE_DIRS}" "${ColourReset}")
+MESSAGE( STATUS "${Cyan}" "Libraries: ${SPDLOG_LIBRARIES}" "${ColourReset}")
+MESSAGE("")
+
 # Optimization libraries
 MESSAGE( "${BoldMagenta}" "External Dependency: Intel TBB" "${ColourReset}" )
 FIND_PACKAGE(TBB)    
@@ -225,7 +233,6 @@ ELSE()
 ENDIF()
 
 FIND_PACKAGE(MKL)    
-target_compile_options(MKL::MKL INTERFACE)
 MESSAGE( STATUS "${Cyan}" "Found: ${MKL_FOUND}" "${ColourReset}")
 MESSAGE( STATUS "${Cyan}" "Include Dir: ${MKL_INCLUDE_DIR}" "${ColourReset}")
 MESSAGE( STATUS "${Cyan}" "Library Dir: ${MKL_LIBRARIES}" "${ColourReset}")
@@ -248,14 +255,6 @@ MESSAGE( "${BoldMagenta}" "External Dependency: Eigen3" "${ColourReset}" )
 FIND_PACKAGE(Eigen3 3.3.9 REQUIRED)
 MESSAGE( STATUS "${Cyan}" "Found: ${EIGEN3_FOUND}" "${ColourReset}")
 MESSAGE( STATUS "${Cyan}" "Include Dir: ${EIGEN3_INCLUDE_DIR}" "${ColourReset}")
-MESSAGE("")
-
-# Logging library
-MESSAGE( "${BoldMagenta}" "External Dependency: spdlog" "${ColourReset}" )
-FIND_PACKAGE(Spdlog 1.9.1 REQUIRED)
-MESSAGE( STATUS "${Cyan}" "Found: ${SPDLOG_FOUND}" )
-MESSAGE( STATUS "${Cyan}" "Include Dir: ${SPDLOG_INCLUDE_DIRS}" "${ColourReset}")
-MESSAGE( STATUS "${Cyan}" "Libraries: ${SPDLOG_LIBRARIES}" "${ColourReset}")
 MESSAGE("")
 
 IF(ENABLE_COVERAGE STREQUAL "True")
