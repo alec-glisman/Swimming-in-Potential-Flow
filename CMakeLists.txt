@@ -73,10 +73,6 @@ ELSEIF("$ENV{USER}" STREQUAL "alec")  # Build on Brady group servers
 
     MESSAGE(STATUS "${BoldGreen}" "Compiling on Brady group servers" "${ColourReset}")      
     
-    INCLUDE_DIRECTORIES("/home/alec/local-new/intel/compilers_and_libraries/linux")
-    INCLUDE_DIRECTORIES("/home/alec/local-new/intel/compilers_and_libraries/linux/mkl/include")
-    INCLUDE_DIRECTORIES("/home/alec/local-new/intel/compilers_and_libraries/linux/tbb/include")
-    
     INCLUDE_DIRECTORIES("/lib/x86_64-linux-gnu")
     INCLUDE_DIRECTORIES("/usr/lib/x86_64-linux-gnu")
     
