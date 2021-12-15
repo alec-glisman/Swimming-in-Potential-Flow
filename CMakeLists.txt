@@ -73,9 +73,6 @@ ELSEIF("$ENV{USER}" STREQUAL "alec")  # Build on Brady group servers
 
     MESSAGE(STATUS "${BoldGreen}" "Compiling on Brady group servers" "${ColourReset}")      
     
-    INCLUDE_DIRECTORIES("/lib/x86_64-linux-gnu")
-    INCLUDE_DIRECTORIES("/usr/lib/x86_64-linux-gnu")
-    
     SET(CMAKE_C_COMPILER /usr/bin/gcc-11 CACHE PATH "")
     SET(CMAKE_CXX_COMPILER /usr/bin/g++-11 CACHE PATH "")
 
