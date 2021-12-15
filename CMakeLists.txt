@@ -151,8 +151,6 @@ PROJECT(
         VERSION "0.1.0"
         DESCRIPTION
             "Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible)"
-        HOMEPAGE_URL
-            "https://github.com/alec-glisman/bodies-in-potential-flow"
         LANGUAGES ${LANGS})
 
 
