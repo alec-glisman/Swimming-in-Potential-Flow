@@ -422,14 +422,6 @@ SystemData::positionsArticulation()
         m_positions_particles_articulation.segment<3>(constrained_p2_3).noalias() =
             r3_mag * m_orientations_particles.segment<3>(constrained_p2_3);
 
-        // Image system: flip z components, leave x,y unchanged
-        if ((particle_id >= (m_num_particles / 2)) && (m_image_system))
-        {
-            m_positions_particles_articulation(constrained_p1_3 + 2) *= -1;
-
-            m_positions_particles_articulation(constrained_p2_3 + 2) *= -1;
-        }
-
         particle_id += 3;
     }
 }
@@ -459,16 +451,6 @@ SystemData::velocitiesArticulation()
 
         m_velocities_particles_articulation.segment<3>(constrained_p2_7).noalias() =
             v3_mag * m_orientations_particles.segment<3>(constrained_p2_3);
-
-        // Image system: flip z components, leave x,y unchanged
-        if ((particle_id >= (m_num_particles / 2)) && (m_image_system))
-        {
-            m_velocities_particles_articulation(constrained_p1_7 + 2) *= -1;
-            m_velocities_particles_articulation.segment<2>(constrained_p1_7 + 4) *= -1;
-
-            m_velocities_particles_articulation(constrained_p2_7 + 2) *= -1;
-            m_velocities_particles_articulation.segment<2>(constrained_p2_7 + 4) *= -1;
-        }
 
         particle_id += 3;
     }
@@ -501,16 +483,6 @@ SystemData::accelerationsArticulation()
 
         m_accelerations_particles_articulation.segment<3>(constrained_p2_7).noalias() =
             a3_mag * m_orientations_particles.segment<3>(constrained_p2_3);
-
-        // Image system: flip z components, leave x,y unchanged
-        if ((particle_id >= (m_num_particles / 2)) && (m_image_system))
-        {
-            m_accelerations_particles_articulation(constrained_p1_7 + 2) *= -1;
-            m_accelerations_particles_articulation.segment<2>(constrained_p1_7 + 4) *= -1;
-
-            m_accelerations_particles_articulation(constrained_p2_7 + 2) *= -1;
-            m_accelerations_particles_articulation.segment<2>(constrained_p2_7 + 4) *= -1;
-        }
 
         particle_id += 3;
     }
