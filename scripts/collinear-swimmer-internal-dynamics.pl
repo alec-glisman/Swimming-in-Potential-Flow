@@ -41,16 +41,16 @@ my $simulationTag    = "collinear-swimmer-internal-dynamics";
 my $projectName      = "bodies-in-potential-flow";
 my $inputDir         = "input";
 my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
-my @inputData        = ( "varyZHeight", "varyEpsilon" );  # other options: [ "varyDt", "varyRelDisp", "varyPhaseAngle",  "varyVarEpsilon" ]
+my @inputData        = (  "varyEpsilon", "varyZHeight" );  # other options: [ "varyDt", "varyRelDisp", "varyPhaseAngle",  "varyVarEpsilon" ]
 my $numSimulationTypes = scalar @inputData;
 
 # Simulation parameters
-my $numberBodies         = 2; # integer number of bodies to simulate
-my $boolImageSystem      = 1; # if system has an image (wall) along z=0 plane
+my $numberBodies         = 1; # integer number of bodies to simulate
+my $boolImageSystem      = 0; # if system has an image (wall) along z=0 plane
 my $boolInternalDynamics = 1; # if swimmer has internal dynamics (0: no, 1: yes)
 
 my $ti          = 0.00e+0;
-my $tf          = 1.00e+3;
+my $tf          = 1.00e+2;
 
 # Python Numerical Analysis
 my $pythonGSDCreation = "python/initial_configurations/" . $simulationTag . "-configuration.py";
