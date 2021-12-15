@@ -237,6 +237,7 @@ SET(MKL_MPI mpich)
 
 
 FIND_PACKAGE(MKL)    
+target_compile_options(MKL::MKL INTERFACE)
 MESSAGE( STATUS "${Cyan}" "Found: ${MKL_FOUND}" "${ColourReset}")
 MESSAGE( STATUS "${Cyan}" "Include Dir: ${MKL_INCLUDE_DIR}" "${ColourReset}")
 MESSAGE( STATUS "${Cyan}" "Library Dir: ${MKL_LIBRARIES}" "${ColourReset}")
