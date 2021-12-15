@@ -225,12 +225,16 @@ MESSAGE( STATUS "${Cyan}" "Library Dir: ${TBB_LIBRARIES}" "${ColourReset}")
 MESSAGE("")
 
 MESSAGE( "${BoldMagenta}" "External Dependency: Intel MKL" "${ColourReset}" )
+SET(MKL_ARCH intel64)
+SET(MKL_LINK dynamic)
 SET(MKL_INTERFACE_FULL intel_lp64)
 IF(${TBB_FOUND})
     SET(MKL_THREADING tbb_thread)
 ELSE()
     SET(MKL_THREADING gnu_thread)
 ENDIF()
+SET(MKL_MPI mpich)
+
 
 FIND_PACKAGE(MKL)    
 MESSAGE( STATUS "${Cyan}" "Found: ${MKL_FOUND}" "${ColourReset}")
