@@ -218,7 +218,6 @@ MESSAGE("")
 
 MESSAGE( "${BoldMagenta}" "External Dependency: Intel MKL" "${ColourReset}" )
 SET(MKL_INTERFACE_FULL intel_lp64)
-
 IF(${TBB_FOUND})
     SET(MKL_THREADING tbb_thread)
 ELSE()
@@ -226,6 +225,7 @@ ELSE()
 ENDIF()
 
 FIND_PACKAGE(MKL)    
+target_compile_options(MKL::MKL INTERFACE)
 MESSAGE( STATUS "${Cyan}" "Found: ${MKL_FOUND}" "${ColourReset}")
 MESSAGE( STATUS "${Cyan}" "Include Dir: ${MKL_INCLUDE_DIR}" "${ColourReset}")
 MESSAGE( STATUS "${Cyan}" "Library Dir: ${MKL_LIBRARIES}" "${ColourReset}")
