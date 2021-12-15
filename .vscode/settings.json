@@ -135,7 +135,7 @@
         "yticklabels",
         "zorder"
     ],
-    "python.pythonPath": "/home/aglisman/miniconda3/envs/bodies-in-potential-flow/bin/python",
+    "python.pythonPath": "/Users/alecglisman/miniconda3/envs/bodies-in-potential-flow/bin/python",
     "files.associations": {
         "*.vim": "viml",
         ".conkyrc": "properties",
