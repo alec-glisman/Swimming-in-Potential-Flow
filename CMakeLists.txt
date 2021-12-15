@@ -73,6 +73,13 @@ ELSEIF("$ENV{USER}" STREQUAL "alec")  # Build on Brady group servers
 
     MESSAGE(STATUS "${BoldGreen}" "Compiling on Brady group servers" "${ColourReset}")      
     
+    INCLUDE_DIRECTORIES("/home/alec/local-new/intel/compilers_and_libraries/linux")
+    INCLUDE_DIRECTORIES("/home/alec/local-new/intel/compilers_and_libraries/linux/mkl/include")
+    INCLUDE_DIRECTORIES("/home/alec/local-new/intel/compilers_and_libraries/linux/tbb/include")
+    
+    INCLUDE_DIRECTORIES("/lib/x86_64-linux-gnu")
+    INCLUDE_DIRECTORIES("/usr/lib/x86_64-linux-gnu")
+    
     SET(CMAKE_C_COMPILER /usr/bin/gcc-11 CACHE PATH "")
     SET(CMAKE_CXX_COMPILER /usr/bin/g++-11 CACHE PATH "")
 
@@ -208,14 +215,6 @@ ENDIF()
 # SECTION: External libraries
 MESSAGE("")
 
-# Logging library
-MESSAGE( "${BoldMagenta}" "External Dependency: spdlog" "${ColourReset}" )
-FIND_PACKAGE(Spdlog 1.9.1 REQUIRED)
-MESSAGE( STATUS "${Cyan}" "Found: ${SPDLOG_FOUND}" )
-MESSAGE( STATUS "${Cyan}" "Include Dir: ${SPDLOG_INCLUDE_DIRS}" "${ColourReset}")
-MESSAGE( STATUS "${Cyan}" "Libraries: ${SPDLOG_LIBRARIES}" "${ColourReset}")
-MESSAGE("")
-
 # Optimization libraries
 MESSAGE( "${BoldMagenta}" "External Dependency: Intel TBB" "${ColourReset}" )
 FIND_PACKAGE(TBB)    
@@ -225,16 +224,13 @@ MESSAGE( STATUS "${Cyan}" "Library Dir: ${TBB_LIBRARIES}" "${ColourReset}")
 MESSAGE("")
 
 MESSAGE( "${BoldMagenta}" "External Dependency: Intel MKL" "${ColourReset}" )
-SET(MKL_ARCH "intel64")
-SET(MKL_LINK "dynamic")
-SET(MKL_INTERFACE_FULL"intel_lp64")
-IF(${TBB_FOUND})
-    SET(MKL_THREADING "tbb_thread")
-ELSE()
-    SET(MKL_THREADING "gnu_thread")
-ENDIF()
-SET(MKL_MPI "mpich")
+SET(MKL_INTERFACE_FULL intel_lp64)
 
+IF(${TBB_FOUND})
+    SET(MKL_THREADING tbb_thread)
+ELSE()
+    SET(MKL_THREADING gnu_thread)
+ENDIF()
 
 FIND_PACKAGE(MKL)    
 MESSAGE( STATUS "${Cyan}" "Found: ${MKL_FOUND}" "${ColourReset}")
@@ -249,7 +245,7 @@ IF(${MKL_FOUND} AND ${TBB_FOUND})
 
 ELSEIF(${MKL_FOUND})
     
-    ADD_COMPILE_OPTIONS(-m64 -lmkl_intel_lp64 -lmkl_core -lm -ldl)
+    ADD_COMPILE_OPTIONS(-lpthread -m64 -lmkl_intel_lp64 -lmkl_core -lm -ldl)
 
 ENDIF()
 
@@ -259,6 +255,14 @@ MESSAGE( "${BoldMagenta}" "External Dependency: Eigen3" "${ColourReset}" )
 FIND_PACKAGE(Eigen3 3.3.9 REQUIRED)
 MESSAGE( STATUS "${Cyan}" "Found: ${EIGEN3_FOUND}" "${ColourReset}")
 MESSAGE( STATUS "${Cyan}" "Include Dir: ${EIGEN3_INCLUDE_DIR}" "${ColourReset}")
+MESSAGE("")
+
+# Logging library
+MESSAGE( "${BoldMagenta}" "External Dependency: spdlog" "${ColourReset}" )
+FIND_PACKAGE(Spdlog 1.9.1 REQUIRED)
+MESSAGE( STATUS "${Cyan}" "Found: ${SPDLOG_FOUND}" )
+MESSAGE( STATUS "${Cyan}" "Include Dir: ${SPDLOG_INCLUDE_DIRS}" "${ColourReset}")
+MESSAGE( STATUS "${Cyan}" "Libraries: ${SPDLOG_LIBRARIES}" "${ColourReset}")
 MESSAGE("")
 
 IF(ENABLE_COVERAGE STREQUAL "True")
