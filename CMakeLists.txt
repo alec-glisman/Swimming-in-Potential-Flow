@@ -90,6 +90,7 @@ ELSE()
     
     SET(CMAKE_C_COMPILER /usr/bin/gcc-11 CACHE PATH "")
     SET(CMAKE_CXX_COMPILER /usr/bin/g++-11 CACHE PATH "")
+    SET(CMAKE_MAKE_PROGRAM make)
     
 ENDIF()
 
