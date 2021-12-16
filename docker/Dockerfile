@@ -191,6 +191,8 @@ RUN source "${MKLROOT}/env/vars.sh"
 # Activate VCPKG
 COPY vcpkg /bodies-in-potential-flow/vcpkg
 COPY vcpkg.json /bodies-in-potential-flow/vcpkg.json
+RUN alias gcc=gcc-11
+RUN alias g++=g++11
 RUN /bodies-in-potential-flow/vcpkg/./bootstrap-vcpkg.sh
 
 # !SECTION (Intel/NVIDA package initialization)
