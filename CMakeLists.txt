@@ -86,7 +86,10 @@ ELSEIF("$ENV{USER}" STREQUAL "alec")  # Build on Brady group servers
 
 ELSE()
 
-    MESSAGE(STATUS "${BoldGreen}" "Compiling on unknown machine" "${ColourReset}")
+    MESSAGE(STATUS "${BoldGreen}" "Compiling on Docker/unkown" "${ColourReset}")
+    
+    SET(CMAKE_C_COMPILER /usr/bin/gcc-11 CACHE PATH "")
+    SET(CMAKE_CXX_COMPILER /usr/bin/g++-11 CACHE PATH "")
     
 ENDIF()
 
