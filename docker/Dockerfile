@@ -205,6 +205,6 @@ RUN mkdir data
 RUN mkdir temp
 
 # Build simulation
-ENTRYPOINT [ "perl", "scripts/collinear-swimmer-wall.pl" ]   # starts simulations from perl script
+ENTRYPOINT [ "perl", "scripts/collinear-swimmer-internal-dynamics.pl" ]   # starts simulations from perl script
 
 # !SECTION (Prepare simulation)
