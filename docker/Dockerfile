@@ -188,6 +188,11 @@ COPY include/cmake_modules /bodies-in-potential-flow/include/cmake_modules
 SHELL ["/bin/bash", "-c"] 
 RUN source "${MKLROOT}/env/vars.sh"
 
+# Activate VCPKG
+COPY vcpkg /bodies-in-potential-flow/vcpkg
+COPY vcpkg.json /bodies-in-potential-flow/vcpkg.json
+RUN /bodies-in-potential-flow/vcpkg/./vcpkg
+
 # !SECTION (Intel/NVIDA package initialization)
 
 
@@ -201,6 +206,8 @@ COPY scripts /bodies-in-potential-flow/scripts
 COPY src /bodies-in-potential-flow/src
 COPY test /bodies-in-potential-flow/test
 COPY CMakeLists.txt /bodies-in-potential-flow/CMakeLists.txt
+COPY vcpkg /bodies-in-potential-flow/vcpkg
+COPY vcpkg.json g /bodies-in-potential-flow/vcpkg.json
 
 # Make output directories for data IO from container
 WORKDIR "/bodies-in-potential-flow"
