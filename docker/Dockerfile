@@ -23,12 +23,10 @@ ENV LDFLAGS="${LDFLAGS} -L${MKLROOT}/lib/intel64"
 ENV CPPFLAGS="${CPPFLAGS} -L${MKLROOT}/include/intel64"
 
 # Update packages on base image and general use packages
-
+RUN apt-get update && apt-get install -y apt-utils
 
 RUN apt-get update --fix-missing && \
-    apt-get upgrade -y && \
-    apt-get install -y \
-    apt-utils 
+    apt-get upgrade -y
 
 RUN apt-get update && apt-get install -y \
     build-essential \
