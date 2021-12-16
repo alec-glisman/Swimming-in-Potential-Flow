@@ -27,6 +27,7 @@ RUN apt-get update --fix-missing && \
     apt-get upgrade -y && \
     apt-get install -y \
     apt-utils \
+    build-essential \
     software-properties-common \
     sudo \
     wget
