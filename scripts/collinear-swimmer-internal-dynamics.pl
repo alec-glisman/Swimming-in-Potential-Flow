@@ -47,7 +47,7 @@ my $numSimulationTypes = scalar @inputData;
 # Simulation parameters
 my $numberBodies         = 2; # integer number of bodies to simulate
 my $boolImageSystem      = 1; # if system has an image (wall) along z=0 plane
-my $boolInternalDynamics = 1; # if swimmer has internal dynamics (0: no, 1: yes)
+my $boolInternalDynamics = 0; # if swimmer has internal dynamics (0: no, 1: yes)
 
 my $ti          = 0.00e+0;
 my $tf          = 1.00e+3;
@@ -213,7 +213,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		my $R_avg       = 3.50e+0;
 		my $Z_height    = 1.00e+1;
 
-		my $phase_angle = 1.57079632679e+0;
+		my $phase_angle = -1.57079632679e+0;
 		my $U0          = 1.40e+0;
 		my $omega       = 1.00e+0;
 
