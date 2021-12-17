@@ -1,5 +1,5 @@
 name: Language Linting
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   language_lint:
