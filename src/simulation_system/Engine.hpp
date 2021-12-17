@@ -100,11 +100,11 @@ class Engine
     // number of physical CPU cores on host device
     const int m_num_physical_cores{static_cast<int>(std::thread::hardware_concurrency())};
     /// @todo: number of physical CPU cores to use in tensor calculations
-    const int m_simulation_cores{1}; // REVIEW: {static_cast<int>(std::ceil(m_num_physical_cores / 4.0))};
+    const int m_simulation_cores{static_cast<int>(std::ceil(m_num_physical_cores / 2.0))};
 
     // ProgressBar output
-    /// Percentage of simulation progress at which to output a GSD frame
-    const double m_outputPercentile{0.01};
+    /// Percentage of simulation progress at which to update ProgressBar
+    const double m_outputPercentile{0.001};
 };
 
 #endif // BODIES_IN_POTENTIAL_FLOW_ENGINE_H

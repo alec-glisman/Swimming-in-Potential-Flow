@@ -23,10 +23,13 @@ ENV LDFLAGS="${LDFLAGS} -L${MKLROOT}/lib/intel64"
 ENV CPPFLAGS="${CPPFLAGS} -L${MKLROOT}/include/intel64"
 
 # Update packages on base image and general use packages
+RUN apt-get update && apt-get install -y apt-utils
+
 RUN apt-get update --fix-missing && \
-    apt-get upgrade -y && \
-    apt-get install -y \
-    apt-utils \
+    apt-get upgrade -y
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
     software-properties-common \
     sudo \
     wget
@@ -185,6 +188,13 @@ COPY include/cmake_modules /bodies-in-potential-flow/include/cmake_modules
 SHELL ["/bin/bash", "-c"] 
 RUN source "${MKLROOT}/env/vars.sh"
 
+# Activate VCPKG
+COPY vcpkg /bodies-in-potential-flow/vcpkg
+COPY vcpkg.json /bodies-in-potential-flow/vcpkg.json
+RUN alias gcc=gcc-11
+RUN alias g++=g++11
+RUN /bodies-in-potential-flow/vcpkg/./bootstrap-vcpkg.sh
+
 # !SECTION (Intel/NVIDA package initialization)
 
 
@@ -205,6 +215,6 @@ RUN mkdir data
 RUN mkdir temp
 
 # Build simulation
-ENTRYPOINT [ "perl", "scripts/collinear-swimmer-wall.pl" ]   # starts simulations from perl script
+ENTRYPOINT [ "perl", "scripts/collinear-swimmer-internal-dynamics.pl" ]   # starts simulations from perl script
 
 # !SECTION (Prepare simulation)

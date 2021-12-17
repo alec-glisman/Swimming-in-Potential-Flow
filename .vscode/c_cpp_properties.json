@@ -33,7 +33,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/home/aglisman/.linuxbrew/include/**"
+                "/home/linuxbrew/.linuxbrew/include/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc-11",

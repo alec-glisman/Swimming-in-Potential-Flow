@@ -15,9 +15,16 @@
             "args": [
                 "--GSD-path=temp/test.gsd",
                 "--dt=1e-5",
-                "--R_avg=10",
-                "--phase_angle=1.57079632679",
-                "--epsilon=0.01"
+                "--ti=0",
+                "--tf=1",
+                "--R-avg=3.5",
+                "--Z-height=2.10e+0",
+                "--phase-angle=1.57079632679",
+                "--U0=1.4",
+                "--omega=1",
+                "--number-bodies=1",
+                "--image-system=0",
+                "--orientation=1"
             ]
         },
         {

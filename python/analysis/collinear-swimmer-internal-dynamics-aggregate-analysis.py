@@ -3,7 +3,7 @@
 __author__ = "Alec Glisman"
 
 Example:
-    python3 python/analysis/collinear-swimmer-internal-dynamics-aggregate-analysis.py --relative-path=temp/output --output-dir=temp/output/figures
+    python3 python/analysis/collinear-swimmer-internal-dynamics-aggregate-analysis.py --relative-path=temp/output --output-dir=figures
 """
 
 # SECTION: Depdencendies

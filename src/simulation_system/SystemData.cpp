@@ -156,8 +156,8 @@ SystemData::initializeData()
             orient_dir = -1.0; // -x placement
         }
 
-        m_positions_particles_articulation_init_norm(particle_id_3) =
-            orient_dir; // REVIEW: All of body coordinate in +x-axis, quaternion rotates
+        m_positions_particles_articulation_init_norm(particle_id_3 + 0) =
+            orient_dir; /// @review_swimmer: All of body coordinate in (+x)-axis, quaternion rotates
 
         spdlog::get(m_logName)->info("Particle {0} initial orientation: [{1:03.14f}, {2:03.14f}, {3:03.14f}]",
                                      particle_id + 1, m_positions_particles_articulation_init_norm(particle_id_3),
@@ -413,14 +413,14 @@ SystemData::positionsArticulation()
 
     for (int body_id = 0; body_id < m_num_bodies; body_id++)
     {
-        const int constrained1_3{3 * (particle_id + 1)};
-        const int constrained2_3{3 * (particle_id + 2)};
+        const int constrained_p1_3{3 * (particle_id + 1)};
+        const int constrained_p2_3{3 * (particle_id + 2)};
 
-        m_positions_particles_articulation.segment<3>(constrained1_3).noalias() =
-            r1_mag * m_orientations_particles.segment<3>(constrained1_3);
+        m_positions_particles_articulation.segment<3>(constrained_p1_3).noalias() =
+            r1_mag * m_orientations_particles.segment<3>(constrained_p1_3);
 
-        m_positions_particles_articulation.segment<3>(constrained2_3).noalias() =
-            r3_mag * m_orientations_particles.segment<3>(constrained2_3);
+        m_positions_particles_articulation.segment<3>(constrained_p2_3).noalias() =
+            r3_mag * m_orientations_particles.segment<3>(constrained_p2_3);
 
         particle_id += 3;
     }
@@ -429,7 +429,6 @@ SystemData::positionsArticulation()
 void
 SystemData::velocitiesArticulation()
 {
-
     // articulation velocity magnitudes
     const double t_dimensional{m_tau * m_t};
     const double v1_mag = m_sys_spec_U0 * cos(m_sys_spec_omega * t_dimensional);
@@ -441,24 +440,17 @@ SystemData::velocitiesArticulation()
 
     for (int body_id = 0; body_id < m_num_bodies; body_id++)
     {
-        const int constrained1_3{3 * (particle_id + 1)};
-        const int constrained1_7{7 * (particle_id + 1)};
+        const int constrained_p1_3{3 * (particle_id + 1)};
+        const int constrained_p1_7{7 * (particle_id + 1)};
 
-        const int constrained2_3{3 * (particle_id + 2)};
-        const int constrained2_7{7 * (particle_id + 2)};
+        const int constrained_p2_3{3 * (particle_id + 2)};
+        const int constrained_p2_7{7 * (particle_id + 2)};
 
-        m_velocities_particles_articulation.segment<3>(constrained1_7).noalias() =
-            v1_mag * m_orientations_particles.segment<3>(constrained1_3);
+        m_velocities_particles_articulation.segment<3>(constrained_p1_7).noalias() =
+            v1_mag * m_orientations_particles.segment<3>(constrained_p1_3);
 
-        m_velocities_particles_articulation.segment<3>(constrained2_7).noalias() =
-            v3_mag * m_orientations_particles.segment<3>(constrained2_3);
-
-        // Image system: flip z components, leave x,y unchanged
-        if (particle_id >= (m_num_particles / 2))
-        {
-            m_velocities_particles_articulation(constrained1_7 + 2) *= -1;
-            m_velocities_particles_articulation(constrained2_7 + 2) *= -1;
-        }
+        m_velocities_particles_articulation.segment<3>(constrained_p2_7).noalias() =
+            v3_mag * m_orientations_particles.segment<3>(constrained_p2_3);
 
         particle_id += 3;
     }
@@ -480,24 +472,17 @@ SystemData::accelerationsArticulation()
 
     for (int body_id = 0; body_id < m_num_bodies; body_id++)
     {
-        const int constrained1_3{3 * (particle_id + 1)};
-        const int constrained1_7{7 * (particle_id + 1)};
+        const int constrained_p1_3{3 * (particle_id + 1)};
+        const int constrained_p1_7{7 * (particle_id + 1)};
 
-        const int constrained2_3{3 * (particle_id + 2)};
-        const int constrained2_7{7 * (particle_id + 2)};
+        const int constrained_p2_3{3 * (particle_id + 2)};
+        const int constrained_p2_7{7 * (particle_id + 2)};
 
-        m_accelerations_particles_articulation.segment<3>(constrained1_7).noalias() =
-            a1_mag * m_orientations_particles.segment<3>(constrained1_3);
+        m_accelerations_particles_articulation.segment<3>(constrained_p1_7).noalias() =
+            a1_mag * m_orientations_particles.segment<3>(constrained_p1_3);
 
-        m_accelerations_particles_articulation.segment<3>(constrained2_7).noalias() =
-            a3_mag * m_orientations_particles.segment<3>(constrained2_3);
-
-        // Image system: flip z components, leave x,y unchanged
-        if (particle_id >= (m_num_particles / 2))
-        {
-            m_accelerations_particles_articulation(constrained1_7 + 2) *= -1;
-            m_accelerations_particles_articulation(constrained2_7 + 2) *= -1;
-        }
+        m_accelerations_particles_articulation.segment<3>(constrained_p2_7).noalias() =
+            a3_mag * m_orientations_particles.segment<3>(constrained_p2_3);
 
         particle_id += 3;
     }
@@ -530,12 +515,12 @@ SystemData::rbmMatrixElement(const int particle_id)
     const int body_id_7{7 * m_particle_group_id(particle_id)};
 
     // \[r_\alpha ^\]: skew-symmetric matrix representation of cross product
-    Eigen::Matrix3d mat_two_dr_cross;
-    crossProdMat(m_positions_particles_articulation.segment<3>(particle_id_3), mat_two_dr_cross);
+    Eigen::Matrix3d mat_dr_cross;
+    crossProdMat(m_positions_particles_articulation.segment<3>(particle_id_3), mat_dr_cross);
     // preprend row of zeros
     Eigen::Matrix<double, 4, 3> mat_dr_cross_43;
     mat_dr_cross_43.setZero();
-    mat_dr_cross_43.block<3, 3>(1, 0).noalias() = mat_two_dr_cross;
+    mat_dr_cross_43.block<3, 3>(1, 0).noalias() = mat_dr_cross;
 
     // E_{(i)}: matrix representation of left quaternion composition
     Eigen::Matrix4d E_body;
@@ -573,9 +558,9 @@ SystemData::chiMatrixElement(const int particle_id)
                                         m_positions_bodies(body_id_7 + 5), m_positions_bodies(body_id_7 + 6));
 
     // particle initial configuration unit quaternion
-    const Eigen::Quaterniond r_body_quat(0.0, prefactor * m_positions_particles_articulation_init_norm(particle_id_3),
-                                         prefactor * m_positions_particles_articulation_init_norm(particle_id_3 + 1),
-                                         prefactor * m_positions_particles_articulation_init_norm(particle_id_3 + 2));
+    const Eigen::Vector3d    r_hat_init = m_positions_particles_articulation_init_norm.segment<3>(particle_id_3);
+    const Eigen::Quaterniond r_body_quat(0.0, prefactor * r_hat_init(0), prefactor * r_hat_init(1),
+                                         prefactor * r_hat_init(2));
 
     // quaternion product: r_body * theta
     const Eigen::Quaterniond r_theta = r_body_quat * theta_body;

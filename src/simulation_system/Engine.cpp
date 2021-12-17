@@ -76,39 +76,46 @@ Engine::run()
     Eigen::ThreadPool       thread_pool = Eigen::ThreadPool(m_simulation_cores);
     Eigen::ThreadPoolDevice all_cores_device(&thread_pool, m_simulation_cores);
 
-    while (m_system->timestep() < tot_step)
+    // Integrate system forward in time
+    try
     {
-        // Integrate system forward in time
-        integrate(all_cores_device);
-
-        // Update time for next step
-        m_system->setT(m_system->t() + m_system->dt());
-        m_system->setTimestep(m_system->timestep() + 1);
-        ++(*m_ProgressBar);
-
-        // Output data
-        if ((m_system->timestep() % write_step == 0) || (m_system->t() >= m_system->tf()))
+        while (m_system->timestep() < tot_step)
         {
-            spdlog::get(m_logName)->info("Normalizing quaternions at t = {0}", m_system->t());
-            m_system->normalizeQuaternions();
+            integrate(all_cores_device);
 
-            spdlog::get(m_logName)->info("Writing frame at t = {0}", m_system->t());
-            m_system->gsdUtil()->writeFrame();
-            spdlog::get(m_logName)->info("Logging SystemData at t = {0}", m_system->t());
-            m_system->logData();
-            spdlog::get(m_logName)->flush();
+            // Update time for next step
+            m_system->setT(m_system->t() + m_system->dt());
+            m_system->setTimestep(m_system->timestep() + 1);
+            ++(*m_ProgressBar);
+
+            // Output data
+            if ((m_system->timestep() % write_step == 0) || (m_system->t() >= m_system->tf()))
+            {
+                spdlog::get(m_logName)->info("Normalizing quaternions at t = {0}", m_system->t());
+                m_system->normalizeQuaternions();
+
+                spdlog::get(m_logName)->info("Writing frame at t = {0}", m_system->t());
+                m_system->gsdUtil()->writeFrame();
+                spdlog::get(m_logName)->info("Logging SystemData at t = {0}", m_system->t());
+                m_system->logData();
+                spdlog::get(m_logName)->flush();
+            }
+            if (m_system->timestep() % display_step == 0)
+            {
+                m_ProgressBar->display(); // display the progress bar
+            }
         }
-        if (m_system->timestep() % display_step == 0)
-        {
-            m_ProgressBar->display(); // display the progress bar
-        }
+    }
+    catch (const std::runtime_error& e)
+    {
+        std::cerr << '\r' << e.what() << " at t = " << m_system->t() << ". Stopping simulation." << '\n';
     }
 
     // Final data writing and shut down
     spdlog::get(m_logName)->info("Ending Engine run");
     spdlog::get(m_logName)->info("Writing frame at t = {0}", m_system->t());
     m_system->gsdUtil()->writeFrame();
-    m_ProgressBar->display();
+    m_ProgressBar->done();
     spdlog::get(m_logName)->flush();
 }
 

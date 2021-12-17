@@ -211,16 +211,11 @@ RungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::Vec
 
     if (m_system->imageSystem())
     {
-        // only update Udwadia system for "real" system not image dipoles
-        const int num_real_bodies{m_system->numBodies() / 2};
-        const int num_real_bodies_7{7 * num_real_bodies};
-
-        Eigen::VectorXd acc_real_body = acc.segment(0, num_real_bodies_7);
-
+        Eigen::VectorXd acc_real_body = acc.segment(0, m_body_dof_7);
         udwadiaKalaba(acc_real_body);
 
         // update acceleration components using constraints
-        acc.segment(0, num_real_bodies_7).noalias() = acc_real_body;
+        acc.segment(0, m_body_dof_7) = acc_real_body;
         imageBodyAcc(acc);
     }
     else
@@ -235,27 +230,22 @@ RungeKutta4::accelerationUpdate(const double t, Eigen::VectorXd& pos, Eigen::Vec
 void
 RungeKutta4::imageBodyPosVel(Eigen::VectorXd& pos, Eigen::VectorXd& vel)
 {
-    const int num_img_bodies{m_system->numBodies() / 2};
+    pos.segment(m_body_dof_7, m_body_dof_7) = pos.segment(0, m_body_dof_7);
+    vel.segment(m_body_dof_7, m_body_dof_7) = vel.segment(0, m_body_dof_7);
 
-    for (int img_body_id = num_img_bodies; img_body_id < m_system->numBodies(); img_body_id++)
+    for (int img_body_id = m_body_dof; img_body_id < m_system->numBodies(); img_body_id++)
     {
         // `Eigen::Vector` indices
-        const int real_body_id_7{7 * (img_body_id - num_img_bodies)};
         const int img_body_id_7{7 * img_body_id};
 
         /* ANCHOR: Position image system: mirror image about xy-plane (transform z --> -z) */
-        pos.segment<7>(img_body_id_7).noalias() = pos.segment<7>(real_body_id_7);
-
         // (linear components) flip z component, leave x-y unchanged
         pos(img_body_id_7 + 2) *= -1;
-
         // (quaternion components) flip x-y components of quaternion vector part (see note in header file: look for "C1
         // and C2 are mirrored along the z-axis")
         pos.segment<2>(img_body_id_7 + 4) *= -1;
 
         /* ANCHOR: Velocity image system: mirror image about xy-plane (transform z --> -z)  */
-        vel.segment<7>(img_body_id_7).noalias() = vel.segment<7>(real_body_id_7);
-
         vel(img_body_id_7 + 2) *= -1;
         vel.segment<2>(img_body_id_7 + 4) *= -1;
     }
@@ -264,17 +254,14 @@ RungeKutta4::imageBodyPosVel(Eigen::VectorXd& pos, Eigen::VectorXd& vel)
 void
 RungeKutta4::imageBodyAcc(Eigen::VectorXd& acc)
 {
-    const int num_img_bodies{m_system->numBodies() / 2};
+    acc.segment(m_body_dof_7, m_body_dof_7) = acc.segment(0, m_body_dof_7);
 
-    for (int img_body_id = num_img_bodies; img_body_id < m_system->numBodies(); img_body_id++)
+    for (int img_body_id = m_body_dof; img_body_id < m_system->numBodies(); img_body_id++)
     {
         // `Eigen::Vector` indices
-        const int real_body_id_7{7 * (img_body_id - num_img_bodies)};
         const int img_body_id_7{7 * img_body_id};
 
         /* ANCHOR: Acceleration image system: mirror image about xy-plane (transform z --> -z)   */
-        acc.segment<7>(img_body_id_7).noalias() = acc.segment<7>(real_body_id_7);
-
         acc(img_body_id_7 + 2) *= -1;
         acc.segment<2>(img_body_id_7 + 4) *= -1;
     }
@@ -428,6 +415,12 @@ RungeKutta4::momForceFree(const Eigen::ThreadPoolDevice& device)
         vel_body.segment<3>(body_id_7).noalias() = U_swim_rot_3d;
     }
 
+    if (m_system->imageSystem())
+    {
+        Eigen::VectorXd pos_body = m_system->positionsBodies();
+        imageBodyPosVel(pos_body, vel_body);
+    }
+
     m_system->setVelocitiesBodies(vel_body);
 
     /* ANCHOR: Calculate acceleration components */
@@ -484,6 +477,11 @@ RungeKutta4::momForceFree(const Eigen::ThreadPoolDevice& device)
         const Eigen::Vector3d    A_swim_rot_3d = A_swim_rot_4d.vec();
 
         acc_body.segment<3>(body_id_7).noalias() = A_swim_rot_3d;
+    }
+
+    if (m_system->imageSystem())
+    {
+        imageBodyAcc(acc_body);
     }
 
     m_system->setAccelerationsBodies(acc_body);

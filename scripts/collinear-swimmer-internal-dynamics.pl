@@ -33,7 +33,7 @@ use warnings;                      # give warnings
 my $enableTesting  = "True";                    # Unit tests,        OPTIONS: (False) OFF, (True) ON
 my $enableCoverage = "False";                   # Testing coverage,  OPTIONS: (False) OFF, (True) ON
 my $build          = "Release";                 # CMake built type,  OPTIONS: Release, Debug, Profile
-my $generator      = "Ninja";                   # CMake generator,   OPTIONS: "Unix Makefiles", "Ninja"
+my $generator      = "Unix Makefiles";          # CMake generator,   OPTIONS: "Unix Makefiles", "Ninja"
 my $buildDir       = "build/" . lc $build;      # Build folder path
 
 # C++ Simulation
@@ -41,17 +41,16 @@ my $simulationTag    = "collinear-swimmer-internal-dynamics";
 my $projectName      = "bodies-in-potential-flow";
 my $inputDir         = "input";
 my $runSimulationSimulan = 1; # NOTE: 0 only runs one simulation at a time
-my @inputData        = ( "varyZHeight", "varyEpsilon" );  # other options: [ "varyRelDisp",  "varyPhaseAngle",  "varyVarEpsilon" ]
+my @inputData        = ( "varyZHeight", "varyEpsilon" );  # other options: [ "varyDt", "varyRelDisp", "varyPhaseAngle",  "varyVarEpsilon" ]
 my $numSimulationTypes = scalar @inputData;
 
 # Simulation parameters
+my $numberBodies         = 2; # integer number of bodies to simulate
+my $boolImageSystem      = 1; # if system has an image (wall) along z=0 plane
 my $boolInternalDynamics = 1; # if swimmer has internal dynamics (0: no, 1: yes)
-my $boolImageSystem      = 0; # if system has an image (wall) along z=0 plane
-my $numberBodies         = 1; # integer number of bodies to simulate
 
-my $dt          = 1.00e-6;		
 my $ti          = 0.00e+0;
-my $tf          = 1.00e+0;
+my $tf          = 1.00e+3;
 
 # Python Numerical Analysis
 my $pythonGSDCreation = "python/initial_configurations/" . $simulationTag . "-configuration.py";
@@ -73,7 +72,7 @@ my $numThreads = 0;
 if ((index($host, "MacBook-Pro") != -1) or (index($host, "mbp") != -1)) {
 	$numThreads = 12;
 } elsif ((index($host, "alec-glisman-PC-Ubuntu") != -1) or (index($host, "alec-glisman-PC-Windows") != -1)) {
-	$numThreads  = 16;
+	$numThreads  = 20;
 } elsif ((index($host, "stokes") != -1 )) {
 	$numThreads  = 6;
 } elsif ((index($host, "shear") != -1 ) or ( index($host, "s") != -1 )) {
@@ -209,18 +208,18 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 		my $gsd_path = ${simulation_dir} . "/" . "data.gsd";
 
 		# Simulation variables
-        my $R_avg       = 6.00e+0;
+		my $dt          = 1.00e-4;
+
+		my $R_avg       = 3.50e+0;
 		my $Z_height    = 1.00e+1;
 
-		my $phase_angle = -1.57079632679e+0;
-		my $U0          = 2.00e-2;
+		my $phase_angle = 1.57079632679e+0;
+		my $U0          = 1.40e+0;
 		my $omega       = 1.00e+0;
 
-        my $orientation = 0;
-
-        if (!$boolInternalDynamics){
-            $U0 = 0.00e+0;
-        }
+		if (!$boolInternalDynamics){
+			$U0 = 0.00e+0;
+		}
 
 		# Modify default preferences for each simulation run
 		switch($inputData[$i]) {
@@ -240,19 +239,21 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 				my $epsilon = ${data[$j]};
 				$U0 = $epsilon * $R_avg * $omega
 			}
-            case ( "varyVarEpsilon" ) {  # Golestanian (2004, PRE) Swimmer analog
-                # continuous equivalent collinear swimmer
-                my $varEpsilon = ${data[$j]};
-                $U0 = $varEpsilon * $omega * 0.50;
+			case ( "varyVarEpsilon" ) {  # Golestanian (2004, PRE) Swimmer analog
+				 # continuous equivalent collinear swimmer
+				my $varEpsilon = ${data[$j]};
+				$U0 = $varEpsilon * $omega * 0.50;
 
-                # Recalculate relDispEqbm so that max separation (D) is 10.0
-                my $D = 10.0;
-                $R_avg = $D - ( 0.50 * $varEpsilon );
-            }
+				# Recalculate relDispEqbm so that max separation (D) is 10.0
+				my $D = 10.0;
+				$R_avg = $D - ( 0.50 * $varEpsilon );
+			}
 		}
 
 		# Generate GSD file
-		system( "python3 " . ${pythonGSDCreation}. " --GSD-path=" . ${gsd_path}. " --dt=" . ${dt} . " --ti=" . ${ti}  . " --tf=" . ${tf}. " --R-avg=" . ${R_avg} . " --Z-height=" . ${Z_height}. " --phase-angle=" . ${phase_angle} . " --U0=" . ${U0} . " --omega=" . ${omega}. " --number-bodies=" . ${numberBodies} ." --image-system=" . ${boolImageSystem} . " --orientation=" . ${orientation})
+		my $pythonConfigCommand = "python3 ${pythonGSDCreation} --GSD-path=${gsd_path} --dt=${dt} --ti=${ti} --tf=${tf} --R-avg=${R_avg} --Z-height=${Z_height} --phase-angle=${phase_angle} --U0=${U0} --omega=${omega} --number-bodies=${numberBodies} --image-system=${boolImageSystem}";
+
+		system( "${pythonConfigCommand}" )
 		  and die "Unable to generate GSD file: $?, $!";
 
 		# Prepare for simulation
@@ -282,7 +283,7 @@ for (my $i = 0; $i < $numSimulationTypes; $i += 1 ){
 	}
 
 	# NOTE: Pause for all simulations to finish
-	sleep(30);
+	sleep(60);
 
 	# !SECTION
 

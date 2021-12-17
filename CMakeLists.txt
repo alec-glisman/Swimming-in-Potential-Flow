@@ -73,14 +73,24 @@ ELSEIF("$ENV{USER}" STREQUAL "alec")  # Build on Brady group servers
 
     MESSAGE(STATUS "${BoldGreen}" "Compiling on Brady group servers" "${ColourReset}")      
     
-    INCLUDE_DIRECTORIES("/home/alec/local-new/intel/compilers_and_libraries/linux/mkl/include")
     INCLUDE_DIRECTORIES("/home/alec/local-new/intel/compilers_and_libraries/linux")
+    INCLUDE_DIRECTORIES("/home/alec/local-new/intel/compilers_and_libraries/linux/mkl/include")
+    INCLUDE_DIRECTORIES("/home/alec/local-new/intel/compilers_and_libraries/linux/tbb/include")
+    
+    INCLUDE_DIRECTORIES("/lib/x86_64-linux-gnu")
     INCLUDE_DIRECTORIES("/usr/lib/x86_64-linux-gnu")
+    
+    SET(CMAKE_C_COMPILER /usr/bin/gcc-11 CACHE PATH "")
+    SET(CMAKE_CXX_COMPILER /usr/bin/g++-11 CACHE PATH "")
 
 
 ELSE()
 
-    MESSAGE(STATUS "${BoldGreen}" "Compiling on unknown machine" "${ColourReset}")
+    MESSAGE(STATUS "${BoldGreen}" "Compiling on Docker/unkown" "${ColourReset}")
+    
+    # SET(CMAKE_C_COMPILER /usr/bin/gcc-11 CACHE PATH "")
+    # SET(CMAKE_CXX_COMPILER /usr/bin/g++-11 CACHE PATH "")
+    # SET(CMAKE_MAKE_PROGRAM make)
     
 ENDIF()
 
@@ -105,10 +115,10 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.5.1 FATAL_ERROR)
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/include/cmake_modules")
 
 # vcpkg integrartion
-if(DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
-  set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
-      CACHE STRING "")
-endif()
+# if(DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+#   set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+#       CACHE STRING "")
+# endif()
 #!SECTION
 
 
@@ -148,8 +158,6 @@ PROJECT(
         VERSION "0.1.0"
         DESCRIPTION
             "Study dynamics of inertial active matter in a potential fluid (irrotational, incompressible)"
-        HOMEPAGE_URL
-            "https://github.com/alec-glisman/bodies-in-potential-flow"
         LANGUAGES ${LANGS})
 
 
