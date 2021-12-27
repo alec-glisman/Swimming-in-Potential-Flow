@@ -57,8 +57,8 @@ RungeKutta4::RungeKutta4(std::shared_ptr<SystemData> sys, std::shared_ptr<Potent
     {
         spdlog::get(m_logName)->warn("Setting initial conditions using constant as internal dynamics off");
         Eigen::VectorXd          vel_body = m_system->velocitiesBodies();
-        const double             vel_init_mag{1.7040237270147573e-07}; // from isolated swimmer with R_avg = 4.0
-        const Eigen::Quaterniond quat_vel_body(0.0, vel_init_mag, 0.0, 0.0);
+        const double             vel_init_mag{1.7040237270147573e-07};        // from isolated swimmer with R_avg = 4.0
+        const Eigen::Quaterniond quat_vel_body(0.0, 0.0, 0.0, -vel_init_mag); // @review_swimmer: -z axis orientation
 
         for (int body_id = 0; body_id < m_system->numBodies(); body_id++)
         {
