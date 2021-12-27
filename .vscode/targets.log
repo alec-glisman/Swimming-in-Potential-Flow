@@ -10,7 +10,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `all'.  Stop.
  
 
-# Make data base, printed on Sun Dec 26 18:46:46 2021
+# Make data base, printed on Sun Dec 26 20:43:47 2021
 
 # Variables
 
@@ -37,7 +37,7 @@ CPPFLAGS =  -L/opt/intel/oneapi/mkl/2021.4.0/include -L/opt/intel/oneapi/tbb/202
 # automatic
 @F = $(notdir $@)
 # makefile
-CURDIR := /Users/alecglisman/VSCodeProjects/local-bodies-in-potential-flow
+CURDIR := /Users/alecglisman/Dropbox/3-Brady-Lab/Code/potential-flow/bodies-in-potential-flow
 # makefile
 SHELL = /bin/sh
 # environment
@@ -47,7 +47,6 @@ VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupp
 # environment
 _ = /usr/bin/make
 # environment
- 
 host_Shear = shear
 # environment
 user_pi = pi
@@ -72,7 +71,7 @@ GMXLDLIB = /Users/alecglisman/.local/gromacs/lib
 # environment
 P9K_SSH = 0
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/b5/blb43g0d6bs83cswllz35l140000gn/T/vscode-ipc-0d965bbf-9992-48d1-ac3c-d99fe686b32c.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/b5/blb43g0d6bs83cswllz35l140000gn/T/vscode-ipc-e7bd1b32-b5e7-4d97-ad73-513403d502d5.sock
 # environment
 VSCODE_CWD = /
 # environment
@@ -116,7 +115,7 @@ VSCODE_PIPE_LOGGING = true
 # environment
 user_UbuntuBuild = aglisman
 # environment
-PWD = /Users/alecglisman/VSCodeProjects/local-bodies-in-potential-flow
+PWD = /Users/alecglisman/Dropbox/3-Brady-Lab/Code/potential-flow/bodies-in-potential-flow
 # environment
 user_MacBookAir = alecglisman
 # automatic
@@ -194,7 +193,6 @@ TMPDIR = /var/folders/b5/blb43g0d6bs83cswllz35l140000gn/T/
 # environment
 dropbox_base = /Users/alecglisman/Dropbox
 # makefile
- 
 MAKEFLAGS = Rrqp
 # environment
 MFLAGS = -Rrqp
@@ -245,7 +243,7 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_PID = 17886
+VSCODE_PID = 25570
 # variable set hash-table stats:
 # Load=115/1024=11%, Rehash=0, Collisions=7/136=5%
 
@@ -255,10 +253,11 @@ VSCODE_PID = 17886
 
 # Directories
 
-# . (device 16777220, inode 104929381): 37 files, no impossibilities.
+# . (device 16777220, inode 61145118): 37 files, no impossibilities.
 
 # 37 files, no impossibilities in 1 directories.
 
+ 
 # Implicit Rules
 
 # No implicit rules.
@@ -329,6 +328,6 @@ GNUmakefile:
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
 # strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-# Finished Make data base on Sun Dec 26 18:46:46 2021
+# Finished Make data base on Sun Dec 26 20:43:47 2021
 
  
