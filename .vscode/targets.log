@@ -1,0 +1,334 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 3.81
+# Copyright (C) 2006  Free Software Foundation, Inc.
+# This is free software; see the source for copying conditions.
+# There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# This program built for i386-apple-darwin11.3.0
+ 
+make: *** No rule to make target `all'.  Stop.
+ 
+
+# Make data base, printed on Sun Dec 26 18:46:46 2021
+
+# Variables
+
+# environment
+GMXDATA = /Users/alecglisman/.local/gromacs/share/gromacs
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# environment
+host_coil = coil
+# environment
+HOMEBREW_NO_ANALYTICS = 1
+# environment
+INTEL_COMPILERS = /opt/intel/oneapi/compiler/latest/mac/bin/intel64
+# environment
+VSCODE_LOG_NATIVE = false
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# environment
+CPPFLAGS =  -L/opt/intel/oneapi/mkl/2021.4.0/include -L/opt/intel/oneapi/tbb/2021.4.0/env/../include -L/opt/intel/oneapi/mkl/2021.4.0/include -L/opt/intel/oneapi/tbb/2021.4.0/env/../include
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# automatic
+@F = $(notdir $@)
+# makefile
+CURDIR := /Users/alecglisman/VSCodeProjects/local-bodies-in-potential-flow
+# makefile
+SHELL = /bin/sh
+# environment
+FZF_DEFAULT_COMMAND = rg --files --hidden -g "!.git" 
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+# environment
+_ = /usr/bin/make
+# environment
+ 
+host_Shear = shear
+# environment
+user_pi = pi
+# environment
+GROMACSROOT = /Users/alecglisman/.local/gromacs
+# environment
+homebrew_base = /usr/local
+# makefile
+MAKEFILE_LIST := 
+# environment
+TBBROOT = /opt/intel/oneapi/tbb/2021.4.0/env/..
+# environment
+VSCODE_VERBOSE_LOGGING = true
+# environment
+host_MacBookAir = alecglisman-MacBookAir
+# environment
+__CFBundleIdentifier = com.microsoft.VSCode
+# environment
+host_PC_Ubuntu = alec-glisman-PC-Ubuntu
+# environment
+GMXLDLIB = /Users/alecglisman/.local/gromacs/lib
+# environment
+P9K_SSH = 0
+# environment
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/b5/blb43g0d6bs83cswllz35l140000gn/T/vscode-ipc-0d965bbf-9992-48d1-ac3c-d99fe686b32c.sock
+# environment
+VSCODE_CWD = /
+# environment
+PATH = /Users/alecglisman/miniconda3/bin:/opt/intel/oneapi/tbb/latest/bin:/opt/intel/oneapi/mkl/latest/bin:/opt/intel/oneapi/compiler/latest/mac/bin/intel64:/usr/local/bin:/Users/alecglisman/.local/gromacs/bin:/usr/local/sbin:/Users/alecglisman/bin:/usr/local/bin:/Users/alecglisman/miniconda3/bin:/opt/intel/oneapi/tbb/latest/bin:/opt/intel/oneapi/mkl/latest/bin:/opt/intel/oneapi/compiler/latest/mac/bin/intel64:/usr/local/bin:/Users/alecglisman/.zinit/plugins/junegunn---fzf:/Users/alecglisman/.zinit/polaris/bin:/usr/local/sbin:/Users/alecglisman/bin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public:/Library/TeX/texbin:/usr/local/share/dotnet:/opt/X11/bin:~/.dotnet/tools:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/usr/local/opt/fzf/bin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin:/Applications/VMD\ 1.9.4a55-x86_64-Rev11.app/Contents/MacOS:/Applications/Visual Studio Code.app/Contents/Resources/app/bin:/Applications/VMD\ 1.9.4a55-x86_64-Rev11.app/Contents/MacOS
+# environment
+user_BradyServers = alec
+# environment
+LIBRARY_PATH = /opt/intel/oneapi/tbb/2021.4.0/env/../lib:/opt/intel/oneapi/mkl/2021.4.0/lib:/opt/intel/oneapi/tbb/2021.4.0/env/../lib:/opt/intel/oneapi/mkl/2021.4.0/lib
+# environment
+VSCODE_IPC_HOOK = /Users/alecglisman/Library/Application Support/Code/1.63.2-main.sock
+# environment
+CPATH = /opt/intel/oneapi/tbb/2021.4.0/env/../include:/opt/intel/oneapi/mkl/2021.4.0/include:/opt/intel/oneapi/tbb/2021.4.0/env/../include:/opt/intel/oneapi/mkl/2021.4.0/include
+# environment
+GROMACS_DIR = /Users/alecglisman/.local/gromacs
+# environment
+host_MacBookProKayla = Kaylas-MacBook-Pro.local
+# environment
+VSCODE_LOG_STACK = false
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+LDFLAGS =  -L/opt/intel/oneapi/mkl/2021.4.0/lib -L/opt/intel/oneapi/tbb/2021.4.0/env/../lib -L/opt/intel/oneapi/mkl/2021.4.0/lib -L/opt/intel/oneapi/tbb/2021.4.0/env/../lib
+# default
+.FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
+# environment
+CMAKE_PREFIX_PATH = /opt/intel/oneapi/tbb/2021.4.0/env/..:/opt/intel/oneapi/tbb/2021.4.0/env/..
+# environment
+host_OS = Darwin
+# environment
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.aNsPb9NBUh/Listeners
+# automatic
+%F = $(notdir $%)
+# environment
+host_name = Alecs-MacBook-Pro.local
+# environment
+DISPLAY = /private/tmp/com.apple.launchd.JuNakDoDkJ/org.xquartz:0
+# environment
+VISUAL = nvim
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+user_UbuntuBuild = aglisman
+# environment
+PWD = /Users/alecglisman/VSCodeProjects/local-bodies-in-potential-flow
+# environment
+user_MacBookAir = alecglisman
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+PKG_CONFIG_PATH = /opt/intel/oneapi/tbb/2021.4.0/env/../lib/pkgconfig:/opt/intel/oneapi/mkl/2021.4.0/lib/pkgconfig:/Users/alecglisman/.local/gromacs/lib/pkgconfig:/opt/intel/oneapi/tbb/2021.4.0/env/../lib/pkgconfig:/opt/intel/oneapi/mkl/2021.4.0/lib/pkgconfig
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# environment
+MANPATH = /Users/alecglisman/.local/gromacs/share/man
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/services/extensions/node/extensionHostProcess
+# environment
+HOME = /Users/alecglisman
+# environment
+GMXMAN = /Users/alecglisman/.local/gromacs/share/man
+# environment
+LD_LIBRARY_PATH = /opt/intel/oneapi/compiler/latest/mac/bin/intel64:/Users/alecglisman/.local/gromacs/lib:/opt/intel/oneapi/compiler/latest/mac/bin/intel64:/Users/alecglisman/.local/gromacs/lib:
+# environment
+host_MacBookPro = Alecs-MacBook-Pro.local
+# default
+MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
+# environment
+VSCODE_CODE_CACHE_PATH = /Users/alecglisman/Library/Application Support/Code/CachedData/899d46d82c4c95423fb7e10e68eba52050e30ba3
+# environment
+LOGNAME = alecglisman
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# environment
+ZSH = /Users/alecglisman/.oh-my-zsh
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+XPC_FLAGS = 0x0
+# default
+MAKE = $(MAKE_COMMAND)
+# environment
+host_blob = blob
+# default
+MAKECMDGOALS := all
+# environment
+user_macOS = alecglisman
+# environment
+SHLVL = 1
+# environment
+SSH_KEY_PATH = ~/.ssh/rsa_id:~/.ssh/id_ed25519
+# default
+MAKE_VERSION := 3.81
+# environment
+USER = alecglisman
+# environment
+MKLROOT = /opt/intel/oneapi/mkl/2021.4.0
+# makefile
+.DEFAULT_GOAL := 
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+host_user = alecglisman
+# environment
+GMXBIN = /Users/alecglisman/.local/gromacs/bin
+# default
+MAKE_COMMAND := /Applications/Xcode.app/Contents/Developer/usr/bin/make
+# environment
+ZPFX = /Users/alecglisman/.zinit/polaris
+# environment
+ZSH_CACHE_DIR = /Users/alecglisman/.cache/zinit
+# default
+.VARIABLES := 
+# environment
+TMPDIR = /var/folders/b5/blb43g0d6bs83cswllz35l140000gn/T/
+# automatic
+*F = $(notdir $*)
+# environment
+dropbox_base = /Users/alecglisman/Dropbox
+# makefile
+ 
+MAKEFLAGS = Rrqp
+# environment
+MFLAGS = -Rrqp
+# environment
+host_MacBookPro_alternate = alecs-mbp.lan
+# environment
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.132337567.132337573
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# automatic
++F = $(notdir $+)
+# environment
+VMDROOT = /Applications/VMD\ 1.9.4a55-x86_64-Rev11.app
+# environment
+PMSPEC = 0uUpiPsf
+# environment
+__CF_USER_TEXT_ENCODING = 0x1F5:0x0:0x0
+# environment
+COMMAND_MODE = unix2003
+# default
+MAKEFILES := 
+# automatic
+<F = $(notdir $<)
+# environment
+EDITOR = nvim
+# environment
+LC_ALL = C
+# environment
+host_pi = pi
+# automatic
+^F = $(notdir $^)
+# default
+SUFFIXES := 
+# environment
+NLSPATH = /opt/intel/oneapi/mkl/2021.4.0/lib/locale/%l_%t/%N:/opt/intel/oneapi/mkl/2021.4.0/lib/locale/%l_%t/%N
+# environment
+CLICOLOR_FORCE = 1
+# default
+.INCLUDE_DIRS = /usr/local/include
+# environment
+MAKELEVEL := 0
+# environment
+host_Stokes = stokes
+# environment
+CLICOLOR = 1
+# environment
+LANG = C
+# environment
+TERM = xterm-256color
+# environment
+VSCODE_PID = 17886
+# variable set hash-table stats:
+# Load=115/1024=11%, Rehash=0, Collisions=7/136=5%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 16777220, inode 104929381): 37 files, no impossibilities.
+
+# 37 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+# Not a target:
+all:
+#  Command-line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Makefile:
+#  A default, MAKEFILES, or -include/sinclude makefile.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+makefile:
+#  A default, MAKEFILES, or -include/sinclude makefile.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+GNUmakefile:
+#  A default, MAKEFILES, or -include/sinclude makefile.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# files hash-table stats:
+# Load=6/1024=1%, Rehash=0, Collisions=0/17=0%
+# VPATH Search Paths
+
+# No `vpath' search paths.
+
+# No general (`VPATH' variable) search path.
+
+# # of strings in strcache: 0
+# # of strcache buffers: 0
+# strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
+# strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
+
+# Finished Make data base on Sun Dec 26 18:46:46 2021
+
+ 
