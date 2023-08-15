@@ -4,6 +4,7 @@
 
 **About:** Study dynamics of inertial active matter in potential flow (irrotational, incompressible).
 This repository contains the molecular dynamics like engine written in C++ for our [Journal of Fluid Mechanics paper](https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/swimming-in-potential-flow/5AA7BDCC8FCE70FB3D6170CE455BD641).  
+Note that the current release is v1.0.3 and version 2 development is in progress for finitely-many bodies in potential flow.  
 **Authors:** [Alec Glisman](https://github.com/alec-glisman)  
 **GitHub actions:**
 [![Code Linting](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/code-linting.yml/badge.svg)](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/code-linting.yml)
