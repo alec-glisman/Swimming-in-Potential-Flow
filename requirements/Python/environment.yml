@@ -14,4 +14,4 @@ dependencies:
   - scipy
   - numpy
   - pandas
-prefix: /home/aglisman/anaconda3/envs/bodies-in-potential-flow
+prefix: bodies-in-potential-flow

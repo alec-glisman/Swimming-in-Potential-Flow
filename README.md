@@ -1,14 +1,14 @@
-# README: Bodies in Potential Flow
+# Bodies in Potential Flow
 
 ![Collinear Swimmer](docs/images/collinear_swimmer_white_background.png)
 
-**About:** Study dynamics of inertial active matter in potential flow (irrotational, incompressible).  
+**About:** Study dynamics of inertial active matter in potential flow (irrotational, incompressible).
+This repository contains the molecular dynamics like engine written in C++ for our [Journal of Fluid Mechanics paper](https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/swimming-in-potential-flow/5AA7BDCC8FCE70FB3D6170CE455BD641).  
 **Authors:** [Alec Glisman](https://github.com/alec-glisman)  
 **GitHub actions:**
 [![Code Linting](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/code-linting.yml/badge.svg)](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/code-linting.yml)
 [![Build & Test](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml/badge.svg)](https://github.com/alec-glisman/bodies-in-potential-flow/actions/workflows/test.yml)  
 **Third-party services:**
-[![CodeFactor](https://www.codefactor.io/repository/github/alec-glisman/bodies-in-potential-flow/badge?s=20f98d924642ab5cf3e3379e8ac68ff4a01876b2)](https://www.codefactor.io/repository/github/alec-glisman/bodies-in-potential-flow)
 [![codecov](https://codecov.io/gh/alec-glisman/bodies-in-potential-flow/branch/master/graph/badge.svg?token=3IUPDIX1D1)](https://codecov.io/gh/alec-glisman/bodies-in-potential-flow)
 [![wakatime](https://wakatime.com/badge/github/alec-glisman/bodies-in-potential-flow.svg)](https://wakatime.com/badge/github/alec-glisman/bodies-in-potential-flow) (v2 development and above)
 
@@ -33,7 +33,6 @@ docker-compose down                                              # tear down
 ## Project structure: links to relevant readme files
 
 `.vscode`: [Files relevant for developing the project in VSCode.](.vscode/)
-`data_tag`: Data relevant for validating results for a selection of git tags.  
 `include`: External dependencies required for the project.
 Further information can be found at the end of this readme.  
 `input`: Data files that are used in Perl scripts to modify parameters of interest across a range of simulations.  
